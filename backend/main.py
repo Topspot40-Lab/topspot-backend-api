@@ -1,8 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+# Core routers
 from backend.routers.health import router as health_router
 from backend.routers.catalog import router as catalog_router
+
+# 🎵 Playback & Car-Mode routers
+from backend.routers.playback_status import router as playback_status_router
+from backend.routers.playback_control import router as playback_control_router
+from backend.routers.decade_genre_player import router as decade_genre_player_router
+from backend.routers.collections_player import router as collections_player_router
+from backend.routers.single_track_player import router as single_track_player_router
+
 
 app = FastAPI(
     title="TopSpot Backend API",
@@ -22,5 +31,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# 🧪 Basic health + catalog
 app.include_router(health_router)
 app.include_router(catalog_router)
+
+# 🚗 Car-Mode + Playback
+app.include_router(playback_status_router)
+app.include_router(playback_control_router)
+app.include_router(decade_genre_player_router)
+app.include_router(collections_player_router)
+app.include_router(single_track_player_router)
