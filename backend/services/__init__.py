@@ -1,3 +1,3 @@
-from .elevenlabs_tts import synth_to_mp3_bytes
+# TTS intentionally disabled for baseline playback
 
 
