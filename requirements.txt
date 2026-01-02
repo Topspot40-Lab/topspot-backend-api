@@ -14,6 +14,7 @@ pydantic_core==2.41.5
 python-dotenv==1.2.1
 PyYAML==6.0.3
 SQLAlchemy==2.0.45
+spotipy==2.24.0
 sqlmodel==0.0.31
 starlette==0.50.0
 typing-inspection==0.4.2
