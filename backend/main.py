@@ -11,6 +11,8 @@ from backend.routers.playback_control import router as playback_control_router
 from backend.routers.decade_genre_player import router as decade_genre_player_router
 from backend.routers.collections_player import router as collections_player_router
 from backend.routers.single_track_player import router as single_track_player_router
+from backend.routers.decade_genre_pause import router as decade_genre_pause_router
+
 
 
 app = FastAPI(
@@ -36,8 +38,9 @@ app.include_router(health_router)
 app.include_router(catalog_router)
 
 # 🚗 Car-Mode + Playback
-app.include_router(playback_status_router)
-app.include_router(playback_control_router)
+# app.include_router(playback_status_router)
+# app.include_router(playback_control_router)
 app.include_router(decade_genre_player_router)
 app.include_router(collections_player_router)
-app.include_router(single_track_player_router)
+app.include_router(decade_genre_pause_router)
+# app.include_router(single_track_player_router)
