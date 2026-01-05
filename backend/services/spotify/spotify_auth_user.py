@@ -17,12 +17,16 @@ logger = logging.getLogger(__name__)
 REPO_ROOT = Path(__file__).resolve().parents[3]
 load_dotenv(REPO_ROOT / ".env", override=False)
 
-# Stable, absolute cache path (prevents random working-dir issues)
-CACHE_PATH = REPO_ROOT / ".cache-topspot"
+# ── Explicit, stable cache location (DIRECTORY + FILE) ──────────────────────
+CACHE_DIR = REPO_ROOT / ".cache-topspot"
+CACHE_FILE = CACHE_DIR / "spotify_token.cache"
 
 # Minimal, valid scopes for server-side playback control
-# (Add 'streaming' later only if you embed the Web Playback SDK in a browser.)
-SCOPES = "user-read-playback-state user-modify-playback-state user-read-currently-playing"
+SCOPES = (
+    "user-read-playback-state "
+    "user-modify-playback-state "
+    "user-read-currently-playing"
+)
 
 _auth_manager: SpotifyOAuth | None = None
 _client: Spotify | None = None
@@ -47,21 +51,29 @@ def _build_auth_manager(open_browser: bool = False) -> SpotifyOAuth:
     redirect = _clean(os.getenv("SPOTIPY_REDIRECT_URI"))
 
     if not cid or not secret or not redirect:
-        raise EnvironmentError("Missing SPOTIPY_CLIENT_ID / SPOTIPY_CLIENT_SECRET / SPOTIPY_REDIRECT_URI")
+        raise EnvironmentError(
+            "Missing SPOTIPY_CLIENT_ID / SPOTIPY_CLIENT_SECRET / SPOTIPY_REDIRECT_URI"
+        )
 
-    # DEBUG breadcrumb: last 6 chars of client id; exact redirect
-    logger.info("SpotifyOAuth init | client=%s | redirect=%s | cache=%s",
-                f"...{cid[-6:]}", redirect, CACHE_PATH)
+    # ✅ Ensure cache directory exists (Spotipy does NOT create it)
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-    cache_handler = CacheFileHandler(cache_path=str(CACHE_PATH))
+    logger.info(
+        "SpotifyOAuth init | client=%s | redirect=%s | cache=%s",
+        f"...{cid[-6:]}",
+        redirect,
+        CACHE_FILE,
+    )
+
+    cache_handler = CacheFileHandler(cache_path=str(CACHE_FILE))
 
     return SpotifyOAuth(
         client_id=cid,
         client_secret=secret,
-        redirect_uri=redirect,     # MUST match Spotify Dashboard exactly
-        scope=SCOPES,              # known-good scopes (no quotes)
+        redirect_uri=redirect,   # MUST match Spotify Dashboard exactly
+        scope=SCOPES,
         cache_handler=cache_handler,
-        open_browser=open_browser, # keep False for server routes
+        open_browser=open_browser,
         show_dialog=False,
     )
 
@@ -69,10 +81,12 @@ def _build_auth_manager(open_browser: bool = False) -> SpotifyOAuth:
 def get_spotify_user_client(allow_prompt: bool = False) -> Spotify:
     """
     Return a Spotipy client using a cached USER token.
-    - If no cached token and allow_prompt=False, raise a RuntimeError (so routes can instruct user to /spotify/authorize).
+    - If no cached token and allow_prompt=False, raise a RuntimeError
+      (routes should instruct user to /spotify/authorize).
     - If allow_prompt=True (CLI only), the OAuth flow may open a browser.
     """
     global _client, _auth_manager
+
     if _client is not None:
         return _client
 
@@ -81,21 +95,25 @@ def get_spotify_user_client(allow_prompt: bool = False) -> Spotify:
     token_info = _auth_manager.get_cached_token()
     if not token_info:
         raise RuntimeError(
-            "No Spotify user token found in cache. "
-            "Visit /spotify/authorize to sign in, or run an auth flow to populate "
-            f"{CACHE_PATH}"
+            "No Spotify user token found. "
+            "Visit /spotify/authorize to sign in and populate "
+            f"{CACHE_FILE}"
         )
 
     _client = spotipy.Spotify(auth_manager=_auth_manager)
-    logger.debug("✅ Spotify user-auth client ready (cache=%s)", CACHE_PATH)
+    logger.debug("✅ Spotify user-auth client ready (cache=%s)", CACHE_FILE)
     return _client
 
 
-# Optional: handy introspection for your /spotify/debug-config route
+# Optional: handy introspection for a /spotify/debug-config route
 def current_oauth_config() -> dict[str, str | None]:
     return {
-        "client_id_tail": (os.getenv("SPOTIPY_CLIENT_ID") or os.getenv("SPOTIFY_CLIENT_ID") or "")[-6:] or None,
+        "client_id_tail": (
+            os.getenv("SPOTIPY_CLIENT_ID")
+            or os.getenv("SPOTIFY_CLIENT_ID")
+            or ""
+        )[-6:] or None,
         "redirect_uri": _clean(os.getenv("SPOTIPY_REDIRECT_URI")),
         "scopes": SCOPES,
-        "cache_path": str(CACHE_PATH),
+        "cache_file": str(CACHE_FILE),
     }

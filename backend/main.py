@@ -13,6 +13,8 @@ from backend.routers.collections_player import router as collections_player_rout
 from backend.routers.single_track_player import router as single_track_player_router
 from backend.routers.decade_genre_pause import router as decade_genre_pause_router
 
+# 🔐 Spotify Auth (THIS WAS MISSING)
+from backend.routers.spotify_auth import router as spotify_auth_router
 
 
 app = FastAPI(
@@ -37,10 +39,12 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(catalog_router)
 
+# 🔐 Spotify Auth (NOW LIVE)
+app.include_router(spotify_auth_router)
+
 # 🚗 Car-Mode + Playback
-# app.include_router(playback_status_router)
-# app.include_router(playback_control_router)
+app.include_router(playback_status_router)
 app.include_router(decade_genre_player_router)
 app.include_router(collections_player_router)
 app.include_router(decade_genre_pause_router)
-# app.include_router(single_track_player_router)
+app.include_router(playback_control_router)
