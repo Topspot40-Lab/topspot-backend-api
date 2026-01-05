@@ -22,6 +22,25 @@ app = FastAPI(
     version="0.1.0"
 )
 
+from fastapi.responses import HTMLResponse
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    return """
+    <html>
+      <head>
+        <title>TopSpot40 Backend</title>
+      </head>
+      <body style="font-family: system-ui; padding: 40px;">
+        <h1>🎶 TopSpot40 Backend</h1>
+        <p>Status: Alive and humming.</p>
+        <p>Environment: Render</p>
+      </body>
+    </html>
+    """
+
+
+
 # 🔓 CORS — REQUIRED for frontend access
 app.add_middleware(
     CORSMiddleware,
