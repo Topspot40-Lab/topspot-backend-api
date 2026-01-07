@@ -14,6 +14,7 @@ class PlaybackStatus:
     is_paused: bool = False
     stopped: bool = True
     cancel_requested: bool = False
+    sequence_done: bool = True
 
     # Context
     language: str = "en"
@@ -85,6 +86,7 @@ def mark_playing(
     status.is_playing = True
     status.is_paused = False
     status.stopped = False
+    status.sequence_done = False
     status.mode = mode
     status.language = language
     if context is not None:
@@ -103,6 +105,7 @@ def mark_stopped() -> None:
     status.is_paused = False
     status.stopped = True
     status.cancel_requested = False
+    status.sequence_done = True
     status.phase = "idle"
     status.elapsed_seconds = 0.0
     status.duration_seconds = 0.0

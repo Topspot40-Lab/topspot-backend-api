@@ -33,6 +33,7 @@ from backend.state.playback_state import (
     status,
     update_phase,
     mark_playing,
+    mark_stopped,
 )
 
 logger = logging.getLogger(__name__)
@@ -639,6 +640,8 @@ async def play_track_with_skip(
             ),
         )
 
+        # ✅ FINALIZE the sequence
+        mark_stopped()
         return False
 
     except asyncio.CancelledError:
