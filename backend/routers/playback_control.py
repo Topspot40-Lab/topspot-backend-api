@@ -34,7 +34,8 @@ sequence_lock = asyncio.Lock()
 
 # Try loading skip_event if available
 try:
-    from backend.state import skip_event  # type: ignore
+    from backend.state.skip import skip_event
+
 except Exception:
     skip_event = None
 
@@ -50,12 +51,16 @@ router = APIRouter(
 current_task: asyncio.Task | None = None
 
 async def _run_sequence_guarded(coro):
+    logger.warning("🔥 Sequence START")
     try:
         await coro
+        logger.warning("✅ Sequence END")
     except asyncio.CancelledError:
+        logger.warning("🛑 Sequence CANCELLED")
         raise
     except Exception:
         logger.exception("🔥 Playback sequence crashed")
+
 
 
 
@@ -205,13 +210,18 @@ async def play_track(payload: dict):
 
     else:
         return {"ok": False, "error": "Unknown playback context type"}
+    # Cancel anything already running (keeps behavior sane)
 
-    await start_new_sequence(coro)
+    await cancel_current_sequence()
+    reset_for_single_track()
+
+    # ✅ Run single-step inline so Spotify actually starts
+    await _run_sequence_guarded(coro)
 
     return {
         "ok": True,
         "rank": track.rank,
-        "message": "Single-step playback started via sequence engine",
+        "message": "Single-step playback ran inline (sync) via sequence engine",
     }
 
 
