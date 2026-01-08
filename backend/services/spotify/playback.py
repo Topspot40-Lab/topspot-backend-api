@@ -52,6 +52,7 @@ async def set_device_volume(volume: int, device_id: str | None = None):
     except SpotifyException as e:
         logger.warning(f"⚠️ Spotify volume set failed: {e}")
 
+
 # ──────────────────────────────────────────────────────────
 # INTERNAL async implementation
 # ──────────────────────────────────────────────────────────
@@ -63,19 +64,23 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
       3) set volume to 100% reliably
     """
     try:
-        client = get_spotify_user_client()   # ✅ FIXED (no await)
+        client = get_spotify_user_client()  # ✅ FIXED (no await)
 
         if not device_id:
             device_id = _pick_device_id(client, prefer_active=True)
+
+        devices = client.devices().get("devices", [])
+        logger.info("🎧 Spotify devices: %s", devices)
 
         if not device_id:
             logger.error("🚫 No active Spotify device found.")
             return False
 
-        # 🔑 Explicitly claim the device
-        client.transfer_playback(device_id=device_id, force_play=True)
+        # Claim the device WITHOUT forcing playback
+        client.transfer_playback(device_id=device_id, force_play=False)
         await asyncio.sleep(0.25)
 
+        # Explicitly start the track
         client.start_playback(
             device_id=device_id,
             uris=[f"spotify:track:{track_id}"]
@@ -143,6 +148,7 @@ def stop_spotify_track(*, device_id: Optional[str] = None) -> bool:
     except (ConnectionError, TimeoutError) as e:
         logger.warning("⚠️ stop_spotify_track network error: %s", e)
         return False
+
 
 # ──────────────────────────────────────────────────────────
 # SOFT STOP (Fade-Out) — with Spotify "restriction" safety patch
