@@ -85,7 +85,7 @@ async def _run_single_track(
     if voice_style == "over" and play_track and track.spotify_track_id:
         logger.info("🎧 SINGLE: over-track mode")
 
-        play_spotify_track(track.spotify_track_id)
+        await play_spotify_track(track.spotify_track_id)
         await asyncio.sleep(0.4)
 
         await play_narrations(

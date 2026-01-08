@@ -414,7 +414,9 @@ async def play_track_with_skip(
     await _respect_user_controls()
 
     logger.info("🎵 Playing Spotify track: %s — rank %s", track_name, rank)
-    if not play_spotify_track(spotify_id):
+
+    ok = await play_spotify_track(spotify_id)
+    if not ok:
         logger.warning("❌ Spotify refused playback.")
         return False
 

@@ -123,7 +123,7 @@ async def run_collection_sequence(
         # OVER MODE — track first
         # ─────────────────────────────────────────────
         if voice_style == "over" and play_track and track.spotify_track_id:
-            play_spotify_track(track.spotify_track_id)
+            await play_spotify_track(track.spotify_track_id)
 
             # narration runs inline but ducks volume
             await play_narrations(

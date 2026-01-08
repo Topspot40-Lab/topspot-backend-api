@@ -417,7 +417,7 @@ async def play_narrations(
                 )
 
                 logger.info("🎧 Starting bed track BEFORE intro narration…")
-                play_spotify_track(SPOTIFY_BED_TRACK_ID)
+                await play_spotify_track(SPOTIFY_BED_TRACK_ID)
 
                 try:
                     for bkt, key, *_ in intro_jobs:
@@ -595,7 +595,7 @@ async def play_track_with_skip(
 
         if not already_playing:
             await _ensure_volume_ok()
-            play_spotify_track(spotify_id)
+            await play_spotify_track(spotify_id)
 
         start_ts = time.time()
         heartbeat_task = asyncio.create_task(

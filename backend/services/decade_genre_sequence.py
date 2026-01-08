@@ -271,7 +271,7 @@ async def run_decade_genre_sequence(
             # ─────────── OVER TRACK MODE ───────────
             if voice_style == "over" and play_track and track.spotify_track_id:
                 await _ensure_volume_ok()
-                play_spotify_track(track.spotify_track_id)
+                await play_spotify_track(track.spotify_track_id)
                 await asyncio.sleep(0.4)
 
                 await play_narrations(

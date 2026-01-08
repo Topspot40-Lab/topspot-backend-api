@@ -106,20 +106,9 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
 # ──────────────────────────────────────────────────────────
 # PUBLIC API (LEGACY-SAFE SYNC WRAPPER)
 # ──────────────────────────────────────────────────────────
-def play_spotify_track(track_id: str, device_id: Optional[str] = None) -> bool:
-    """
-    Legacy-safe wrapper:
-    Your codebase calls play_spotify_track() WITHOUT await.
-    So this schedules the real async function on the running loop.
-    """
-    try:
-        loop = asyncio.get_running_loop()
-        loop.create_task(_play_spotify_track_async(track_id, device_id))
-        return True
-    except RuntimeError:
-        # No running loop (rare in your FastAPI flow), so run directly.
-        asyncio.run(_play_spotify_track_async(track_id, device_id))
-        return True
+async def play_spotify_track(track_id: str, device_id: Optional[str] = None) -> bool:
+    return await _play_spotify_track_async(track_id, device_id)
+
 
 
 # ──────────────────────────────────────────────────────────
