@@ -72,6 +72,10 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
             logger.error("🚫 No active Spotify device found.")
             return False
 
+        # 🔑 Explicitly claim the device
+        client.transfer_playback(device_id=device_id, force_play=True)
+        await asyncio.sleep(0.25)
+
         client.start_playback(
             device_id=device_id,
             uris=[f"spotify:track:{track_id}"]
