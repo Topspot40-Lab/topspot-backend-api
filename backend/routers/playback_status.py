@@ -1,11 +1,27 @@
 from __future__ import annotations
 
 from dataclasses import asdict
-from fastapi import APIRouter
 
 from backend.state.playback_state import status
 
+from fastapi import APIRouter
+from backend.services.spotify.spotify_auth_user import get_spotify_user_client
+
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
+
+@router.get("/devices")
+async def get_devices():
+    """
+    List available Spotify playback devices for the user.
+    """
+    sp = get_spotify_user_client()
+    data = sp.devices()
+    return {
+        "devices": data.get("devices", [])
+    }
+
+
+# router = APIRouter(prefix="/playback", tags=["Playback Status"])
 
 
 @router.get("/status")
@@ -37,3 +53,12 @@ async def get_status():
         "durationMs": duration_ms,
         "percentComplete": snap.get("percent_complete", 0.0),
     }
+
+@router.post("/transfer/{device_id}")
+async def transfer_playback(device_id: str):
+    """
+    Force Spotify playback onto a specific device.
+    """
+    sp = get_spotify_user_client()
+    sp.transfer_playback(device_id=device_id, force_play=True)
+    return {"ok": True, "device_id": device_id}
