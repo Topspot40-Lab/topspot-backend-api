@@ -15,6 +15,8 @@ from backend.routers.decade_genre_pause import router as decade_genre_pause_rout
 
 # 🔐 Spotify Auth (THIS WAS MISSING)
 from backend.routers.spotify_auth import router as spotify_auth_router
+from backend.routers.feedback import feedback_router
+
 
 
 app = FastAPI(
@@ -67,3 +69,4 @@ app.include_router(decade_genre_player_router)
 app.include_router(collections_player_router)
 app.include_router(decade_genre_pause_router)
 app.include_router(playback_control_router)
+app.include_router(feedback_router, prefix="/api")

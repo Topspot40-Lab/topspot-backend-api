@@ -7,6 +7,7 @@ from typing import Any, Optional, Literal
 Phase = Literal["idle", "intro", "detail", "artist", "track", "ended", "music"]
 Mode  = Literal["decade_genre", "collection"]
 
+
 @dataclass
 class PlaybackStatus:
     # Core flags
@@ -22,10 +23,16 @@ class PlaybackStatus:
     context: dict[str, Any] = field(default_factory=dict)
     current_rank: Optional[int] = None
 
-    # UI progress
+    # 🔵 GLOBAL show progress
     elapsed_seconds: float = 0.0
     duration_seconds: float = 0.0
     percent_complete: float = 0.0
+
+    # 🟢 TRACK progress
+    track_start_ts: float = 0.0
+    track_elapsed_seconds: float = 0.0
+    track_duration_seconds: float = 0.0
+    track_percent_complete: float = 0.0
 
     # Phase + labels
     phase: Phase = "idle"
@@ -36,15 +43,45 @@ class PlaybackStatus:
     last_action_ts: float = field(default_factory=time.time)
 
 
-# 🔴 SINGLE GLOBAL INSTANCE (this replaces `_flags`)
+# 🔴 SINGLE GLOBAL INSTANCE
 status = PlaybackStatus()
 
 
 # ─────────────────────────────────────────────
-# Helpers (small, explicit, boring = good)
+# Helpers
 # ─────────────────────────────────────────────
 def _touch() -> None:
     status.last_action_ts = time.time()
+
+
+def begin_track(track_duration_seconds: float) -> None:
+    """
+    Call this EXACTLY when a new Spotify track starts playing.
+    This arms the per-track clock.
+    """
+    status.track_start_ts = time.time()
+    status.track_elapsed_seconds = 0.0
+    status.track_duration_seconds = track_duration_seconds
+    status.track_percent_complete = 0.0
+    _touch()
+
+
+def update_track_clock() -> None:
+    """
+    Advances the per-track clock. Safe to call repeatedly.
+    """
+    if (
+        status.is_playing
+        and status.phase == "track"
+        and status.track_start_ts > 0
+    ):
+        status.track_elapsed_seconds = time.time() - status.track_start_ts
+
+        if status.track_duration_seconds > 0:
+            status.track_percent_complete = min(
+                100.0,
+                (status.track_elapsed_seconds / status.track_duration_seconds) * 100.0,
+            )
 
 
 def update_phase(phase: Phase, **kwargs) -> None:
@@ -53,9 +90,9 @@ def update_phase(phase: Phase, **kwargs) -> None:
     for k, v in kwargs.items():
         setattr(status, k, v)
 
+    # Global (show-level) progress handling
     ctx = kwargs.get("context")
     if isinstance(ctx, dict):
-        # ✅ Accept camelCase from _phase_context
         elapsed = ctx.get("elapsedSeconds")
         duration = ctx.get("durationSeconds")
 
@@ -65,7 +102,7 @@ def update_phase(phase: Phase, **kwargs) -> None:
         if duration is not None:
             status.duration_seconds = float(duration)
 
-        if status.duration_seconds and status.duration_seconds > 0:
+        if status.duration_seconds > 0:
             status.percent_complete = min(
                 100.0,
                 (status.elapsed_seconds / status.duration_seconds) * 100.0,
@@ -74,7 +111,6 @@ def update_phase(phase: Phase, **kwargs) -> None:
             status.percent_complete = 0.0
 
     _touch()
-
 
 
 def mark_playing(
@@ -107,7 +143,16 @@ def mark_stopped() -> None:
     status.cancel_requested = False
     status.sequence_done = True
     status.phase = "idle"
+
+    # Reset GLOBAL clocks
     status.elapsed_seconds = 0.0
     status.duration_seconds = 0.0
     status.percent_complete = 0.0
+
+    # Reset TRACK clocks
+    status.track_start_ts = 0.0
+    status.track_elapsed_seconds = 0.0
+    status.track_duration_seconds = 0.0
+    status.track_percent_complete = 0.0
+
     _touch()

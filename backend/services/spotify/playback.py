@@ -4,6 +4,8 @@ from typing import Optional
 
 from spotipy.exceptions import SpotifyException
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
+from backend.state.playback_state import begin_track, status
+
 
 logger = logging.getLogger(__name__)
 
@@ -57,14 +59,8 @@ async def set_device_volume(volume: int, device_id: str | None = None):
 # INTERNAL async implementation
 # ──────────────────────────────────────────────────────────
 async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = None) -> bool:
-    """
-    True async playback:
-      1) start playback
-      2) wait for Spotify Connect to "wake up"
-      3) set volume to 100% reliably
-    """
     try:
-        client = get_spotify_user_client()  # ✅ FIXED (no await)
+        client = get_spotify_user_client()
 
         if not device_id:
             device_id = _pick_device_id(client, prefer_active=True)
@@ -80,11 +76,19 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
         client.transfer_playback(device_id=device_id, force_play=False)
         await asyncio.sleep(0.25)
 
-        # Explicitly start the track
+        # 🔥 START SPOTIFY PLAYBACK
         client.start_playback(
             device_id=device_id,
             uris=[f"spotify:track:{track_id}"]
         )
+
+        # ⏱ ARM THE TRACK CLOCK HERE
+        track = client.track(track_id)  # fetch metadata
+        duration_sec = track["duration_ms"] / 1000
+
+        begin_track(track_duration_seconds=duration_sec)
+
+        logger.info(f"🎵 Track clock started: {duration_sec:.2f}s")
 
         # Spotify needs a brief pause before volume adjustment
         await asyncio.sleep(0.30)
@@ -101,6 +105,7 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
     except Exception as e:
         logger.error(f"❌ Unexpected error in _play_spotify_track_async: {e}")
         return False
+
 
 
 # ──────────────────────────────────────────────────────────
