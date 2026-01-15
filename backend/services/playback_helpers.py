@@ -25,6 +25,7 @@ from backend.state.playback_state import status, update_phase
 from backend.state.skip import skip_event
 from backend.utils.tts_diagnostics import normalize_for_filename
 from backend.services.audio_urls import resolve_audio_ref
+from backend.services.audio_urls import is_remote_audio
 
 logger = logging.getLogger(__name__)
 
@@ -245,7 +246,6 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
 # ─────────────────────────────────────────────
 
 async def safe_play(kind: str, bucket: str, key: str) -> bool:
-    print("🚨 SAFE_PLAY CALLED:", kind, bucket, key)
     """
     Play a narration MP3 from Supabase while continuously updating playback_state.
 
@@ -253,6 +253,23 @@ async def safe_play(kind: str, bucket: str, key: str) -> bool:
       True  -> skip detected
       False -> finished normally (or not played)
     """
+    print("🚨 SAFE_PLAY CALLED:", kind, bucket, key)
+
+    # 🌍 Remote mode: do not attempt local audio playback
+    if is_remote_audio():
+        logger.info(
+            "🌍 Remote audio mode active. Skipping server playback for %s (%s/%s). Frontend will stream audio.",
+            kind, bucket, key
+        )
+        update_phase(
+            kind.lower(),
+            is_playing=False,
+            is_paused=False,
+            stopped=False,
+            context={"bucket": bucket, "key": key, "mode": "remote"},
+        )
+        return False
+
     if not (bucket and key):
         logger.warning("🚫 %s MP3 not attempted (empty bucket/key)", kind)
         return False
