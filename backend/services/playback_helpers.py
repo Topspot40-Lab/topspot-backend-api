@@ -24,6 +24,7 @@ from backend.services.play_policy import compute_play_seconds, sleep_with_skip
 from backend.state.playback_state import status, update_phase
 from backend.state.skip import skip_event
 from backend.utils.tts_diagnostics import normalize_for_filename
+from backend.services.audio_urls import resolve_audio_ref
 
 logger = logging.getLogger(__name__)
 
@@ -244,6 +245,7 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
 # ─────────────────────────────────────────────
 
 async def safe_play(kind: str, bucket: str, key: str) -> bool:
+    print("🚨 SAFE_PLAY CALLED:", kind, bucket, key)
     """
     Play a narration MP3 from Supabase while continuously updating playback_state.
 
@@ -257,21 +259,19 @@ async def safe_play(kind: str, bucket: str, key: str) -> bool:
 
     phase = (kind or "").strip().lower()  # "intro" | "detail" | "artist" | ...
 
-    url = f"{SUPABASE_URL}/storage/v1/object/{bucket}/{key}"
-    headers = {"Authorization": f"Bearer {SUPABASE_SERVICE_ROLE_KEY}"}
+    ref = resolve_audio_ref(bucket, key)
+    logger.info("🎧 MP3 REF: %s", ref)
 
-    # Optional HEAD probe (don’t fail hard if it errors)
-    try:
-        async with httpx.AsyncClient(timeout=10) as client:
-            head = await client.head(url, headers=headers)
-        if head.status_code != 200:
-            logger.warning(
-                "❌ %s MP3 missing: %s/%s (status=%s)",
-                phase, bucket, key, head.status_code
-            )
-            return False
-    except Exception:
-        pass
+    # Optional HEAD probe (only for remote URLs)
+    if ref.startswith("http"):
+        try:
+            async with httpx.AsyncClient(timeout=10) as client:
+                head = await client.head(ref)
+            if head.status_code != 200:
+                logger.warning("❌ MP3 missing: %s (status=%s)", ref, head.status_code)
+                return False
+        except Exception:
+            pass
 
     gain_db = _gain_for_kind(phase)
     last_err: object | None = None
@@ -283,10 +283,15 @@ async def safe_play(kind: str, bucket: str, key: str) -> bool:
                 _update_state_for_play(phase, bucket, key)
 
                 # Download MP3 bytes
-                async with httpx.AsyncClient(timeout=_SUPA_FETCH_TIMEOUT) as client:
-                    resp = await client.get(url, headers=headers)
-                    resp.raise_for_status()
-                    b = await resp.aread()
+                if ref.startswith("http"):
+                    async with httpx.AsyncClient(timeout=_SUPA_FETCH_TIMEOUT) as client:
+                        resp = await client.get(ref)
+                        resp.raise_for_status()
+                        b = await resp.aread()
+                else:
+                    # Local filesystem playback
+                    with open(ref, "rb") as f:
+                        b = f.read()
 
                 if len(b) < 1024 or not _looks_like_mp3(b):
                     raise RuntimeError("Bad MP3 download")
