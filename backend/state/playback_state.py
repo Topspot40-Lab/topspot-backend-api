@@ -87,28 +87,40 @@ def update_track_clock() -> None:
 def update_phase(phase: Phase, **kwargs) -> None:
     status.phase = phase
 
+    # Apply direct attributes first
     for k, v in kwargs.items():
         setattr(status, k, v)
 
-    # Global (show-level) progress handling
+    # 🎯 Global (show-level) progress handling
+    elapsed = None
+    duration = None
+
+    # 1️⃣ Prefer explicit kwargs
+    if "elapsed_seconds" in kwargs:
+        elapsed = kwargs["elapsed_seconds"]
+
+    if "duration_seconds" in kwargs:
+        duration = kwargs["duration_seconds"]
+
+    # 2️⃣ Fallback to context if present
     ctx = kwargs.get("context")
     if isinstance(ctx, dict):
-        elapsed = ctx.get("elapsedSeconds")
-        duration = ctx.get("durationSeconds")
+        elapsed = ctx.get("elapsedSeconds", elapsed)
+        duration = ctx.get("durationSeconds", duration)
 
-        if elapsed is not None:
-            status.elapsed_seconds = float(elapsed)
+    if elapsed is not None:
+        status.elapsed_seconds = float(elapsed)
 
-        if duration is not None:
-            status.duration_seconds = float(duration)
+    if duration is not None:
+        status.duration_seconds = float(duration)
 
-        if status.duration_seconds > 0:
-            status.percent_complete = min(
-                100.0,
-                (status.elapsed_seconds / status.duration_seconds) * 100.0,
-            )
-        else:
-            status.percent_complete = 0.0
+    if status.duration_seconds > 0:
+        status.percent_complete = min(
+            100.0,
+            (status.elapsed_seconds / status.duration_seconds) * 100.0,
+        )
+    else:
+        status.percent_complete = 0.0
 
     _touch()
 

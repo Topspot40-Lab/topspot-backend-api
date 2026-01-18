@@ -97,12 +97,17 @@ def _phase_context(
     return ctx
 
 
-async def _run_voice_clip_with_skip(kind: str, bucket: str, key: str) -> bool:
-    """
-    Run safe_play(kind, bucket, key) cooperatively so we can honor pause/skip.
-    Returns True if skip detected, else False.
-    """
-    play_task = asyncio.create_task(safe_play(kind, bucket, key))
+async def _run_voice_clip_with_skip(
+    kind: str,
+    bucket: str,
+    key: str,
+    *,
+    voice_style: str
+) -> bool:
+    play_task = asyncio.create_task(
+        safe_play(kind, bucket, key, voice_style=voice_style)
+    )
+
 
     try:
         while not play_task.done():
@@ -345,7 +350,10 @@ async def play_narrations(
                                 logger.info("⏭️ Skip hit — skipping remaining intro narration.")
                                 break
                             logger.info("🎙️ Intro narration (over): %s/%s", bkt, key)
-                            skipped = await _run_voice_clip_with_skip("intro", bkt, key)
+                            skipped = await _run_voice_clip_with_skip(
+                                "intro", bkt, key, voice_style=voice_style
+                            )
+
                             if skipped:
                                 return
 
@@ -366,7 +374,7 @@ async def play_narrations(
                             ),
                         )
                         logger.info("🎙️ Detail narration (over): %s/%s", detail_bucket, detail_key)
-                        skipped = await _run_voice_clip_with_skip("detail", detail_bucket, detail_key)
+                        skipped = await _run_voice_clip_with_skip("detail", detail_bucket, detail_key, voice_style=voice_style)
                         if skipped:
                             return
 
@@ -387,7 +395,7 @@ async def play_narrations(
                             ),
                         )
                         logger.info("🎙️ Artist narration (over): %s/%s", artist_bucket, artist_key)
-                        skipped = await _run_voice_clip_with_skip("artist", artist_bucket, artist_key)
+                        skipped = await _run_voice_clip_with_skip("artist", artist_bucket, artist_key, voice_style=voice_style)
                         if skipped:
                             return
 
@@ -426,7 +434,7 @@ async def play_narrations(
                             logger.info("⏭️ Skip hit — skipping remaining intro.")
                             break
                         logger.info("🎙️ Intro narration: %s/%s", bkt, key)
-                        skipped = await _run_voice_clip_with_skip("intro", bkt, key)
+                        skipped = await _run_voice_clip_with_skip("intro", bkt, key, voice_style=voice_style)
                         if skipped:
                             break
                 finally:
@@ -451,7 +459,7 @@ async def play_narrations(
                     ),
                 )
                 logger.info("🎙️ Detail narration: %s/%s", detail_bucket, detail_key)
-                skipped = await _run_voice_clip_with_skip("detail", detail_bucket, detail_key)
+                skipped = await _run_voice_clip_with_skip("detail", detail_bucket, detail_key, voice_style=voice_style)
                 if skipped:
                     return
 
@@ -472,7 +480,7 @@ async def play_narrations(
                     ),
                 )
                 logger.info("🎙️ Artist narration: %s/%s", artist_bucket, artist_key)
-                skipped = await _run_voice_clip_with_skip("artist", artist_bucket, artist_key)
+                skipped = await _run_voice_clip_with_skip("artist", artist_bucket, artist_key, voice_style=voice_style)
                 if skipped:
                     return
 

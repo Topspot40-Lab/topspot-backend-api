@@ -15,8 +15,6 @@ from mutagen.mp3 import MP3
 from backend.config import (
     AUDIO_PREFIXES,
     BUCKETS,
-    SUPABASE_SERVICE_ROLE_KEY,
-    SUPABASE_URL,
 )
 from backend.services.supabase_playback import play_mp3
 from backend.services.spotify.playback import play_spotify_track, stop_spotify_playback
@@ -25,7 +23,6 @@ from backend.state.playback_state import status, update_phase
 from backend.state.skip import skip_event
 from backend.utils.tts_diagnostics import normalize_for_filename
 from backend.services.audio_urls import resolve_audio_ref
-from backend.services.audio_urls import is_remote_audio
 
 logger = logging.getLogger(__name__)
 
@@ -245,29 +242,66 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
 # safe_play — MP3 playback + real-time progress updates
 # ─────────────────────────────────────────────
 
-async def safe_play(kind: str, bucket: str, key: str) -> bool:
-    """
-    Play a narration MP3 from Supabase while continuously updating playback_state.
+async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = None) -> bool:
 
-    Returns:
-      True  -> skip detected
-      False -> finished normally (or not played)
-    """
     print("🚨 SAFE_PLAY CALLED:", kind, bucket, key)
 
-    # 🌍 Remote mode: do not attempt local audio playback
-    if is_remote_audio():
-        logger.info(
-            "🌍 Remote audio mode active. Skipping server playback for %s (%s/%s). Frontend will stream audio.",
-            kind, bucket, key
-        )
+    logger.warning("🔍 AUDIO_MODE env = %s", os.getenv("AUDIO_MODE"))
+    logger.warning("🔍 SUPABASE_URL env = %s", os.getenv("SUPABASE_URL"))
+
+    # Resolve first, always
+    ref = resolve_audio_ref(bucket, key)
+    logger.warning("🔍 RESOLVED AUDIO REF = %s", ref)
+
+    # Decide remote vs local by the resolved ref
+    remote = ref.startswith("http")
+    logger.info("🌍 remote(ref.startswith('http')) = %s", remote)
+
+    if remote:
+        phase = kind.lower()
+
+        # 🔥 Fetch MP3 bytes so we can compute duration (needed for before-mode timeline)
+        b: bytes = b""
+        duration = 0.0
+        try:
+            async with httpx.AsyncClient(timeout=_SUPA_FETCH_TIMEOUT) as client:
+                resp = await client.get(ref)
+                resp.raise_for_status()
+                b = await resp.aread()
+
+            if len(b) >= 1024 and _looks_like_mp3(b):
+                duration = float(mp3_duration_seconds(b) or 0.0)
+            else:
+                logger.warning("⚠️ Remote audio did not look like MP3: %s", ref)
+
+        except Exception as e:
+            logger.warning("⚠️ Could not fetch remote MP3 to compute duration: %s", e)
+
+        # ✅ Publish phase WITH duration so frontend sees durationMs != 0
         update_phase(
-            kind.lower(),
-            is_playing=False,
+            phase,
+            is_playing=True,
             is_paused=False,
             stopped=False,
-            context={"bucket": bucket, "key": key, "mode": "remote"},
+            elapsed_seconds=0.0,
+            duration_seconds=duration,
+            percent_complete=0.0,
+            context={
+                "bucket": bucket,
+                "key": key,
+                "mode": "remote",
+                "audio_url": ref,
+                "voice_style": voice_style or "before",
+            },
         )
+
+        # ✅ BEFORE mode: backend waits until frontend advances phase away from intro/detail/artist
+        if (voice_style or "before") == "before":
+            logger.info("⏸ Waiting for frontend narration to finish (before mode)")
+            while status.phase == phase and not status.stopped:
+                await asyncio.sleep(0.1)
+            logger.info("▶ Narration finished, continuing sequence")
+
         return False
 
     if not (bucket and key):
@@ -275,20 +309,6 @@ async def safe_play(kind: str, bucket: str, key: str) -> bool:
         return False
 
     phase = (kind or "").strip().lower()  # "intro" | "detail" | "artist" | ...
-
-    ref = resolve_audio_ref(bucket, key)
-    logger.info("🎧 MP3 REF: %s", ref)
-
-    # Optional HEAD probe (only for remote URLs)
-    if ref.startswith("http"):
-        try:
-            async with httpx.AsyncClient(timeout=10) as client:
-                head = await client.head(ref)
-            if head.status_code != 200:
-                logger.warning("❌ MP3 missing: %s (status=%s)", ref, head.status_code)
-                return False
-        except Exception:
-            pass
 
     gain_db = _gain_for_kind(phase)
     last_err: object | None = None

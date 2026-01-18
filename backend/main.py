@@ -17,6 +17,14 @@ from backend.routers.decade_genre_pause import router as decade_genre_pause_rout
 from backend.routers.spotify_auth import router as spotify_auth_router
 from backend.routers.feedback import feedback_router
 
+import logging
+
+class IgnorePlaybackStatus(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        # uvicorn.access puts the whole access line in record.getMessage()
+        return "/playback/status" not in record.getMessage()
+
+logging.getLogger("uvicorn.access").addFilter(IgnorePlaybackStatus())
 
 
 app = FastAPI(

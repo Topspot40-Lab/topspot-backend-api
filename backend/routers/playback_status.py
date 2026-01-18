@@ -57,12 +57,13 @@ async def get_status():
         "artistName": snap.get("artist_name"),
         "currentRank": snap.get("current_rank"),
 
-        # Unified clock for frontend
         "elapsedMs": elapsed_ms,
         "durationMs": duration_ms,
         "progress": progress,
-    }
 
+        # 🔥 this is what feeds your poller
+        "context": snap.get("context"),
+    }
 
 
 @router.post("/transfer/{device_id}")
