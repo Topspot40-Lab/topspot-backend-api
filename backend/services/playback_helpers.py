@@ -298,8 +298,18 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
         # ✅ BEFORE mode: backend waits until frontend advances phase away from intro/detail/artist
         if (voice_style or "before") == "before":
             logger.info("⏸ Waiting for frontend narration to finish (before mode)")
-            while status.phase == phase and not status.stopped:
-                await asyncio.sleep(0.1)
+
+            # ✅ Simulate progress so /playback/status elapsedMs increases during remote narration
+            hb = asyncio.create_task(_run_progress_heartbeat(phase, duration))
+
+            try:
+                while status.phase == phase and not status.stopped:
+                    await asyncio.sleep(0.1)
+            finally:
+                hb.cancel()
+                with contextlib.suppress(asyncio.CancelledError, Exception):
+                    await hb
+
             logger.info("▶ Narration finished, continuing sequence")
 
         return False

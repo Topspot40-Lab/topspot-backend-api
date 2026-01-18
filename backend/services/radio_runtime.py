@@ -648,9 +648,10 @@ async def play_track_with_skip(
             ),
         )
 
-        # ✅ FINALIZE the sequence
-        mark_stopped()
+        # Do NOT mark_stopped() here.
+        # The sequence runner (the thing looping ranks) should decide when playback is finished.
         return False
+
 
     except asyncio.CancelledError:
         logger.info("🛑 Track playback cancelled.")

@@ -74,3 +74,16 @@ async def transfer_playback(device_id: str):
     sp = get_spotify_user_client()
     sp.transfer_playback(device_id=device_id, force_play=True)
     return {"ok": True, "device_id": device_id}
+
+@router.post("/narration-finished")
+async def narration_finished():
+    """
+    Called by frontend when narration audio ends in BEFORE mode.
+    This releases safe_play() so Spotify can start.
+    """
+    from backend.state.playback_state import status, update_phase
+
+    if status.phase in ("intro", "detail", "artist", "collections_intro"):
+        update_phase("music", is_playing=False)
+
+    return {"ok": True, "phase": status.phase}
