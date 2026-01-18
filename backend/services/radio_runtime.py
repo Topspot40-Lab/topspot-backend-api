@@ -33,8 +33,24 @@ from backend.state.playback_state import (
     status,
     update_phase,
     mark_playing,
-    mark_stopped,
 )
+
+_play_task: asyncio.Task | None = None
+
+def start_playback_sequence(coro) -> None:
+    """
+    Register the main playback coroutine so skip_to_next / skip_to_prev can cancel it.
+    """
+    global _play_task
+
+    # Cancel any previous running sequence
+    if _play_task and not _play_task.done():
+        logger.info("🔁 Cancelling old playback task")
+        _play_task.cancel()
+
+    _play_task = asyncio.create_task(coro)
+    logger.info("▶️ Playback sequence started")
+
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +58,8 @@ logger = logging.getLogger(__name__)
 _narration_lock = asyncio.Lock()
 
 logger.warning("✅ LOADED radio_runtime.py version=2025-12-25-FIX-01")
+
+
 
 # ─────────────────────────────────────────────
 # Safety guard: ensure Spotify volume is sane
@@ -668,3 +686,28 @@ async def play_track_with_skip(
             heartbeat_task.cancel()
             with contextlib.suppress(asyncio.CancelledError, Exception):
                 await heartbeat_task
+
+
+
+def skip_to_next() -> None:
+    """
+    Called by /playback/next
+    Cancels current playback task; the sequence runner should handle advancing.
+    """
+    global _play_task
+    logger.info("⏭ skip_to_next requested")
+
+    if _play_task and not _play_task.done():
+        _play_task.cancel()
+
+
+def skip_to_prev() -> None:
+    """
+    Called by /playback/prev
+    Cancels current playback task; the sequence runner should handle reversing.
+    """
+    global _play_task
+    logger.info("⏮ skip_to_prev requested")
+
+    if _play_task and not _play_task.done():
+        _play_task.cancel()

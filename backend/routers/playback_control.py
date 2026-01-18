@@ -61,6 +61,24 @@ async def _run_sequence_guarded(coro):
     except Exception:
         logger.exception("🔥 Playback sequence crashed")
 
+def cancel_for_skip():
+    """
+    Cancel current playback immediately for Next/Prev.
+    This is a lighter version of cancel_current_sequence.
+    """
+    global current_task
+    logger.warning("🛑 cancel_for_skip CALLED by Next/Prev")
+
+    if current_task:
+        logger.warning("⏭ Cancelling current playback for skip/next/prev")
+        try:
+            current_task.cancel()
+        except Exception:
+            pass
+        current_task = None
+
+    flags.cancel_requested = True
+    flags.is_playing = False
 
 
 
@@ -216,7 +234,7 @@ async def play_track(payload: dict):
     reset_for_single_track()
 
     # ✅ Run single-step inline so Spotify actually starts
-    await _run_sequence_guarded(coro)
+    await start_new_sequence(coro)
 
     return {
         "ok": True,
