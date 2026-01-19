@@ -5,6 +5,7 @@ import asyncio
 import logging
 from dataclasses import asdict
 from typing import Literal, Optional
+import contextlib
 
 from fastapi import APIRouter
 from fastapi import HTTPException
@@ -12,13 +13,11 @@ from fastapi import HTTPException
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from backend.services.spotify.playback import set_device_volume
 
-
 # ✅ KEEP data models, but not the pipeline
 from backend.services.playback_engine import (
     TrackRef,
     PlaybackSelection,
 )
-
 
 # ✅ shared playback state (NO circular import)
 from backend.state.playback_flags import (
@@ -39,7 +38,6 @@ try:
 except Exception:
     skip_event = None
 
-
 router = APIRouter(
     prefix="/playback",
     tags=["Playback"],
@@ -49,6 +47,7 @@ router = APIRouter(
 # GLOBAL ASYNC TASK REFERENCE
 # ─────────────────────────────────────────────
 current_task: asyncio.Task | None = None
+
 
 async def _run_sequence_guarded(coro):
     logger.warning("🔥 Sequence START")
@@ -61,25 +60,21 @@ async def _run_sequence_guarded(coro):
     except Exception:
         logger.exception("🔥 Playback sequence crashed")
 
-def cancel_for_skip():
-    """
-    Cancel current playback immediately for Next/Prev.
-    This is a lighter version of cancel_current_sequence.
-    """
+
+def cancel_for_skip() -> None:
+    """Cancel current playback immediately for Next/Prev without poisoning global flags."""
     global current_task
     logger.warning("🛑 cancel_for_skip CALLED by Next/Prev")
 
     if current_task:
         logger.warning("⏭ Cancelling current playback for skip/next/prev")
-        try:
+        with contextlib.suppress(Exception):
             current_task.cancel()
-        except Exception:
-            pass
         current_task = None
 
-    flags.cancel_requested = True
-    flags.is_playing = False
-
+    if skip_event is not None:
+        with contextlib.suppress(Exception):
+            skip_event.set()
 
 
 # ─────────────────────────────────────────────
@@ -151,6 +146,7 @@ async def start_new_sequence(coro):
 @router.post("/play-track", summary="Play exactly one track via sequence engine")
 async def play_track(payload: dict):
     logger.info("🎯 /playback/play-track HIT")
+    print("🔥🔥🔥 PLAY_TRACK ENDPOINT ENTERED 🔥🔥🔥")
 
     track = TrackRef(
         track_id=payload["track"]["track_id"],
@@ -230,9 +226,6 @@ async def play_track(payload: dict):
         return {"ok": False, "error": "Unknown playback context type"}
     # Cancel anything already running (keeps behavior sane)
 
-    await cancel_current_sequence()
-    reset_for_single_track()
-
     # ✅ Run single-step inline so Spotify actually starts
     await start_new_sequence(coro)
 
@@ -248,12 +241,11 @@ def flags_status():
     return asdict(flags)
 
 
-
 @router.post("/start", summary="Mark playback as started")
 def start(
-    language: Literal["en", "es", "ptbr", "pt-BR"] = "en",
-    mode: Optional[str] = None,
-    current_rank: Optional[int] = None,
+        language: Literal["en", "es", "ptbr", "pt-BR"] = "en",
+        mode: Optional[str] = None,
+        current_rank: Optional[int] = None,
 ):
     flags.is_playing = True
     flags.is_paused = False
@@ -323,6 +315,7 @@ def skip():
         "status": asdict(flags),
     }
 
+
 @router.post("/warmup", summary="Prepare Spotify playback environment")
 async def warmup_playback():
     """
@@ -377,7 +370,6 @@ async def warmup_playback():
             logger.info("🔊 Spotify volume set to 100%%")
         except Exception as exc:
             logger.warning("⚠️ Failed to set volume during warmup: %s", exc)
-
 
         return {
             "ready": True,

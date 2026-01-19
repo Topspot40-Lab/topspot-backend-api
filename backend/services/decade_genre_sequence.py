@@ -30,6 +30,8 @@ from backend.state.playback_state import (
 )
 
 from backend.config.volume import PLAY_FULL_TRACK
+from backend.state.skip import skip_event
+
 
 logger = logging.getLogger(__name__)
 
@@ -214,19 +216,39 @@ async def run_decade_genre_sequence(
 
         rows = order_rows_for_mode(rows, mode)
 
-        # ─────────── MAIN LOOP ───────────
-        for track, artist, tr_rank, decade_obj, genre_obj in rows:
+        # ─────────── MAIN LOOP (jumpable) ───────────
+
+        # Build rank lookup so we can jump instantly
+        rank_map = {
+            tr_rank.ranking: (track, artist, tr_rank, decade_obj, genre_obj)
+            for track, artist, tr_rank, decade_obj, genre_obj in rows
+        }
+
+        rank = start_rank
+
+        while rank <= end_rank:
 
             if _is_cancelled_or_stopped():
-                logger.info(
-                    "🛑 Sequence cancelled/stopped before rank #%02d",
-                    tr_rank.ranking,
-                )
+                logger.info("🛑 Sequence cancelled/stopped before rank #%02d", rank)
                 break
+
+            # Handle Next / Prev jump
+            if status.requested_rank is not None:
+                logger.info("🔁 Jump requested → %d", status.requested_rank)
+                rank = status.requested_rank
+                status.requested_rank = None
+                skip_event.clear()
+                continue
 
             await _wait_if_paused()
 
-            rank = tr_rank.ranking
+            if rank not in rank_map:
+                logger.warning("⚠️ Rank %d not found, skipping", rank)
+                rank += 1
+                continue
+
+            track, artist, tr_rank, decade_obj, genre_obj = rank_map[rank]
+
             flags.current_rank = rank
 
             logger.info(
@@ -301,9 +323,9 @@ async def run_decade_genre_sequence(
                     full_flag=PLAY_FULL_TRACK,
                     already_playing=True,
                 )
-
                 if skipped:
-                    continue
+                    # rank advance still happens at bottom of loop
+                    pass
 
             # ─────────── BEFORE TRACK MODE ───────────
             else:
@@ -335,12 +357,15 @@ async def run_decade_genre_sequence(
                         full_flag=PLAY_FULL_TRACK,
                         already_playing=False,
                     )
-
                     if skipped:
-                        continue
+                        pass
+
 
             await _wait_if_paused()
             await asyncio.sleep(0.4)
+
+            # Normal forward advance
+            rank += 1
 
         logger.info("🎉 Sequence finished: %s / %s", decade, genre)
 

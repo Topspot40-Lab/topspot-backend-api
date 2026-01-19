@@ -88,17 +88,3 @@ async def narration_finished():
 
     return {"ok": True, "phase": status.phase}
 
-
-@router.post("/next")
-async def next_track():
-    from backend.routers.playback_control import cancel_for_skip
-    cancel_for_skip()
-    return {"ok": True, "action": "next"}
-
-
-@router.post("/prev")
-async def prev_track():
-    from backend.routers.playback_control import cancel_for_skip
-    cancel_for_skip()
-    return {"ok": True, "action": "prev"}
-

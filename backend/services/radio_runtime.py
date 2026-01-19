@@ -689,25 +689,22 @@ async def play_track_with_skip(
 
 
 
+from backend.state.playback_state import status
+
 def skip_to_next() -> None:
     """
-    Called by /playback/next
-    Cancels current playback task; the sequence runner should handle advancing.
+    Signals the currently running narration/track loop to skip.
+    Does NOT start new sequences. The active sequence runner (if any)
+    will advance to the next rank on its own.
     """
-    global _play_task
     logger.info("⏭ skip_to_next requested")
-
-    if _play_task and not _play_task.done():
-        _play_task.cancel()
+    skip_event.set()
 
 
 def skip_to_prev() -> None:
     """
-    Called by /playback/prev
-    Cancels current playback task; the sequence runner should handle reversing.
+    Signals skip. True 'prev' requires the sequence runner to support jumping.
+    For now, treat as skip (same behavior as next).
     """
-    global _play_task
     logger.info("⏮ skip_to_prev requested")
-
-    if _play_task and not _play_task.done():
-        _play_task.cancel()
+    skip_event.set()

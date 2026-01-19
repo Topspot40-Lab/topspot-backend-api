@@ -7,6 +7,8 @@ from typing import Any, Optional, Literal
 Phase = Literal["idle", "intro", "detail", "artist", "track", "ended", "music"]
 Mode  = Literal["decade_genre", "collection"]
 
+# REMOVE this module-level var (it does NOT attach to status)
+# requested_rank: int | None = None
 
 @dataclass
 class PlaybackStatus:
@@ -16,6 +18,9 @@ class PlaybackStatus:
     stopped: bool = True
     cancel_requested: bool = False
     sequence_done: bool = True
+
+    # ✅ ADD this (attaches to status instance)
+    requested_rank: int | None = None
 
     # Context
     language: str = "en"
@@ -41,6 +46,7 @@ class PlaybackStatus:
 
     # Timing
     last_action_ts: float = field(default_factory=time.time)
+
 
 
 # 🔴 SINGLE GLOBAL INSTANCE
