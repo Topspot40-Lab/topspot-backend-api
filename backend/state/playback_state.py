@@ -19,6 +19,8 @@ class PlaybackStatus:
     cancel_requested: bool = False
     sequence_done: bool = True
 
+    bed_playing: bool = False
+
     # ✅ ADD this (attaches to status instance)
     requested_rank: int | None = None
 

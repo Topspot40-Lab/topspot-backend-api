@@ -162,12 +162,53 @@ def _looks_like_mp3(b: bytes) -> bool:
     )
 
 
-def mp3_duration_seconds(b: bytes) -> float:
-    """Return duration of MP3 bytes in seconds."""
+from typing import Union
+import httpx
+from io import BytesIO
+from mutagen.mp3 import MP3
+import logging
+
+logger = logging.getLogger(__name__)
+
+def mp3_duration_seconds(src: Union[str, bytes]) -> float:
+    """
+    Return duration of an MP3 in seconds.
+    Accepts:
+      - raw bytes
+      - local file path
+      - remote URL (http/https)
+    """
     try:
-        audio = MP3(BytesIO(b))
-        return float(audio.info.length)
-    except Exception:
+        # Case 1: Already bytes
+        if isinstance(src, bytes):
+            audio = MP3(BytesIO(src))
+            secs = float(audio.info.length)
+            logger.info(f"🎵 MP3 duration from BYTES: {secs:.2f}s")
+            return secs
+
+        # Case 2: Remote URL
+        if isinstance(src, str) and src.startswith("http"):
+            logger.info(f"🌐 Fetching MP3 for duration: {src}")
+            r = httpx.get(src, timeout=20.0)
+            r.raise_for_status()
+            audio = MP3(BytesIO(r.content))
+            secs = float(audio.info.length)
+            logger.info(f"🎵 MP3 duration from URL: {secs:.2f}s")
+            return secs
+
+        # Case 3: Local file path
+        if isinstance(src, str):
+            logger.info(f"📁 Loading MP3 for duration: {src}")
+            audio = MP3(src)
+            secs = float(audio.info.length)
+            logger.info(f"🎵 MP3 duration from FILE: {secs:.2f}s")
+            return secs
+
+        logger.error(f"❌ Unsupported MP3 source type: {type(src)}")
+        return 0.0
+
+    except Exception as e:
+        logger.exception(f"❌ Failed to read MP3 duration: {src}")
         return 0.0
 
 
@@ -243,83 +284,17 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
 # ─────────────────────────────────────────────
 
 async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = None) -> bool:
-
     print("🚨 SAFE_PLAY CALLED:", kind, bucket, key)
-
-    logger.warning("🔍 AUDIO_MODE env = %s", os.getenv("AUDIO_MODE"))
-    logger.warning("🔍 SUPABASE_URL env = %s", os.getenv("SUPABASE_URL"))
 
     # Resolve first, always
     ref = resolve_audio_ref(bucket, key)
     logger.warning("🔍 RESOLVED AUDIO REF = %s", ref)
 
-    # Decide remote vs local by the resolved ref
-    remote = ref.startswith("http")
-    logger.info("🌍 remote(ref.startswith('http')) = %s", remote)
-
-    if remote:
-        phase = kind.lower()
-
-        # 🔥 Fetch MP3 bytes so we can compute duration (needed for before-mode timeline)
-        b: bytes = b""
-        duration = 0.0
-        try:
-            async with httpx.AsyncClient(timeout=_SUPA_FETCH_TIMEOUT) as client:
-                resp = await client.get(ref)
-                resp.raise_for_status()
-                b = await resp.aread()
-
-            if len(b) >= 1024 and _looks_like_mp3(b):
-                duration = float(mp3_duration_seconds(b) or 0.0)
-            else:
-                logger.warning("⚠️ Remote audio did not look like MP3: %s", ref)
-
-        except Exception as e:
-            logger.warning("⚠️ Could not fetch remote MP3 to compute duration: %s", e)
-
-        # ✅ Publish phase WITH duration so frontend sees durationMs != 0
-        update_phase(
-            phase,
-            is_playing=True,
-            is_paused=False,
-            stopped=False,
-            elapsed_seconds=0.0,
-            duration_seconds=duration,
-            percent_complete=0.0,
-            context={
-                "bucket": bucket,
-                "key": key,
-                "mode": "remote",
-                "audio_url": ref,
-                "voice_style": voice_style or "before",
-            },
-        )
-
-        # ✅ BEFORE mode: backend waits until frontend advances phase away from intro/detail/artist
-        if (voice_style or "before") == "before":
-            logger.info("⏸ Waiting for frontend narration to finish (before mode)")
-
-            # ✅ Simulate progress so /playback/status elapsedMs increases during remote narration
-            hb = asyncio.create_task(_run_progress_heartbeat(phase, duration))
-
-            try:
-                while status.phase == phase and not status.stopped:
-                    await asyncio.sleep(0.1)
-            finally:
-                hb.cancel()
-                with contextlib.suppress(asyncio.CancelledError, Exception):
-                    await hb
-
-            logger.info("▶ Narration finished, continuing sequence")
-
+    if not ref:
+        logger.warning("🚫 %s MP3 not attempted (empty ref)", kind)
         return False
 
-    if not (bucket and key):
-        logger.warning("🚫 %s MP3 not attempted (empty bucket/key)", kind)
-        return False
-
-    phase = (kind or "").strip().lower()  # "intro" | "detail" | "artist" | ...
-
+    phase = (kind or "").strip().lower()  # "intro" | "detail" | "artist"
     gain_db = _gain_for_kind(phase)
     last_err: object | None = None
 
@@ -329,23 +304,29 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
                 await _respect_user_controls()
                 _update_state_for_play(phase, bucket, key)
 
-                # Download MP3 bytes
+                # ─────────────────────────────────────────────
+                # Download MP3 bytes (remote or local unified)
+                # ─────────────────────────────────────────────
                 if ref.startswith("http"):
                     async with httpx.AsyncClient(timeout=_SUPA_FETCH_TIMEOUT) as client:
                         resp = await client.get(ref)
                         resp.raise_for_status()
                         b = await resp.aread()
                 else:
-                    # Local filesystem playback
                     with open(ref, "rb") as f:
                         b = f.read()
 
                 if len(b) < 1024 or not _looks_like_mp3(b):
                     raise RuntimeError("Bad MP3 download")
 
-                duration = float(mp3_duration_seconds(b) or 0.0)
+                # ─────────────────────────────────────────────
+                # Duration is always computed from the real source
+                # ─────────────────────────────────────────────
+                duration = float(mp3_duration_seconds(ref) or 0.0)
 
-                # ✅ Initialize state immediately so status endpoint never shows zeros
+                logger.info("🎚️ Narration duration: %.2fs", duration)
+
+                # Initialize state so status endpoint never shows zero timing
                 update_phase(
                     phase,
                     is_playing=True,
@@ -354,16 +335,21 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
                     elapsed_seconds=0.0,
                     duration_seconds=duration,
                     percent_complete=0.0,
-                    context={"bucket": bucket, "key": key},
+                    context={
+                        "bucket": bucket,
+                        "key": key,
+                        "audio_url": ref,
+                        "voice_style": voice_style or "before",
+                    },
                 )
 
                 await _respect_user_controls()
 
-                # ✅ Single authority: narration timing lives here
+                # Single authority: narration timing lives here
                 heartbeat_task = asyncio.create_task(_run_progress_heartbeat(phase, duration))
 
                 try:
-                    # Run actual playback in worker thread
+                    # Playback in worker thread
                     if abs(gain_db) > 0.05:
                         play_task = asyncio.create_task(
                             asyncio.to_thread(_play_bytes_with_gain_sync, b, gain_db)
@@ -392,7 +378,7 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
                         last_err = f"play rc={rc}"
                         raise RuntimeError(str(last_err))
 
-                    # ✅ Final state
+                    # Final state
                     update_phase(
                         phase,
                         elapsed_seconds=duration,
@@ -410,6 +396,7 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
             except asyncio.CancelledError:
                 logger.info("🛑 %s playback cancelled by user", phase)
                 return False
+
             except Exception as e:
                 last_err = e
                 logger.warning(
@@ -425,6 +412,7 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
         phase, _SUPA_FETCH_RETRIES, bucket, key, last_err
     )
     return False
+
 
 
 # ─────────────────────────────────────────────
