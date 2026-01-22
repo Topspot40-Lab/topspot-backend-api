@@ -47,6 +47,45 @@ def _extract_bucket_key(job):
     key = getattr(job, "key", None) or getattr(job, "object_path", None)
     return bucket, key
 
+from backend.state.skip import skip_event
+
+async def publish_narration_phase(
+    phase: Literal["intro", "detail", "artist"],
+    *,
+    track,
+    artist,
+    rank,
+    collection_slug,
+    bucket,
+    key,
+    voice_style,
+):
+    audio_url = resolve_audio_ref(bucket, key)
+
+    update_phase(
+        phase,
+        track_name=track.track_name,
+        artist_name=artist.artist_name,
+        current_rank=int(rank),
+        context={
+            "mode": "collection",
+            "collection_slug": collection_slug,
+            "bucket": bucket,
+            "key": key,
+            "audio_url": audio_url,
+            "source": "remote" if is_remote_audio() else "local",
+            "voice_style": voice_style,
+        },
+    )
+
+    logger.info("🎙 Published %s frame: %s", phase.upper(), audio_url)
+
+    if voice_style == "before":
+        logger.info("⏸ Waiting for narration to finish (%s)", phase)
+        skip_event.clear()
+        await skip_event.wait()
+
+
 
 # ─────────────────────────────────────────────
 # COLLECTION PLAYBACK SEQUENCE (PUBLISHER ONLY)
@@ -124,103 +163,59 @@ async def run_collection_sequence(
         tr_rows=[],
     )
 
-    # ─────────────────────────────────────────────
-    # INTRO PHASE (publish URL for frontend)
-    # ─────────────────────────────────────────────
+
+    # ───────── INTRO ─────────
     if play_intro:
         intro_jobs = collection_intro_jobs(
             lang=tts_language,
             collection_slug=collection_slug,
             rank=rank,
         )
-    else:
-        intro_jobs = []
+        if intro_jobs:
+            bucket, key = _extract_bucket_key(intro_jobs[0])
+            if bucket and key:
+                await publish_narration_phase(
+                    "intro",
+                    track=track,
+                    artist=artist,
+                    rank=rank,
+                    collection_slug=collection_slug,
+                    bucket=bucket,
+                    key=key,
+                    voice_style=voice_style,
+                )
 
-    if play_intro and intro_jobs:
-        j0 = intro_jobs[0]
-        bucket, key = _extract_bucket_key(j0)
-
-        if bucket and key:
-            audio_url = resolve_audio_ref(bucket, key)
-
-            update_phase(
-                "intro",
-                track_name=track.track_name,
-                artist_name=artist.artist_name,
-                current_rank=int(rank),
-                context={
-                    "mode": "collection",
-                    "collection_slug": collection_slug,
-                    "bucket": bucket,
-                    "key": key,
-                    "audio_url": audio_url,
-                    "source": "remote" if is_remote_audio() else "local",
-                    "voice_style": voice_style,
-                },
-            )
-
-            logger.info("🎙 Published INTRO frame: %s", audio_url)
-
-            # wait for frontend to finish playing narration
-            from backend.state.skip import skip_event
-
-            if voice_style == "before":
-                logger.info("⏸ Waiting for narration to finish (before mode)")
-                skip_event.clear()
-                await skip_event.wait()
-
-        else:
-            logger.warning("⚠️ Intro job malformed: %r", j0)
-
-    # ─────────────────────────────────────────────
-    # OPTIONAL: publish detail/artist URLs too (same pattern)
-    # (kept here but off unless flags are true)
-    # ─────────────────────────────────────────────
     detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
         lang=tts_language,
         track=track,
         artist=artist,
     )
 
+    # ───────── DETAIL ─────────
     if play_detail and detail_bucket and detail_key:
-        detail_url = resolve_audio_ref(detail_bucket, detail_key)
-        update_phase(
+        await publish_narration_phase(
             "detail",
-            track_name=track.track_name,
-            artist_name=artist.artist_name,
-            current_rank=int(rank),
-            context={
-                "mode": "collection",
-                "collection_slug": collection_slug,
-                "bucket": detail_bucket,
-                "key": detail_key,
-                "audio_url": detail_url,
-                "source": "remote" if is_remote_audio() else "local",
-                "voice_style": voice_style,
-            },
+            track=track,
+            artist=artist,
+            rank=rank,
+            collection_slug=collection_slug,
+            bucket=detail_bucket,
+            key=detail_key,
+            voice_style=voice_style,
         )
-        logger.info("🧾 Published DETAIL frame: %s", detail_url)
-        await asyncio.sleep(0.15)
 
+    # ───────── ARTIST ─────────
     if play_artist_description and artist_bucket and artist_key:
-        artist_url = resolve_audio_ref(artist_bucket, artist_key)
-        update_phase(
+        await publish_narration_phase(
             "artist",
-            track_name=track.track_name,
-            artist_name=artist.artist_name,
-            current_rank=int(rank),
-            context={
-                "mode": "collection",
-                "collection_slug": collection_slug,
-                "bucket": artist_bucket,
-                "key": artist_key,
-                "audio_url": artist_url,
-                "source": "remote" if is_remote_audio() else "local",
-                "voice_style": voice_style,
-            },
+            track=track,
+            artist=artist,
+            rank=rank,
+            collection_slug=collection_slug,
+            bucket=artist_bucket,
+            key=artist_key,
+            voice_style=voice_style,
         )
-        logger.info("👤 Published ARTIST frame: %s", artist_url)
-        await asyncio.sleep(0.15)
 
     logger.warning(
         "DEBUG BEFORE TRACK: play_track=%s spotify_id=%s",

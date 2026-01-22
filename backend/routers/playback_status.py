@@ -21,8 +21,6 @@ from backend.config import SPOTIFY_BED_TRACK_ID
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
 logger = logging.getLogger(__name__)
 
-_last_bed_phase: str | None = None
-
 
 def update_track_clock():
     if status.is_playing and status.phase == "track":
@@ -52,7 +50,6 @@ async def get_status():
     voice_style = ctx.get("voice_style")
 
     # 🔥 Bed track control: ONLY for narration phases in BEFORE mode
-    global _last_bed_phase
 
     if phase in ("intro", "detail", "artist") and voice_style == "before":
         if not getattr(status, "bed_playing", False):
@@ -106,7 +103,6 @@ async def transfer_playback(device_id: str):
 async def narration_finished():
     from backend.state.playback_state import status
     from backend.state.skip import skip_event
-    global _last_bed_phase
 
     ctx = status.context or {}
     voice_style = ctx.get("voice_style")
@@ -124,9 +120,9 @@ async def narration_finished():
         except Exception as e:
             logger.warning("⚠️ Failed to stop bed track: %s", e)
 
-        status.bed_playing = False
-        _last_bed_phase = None   # 🔥 reset latch
+        status.bed_playing = False   # ✅ this is now your only latch
 
     skip_event.set()
     return {"ok": True}
+
 
