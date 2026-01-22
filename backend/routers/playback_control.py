@@ -1,6 +1,11 @@
 # backend/routers/playback_control.py
 from __future__ import annotations
 
+from pydantic import BaseModel
+from backend.services.spotify.playback import play_spotify_track
+from backend.state.playback_state import update_phase
+
+
 import asyncio
 import logging
 from dataclasses import asdict
@@ -42,6 +47,32 @@ router = APIRouter(
     prefix="/playback",
     tags=["Playback"],
 )
+
+class PlaySpotifyRequest(BaseModel):
+    spotify_track_id: str
+
+
+@router.post("/play-spotify", summary="Start Spotify playback for a spotify_track_id")
+async def play_spotify(req: PlaySpotifyRequest):
+    logger.info("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
+
+    # Start Spotify playback
+    await play_spotify_track(req.spotify_track_id)
+
+    # Optional: reinforce phase for UI sync
+    update_phase(
+        "track",
+        context={
+            "spotify_track_id": req.spotify_track_id,
+            "started_by": "frontend",
+        }
+    )
+
+    return {
+        "ok": True,
+        "spotify_track_id": req.spotify_track_id,
+    }
+
 
 # ─────────────────────────────────────────────
 # GLOBAL ASYNC TASK REFERENCE

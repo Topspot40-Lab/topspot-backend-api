@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 import time
+import logging
 
 from backend.state.playback_state import status
 
@@ -9,6 +10,7 @@ from fastapi import APIRouter
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
+logger = logging.getLogger(__name__)
 
 def update_track_clock():
     if status.is_playing and status.phase == "track":
@@ -26,9 +28,6 @@ async def get_devices():
     return {
         "devices": data.get("devices", [])
     }
-
-
-# router = APIRouter(prefix="/playback", tags=["Playback Status"])
 
 
 @router.get("/status")
@@ -79,12 +78,13 @@ async def transfer_playback(device_id: str):
 async def narration_finished():
     """
     Called by frontend when narration audio ends in BEFORE mode.
-    This releases safe_play() so Spotify can start.
+    This releases the backend sequence so Spotify can start.
     """
-    from backend.state.playback_state import status, update_phase
+    from backend.state.playback_state import status
+    from backend.state.skip import skip_event
 
-    if status.phase in ("intro", "detail", "artist", "collections_intro"):
-        update_phase("music", is_playing=False)
+    logger.info("🔔 Narration finished signal received (phase=%s)", status.phase)
+
+    skip_event.set()
 
     return {"ok": True, "phase": status.phase}
-
