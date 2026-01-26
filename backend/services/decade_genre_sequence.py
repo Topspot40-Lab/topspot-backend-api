@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Literal
+import random
 import time
-
+from typing import Literal
 
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.playback_ordering import order_rows_for_mode
-from backend.services.spotify.playback import play_spotify_track
 
 # Legacy flags (still used by runtime helpers)
 from backend.state.playback_flags import flags
@@ -17,23 +16,86 @@ from backend.services.radio_runtime import (
     log_header_and_texts,
     build_intro_jobs,
     narration_keys_for,
-    play_narrations,
-    play_track_with_skip,
-    _ensure_volume_ok,
 )
+
+from backend.services.audio_urls import resolve_audio_ref, is_remote_audio
 
 from backend.state.playback_state import (
     status,
     mark_playing,
-    mark_stopped,
     update_phase,
 )
 
-from backend.config.volume import PLAY_FULL_TRACK
 from backend.state.skip import skip_event
 
-
 logger = logging.getLogger(__name__)
+
+
+def _extract_bucket_key(job):
+    """
+    Supports:
+      - tuple/list: (bucket, key, ...)
+      - dict: {"bucket": "...", "key": "..."} (or object_path)
+      - object: .bucket / .key / .object_path
+    """
+    if job is None:
+        return None, None
+
+    if isinstance(job, (tuple, list)) and len(job) >= 2:
+        return job[0], job[1]
+
+    if isinstance(job, dict):
+        return job.get("bucket"), job.get("key") or job.get("object_path")
+
+    bucket = getattr(job, "bucket", None)
+    key = getattr(job, "key", None) or getattr(job, "object_path", None)
+    return bucket, key
+
+
+async def publish_narration_phase(
+    phase: Literal["intro", "detail", "artist"],
+    *,
+    track,
+    artist,
+    rank: int,
+    decade: str,
+    genre: str,
+    bucket: str,
+    key: str,
+    voice_style: Literal["before", "over"],
+):
+    audio_url = resolve_audio_ref(bucket, key)
+
+    update_phase(
+        phase,
+        track_name=track.track_name,
+        artist_name=artist.artist_name,
+        current_rank=int(rank),
+        context={
+            "lang": getattr(status, "language", None),
+            "mode": "decade_genre",
+            "decade": decade,
+            "genre": genre,
+            "rank": int(rank),
+            "track_name": track.track_name,
+            "artist_name": artist.artist_name,
+            "bucket": bucket,
+            "key": key,
+            "audio_url": audio_url,
+            "source": "remote" if is_remote_audio() else "local",
+            "voice_style": voice_style,
+        },
+    )
+
+    logger.info("🎙 Published %s frame: %s", phase.upper(), audio_url)
+
+    # Same behavior as collections:
+    # - "before": backend waits until frontend signals narration finished
+    # - "over": do not wait (narration overlaps track)
+    if voice_style == "before":
+        logger.info("⏸ Waiting for narration to finish (%s)", phase)
+        skip_event.clear()
+        await skip_event.wait()
 
 
 # ─────────────────────────────────────────────
@@ -69,6 +131,9 @@ def _is_cancelled_or_stopped() -> bool:
 
 # ─────────────────────────────────────────────
 # MAIN SEQUENCE ENGINE (DECADE / GENRE)
+# Publisher-style (like collections):
+# Publishes intro/detail/artist/track frames for ONE rank, then returns.
+# Frontend controls actual playback and Next/Prev navigation.
 # ─────────────────────────────────────────────
 async def run_decade_genre_sequence(
     *,
@@ -84,19 +149,8 @@ async def run_decade_genre_sequence(
     play_track: bool,
     voice_style: Literal["before", "over"] = "before",
 ) -> None:
-
-    """
-    Core decade/genre playback pipeline.
-
-    - Loads ranked tracks
-    - Orders by playback mode
-    - Plays narration + track per entry
-    - Controlled by playback_state (primary)
-    - playback_flags bridged temporarily (Option A)
-    """
-
     logger.info(
-        "🎧 Starting sequence: %s/%s %d-%d mode=%s lang=%s voice=%s",
+        "🎧 Starting sequence (publisher): %s/%s %d-%d mode=%s lang=%s voice=%s",
         decade,
         genre,
         start_rank,
@@ -109,6 +163,7 @@ async def run_decade_genre_sequence(
     # ─────────── RESET PLAYBACK STATE ───────────
     status.stopped = False
     status.cancel_requested = False
+    status.language = tts_language
 
     # 🔁 TEMP: Reset legacy flags (critical)
     flags.is_playing = True
@@ -116,11 +171,6 @@ async def run_decade_genre_sequence(
     flags.cancel_requested = False
     flags.current_rank = start_rank
     flags.mode = "decade_genre"
-
-    logger.info("🧭 STEP 0: pre mark_playing (status=%s flags.cancel=%s)", status,
-                getattr(flags, "cancel_requested", None))
-
-    logger.info("🧭 STEP 1: calling mark_playing()")
 
     mark_playing(
         mode="decade_genre",
@@ -147,12 +197,10 @@ async def run_decade_genre_sequence(
         },
     )
 
-    logger.info("🧭 STEP 2: mark_playing() returned")
-
     try:
-        # ─────────── LOAD TRACK ROWS (TRIPWIRES + TIMEOUT) ───────────
+        # ─────────── LOAD TRACK ROWS ───────────
         logger.info(
-            "🧨 TRIPWIRE A: calling load_decade_genre_rows(decade=%r, genre=%r, start=%d, end=%d)",
+            "🧨 Loading rows decade=%r genre=%r start=%d end=%d",
             decade,
             genre,
             start_rank,
@@ -161,7 +209,6 @@ async def run_decade_genre_sequence(
 
         t0 = time.time()
         try:
-            # load_decade_genre_rows is SYNC; run it off the event loop
             rows = await asyncio.wait_for(
                 asyncio.to_thread(
                     load_decade_genre_rows,
@@ -173,214 +220,143 @@ async def run_decade_genre_sequence(
                 timeout=30.0,
             )
         except asyncio.TimeoutError:
-            logger.error(
-                "⏱️ TRIPWIRE A TIMEOUT: load_decade_genre_rows hung > 5s. "
-                "This is almost certainly a DB/session/pool issue or a blocked query."
-            )
+            logger.error("⏱️ load_decade_genre_rows timeout (>30s)")
             return
 
-        logger.info(
-            "🧨 TRIPWIRE B: load_decade_genre_rows returned %d rows in %.2fs",
-            len(rows),
-            time.time() - t0,
-        )
-
-
-        logger.info(
-            "📦 Loaded %d rows for %s/%s ranks %d-%d",
-            len(rows),
-            decade,
-            genre,
-            start_rank,
-            end_rank,
-        )
+        logger.info("📦 Loaded %d rows in %.2fs", len(rows), time.time() - t0)
 
         if not rows:
-            logger.error(
-                "❌ NO TRACK ROWS — decade=%s genre=%s start=%d end=%d",
-                decade,
-                genre,
-                start_rank,
-                end_rank,
-            )
+            logger.error("❌ NO TRACK ROWS — decade=%s genre=%s", decade, genre)
             return
 
-        # Diagnostic truth log (keep this)
-        logger.debug(
-            "🧪 cancel state → status(stopped=%s cancel=%s) flags(stopped=%s cancel=%s)",
-            status.stopped,
-            status.cancel_requested,
-            flags.stopped,
-            flags.cancel_requested,
-        )
+        if _is_cancelled_or_stopped():
+            logger.info("🛑 Cancelled/stopped before publish")
+            return
 
+        await _wait_if_paused()
+
+        # Order rows in the same way the old engine did
         rows = order_rows_for_mode(rows, mode)
 
-        # ─────────── MAIN LOOP (jumpable) ───────────
+        # Pick ONE row to publish (publisher behavior)
+        # - count_up: first row in ordered list
+        # - count_down: first row after ordering (ordering already reversed)
+        # - random: shuffle already handled by order_rows_for_mode; if not, do it here
+        if mode == "random":
+            random.shuffle(rows)
 
-        # Build rank lookup so we can jump instantly
-        rank_map = {
-            tr_rank.ranking: (track, artist, tr_rank, decade_obj, genre_obj)
-            for track, artist, tr_rank, decade_obj, genre_obj in rows
-        }
+        track, artist, tr_rank, decade_obj, genre_obj = rows[0]
+        rank = int(tr_rank.ranking)
+        flags.current_rank = rank
 
-        rank = start_rank
+        logger.info("▶ Publish Rank #%02d: %s — %s", rank, track.track_name, artist.artist_name)
 
-        while rank <= end_rank:
+        update_phase(
+            "prelude",
+            is_playing=True,
+            current_rank=rank,
+            track_name=track.track_name,
+            artist_name=artist.artist_name,
+            context={
+                "lang": tts_language,
+                "mode": "decade_genre",
+                "rank": rank,
+                "track_name": track.track_name,
+                "artist_name": artist.artist_name,
+                "decade": decade,
+                "genre": genre,
+                "voice_style": voice_style,
+            },
+        )
 
-            if _is_cancelled_or_stopped():
-                logger.info("🛑 Sequence cancelled/stopped before rank #%02d", rank)
-                break
+        # ─────────── NARRATION KEYS ───────────
+        log_header_and_texts(
+            lang=tts_language,
+            track=track,
+            artist=artist,
+            tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
+        )
 
-            # Handle Next / Prev jump
-            if status.requested_rank is not None:
-                logger.info("🔁 Jump requested → %d", status.requested_rank)
-                rank = status.requested_rank
-                status.requested_rank = None
-                skip_event.clear()
-                continue
+        intro_jobs = build_intro_jobs(
+            lang=tts_language,
+            tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
+        )
 
-            await _wait_if_paused()
+        detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
+            lang=tts_language,
+            track=track,
+            artist=artist,
+        )
 
-            if rank not in rank_map:
-                logger.warning("⚠️ Rank %d not found, skipping", rank)
-                rank += 1
-                continue
+        # ───────── INTRO (publish) ─────────
+        if play_intro and intro_jobs:
+            ib, ik = _extract_bucket_key(intro_jobs[0])
+            if ib and ik:
+                await publish_narration_phase(
+                    "intro",
+                    track=track,
+                    artist=artist,
+                    rank=rank,
+                    decade=decade,
+                    genre=genre,
+                    bucket=ib,
+                    key=ik,
+                    voice_style=voice_style,
+                )
 
-            track, artist, tr_rank, decade_obj, genre_obj = rank_map[rank]
-
-            flags.current_rank = rank
-
-            logger.info(
-                "▶ Rank #%02d: %s — %s",
-                rank,
-                track.track_name,
-                artist.artist_name,
+        # ───────── DETAIL (publish) ─────────
+        if play_detail and detail_bucket and detail_key:
+            await publish_narration_phase(
+                "detail",
+                track=track,
+                artist=artist,
+                rank=rank,
+                decade=decade,
+                genre=genre,
+                bucket=detail_bucket,
+                key=detail_key,
+                voice_style=voice_style,
             )
 
+        # ───────── ARTIST (publish) ─────────
+        if play_artist_description and artist_bucket and artist_key:
+            await publish_narration_phase(
+                "artist",
+                track=track,
+                artist=artist,
+                rank=rank,
+                decade=decade,
+                genre=genre,
+                bucket=artist_bucket,
+                key=artist_key,
+                voice_style=voice_style,
+            )
+
+        # ───────── TRACK (publish spotify id) ─────────
+        if play_track and track.spotify_track_id:
             update_phase(
-                "prelude",
-                is_playing=True,
+                "track",
+                track_name=track.track_name,
+                artist_name=artist.artist_name,
+                current_rank=rank,
                 context={
-                    "rank": rank,
-                    "track_name": track.track_name,
-                    "artist_name": artist.artist_name,
+                    "mode": "spotify",
                     "decade": decade,
                     "genre": genre,
-                    "voice_style": voice_style,
+                    "spotify_track_id": track.spotify_track_id,
                 },
             )
+            logger.info("🎯 PUBLISHED track frame rank=%s spotify=%s", rank, track.spotify_track_id)
 
-            # ─────────── NARRATION PREP ───────────
-            log_header_and_texts(
-                lang=tts_language,
-                track=track,
-                artist=artist,
-                tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
-            )
-
-            intro_jobs = build_intro_jobs(
-                lang=tts_language,
-                tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
-            )
-
-            detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
-                lang=tts_language,
-                track=track,
-                artist=artist,
-            )
-
-            # ─────────── OVER TRACK MODE ───────────
-            if voice_style == "over" and play_track and track.spotify_track_id:
-                await _ensure_volume_ok()
-                await play_spotify_track(track.spotify_track_id)
-                await asyncio.sleep(0.4)
-
-                await play_narrations(
-                    play_intro=play_intro,
-                    play_detail=play_detail,
-                    play_artist=play_artist_description,
-                    intro_jobs=intro_jobs,
-                    detail_bucket=detail_bucket,
-                    detail_key=detail_key,
-                    artist_bucket=artist_bucket,
-                    artist_key=artist_key,
-                    lang=tts_language,
-                    mode="decade_genre",
-                    rank=rank,
-                    track_name=track.track_name,
-                    artist_name=artist.artist_name,
-                    voice_style="over",
-                )
-
-                skipped = await play_track_with_skip(
-                    track=track,
-                    lang=tts_language,
-                    mode="decade_genre",
-                    rank=rank,
-                    track_name=track.track_name,
-                    artist_name=artist.artist_name,
-                    full_flag=PLAY_FULL_TRACK,
-                    already_playing=True,
-                )
-                if skipped:
-                    # rank advance still happens at bottom of loop
-                    pass
-
-            # ─────────── BEFORE TRACK MODE ───────────
-            else:
-                await play_narrations(
-                    play_intro=play_intro,
-                    play_detail=play_detail,
-                    play_artist=play_artist_description,
-                    intro_jobs=intro_jobs,
-                    detail_bucket=detail_bucket,
-                    detail_key=detail_key,
-                    artist_bucket=artist_bucket,
-                    artist_key=artist_key,
-                    lang=tts_language,
-                    mode="decade_genre",
-                    rank=rank,
-                    track_name=track.track_name,
-                    artist_name=artist.artist_name,
-                    voice_style="before",
-                )
-
-                if play_track:
-                    skipped = await play_track_with_skip(
-                        track=track,
-                        lang=tts_language,
-                        mode="decade_genre",
-                        rank=rank,
-                        track_name=track.track_name,
-                        artist_name=artist.artist_name,
-                        full_flag=PLAY_FULL_TRACK,
-                        already_playing=False,
-                    )
-                    if skipped:
-                        pass
-
-
-            await _wait_if_paused()
-            await asyncio.sleep(0.4)
-
-            # Normal forward advance
-            rank += 1
-
-        logger.info("🎉 Sequence finished: %s / %s", decade, genre)
+        logger.info("✅ Decade/genre publish finished (single-rank).")
 
     except asyncio.CancelledError:
         logger.info("⛔ Sequence task cancelled")
         raise
-
     except Exception:
         logger.exception("⚠️ Sequence error for %s/%s", decade, genre)
-
     finally:
-        logger.debug("🧹 Sequence task ended (NOT marking stopped)")
-
-        # 🔁 TEMP: reset legacy flags
+        # reset legacy flags (keep your existing behavior)
         flags.is_playing = False
         flags.stopped = True
-
-        logger.debug("🧹 Playback state reset for %s/%s", decade, genre)
+        logger.debug("🧹 Playback flags reset for %s/%s", decade, genre)

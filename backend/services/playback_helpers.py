@@ -26,6 +26,12 @@ from backend.services.audio_urls import resolve_audio_ref
 
 logger = logging.getLogger(__name__)
 
+# Temporary: frontend owns narration playback
+FRONTEND_OWNS_INTRO = True
+FRONTEND_OWNS_DETAIL = False
+FRONTEND_OWNS_ARTIST = False
+
+
 # ─────────────────────────────────────────────
 # Playback User-Control Helpers
 # ─────────────────────────────────────────────
@@ -285,6 +291,39 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
 
 async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = None) -> bool:
     print("🚨 SAFE_PLAY CALLED:", kind, bucket, key)
+
+    owns = (
+            (kind == "intro" and FRONTEND_OWNS_INTRO)
+            or (kind == "detail" and FRONTEND_OWNS_DETAIL)
+            or (kind == "artist" and FRONTEND_OWNS_ARTIST)
+    )
+
+    if owns:
+        logger.info("🧭 FRONTEND OWNS %s — announcing only, not playing backend audio", kind)
+
+        ref = resolve_audio_ref(bucket, key)
+
+        update_phase(
+            kind,
+            is_playing=True,
+            is_paused=False,
+            stopped=False,
+            context={
+                "bucket": bucket,
+                "key": key,
+                "audio_url": ref,
+            },
+        )
+
+        # Wait until frontend says narration finished
+        while True:
+            await asyncio.sleep(0.1)
+            if status.stopped:
+                return False
+            if getattr(status, "narration_finished", False):
+                logger.info("🎤 Frontend reported %s narration finished", kind)
+                status.narration_finished = False
+                return False
 
     # Resolve first, always
     ref = resolve_audio_ref(bucket, key)
