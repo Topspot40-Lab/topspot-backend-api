@@ -57,7 +57,8 @@ logger = logging.getLogger(__name__)
 # Single lock so intros/details/artist narrations never overlap
 _narration_lock = asyncio.Lock()
 
-logger.warning("✅ LOADED radio_runtime.py version=2025-12-25-FIX-01")
+logger.warning("🧨 RADIO RUNTIME LOADED – TRACK HEARTBEAT FIX ACTIVE 🧨")
+
 
 
 
@@ -551,7 +552,32 @@ async def _track_heartbeat(
             )
 
             if elapsed >= total_secs or (skip_event is not None and skip_event.is_set()):
-                break
+                logger.info("🏁 Track heartbeat complete")
+
+                status.elapsed_seconds = float(total_secs)
+                status.duration_seconds = float(total_secs)
+                status.percent_complete = 1.0 if total_secs else 0.0
+
+                status.is_playing = False
+                status.is_paused = False
+                status.stopped = True
+
+                update_phase(
+                    "idle",
+                    current_rank=rank,
+                    track_name=track_name,
+                    artist_name=artist_name,
+                    context=_phase_context(
+                        lang=lang,
+                        mode=mode,
+                        rank=rank,
+                        track_name=track_name,
+                        artist_name=artist_name,
+                        elapsed_seconds=total_secs,
+                        duration_seconds=total_secs,
+                    ),
+                )
+                return
 
             await asyncio.sleep(0.25)
     except asyncio.CancelledError:
@@ -650,21 +676,6 @@ async def play_track_with_skip(
                 await stop_spotify_playback(fade_out_seconds=1.0)
 
         logger.info("✅ Track finished normally.")
-        update_phase(
-            "track_finished",
-            current_rank=rank_val,
-            track_name=track_label,
-            artist_name=artist_label,
-            context=_phase_context(
-                lang=lang,
-                mode=mode,
-                rank=rank_val,
-                track_name=track_label,
-                artist_name=artist_label,
-                elapsed_seconds=play_secs,
-                duration_seconds=play_secs,
-            ),
-        )
 
         # Do NOT mark_stopped() here.
         # The sequence runner (the thing looping ranks) should decide when playback is finished.
