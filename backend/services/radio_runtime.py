@@ -8,7 +8,7 @@ from typing import List, Tuple, Optional
 import time
 
 from sqlmodel import Session as SQLSession
-from backend.services.radio.heartbeat import track_heartbeat
+
 
 from backend.database import engine
 from backend.services.localization import get_localized_texts
@@ -35,6 +35,7 @@ from backend.state.playback_state import (
     update_phase,
     mark_playing,
 )
+from backend.services.radio.heartbeat import track_heartbeat
 
 _play_task: asyncio.Task | None = None
 
@@ -626,9 +627,6 @@ async def play_track_with_skip(
             with contextlib.suppress(asyncio.CancelledError, Exception):
                 await heartbeat_task
 
-
-
-from backend.state.playback_state import status
 
 def skip_to_next() -> None:
     """
