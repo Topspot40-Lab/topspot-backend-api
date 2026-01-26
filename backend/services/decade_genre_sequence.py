@@ -26,7 +26,8 @@ from backend.state.playback_state import (
     update_phase,
 )
 
-from backend.state.skip import skip_event
+from backend.state.narration import narration_done_event
+
 
 logger = logging.getLogger(__name__)
 
@@ -93,9 +94,8 @@ async def publish_narration_phase(
     # - "before": backend waits until frontend signals narration finished
     # - "over": do not wait (narration overlaps track)
     if voice_style == "before":
-        logger.info("⏸ Waiting for narration to finish (%s)", phase)
-        skip_event.clear()
-        await skip_event.wait()
+        narration_done_event.clear()
+        await narration_done_event.wait()
 
 
 # ─────────────────────────────────────────────
@@ -164,6 +164,10 @@ async def run_decade_genre_sequence(
     status.stopped = False
     status.cancel_requested = False
     status.language = tts_language
+
+    # 🔥 HARD RESET PHASE STATE
+    status.phase = None
+    status.bed_playing = False
 
     # 🔁 TEMP: Reset legacy flags (critical)
     flags.is_playing = True

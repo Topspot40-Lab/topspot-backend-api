@@ -412,3 +412,30 @@ async def warmup_playback():
     except Exception as exc:
         logger.exception("🔥 Playback warmup failed")
         raise HTTPException(status_code=500, detail=str(exc))
+
+# backend/routers/playback_control.py (or playback_status.py)
+
+@router.post("/reset")
+async def reset_playback_state():
+    from backend.state.playback_state import status
+    from backend.state.playback_flags import flags
+
+    status.is_playing = False
+    status.is_paused = False
+    status.stopped = True
+    status.phase = None
+    status.track_name = None
+    status.artist_name = None
+    status.current_rank = None
+    status.context = {}
+    status.bed_playing = False
+    status.started_by = None
+    status.track_start_ts = None
+    status.track_elapsed_seconds = 0
+    status.track_duration_seconds = 0
+
+    flags.is_playing = False
+    flags.stopped = True
+    flags.cancel_requested = False
+
+    return {"ok": True}

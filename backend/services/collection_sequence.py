@@ -23,6 +23,8 @@ from backend.services.radio_runtime import (
     collection_intro_jobs,
     narration_keys_for,
 )
+from backend.state.narration import narration_done_event
+
 
 logger = logging.getLogger(__name__)
 
@@ -46,8 +48,6 @@ def _extract_bucket_key(job):
     bucket = getattr(job, "bucket", None)
     key = getattr(job, "key", None) or getattr(job, "object_path", None)
     return bucket, key
-
-from backend.state.skip import skip_event
 
 async def publish_narration_phase(
     phase: Literal["intro", "detail", "artist"],
@@ -81,10 +81,8 @@ async def publish_narration_phase(
     logger.info("🎙 Published %s frame: %s", phase.upper(), audio_url)
 
     if voice_style == "before":
-        logger.info("⏸ Waiting for narration to finish (%s)", phase)
-        skip_event.clear()
-        await skip_event.wait()
-
+        narration_done_event.clear()
+        await narration_done_event.wait()
 
 
 # ─────────────────────────────────────────────

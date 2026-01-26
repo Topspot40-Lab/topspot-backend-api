@@ -16,6 +16,7 @@ from backend.services.spotify.playback import (
 
 
 from backend.config import SPOTIFY_BED_TRACK_ID
+from backend.state.narration import narration_done_event
 
 
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
@@ -101,8 +102,7 @@ async def transfer_playback(device_id: str):
 
 @router.post("/narration-finished")
 async def narration_finished():
-    from backend.state.playback_state import status
-    from backend.state.skip import skip_event
+
 
     ctx = status.context or {}
     voice_style = ctx.get("voice_style")
@@ -113,6 +113,7 @@ async def narration_finished():
         voice_style
     )
 
+    # Stop bed track only for BEFORE narration
     if voice_style == "before" and getattr(status, "bed_playing", False):
         logger.info("🔉 Stopping narration bed track (BEFORE mode)")
         try:
@@ -120,9 +121,12 @@ async def narration_finished():
         except Exception as e:
             logger.warning("⚠️ Failed to stop bed track: %s", e)
 
-        status.bed_playing = False   # ✅ this is now your only latch
+        status.bed_playing = False
 
-    skip_event.set()
+    # ✅ Signal narration completion (NOT skip)
+    narration_done_event.set()
+
     return {"ok": True}
+
 
 
