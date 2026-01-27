@@ -253,6 +253,8 @@ async def run_decade_genre_sequence(
         rank = int(tr_rank.ranking)
         flags.current_rank = rank
 
+        logger.info(f"📻 Playing rank {rank}")
+
         logger.info("▶ Publish Rank #%02d: %s — %s", rank, track.track_name, artist.artist_name)
 
         update_phase(
