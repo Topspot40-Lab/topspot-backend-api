@@ -25,9 +25,10 @@ logger = logging.getLogger(__name__)
 
 def update_track_clock():
     if status.is_playing and status.phase == "track":
-        status.track_elapsed_seconds = time.time() - status.track_start_ts
-
-
+        if status.track_start_ts is None:
+            status.track_elapsed_seconds = 0
+        else:
+            status.track_elapsed_seconds = time.time() - status.track_start_ts
 
 @router.get("/devices")
 async def get_devices():
