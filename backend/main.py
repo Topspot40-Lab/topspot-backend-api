@@ -59,13 +59,14 @@ app.add_middleware(
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "https://topspot40.com",
+        "https://www.topspot40.com",
         "https://topspot40-frontend-app.netlify.app",
-
     ],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # 🧪 Basic health + catalog
 app.include_router(health_router)

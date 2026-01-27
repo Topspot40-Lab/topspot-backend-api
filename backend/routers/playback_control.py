@@ -419,7 +419,12 @@ async def warmup_playback():
 async def reset_playback_state():
     from backend.state.playback_state import status
     from backend.state.playback_flags import flags
+    from backend.routers.playback_control import cancel_current_sequence
 
+    # Kill any running sequence first
+    await cancel_current_sequence()
+
+    # Reset public playback state
     status.is_playing = False
     status.is_paused = False
     status.stopped = True
@@ -434,6 +439,7 @@ async def reset_playback_state():
     status.track_elapsed_seconds = 0
     status.track_duration_seconds = 0
 
+    # Reset engine flags
     flags.is_playing = False
     flags.stopped = True
     flags.cancel_requested = False
