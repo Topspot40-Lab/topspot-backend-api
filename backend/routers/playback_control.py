@@ -211,16 +211,12 @@ async def play_track(payload: dict):
     if context["type"] == "decade_genre":
         from backend.services.decade_genre_sequence import (
             run_decade_genre_sequence,
-            run_decade_genre_continuous_sequence,
+            run_decade_genre_continuous_sequence
         )
 
-        print("🔥 About to build decade_genre sequence")
-
-        # this flag must already exist in your UI payload
         is_continuous = payload["selection"].get("continuous", False)
-
-        start_rank = track.rank
-        end_rank = context.get("end_rank", 40)  # or whatever your UI uses
+        logger.warning("🔎 selection payload = %s", payload.get("selection"))
+        logger.warning("🔎 is_continuous parsed = %s", is_continuous)
 
         if is_continuous:
             logger.warning("📻 RADIO MODE ENABLED (continuous)")
@@ -228,9 +224,9 @@ async def play_track(payload: dict):
             coro = run_decade_genre_continuous_sequence(
                 decade=context["decade"],
                 genre=context["genre"],
-                start_rank=start_rank,
-                end_rank=end_rank,
-                mode=context.get("order", "count_up"),
+                start_rank=track.rank,
+                end_rank=40,
+                mode="count_up",
                 tts_language=selection.language,
                 play_intro=True,
                 play_detail="detail" in selection.voices,
@@ -244,8 +240,8 @@ async def play_track(payload: dict):
             coro = run_decade_genre_sequence(
                 decade=context["decade"],
                 genre=context["genre"],
-                start_rank=start_rank,
-                end_rank=start_rank,
+                start_rank=track.rank,
+                end_rank=track.rank,
                 mode="count_up",
                 tts_language=selection.language,
                 play_intro=True,
@@ -254,6 +250,7 @@ async def play_track(payload: dict):
                 play_track=True,
                 voice_style=selection.voicePlayMode,
             )
+
 
 
 

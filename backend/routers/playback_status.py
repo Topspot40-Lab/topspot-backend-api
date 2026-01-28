@@ -132,12 +132,7 @@ async def narration_finished():
 
 from backend.state.narration import track_done_event
 
-@router.post("/track-finished")
-async def track_finished():
-    logger.info("🎵 Track finished signal received")
-    track_done_event.set()
-    return {"ok": True}
-
+from backend.state.narration import track_done_event
 
 @router.post("/track-finished")
 async def track_finished():
@@ -147,5 +142,6 @@ async def track_finished():
     track_done_event.set()
 
     return {"ok": True}
+
 
 
