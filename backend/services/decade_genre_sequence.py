@@ -8,6 +8,7 @@ from typing import Literal
 
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.playback_ordering import order_rows_for_mode
+from backend.state.narration import narration_done_event, track_done_event
 
 # Legacy flags (still used by runtime helpers)
 from backend.state.playback_flags import flags
@@ -363,6 +364,216 @@ async def run_decade_genre_sequence(
         logger.exception("⚠️ Sequence error for %s/%s", decade, genre)
     finally:
         # reset legacy flags (keep your existing behavior)
+        flags.is_playing = False
+        flags.stopped = True
+        logger.debug("🧹 Playback flags reset for %s/%s", decade, genre)
+
+
+async def run_decade_genre_continuous_sequence(
+    *,
+    decade: str,
+    genre: str,
+    start_rank: int,
+    end_rank: int,
+    mode: Literal["count_up", "count_down", "random"],
+    tts_language: str,
+    play_intro: bool,
+    play_detail: bool,
+    play_artist_description: bool,
+    play_track: bool,
+    voice_style: Literal["before", "over"] = "before",
+) -> None:
+    logger.info(
+        "📻 CONTINUOUS MODE START: %s/%s %d-%d mode=%s lang=%s voice=%s",
+        decade, genre, start_rank, end_rank, mode, tts_language, voice_style
+    )
+
+    # ─────────── RESET PLAYBACK STATE ───────────
+    status.stopped = False
+    status.cancel_requested = False
+    status.language = tts_language
+    status.phase = None
+    status.bed_playing = False
+
+    flags.is_playing = True
+    flags.stopped = False
+    flags.cancel_requested = False
+    flags.current_rank = start_rank
+    flags.mode = "decade_genre"
+
+    mark_playing(
+        mode="decade_genre",
+        language=tts_language,
+        context={
+            "decade": decade,
+            "genre": genre,
+            "start_rank": start_rank,
+            "end_rank": end_rank,
+            "order": mode,
+        },
+    )
+
+    update_phase(
+        "loading",
+        current_rank=start_rank,
+        track_name="",
+        artist_name="",
+        context={
+            "lang": tts_language,
+            "mode": "decade_genre",
+            "decade": decade,
+            "genre": genre,
+        },
+    )
+
+    try:
+        # ─────────── LOAD ROWS ONCE ───────────
+        logger.info("🧨 Loading decade/genre rows for continuous mode")
+
+        rows = await asyncio.wait_for(
+            asyncio.to_thread(
+                load_decade_genre_rows,
+                decade=decade,
+                genre=genre,
+                start_rank=start_rank,
+                end_rank=end_rank,
+            ),
+            timeout=30.0,
+        )
+
+        if not rows:
+            logger.error("❌ NO TRACK ROWS — decade=%s genre=%s", decade, genre)
+            return
+
+        # Order rows
+        rows = order_rows_for_mode(rows, mode)
+        if mode == "random":
+            random.shuffle(rows)
+
+        logger.info("🔥 Sequence START (continuous) rows=%d", len(rows))
+
+        # ─────────── MAIN RADIO LOOP ───────────
+        for (track, artist, tr_rank, decade_obj, genre_obj) in rows:
+            if _is_cancelled_or_stopped():
+                logger.info("🛑 Cancelled/stopped — exiting continuous loop")
+                return
+
+            await _wait_if_paused()
+
+            rank = int(tr_rank.ranking)
+            flags.current_rank = rank
+
+            logger.info("▶ Publish Rank #%02d: %s — %s",
+                        rank, track.track_name, artist.artist_name)
+
+            update_phase(
+                "prelude",
+                is_playing=True,
+                current_rank=rank,
+                track_name=track.track_name,
+                artist_name=artist.artist_name,
+                context={
+                    "lang": tts_language,
+                    "mode": "decade_genre",
+                    "rank": rank,
+                    "track_name": track.track_name,
+                    "artist_name": artist.artist_name,
+                    "decade": decade,
+                    "genre": genre,
+                    "voice_style": voice_style,
+                },
+            )
+
+            # ─────────── NARRATION JOBS ───────────
+            intro_jobs = build_intro_jobs(
+                lang=tts_language,
+                tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
+            )
+
+            detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
+                lang=tts_language,
+                track=track,
+                artist=artist,
+            )
+
+            # ───────── INTRO ─────────
+            if play_intro and intro_jobs:
+                ib, ik = _extract_bucket_key(intro_jobs[0])
+                if ib and ik:
+                    await publish_narration_phase(
+                        "intro",
+                        track=track,
+                        artist=artist,
+                        rank=rank,
+                        decade=decade,
+                        genre=genre,
+                        bucket=ib,
+                        key=ik,
+                        voice_style=voice_style,
+                    )
+
+            # ───────── DETAIL ─────────
+            if play_detail and detail_bucket and detail_key:
+                await publish_narration_phase(
+                    "detail",
+                    track=track,
+                    artist=artist,
+                    rank=rank,
+                    decade=decade,
+                    genre=genre,
+                    bucket=detail_bucket,
+                    key=detail_key,
+                    voice_style=voice_style,
+                )
+
+            # ───────── ARTIST ─────────
+            if play_artist_description and artist_bucket and artist_key:
+                await publish_narration_phase(
+                    "artist",
+                    track=track,
+                    artist=artist,
+                    rank=rank,
+                    decade=decade,
+                    genre=genre,
+                    bucket=artist_bucket,
+                    key=artist_key,
+                    voice_style=voice_style,
+                )
+
+            # ───────── TRACK ─────────
+            if play_track and track.spotify_track_id:
+                track_done_event.clear()
+
+                update_phase(
+                    "track",
+                    track_name=track.track_name,
+                    artist_name=artist.artist_name,
+                    current_rank=rank,
+                    context={
+                        "mode": "spotify",
+                        "decade": decade,
+                        "genre": genre,
+                        "spotify_track_id": track.spotify_track_id,
+                    },
+                )
+
+                logger.info("🎯 PUBLISHED track frame rank=%s spotify=%s",
+                            rank, track.spotify_track_id)
+
+                # 🔥 This is the radio heartbeat:
+                # Wait until frontend says Spotify finished
+                await track_done_event.wait()
+
+        logger.info("🏁 Sequence COMPLETE (continuous)")
+
+    except asyncio.TimeoutError:
+        logger.error("⏱️ load_decade_genre_rows timeout (>30s)")
+    except asyncio.CancelledError:
+        logger.info("⛔ Continuous sequence task cancelled")
+        raise
+    except Exception:
+        logger.exception("⚠️ Continuous sequence error for %s/%s", decade, genre)
+    finally:
         flags.is_playing = False
         flags.stopped = True
         logger.debug("🧹 Playback flags reset for %s/%s", decade, genre)

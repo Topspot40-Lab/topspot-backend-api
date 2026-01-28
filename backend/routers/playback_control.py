@@ -208,30 +208,53 @@ async def play_track(payload: dict):
     # await cancel_current_sequence()
     reset_for_single_track()
 
-    # ─────────────────────────────────────────────
-    # SINGLE STEP = SEQUENCE OF LENGTH 1
-    # ─────────────────────────────────────────────
-
     if context["type"] == "decade_genre":
-        from backend.services.decade_genre_sequence import run_decade_genre_sequence
+        from backend.services.decade_genre_sequence import (
+            run_decade_genre_sequence,
+            run_decade_genre_continuous_sequence,
+        )
 
         print("🔥 About to build decade_genre sequence")
-        print("FUNC:", run_decade_genre_sequence)
-        print("FILE:", run_decade_genre_sequence.__code__.co_filename)
 
-        coro = run_decade_genre_sequence(
-            decade=context["decade"],
-            genre=context["genre"],
-            start_rank=track.rank,
-            end_rank=track.rank,
-            mode="count_up",
-            tts_language=selection.language,
-            play_intro=True,
-            play_detail="detail" in selection.voices,
-            play_artist_description="artist" in selection.voices,
-            play_track=True,
-            voice_style=selection.voicePlayMode,
-        )
+        # this flag must already exist in your UI payload
+        is_continuous = payload["selection"].get("continuous", False)
+
+        start_rank = track.rank
+        end_rank = context.get("end_rank", 40)  # or whatever your UI uses
+
+        if is_continuous:
+            logger.warning("📻 RADIO MODE ENABLED (continuous)")
+
+            coro = run_decade_genre_continuous_sequence(
+                decade=context["decade"],
+                genre=context["genre"],
+                start_rank=start_rank,
+                end_rank=end_rank,
+                mode=context.get("order", "count_up"),
+                tts_language=selection.language,
+                play_intro=True,
+                play_detail="detail" in selection.voices,
+                play_artist_description="artist" in selection.voices,
+                play_track=True,
+                voice_style=selection.voicePlayMode,
+            )
+        else:
+            logger.warning("🎯 SINGLE MODE ENABLED")
+
+            coro = run_decade_genre_sequence(
+                decade=context["decade"],
+                genre=context["genre"],
+                start_rank=start_rank,
+                end_rank=start_rank,
+                mode="count_up",
+                tts_language=selection.language,
+                play_intro=True,
+                play_detail="detail" in selection.voices,
+                play_artist_description="artist" in selection.voices,
+                play_track=True,
+                voice_style=selection.voicePlayMode,
+            )
+
 
 
     elif context["type"] == "collection":

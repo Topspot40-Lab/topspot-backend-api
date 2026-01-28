@@ -16,7 +16,8 @@ from backend.services.spotify.playback import (
 
 
 from backend.config import SPOTIFY_BED_TRACK_ID
-from backend.state.narration import narration_done_event
+from backend.state.narration import narration_done_event, track_done_event
+
 
 
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
@@ -129,5 +130,22 @@ async def narration_finished():
 
     return {"ok": True}
 
+from backend.state.narration import track_done_event
+
+@router.post("/track-finished")
+async def track_finished():
+    logger.info("🎵 Track finished signal received")
+    track_done_event.set()
+    return {"ok": True}
+
+
+@router.post("/track-finished")
+async def track_finished():
+    logger.info("🎵 Track finished signal received")
+
+    # Signal backend sequence loop that Spotify track is done
+    track_done_event.set()
+
+    return {"ok": True}
 
 
