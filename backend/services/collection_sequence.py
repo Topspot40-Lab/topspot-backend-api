@@ -435,6 +435,12 @@ async def run_collection_continuous_sequence(
                 )
 
             # ───────── TRACK ─────────
+            logger.error(
+                "🔥 TRACK CHECK: play_track=%s spotify_id=%s",
+                play_track,
+                track.spotify_track_id
+            )
+
             if play_track and track.spotify_track_id:
                 track_done_event.clear()
 
