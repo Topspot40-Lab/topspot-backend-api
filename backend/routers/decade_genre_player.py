@@ -280,11 +280,22 @@ async def get_sequence_decade_genre(
             "rank": tr_rank.ranking,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
+
+            # 🎨 ARTWORK
+            "albumArtwork": getattr(track, "album_artwork", None),
+            "artistArtwork": getattr(artist, "artist_artwork", None),
+
+            # 📝 TEXT CONTENT
+            "detail": getattr(track, "detail", None),
+            "artistDescription": getattr(artist, "artist_description", None),
+
+            # 📅 META
+            "albumName": getattr(track, "album_name", None),
             "yearReleased": getattr(track, "year_released", None),
             "durationMs": getattr(track, "duration_ms", None),
-            "albumArtwork": getattr(track, "album_artwork", None),
             "spotifyTrackId": getattr(track, "spotify_track_id", None),
-            "albumName": getattr(track, "album_name", None),
+            # ✅ INTRO TEXT (from track_ranking)
+            "intro": tr_rank.intro,
         }
         for track, artist, tr_rank, _, _ in rows
     ]
