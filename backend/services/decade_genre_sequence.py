@@ -351,8 +351,10 @@ async def run_decade_genre_sequence(
                     "decade": decade,
                     "genre": genre,
                     "spotify_track_id": track.spotify_track_id,
+                    "ranking_id": tr_rank.id,  # ⭐ ADD THIS
                 },
             )
+
             logger.info("🎯 PUBLISHED track frame rank=%s spotify=%s", rank, track.spotify_track_id)
 
         logger.info("✅ Decade/genre publish finished (single-rank).")
@@ -554,6 +556,7 @@ async def run_decade_genre_continuous_sequence(
                         "decade": decade,
                         "genre": genre,
                         "spotify_track_id": track.spotify_track_id,
+                        "ranking_id": tr_rank.id,  # ⭐ ADD THIS
                     },
                 )
 

@@ -25,7 +25,6 @@ from backend.services.radio_runtime import (
 )
 from backend.state.narration import narration_done_event
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -49,16 +48,17 @@ def _extract_bucket_key(job):
     key = getattr(job, "key", None) or getattr(job, "object_path", None)
     return bucket, key
 
+
 async def publish_narration_phase(
-    phase: Literal["intro", "detail", "artist"],
-    *,
-    track,
-    artist,
-    rank,
-    collection_slug,
-    bucket,
-    key,
-    voice_style,
+        phase: Literal["intro", "detail", "artist"],
+        *,
+        track,
+        artist,
+        rank,
+        collection_slug,
+        bucket,
+        key,
+        voice_style,
 ):
     audio_url = resolve_audio_ref(bucket, key)
 
@@ -92,20 +92,20 @@ async def publish_narration_phase(
 # One-rank-at-a-time: publishes intro url + spotify_track_id then returns.
 # ─────────────────────────────────────────────
 async def run_collection_sequence(
-    *,
-    collection_slug: str,
-    start_rank: int,
-    end_rank: int,
-    mode: Literal["count_up", "count_down", "random"],
-    tts_language: str,
-    play_intro: bool,
-    play_detail: bool,
-    play_artist_description: bool,
-    play_track: bool,
-    text_intro: bool,
-    text_detail: bool,
-    text_artist_description: bool,
-    voice_style: Literal["before", "over"] = "before",
+        *,
+        collection_slug: str,
+        start_rank: int,
+        end_rank: int,
+        mode: Literal["count_up", "count_down", "random"],
+        tts_language: str,
+        play_intro: bool,
+        play_detail: bool,
+        play_artist_description: bool,
+        play_track: bool,
+        text_intro: bool,
+        text_detail: bool,
+        text_artist_description: bool,
+        voice_style: Literal["before", "over"] = "before",
 ):
     logger.info(
         "🎧 COLLECTION START: %s %s-%s mode=%s voice_style=%s",
@@ -122,8 +122,9 @@ async def run_collection_sequence(
             select(
                 Track,
                 Artist,
-                CollectionTrackRanking.ranking,
+                CollectionTrackRanking,
             )
+
             .join(Artist, Artist.id == Track.artist_id)
             .join(CollectionTrackRanking, CollectionTrackRanking.track_id == Track.id)
             .join(Collection, Collection.id == CollectionTrackRanking.collection_id)
@@ -151,7 +152,9 @@ async def run_collection_sequence(
 
     # ✅ CRITICAL: publish ONE rank only, then return
     # Frontend Next/Prev calls this endpoint again with a new start_rank.
-    track, artist, rank = rows[0]
+    track, artist, ctr = rows[0]
+    rank = int(ctr.ranking)
+    ranking_id = ctr.id
 
     logger.info("──────────────────────────────────────────────")
     logger.info("▶ Rank #%02d: %s — %s", rank, track.track_name, artist.artist_name)
@@ -162,7 +165,6 @@ async def run_collection_sequence(
         artist=artist,
         tr_rows=[],
     )
-
 
     # ───────── INTRO ─────────
     if play_intro:
@@ -236,11 +238,13 @@ async def run_collection_sequence(
                 "mode": "spotify",
                 "collection_slug": collection_slug,
                 "spotify_track_id": track.spotify_track_id,
+                "ranking_id": ranking_id,  # ⭐ THIS IS THE MAGIC
             },
         )
         logger.info("🎯 PUBLISHED track frame rank=%s spotify=%s", rank, track.spotify_track_id)
 
     logger.info("✅ Collection publish finished (single-rank).")
+
 
 from backend.state.narration import track_done_event
 from backend.state.playback_flags import flags
@@ -248,17 +252,17 @@ from backend.state.playback_state import status
 
 
 async def run_collection_continuous_sequence(
-    *,
-    collection_slug: str,
-    start_rank: int,
-    end_rank: int,
-    mode: Literal["count_up", "count_down", "random"],
-    tts_language: str,
-    play_intro: bool,
-    play_detail: bool,
-    play_artist_description: bool,
-    play_track: bool,
-    voice_style: Literal["before", "over"] = "before",
+        *,
+        collection_slug: str,
+        start_rank: int,
+        end_rank: int,
+        mode: Literal["count_up", "count_down", "random"],
+        tts_language: str,
+        play_intro: bool,
+        play_detail: bool,
+        play_artist_description: bool,
+        play_track: bool,
+        voice_style: Literal["before", "over"] = "before",
 ) -> None:
     logger.info(
         "📻 COLLECTION CONTINUOUS START: %s %d-%d mode=%s lang=%s voice=%s",
@@ -321,8 +325,9 @@ async def run_collection_continuous_sequence(
                 select(
                     Track,
                     Artist,
-                    CollectionTrackRanking.ranking,
+                    CollectionTrackRanking,
                 )
+
                 .join(Artist, Artist.id == Track.artist_id)
                 .join(CollectionTrackRanking, CollectionTrackRanking.track_id == Track.id)
                 .join(Collection, Collection.id == CollectionTrackRanking.collection_id)
@@ -352,7 +357,10 @@ async def run_collection_continuous_sequence(
         logger.info("🔥 Collection radio loop START rows=%d", len(rows))
 
         # ─────────── MAIN RADIO LOOP ───────────
-        for (track, artist, rank) in rows:
+        for (track, artist, ctr) in rows:
+            rank = int(ctr.ranking)
+            ranking_id = ctr.id
+
             if getattr(status, "stopped", False) or getattr(status, "cancel_requested", False):
                 logger.info("🛑 Cancelled/stopped — exiting collection loop")
                 return
@@ -453,6 +461,7 @@ async def run_collection_continuous_sequence(
                         "mode": "spotify",
                         "collection_slug": collection_slug,
                         "spotify_track_id": track.spotify_track_id,
+                        "ranking_id": ranking_id,  # ⭐ THIS IS THE MAGIC
                     },
                 )
 

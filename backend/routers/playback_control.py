@@ -1,9 +1,10 @@
 # backend/routers/playback_control.py
 from __future__ import annotations
 
+from backend.state.playback_state import update_phase, status
+
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
-from backend.state.playback_state import update_phase
 
 
 import asyncio
@@ -60,12 +61,20 @@ async def play_spotify(req: PlaySpotifyRequest):
     await play_spotify_track(req.spotify_track_id)
 
     # Optional: reinforce phase for UI sync
+    existing_context = getattr(status, "context", {}) or {}
+
+    merged_context = {
+        **existing_context,
+        "spotify_track_id": req.spotify_track_id,
+        "started_by": "frontend",
+    }
+
     update_phase(
         "track",
-        context={
-            "spotify_track_id": req.spotify_track_id,
-            "started_by": "frontend",
-        }
+        track_name=getattr(status, "track_name", None),
+        artist_name=getattr(status, "artist_name", None),
+        current_rank=getattr(status, "current_rank", None),
+        context=merged_context,
     )
 
     return {
