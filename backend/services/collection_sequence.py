@@ -361,6 +361,9 @@ async def run_collection_continuous_sequence(
             rank = int(ctr.ranking)
             ranking_id = ctr.id
 
+            status.current_rank = rank
+            status.current_ranking_id = ranking_id
+
             if getattr(status, "stopped", False) or getattr(status, "cancel_requested", False):
                 logger.info("🛑 Cancelled/stopped — exiting collection loop")
                 return

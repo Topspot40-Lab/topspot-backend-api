@@ -48,6 +48,7 @@ async def get_status():
 
     snap = asdict(status)
     ctx = snap.get("context") or {}
+    ctx["ranking_id"] = snap.get("current_ranking_id")
 
     phase = snap.get("phase")
     voice_style = ctx.get("voice_style")

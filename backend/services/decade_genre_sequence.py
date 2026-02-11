@@ -254,6 +254,9 @@ async def run_decade_genre_sequence(
         rank = int(tr_rank.ranking)
         flags.current_rank = rank
 
+        status.current_rank = rank  # ⭐ ADD
+        status.current_ranking_id = tr_rank.id  # ⭐ ADD
+
         logger.info(f"📻 Playing rank {rank}")
 
         logger.info("▶ Publish Rank #%02d: %s — %s", rank, track.track_name, artist.artist_name)
@@ -464,6 +467,9 @@ async def run_decade_genre_continuous_sequence(
 
             rank = int(tr_rank.ranking)
             flags.current_rank = rank
+
+            status.current_rank = rank  # ⭐ ADD
+            status.current_ranking_id = tr_rank.id  # ⭐ ADD
 
             logger.info("▶ Publish Rank #%02d: %s — %s",
                         rank, track.track_name, artist.artist_name)

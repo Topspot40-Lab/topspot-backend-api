@@ -29,6 +29,7 @@ class PlaybackStatus:
     mode: Optional[Mode] = None
     context: dict[str, Any] = field(default_factory=dict)
     current_rank: Optional[int] = None
+    current_ranking_id: int | None = None
 
     # 🔵 GLOBAL show progress
     elapsed_seconds: float = 0.0
