@@ -19,10 +19,11 @@ logger = logging.getLogger(__name__)
 def load_decade_genre_rows(
     *,
     decade: str,
-    genre: str,
+    genre: str | None,
     start_rank: int,
     end_rank: int,
 ):
+
     """
     Query all tracks for (decade, genre) in [start_rank, end_rank].
 
@@ -39,6 +40,16 @@ def load_decade_genre_rows(
     )
 
     with get_db_session() as db:
+        conditions = [
+            Decade.slug == decade,
+            TrackRanking.ranking >= start_rank,
+            TrackRanking.ranking <= end_rank,
+        ]
+
+        # Only filter by genre if one was provided
+        if genre is not None:
+            conditions.append(Genre.slug == genre)
+
         q = (
             select(Track, Artist, TrackRanking, Decade, Genre)
             .join(Artist, Artist.id == Track.artist_id)
@@ -46,12 +57,7 @@ def load_decade_genre_rows(
             .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
             .join(Decade, Decade.id == DecadeGenre.decade_id)
             .join(Genre, Genre.id == DecadeGenre.genre_id)
-            .where(
-                Decade.slug == decade,
-                Genre.slug == genre,
-                TrackRanking.ranking >= start_rank,
-                TrackRanking.ranking <= end_rank,
-            )
+            .where(*conditions)
             .order_by(TrackRanking.ranking)
         )
 

@@ -214,14 +214,17 @@ async def run_decade_genre_sequence(
 
         t0 = time.time()
         try:
+            effective_genre = None if genre == "favorites" else genre
+
             rows = await asyncio.wait_for(
                 asyncio.to_thread(
                     load_decade_genre_rows,
                     decade=decade,
-                    genre=genre,
+                    genre=effective_genre,
                     start_rank=start_rank,
                     end_rank=end_rank,
                 ),
+
                 timeout=30.0,
             )
         except asyncio.TimeoutError:
@@ -435,14 +438,17 @@ async def run_decade_genre_continuous_sequence(
         # ─────────── LOAD ROWS ONCE ───────────
         logger.info("🧨 Loading decade/genre rows for continuous mode")
 
+        effective_genre = None if genre == "favorites" else genre
+
         rows = await asyncio.wait_for(
             asyncio.to_thread(
                 load_decade_genre_rows,
                 decade=decade,
-                genre=genre,
+                genre=effective_genre,
                 start_rank=start_rank,
                 end_rank=end_rank,
             ),
+
             timeout=30.0,
         )
 
