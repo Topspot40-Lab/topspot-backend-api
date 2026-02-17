@@ -301,3 +301,66 @@ async def get_sequence_decade_genre(
     ]
 
     return {"status": "ok", "total": len(tracks), "tracks": tracks}
+
+
+from pydantic import BaseModel
+from typing import List
+
+class FavoritesRequest(BaseModel):
+    ranking_ids: List[int]
+
+# ─────────────────────────────────────────────
+# FAVORITES (DECADE – ALL GENRES)
+# ─────────────────────────────────────────────
+@router.post("/get-favorites")
+async def get_favorites_decade(
+    payload: FavoritesRequest,
+    db=Depends(get_db),
+):
+    ranking_ids = payload.ranking_ids
+
+    if not ranking_ids:
+        return {"status": "empty", "tracks": []}
+
+    q = (
+        select(Track, Artist, TrackRanking, Decade)
+        .join(Artist, Artist.id == Track.artist_id)
+        .join(TrackRanking, TrackRanking.track_id == Track.id)
+        .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
+        .join(Decade, Decade.id == DecadeGenre.decade_id)
+        .where(
+            TrackRanking.id.in_(ranking_ids),
+        )
+        .order_by(TrackRanking.ranking)
+    )
+
+    rows = db.exec(q).all()
+
+    if not rows:
+        return {"status": "empty", "tracks": []}
+
+    tracks = [
+        {
+            "rank": tr_rank.ranking,
+            "rankingId": tr_rank.id,
+            "trackId": track.id,
+            "trackName": track.track_name,
+            "artistName": artist.artist_name,
+            "albumArtwork": getattr(track, "album_artwork", None),
+            "artistArtwork": getattr(artist, "artist_artwork", None),
+            "detail": getattr(track, "detail", None),
+            "artistDescription": getattr(artist, "artist_description", None),
+            "albumName": getattr(track, "album_name", None),
+            "yearReleased": getattr(track, "year_released", None),
+            "durationMs": getattr(track, "duration_ms", None),
+            "spotifyTrackId": getattr(track, "spotify_track_id", None),
+            "intro": tr_rank.intro,
+        }
+        for track, artist, tr_rank, _ in rows
+    ]
+
+    return {
+        "status": "ok",
+        "total": len(tracks),
+        "tracks": tracks,
+    }

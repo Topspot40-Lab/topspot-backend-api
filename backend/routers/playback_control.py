@@ -217,6 +217,97 @@ async def play_track(payload: dict):
     # await cancel_current_sequence()
     reset_for_single_track()
 
+    if context["type"] == "favorites":
+        from backend.database import get_db
+        from backend.models.dbmodels import TrackRanking, DecadeGenre, Decade, Genre
+        from sqlmodel import select
+
+        ranking_id = payload.get("track", {}).get("ranking_id")
+        if not ranking_id:
+            return {"ok": False, "error": "Missing track.ranking_id for favorites playback"}
+
+        db = next(get_db())
+
+        q = (
+            select(TrackRanking, Decade, Genre)
+            .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
+            .join(Decade, Decade.id == DecadeGenre.decade_id)
+            .join(Genre, Genre.id == DecadeGenre.genre_id)
+            .where(TrackRanking.id == ranking_id)
+        )
+
+        row = db.exec(q).first()
+        if not row:
+            return {"ok": False, "error": f"TrackRanking not found for ranking_id={ranking_id}"}
+
+        tr_rank, decade_row, genre_row = row
+
+        # ✅ Reuse DG sequence engine with REAL decade/genre
+        from backend.services.decade_genre_sequence import run_decade_genre_sequence
+
+        coro = run_decade_genre_sequence(
+            decade=decade_row.slug,
+            genre=genre_row.slug,
+            start_rank=tr_rank.ranking,
+            end_rank=tr_rank.ranking,
+            mode="count_up",
+            tts_language=selection.language,
+            play_intro=True,
+            play_detail="detail" in selection.voices,
+            play_artist_description="artist" in selection.voices,
+            play_track=True,
+            voice_style=selection.voicePlayMode,
+        )
+
+        await start_new_sequence(coro)
+
+        return {
+            "ok": True,
+            "message": "Favorites single-track played via DG engine (resolved by ranking_id)",
+            "resolved": {
+                "decade": decade_row.slug,
+                "genre": genre_row.slug,
+                "rank": tr_rank.ranking,
+                "ranking_id": ranking_id,
+            },
+        }
+
+    if context.get("type") == "favorites":
+        # Option 1: separate pipeline for favorites (no genre required)
+        spotify_id = track.spotify_track_id
+        if not spotify_id:
+            raise HTTPException(status_code=400, detail="Missing spotify_track_id for favorites playback")
+
+        async def _play_favorites_one():
+            # Minimal v1: just start the Spotify track (keeps pipeline separate)
+            await play_spotify_track(spotify_id)
+
+            existing_context = getattr(status, "context", {}) or {}
+            merged_context = {
+                **existing_context,
+                "type": "favorites",
+                "program": context.get("program"),
+                "decade": context.get("decade"),
+                "collection_slug": context.get("collection_slug"),
+                "ranking_id": payload["track"].get("ranking_id"),
+                "spotify_track_id": spotify_id,
+                "started_by": "frontend",
+            }
+
+            update_phase(
+                "track",
+                track_name=track.track_name,
+                artist_name=track.artist_name,
+                current_rank=track.rank,
+                context=merged_context,
+            )
+
+        reset_for_single_track()
+        await start_new_sequence(_play_favorites_one())
+        return {"ok": True, "message": "Favorites single-track playback started"}
+
+
+
     if context["type"] == "decade_genre":
         from backend.services.decade_genre_sequence import (
             run_decade_genre_sequence,
