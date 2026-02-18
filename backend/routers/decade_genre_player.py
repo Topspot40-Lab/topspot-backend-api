@@ -297,7 +297,7 @@ async def get_sequence_decade_genre(
             # ✅ INTRO TEXT (from track_ranking)
             "intro": tr_rank.intro,
         }
-        for track, artist, tr_rank, _, _ in rows
+        for track, artist, tr_rank, decade, genre in rows
     ]
 
     return {"status": "ok", "total": len(tracks), "tracks": tracks}
@@ -323,14 +323,13 @@ async def get_favorites_decade(
         return {"status": "empty", "tracks": []}
 
     q = (
-        select(Track, Artist, TrackRanking, Decade)
+        select(Track, Artist, TrackRanking, Decade, Genre)
         .join(Artist, Artist.id == Track.artist_id)
         .join(TrackRanking, TrackRanking.track_id == Track.id)
         .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
         .join(Decade, Decade.id == DecadeGenre.decade_id)
-        .where(
-            TrackRanking.id.in_(ranking_ids),
-        )
+        .join(Genre, Genre.id == DecadeGenre.genre_id)
+        .where(TrackRanking.id.in_(ranking_ids))
         .order_by(TrackRanking.ranking)
     )
 
@@ -341,11 +340,24 @@ async def get_favorites_decade(
 
     tracks = [
         {
+            # ⭐ Favorite display rank (will be reordered later on frontend)
             "rank": tr_rank.ranking,
+
+            # ⭐ Original DG rank (for ticker)
+            "sourceRank": tr_rank.ranking,
+
             "rankingId": tr_rank.id,
             "trackId": track.id,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
+
+            # ✅ NEW
+            "genreSlug": getattr(genre, "slug", None),
+            "genreName": getattr(genre, "name", None),
+
+            "decadeSlug": getattr(decade, "slug", None),
+            "decadeName": getattr(decade, "name", None),
+
             "albumArtwork": getattr(track, "album_artwork", None),
             "artistArtwork": getattr(artist, "artist_artwork", None),
             "detail": getattr(track, "detail", None),
@@ -356,7 +368,7 @@ async def get_favorites_decade(
             "spotifyTrackId": getattr(track, "spotify_track_id", None),
             "intro": tr_rank.intro,
         }
-        for track, artist, tr_rank, _ in rows
+        for track, artist, tr_rank, decade, genre in rows
     ]
 
     return {
