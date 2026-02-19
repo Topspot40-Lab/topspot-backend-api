@@ -62,7 +62,7 @@ app.add_middleware(
         "http://127.0.0.1:5173",
         "https://topspot40.com",
         "https://www.topspot40.com",
-        "https://topspot40-frontend-app.netlify.app",
+        "https://topspot40.netlify.app",
     ],
     allow_credentials=False,
     allow_methods=["*"],
