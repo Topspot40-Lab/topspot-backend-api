@@ -2,11 +2,8 @@
 import os 
 import httpx 
 from dotenv import load_dotenv
-from supabase import create_client, Client
+from supabase import create_client
 import base64 
-from fastapi import Query, HTTPException
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
 from datetime import datetime, timezone, timedelta
 import logging
 
@@ -40,31 +37,6 @@ SPOTIFY_ME_URL = "https://api.spotify.com/v1/me"
 AUTH_URL = "https://accounts.spotify.com/api/token"
 
 
-_client = None
-def get_spotify_user_client() -> spotipy.Spotify:
-    global _client
-    if _client:
-        return _client
-
-    cid = client_id
-    secret = client_secret
-    redirect = "http://127.0.0.1:8888/callback"
-    scope = "user-modify-playback-state user-read-playback-state"
-
-    if not (cid and secret and redirect):
-        raise EnvironmentError("Missing Spotify credentials or redirect URI")
-
-    auth_manager = SpotifyOAuth(
-        client_id=cid,
-        client_secret=secret,
-        redirect_uri=redirect,
-        scope=scope,
-        cache_path=".cache"
-    )
-
-    _client = spotipy.Spotify(auth_manager=auth_manager)
-
-    return _client
 
 async def get_access_token():
     async with httpx.AsyncClient() as client:
@@ -134,22 +106,6 @@ async def get_user_profile(access_token: str) -> dict:
         response.raise_for_status()
         return response.json()
 
-async def is_spotify_user_premium(code: str, redirect_uri: str) -> bool:
-    """
-    Given an auth code and redirect_uri, check if the user has Spotify Premium.
-    """
-    token_data = await exchange_code_for_token(code, redirect_uri)
-    access_token = token_data["access_token"]
-    user_profile = await get_user_profile(access_token)
-    return user_profile.get("product") == "premium"
-
-
-
-
-
-
-
-
 
 
 
@@ -194,15 +150,7 @@ async def get_valid_access_token(user_id: str):
         return record["access_token"]
     
 
-"""
-Sends a POST to https://accounts.spotify.com/api/token with the grant_type=refresh_token.
 
-Uses your client credentials (client ID + secret).
-
-Raises an exception automatically if Spotify returns a non-200 response.
-
-Returns the refreshed JSON payload.
-"""
 async def refresh_spotify_token(refresh_token: str):
     async with httpx.AsyncClient() as client:
         resp = await client.post(
@@ -218,15 +166,4 @@ async def refresh_spotify_token(refresh_token: str):
 
         resp.raise_for_status()
         return resp.json()
-    """
-    #url = "https://accounts.spotify.com/api/token"
-    payload = {
-        "grant_type": "refresh_token",
-        "refresh_token": refresh_token,
-        "client_id": os.getenv("SPOTIFY_CLIENT_ID"),
-        "client_secret": os.getenv("SPOTIFY_CLIENT_SECRET")
-    }
-    response = requests.post(url, data=payload)
-    response.raise_for_status()
-    return response.json()
-    """
+    

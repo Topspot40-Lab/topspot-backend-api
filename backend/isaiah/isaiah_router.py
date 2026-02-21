@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query, APIRouter, Request, HTTPException, Cookie
 from fastapi.responses import RedirectResponse
-from backend.isaiah.isaiah_spotify import is_spotify_user_premium, exchange_code_for_token, get_user_profile  # from spotify helper module
+from backend.isaiah.isaiah_spotify import exchange_code_for_token, get_user_profile  # from spotify helper module
 import os
 from dotenv import load_dotenv
 import stripe
