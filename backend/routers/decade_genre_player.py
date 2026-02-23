@@ -277,6 +277,7 @@ async def get_sequence_decade_genre(
 
     tracks = [
         {
+            "rankingId": tr_rank.id,
             "rank": tr_rank.ranking,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
