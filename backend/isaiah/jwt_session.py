@@ -16,6 +16,8 @@ def create_jwt_token(user_id: str):
         "exp": datetime.now(timezone.utc) + timedelta(seconds=JWT_EXP_DELTA_SECONDS),
         "iat": datetime.now(timezone.utc),
     }
+    print("JWT_SECRET type:", type(JWT_SECRET), "value:", JWT_SECRET)
+
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
     return token
 

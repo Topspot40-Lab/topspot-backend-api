@@ -1,26 +1,29 @@
-from fastapi import FastAPI, Query, APIRouter, Request, HTTPException, Cookie
+from fastapi import Query, APIRouter, Request, HTTPException, Cookie
 from fastapi.responses import RedirectResponse
-from backend.isaiah.isaiah_spotify import exchange_code_for_token, get_user_profile  # from spotify helper module
+from backend.isaiah.isaiah_spotify import exchange_code_for_token, get_user_profile, get_valid_access_token  # from spotify helper module
 import os
 from dotenv import load_dotenv
 import stripe
-from jwt_session import create_jwt_token, JWT_EXP_DELTA_SECONDS, decode_jwt_token
+from backend.isaiah.jwt_session import create_jwt_token, JWT_EXP_DELTA_SECONDS, decode_jwt_token
 from backend.isaiah.isaiah_spotify import get_valid_access_token
 from datetime import datetime, timedelta, timezone
 #from main import supabase  # import your Supabase client
 from supabase import create_client
 import logging
+from backend.isaiah.isaiah_helper import get_env_config, get_spotify_redirect_uri 
+import uuid
 
-# Setup logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 load_dotenv()
 
-#router = APIRouter()
-spotify_auth_router = APIRouter()
-play_router = APIRouter()
-stripe_router = APIRouter()
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("topspot")
+
+
+config = get_env_config()  # returns dict with COOKIE_DOMAIN, SECURE_COOKIE, ENV
+
+
 
 
 
@@ -33,13 +36,20 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
 
+
 # Redirect Spotify URI
 SPOTIFY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
 
 
+#router = APIRouter()
+spotify_auth_router = APIRouter()
+play_router = APIRouter()
+stripe_router = APIRouter()
+
+
 
 # Helper function of retrieivning or if user does not have topspot account, create
-def get_or_create_topspot_user(user_profile: dict):
+async def get_or_create_topspot_user(user_profile: dict):
     spotify_user_id = user_profile["id"]
     logger.info("Checking for existing TopSpot user with Spotify ID: %s", spotify_user_id)
 
@@ -47,12 +57,12 @@ def get_or_create_topspot_user(user_profile: dict):
     res = supabase.table("topspot_users") \
         .select("*") \
         .eq("spotify_user_id", spotify_user_id) \
-        .maybe_single() \
         .execute()
 
 
-    if res.data:
-        logger.info("Found existing TopSpot user: %s", res.data)
+    if res.data and len(res.data) > 0:
+        # Update last login & display info
+        logger.info("Found existing TopSpot user: %s", res.data[0])
         supabase.table("topspot_users") \
             .update({
                 "display_name": user_profile.get("display_name"),
@@ -63,43 +73,26 @@ def get_or_create_topspot_user(user_profile: dict):
             }) \
             .eq("spotify_user_id", spotify_user_id) \
             .execute()
-        return res.data
+        return res.data[0]
 
-    """
+    # Insert new user
     insert = supabase.table("topspot_users").insert({
+        "auth_user_id": str(uuid.uuid4()),
         "spotify_user_id": spotify_user_id,
         "email": user_profile.get("email"),
         "display_name": user_profile.get("display_name"),
         "spotify_display_name": user_profile.get("display_name"),
         "spotify_country": user_profile.get("country"),
         "spotify_product": user_profile.get("product"),
-        "role": "listener",
+        "role": "listener", # default permissions
     }).execute()
-    """
 
+    
 
-    # if user not found, insert a new one into the supabase table
-    insert_payload = {
-        "spotify_user_id": user_profile["id"],
-        # Optional snapshots (safe if missing)
-        "email": user_profile.get("email"),
-        "display_name": user_profile.get("display_name"),
-        "spotify_display_name": user_profile.get("display_name"),
-        "spotify_country": user_profile.get("country"),
-        "spotify_product": user_profile.get("product"),
-    }
-
-
-
-    insert = supabase.table("topspot_users").insert(insert_payload).execute()
-    print(insert.data, insert.error)
-    logger.info("INSERT RESULT: data=%s, error=%s", insert.data, insert.error)
-
-    if not insert.data or insert.error:
-        logger.error("Failed to create TopSpot user. Payload=%s", insert_payload)
+    print("Insert data:", insert.data)
+    if not insert.data:
+        logger.error("Failed to create TopSpot user: %s", insert.error)
         raise HTTPException(status_code=500, detail="User creation failed")
-
-
 
     return insert.data[0]
 
@@ -111,9 +104,10 @@ def spotify_login():
     # Redirect user to Spotify authorization URL with your client ID and redirect_uri (backend callback)
     from urllib.parse import urlencode
 
-    client_id = os.environ.get("SPOTIFY_CLIENT_ID")
+    client_id = SPOTIFY_CLIENT_ID
     #redirect_uri = "https://api.topspot40.com/api/auth/spotify/callback"
-    redirect_uri = "http://127.0.0.1:8000/api/auth/spotify/callback"
+    #redirect_uri = "http://127.0.0.1:8000/api/auth/spotify/callback"
+    redirect_uri = get_spotify_redirect_uri()
     scopes = "user-read-private playlist-read-private user-read-email user-read-private user-read-playback-state user-modify-playback-state streaming" # "user-read-private playlist-read-private"
     params = {
         "client_id": client_id,
@@ -125,6 +119,9 @@ def spotify_login():
     url = "https://accounts.spotify.com/authorize?" + urlencode(params)
     return RedirectResponse(url)
 
+
+
+# SPOTIFY OAUTH CALLBACK 
 @spotify_auth_router.get("/spotify/callback")
 async def spotify_callback(request: Request):
     logger.critical("=== SPOTIFY CALLBACK ENTERED ===")
@@ -142,9 +139,12 @@ async def spotify_callback(request: Request):
 
     #redirect_uri = "https://api.topspot40.com/api/auth/spotify/callback"
     #redirect_uri = "https://localhost:5173/api/auth/spotify/callback"
-    redirect_uri = "http://127.0.0.1:8000/api/auth/spotify/callback"
+
+    #THIS IS THE MAIN ONE JUST IN CASE
+    #redirect_uri = "http://127.0.0.1:8000/api/auth/spotify/callback"
 
 
+    redirect_uri = get_spotify_redirect_uri()
 
     token_data = await exchange_code_for_token(code, redirect_uri)
     access_token = token_data["access_token"]
@@ -153,7 +153,8 @@ async def spotify_callback(request: Request):
     expires_in = token_data.get("expires_in", 3600)
 
     # Calculate expiry time
-    expires_at = datetime.now(timezone.utc)+ timedelta(seconds=expires_in)
+    expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
+
 
     user_profile = await get_user_profile(access_token)
 
@@ -162,21 +163,18 @@ async def spotify_callback(request: Request):
     if not is_premium:
         logger.warning(f"User {user_profile.get('id')} is not Spotify Premium")
         #return RedirectResponse("https://topspot40.com/app/not-spotify-premium")
-        return RedirectResponse("http://localhost:8000/app/not-spotify-premium")
+        return RedirectResponse("/not-spotify-premium") # "http://localhost:8000/app/not-spotify-premium"
 
     # created user session JWT here
     #user_id = user_profile["id"]
 
     # Find or create TopSpot40 user
-    topspot_user = get_or_create_topspot_user(user_profile)
+    topspot_user = await get_or_create_topspot_user(user_profile)
     topspot_user_id = topspot_user["id"]
 
     if not topspot_user or "id" not in topspot_user:
         logger.error("TopSpot user creation failed. Profile=%s", user_profile)
         raise HTTPException(status_code=500, detail="Failed to create user")
-
-
-
 
 
     try:
@@ -185,9 +183,7 @@ async def spotify_callback(request: Request):
             "user_id": topspot_user_id, # not user_id, the spotify_tokens table must reference to topspot users, not spotify users
             "access_token": access_token,
             "refresh_token": refresh_token,
-            #"created_at": created_at.isoformat(),
             "expires_at": expires_at.isoformat(),
-            #"updated_at": updated_at.isoformat(),
         }).execute()
         logger.info(f"Stored tokens for user {topspot_user_id} in Supabase")
     except Exception as e:
@@ -195,6 +191,7 @@ async def spotify_callback(request: Request):
         raise HTTPException(status_code=500, detail="Could not save Spotify tokens")
     
 
+    # Generate JWT for session Cookie
     jwt_token = create_jwt_token(topspot_user_id) # not user_id, but topspot user id
 
 
@@ -205,17 +202,16 @@ async def spotify_callback(request: Request):
     # either create-account route page (if user has not subscribed) or to
     # dashboard route page (if user has already subscribed to topspot40 AND has spotify premium)
     sub = supabase.table("subscriptions") \
-        .select("id") \
+        .select("*") \
         .eq("user_id", topspot_user_id) \
         .eq("status", "active") \
-        .maybe_single() \
         .execute()
     
 
-    if not sub.data:
-        redirect_url = "http://localhost:8000/app/create-account"
+    if not sub.data or len(sub.data) == 0:
+        redirect_url = "/create-account" # "http://localhost:8000/app/create-account"
     else:
-        redirect_url = "http://localhost:8000/dashboard"
+        redirect_url = "/dashboard" # "http://localhost:8000/dashboard"
     redirect_response = RedirectResponse(redirect_url)
 
 
@@ -243,7 +239,7 @@ async def spotify_callback(request: Request):
     
 
 
-
+# Endpoint for frontend to get valid Spotify token
 @spotify_auth_router.get("/spotify/sdk-token")
 async def spotify_sdk_token(access_token: str = Cookie(None)): # should not fetch spotify user from frontend, SECURITY RISK
     """
@@ -322,6 +318,7 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 
     
     try:
+        # Create Stripe checkout session
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=[{
@@ -339,6 +336,7 @@ async def create_checkout_session(access_token: str = Cookie(None)):
         return {"url": session.url}
 
     except Exception as e:
+        logger.exception("Stripe Checkout creation failed")
         return {"error": str(e)}
     
 
@@ -349,7 +347,7 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 
 # verify if user has already subscribed to topspot40 app
 @stripe_router.get("/verify-subscription")
-async def verify_subscription(session_id: str = Query(...), access_token: str = Cookie(None)):
+async def verify_subscription(session_id: str, access_token: str = Cookie(None)):
     stripe.api_key = os.getenv("STRIPE_TEST_SECRET_KEY")
 
 
@@ -363,6 +361,8 @@ async def verify_subscription(session_id: str = Query(...), access_token: str = 
         session = stripe.checkout.Session.retrieve(session_id)
         customer_id = session.get("customer")
         subscription_id = session.get("subscription")
+        if not subscription_id or not customer_id:
+            raise HTTPException(status_code=400, detail="Invalid session")
         subscription = stripe.Subscription.retrieve(subscription_id)
         status = subscription.get("status")
 
@@ -376,12 +376,14 @@ async def verify_subscription(session_id: str = Query(...), access_token: str = 
                 "current_period_start": datetime.fromtimestamp(subscription["current_period_start"], tz=timezone.utc).isoformat(),
                 "current_period_end": datetime.fromtimestamp(subscription["current_period_end"], tz=timezone.utc).isoformat(),
                 "cancel_at_period_end": subscription.get("cancel_at_period_end", False),
+                "updated_at": datetime.now(timezone.utc).isoformat()
             }).execute()
 
         #return {"status": status, "subscription_id": subscription_id}
         return RedirectResponse(url=f"http://localhost:5173/app/success?session_id={session_id}")
 
     except Exception as e:
+        logger.exception("Failed to verify Stripe subscription")
         raise HTTPException(status_code=500, detail=str(e))
     
 
@@ -401,14 +403,14 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
 
-    res = supabase.table("subscriptions").select("*").eq("user_id", user_id).single().execute()
+    res = supabase.table("subscriptions").select("*").eq("user_id", user_id).maybe_single().execute()
     if not res.data:
-        #return {"is_subscribed": False}
-        return RedirectResponse(url="http://localhost:5173/app/create-account")
+        return {"is_subscribed": False}
+        #return RedirectResponse(url="http://localhost:5173/app/create-account")
 
-    #status = res.data.get("status", "inactive")
-    #return {"is_subscribed": status in ("active", "trialing")}
-    return RedirectResponse(url="http://localhost:5173/dashboard")
+    status = res.data.get("status", "inactive")
+    return {"is_subscribed": status in ("active", "trialing")}
+    #return RedirectResponse(url="http://localhost:5173/dashboard")
 
 
 
