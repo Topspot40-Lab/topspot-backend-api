@@ -63,6 +63,7 @@ app.add_middleware(
         "https://topspot40.com",
         "https://www.topspot40.com",
         "https://topspot40.netlify.app",
+        "https://sparkling-croissant-23bbac.netlify.app",
     ],
     allow_credentials=False,
     allow_methods=["*"],
