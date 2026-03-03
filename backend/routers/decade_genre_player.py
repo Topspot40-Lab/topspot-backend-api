@@ -296,6 +296,8 @@ async def get_sequence_decade_genre(
             "yearReleased": track.year_released,
             "decade": decade_obj.slug,
             "genre": genre_obj.slug,
+            "albumArtwork": track.album_artwork,
+            "artistArtwork": artist.artist_artwork,
         })
 
     return {
