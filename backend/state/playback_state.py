@@ -19,6 +19,8 @@ class PlaybackStatus:
     cancel_requested: bool = False
     sequence_done: bool = True
 
+    bed_playing: bool = False
+
     # ✅ ADD this (attaches to status instance)
     requested_rank: int | None = None
 
@@ -27,6 +29,7 @@ class PlaybackStatus:
     mode: Optional[Mode] = None
     context: dict[str, Any] = field(default_factory=dict)
     current_rank: Optional[int] = None
+    current_ranking_id: int | None = None
 
     # 🔵 GLOBAL show progress
     elapsed_seconds: float = 0.0

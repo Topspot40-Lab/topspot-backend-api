@@ -1,6 +1,12 @@
 # backend/routers/playback_control.py
 from __future__ import annotations
 
+from backend.state.playback_state import update_phase, status
+
+from pydantic import BaseModel
+from backend.services.spotify.playback import play_spotify_track
+
+
 import asyncio
 import logging
 from dataclasses import asdict
@@ -42,6 +48,40 @@ router = APIRouter(
     prefix="/playback",
     tags=["Playback"],
 )
+
+class PlaySpotifyRequest(BaseModel):
+    spotify_track_id: str
+
+
+@router.post("/play-spotify", summary="Start Spotify playback for a spotify_track_id")
+async def play_spotify(req: PlaySpotifyRequest):
+    logger.info("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
+
+    # Start Spotify playback
+    await play_spotify_track(req.spotify_track_id)
+
+    # Optional: reinforce phase for UI sync
+    existing_context = getattr(status, "context", {}) or {}
+
+    merged_context = {
+        **existing_context,
+        "spotify_track_id": req.spotify_track_id,
+        "started_by": "frontend",
+    }
+
+    update_phase(
+        "track",
+        track_name=getattr(status, "track_name", None),
+        artist_name=getattr(status, "artist_name", None),
+        current_rank=getattr(status, "current_rank", None),
+        context=merged_context,
+    )
+
+    return {
+        "ok": True,
+        "spotify_track_id": req.spotify_track_id,
+    }
+
 
 # ─────────────────────────────────────────────
 # GLOBAL ASYNC TASK REFERENCE
@@ -177,22 +217,39 @@ async def play_track(payload: dict):
     # await cancel_current_sequence()
     reset_for_single_track()
 
-    # ─────────────────────────────────────────────
-    # SINGLE STEP = SEQUENCE OF LENGTH 1
-    # ─────────────────────────────────────────────
+    if context["type"] == "favorites":
+        from backend.database import get_db
+        from backend.models.dbmodels import TrackRanking, DecadeGenre, Decade, Genre
+        from sqlmodel import select
 
-    if context["type"] == "decade_genre":
+        ranking_id = payload.get("track", {}).get("ranking_id")
+        if not ranking_id:
+            return {"ok": False, "error": "Missing track.ranking_id for favorites playback"}
+
+        db = next(get_db())
+
+        q = (
+            select(TrackRanking, Decade, Genre)
+            .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
+            .join(Decade, Decade.id == DecadeGenre.decade_id)
+            .join(Genre, Genre.id == DecadeGenre.genre_id)
+            .where(TrackRanking.id == ranking_id)
+        )
+
+        row = db.exec(q).first()
+        if not row:
+            return {"ok": False, "error": f"TrackRanking not found for ranking_id={ranking_id}"}
+
+        tr_rank, decade_row, genre_row = row
+
+        # ✅ Reuse DG sequence engine with REAL decade/genre
         from backend.services.decade_genre_sequence import run_decade_genre_sequence
 
-        print("🔥 About to build decade_genre sequence")
-        print("FUNC:", run_decade_genre_sequence)
-        print("FILE:", run_decade_genre_sequence.__code__.co_filename)
-
         coro = run_decade_genre_sequence(
-            decade=context["decade"],
-            genre=context["genre"],
-            start_rank=track.rank,
-            end_rank=track.rank,
+            decade=decade_row.slug,
+            genre=genre_row.slug,
+            start_rank=tr_rank.ranking,
+            end_rank=tr_rank.ranking,
             mode="count_up",
             tts_language=selection.language,
             play_intro=True,
@@ -201,6 +258,100 @@ async def play_track(payload: dict):
             play_track=True,
             voice_style=selection.voicePlayMode,
         )
+
+        await start_new_sequence(coro)
+
+        return {
+            "ok": True,
+            "message": "Favorites single-track played via DG engine (resolved by ranking_id)",
+            "resolved": {
+                "decade": decade_row.slug,
+                "genre": genre_row.slug,
+                "rank": tr_rank.ranking,
+                "ranking_id": ranking_id,
+            },
+        }
+
+    if context.get("type") == "favorites":
+        # Option 1: separate pipeline for favorites (no genre required)
+        spotify_id = track.spotify_track_id
+        if not spotify_id:
+            raise HTTPException(status_code=400, detail="Missing spotify_track_id for favorites playback")
+
+        async def _play_favorites_one():
+            # Minimal v1: just start the Spotify track (keeps pipeline separate)
+            await play_spotify_track(spotify_id)
+
+            existing_context = getattr(status, "context", {}) or {}
+            merged_context = {
+                **existing_context,
+                "type": "favorites",
+                "program": context.get("program"),
+                "decade": context.get("decade"),
+                "collection_slug": context.get("collection_slug"),
+                "ranking_id": payload["track"].get("ranking_id"),
+                "spotify_track_id": spotify_id,
+                "started_by": "frontend",
+            }
+
+            update_phase(
+                "track",
+                track_name=track.track_name,
+                artist_name=track.artist_name,
+                current_rank=track.rank,
+                context=merged_context,
+            )
+
+        reset_for_single_track()
+        await start_new_sequence(_play_favorites_one())
+        return {"ok": True, "message": "Favorites single-track playback started"}
+
+
+
+    if context["type"] == "decade_genre":
+        from backend.services.decade_genre_sequence import (
+            run_decade_genre_sequence,
+            run_decade_genre_continuous_sequence
+        )
+
+        is_continuous = payload["selection"].get("continuous", False)
+        logger.warning("🔎 selection payload = %s", payload.get("selection"))
+        logger.warning("🔎 is_continuous parsed = %s", is_continuous)
+
+        if is_continuous:
+            logger.warning("📻 RADIO MODE ENABLED (continuous)")
+
+            coro = run_decade_genre_continuous_sequence(
+                decade=context["decade"],
+                genre=context["genre"],
+                start_rank=track.rank,
+                end_rank=40,
+                mode="count_up",
+                tts_language=selection.language,
+                play_intro=True,
+                play_detail="detail" in selection.voices,
+                play_artist_description="artist" in selection.voices,
+                play_track=True,
+                voice_style=selection.voicePlayMode,
+            )
+        else:
+            logger.warning("🎯 SINGLE MODE ENABLED")
+
+            coro = run_decade_genre_sequence(
+                decade=context["decade"],
+                genre=context["genre"],
+                start_rank=track.rank,
+                end_rank=track.rank,
+                mode="count_up",
+                tts_language=selection.language,
+                play_intro=True,
+                play_detail="detail" in selection.voices,
+                play_artist_description="artist" in selection.voices,
+                play_track=True,
+                voice_style=selection.voicePlayMode,
+            )
+
+
 
 
     elif context["type"] == "collection":
@@ -381,3 +532,36 @@ async def warmup_playback():
     except Exception as exc:
         logger.exception("🔥 Playback warmup failed")
         raise HTTPException(status_code=500, detail=str(exc))
+
+# backend/routers/playback_control.py (or playback_status.py)
+
+@router.post("/reset")
+async def reset_playback_state():
+    from backend.state.playback_state import status
+    from backend.state.playback_flags import flags
+    from backend.routers.playback_control import cancel_current_sequence
+
+    # Kill any running sequence first
+    await cancel_current_sequence()
+
+    # Reset public playback state
+    status.is_playing = False
+    status.is_paused = False
+    status.stopped = True
+    status.phase = None
+    status.track_name = None
+    status.artist_name = None
+    status.current_rank = None
+    status.context = {}
+    status.bed_playing = False
+    status.started_by = None
+    status.track_start_ts = None
+    status.track_elapsed_seconds = 0
+    status.track_duration_seconds = 0
+
+    # Reset engine flags
+    flags.is_playing = False
+    flags.stopped = True
+    flags.cancel_requested = False
+
+    return {"ok": True}

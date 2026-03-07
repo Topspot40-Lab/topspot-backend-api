@@ -2,19 +2,34 @@ from __future__ import annotations
 
 from dataclasses import asdict
 import time
+import logging
 
 from backend.state.playback_state import status
 
 from fastapi import APIRouter
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
+from backend.services.spotify.playback import (
+    play_spotify_track,
+    stop_spotify_playback,
+    ensure_active_device,   # ✅ add
+)
+
+
+from backend.config import SPOTIFY_BED_TRACK_ID
+from backend.state.narration import narration_done_event, track_done_event
+
+
 
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
+logger = logging.getLogger(__name__)
+
 
 def update_track_clock():
     if status.is_playing and status.phase == "track":
-        status.track_elapsed_seconds = time.time() - status.track_start_ts
-
-
+        if status.track_start_ts is None:
+            status.track_elapsed_seconds = 0
+        else:
+            status.track_elapsed_seconds = time.time() - status.track_start_ts
 
 @router.get("/devices")
 async def get_devices():
@@ -27,15 +42,30 @@ async def get_devices():
         "devices": data.get("devices", [])
     }
 
-
-# router = APIRouter(prefix="/playback", tags=["Playback Status"])
-
-
 @router.get("/status")
 async def get_status():
     update_track_clock()
 
     snap = asdict(status)
+    ctx = snap.get("context") or {}
+    ctx["ranking_id"] = snap.get("current_ranking_id")
+
+    phase = snap.get("phase")
+    voice_style = ctx.get("voice_style")
+
+    # 🔥 Bed track control: ONLY for narration phases in BEFORE mode
+
+    if phase in ("intro", "detail", "artist") and voice_style == "before":
+        if not getattr(status, "bed_playing", False):
+            logger.info("🎧 Starting narration bed track (BEFORE mode)")
+            try:
+                await ensure_active_device()  # ✅ add
+                await play_spotify_track(SPOTIFY_BED_TRACK_ID)  # ✅ keep
+                status.bed_playing = True
+            except Exception as e:
+                logger.warning("⚠️ Could not start bed track: %s", e)
+
+    # Otherwise do nothing here; bed is stopped explicitly by narration-finished
 
     # Pick which clock to expose
     if snap["phase"] == "track":
@@ -51,7 +81,7 @@ async def get_status():
         "isPlaying": snap.get("is_playing", False),
         "isPaused": snap.get("is_paused", False),
         "stopped": snap.get("stopped", False),
-        "phase": snap.get("phase"),
+        "phase": phase,
 
         "trackName": snap.get("track_name"),
         "artistName": snap.get("artist_name"),
@@ -61,10 +91,8 @@ async def get_status():
         "durationMs": duration_ms,
         "progress": progress,
 
-        # 🔥 this is what feeds your poller
-        "context": snap.get("context"),
+        "context": ctx,
     }
-
 
 @router.post("/transfer/{device_id}")
 async def transfer_playback(device_id: str):
@@ -77,14 +105,44 @@ async def transfer_playback(device_id: str):
 
 @router.post("/narration-finished")
 async def narration_finished():
-    """
-    Called by frontend when narration audio ends in BEFORE mode.
-    This releases safe_play() so Spotify can start.
-    """
-    from backend.state.playback_state import status, update_phase
 
-    if status.phase in ("intro", "detail", "artist", "collections_intro"):
-        update_phase("music", is_playing=False)
 
-    return {"ok": True, "phase": status.phase}
+    ctx = status.context or {}
+    voice_style = ctx.get("voice_style")
+
+    logger.info(
+        "🔔 Narration finished signal received (phase=%s, voice_style=%s)",
+        status.phase,
+        voice_style
+    )
+
+    # Stop bed track only for BEFORE narration
+    if voice_style == "before" and getattr(status, "bed_playing", False):
+        logger.info("🔉 Stopping narration bed track (BEFORE mode)")
+        try:
+            await stop_spotify_playback(fade_out_seconds=1.2)
+        except Exception as e:
+            logger.warning("⚠️ Failed to stop bed track: %s", e)
+
+        status.bed_playing = False
+
+    # ✅ Signal narration completion (NOT skip)
+    narration_done_event.set()
+
+    return {"ok": True}
+
+from backend.state.narration import track_done_event
+
+from backend.state.narration import track_done_event
+
+@router.post("/track-finished")
+async def track_finished():
+    logger.info("🎵 Track finished signal received")
+
+    # Signal backend sequence loop that Spotify track is done
+    track_done_event.set()
+
+    return {"ok": True}
+
+
 

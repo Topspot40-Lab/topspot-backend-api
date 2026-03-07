@@ -10,7 +10,6 @@ from backend.routers.playback_status import router as playback_status_router
 from backend.routers.playback_control import router as playback_control_router
 from backend.routers.decade_genre_player import router as decade_genre_player_router
 from backend.routers.collections_player import router as collections_player_router
-from backend.routers.single_track_player import router as single_track_player_router
 from backend.routers.decade_genre_pause import router as decade_genre_pause_router
 
 # 🔐 Spotify Auth (THIS WAS MISSING)
@@ -22,6 +21,7 @@ from backend.routers.feedback import feedback_router
 from backend.isaiah.isaiah_router import stripe_router
 from backend.isaiah.isaiah_router import spotify_auth_router
 
+from backend.routers import supabase_collections
 
 import logging
 
@@ -42,6 +42,7 @@ from fastapi.responses import HTMLResponse
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
+    print("🔥🔥🔥 ROOT ENDPOINT HIT 🔥🔥🔥")
     return """
     <html>
       <head>
@@ -57,6 +58,7 @@ async def root():
 
 
 
+
 # 🔓 CORS — REQUIRED for frontend access
 app.add_middleware(
     CORSMiddleware,
@@ -64,13 +66,15 @@ app.add_middleware(
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "https://topspot40.com",
-        "https://topspot40-frontend-app.netlify.app",
-
+        "https://www.topspot40.com",
+        "https://topspot40.netlify.app",
+        "https://sparkling-croissant-23bbac.netlify.app",
     ],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # 🧪 Basic health + catalog
 app.include_router(health_router)
@@ -95,3 +99,4 @@ app.include_router(spotify_auth_router, prefix="/api/auth")
 app.include_router(stripe_router, prefix="/api")
 # Feedback/bug report logic endpoint
 app.include_router(feedback_router, prefix="/api")
+app.include_router(supabase_collections.router)

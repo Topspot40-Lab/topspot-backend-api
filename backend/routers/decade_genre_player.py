@@ -42,20 +42,27 @@ async def play_first_decade_genre(
     voice_style: Literal["before", "over"] = Query("before"),
 ):
     logger.info(
-        "⚡ FAST PLAY-FIRST (SERIALIZED): %s/%s lang=%s voice_style=%s",
+        "⚡ FAST PLAY-FIRST: %s/%s mode=%s",
         decade,
         genre,
-        tts_language,
-        voice_style,
+        mode,
     )
 
-    async def _run_serial_fast_then_full():
-        # ✅ First: rank #1 only
+    async def _run_full_sequence():
+        # Determine correct first rank
+        if mode == "count_down":
+            first_rank = 40
+        elif mode == "random":
+            first_rank = random.randint(1, 40)
+        else:
+            first_rank = 1
+
+        # Play first track only
         await run_decade_genre_sequence(
             decade=decade,
             genre=genre,
-            start_rank=1,
-            end_rank=1,
+            start_rank=first_rank,
+            end_rank=first_rank,
             mode=mode,
             tts_language=tts_language,
             play_intro=play_intro,
@@ -65,11 +72,11 @@ async def play_first_decade_genre(
             voice_style=voice_style,
         )
 
-        # ✅ THEN continue with 2–40 (no overlap possible)
+        # Continue remaining tracks
         await run_decade_genre_sequence(
             decade=decade,
             genre=genre,
-            start_rank=2,
+            start_rank=1,
             end_rank=40,
             mode=mode,
             tts_language=tts_language,
@@ -80,14 +87,13 @@ async def play_first_decade_genre(
             voice_style=voice_style,
         )
 
-    await start_new_sequence(_run_serial_fast_then_full())
+    await start_new_sequence(_run_full_sequence())
 
     return {
-        "status": "started-fast-serialized",
+        "status": "started",
         "decade": decade,
         "genre": genre,
         "mode": mode,
-        "voice_style": voice_style,
     }
 
 
@@ -254,6 +260,13 @@ async def get_sequence_decade_genre(
     end_rank: int = Query(40),
     db=Depends(get_db),
 ):
+    conditions = [
+        Genre.slug == genre,
+    ]
+
+    if decade != "ALL":
+        conditions.append(Decade.slug == decade)
+
     q = (
         select(Track, Artist, TrackRanking, Decade, Genre)
         .join(Artist, Artist.id == Track.artist_id)
@@ -261,12 +274,66 @@ async def get_sequence_decade_genre(
         .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
         .join(Decade, Decade.id == DecadeGenre.decade_id)
         .join(Genre, Genre.id == DecadeGenre.genre_id)
-        .where(
-            Decade.slug == decade,
-            Genre.slug == genre,
-            TrackRanking.ranking >= start_rank,
-            TrackRanking.ranking <= end_rank,
-        )
+        .where(*conditions)
+        .order_by(Decade.slug, TrackRanking.ranking)
+    )
+
+    rows = db.exec(q).all()
+
+    if not rows:
+        return {"status": "empty", "tracks": []}
+
+    tracks = []
+
+    for track, artist, ranking, decade_obj, genre_obj in rows:
+        tracks.append({
+            "rankingId": ranking.id,
+            "rank": ranking.ranking,
+            "trackName": track.track_name,
+            "artistName": artist.artist_name,
+            "spotifyTrackId": track.spotify_track_id,
+            "durationMs": track.duration_ms,
+            "yearReleased": track.year_released,
+            "decade": decade_obj.slug,
+            "genre": genre_obj.slug,
+            "albumArtwork": track.album_artwork,
+            "artistArtwork": artist.artist_artwork,
+        })
+
+    return {
+        "status": "ok",
+        "total": len(tracks),
+        "tracks": tracks,
+    }
+
+
+from pydantic import BaseModel
+from typing import List
+
+class FavoritesRequest(BaseModel):
+    ranking_ids: List[int]
+
+# ─────────────────────────────────────────────
+# FAVORITES (DECADE – ALL GENRES)
+# ─────────────────────────────────────────────
+@router.post("/get-favorites")
+async def get_favorites_decade(
+    payload: FavoritesRequest,
+    db=Depends(get_db),
+):
+    ranking_ids = payload.ranking_ids
+
+    if not ranking_ids:
+        return {"status": "empty", "tracks": []}
+
+    q = (
+        select(Track, Artist, TrackRanking, Decade, Genre)
+        .join(Artist, Artist.id == Track.artist_id)
+        .join(TrackRanking, TrackRanking.track_id == Track.id)
+        .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
+        .join(Decade, Decade.id == DecadeGenre.decade_id)
+        .join(Genre, Genre.id == DecadeGenre.genre_id)
+        .where(TrackRanking.id.in_(ranking_ids))
         .order_by(TrackRanking.ranking)
     )
 
@@ -277,16 +344,39 @@ async def get_sequence_decade_genre(
 
     tracks = [
         {
+            # ⭐ Favorite display rank (will be reordered later on frontend)
             "rank": tr_rank.ranking,
+
+            # ⭐ Original DG rank (for ticker)
+            "sourceRank": tr_rank.ranking,
+
+            "rankingId": tr_rank.id,
+            "trackId": track.id,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
+
+            # ✅ NEW
+            "genreSlug": getattr(genre, "slug", None),
+            "genreName": getattr(genre, "name", None),
+
+            "decadeSlug": getattr(decade, "slug", None),
+            "decadeName": getattr(decade, "name", None),
+
+            "albumArtwork": getattr(track, "album_artwork", None),
+            "artistArtwork": getattr(artist, "artist_artwork", None),
+            "detail": getattr(track, "detail", None),
+            "artistDescription": getattr(artist, "artist_description", None),
+            "albumName": getattr(track, "album_name", None),
             "yearReleased": getattr(track, "year_released", None),
             "durationMs": getattr(track, "duration_ms", None),
-            "albumArtwork": getattr(track, "album_artwork", None),
             "spotifyTrackId": getattr(track, "spotify_track_id", None),
-            "albumName": getattr(track, "album_name", None),
+            "intro": tr_rank.intro,
         }
-        for track, artist, tr_rank, _, _ in rows
+        for track, artist, tr_rank, decade, genre in rows
     ]
 
-    return {"status": "ok", "total": len(tracks), "tracks": tracks}
+    return {
+        "status": "ok",
+        "total": len(tracks),
+        "tracks": tracks,
+    }

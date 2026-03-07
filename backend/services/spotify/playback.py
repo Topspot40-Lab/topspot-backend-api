@@ -222,3 +222,17 @@ async def stop_spotify_playback(fade_out_seconds: float = 1.5, steps: int = 10) 
 
     except Exception as e:
         logger.warning("⚠️ stop_spotify_playback error: %s", e)
+
+async def ensure_active_device():
+    sp = get_spotify_user_client()
+    devices = sp.devices().get("devices", [])
+    if not devices:
+        raise RuntimeError("No Spotify devices available")
+
+    active = next((d for d in devices if d["is_active"]), None)
+    if active:
+        return
+
+    # Activate the first device
+    device_id = devices[0]["id"]
+    sp.transfer_playback(device_id=device_id, force_play=True)
