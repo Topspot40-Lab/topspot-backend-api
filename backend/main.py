@@ -16,6 +16,11 @@ from backend.routers.decade_genre_pause import router as decade_genre_pause_rout
 from backend.routers.spotify_auth import router as spotify_auth_router
 from backend.routers.feedback import feedback_router
 
+
+# Isaiah's endpoints 
+from backend.isaiah.isaiah_router import stripe_router
+from backend.isaiah.isaiah_router import spotify_auth_router
+
 from backend.routers import supabase_collections
 
 import logging
@@ -84,5 +89,14 @@ app.include_router(decade_genre_player_router)
 app.include_router(collections_player_router)
 app.include_router(decade_genre_pause_router)
 app.include_router(playback_control_router)
+app.include_router(feedback_router, prefix="/api")
+
+
+
+# Spotify Auth endpoints 
+app.include_router(spotify_auth_router, prefix="/api/auth")
+# Stripe endpoints
+app.include_router(stripe_router, prefix="/api")
+# Feedback/bug report logic endpoint
 app.include_router(feedback_router, prefix="/api")
 app.include_router(supabase_collections.router)

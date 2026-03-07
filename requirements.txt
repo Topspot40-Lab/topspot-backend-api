@@ -56,6 +56,7 @@ starlette==0.50.0
 storage3==2.27.1
 StrEnum==0.4.15
 strictyaml==1.7.3
+stripe==14.2.0
 supabase==2.27.1
 supabase-auth==2.27.1
 supabase-functions==2.27.1
