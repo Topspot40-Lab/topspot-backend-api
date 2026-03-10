@@ -342,6 +342,12 @@ async def run_decade_genre_sequence(
                 voice_style=voice_style,
             )
 
+        logger.info(
+            "🔍 DEBUG spotify id for rank %s → %s",
+            rank,
+            track.spotify_track_id
+        )
+
         # ───────── TRACK (publish spotify id) ─────────
         if play_track and track.spotify_track_id:
             update_phase(
