@@ -87,3 +87,21 @@ def whoami():
     sp = spotipy.Spotify(auth_manager=am)
     me = sp.current_user()  # raises on 401/invalid token
     return {"id": me.get("id"), "name": me.get("display_name")}
+
+
+
+
+
+# DEBUG ROUTE, TO CHECK IF SPOTIFY TOKEN CACHE FILE EXISTS ON RENDER
+@router.get("/cache-check")
+def cache_check():
+    """
+    Temporary debug route:
+    confirms whether the Spotify token cache file exists on Render.
+    """
+    from backend.services.spotify.spotify_auth_user import CACHE_FILE
+
+    return {
+        "cache_exists": CACHE_FILE.exists(),
+        "cache_file": str(CACHE_FILE),
+    }
