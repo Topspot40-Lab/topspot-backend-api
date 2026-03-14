@@ -58,7 +58,15 @@ async def play_spotify(req: PlaySpotifyRequest):
     logger.info("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
 
     # Start Spotify playback
-    await play_spotify_track(req.spotify_track_id)
+    ok = await play_spotify_track(req.spotify_track_id)
+
+    if not ok:
+        logger.error("❌ Spotify playback failed for %s", req.spotify_track_id)
+        return {
+            "ok": False,
+            "error": "Spotify playback failed",
+            "spotify_track_id": req.spotify_track_id,
+        }
 
     # Optional: reinforce phase for UI sync
     existing_context = getattr(status, "context", {}) or {}
