@@ -71,7 +71,7 @@ app.add_middleware(
         "https://sparkling-croissant-23bbac.netlify.app",
         "https://resplendent-gaufre-032b1a.netlify.app",
     ],
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

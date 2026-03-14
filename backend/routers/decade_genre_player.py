@@ -26,20 +26,21 @@ from backend.state.playback_flags import flags
 router = APIRouter(prefix="/supabase/decade-genre", tags=["Supabase: Decade/Genre"])
 logger = logging.getLogger(__name__)
 
+
 # ─────────────────────────────────────────────
 # FAST PLAY-FIRST (INSTANT START)
 # ─────────────────────────────────────────────
 @router.get("/play-first")
 async def play_first_decade_genre(
-    decade: str = Query(...),
-    genre: str = Query(...),
-    mode: Literal["count_up", "count_down", "random"] = Query("count_up"),
-    tts_language: Literal["en", "es", "ptbr", "pt-BR"] = Query("en"),
-    play_intro: bool = Query(True),
-    play_detail: bool = Query(True),
-    play_artist_description: bool = Query(True),
-    play_track: bool = Query(True),
-    voice_style: Literal["before", "over"] = Query("before"),
+        decade: str = Query(...),
+        genre: str = Query(...),
+        mode: Literal["count_up", "count_down", "random"] = Query("count_up"),
+        tts_language: Literal["en", "es", "ptbr", "pt-BR"] = Query("en"),
+        play_intro: bool = Query(True),
+        play_detail: bool = Query(True),
+        play_artist_description: bool = Query(True),
+        play_track: bool = Query(True),
+        voice_style: Literal["before", "over"] = Query("before"),
 ):
     logger.info(
         "⚡ FAST PLAY-FIRST: %s/%s mode=%s",
@@ -102,17 +103,17 @@ async def play_first_decade_genre(
 # ─────────────────────────────────────────────
 @router.get("/play-sequence")
 async def play_sequence_decade_genre(
-    decade: str = Query(...),
-    genre: str = Query(...),
-    start_rank: int = Query(1),
-    end_rank: int = Query(40),
-    mode: Literal["count_up", "count_down", "random"] = Query("count_up"),
-    tts_language: Literal["en", "es", "ptbr", "pt-BR"] = Query("en"),
-    play_intro: bool = Query(True),
-    play_detail: bool = Query(True),
-    play_artist_description: bool = Query(True),
-    play_track: bool = Query(False),
-    voice_style: Literal["before", "over"] = Query("before"),
+        decade: str = Query(...),
+        genre: str = Query(...),
+        start_rank: int = Query(1),
+        end_rank: int = Query(40),
+        mode: Literal["count_up", "count_down", "random"] = Query("count_up"),
+        tts_language: Literal["en", "es", "ptbr", "pt-BR"] = Query("en"),
+        play_intro: bool = Query(True),
+        play_detail: bool = Query(True),
+        play_artist_description: bool = Query(True),
+        play_track: bool = Query(False),
+        voice_style: Literal["before", "over"] = Query("before"),
 ):
     logger.info(
         "▶ Launch request: %s/%s %d-%d mode=%s lang=%s voice_style=%s",
@@ -254,11 +255,11 @@ async def play_next_decade_genre():
 # ─────────────────────────────────────────────
 @router.get("/get-sequence")
 async def get_sequence_decade_genre(
-    decade: str = Query(...),
-    genre: str = Query(...),
-    start_rank: int = Query(1),
-    end_rank: int = Query(40),
-    db=Depends(get_db),
+        decade: str = Query(...),
+        genre: str = Query(...),
+        start_rank: int = Query(1),
+        end_rank: int = Query(40),
+        db=Depends(get_db),
 ):
     conditions = [
         Genre.slug == genre,
@@ -266,6 +267,11 @@ async def get_sequence_decade_genre(
 
     if decade != "ALL":
         conditions.append(Decade.slug == decade)
+
+    if decade == "ALL":
+        order_clause = (TrackRanking.ranking,)
+    else:
+        order_clause = (Decade.slug, TrackRanking.ranking)
 
     q = (
         select(Track, Artist, TrackRanking, Decade, Genre)
@@ -275,9 +281,8 @@ async def get_sequence_decade_genre(
         .join(Decade, Decade.id == DecadeGenre.decade_id)
         .join(Genre, Genre.id == DecadeGenre.genre_id)
         .where(*conditions)
-        .order_by(Decade.slug, TrackRanking.ranking)
+        .order_by(*order_clause)
     )
-
     rows = db.exec(q).all()
 
     if not rows:
@@ -289,15 +294,29 @@ async def get_sequence_decade_genre(
         tracks.append({
             "rankingId": ranking.id,
             "rank": ranking.ranking,
+
             "trackName": track.track_name,
             "artistName": artist.artist_name,
+
             "spotifyTrackId": track.spotify_track_id,
             "durationMs": track.duration_ms,
             "yearReleased": track.year_released,
+
             "decade": decade_obj.slug,
             "genre": genre_obj.slug,
+
             "albumArtwork": track.album_artwork,
             "artistArtwork": artist.artist_artwork,
+
+            # narration text
+            "intro": getattr(ranking, "intro", None),
+            "detail": getattr(track, "detail", None),
+            "artistDescription": getattr(artist, "artist_description", None),
+
+            # ⭐ ADD THESE
+            "introKey": getattr(ranking, "intro_key", None),
+            "detailKey": getattr(track, "detail_key", None),
+            "artistKey": getattr(artist, "artist_description_key", None),
         })
 
     return {
@@ -310,16 +329,18 @@ async def get_sequence_decade_genre(
 from pydantic import BaseModel
 from typing import List
 
+
 class FavoritesRequest(BaseModel):
     ranking_ids: List[int]
+
 
 # ─────────────────────────────────────────────
 # FAVORITES (DECADE – ALL GENRES)
 # ─────────────────────────────────────────────
 @router.post("/get-favorites")
 async def get_favorites_decade(
-    payload: FavoritesRequest,
-    db=Depends(get_db),
+        payload: FavoritesRequest,
+        db=Depends(get_db),
 ):
     ranking_ids = payload.ranking_ids
 

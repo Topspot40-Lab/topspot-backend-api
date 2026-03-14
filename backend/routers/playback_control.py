@@ -208,7 +208,9 @@ async def play_track(payload: dict):
         return {"ok": False, "error": "Missing playback context"}
 
     logger.info(
-        "▶️ /playback/play-track (single-step via sequence): rank=%s mode=%s context=%s",
+        "▶️ /playback/play-track (single-step via sequence): program=DG|%s|%s rank=%s mode=%s context=%s",
+        context.get("decade"),
+        context.get("genre"),
         track.rank,
         selection.voicePlayMode,
         context.get("type"),
