@@ -261,17 +261,26 @@ async def get_sequence_decade_genre(
         end_rank: int = Query(40),
         db=Depends(get_db),
 ):
-    conditions = [
-        Genre.slug == genre,
-    ]
+    conditions = []
 
     if decade != "ALL":
         conditions.append(Decade.slug == decade)
 
-    if decade == "ALL":
-        order_clause = (TrackRanking.ranking,)
+    if genre != "ALL":
+        conditions.append(Genre.slug == genre)
+
+    # ordering
+    if decade == "ALL" and genre == "ALL":
+        order_clause = (Decade.slug, Genre.slug, TrackRanking.ranking)
+
+    elif decade == "ALL":
+        order_clause = (Genre.slug, Decade.slug, TrackRanking.ranking)
+
+    elif genre == "ALL":
+        order_clause = (Decade.slug, Genre.slug, TrackRanking.ranking)
+
     else:
-        order_clause = (Decade.slug, TrackRanking.ranking)
+        order_clause = (TrackRanking.ranking,)
 
     q = (
         select(Track, Artist, TrackRanking, Decade, Genre)
@@ -280,9 +289,12 @@ async def get_sequence_decade_genre(
         .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
         .join(Decade, Decade.id == DecadeGenre.decade_id)
         .join(Genre, Genre.id == DecadeGenre.genre_id)
-        .where(*conditions)
-        .order_by(*order_clause)
     )
+
+    if conditions:
+        q = q.where(*conditions)
+
+    q = q.order_by(*order_clause)
     rows = db.exec(q).all()
 
     if not rows:
