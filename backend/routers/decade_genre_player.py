@@ -6,6 +6,7 @@ from typing import Literal
 
 from fastapi import APIRouter, Query, Depends
 from sqlmodel import select
+from backend.services.all_radio_sequence import run_all_radio_sequence
 
 from backend.database import get_db
 from backend.models.dbmodels import (
@@ -125,6 +126,23 @@ async def play_sequence_decade_genre(
         tts_language,
         voice_style,
     )
+
+    # ─────────────────────────────────────────────
+    # ALL / ALL → RADIO MODE
+    # ─────────────────────────────────────────────
+    if decade == "ALL" and genre == "ALL":
+        logger.info("📻 Switching to ALL-ALL radio mode")
+
+        await start_new_sequence(
+            run_all_radio_sequence(
+                tts_language=tts_language
+            )
+        )
+
+        return {
+            "status": "started",
+            "mode": "all_radio",
+        }
 
     coro = run_decade_genre_sequence(
         decade=decade,
