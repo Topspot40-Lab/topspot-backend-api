@@ -10,9 +10,12 @@ from datetime import datetime, timedelta, timezone
 #from main import supabase  # import your Supabase client
 from supabase import create_client
 import logging
-from backend.isaiah.isaiah_helper import get_env_config, get_spotify_redirect_uri 
+from backend.isaiah.isaiah_helper import get_env_config, get_spotify_redirect_uri, get_frontend_url
 import uuid
 
+
+# Flag to switch between local dev and Netlify deployment
+IS_LOCAL = False  # set False when deploying to Netlify, set True if running locally
 
 load_dotenv()
 
@@ -107,10 +110,10 @@ def spotify_login():
     client_id = SPOTIFY_CLIENT_ID
     #redirect_uri = "https://api.topspot40.com/api/auth/spotify/callback"
     #redirect_uri = "http://127.0.0.1:8000/api/auth/spotify/callback"
-    redirect_uri = get_spotify_redirect_uri()
+    redirect_uri = get_spotify_redirect_uri(local=IS_LOCAL)
     scopes = "user-read-private playlist-read-private user-read-email user-read-private user-read-playback-state user-modify-playback-state streaming" # "user-read-private playlist-read-private"
     params = {
-        "client_id": client_id,
+        "client_id": SPOTIFY_CLIENT_ID, # client_id
         "response_type": "code",
         "redirect_uri": redirect_uri,
         "scope": scopes,
@@ -144,7 +147,7 @@ async def spotify_callback(request: Request):
     #redirect_uri = "http://127.0.0.1:8000/api/auth/spotify/callback"
 
 
-    redirect_uri = get_spotify_redirect_uri()
+    redirect_uri = get_spotify_redirect_uri(local=IS_LOCAL)
 
     token_data = await exchange_code_for_token(code, redirect_uri)
     access_token = token_data["access_token"]
@@ -209,9 +212,9 @@ async def spotify_callback(request: Request):
     
 
     if not sub.data or len(sub.data) == 0:
-        redirect_url = "/create-account" # "http://localhost:8000/app/create-account"
+        redirect_url = f"{get_frontend_url(local=IS_LOCAL)}/create-account" # "http://localhost:8000/app/create-account"
     else:
-        redirect_url = "/dashboard" # "http://localhost:8000/dashboard"
+        redirect_url = f"{get_frontend_url(local=IS_LOCAL)}/dashboard" # "http://localhost:8000/dashboard"
     redirect_response = RedirectResponse(redirect_url)
 
 
@@ -225,7 +228,8 @@ async def spotify_callback(request: Request):
         value=jwt_token,
         httponly=True,
         #secure=False, # remove when in production
-        secure=True,  # True if HTTPS, uncomment this when in production
+        #secure=True,  # True if HTTPS, uncomment this when in production
+        secure=config["SECURE_COOKIE"],
         #samesite="lax", # might have to change to "none" in production
         samesite="none",# Uncomment for production
         max_age=JWT_EXP_DELTA_SECONDS,
@@ -330,9 +334,9 @@ async def create_checkout_session(access_token: str = Cookie(None)):
             client_reference_id=user_id, # stripe will know who made the subscription, saves us later pains of subscription recoveries
             metadata={ "topspot_user_id": user_id }, # extra key-value data from stripe
             #success_url="https://topspot40.com/app/success?session_id={CHECKOUT_SESSION_ID}", # This is for production!!!
-            success_url="http://localhost:5173/app/success?session_id={CHECKOUT_SESSION_ID}",
+            success_url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={CHECKOUT_SESSION_ID}",
             #cancel_url="https://topspot40.com/app/create-account",
-            cancel_url="http://localhost:5173/app/create-account",
+            cancel_url=f"{get_frontend_url(local=IS_LOCAL)}/app/create-account",
         )
         return {"url": session.url}
 
@@ -381,7 +385,7 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
             }).execute()
 
         #return {"status": status, "subscription_id": subscription_id}
-        return RedirectResponse(url=f"http://localhost:5173/app/success?session_id={session_id}")
+        return RedirectResponse(url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={session_id}")
 
     except Exception as e:
         logger.exception("Failed to verify Stripe subscription")
