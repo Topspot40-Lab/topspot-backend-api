@@ -224,9 +224,10 @@ async def spotify_callback(request: Request):
         key="access_token",
         value=jwt_token,
         httponly=True,
-        secure=False, # remove when in production
-        #secure=True,  # True if HTTPS, uncomment this when in production
-        samesite="lax",
+        #secure=False, # remove when in production
+        secure=True,  # True if HTTPS, uncomment this when in production
+        #samesite="lax", # might have to change to "none" in production
+        samesite="none",# Uncomment for production
         max_age=JWT_EXP_DELTA_SECONDS,
         path="/",
     )
