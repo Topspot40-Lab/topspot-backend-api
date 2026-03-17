@@ -113,7 +113,7 @@ def spotify_login():
     redirect_uri = get_spotify_redirect_uri(local=IS_LOCAL)
     scopes = "user-read-private playlist-read-private user-read-email user-read-private user-read-playback-state user-modify-playback-state streaming" # "user-read-private playlist-read-private"
     params = {
-        "client_id": SPOTIFY_CLIENT_ID, # client_id
+        "client_id": client_id, # client_id
         "response_type": "code",
         "redirect_uri": redirect_uri,
         "scope": scopes,
@@ -230,8 +230,8 @@ async def spotify_callback(request: Request):
         #secure=False, # remove when in production
         #secure=True,  # True if HTTPS, uncomment this when in production
         secure=config["SECURE_COOKIE"],
-        #samesite="lax", # might have to change to "none" in production
-        samesite="none",# Uncomment for production
+        samesite="lax", # might have to change to "none" in production
+        #samesite="none",# Uncomment for production
         max_age=JWT_EXP_DELTA_SECONDS,
         path="/",
     )
@@ -334,7 +334,7 @@ async def create_checkout_session(access_token: str = Cookie(None)):
             client_reference_id=user_id, # stripe will know who made the subscription, saves us later pains of subscription recoveries
             metadata={ "topspot_user_id": user_id }, # extra key-value data from stripe
             #success_url="https://topspot40.com/app/success?session_id={CHECKOUT_SESSION_ID}", # This is for production!!!
-            success_url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={CHECKOUT_SESSION_ID}",
+            success_url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={{CHECKOUT_SESSION_ID}}",
             #cancel_url="https://topspot40.com/app/create-account",
             cancel_url=f"{get_frontend_url(local=IS_LOCAL)}/app/create-account",
         )
