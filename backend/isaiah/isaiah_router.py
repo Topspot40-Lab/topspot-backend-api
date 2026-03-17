@@ -234,6 +234,7 @@ async def spotify_callback(request: Request):
         samesite="none",# Uncomment for production
         max_age=JWT_EXP_DELTA_SECONDS,
         path="/",
+        domain=config["COOKIE_DOMAIN"],
     )
 
     logger.info(f"Redirecting to {redirect_url} with JWT cookie {jwt_token}")
