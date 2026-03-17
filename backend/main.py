@@ -65,12 +65,14 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "http://127.0.0.1:8000",
         "https://topspot40.com",
         "https://www.topspot40.com",
         "https://topspot40.netlify.app",
         "https://sparkling-croissant-23bbac.netlify.app",
     ],
-    allow_credentials=False,
+    #allow_credentials=False,
+    allow_credentials=True, # must be True for Cookies
     allow_methods=["*"],
     allow_headers=["*"],
 )

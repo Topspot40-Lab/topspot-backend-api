@@ -5,8 +5,8 @@ def get_env_config():
     Returns backend configuration for cookies.
     """
     return {
-        "COOKIE_DOMAIN": None,  # set "topspot40.com" for production if needed
-        "SECURE_COOKIE": False  # set True if using HTTPS in production
+        "COOKIE_DOMAIN": "https://resplendent-gaufre-032b1a.netlify.app",  # set "topspot40.com" for production if needed, None if local
+        "SECURE_COOKIE": True  # set True if using HTTPS in production, False if local
     }
 
 def get_spotify_redirect_uri(local: bool = True):
