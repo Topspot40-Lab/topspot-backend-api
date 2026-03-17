@@ -58,7 +58,15 @@ async def play_spotify(req: PlaySpotifyRequest):
     logger.info("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
 
     # Start Spotify playback
-    await play_spotify_track(req.spotify_track_id)
+    ok = await play_spotify_track(req.spotify_track_id)
+
+    if not ok:
+        logger.error("❌ Spotify playback failed for %s", req.spotify_track_id)
+        return {
+            "ok": False,
+            "error": "Spotify playback failed",
+            "spotify_track_id": req.spotify_track_id,
+        }
 
     # Optional: reinforce phase for UI sync
     existing_context = getattr(status, "context", {}) or {}
@@ -208,7 +216,9 @@ async def play_track(payload: dict):
         return {"ok": False, "error": "Missing playback context"}
 
     logger.info(
-        "▶️ /playback/play-track (single-step via sequence): rank=%s mode=%s context=%s",
+        "▶️ /playback/play-track (single-step via sequence): program=DG|%s|%s rank=%s mode=%s context=%s",
+        context.get("decade"),
+        context.get("genre"),
         track.rank,
         selection.voicePlayMode,
         context.get("type"),
@@ -306,14 +316,33 @@ async def play_track(payload: dict):
         await start_new_sequence(_play_favorites_one())
         return {"ok": True, "message": "Favorites single-track playback started"}
 
-
-
     if context["type"] == "decade_genre":
+        # logger.warning("DECADE GENRE CONTEXT → %s", context)
+
+        if context.get("decade", "").lower() == "all":
+            if not track.spotify_track_id:
+                return {"ok": False, "error": "Missing spotify_track_id for ALL decade playback"}
+
+            await play_spotify_track(track.spotify_track_id)
+
+            update_phase(
+                "track",
+                track_name=track.track_name,
+                artist_name=track.artist_name,
+                current_rank=track.rank,
+                context={
+                    **context,
+                    "spotify_track_id": track.spotify_track_id,
+                    "started_by": "frontend",
+                },
+            )
+
+            return {"ok": True, "message": "ALL decade direct playback"}
+
         from backend.services.decade_genre_sequence import (
             run_decade_genre_sequence,
             run_decade_genre_continuous_sequence
         )
-
         is_continuous = payload["selection"].get("continuous", False)
         logger.warning("🔎 selection payload = %s", payload.get("selection"))
         logger.warning("🔎 is_continuous parsed = %s", is_continuous)

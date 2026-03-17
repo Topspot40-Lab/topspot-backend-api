@@ -303,6 +303,8 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
 
         ref = resolve_audio_ref(bucket, key)
 
+        logger.info("🧭 FRONTEND INTRO URL = %s", ref)
+
         update_phase(
             kind,
             is_playing=True,

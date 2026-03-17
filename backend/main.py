@@ -19,7 +19,7 @@ from backend.routers.feedback import feedback_router
 
 # Isaiah's endpoints 
 from backend.isaiah.isaiah_router import stripe_router
-from backend.isaiah.isaiah_router import spotify_auth_router
+from backend.isaiah.isaiah_router import spotify_user_auth_router
 
 from backend.routers import supabase_collections
 
@@ -97,7 +97,7 @@ app.include_router(feedback_router, prefix="/api")
 
 
 # Spotify Auth endpoints 
-app.include_router(spotify_auth_router, prefix="/api/auth")
+app.include_router(spotify_user_auth_router, prefix="/api/auth")
 # Stripe endpoints
 app.include_router(stripe_router, prefix="/api")
 # Feedback/bug report logic endpoint

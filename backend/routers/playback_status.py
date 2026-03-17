@@ -83,9 +83,9 @@ async def get_status():
         "stopped": snap.get("stopped", False),
         "phase": phase,
 
-        "trackName": snap.get("track_name"),
-        "artistName": snap.get("artist_name"),
-        "currentRank": snap.get("current_rank"),
+        "track_name": snap.get("track_name"),
+        "artist_name": snap.get("artist_name"),
+        "current_rank": snap.get("current_rank"),
 
         "elapsedMs": elapsed_ms,
         "durationMs": duration_ms,

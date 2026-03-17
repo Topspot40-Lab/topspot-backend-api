@@ -68,6 +68,9 @@ async def publish_narration_phase(
 ):
     audio_url = resolve_audio_ref(bucket, key)
 
+    logger.info("🎙 publish_narration_phase phase=%s decade=%s genre=%s bucket=%s key=%s",
+                phase, decade, genre, bucket, key)
+
     update_phase(
         phase,
         track_name=track.track_name,
@@ -289,8 +292,10 @@ async def run_decade_genre_sequence(
 
         intro_jobs = build_intro_jobs(
             lang=tts_language,
-            tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
+            tr_rows=[(tr_rank, decade_obj.slug, genre_obj.slug)],
         )
+
+        logger.info("🎙 intro_jobs=%s", intro_jobs)
 
         detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
             lang=tts_language,
@@ -307,7 +312,7 @@ async def run_decade_genre_sequence(
                     track=track,
                     artist=artist,
                     rank=rank,
-                    decade=decade,
+                    decade=decade_obj.decade_name,
                     genre=genre,
                     bucket=ib,
                     key=ik,
@@ -321,7 +326,7 @@ async def run_decade_genre_sequence(
                 track=track,
                 artist=artist,
                 rank=rank,
-                decade=decade,
+                decade=decade_obj.decade_name,
                 genre=genre,
                 bucket=detail_bucket,
                 key=detail_key,
@@ -335,12 +340,18 @@ async def run_decade_genre_sequence(
                 track=track,
                 artist=artist,
                 rank=rank,
-                decade=decade,
+                decade=decade_obj.decade_name,
                 genre=genre,
                 bucket=artist_bucket,
                 key=artist_key,
                 voice_style=voice_style,
             )
+
+        logger.info(
+            "🔍 DEBUG spotify id for rank %s → %s",
+            rank,
+            track.spotify_track_id
+        )
 
         # ───────── TRACK (publish spotify id) ─────────
         if play_track and track.spotify_track_id:
@@ -513,7 +524,7 @@ async def run_decade_genre_continuous_sequence(
                         track=track,
                         artist=artist,
                         rank=rank,
-                        decade=decade,
+                        decade=decade_obj.decade_name,
                         genre=genre,
                         bucket=ib,
                         key=ik,
@@ -527,7 +538,7 @@ async def run_decade_genre_continuous_sequence(
                     track=track,
                     artist=artist,
                     rank=rank,
-                    decade=decade,
+                    decade=decade_obj.decade_name,
                     genre=genre,
                     bucket=detail_bucket,
                     key=detail_key,
@@ -541,7 +552,7 @@ async def run_decade_genre_continuous_sequence(
                     track=track,
                     artist=artist,
                     rank=rank,
-                    decade=decade,
+                    decade=decade_obj.decade_name,
                     genre=genre,
                     bucket=artist_bucket,
                     key=artist_key,
