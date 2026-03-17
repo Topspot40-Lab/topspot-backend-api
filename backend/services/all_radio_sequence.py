@@ -68,10 +68,20 @@ async def run_all_radio_sequence(
         }
     )
 
+
     global VALID_BUCKETS_CACHE
+    genres = []
+    clock_index = 0
+
     previous_bucket = None
     last_played_ranking_id = None
     set_number = 0
+
+    recent_decades = []
+    MAX_RECENT_DECADES = 3
+
+    recent_artists = []
+    MAX_RECENT_ARTISTS = 5
 
     try:
 
@@ -92,18 +102,51 @@ async def run_all_radio_sequence(
                     logger.error("❌ No valid radio buckets found")
                     return
 
+                # 🕒 Build station clock from DB genres
+                genres = list({g for _, g in VALID_BUCKETS_CACHE})
+                random.shuffle(genres)
+
+                logger.info("🕒 Station clock genres: %s", genres)
+
+                clock_index = 0
+
             valid_buckets = VALID_BUCKETS_CACHE
 
             # ─────────────────────────────
             # PICK RANDOM BUCKET
             # ─────────────────────────────
-            decade, genre = random.choice(valid_buckets)
+            # avoid repeating recent decades
+            filtered = [
+                (d, g) for (d, g) in valid_buckets
+                if d not in recent_decades
+            ]
+
+            if not filtered:
+                filtered = valid_buckets
+
+            if genres:
+                target_genre = genres[clock_index]
+                clock_index = (clock_index + 1) % len(genres)
+
+                candidates = [(d, g) for (d, g) in filtered if g == target_genre]
+            else:
+                candidates = filtered
+
+            if not candidates:
+                candidates = filtered
+
+            decade, genre = random.choice(candidates)
 
             while (decade, genre) == previous_bucket:
                 decade, genre = random.choice(valid_buckets)
 
             previous_bucket = (decade, genre)
             set_number += 1
+
+            recent_decades.append(decade)
+
+            if len(recent_decades) > MAX_RECENT_DECADES:
+                recent_decades.pop(0)
 
             logger.info("🎲 Bucket chosen: %s / %s", decade, genre)
 
@@ -139,6 +182,15 @@ async def run_all_radio_sequence(
             # ─────────────────────────────
             block_rows = build_track_block(rows)
 
+            # avoid repeating recent artists
+            filtered_block = [
+                row for row in block_rows
+                if row[1].artist_name not in recent_artists
+            ]
+
+            if filtered_block:
+                block_rows = filtered_block
+
             # SINGLE MODE → only keep one track
             if category == "single":
                 block_rows = block_rows[:1]
@@ -148,6 +200,14 @@ async def run_all_radio_sequence(
                 decade,
                 genre,
                 len(block_rows),
+            )
+
+            total_ms = sum(row[0].duration_ms for row in block_rows if row[0].duration_ms)
+
+            logger.info(
+                "📻 Radio block: %d tracks • %.1f minutes",
+                len(block_rows),
+                total_ms / 60000
             )
 
             # ─────────────────────────────
@@ -196,6 +256,12 @@ async def run_all_radio_sequence(
                     decade,
                     genre,
                 )
+
+                recent_artists.append(artist.artist_name)
+
+                if len(recent_artists) > MAX_RECENT_ARTISTS:
+                    recent_artists.pop(0)
+
                 logger.info(
                     "📡 UI UPDATE %s — %s rank=%s",
                     track.track_name,
