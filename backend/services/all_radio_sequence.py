@@ -131,11 +131,18 @@ async def run_all_radio_sequence(
                     artist_name=artist.artist_name,
                     current_rank=rank,
                     context={
-                        "mode": "spotify",
+                        "mode": "decade_genre",
                         "decade": decade,
                         "genre": genre,
+
                         "spotify_track_id": track.spotify_track_id,
                         "ranking_id": tr_rank.id,
+
+                        "year": track.year_released,
+                        "genre_name": genre_obj.genre_name,
+                        "decade_name": decade_obj.decade_name,
+
+                        "album_art": track.album_artwork,
                     },
                 )
 
@@ -145,6 +152,12 @@ async def run_all_radio_sequence(
                     artist.artist_name,
                     decade,
                     genre,
+                )
+                logger.info(
+                    "📡 UI UPDATE %s — %s rank=%s",
+                    track.track_name,
+                    artist.artist_name,
+                    rank
                 )
 
                 track_done_event.clear()
