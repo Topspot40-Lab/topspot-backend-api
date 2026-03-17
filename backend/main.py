@@ -70,6 +70,7 @@ app.add_middleware(
         "https://www.topspot40.com",
         "https://topspot40.netlify.app",
         "https://sparkling-croissant-23bbac.netlify.app",
+        "https://resplendent-gaufre-032b1a.netlify.app",
     ],
     #allow_credentials=False,
     allow_credentials=True, # must be True for Cookies
