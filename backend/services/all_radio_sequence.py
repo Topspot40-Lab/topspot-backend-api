@@ -136,6 +136,10 @@ async def run_all_radio_sequence(
             # ─────────────────────────────
             block_rows = build_track_block(rows)
 
+            # SINGLE MODE → only keep one track
+            if category == "single":
+                block_rows = block_rows[:1]
+
             logger.info(
                 "🎯 Block built decade=%s genre=%s tracks=%d",
                 decade,
@@ -202,11 +206,11 @@ async def run_all_radio_sequence(
                 track_done_event.clear()
                 await track_done_event.wait()
 
-                # ─────────────────────────────
-                # SINGLE MODE EXIT
-                # ─────────────────────────────
+                # Stop immediately after first completed track
                 if category == "single":
                     logger.info("🛑 Single mode: stopping radio loop after one track")
+                    status.stopped = True
+                    flags.stopped = True
                     return
 
     except asyncio.CancelledError:
