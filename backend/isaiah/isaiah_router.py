@@ -215,7 +215,7 @@ async def spotify_callback(request: Request):
         redirect_url = f"{get_frontend_url(local=IS_LOCAL)}/create-account" # "http://localhost:8000/app/create-account"
     else:
         redirect_url = f"{get_frontend_url(local=IS_LOCAL)}/dashboard" # "http://localhost:8000/dashboard"
-    redirect_response = RedirectResponse(redirect_url)
+    redirect_response = RedirectResponse(redirect_url, status_code=302)
 
 
     logger.info(f"About to set JWT cookie for user {topspot_user_id}")
