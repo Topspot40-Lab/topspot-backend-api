@@ -15,7 +15,7 @@ import uuid
 
 
 # Flag to switch between local dev and Netlify deployment
-IS_LOCAL = False  # set False when deploying to Netlify, set True if running locally
+IS_LOCAL = True  # set False when deploying to Netlify, set True if running locally
 
 load_dotenv()
 
@@ -113,7 +113,7 @@ def spotify_login():
     redirect_uri = get_spotify_redirect_uri(local=IS_LOCAL)
     scopes = "user-read-private playlist-read-private user-read-email user-read-private user-read-playback-state user-modify-playback-state streaming" # "user-read-private playlist-read-private"
     params = {
-        "client_id": SPOTIFY_CLIENT_ID, # client_id
+        "client_id": client_id, # client_id
         "response_type": "code",
         "redirect_uri": redirect_uri,
         "scope": scopes,
@@ -230,8 +230,8 @@ async def spotify_callback(request: Request):
         #secure=False, # remove when in production
         #secure=True,  # True if HTTPS, uncomment this when in production
         secure=config["SECURE_COOKIE"],
-        #samesite="lax", # might have to change to "none" in production
-        samesite="none",# Uncomment for production
+        samesite="lax", # might have to change to "none" in production
+        #samesite="none",# Uncomment for production
         max_age=JWT_EXP_DELTA_SECONDS,
         path="/",
     )

@@ -22,5 +22,5 @@ def get_frontend_url(local: bool = True):
     Returns the frontend base URL.
     """
     if local:
-        return "http://127.0.0.1:5173"
+        return "http://localhost:5173"
     return "https://resplendent-gaufre-032b1a.netlify.app"  # your Netlify site
