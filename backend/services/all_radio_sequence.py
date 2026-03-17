@@ -71,6 +71,7 @@ async def run_all_radio_sequence(
     global VALID_BUCKETS_CACHE
     previous_bucket = None
     last_played_ranking_id = None
+    set_number = 0
 
     try:
 
@@ -102,6 +103,7 @@ async def run_all_radio_sequence(
                 decade, genre = random.choice(valid_buckets)
 
             previous_bucket = (decade, genre)
+            set_number += 1
 
             logger.info("🎲 Bucket chosen: %s / %s", decade, genre)
 
@@ -113,6 +115,7 @@ async def run_all_radio_sequence(
                     "mode": "all_radio",
                     "decade": decade,
                     "genre": genre,
+                    "set_number": set_number,
                 },
             )
 
@@ -150,7 +153,7 @@ async def run_all_radio_sequence(
             # ─────────────────────────────
             # PLAY BLOCK
             # ─────────────────────────────
-            for track, artist, tr_rank, decade_obj, genre_obj in block_rows:
+            for idx, (track, artist, tr_rank, decade_obj, genre_obj) in enumerate(block_rows, start=1):
 
                 if status.cancel_requested or status.stopped:
                     logger.info("🛑 Radio mode cancelled")
@@ -168,9 +171,12 @@ async def run_all_radio_sequence(
                     artist_name=artist.artist_name,
                     current_rank=rank,
                     context={
-                        "mode": "decade_genre",
+                        "mode": "all_radio",
                         "decade": decade,
                         "genre": genre,
+                        "set_number": set_number,
+                        "block_size": len(block_rows),
+                        "block_position": idx,
 
                         "spotify_track_id": track.spotify_track_id,
                         "ranking_id": tr_rank.id,
