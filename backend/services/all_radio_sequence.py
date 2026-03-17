@@ -3,6 +3,13 @@ from __future__ import annotations
 import asyncio
 import logging
 import random
+from sqlalchemy import select
+from backend.models import (
+    Decade,
+    Genre,
+    DecadeGenre,
+    TrackRanking
+)
 
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.block_builder import build_track_block
@@ -12,21 +19,27 @@ from backend.state.narration import track_done_event
 
 logger = logging.getLogger(__name__)
 
-DECADES = [
-    "1950s","1960s","1970s","1980s",
-    "1990s","2000s","2010s","2020s"
-]
 
-GENRES = [
-    "rock","pop","country","rnb",
-    "blues_jazz","tv_themes","stage_screen","latin"
-]
+VALID_BUCKETS_CACHE = None
+
+def get_valid_buckets(session):
+    q = (
+        select(Decade.slug, Genre.slug)
+        .join(DecadeGenre, DecadeGenre.decade_id == Decade.id)
+        .join(Genre, Genre.id == DecadeGenre.genre_id)
+        .join(TrackRanking, TrackRanking.decade_genre_id == DecadeGenre.id)
+        .group_by(Decade.slug, Genre.slug)
+    )
+
+    rows = session.exec(q).all()
+
+    return [(d, g) for d, g in rows]
 
 
 async def run_all_radio_sequence(
-    *,
-    tts_language: str = "en",
-    play_track: bool = True,
+        *,
+        tts_language: str = "en",
+        category: str | None = None,
 ):
     """
     ALL / ALL radio mode.
@@ -49,24 +62,44 @@ async def run_all_radio_sequence(
     mark_playing(
         mode="all_radio",
         language=tts_language,
-        context={"mode": "all_radio"},
+        context={
+            "mode": "all_radio",
+            "category": category,
+        }
     )
 
+    global VALID_BUCKETS_CACHE
     previous_bucket = None
+    last_played_ranking_id = None
 
     try:
 
         while True:
 
             # ─────────────────────────────
+            # BUILD VALID BUCKET LIST
+            # ─────────────────────────────
+            if VALID_BUCKETS_CACHE is None:
+                from backend.database import get_db_session
+
+                with get_db_session() as session:
+                    VALID_BUCKETS_CACHE = get_valid_buckets(session)
+
+                logger.info("📚 Valid radio buckets loaded: %d", len(VALID_BUCKETS_CACHE))
+
+                if not VALID_BUCKETS_CACHE:
+                    logger.error("❌ No valid radio buckets found")
+                    return
+
+            valid_buckets = VALID_BUCKETS_CACHE
+
+            # ─────────────────────────────
             # PICK RANDOM BUCKET
             # ─────────────────────────────
-            while True:
-                decade = random.choice(DECADES)
-                genre = random.choice(GENRES)
+            decade, genre = random.choice(valid_buckets)
 
-                if (decade, genre) != previous_bucket:
-                    break
+            while (decade, genre) == previous_bucket:
+                decade, genre = random.choice(valid_buckets)
 
             previous_bucket = (decade, genre)
 
@@ -160,8 +193,21 @@ async def run_all_radio_sequence(
                     rank
                 )
 
+                # Ignore duplicate finish handling
+                if tr_rank.id == last_played_ranking_id:
+                    continue
+
+                last_played_ranking_id = tr_rank.id
+
                 track_done_event.clear()
                 await track_done_event.wait()
+
+                # ─────────────────────────────
+                # SINGLE MODE EXIT
+                # ─────────────────────────────
+                if category == "single":
+                    logger.info("🛑 Single mode: stopping radio loop after one track")
+                    return
 
     except asyncio.CancelledError:
         logger.info("⛔ ALL RADIO sequence cancelled")

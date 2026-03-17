@@ -106,6 +106,7 @@ async def play_first_decade_genre(
 async def play_sequence_decade_genre(
         decade: str = Query(...),
         genre: str = Query(...),
+        category: Literal["single", "continuous"] = Query("continuous"),  # 👈 ADD THIS
         start_rank: int = Query(1),
         end_rank: int = Query(40),
         mode: Literal["count_up", "count_down", "random"] = Query("count_up"),
@@ -113,9 +114,11 @@ async def play_sequence_decade_genre(
         play_intro: bool = Query(True),
         play_detail: bool = Query(True),
         play_artist_description: bool = Query(True),
-        play_track: bool = Query(False),
+        play_track: bool = Query(True),
         voice_style: Literal["before", "over"] = Query("before"),
 ):
+
+
     logger.info(
         "▶ Launch request: %s/%s %d-%d mode=%s lang=%s voice_style=%s",
         decade,
@@ -135,7 +138,8 @@ async def play_sequence_decade_genre(
 
         await start_new_sequence(
             run_all_radio_sequence(
-                tts_language=tts_language
+                tts_language=tts_language,
+                category=category
             )
         )
 
