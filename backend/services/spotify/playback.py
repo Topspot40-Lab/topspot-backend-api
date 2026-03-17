@@ -73,7 +73,7 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
             return False
 
         # Claim the device WITHOUT forcing playback
-        client.transfer_playback(device_id=device_id, force_play=False)
+        client.transfer_playback(device_id=device_id, force_play=True)
         await asyncio.sleep(0.25)
 
         # 🔥 START SPOTIFY PLAYBACK

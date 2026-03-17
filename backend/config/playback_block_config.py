@@ -1,0 +1,9 @@
+# backend/config/playback_block_config.py
+
+MIN_BLOCK_MINUTES = 8
+MAX_BLOCK_MINUTES = 12
+
+MIN_TRACKS_PER_BLOCK = 2
+MAX_TRACKS_PER_BLOCK = 8
+
+MS_PER_MINUTE = 60 * 1000

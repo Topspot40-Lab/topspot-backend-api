@@ -45,7 +45,7 @@ SPOTIFY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
 
 
 #router = APIRouter()
-spotify_auth_router = APIRouter()
+spotify_user_auth_router = APIRouter()
 play_router = APIRouter()
 stripe_router = APIRouter()
 
@@ -102,7 +102,7 @@ async def get_or_create_topspot_user(user_profile: dict):
 
 
 
-@spotify_auth_router.get("/spotify/login")
+@spotify_user_auth_router.get("/spotify/login")
 def spotify_login():
     # Redirect user to Spotify authorization URL with your client ID and redirect_uri (backend callback)
     from urllib.parse import urlencode
@@ -125,7 +125,7 @@ def spotify_login():
 
 
 # SPOTIFY OAUTH CALLBACK 
-@spotify_auth_router.get("/spotify/callback")
+@spotify_user_auth_router.get("/spotify/callback")
 async def spotify_callback(request: Request):
     logger.critical("=== SPOTIFY CALLBACK ENTERED ===")
 
@@ -245,7 +245,7 @@ async def spotify_callback(request: Request):
 
 
 # Endpoint for frontend to get valid Spotify token
-@spotify_auth_router.get("/spotify/sdk-token")
+@spotify_user_auth_router.get("/spotify/sdk-token")
 async def spotify_sdk_token(access_token: str = Cookie(None)): # should not fetch spotify user from frontend, SECURITY RISK
     """
     Returns a token specifically for the Web Playback SDK.
@@ -262,7 +262,7 @@ async def spotify_sdk_token(access_token: str = Cookie(None)): # should not fetc
 
 
 
-#@spotify_auth_router.get("/spotify/refresh")
+#@spotify_user_auth_router.get("/spotify/refresh")
 async def spotify_refresh(user_id: str):
     """
     Manually trigger a refresh for a given user_id.
@@ -278,7 +278,7 @@ async def spotify_refresh(user_id: str):
 
 
 
-@spotify_auth_router.get("/spotify/token")
+@spotify_user_auth_router.get("/spotify/token")
 async def spotify_token(access_token: str = Cookie(None)):
     """
     Return a valid Spotify access token (auto-refresh if expired).
