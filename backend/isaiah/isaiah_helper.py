@@ -15,7 +15,7 @@ def get_spotify_redirect_uri(local: bool = True):
     """
     if local:
         return "http://127.0.0.1:8000/spotify/callback"
-    return "https://api.topspot40.com/spotify/callback"  # adjust to Netlify deploy
+    return "https://api.topspot40.com/api/auth/spotify/callback"  # adjust to Netlify deploy
 
 def get_frontend_url(local: bool = True):
     """
