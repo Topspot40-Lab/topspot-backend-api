@@ -4,6 +4,10 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Optional, Literal
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 Phase = Literal["idle", "intro", "detail", "artist", "track", "ended", "music"]
 Mode  = Literal["decade_genre", "collection"]
 
@@ -94,11 +98,14 @@ def update_track_clock() -> None:
 
 
 def update_phase(phase: Phase, **kwargs) -> None:
+    logger.info(f"🔥 update_phase context IN: {kwargs.get('context')}")
     status.phase = phase
 
     # Apply direct attributes first
     for k, v in kwargs.items():
         setattr(status, k, v)
+
+    status.context = kwargs.get("context", {})
 
     # 🎯 Global (show-level) progress handling
     elapsed = None

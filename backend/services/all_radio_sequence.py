@@ -232,8 +232,13 @@ async def run_all_radio_sequence(
                     current_rank=rank,
                     context={
                         "mode": "all_radio",
-                        "decade": decade,
-                        "genre": genre,
+
+                        "decade_slug": decade,
+                        "genre_slug": genre,
+
+                        "decade_name": decade_obj.decade_name,
+                        "genre_name": genre_obj.genre_name,
+
                         "set_number": set_number,
                         "block_size": len(block_rows),
                         "block_position": idx,
@@ -242,10 +247,7 @@ async def run_all_radio_sequence(
                         "ranking_id": tr_rank.id,
 
                         "year": track.year_released,
-                        "genre_name": genre_obj.genre_name,
-                        "decade_name": decade_obj.decade_name,
-
-                        "album_art": track.album_artwork,
+                        "album_artwork": track.album_artwork,
                     },
                 )
 

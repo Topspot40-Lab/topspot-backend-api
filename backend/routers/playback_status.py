@@ -47,8 +47,10 @@ async def get_status():
     update_track_clock()
 
     snap = asdict(status)
-    ctx = snap.get("context") or {}
+    ctx = snap.get("context") or status.context or {}
     ctx["ranking_id"] = snap.get("current_ranking_id")
+
+    # logger.info(f"📡 STATUS CONTEXT OUT: {ctx}")
 
     phase = snap.get("phase")
     voice_style = ctx.get("voice_style")
