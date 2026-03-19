@@ -390,6 +390,14 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
             subscription_id: {subscription_id}
             status: {status}
             """)
+        
+        current_period_start = subscription.get("current_period_start")
+        current_period_end = subscription.get("current_period_end")
+        if current_period_start:
+            current_period_start = datetime.fromtimestamp(current_period_start, tz=timezone.utc).isoformat()
+        if current_period_end:
+            current_period_end = datetime.fromtimestamp(current_period_end, tz=timezone.utc).isoformat()
+
         if status in ("active", "trialing"):
             supabase.table("subscriptions").upsert({
                 "user_id": user_id,
@@ -397,8 +405,8 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
                 "stripe_subscription_id": subscription_id,
                 "stripe_price_id": subscription["items"]["data"][0]["price"]["id"],
                 "status": status,
-                "current_period_start": datetime.fromtimestamp(subscription["current_period_start"], tz=timezone.utc).isoformat(),
-                "current_period_end": datetime.fromtimestamp(subscription["current_period_end"], tz=timezone.utc).isoformat(),
+                "current_period_start": current_period_start,
+                "current_period_end": current_period_end,
                 "cancel_at_period_end": subscription.get("cancel_at_period_end", False),
                 "updated_at": datetime.now(timezone.utc).isoformat()
             }).execute()
