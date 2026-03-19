@@ -406,7 +406,13 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
 
 
         #return {"status": status, "subscription_id": subscription_id}
-        return RedirectResponse(url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={session_id}")
+        #return RedirectResponse(url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={session_id}")
+        return {
+            "status": status,
+            "subscription_id": subscription_id,
+            "is_active": status in ("active", "trialing")
+        }
+
 
     except Exception as e:
         logger.exception("Failed to verify Stripe subscription")
