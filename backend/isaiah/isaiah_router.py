@@ -311,6 +311,7 @@ async def spotify_token(access_token: str = Cookie(None)):
 async def create_checkout_session(access_token: str = Cookie(None)):
     stripe.api_key = os.environ.get("STRIPE_TEST_SECRET_KEY")
     stripe_price_id = os.getenv("STRIPE_TEST_PRICE_ID")
+    
 
     if not stripe.api_key or not stripe_price_id:
         return {"error": "Stripe environment variables not set."}
@@ -355,22 +356,47 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 @stripe_router.get("/verify-subscription")
 async def verify_subscription(session_id: str, access_token: str = Cookie(None)):
     stripe.api_key = os.getenv("STRIPE_TEST_SECRET_KEY")
+    logger.critical("=== VERIFY SUBSCRIPTION HIT ===")
+    logger.critical(f"Session ID received: {session_id}")
+    logger.critical(f"JWT cookie: {access_token}")
+
 
 
     payload = decode_jwt_token(access_token)
+    logger.critical(f"Decoded JWT payload: {payload}")
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
+    
+    
+
 
     try:
         # Retrieve the checkout session
         session = stripe.checkout.Session.retrieve(session_id)
+        logger.critical(f"Stripe session: {session}")
         customer_id = session.get("customer")
         subscription_id = session.get("subscription")
         if not subscription_id or not customer_id:
             raise HTTPException(status_code=400, detail="Invalid session")
         subscription = stripe.Subscription.retrieve(subscription_id)
+        logger.critical(f"Stripe subscription: {subscription}")
         status = subscription.get("status")
+
+        logger.critical(f"""
+            WRITING SUBSCRIPTION TO DB:
+            user_id: {user_id}
+            customer_id: {customer_id}
+            subscription_id: {subscription_id}
+            status: {status}
+            """)
+        
+        current_period_start = subscription.get("current_period_start")
+        current_period_end = subscription.get("current_period_end")
+        if current_period_start:
+            current_period_start = datetime.fromtimestamp(current_period_start, tz=timezone.utc).isoformat()
+        if current_period_end:
+            current_period_end = datetime.fromtimestamp(current_period_end, tz=timezone.utc).isoformat()
 
         if status in ("active", "trialing"):
             supabase.table("subscriptions").upsert({
@@ -379,14 +405,22 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
                 "stripe_subscription_id": subscription_id,
                 "stripe_price_id": subscription["items"]["data"][0]["price"]["id"],
                 "status": status,
-                "current_period_start": datetime.fromtimestamp(subscription["current_period_start"], tz=timezone.utc).isoformat(),
-                "current_period_end": datetime.fromtimestamp(subscription["current_period_end"], tz=timezone.utc).isoformat(),
+                "current_period_start": current_period_start,
+                "current_period_end": current_period_end,
                 "cancel_at_period_end": subscription.get("cancel_at_period_end", False),
                 "updated_at": datetime.now(timezone.utc).isoformat()
             }).execute()
+            logger.critical("✅ Subscription successfully written to Supabase")
+
 
         #return {"status": status, "subscription_id": subscription_id}
-        return RedirectResponse(url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={session_id}")
+        #return RedirectResponse(url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={session_id}")
+        return {
+            "status": status,
+            "subscription_id": subscription_id,
+            "is_active": status in ("active", "trialing")
+        }
+
 
     except Exception as e:
         logger.exception("Failed to verify Stripe subscription")
