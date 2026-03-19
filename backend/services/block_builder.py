@@ -13,7 +13,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def build_track_block(candidate_tracks):
+def build_track_block(candidate_tracks, set_number: int = 1):
     logger.info("🧪 candidate rows=%d", len(candidate_tracks))
 
     if not candidate_tracks:
@@ -75,3 +75,4 @@ def build_track_block(candidate_tracks):
                     break
 
     return selected_tracks
+

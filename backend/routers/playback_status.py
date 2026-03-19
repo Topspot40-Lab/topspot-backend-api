@@ -89,6 +89,16 @@ async def get_status():
         "artist_name": snap.get("artist_name"),
         "current_rank": snap.get("current_rank"),
 
+        # ⭐ ADD THESE (THIS IS THE FIX)
+        "setNumber": ctx.get("set_number"),
+        "blockPosition": ctx.get("block_position"),
+        "blockSize": ctx.get("block_size"),
+
+        "decadeSlug": ctx.get("decade_slug"),
+        "genreSlug": ctx.get("genre_slug"),
+        "decadeName": ctx.get("decade_name"),
+        "genreName": ctx.get("genre_name"),
+
         "elapsedMs": elapsed_ms,
         "durationMs": duration_ms,
         "progress": progress,

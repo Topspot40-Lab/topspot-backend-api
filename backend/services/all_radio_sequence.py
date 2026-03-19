@@ -65,6 +65,7 @@ async def run_all_radio_sequence(
         context={
             "mode": "all_radio",
             "category": category,
+
         }
     )
 
