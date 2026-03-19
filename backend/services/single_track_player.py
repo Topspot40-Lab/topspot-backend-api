@@ -38,11 +38,10 @@ async def play_one_server_side(
         voice_style,
     )
 
-    # ─────────────────────────────────────────────
-    # ✅ STEP 1: Persist playback intent (NO behavior change)
-    # ─────────────────────────────────────────────
+    # ✅ STEP 1: Persist playback intent
     flags.mode = mode
     flags.context = {
+        "type": "decade_genre",  # 👈 add this
         "decade": decade,
         "genre": genre,
     }

@@ -134,12 +134,23 @@ async def play_sequence_decade_genre(
     # ALL / ALL → RADIO MODE
     # ─────────────────────────────────────────────
     if decade == "ALL" and genre == "ALL":
-        logger.info("📻 Switching to ALL-ALL radio mode")
+        logger.info("📻 Switching to ALL-ALL single-step radio mode")
+
+        # ✅ THIS IS THE FIX (ONLY HERE)
+        flags.context = {
+            "type": "all_radio",
+            "decade": "ALL",
+            "genre": "ALL",
+        }
+        flags.mode = mode
+        flags.current_rank = None
+        flags.lang = tts_language
+        flags.voice_style = voice_style
 
         await start_new_sequence(
             run_all_radio_sequence(
                 tts_language=tts_language,
-                category=category
+                category="single",
             )
         )
 
@@ -161,6 +172,17 @@ async def play_sequence_decade_genre(
         play_track=play_track,
         voice_style=voice_style,
     )
+
+    flags.context = {
+        "type": "decade_genre",
+        "decade": decade,
+        "genre": genre,
+    }
+
+    flags.mode = mode
+    flags.current_rank = start_rank
+    flags.lang = tts_language
+    flags.voice_style = voice_style
 
     await start_new_sequence(coro)
 
@@ -194,8 +216,24 @@ async def play_next_decade_genre():
     mode = flags.mode or "count_up"
     current_rank = flags.current_rank
 
+
     if not decade or not genre or current_rank is None:
         return {"status": "error", "message": "Missing playback state."}
+
+    if decade == "ALL" and genre == "ALL":
+        logger.info("⏭ NEXT (ALL/ALL) → launching new random track")
+
+        await start_new_sequence(
+            run_all_radio_sequence(
+                tts_language=getattr(flags, "lang", "en"),
+                category="single",
+            )
+        )
+
+        return {
+            "status": "playing-next",
+            "mode": "all_radio"
+        }
 
     db = next(get_db())
     q = (

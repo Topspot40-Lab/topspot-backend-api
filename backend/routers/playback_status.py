@@ -138,6 +138,7 @@ from backend.state.narration import track_done_event
 @router.post("/track-finished")
 async def track_finished():
     logger.info("🎵 Track finished signal received")
+    logger.info(f"TRACK DONE EVENT ID (router): {id(track_done_event)}")
 
     # Signal backend sequence loop that Spotify track is done
     track_done_event.set()

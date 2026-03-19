@@ -275,15 +275,35 @@ async def run_all_radio_sequence(
 
                 last_played_ranking_id = tr_rank.id
 
+                # Wait for track to finish
+                track_done_event.clear()
+                logger.info(f"⏳ WAITING FOR TRACK END: {id(track_done_event)}")
+                await track_done_event.wait()
+
+                # Enter paused state
+                update_phase(
+                    "paused",
+                    track_name=track.track_name,
+                    artist_name=artist.artist_name,
+                    current_rank=rank,
+                    context={
+                        "mode": "all_radio",
+                        "decade": decade,
+                        "genre": genre,
+                        "set_number": set_number,
+                        "block_size": len(block_rows),
+                        "block_position": idx,
+                    },
+                )
+
+                logger.info("⏸ Paused — waiting for NEXT button")
+
+                # 🔥 THIS IS THE MISSING PIECE
                 track_done_event.clear()
                 await track_done_event.wait()
 
-                # Stop immediately after first completed track
-                if category == "single":
-                    logger.info("🛑 Single mode: stopping radio loop after one track")
-                    status.stopped = True
-                    flags.stopped = True
-                    return
+                logger.info("▶️ NEXT received — advancing to next track")
+
 
     except asyncio.CancelledError:
         logger.info("⛔ ALL RADIO sequence cancelled")
