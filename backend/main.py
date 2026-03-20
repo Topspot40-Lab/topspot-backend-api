@@ -100,6 +100,7 @@ app.include_router(feedback_router, prefix="/api")
 app.include_router(spotify_user_auth_router, prefix="/api/auth")
 # Stripe endpoints
 app.include_router(stripe_router, prefix="/api")
+app.include_router(stripe_router, prefix="/api") # stripe webhook
 # Feedback/bug report logic endpoint
 app.include_router(feedback_router, prefix="/api")
 app.include_router(supabase_collections.router)
