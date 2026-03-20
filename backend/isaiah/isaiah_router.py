@@ -1,5 +1,5 @@
 from fastapi import Query, APIRouter, Request, HTTPException, Cookie
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 from backend.isaiah.isaiah_spotify import exchange_code_for_token, get_user_profile, get_valid_access_token  # from spotify helper module
 import os
 from dotenv import load_dotenv
@@ -219,7 +219,7 @@ async def spotify_callback(request: Request):
 
 
     logger.info(f"About to set JWT cookie for user {topspot_user_id}")
-    logger.critical("About to set cookie. JWT=%s", jwt_token)
+    #logger.critical("About to set cookie. JWT=%s", jwt_token)
 
 
 
@@ -357,13 +357,13 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 async def verify_subscription(session_id: str, access_token: str = Cookie(None)):
     stripe.api_key = os.getenv("STRIPE_TEST_SECRET_KEY")
     logger.critical("=== VERIFY SUBSCRIPTION HIT ===")
-    logger.critical(f"Session ID received: {session_id}")
-    logger.critical(f"JWT cookie: {access_token}")
+    #logger.critical(f"Session ID received: {session_id}")
+    #logger.critical(f"JWT cookie: {access_token}")
 
 
 
     payload = decode_jwt_token(access_token)
-    logger.critical(f"Decoded JWT payload: {payload}")
+    #logger.critical(f"Decoded JWT payload: {payload}")
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
@@ -374,7 +374,7 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
     try:
         # Retrieve the checkout session
         session = stripe.checkout.Session.retrieve(session_id)
-        logger.critical(f"Stripe session: {session}")
+        #logger.critical(f"Stripe session: {session}")
         customer_id = session.get("customer")
         subscription_id = session.get("subscription")
         if not subscription_id or not customer_id:
@@ -434,11 +434,11 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
 @stripe_router.get("/subscription-status")
 async def get_subscription_status(access_token: str = Cookie(None)):
     logger.critical("=== SUBSCRIPTION STATUS HIT ===")
-    logger.critical("Cookie received: %s", access_token)
+    #logger.critical("Cookie received: %s", access_token)
 
 
     payload = decode_jwt_token(access_token)
-    logger.critical("Decoded JWT payload: %s", payload)
+    #logger.critical("Decoded JWT payload: %s", payload)
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
@@ -453,5 +453,115 @@ async def get_subscription_status(access_token: str = Cookie(None)):
     #return RedirectResponse(url="http://localhost:5173/dashboard")
 
 
+
+
+# Stripe Webhook
+"""
+Edge case: if user accidentally clicks off the screen, 
+or closes off tab, it does not write on Supabase, 
+if requests fails, you LOSE the subscription, 
+and it depends on the frontend, which is unreliable. So, 
+we shall implement Stripe's webhooks. 
+"""
+@stripe_router.post("/webhooks/stripe")
+async def stripe_webhook(request: Request):
+    logger.critical("🚨 Stripe webhook endpoint HIT")
+    stripe.api_key = os.getenv("STRIPE_TEST_SECRET_KEY")
+    webhook_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
+
+    payload = await request.body()
+    sig_header = request.headers.get("stripe-signature")
+
+    if not sig_header:
+        raise HTTPException(status_code=400, detail="Missing Stripe signature")
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, webhook_secret
+        )
+    except stripe.error.SignatureVerificationError:
+        raise HTTPException(status_code=400, detail="Invalid signature")
+    except Exception as e:
+        logger.exception("Webhook failed")
+        return JSONResponse(status_code=400, content={"error": str(e)})
+
+    event_type = event["type"]
+    data = event["data"]["object"]
+
+    logger.critical(f"🔥 Webhook event: {event_type}")
+
+    try:
+        # ✅ Checkout completed (initial subscription)
+        if event_type == "checkout.session.completed":
+            session = data
+
+            user_id = session.get("metadata", {}).get("topspot_user_id")
+            customer_id = session.get("customer")
+            subscription_id = session.get("subscription")
+
+            if user_id and subscription_id:
+                subscription = stripe.Subscription.retrieve(subscription_id)
+
+                current_period_start = datetime.fromtimestamp(
+                    subscription["current_period_start"], tz=timezone.utc
+                ).isoformat()
+
+                current_period_end = datetime.fromtimestamp(
+                    subscription["current_period_end"], tz=timezone.utc
+                ).isoformat()
+
+                supabase.table("subscriptions").upsert({
+                    "user_id": user_id,
+                    "stripe_customer_id": customer_id,
+                    "stripe_subscription_id": subscription_id,
+                    "stripe_price_id": subscription["items"]["data"][0]["price"]["id"],
+                    "status": subscription["status"],
+                    "current_period_start": current_period_start,
+                    "current_period_end": current_period_end,
+                    "cancel_at_period_end": subscription.get("cancel_at_period_end", False),
+                    "updated_at": datetime.now(timezone.utc).isoformat()
+                }).execute()
+
+                logger.critical("✅ Webhook wrote subscription")
+
+        # 💰 Renewal payments
+        elif event_type == "invoice.payment_succeeded":
+            subscription_id = data.get("subscription")
+
+            supabase.table("subscriptions").update({
+                "status": "active",
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }).eq("stripe_subscription_id", subscription_id).execute()
+
+            logger.critical("💰 Payment succeeded (renewal)")
+
+        # 🔄 Subscription updates
+        elif event_type == "customer.subscription.updated":
+            subscription_id = data.get("id")
+
+            supabase.table("subscriptions").update({
+                "status": data.get("status"),
+                "cancel_at_period_end": data.get("cancel_at_period_end", False),
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }).eq("stripe_subscription_id", subscription_id).execute()
+
+            logger.critical("🔄 Subscription updated")
+
+        # ❌ Subscription canceled
+        elif event_type == "customer.subscription.deleted":
+            subscription_id = data.get("id")
+
+            supabase.table("subscriptions").update({
+                "status": "canceled",
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }).eq("stripe_subscription_id", subscription_id).execute()
+
+            logger.critical("❌ Subscription canceled")
+
+    except Exception as e:
+        logger.exception("Error processing webhook event")
+        return JSONResponse(status_code=400, content={"error": str(e)})
+
+    return JSONResponse({"status": "success"})
 
 
