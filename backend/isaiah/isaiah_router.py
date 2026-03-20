@@ -415,6 +415,13 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
             }).execute()
             logger.critical("✅ Subscription successfully written to Supabase")
 
+            # Also update topspot_users.stripe_customer_id so the user is linked to Stripe
+            supabase.table("topspot_users").update({
+                "stripe_customer_id": customer_id
+            }).eq("id", user_id).execute()
+            logger.info(f"✅ Updated topspot_users.stripe_customer_id for user {user_id}")
+
+
 
         #return {"status": status, "subscription_id": subscription_id}
         #return RedirectResponse(url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={session_id}")
@@ -526,6 +533,14 @@ async def stripe_webhook(request: Request):
                 }).execute()
 
                 logger.critical("✅ Webhook wrote subscription")
+
+
+                # Also update topspot_users.stripe_customer_id for the webhook flow
+                supabase.table("topspot_users").update({
+                    "stripe_customer_id": customer_id
+                }).eq("id", user_id).execute()
+                logger.info(f"✅ Webhook updated topspot_users.stripe_customer_id for user {user_id}")
+
 
         # 💰 Renewal payments
         elif event_type == "invoice.payment_succeeded":
