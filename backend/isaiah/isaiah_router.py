@@ -76,6 +76,9 @@ async def get_or_create_topspot_user(user_profile: dict):
             }) \
             .eq("spotify_user_id", spotify_user_id) \
             .execute()
+
+        logger.info("✅ Updated TopSpot user with Spotify ID %s", spotify_user_id)
+    
         return res.data[0]
 
     # Insert new user
