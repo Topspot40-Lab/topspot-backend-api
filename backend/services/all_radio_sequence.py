@@ -247,6 +247,36 @@ async def run_all_radio_sequence(
                 status.current_rank = rank
                 status.current_ranking_id = tr_rank.id
 
+                # ─────────────────────────────────────────────
+                # 🎤 INTRO PHASE (NEW)
+                # ─────────────────────────────────────────────
+                if play_intro:
+                    logger.info("🎤 INTRO | %s — %s", track.track_name, artist.artist_name)
+
+                    update_phase(
+                        "intro",
+                        track_name=track.track_name,
+                        artist_name=artist.artist_name,
+                        current_rank=rank,
+                        context={
+                            "mode": "all_radio",
+                            "audio_url": track.intro_audio_url,  # 👈 IMPORTANT
+
+                            "decade_slug": decade,
+                            "genre_slug": genre,
+
+                            "decade_name": decade_obj.decade_name,
+                            "genre_name": genre_obj.genre_name,
+
+                            "set_number": set_number,
+                            "block_size": len(block_rows),
+                            "block_position": idx,
+                        },
+                    )
+
+                    track_done_event.clear()
+                    await track_done_event.wait()
+
                 logger.info(
                     "🎵 TRACK %d/%d | %s — %s",
                     idx,
