@@ -21,6 +21,8 @@ from backend.state.narration import track_done_event
 logger = logging.getLogger(__name__)
 
 
+
+
 VALID_BUCKETS_CACHE = None
 
 def get_valid_buckets(session):
@@ -42,6 +44,29 @@ async def run_all_radio_sequence(
         tts_language: str = "en",
         category: str | None = None,
 ):
+    # 🎛️ Get selection from playback state (set by frontend)
+    selection = getattr(status, "selection", {}) or {}
+
+    voices = selection.get("voices", [])
+
+    play_intro = "intro" in voices
+    play_detail = "detail" in voices
+    play_artist = "artist" in voices
+
+    logger.info(
+        "🎛️ RADIO FLAGS | intro=%s detail=%s artist=%s",
+        play_intro,
+        play_detail,
+        play_artist
+    )
+
+    logger.info(
+        "🎛️ RADIO FLAGS | intro=%s detail=%s artist=%s",
+        play_intro,
+        play_detail,
+        play_artist
+    )
+
     """
     ALL / ALL radio mode.
 
@@ -268,29 +293,17 @@ async def run_all_radio_sequence(
 
                 last_played_ranking_id = tr_rank.id
 
-                # Wait for track to finish
-                track_done_event.clear()
-                await track_done_event.wait()
-
-                # Enter paused state
-                update_phase(
-                    "paused",
-                    track_name=track.track_name,
-                    artist_name=artist.artist_name,
-                    current_rank=rank,
-                    context={
-                        "mode": "all_radio",
-                        "decade": decade,
-                        "genre": genre,
-                        "set_number": set_number,
-                        "block_size": len(block_rows),
-                        "block_position": idx,
-                    },
+                logger.info(
+                    "📡 RADIO publishing track to UI rank=%s intro=%s detail=%s artist=%s",
+                    rank,
+                    play_intro,
+                    play_detail,
+                    play_artist,
                 )
 
-                logger.info("⏸ Paused — waiting for NEXT button")
-
-                # 🔥 THIS IS THE MISSING PIECE
+                # ─────────────────────────────────────────────
+                # 3. WAIT FOR TRACK TO FINISH
+                # ─────────────────────────────────────────────
                 track_done_event.clear()
                 await track_done_event.wait()
 

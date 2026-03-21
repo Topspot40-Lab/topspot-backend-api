@@ -63,8 +63,5 @@ async def play_one_server_side(
         play_detail=play_detail,
         play_artist_description=play_artist_description,
         play_track=play_track,
-        text_intro=text_intro,
-        text_detail=text_detail,
-        text_artist_description=text_artist_description,
         voice_style=voice_style,
     )

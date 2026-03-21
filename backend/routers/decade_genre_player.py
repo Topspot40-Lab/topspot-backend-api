@@ -4,6 +4,7 @@ import logging
 import random
 from typing import Literal
 
+
 from fastapi import APIRouter, Query, Depends
 from sqlmodel import select
 from backend.services.all_radio_sequence import run_all_radio_sequence
@@ -23,6 +24,7 @@ from backend.services.decade_genre_sequence import run_decade_genre_sequence
 
 from backend.routers.playback_control import start_new_sequence
 from backend.state.playback_flags import flags
+from backend.state.playback_state import status
 
 router = APIRouter(prefix="/supabase/decade-genre", tags=["Supabase: Decade/Genre"])
 logger = logging.getLogger(__name__)
@@ -136,7 +138,19 @@ async def play_sequence_decade_genre(
     if decade == "ALL" and genre == "ALL":
         logger.info("📻 Switching to ALL-ALL single-step radio mode")
 
-        # ✅ THIS IS THE FIX (ONLY HERE)
+        # ✅ ADD THIS BLOCK HERE 👇
+        status.selection = {
+            "voices": [
+                v for v, enabled in [
+                    ("intro", play_intro),
+                    ("detail", play_detail),
+                    ("artist", play_artist_description),
+                ] if enabled
+            ]
+        }
+
+        logger.info("✅ status.selection set: %s", status.selection)
+
         flags.context = {
             "type": "all_radio",
             "decade": "ALL",
@@ -226,7 +240,7 @@ async def play_next_decade_genre():
         await start_new_sequence(
             run_all_radio_sequence(
                 tts_language=getattr(flags, "lang", "en"),
-                category="single",
+                category="continuous",
             )
         )
 
