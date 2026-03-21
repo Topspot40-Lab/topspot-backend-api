@@ -537,7 +537,8 @@ async def stripe_webhook(request: Request):
 
                 # Also update topspot_users.stripe_customer_id for the webhook flow
                 supabase.table("topspot_users").update({
-                    "stripe_customer_id": customer_id
+                    "stripe_customer_id": customer_id,
+                    "is_active": True,
                 }).eq("id", user_id).execute()
                 logger.info(f"✅ Webhook updated topspot_users.stripe_customer_id for user {user_id}")
 
