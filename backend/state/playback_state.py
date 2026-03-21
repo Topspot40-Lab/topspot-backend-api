@@ -98,7 +98,6 @@ def update_track_clock() -> None:
 
 
 def update_phase(phase: Phase, **kwargs) -> None:
-    logger.info(f"🔥 update_phase context IN: {kwargs.get('context')}")
     status.phase = phase
 
     # Apply direct attributes first

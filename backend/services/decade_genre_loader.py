@@ -30,14 +30,6 @@ def load_decade_genre_rows(
       (Track, Artist, TrackRanking, Decade, Genre)
     """
 
-    logger.info(
-        "🧪 load_decade_genre_rows: decade=%s genre=%s ranks=%s–%s",
-        decade,
-        genre,
-        start_rank,
-        end_rank,
-    )
-
     with get_db_session() as db:
         q = (
             select(Track, Artist, TrackRanking, Decade, Genre)
@@ -56,8 +48,6 @@ def load_decade_genre_rows(
         )
 
         rows = db.exec(q).all()
-
-        logger.info("🧪 load_decade_genre_rows → %d rows", len(rows))
 
         if rows:
             track, artist, tr_rank, dec, gen = rows[0]

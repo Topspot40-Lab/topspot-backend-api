@@ -11,6 +11,7 @@ from backend.models import (
     TrackRanking
 )
 
+from backend.config.playback_block_config import MIN_TRACKS_PER_BLOCK
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.block_builder import build_track_block
 from backend.state.playback_state import status, mark_playing, update_phase
@@ -97,8 +98,6 @@ async def run_all_radio_sequence(
                 with get_db_session() as session:
                     VALID_BUCKETS_CACHE = get_valid_buckets(session)
 
-                logger.info("📚 Valid radio buckets loaded: %d", len(VALID_BUCKETS_CACHE))
-
                 if not VALID_BUCKETS_CACHE:
                     logger.error("❌ No valid radio buckets found")
                     return
@@ -107,7 +106,7 @@ async def run_all_radio_sequence(
                 genres = list({g for _, g in VALID_BUCKETS_CACHE})
                 random.shuffle(genres)
 
-                logger.info("🕒 Station clock genres: %s", genres)
+                logger.debug("🕒 Station clock genres: %s", genres)
 
                 clock_index = 0
 
@@ -189,26 +188,23 @@ async def run_all_radio_sequence(
                 if row[1].artist_name not in recent_artists
             ]
 
-            if filtered_block:
+            # Only apply filter if it doesn't shrink too much
+            if len(filtered_block) >= MIN_TRACKS_PER_BLOCK:
                 block_rows = filtered_block
 
             # SINGLE MODE → only keep one track
-            if category == "single":
+            if category == "single" and flags.mode != "all_radio":
                 block_rows = block_rows[:1]
-
-            logger.info(
-                "🎯 Block built decade=%s genre=%s tracks=%d",
-                decade,
-                genre,
-                len(block_rows),
-            )
 
             total_ms = sum(row[0].duration_ms for row in block_rows if row[0].duration_ms)
 
             logger.info(
-                "📻 Radio block: %d tracks • %.1f minutes",
+                "🎼 SET %d | %s / %s | %d tracks | %.1f min",
+                set_number,
+                decade,
+                genre,
                 len(block_rows),
-                total_ms / 60000
+                total_ms / 60000,
             )
 
             # ─────────────────────────────
@@ -225,6 +221,14 @@ async def run_all_radio_sequence(
                 flags.current_rank = rank
                 status.current_rank = rank
                 status.current_ranking_id = tr_rank.id
+
+                logger.info(
+                    "🎵 TRACK %d/%d | %s — %s",
+                    idx,
+                    len(block_rows),
+                    track.track_name,
+                    artist.artist_name
+                )
 
                 update_phase(
                     "track",
@@ -252,25 +256,11 @@ async def run_all_radio_sequence(
                     },
                 )
 
-                logger.info(
-                    "🎵 PLAY %s — %s (%s/%s)",
-                    track.track_name,
-                    artist.artist_name,
-                    decade,
-                    genre,
-                )
-
                 recent_artists.append(artist.artist_name)
 
                 if len(recent_artists) > MAX_RECENT_ARTISTS:
                     recent_artists.pop(0)
 
-                logger.info(
-                    "📡 UI UPDATE %s — %s rank=%s",
-                    track.track_name,
-                    artist.artist_name,
-                    rank
-                )
 
                 # Ignore duplicate finish handling
                 if tr_rank.id == last_played_ranking_id:
@@ -280,7 +270,6 @@ async def run_all_radio_sequence(
 
                 # Wait for track to finish
                 track_done_event.clear()
-                logger.info(f"⏳ WAITING FOR TRACK END: {id(track_done_event)}")
                 await track_done_event.wait()
 
                 # Enter paused state
@@ -304,9 +293,6 @@ async def run_all_radio_sequence(
                 # 🔥 THIS IS THE MISSING PIECE
                 track_done_event.clear()
                 await track_done_event.wait()
-
-                logger.info("▶️ NEXT received — advancing to next track")
-
 
     except asyncio.CancelledError:
         logger.info("⛔ ALL RADIO sequence cancelled")
