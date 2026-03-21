@@ -417,7 +417,8 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
 
             # Also update topspot_users.stripe_customer_id so the user is linked to Stripe
             supabase.table("topspot_users").update({
-                "stripe_customer_id": customer_id
+                "stripe_customer_id": customer_id,
+                "is_active": True,
             }).eq("id", user_id).execute()
             logger.info(f"✅ Updated topspot_users.stripe_customer_id for user {user_id}")
 
