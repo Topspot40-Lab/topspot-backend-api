@@ -157,7 +157,7 @@ async def cancel_current_sequence():
     try:
         from backend.services.spotify.playback import set_device_volume
         await set_device_volume(100)
-        logger.info("🔊 Restored Spotify volume to 100% after cancel")
+        logger.debug("🔊 Restored Spotify volume to 100% after cancel")
     except Exception as exc:
         logger.warning(f"⚠️ Failed to restore volume after cancel: {exc}")
 
@@ -547,7 +547,7 @@ async def warmup_playback():
         # NOTE: set_device_volume may be async in some versions; yours supports await
         try:
             await set_device_volume(100, device_id=device_id)
-            logger.info("🔊 Spotify volume set to 100%%")
+            logger.debug("🔊 Spotify volume set to 100%%")
         except Exception as exc:
             logger.warning("⚠️ Failed to set volume during warmup: %s", exc)
 

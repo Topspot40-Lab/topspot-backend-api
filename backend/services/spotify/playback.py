@@ -43,13 +43,13 @@ async def set_device_volume(volume: int, device_id: str | None = None):
 
         # ✅ If already at target, do nothing
         if current_volume == volume:
-            logger.info(f"🔊 Spotify volume already at {volume}%, no change needed.")
+            logger.debug(f"🔊 Spotify volume already at {volume}%, no change needed.")
             return
 
         sp.volume(volume, device_id=device_id)
         await asyncio.sleep(0.25)
 
-        logger.info(f"🔊 Spotify volume set to {volume}%")
+        logger.debug(f"🔊 Spotify volume set to {volume}%")
 
     except SpotifyException as e:
         logger.warning(f"⚠️ Spotify volume set failed: {e}")
@@ -96,7 +96,7 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
         # Ensure main track plays at full volume
         await set_device_volume(100, device_id)
 
-        logger.info(f"🎵 Spotify track started at 100% volume: {track_id}")
+        logger.debug(f"🎵 Spotify track started at 100% volume: {track_id}")
         return True
 
     except SpotifyException as e:

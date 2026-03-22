@@ -243,7 +243,9 @@ async def run_all_radio_sequence(
                 if status.cancel_requested:
                     logger.info("⏭ Skip requested → moving to next track")
                     status.cancel_requested = False
-                    continue
+
+                    # 🔥 BREAK out of current track immediately
+                    break
 
                 rank = tr_rank.ranking
 
