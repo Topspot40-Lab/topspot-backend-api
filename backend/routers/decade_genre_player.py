@@ -234,18 +234,16 @@ async def play_next_decade_genre():
     if not decade or not genre or current_rank is None:
         return {"status": "error", "message": "Missing playback state."}
 
-    if decade == "ALL" and genre == "ALL":
-        logger.info("⏭ NEXT (ALL/ALL) → launching new random track")
+    from backend.state.narration import track_done_event  # ← ADD IMPORT AT TOP IF NOT THERE
 
-        await start_new_sequence(
-            run_all_radio_sequence(
-                tts_language=getattr(flags, "lang", "en"),
-                category="continuous",
-            )
-        )
+    if decade == "ALL" and genre == "ALL":
+        logger.info("⏭ NEXT (ALL/ALL) → skipping to next track")
+
+        status.cancel_requested = True
+        track_done_event.set()  # 🔥 THIS IS THE KEY LINE
 
         return {
-            "status": "playing-next",
+            "status": "skipping",
             "mode": "all_radio"
         }
 

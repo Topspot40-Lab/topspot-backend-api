@@ -95,7 +95,6 @@ async def run_all_radio_sequence(
         }
     )
 
-
     global VALID_BUCKETS_CACHE
     genres = []
     clock_index = 0
@@ -237,9 +236,14 @@ async def run_all_radio_sequence(
             # ─────────────────────────────
             for idx, (track, artist, tr_rank, decade_obj, genre_obj) in enumerate(block_rows, start=1):
 
-                if status.cancel_requested or status.stopped:
-                    logger.info("🛑 Radio mode cancelled")
+                if status.stopped:
+                    logger.info("🛑 Radio mode stopped")
                     return
+
+                if status.cancel_requested:
+                    logger.info("⏭ Skip requested → moving to next track")
+                    status.cancel_requested = False
+                    continue
 
                 rank = tr_rank.ranking
 

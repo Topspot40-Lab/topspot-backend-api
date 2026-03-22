@@ -54,6 +54,10 @@ class PlaybackStatus:
     # Timing
     last_action_ts: float = field(default_factory=time.time)
 
+    # 🔵 RADIO tracking
+    set_number: int = 0
+    previous_bucket: tuple[str, str] | None = None
+
 
 
 # 🔴 SINGLE GLOBAL INSTANCE
