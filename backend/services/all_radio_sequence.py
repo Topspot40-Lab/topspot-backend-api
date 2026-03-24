@@ -310,8 +310,15 @@ async def run_all_radio_sequence(
                 # ─────────────────────────────────────────────
                 # 3. WAIT FOR TRACK TO FINISH
                 # ─────────────────────────────────────────────
+                # 🔥 Ensure we are waiting for a NEW signal
                 track_done_event.clear()
-                await track_done_event.wait()
+
+                while True:
+                    await track_done_event.wait()
+
+                    # Only break if this was triggered AFTER clear()
+                    if track_done_event.is_set():
+                        break
 
     except asyncio.CancelledError:
         logger.info("⛔ ALL RADIO sequence cancelled")
