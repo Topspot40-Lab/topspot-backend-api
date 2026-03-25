@@ -3,6 +3,8 @@ from sqlmodel import Session, select
 import logging
 from sqlalchemy import func
 from backend.models import CollectionTrackRanking
+from backend.models import TrackRanking
+from backend.models import DecadeGenre
 
 from backend.database import get_db
 from backend.models import Decade, Genre
@@ -107,9 +109,9 @@ def get_grouped_catalog(db: Session = Depends(get_db)):
 
             for c in collections:
                 total_tracks = db.exec(
-                        select(func.count())
-                        .where(CollectionTrackRanking.collection_id == c.id)
-                    ).one()
+                    select(func.count())
+                    .where(CollectionTrackRanking.collection_id == c.id)
+                ).one()
 
                 collections_with_counts.append({
                     "id": c.id,
@@ -124,6 +126,19 @@ def get_grouped_catalog(db: Session = Depends(get_db)):
                 "collections": collections_with_counts
             })
 
+        # --- Decade-Genre Totals ---
+        dg_totals = db.exec(
+            select(
+                Decade.slug.label("decade"),
+                Genre.slug.label("genre"),
+                func.count().label("total_tracks")
+            )
+            .join(DecadeGenre, DecadeGenre.decade_id == Decade.id)
+            .join(Genre, DecadeGenre.genre_id == Genre.id)
+            .join(TrackRanking, TrackRanking.decade_genre_id == DecadeGenre.id)
+            .group_by(Decade.slug, Genre.slug)
+        ).all()
+
         # --- Return structured response ---
         return {
             "decades": [
@@ -135,6 +150,16 @@ def get_grouped_catalog(db: Session = Depends(get_db)):
                 for g in genres
             ],
             "collections": collections_grouped,
+
+            # 👇 ADD THIS
+            "decade_genre_totals": [
+                {
+                    "decade": row.decade,
+                    "genre": row.genre,
+                    "total_tracks": row.total_tracks
+                }
+                for row in dg_totals
+            ]
         }
 
     except Exception as e:
