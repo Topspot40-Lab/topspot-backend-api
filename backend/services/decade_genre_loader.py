@@ -21,16 +21,24 @@ def load_decade_genre_rows(
     decade: str,
     genre: str,
     start_rank: int,
-    end_rank: int,
+    end_rank: int | None = None,
 ):
     """
-    Query all tracks for (decade, genre) in [start_rank, end_rank].
-
-    Returns a list of tuples:
-      (Track, Artist, TrackRanking, Decade, Genre)
+    Query all tracks for (decade, genre).
+    If end_rank is provided, limit to [start_rank, end_rank].
+    Otherwise return full range from start_rank upward.
     """
 
     with get_db_session() as db:
+        filters = [
+            Decade.slug == decade,
+            Genre.slug == genre,
+            TrackRanking.ranking >= start_rank,
+        ]
+
+        if end_rank is not None:
+            filters.append(TrackRanking.ranking <= end_rank)
+
         q = (
             select(Track, Artist, TrackRanking, Decade, Genre)
             .join(Artist, Artist.id == Track.artist_id)
@@ -38,17 +46,13 @@ def load_decade_genre_rows(
             .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
             .join(Decade, Decade.id == DecadeGenre.decade_id)
             .join(Genre, Genre.id == DecadeGenre.genre_id)
-            .where(
-                Decade.slug == decade,
-                Genre.slug == genre,
-                TrackRanking.ranking >= start_rank,
-                TrackRanking.ranking <= end_rank,
-            )
+            .where(*filters)
             .order_by(TrackRanking.ranking)
         )
 
         rows = db.exec(q).all()
 
+        # 🔍 helpful debug
         if rows:
             track, artist, tr_rank, dec, gen = rows[0]
             logger.debug(
@@ -59,5 +63,15 @@ def load_decade_genre_rows(
                 dec.decade_name,
                 gen.genre_name,
             )
+
+        # 🔥 add summary log (like collections)
+        logger.info(
+            "🎶 DG '%s/%s': returning %d tracks (range %s-%s)",
+            decade,
+            genre,
+            len(rows),
+            start_rank,
+            end_rank if end_rank else "ALL"
+        )
 
         return rows

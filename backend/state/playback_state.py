@@ -9,7 +9,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 Phase = Literal["idle", "intro", "detail", "artist", "track", "ended", "music"]
-Mode  = Literal["decade_genre", "collection"]
+Mode = Literal["decade_genre", "collection"]
+
 
 # REMOVE this module-level var (it does NOT attach to status)
 # requested_rank: int | None = None
@@ -35,6 +36,9 @@ class PlaybackStatus:
     current_rank: Optional[int] = None
     current_ranking_id: int | None = None
 
+    # ✅ ADD THIS
+    total_tracks: int = 0
+
     # 🔵 GLOBAL show progress
     elapsed_seconds: float = 0.0
     duration_seconds: float = 0.0
@@ -57,7 +61,6 @@ class PlaybackStatus:
     # 🔵 RADIO tracking
     set_number: int = 0
     previous_bucket: tuple[str, str] | None = None
-
 
 
 # 🔴 SINGLE GLOBAL INSTANCE
@@ -88,9 +91,9 @@ def update_track_clock() -> None:
     Advances the per-track clock. Safe to call repeatedly.
     """
     if (
-        status.is_playing
-        and status.phase == "track"
-        and status.track_start_ts > 0
+            status.is_playing
+            and status.phase == "track"
+            and status.track_start_ts > 0
     ):
         status.track_elapsed_seconds = time.time() - status.track_start_ts
 
@@ -145,10 +148,10 @@ def update_phase(phase: Phase, **kwargs) -> None:
 
 
 def mark_playing(
-    *,
-    mode: Mode,
-    language: str,
-    context: Optional[dict[str, Any]] = None,
+        *,
+        mode: Mode,
+        language: str,
+        context: Optional[dict[str, Any]] = None,
 ) -> None:
     status.is_playing = True
     status.is_paused = False

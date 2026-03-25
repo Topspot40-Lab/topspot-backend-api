@@ -141,6 +141,18 @@ async def run_collection_sequence(
         logger.warning("⚠️ No tracks found for collection: %s", collection_slug)
         return
 
+    # ✅ FULL TOTAL COUNT (not filtered by rank)
+    total_stmt = (
+        select(CollectionTrackRanking)
+        .join(Collection)
+        .where(Collection.slug == collection_slug)
+    )
+    total_rows = db.exec(total_stmt).all()
+
+    status.total_tracks = len(total_rows)
+
+    logger.warning(f"🧪 TOTAL TRACKS SET: {status.total_tracks}")
+
     # Tell frontend a sequence is active
     mark_playing(mode="collection", language=tts_language)
 
@@ -339,6 +351,19 @@ async def run_collection_continuous_sequence(
                 .order_by(CollectionTrackRanking.ranking)
             )
             rows = db.exec(stmt).all()
+
+            total_stmt = (
+                select(CollectionTrackRanking)
+                .join(Collection)
+                .where(Collection.slug == collection_slug)
+            )
+            total_rows = db.exec(total_stmt).all()
+
+            status.total_tracks = len(total_rows)
+
+            logger.warning(f"🧪 TOTAL TRACKS SET (continuous): {status.total_tracks}")
+
+
             print(f"🔥🔥🔥 COLLECTION DB rows={len(rows)} slug={collection_slug} range={start_rank}-{end_rank}")
             if rows:
                 t0, a0, r0 = rows[0]

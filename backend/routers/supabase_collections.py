@@ -10,30 +10,36 @@ from backend.models.dbmodels import (
 )
 
 router = APIRouter(prefix="/supabase/collections", tags=["Supabase: Collections"])
+
+
 @router.get("/get-sequence")
 async def get_sequence_collection(
-    collection_slug: str = Query(...),
-    start_rank: int = Query(1),
-    end_rank: int = Query(40),
-    db=Depends(get_db),
+        collection_slug: str = Query(...),
+        start_rank: int = Query(1),
+        end_rank: int | None = Query(None),
+        db=Depends(get_db),
 ):
+    filters = [
+        Collection.slug == collection_slug,
+        CollectionTrackRanking.ranking >= start_rank,
+    ]
+
+    if end_rank is not None:
+        filters.append(CollectionTrackRanking.ranking <= end_rank)
+
     q = (
         select(Track, Artist, CollectionTrackRanking)
         .join(Artist, Artist.id == Track.artist_id)
         .join(CollectionTrackRanking, CollectionTrackRanking.track_id == Track.id)
         .join(Collection, Collection.id == CollectionTrackRanking.collection_id)
-        .where(
-            Collection.slug == collection_slug,
-            CollectionTrackRanking.ranking >= start_rank,
-            CollectionTrackRanking.ranking <= end_rank,
-        )
+        .where(*filters)
         .order_by(CollectionTrackRanking.ranking)
     )
 
     rows = db.exec(q).all()
 
     if not rows:
-        return {"status": "empty", "tracks": []}
+        return {"status": "empty", "total": 0, "tracks": []}
 
     tracks = [
         {
@@ -48,5 +54,16 @@ async def get_sequence_collection(
         }
         for track, artist, ctr in rows
     ]
+
+    import logging
+    logger = logging.getLogger(__name__)
+
+    logger.info(
+        "📚 Collection '%s': returning %d tracks (range %s-%s)",
+        collection_slug,
+        len(rows),
+        start_rank,
+        end_rank if end_rank else "ALL"
+    )
 
     return {"status": "ok", "total": len(tracks), "tracks": tracks}

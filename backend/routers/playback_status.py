@@ -11,14 +11,11 @@ from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from backend.services.spotify.playback import (
     play_spotify_track,
     stop_spotify_playback,
-    ensure_active_device,   # ✅ add
+    ensure_active_device,  # ✅ add
 )
-
 
 from backend.config import SPOTIFY_BED_TRACK_ID
 from backend.state.narration import narration_done_event, track_done_event
-
-
 
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
 logger = logging.getLogger(__name__)
@@ -31,6 +28,7 @@ def update_track_clock():
         else:
             status.track_elapsed_seconds = time.time() - status.track_start_ts
 
+
 @router.get("/devices")
 async def get_devices():
     """
@@ -41,6 +39,7 @@ async def get_devices():
     return {
         "devices": data.get("devices", [])
     }
+
 
 @router.get("/status")
 async def get_status():
@@ -89,6 +88,9 @@ async def get_status():
         "artist_name": snap.get("artist_name"),
         "current_rank": snap.get("current_rank"),
 
+        # ✅ ADD THIS
+        "totalTracks": snap.get("total_tracks"),
+
         # ⭐ ADD THESE (THIS IS THE FIX)
         "setNumber": ctx.get("set_number"),
         "blockPosition": ctx.get("block_position"),
@@ -106,6 +108,7 @@ async def get_status():
         "context": ctx,
     }
 
+
 @router.post("/transfer/{device_id}")
 async def transfer_playback(device_id: str):
     """
@@ -115,10 +118,9 @@ async def transfer_playback(device_id: str):
     sp.transfer_playback(device_id=device_id, force_play=True)
     return {"ok": True, "device_id": device_id}
 
+
 @router.post("/narration-finished")
 async def narration_finished():
-
-
     ctx = status.context or {}
     voice_style = ctx.get("voice_style")
 
@@ -143,9 +145,11 @@ async def narration_finished():
 
     return {"ok": True}
 
+
 from backend.state.narration import track_done_event
 
 from backend.state.narration import track_done_event
+
 
 @router.post("/track-finished")
 async def track_finished():
@@ -156,6 +160,3 @@ async def track_finished():
     track_done_event.set()
 
     return {"ok": True}
-
-
-
