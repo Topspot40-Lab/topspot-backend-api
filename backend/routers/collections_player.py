@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 async def play_collection_sequence(
         collection_slug: str = Query(...),
         start_rank: int = Query(1),
-        end_rank: int = Query(40),
+        end_rank: int | None = Query(None),
         mode: Literal["count_up", "count_down", "random"] = Query("count_up"),
         continuous: bool = Query(False),  # 👈 add this
         tts_language: Literal["en", "es", "ptbr", "pt-BR"] = Query("en"),

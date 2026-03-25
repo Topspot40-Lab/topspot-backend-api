@@ -110,7 +110,7 @@ async def play_sequence_decade_genre(
         genre: str = Query(...),
         category: Literal["single", "continuous"] = Query("continuous"),  # 👈 ADD THIS
         start_rank: int = Query(1),
-        end_rank: int = Query(40),
+        end_rank: int | None = Query(None),
         mode: Literal["count_up", "count_down", "random"] = Query("count_up"),
         tts_language: Literal["en", "es", "ptbr", "pt-BR"] = Query("en"),
         play_intro: bool = Query(True),
@@ -330,7 +330,7 @@ async def get_sequence_decade_genre(
         decade: str = Query(...),
         genre: str = Query(...),
         start_rank: int = Query(1),
-        end_rank: int = Query(40),
+        end_rank: int | None = Query(None),
         db=Depends(get_db),
 ):
     conditions = []
@@ -354,6 +354,13 @@ async def get_sequence_decade_genre(
     else:
         order_clause = (TrackRanking.ranking,)
 
+    if start_rank is not None:
+        conditions.append(TrackRanking.ranking >= start_rank)
+
+    if end_rank is not None:
+        conditions.append(TrackRanking.ranking <= end_rank)
+
+
     q = (
         select(Track, Artist, TrackRanking, Decade, Genre)
         .join(Artist, Artist.id == Track.artist_id)
@@ -367,7 +374,17 @@ async def get_sequence_decade_genre(
         q = q.where(*conditions)
 
     q = q.order_by(*order_clause)
+
+    logger.info(
+        "📦 get-sequence request: decade=%s genre=%s start_rank=%s end_rank=%s",
+        decade,
+        genre,
+        start_rank,
+        end_rank,
+    )
     rows = db.exec(q).all()
+
+    logger.info("📦 get-sequence returned %d rows", len(rows))
 
     if not rows:
         return {"status": "empty", "tracks": []}
