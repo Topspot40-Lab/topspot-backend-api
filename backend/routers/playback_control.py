@@ -382,9 +382,9 @@ async def play_track(payload: dict):
 
 
     elif context.get("type") == "collection":
-        from backend.routers.collections_player import _run_play_sequence_collection
+        from backend.services.collection_sequence import run_collection_sequence
 
-        coro = _run_play_sequence_collection(
+        coro = run_collection_sequence(
             collection_slug=context["collection_slug"],
             start_rank=track.rank,
             end_rank=track.rank,
