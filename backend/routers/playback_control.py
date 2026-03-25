@@ -227,7 +227,7 @@ async def play_track(payload: dict):
     # await cancel_current_sequence()
     reset_for_single_track()
 
-    if context["type"] == "favorites":
+    if context and context.get("type") == "favorites":
         from backend.database import get_db
         from backend.models.dbmodels import TrackRanking, DecadeGenre, Decade, Genre
         from sqlmodel import select
@@ -316,7 +316,7 @@ async def play_track(payload: dict):
         await start_new_sequence(_play_favorites_one())
         return {"ok": True, "message": "Favorites single-track playback started"}
 
-    if context["type"] == "decade_genre":
+    if context.get("type") == "decade_genre":
         # logger.warning("DECADE GENRE CONTEXT → %s", context)
 
         if context.get("decade", "").lower() == "all":
@@ -381,9 +381,7 @@ async def play_track(payload: dict):
             )
 
 
-
-
-    elif context["type"] == "collection":
+    elif context.get("type") == "collection":
         from backend.routers.collections_player import _run_play_sequence_collection
 
         coro = _run_play_sequence_collection(

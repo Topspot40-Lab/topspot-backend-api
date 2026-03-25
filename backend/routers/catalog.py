@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 import logging
+from sqlalchemy import func
+from backend.models import CollectionTrackRanking
 
 from backend.database import get_db
 from backend.models import Decade, Genre
@@ -9,6 +11,7 @@ from backend.models.collection_models import CollectionCategory, Collection
 router = APIRouter(prefix="/api/catalog", tags=["Catalog"])
 
 logger = logging.getLogger(__name__)
+
 
 @router.get("/summary")
 def get_catalog_summary(db: Session = Depends(get_db)):  # ✅ use get_db
@@ -100,13 +103,25 @@ def get_grouped_catalog(db: Session = Depends(get_db)):
                 .order_by(Collection.name)
             ).all()
 
+            collections_with_counts = []
+
+            for c in collections:
+                total_tracks = db.exec(
+                        select(func.count())
+                        .where(CollectionTrackRanking.collection_id == c.id)
+                    ).one()
+
+                collections_with_counts.append({
+                    "id": c.id,
+                    "name": c.name,
+                    "slug": c.slug,
+                    "totalTracks": total_tracks
+                })
+
             collections_grouped.append({
                 "category": category.name,
                 "slug": category.slug,
-                "collections": [
-                    {"id": c.id, "name": c.name, "slug": c.slug}
-                    for c in collections
-                ],
+                "collections": collections_with_counts
             })
 
         # --- Return structured response ---
