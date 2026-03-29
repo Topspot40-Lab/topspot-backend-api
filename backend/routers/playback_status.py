@@ -130,6 +130,11 @@ async def narration_finished():
         voice_style
     )
 
+    # 🛑 NEW: ignore if paused
+    if status.is_paused:
+        logger.info("⏸️ Ignoring narration-finished because system is paused")
+        return {"ok": True}
+
     # Stop bed track only for BEFORE narration
     if voice_style == "before" and getattr(status, "bed_playing", False):
         logger.info("🔉 Stopping narration bed track (BEFORE mode)")
@@ -140,7 +145,7 @@ async def narration_finished():
 
         status.bed_playing = False
 
-    # ✅ Signal narration completion (NOT skip)
+    # ✅ ONLY fire event if NOT paused
     narration_done_event.set()
 
     return {"ok": True}

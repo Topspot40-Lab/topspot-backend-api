@@ -472,6 +472,9 @@ async def pause():
 @router.post("/resume", summary="Resume playback")
 def resume():
 
+    phase = status.phase
+    logger.info(f"▶️ Resume requested from phase: {phase}")
+
     mark_playing(
         mode=status.mode,
         language=status.language,
@@ -479,36 +482,45 @@ def resume():
     )
 
     try:
-        sp = get_spotify_user_client()
+        # 🎯 CASE 1 — TRACK (existing logic)
+        if phase == "track":
+            sp = get_spotify_user_client()
 
-        sp.start_playback()
+            sp.start_playback()
 
-        import time
+            import time
 
-        # 🔁 Wait until Spotify is actually playing
-        for _ in range(10):
-            time.sleep(0.1)
-            try:
-                pb = sp.current_playback()
-                if pb and pb.get("is_playing"):
-                    break
-            except Exception:
-                pass
+            for _ in range(10):
+                time.sleep(0.1)
+                try:
+                    pb = sp.current_playback()
+                    if pb and pb.get("is_playing"):
+                        break
+                except Exception:
+                    pass
 
-        # 🧠 ADD THIS LINE (this is the fix)
-        time.sleep(0.2)
+            time.sleep(0.2)
 
-        # 🔊 Restore volume
-        device_id = status.context.get("device_id") if status.context else None
+            device_id = status.context.get("device_id") if status.context else None
 
-        if device_id and hasattr(status, "volume") and status.volume is not None:
-            logger.info(f"🔊 Restoring volume to {status.volume}")
-            sp.volume(status.volume, device_id=device_id)
-            time.sleep(0.1)
-            sp.volume(status.volume, device_id=device_id)
+            if device_id and hasattr(status, "volume") and status.volume is not None:
+                logger.info(f"🔊 Restoring volume to {status.volume}")
+                sp.volume(status.volume, device_id=device_id)
+
+            return {"ok": True, "status": asdict(flags)}
+
+        # 🎯 CASE 2 — NARRATION PHASES
+        elif phase in ["intro", "detail", "artist"]:
+            logger.info(f"🔁 Restarting narration phase: {phase}")
+
+            return {
+                "ok": True,
+                "restart_track": True,
+                "status": asdict(flags)
+            }
 
     except Exception as exc:
-        logger.warning("⚠️ Resume Spotify failed: %s", exc)
+        logger.warning("⚠️ Resume failed: %s", exc)
 
     touch()
     return {"ok": True, "status": asdict(flags)}
