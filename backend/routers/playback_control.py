@@ -1,11 +1,10 @@
 # backend/routers/playback_control.py
 from __future__ import annotations
 
-from backend.state.playback_state import update_phase, status
-
+from backend.state.playback_state import update_phase, status, mark_paused, mark_playing
+from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
-
 
 import asyncio
 import logging
@@ -439,21 +438,28 @@ def start(
 async def pause():
     logger.info("⏸️ Pause requested")
 
-    # Mark paused state
-    flags.is_paused = True
-    flags.is_playing = False
-    flags.cancel_requested = True
+    mark_paused()
 
-    # 1️⃣ Stop narration immediately
+    # 🔊 Capture current volume BEFORE fade
+    try:
+        sp = get_spotify_user_client()
+        pb = sp.current_playback()
+        if pb and pb.get("device"):
+            status.volume = pb["device"]["volume_percent"]
+            status.context["device_id"] = pb["device"]["id"]
+            logger.info(f"💾 Saved volume: {status.volume}")
+    except Exception as exc:
+        logger.warning("⚠️ Failed to capture volume: %s", exc)
+
+    # 1️⃣ Stop narration
     if skip_event is not None:
         try:
             skip_event.set()
         except Exception:
             pass
 
-    # 2️⃣ Stop Spotify immediately
+    # 2️⃣ Fade out Spotify
     try:
-        await set_device_volume(100)
         from backend.services.spotify.playback import stop_spotify_playback
         await stop_spotify_playback(fade_out_seconds=0.3)
     except Exception as exc:
@@ -465,11 +471,47 @@ async def pause():
 
 @router.post("/resume", summary="Resume playback")
 def resume():
-    flags.is_paused = False
-    flags.is_playing = True
+
+    mark_playing(
+        mode=status.mode,
+        language=status.language,
+        context=status.context
+    )
+
+    try:
+        sp = get_spotify_user_client()
+
+        sp.start_playback()
+
+        import time
+
+        # 🔁 Wait until Spotify is actually playing
+        for _ in range(10):
+            time.sleep(0.1)
+            try:
+                pb = sp.current_playback()
+                if pb and pb.get("is_playing"):
+                    break
+            except Exception:
+                pass
+
+        # 🧠 ADD THIS LINE (this is the fix)
+        time.sleep(0.2)
+
+        # 🔊 Restore volume
+        device_id = status.context.get("device_id") if status.context else None
+
+        if device_id and hasattr(status, "volume") and status.volume is not None:
+            logger.info(f"🔊 Restoring volume to {status.volume}")
+            sp.volume(status.volume, device_id=device_id)
+            time.sleep(0.1)
+            sp.volume(status.volume, device_id=device_id)
+
+    except Exception as exc:
+        logger.warning("⚠️ Resume Spotify failed: %s", exc)
+
     touch()
     return {"ok": True, "status": asdict(flags)}
-
 
 @router.post("/stop", summary="Stop playback")
 async def stop():
