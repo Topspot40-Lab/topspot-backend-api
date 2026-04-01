@@ -30,6 +30,23 @@ router = APIRouter(prefix="/supabase/decade-genre", tags=["Supabase: Decade/Genr
 logger = logging.getLogger(__name__)
 
 
+def get_max_rank_for_decade_genre(db, decade: str, genre: str) -> int:
+    q = (
+        select(TrackRanking.ranking)
+        .join(DecadeGenre, DecadeGenre.id == TrackRanking.decade_genre_id)
+        .join(Decade, Decade.id == DecadeGenre.decade_id)
+        .join(Genre, Genre.id == DecadeGenre.genre_id)
+        .where(
+            Decade.slug == decade,
+            Genre.slug == genre,
+        )
+        .order_by(TrackRanking.ranking.desc())
+    )
+
+    max_rank = db.exec(q).first()
+    return max_rank if max_rank is not None else 1
+
+
 # ─────────────────────────────────────────────
 # FAST PLAY-FIRST (INSTANT START)
 # ─────────────────────────────────────────────
@@ -45,6 +62,9 @@ async def play_first_decade_genre(
         play_track: bool = Query(True),
         voice_style: Literal["before", "over"] = Query("before"),
 ):
+    db = next(get_db())
+    max_rank = get_max_rank_for_decade_genre(db, decade, genre)
+
     logger.info(
         "⚡ FAST PLAY-FIRST: %s/%s mode=%s",
         decade,
@@ -52,12 +72,13 @@ async def play_first_decade_genre(
         mode,
     )
 
+
     async def _run_full_sequence():
         # Determine correct first rank
         if mode == "count_down":
-            first_rank = 40
+            first_rank = max_rank
         elif mode == "random":
-            first_rank = random.randint(1, 40)
+            first_rank = random.randint(1, max_rank)
         else:
             first_rank = 1
 
@@ -81,7 +102,7 @@ async def play_first_decade_genre(
             decade=decade,
             genre=genre,
             start_rank=1,
-            end_rank=40,
+            end_rank=max_rank,
             mode=mode,
             tts_language=tts_language,
             play_intro=play_intro,
@@ -132,11 +153,37 @@ async def play_sequence_decade_genre(
         voice_style,
     )
 
+    db = next(get_db())
+    max_rank = get_max_rank_for_decade_genre(db, decade, genre)
+
+    # Clamp start_rank
+    if start_rank > max_rank:
+        logger.warning(
+            "⚠️ start_rank (%d) > max_rank (%d), clamping",
+            start_rank,
+            max_rank,
+        )
+        start_rank = max_rank
+
+    # Fix end_rank
+    if end_rank is None:
+        end_rank = max_rank
+
     # ─────────────────────────────────────────────
     # ALL / ALL → RADIO MODE
     # ─────────────────────────────────────────────
     if decade == "ALL" and genre == "ALL":
         logger.info("📻 Switching to ALL-ALL single-step radio mode")
+
+        db = next(get_db())
+        max_rank = get_max_rank_for_decade_genre(db, decade, genre)
+        # Clamp start_rank to valid range
+        if start_rank > max_rank:
+            logger.warning("⚠️ start_rank (%d) > max_rank (%d), clamping", start_rank, max_rank)
+            start_rank = max_rank
+
+        if end_rank is None:
+            end_rank = max_rank
 
         # ✅ ADD THIS BLOCK HERE 👇
         status.selection = {
@@ -173,6 +220,37 @@ async def play_sequence_decade_genre(
             "mode": "all_radio",
         }
 
+    db = next(get_db())
+    max_rank = get_max_rank_for_decade_genre(db, decade, genre)
+
+    # Fix end_rank
+    if end_rank is None:
+        end_rank = max_rank
+
+    # Clamp start_rank
+    if start_rank > max_rank:
+        logger.warning(
+            "⚠️ start_rank (%d) > max_rank (%d), clamping",
+            start_rank,
+            max_rank,
+        )
+        start_rank = max_rank
+
+    # Final safety: prevent invalid range
+    if start_rank > end_rank:
+        logger.warning(
+            "⚠️ Invalid range %d-%d, correcting",
+            start_rank,
+            end_rank,
+        )
+        start_rank = end_rank
+
+        logger.warning(
+            "🚨 FINAL RANGE BEFORE SEQUENCE: %d-%d",
+            start_rank,
+            end_rank,
+        )
+
     coro = run_decade_genre_sequence(
         decade=decade,
         genre=genre,
@@ -194,7 +272,10 @@ async def play_sequence_decade_genre(
     }
 
     flags.mode = mode
-    flags.current_rank = start_rank
+    if mode == "count_down":
+        flags.current_rank = end_rank
+    else:
+        flags.current_rank = start_rank
     flags.lang = tts_language
     flags.voice_style = voice_style
 

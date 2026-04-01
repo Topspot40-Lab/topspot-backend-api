@@ -29,6 +29,11 @@ def load_decade_genre_rows(
     Otherwise return full range from start_rank upward.
     """
 
+    # 🔥 NORMALIZE RANGE (CRITICAL FIX)
+    if end_rank is not None and start_rank > end_rank:
+        logger.warning(f"⚠️ Reversed range detected: {start_rank}-{end_rank}, fixing")
+        start_rank, end_rank = end_rank, start_rank
+
     with get_db_session() as db:
         filters = [
             Decade.slug == decade,
