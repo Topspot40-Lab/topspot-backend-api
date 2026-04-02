@@ -243,7 +243,14 @@ async def play_sequence_decade_genre(
             start_rank,
             end_rank,
         )
-        start_rank = end_rank
+        if start_rank > end_rank:
+            logger.error(
+                "🚨 INVALID RANGE %d-%d — forcing single rank at %d",
+                start_rank,
+                end_rank,
+                start_rank,
+            )
+            end_rank = start_rank
 
         logger.warning(
             "🚨 FINAL RANGE BEFORE SEQUENCE: %d-%d",
