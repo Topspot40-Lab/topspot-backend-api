@@ -43,6 +43,7 @@ async def run_all_radio_sequence(
         *,
         tts_language: str = "en",
         category: str | None = None,
+        genre_filter: str | None = None,   # 👈 ADD THIS
 ):
     # 🎛️ Get selection from playback state (set by frontend)
     selection = getattr(status, "selection", {}) or {}
@@ -126,15 +127,30 @@ async def run_all_radio_sequence(
                     logger.error("❌ No valid radio buckets found")
                     return
 
-                # 🕒 Build station clock from DB genres
-                genres = list({g for _, g in VALID_BUCKETS_CACHE})
-                random.shuffle(genres)
+            # ALWAYS assign first
+            valid_buckets = VALID_BUCKETS_CACHE
 
-                logger.debug("🕒 Station clock genres: %s", genres)
+            # 🎯 Apply genre filter (once, clean)
+            if genre_filter and genre_filter != "ALL":
+                logger.info("🎸 GENRE FILTER ACTIVE: %s", genre_filter)
+                valid_buckets = [(d, g) for (d, g) in valid_buckets if g == genre_filter]
 
-                clock_index = 0
+            # 🕒 Build station clock from filtered buckets
+            genres = list({g for _, g in valid_buckets})
+            random.shuffle(genres)
+
+            logger.debug("🕒 Station clock genres: %s", genres)
+
+            clock_index = 0
 
             valid_buckets = VALID_BUCKETS_CACHE
+            # 🎯 Apply genre filter
+            if genre_filter and genre_filter != "ALL":
+                valid_buckets = [(d, g) for (d, g) in valid_buckets if g == genre_filter]
+
+            # 🎯 Apply genre filter (for Nostalgia Radio station selection)
+            if genre_filter and genre_filter != "ALL":
+                valid_buckets = [(d, g) for (d, g) in valid_buckets if g == genre_filter]
 
             # ─────────────────────────────
             # PICK RANDOM BUCKET

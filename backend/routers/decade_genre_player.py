@@ -4,7 +4,6 @@ import logging
 import random
 from typing import Literal
 
-
 from fastapi import APIRouter, Query, Depends
 from sqlmodel import select
 from backend.services.all_radio_sequence import run_all_radio_sequence
@@ -72,7 +71,6 @@ async def play_first_decade_genre(
         mode,
     )
 
-
     async def _run_full_sequence():
         # Determine correct first rank
         if mode == "count_down":
@@ -122,6 +120,38 @@ async def play_first_decade_genre(
     }
 
 
+def start_radio_mode(
+        tts_language,
+        play_intro,
+        play_detail,
+        play_artist_description,
+        voice_style,
+):
+    # Build voice selection
+    status.selection = {
+        "voices": [
+            v for v, enabled in [
+                ("intro", play_intro),
+                ("detail", play_detail),
+                ("artist", play_artist_description),
+            ] if enabled
+        ]
+    }
+
+    logger.info("✅ status.selection set: %s", status.selection)
+
+    # Set context (leave as ALL for now — Phase 2 will refine)
+    flags.context = {
+        "type": "all_radio",
+        "decade": "ALL",
+        "genre": "ALL",
+    }
+
+    flags.current_rank = None
+    flags.lang = tts_language
+    flags.voice_style = voice_style
+
+
 # ─────────────────────────────────────────────
 # START NEW SEQUENCE (FULL RANGE)
 # ─────────────────────────────────────────────
@@ -140,10 +170,8 @@ async def play_sequence_decade_genre(
         play_track: bool = Query(True),
         voice_style: Literal["before", "over"] = Query("before"),
 ):
-
-
     logger.info(
-        "▶ Launch request: %s/%s %d-%d mode=%s lang=%s voice_style=%s",
+        "▶ Launch request: %s/%s %s-%s mode=%s lang=%s voice_style=%s",
         decade,
         genre,
         start_rank,
@@ -169,56 +197,79 @@ async def play_sequence_decade_genre(
     if end_rank is None:
         end_rank = max_rank
 
-    # ─────────────────────────────────────────────
-    # ALL / ALL → RADIO MODE
-    # ─────────────────────────────────────────────
-    if decade == "ALL" and genre == "ALL":
-        logger.info("📻 Switching to ALL-ALL single-step radio mode")
+    # 🧪 TEMP TEST — FORCE RADIO FOR ROCK
+    if decade == "ALL":
+        logger.info(f"🧪 RADIO MODE: ALL/{genre}")
 
-        db = next(get_db())
-        max_rank = get_max_rank_for_decade_genre(db, decade, genre)
-        # Clamp start_rank to valid range
-        if start_rank > max_rank:
-            logger.warning("⚠️ start_rank (%d) > max_rank (%d), clamping", start_rank, max_rank)
-            start_rank = max_rank
+        genre_filter = None if genre == "ALL" else genre
 
-        if end_rank is None:
-            end_rank = max_rank
-
-        # ✅ ADD THIS BLOCK HERE 👇
-        status.selection = {
-            "voices": [
-                v for v, enabled in [
-                    ("intro", play_intro),
-                    ("detail", play_detail),
-                    ("artist", play_artist_description),
-                ] if enabled
-            ]
-        }
-
-        logger.info("✅ status.selection set: %s", status.selection)
-
-        flags.context = {
-            "type": "all_radio",
-            "decade": "ALL",
-            "genre": "ALL",
-        }
-        flags.mode = mode
-        flags.current_rank = None
-        flags.lang = tts_language
-        flags.voice_style = voice_style
+        start_radio_mode(
+            tts_language,
+            play_intro,
+            play_detail,
+            play_artist_description,
+            voice_style,
+        )
 
         await start_new_sequence(
             run_all_radio_sequence(
-                tts_language=tts_language,
-                category="single",
+                genre_filter=genre_filter,
+                # keep your existing params here
             )
         )
 
-        return {
-            "status": "started",
-            "mode": "all_radio",
-        }
+        return {"status": "started", "mode": f"radio_{genre}"}
+
+    # ─────────────────────────────────────────────
+    # ALL / ALL → RADIO MODE
+    # ─────────────────────────────────────────────
+    # if decade == "ALL" and genre == "ALL":
+    #     logger.info("📻 Switching to ALL-ALL single-step radio mode")
+    #
+    #     db = next(get_db())
+    #     max_rank = get_max_rank_for_decade_genre(db, decade, genre)
+    #     # Clamp start_rank to valid range
+    #     if start_rank > max_rank:
+    #         logger.warning("⚠️ start_rank (%d) > max_rank (%d), clamping", start_rank, max_rank)
+    #         start_rank = max_rank
+    #
+    #     if end_rank is None:
+    #         end_rank = max_rank
+    #
+    #     # ✅ ADD THIS BLOCK HERE 👇
+    #     status.selection = {
+    #         "voices": [
+    #             v for v, enabled in [
+    #                 ("intro", play_intro),
+    #                 ("detail", play_detail),
+    #                 ("artist", play_artist_description),
+    #             ] if enabled
+    #         ]
+    #     }
+    #
+    #     logger.info("✅ status.selection set: %s", status.selection)
+    #
+    #     flags.context = {
+    #         "type": "all_radio",
+    #         "decade": "ALL",
+    #         "genre": "ALL",
+    #     }
+    #     flags.mode = mode
+    #     flags.current_rank = None
+    #     flags.lang = tts_language
+    #     flags.voice_style = voice_style
+    #
+    #     await start_new_sequence(
+    #         run_all_radio_sequence(
+    #             tts_language=tts_language,
+    #             category="single",
+    #         )
+    #     )
+    #
+    #     return {
+    #         "status": "started",
+    #         "mode": "all_radio",
+    #     }
 
     db = next(get_db())
     max_rank = get_max_rank_for_decade_genre(db, decade, genre)
@@ -317,7 +368,6 @@ async def play_next_decade_genre():
     genre = flags.context.get("genre")
     mode = flags.mode or "count_up"
     current_rank = flags.current_rank
-
 
     if not decade or not genre or current_rank is None:
         return {"status": "error", "message": "Missing playback state."}
@@ -447,7 +497,6 @@ async def get_sequence_decade_genre(
 
     if end_rank is not None:
         conditions.append(TrackRanking.ranking <= end_rank)
-
 
     q = (
         select(Track, Artist, TrackRanking, Decade, Genre)
