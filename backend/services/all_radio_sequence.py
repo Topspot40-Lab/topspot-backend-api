@@ -256,12 +256,13 @@ async def run_all_radio_sequence(
                     logger.info("🛑 Radio mode stopped")
                     return
 
-                if status.cancel_requested:
-                    logger.info("⏭ Skip requested → moving to next track")
-                    status.cancel_requested = False
-
-                    # 🔥 BREAK out of current track immediately
-                    break
+                # if status.cancel_requested:
+                #     logger.info("⏭ Skip requested → moving to next track")
+                #     status.cancel_requested = False
+                #
+                #     # 🔥 FORCE IMMEDIATE ADVANCE
+                #     track_done_event.clear()
+                #     continue
 
                 rank = tr_rank.ranking
 
@@ -328,6 +329,7 @@ async def run_all_radio_sequence(
                 # ─────────────────────────────────────────────
                 # 🔥 Ensure we are waiting for a NEW signal
                 track_done_event.clear()
+
 
                 while True:
                     await track_done_event.wait()

@@ -374,7 +374,16 @@ async def play_next_decade_genre():
 
     from backend.state.narration import track_done_event  # ← ADD IMPORT AT TOP IF NOT THERE
 
-    if decade == "ALL" and genre == "ALL":
+    if decade == "ALL":
+        logger.info("⏭ NEXT (RADIO MODE) → skipping to next track")
+
+        status.cancel_requested = True
+        track_done_event.set()
+
+        return {
+            "status": "skipping",
+            "mode": "radio"
+        }
         logger.info("⏭ NEXT (ALL/ALL) → skipping to next track")
 
         status.cancel_requested = True
