@@ -97,8 +97,7 @@ async def run_all_radio_sequence(
     )
 
     global VALID_BUCKETS_CACHE
-    genres = []
-    clock_index = 0
+
 
     previous_bucket = None
     last_played_ranking_id = None
@@ -166,7 +165,6 @@ async def run_all_radio_sequence(
 
             if genres:
                 target_genre = genres[clock_index]
-                clock_index = (clock_index + 1) % len(genres)
 
                 candidates = [(d, g) for (d, g) in filtered if g == target_genre]
             else:
@@ -283,22 +281,23 @@ async def run_all_radio_sequence(
                     track_name=track.track_name,
                     artist_name=artist.artist_name,
                     current_rank=rank,
+
+                    # 🔥 ADD THESE
+                    intro=tr_rank.intro,
+                    detail=track.detail,
+                    artist_text=artist.artist_description,
+
                     context={
                         "mode": "all_radio",
-
                         "decade_slug": decade,
                         "genre_slug": genre,
-
                         "decade_name": decade_obj.decade_name,
                         "genre_name": genre_obj.genre_name,
-
                         "set_number": set_number,
                         "block_size": len(block_rows),
                         "block_position": idx,
-
                         "spotify_track_id": track.spotify_track_id,
                         "ranking_id": tr_rank.id,
-
                         "year": track.year_released,
                         "album_artwork": track.album_artwork,
                     },

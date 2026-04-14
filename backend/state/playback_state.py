@@ -55,6 +55,11 @@ class PlaybackStatus:
     track_name: str = ""
     artist_name: str = ""
 
+    # 🔥 ADD THESE
+    intro: str | None = None
+    detail: str | None = None
+    artist_text: str | None = None
+
     # Timing
     last_action_ts: float = field(default_factory=time.time)
 

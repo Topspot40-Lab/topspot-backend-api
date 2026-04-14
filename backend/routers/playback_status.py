@@ -46,6 +46,7 @@ async def get_status():
     update_track_clock()
 
     snap = asdict(status)
+
     ctx = snap.get("context") or status.context or {}
     ctx["ranking_id"] = snap.get("current_ranking_id")
 
@@ -87,6 +88,11 @@ async def get_status():
         "track_name": snap.get("track_name"),
         "artist_name": snap.get("artist_name"),
         "current_rank": snap.get("current_rank"),
+
+        # 🔥 ADD THIS — NARRATION FIELDS
+        "intro": snap.get("intro"),
+        "detail": snap.get("detail"),
+        "artist_text": snap.get("artist_text"),
 
         # ✅ ADD THIS
         "totalTracks": snap.get("total_tracks"),
