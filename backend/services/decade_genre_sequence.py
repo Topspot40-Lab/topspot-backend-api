@@ -29,7 +29,6 @@ from backend.state.playback_state import (
 
 from backend.state.narration import narration_done_event
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -65,31 +64,43 @@ async def publish_narration_phase(
     bucket: str,
     key: str,
     voice_style: Literal["before", "over"],
+    extra_context: dict | None = None,
 ):
     audio_url = resolve_audio_ref(bucket, key)
 
     logger.info("🎙 publish_narration_phase phase=%s decade=%s genre=%s bucket=%s key=%s",
                 phase, decade, genre, bucket, key)
 
+    base_context = {
+        "lang": getattr(status, "language", None),
+        "mode": "decade_genre",
+        "decade": decade,
+        "genre": genre,
+        "rank": int(rank),
+        "track_name": track.track_name,
+        "artist_name": artist.artist_name,
+        "bucket": bucket,
+        "key": key,
+        "audio_url": audio_url,
+        "source": "remote" if is_remote_audio() else "local",
+        "voice_style": voice_style,
+
+        # artwork + ids for UI continuity
+        "spotify_track_id": getattr(track, "spotify_track_id", None),
+        "album_artwork": getattr(track, "album_artwork", None),
+        "artist_artwork": getattr(artist, "artist_artwork", None),
+        "year": getattr(track, "year_released", None),
+    }
+
+    if extra_context:
+        base_context.update(extra_context)
+
     update_phase(
         phase,
         track_name=track.track_name,
         artist_name=artist.artist_name,
         current_rank=int(rank),
-        context={
-            "lang": getattr(status, "language", None),
-            "mode": "decade_genre",
-            "decade": decade,
-            "genre": genre,
-            "rank": int(rank),
-            "track_name": track.track_name,
-            "artist_name": artist.artist_name,
-            "bucket": bucket,
-            "key": key,
-            "audio_url": audio_url,
-            "source": "remote" if is_remote_audio() else "local",
-            "voice_style": voice_style,
-        },
+        context=base_context,
     )
 
     logger.info("🎙 Published %s frame: %s", phase.upper(), audio_url)
@@ -140,18 +151,18 @@ def _is_cancelled_or_stopped() -> bool:
 # Frontend controls actual playback and Next/Prev navigation.
 # ─────────────────────────────────────────────
 async def run_decade_genre_sequence(
-    *,
-    decade: str,
-    genre: str,
-    start_rank: int,
-    end_rank: int,
-    mode: Literal["count_up", "count_down", "random"],
-    tts_language: str,
-    play_intro: bool,
-    play_detail: bool,
-    play_artist_description: bool,
-    play_track: bool,
-    voice_style: Literal["before", "over"] = "before",
+        *,
+        decade: str,
+        genre: str,
+        start_rank: int,
+        end_rank: int,
+        mode: Literal["count_up", "count_down", "random"],
+        tts_language: str,
+        play_intro: bool,
+        play_detail: bool,
+        play_artist_description: bool,
+        play_track: bool,
+        voice_style: Literal["before", "over"] = "before",
 ) -> None:
     logger.info(
         "🎧 Starting sequence (publisher): %s/%s %d-%d mode=%s lang=%s voice=%s",
@@ -386,18 +397,18 @@ async def run_decade_genre_sequence(
 
 
 async def run_decade_genre_continuous_sequence(
-    *,
-    decade: str,
-    genre: str,
-    start_rank: int,
-    end_rank: int,
-    mode: Literal["count_up", "count_down", "random"],
-    tts_language: str,
-    play_intro: bool,
-    play_detail: bool,
-    play_artist_description: bool,
-    play_track: bool,
-    voice_style: Literal["before", "over"] = "before",
+        *,
+        decade: str,
+        genre: str,
+        start_rank: int,
+        end_rank: int,
+        mode: Literal["count_up", "count_down", "random"],
+        tts_language: str,
+        play_intro: bool,
+        play_detail: bool,
+        play_artist_description: bool,
+        play_track: bool,
+        voice_style: Literal["before", "over"] = "before",
 ) -> None:
     logger.info(
         "📻 CONTINUOUS MODE START: %s/%s %d-%d mode=%s lang=%s voice=%s",

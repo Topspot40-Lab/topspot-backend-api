@@ -11,6 +11,14 @@ from backend.models import (
     TrackRanking
 )
 
+from backend.services.decade_genre_sequence import (
+    _extract_bucket_key,
+    publish_narration_phase,
+)
+from backend.services.radio_runtime import (
+    build_intro_jobs,
+    narration_keys_for,
+)
 from backend.config.playback_block_config import MIN_TRACKS_PER_BLOCK
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.block_builder import build_track_block
@@ -20,10 +28,8 @@ from backend.state.narration import track_done_event
 
 logger = logging.getLogger(__name__)
 
-
-
-
 VALID_BUCKETS_CACHE = None
+
 
 def get_valid_buckets(session):
     q = (
@@ -43,7 +49,7 @@ async def run_all_radio_sequence(
         *,
         tts_language: str = "en",
         category: str | None = None,
-        genre_filter: str | None = None,   # 👈 ADD THIS
+        genre_filter: str | None = None,  # 👈 ADD THIS
 ):
     # 🎛️ Get selection from playback state (set by frontend)
     selection = getattr(status, "selection", {}) or {}
@@ -97,7 +103,6 @@ async def run_all_radio_sequence(
     )
 
     global VALID_BUCKETS_CACHE
-
 
     previous_bucket = None
     last_played_ranking_id = None
@@ -276,39 +281,9 @@ async def run_all_radio_sequence(
                     artist.artist_name
                 )
 
-                update_phase(
-                    "track",
-                    track_name=track.track_name,
-                    artist_name=artist.artist_name,
-                    current_rank=rank,
-
-                    # 🔥 ADD THESE
-                    intro=tr_rank.intro,
-                    detail=track.detail,
-                    artist_text=artist.artist_description,
-
-                    context={
-                        "mode": "all_radio",
-                        "decade_slug": decade,
-                        "genre_slug": genre,
-                        "decade_name": decade_obj.decade_name,
-                        "genre_name": genre_obj.genre_name,
-                        "set_number": set_number,
-                        "block_size": len(block_rows),
-                        "block_position": idx,
-                        "spotify_track_id": track.spotify_track_id,
-                        "ranking_id": tr_rank.id,
-                        "year": track.year_released,
-                        "album_artwork": track.album_artwork,
-                        "artist_artwork": artist.artist_artwork,
-                    },
-                )
-
                 recent_artists.append(artist.artist_name)
-
                 if len(recent_artists) > MAX_RECENT_ARTISTS:
                     recent_artists.pop(0)
-
 
                 # Ignore duplicate finish handling
                 if tr_rank.id == last_played_ranking_id:
@@ -317,26 +292,144 @@ async def run_all_radio_sequence(
                 last_played_ranking_id = tr_rank.id
 
                 logger.info(
-                    "📡 RADIO publishing track to UI rank=%s intro=%s detail=%s artist=%s",
+                    "📻 RADIO starting narrated pipeline rank=%s intro=%s detail=%s artist=%s",
                     rank,
                     play_intro,
                     play_detail,
                     play_artist,
                 )
 
-                # ─────────────────────────────────────────────
-                # 3. WAIT FOR TRACK TO FINISH
-                # ─────────────────────────────────────────────
-                # 🔥 Ensure we are waiting for a NEW signal
-                track_done_event.clear()
+                # Optional prelude, same idea as DG mode
+                update_phase(
+                    "prelude",
+                    is_playing=True,
+                    current_rank=rank,
+                    track_name=track.track_name,
+                    artist_name=artist.artist_name,
+                    context={
+                        "lang": tts_language,
+                        "mode": "all_radio",
+                        "rank": rank,
+                        "track_name": track.track_name,
+                        "artist_name": artist.artist_name,
+                        "decade": decade,
+                        "genre": genre,
+                        "voice_style": "before",
+                        "set_number": set_number,
+                        "block_size": len(block_rows),
+                        "block_position": idx,
+                        "year": track.year_released,
+                        "album_artwork": track.album_artwork,
+                        "artist_artwork": artist.artist_artwork,
+                    },
+                )
 
+                # ─────────── NARRATION JOBS ───────────
+                intro_jobs = build_intro_jobs(
+                    lang=tts_language,
+                    tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
+                )
 
-                while True:
+                detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
+                    lang=tts_language,
+                    track=track,
+                    artist=artist,
+                )
+
+                radio_context = {
+                    "mode": "all_radio",
+                    "decade_slug": decade,
+                    "genre_slug": genre,
+                    "decade_name": decade_obj.decade_name,
+                    "genre_name": genre_obj.genre_name,
+                    "set_number": set_number,
+                    "block_size": len(block_rows),
+                    "block_position": idx,
+                    "ranking_id": tr_rank.id,
+                    "year": track.year_released,
+                    "album_artwork": track.album_artwork,
+                    "artist_artwork": artist.artist_artwork,
+                }
+
+                # ───────── INTRO ─────────
+                if play_intro and intro_jobs:
+                    ib, ik = _extract_bucket_key(intro_jobs[0])
+                    if ib and ik:
+                        await publish_narration_phase(
+                            "intro",
+                            track=track,
+                            artist=artist,
+                            rank=rank,
+                            decade=decade_obj.decade_name,
+                            genre=genre,
+                            bucket=ib,
+                            key=ik,
+                            voice_style="before",
+                            extra_context=radio_context,
+                        )
+
+                # ───────── DETAIL ─────────
+                if play_detail and detail_bucket and detail_key:
+                    await publish_narration_phase(
+                        "detail",
+                        track=track,
+                        artist=artist,
+                        rank=rank,
+                        decade=decade_obj.decade_name,
+                        genre=genre,
+                        bucket=detail_bucket,
+                        key=detail_key,
+                        voice_style="before",
+                        extra_context=radio_context,
+                    )
+
+                # ───────── ARTIST ─────────
+                if play_artist and artist_bucket and artist_key:
+                    await publish_narration_phase(
+                        "artist",
+                        track=track,
+                        artist=artist,
+                        rank=rank,
+                        decade=decade_obj.decade_name,
+                        genre=genre,
+                        bucket=artist_bucket,
+                        key=artist_key,
+                        voice_style="before",
+                        extra_context=radio_context,
+                    )
+
+                # ───────── TRACK ─────────
+                if track.spotify_track_id:
+                    track_done_event.clear()
+
+                    update_phase(
+                        "track",
+                        track_name=track.track_name,
+                        artist_name=artist.artist_name,
+                        current_rank=rank,
+                        context={
+                            "mode": "spotify",
+                            "decade": decade,
+                            "genre": genre,
+                            "spotify_track_id": track.spotify_track_id,
+                            "ranking_id": tr_rank.id,
+                            "set_number": set_number,
+                            "block_size": len(block_rows),
+                            "block_position": idx,
+                            "year": track.year_released,
+                            "album_artwork": track.album_artwork,
+                            "artist_artwork": artist.artist_artwork,
+                        },
+                    )
+
+                    logger.info(
+                        "🎯 RADIO PUBLISHED track frame rank=%s spotify=%s",
+                        rank,
+                        track.spotify_track_id,
+                    )
+
+                    # ✅ correct wait
                     await track_done_event.wait()
-
-                    # Only break if this was triggered AFTER clear()
-                    if track_done_event.is_set():
-                        break
 
     except asyncio.CancelledError:
         logger.info("⛔ ALL RADIO sequence cancelled")
