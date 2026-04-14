@@ -300,6 +300,7 @@ async def run_all_radio_sequence(
                         "ranking_id": tr_rank.id,
                         "year": track.year_released,
                         "album_artwork": track.album_artwork,
+                        "artist_artwork": artist.artist_artwork,
                     },
                 )
 
