@@ -428,8 +428,17 @@ async def run_all_radio_sequence(
                         track.spotify_track_id,
                     )
 
-                    # ✅ correct wait
+                    logger.info(
+                        "🎯 RADIO PUBLISHED track frame rank=%s spotify=%s",
+                        rank,
+                        track.spotify_track_id,
+                    )
+
+                    # ✅ wait for Spotify track to finish
                     await track_done_event.wait()
+
+                    # small buffer to avoid noise / abrupt transition
+                    await asyncio.sleep(0.75)
 
     except asyncio.CancelledError:
         logger.info("⛔ ALL RADIO sequence cancelled")
