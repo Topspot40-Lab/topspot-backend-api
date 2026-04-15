@@ -44,6 +44,66 @@ def get_valid_buckets(session):
 
     return [(d, g) for d, g in rows]
 
+def build_decade_genre_intro_url(decade_slug: str, genre_slug: str) -> str:
+    slug = f"{decade_slug}-{genre_slug}"
+    return (
+        "https://iizlnzmmhkzedqkolgir.supabase.co"
+        f"/storage/v1/object/public/audio-en/decade-genre-intro/{slug}.mp3"
+    )
+
+def build_set_intro_bucket_key(decade_slug: str, genre_slug: str, lang: str = "en") -> tuple[str, str]:
+    bucket_map = {
+        "en": "audio-en",
+        "es": "audio-es",
+        "pt_br": "audio-ptbr",
+    }
+
+    bucket = bucket_map.get(lang, "audio-en")
+    slug = f"{decade_slug}-{genre_slug}"
+    key = f"decade-genre-intro/{slug}.mp3"
+
+    return bucket, key
+
+
+async def publish_set_intro_phase(
+    *,
+    tts_language: str,
+    decade_slug: str,
+    genre_slug: str,
+    decade_name: str,
+    genre_name: str,
+    track,
+    artist,
+    rank: int,
+    radio_context: dict,
+) -> None:
+    bucket, key = build_set_intro_bucket_key(decade_slug, genre_slug, tts_language)
+
+    logger.info(
+        "🎙 SET INTRO | decade=%s genre=%s bucket=%s key=%s",
+        decade_slug,
+        genre_slug,
+        bucket,
+        key,
+    )
+
+    await publish_narration_phase(
+        "intro",   # first-pass shortcut: reuse existing intro narration pipeline
+        track=track,
+        artist=artist,
+        rank=rank,
+        decade=decade_name,
+        genre=genre_name,
+        bucket=bucket,
+        key=key,
+        voice_style="before",
+        extra_context={
+            **radio_context,
+            "set_intro": True,
+            "set_intro_slug": f"{decade_slug}-{genre_slug}",
+        },
+    )
+
 
 async def run_all_radio_sequence(
         *,
@@ -351,8 +411,24 @@ async def run_all_radio_sequence(
                     "artist_artwork": artist.artist_artwork,
                 }
 
+                # ───────── SET INTRO (first track in set only) ─────────
+                if idx == 1:
+                    await publish_set_intro_phase(
+                        tts_language=tts_language,
+                        decade_slug=decade,
+                        genre_slug=genre,
+                        decade_name=decade_obj.decade_name,
+                        genre_name=genre_obj.genre_name,
+                        track=track,
+                        artist=artist,
+                        rank=rank,
+                        radio_context=radio_context,
+                    )
+
                 # ───────── INTRO ─────────
-                if play_intro and intro_jobs:
+                # skip the normal track intro on the first track,
+                # because the set intro already used the intro lane
+                if play_intro and intro_jobs and idx != 1:
                     ib, ik = _extract_bucket_key(intro_jobs[0])
                     if ib and ik:
                         await publish_narration_phase(
