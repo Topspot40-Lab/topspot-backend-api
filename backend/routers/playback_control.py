@@ -48,6 +48,7 @@ router = APIRouter(
     tags=["Playback"],
 )
 
+
 class PlaySpotifyRequest(BaseModel):
     spotify_track_id: str
 
@@ -379,6 +380,26 @@ async def play_track(payload: dict):
                 voice_style=selection.voicePlayMode,
             )
 
+    elif context.get("type") == "collection_radio":
+        from backend.services.collections_radio_sequence import run_collections_radio_sequence
+
+        collection_group_slug = (
+                context.get("collection_group_slug")
+                or context.get("collectionGroupSlug")
+                or context.get("collection_group")
+                or "ALL"
+        )
+
+        logger.info(
+            "📻 COLLECTIONS RADIO START REQUEST | group=%s",
+            collection_group_slug,
+        )
+
+        coro = run_collections_radio_sequence(
+            tts_language=selection.language,
+            collection_group_slug=collection_group_slug,
+        )
+
 
     elif context.get("type") == "collection":
         from backend.services.collection_sequence import run_collection_sequence
@@ -471,7 +492,6 @@ async def pause():
 
 @router.post("/resume", summary="Resume playback")
 def resume():
-
     phase = status.phase
     logger.info(f"▶️ Resume requested from phase: {phase}")
 
@@ -524,6 +544,7 @@ def resume():
 
     touch()
     return {"ok": True, "status": asdict(flags)}
+
 
 @router.post("/stop", summary="Stop playback")
 async def stop():
@@ -613,6 +634,7 @@ async def warmup_playback():
     except Exception as exc:
         logger.exception("🔥 Playback warmup failed")
         raise HTTPException(status_code=500, detail=str(exc))
+
 
 # backend/routers/playback_control.py (or playback_status.py)
 
