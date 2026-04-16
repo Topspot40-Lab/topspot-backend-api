@@ -510,7 +510,7 @@ def resume():
             return {"ok": True, "status": asdict(flags)}
 
         # 🎯 CASE 2 — NARRATION PHASES
-        elif phase in ["intro", "detail", "artist"]:
+        elif phase in ["set_intro", "liner", "intro", "detail", "artist"]:
             logger.info(f"🔁 Restarting narration phase: {phase}")
 
             return {

@@ -8,7 +8,19 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-Phase = Literal["idle", "intro", "detail", "artist", "track", "ended", "music"]
+Phase = Literal[
+    "idle",
+    "loading",
+    "prelude",
+    "set_intro",
+    "liner",
+    "intro",
+    "detail",
+    "artist",
+    "track",
+    "ended",
+    "music",
+]
 Mode = Literal["decade_genre", "collection"]
 
 

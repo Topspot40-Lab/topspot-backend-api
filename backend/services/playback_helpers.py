@@ -62,7 +62,14 @@ def _update_state_for_play(kind: str, bucket: str, key: str) -> None:
 # ─────────────────────────────────────────────
 
 Lang = Literal["en", "es", "pt-BR"]
-Kind = Literal["intro", "detail", "artist", "collections_intro"]
+Kind = Literal[
+    "set_intro",
+    "liner",
+    "intro",
+    "detail",
+    "artist",
+    "collections_intro",
+]
 
 _LANG_MAP: dict[str, str] = {
     "en": "en",
@@ -292,8 +299,10 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
 async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = None) -> bool:
     print("🚨 SAFE_PLAY CALLED:", kind, bucket, key)
 
+    print("🚨 SAFE_PLAY KIND:", kind)
+
     owns = (
-            (kind == "intro" and FRONTEND_OWNS_INTRO)
+            ((kind == "intro" or kind == "set_intro") and FRONTEND_OWNS_INTRO)
             or (kind == "detail" and FRONTEND_OWNS_DETAIL)
             or (kind == "artist" and FRONTEND_OWNS_ARTIST)
     )

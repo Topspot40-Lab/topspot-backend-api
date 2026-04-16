@@ -43,6 +43,14 @@ def get_random_station_liner():
 
     return bucket, key
 
+import os
+
+def get_liner_probability() -> float:
+    try:
+        return float(os.getenv("LINER_PROBABILITY", "0.35"))
+    except ValueError:
+        return 0.35
+
 
 def get_valid_buckets(session):
     q = (
@@ -103,7 +111,7 @@ async def publish_set_intro_phase(
     )
 
     await publish_narration_phase(
-        "intro",  # first-pass shortcut: reuse existing intro narration pipeline
+        "set_intro",  # first-pass shortcut: reuse existing intro narration pipeline
         track=track,
         artist=artist,
         rank=rank,
@@ -428,6 +436,32 @@ async def run_all_radio_sequence(
 
                 # ───────── SET INTRO (first track in set only) ─────────
                 if idx == 1:
+
+                    # 🎙️ STATION LINER (between sets, skip first set)
+                    if set_number > 1 and random.random() < get_liner_probability():
+                        liner_bucket, liner_key = get_random_station_liner()
+
+                        logger.info("📢 STATION LINER (before set intro) | %s", liner_key)
+
+                        await publish_narration_phase(
+                            "liner",
+                            track=track,
+                            artist=artist,
+                            rank=rank,
+                            decade=decade_obj.decade_name,
+                            genre=genre,
+                            bucket=liner_bucket,
+                            key=liner_key,
+                            voice_style="before",
+                            extra_context={
+                                **radio_context,
+                                "station_liner": True,
+                                "liner_key": liner_key,
+                                "between_sets": True,
+                            },
+                        )
+
+                    # 🎙️ SET INTRO
                     await publish_set_intro_phase(
                         tts_language=tts_language,
                         decade_slug=decade,
@@ -443,7 +477,7 @@ async def run_all_radio_sequence(
                 # ───────── INTRO ─────────
                 # skip the normal track intro on the first track,
                 # because the set intro already used the intro lane
-                if play_intro and intro_jobs and idx != 1:
+                if play_intro and intro_jobs:
                     ib, ik = _extract_bucket_key(intro_jobs[0])
                     if ib and ik:
                         await publish_narration_phase(
@@ -531,28 +565,6 @@ async def run_all_radio_sequence(
                     # small buffer to avoid noise / abrupt transition
                     await asyncio.sleep(0.75)
 
-                    # 🎙️ STATION LINER (random, not every track)
-                    if random.random() < 0.35:  # ~35% chance
-                        liner_bucket, liner_key = get_random_station_liner()
-
-                        logger.info("📢 STATION LINER | %s", liner_key)
-
-                        await publish_narration_phase(
-                            "intro",  # reuse intro pipeline
-                            track=track,
-                            artist=artist,
-                            rank=rank,
-                            decade=decade_obj.decade_name,
-                            genre=genre,
-                            bucket=liner_bucket,
-                            key=liner_key,
-                            voice_style="before",
-                            extra_context={
-                                **radio_context,
-                                "station_liner": True,
-                                "liner_key": liner_key,
-                            },
-                        )
 
     except asyncio.CancelledError:
         logger.info("⛔ ALL RADIO sequence cancelled")

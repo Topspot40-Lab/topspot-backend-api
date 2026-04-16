@@ -54,17 +54,17 @@ def _extract_bucket_key(job):
 
 
 async def publish_narration_phase(
-    phase: Literal["intro", "detail", "artist"],
-    *,
-    track,
-    artist,
-    rank: int,
-    decade: str,
-    genre: str,
-    bucket: str,
-    key: str,
-    voice_style: Literal["before", "over"],
-    extra_context: dict | None = None,
+        phase: Literal["set_intro", "liner", "intro", "detail", "artist"],
+        *,
+        track,
+        artist,
+        rank: int,
+        decade: str,
+        genre: str,
+        bucket: str,
+        key: str,
+        voice_style: Literal["before", "over"],
+        extra_context: dict | None = None,
 ):
     audio_url = resolve_audio_ref(bucket, key)
 

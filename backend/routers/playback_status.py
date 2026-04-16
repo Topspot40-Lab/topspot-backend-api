@@ -57,7 +57,7 @@ async def get_status():
 
     # 🔥 Bed track control: ONLY for narration phases in BEFORE mode
 
-    if phase in ("intro", "detail", "artist") and voice_style == "before":
+    if phase in ("set_intro", "liner", "intro", "detail", "artist") and voice_style == "before":
         if not getattr(status, "bed_playing", False):
             logger.info("🎧 Starting narration bed track (BEFORE mode)")
             try:

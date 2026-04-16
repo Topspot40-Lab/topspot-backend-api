@@ -50,7 +50,7 @@ def _extract_bucket_key(job):
 
 
 async def publish_narration_phase(
-        phase: Literal["intro", "detail", "artist"],
+        phase: Literal["set_intro", "liner", "intro", "detail", "artist"],
         *,
         track,
         artist,
