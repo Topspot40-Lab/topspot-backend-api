@@ -30,6 +30,19 @@ logger = logging.getLogger(__name__)
 
 VALID_BUCKETS_CACHE = None
 
+import random
+
+LINER_FILES = [f"liner_{i:02}.mp3" for i in range(1, 31)]
+
+
+def get_random_station_liner():
+    filename = random.choice(LINER_FILES)
+
+    bucket = "audio-en"
+    key = f"station-liner/{filename}"
+
+    return bucket, key
+
 
 def get_valid_buckets(session):
     q = (
@@ -44,12 +57,14 @@ def get_valid_buckets(session):
 
     return [(d, g) for d, g in rows]
 
+
 def build_decade_genre_intro_url(decade_slug: str, genre_slug: str) -> str:
     slug = f"{decade_slug}-{genre_slug}"
     return (
         "https://iizlnzmmhkzedqkolgir.supabase.co"
         f"/storage/v1/object/public/audio-en/decade-genre-intro/{slug}.mp3"
     )
+
 
 def build_set_intro_bucket_key(decade_slug: str, genre_slug: str, lang: str = "en") -> tuple[str, str]:
     bucket_map = {
@@ -66,16 +81,16 @@ def build_set_intro_bucket_key(decade_slug: str, genre_slug: str, lang: str = "e
 
 
 async def publish_set_intro_phase(
-    *,
-    tts_language: str,
-    decade_slug: str,
-    genre_slug: str,
-    decade_name: str,
-    genre_name: str,
-    track,
-    artist,
-    rank: int,
-    radio_context: dict,
+        *,
+        tts_language: str,
+        decade_slug: str,
+        genre_slug: str,
+        decade_name: str,
+        genre_name: str,
+        track,
+        artist,
+        rank: int,
+        radio_context: dict,
 ) -> None:
     bucket, key = build_set_intro_bucket_key(decade_slug, genre_slug, tts_language)
 
@@ -88,7 +103,7 @@ async def publish_set_intro_phase(
     )
 
     await publish_narration_phase(
-        "intro",   # first-pass shortcut: reuse existing intro narration pipeline
+        "intro",  # first-pass shortcut: reuse existing intro narration pipeline
         track=track,
         artist=artist,
         rank=rank,
@@ -515,6 +530,29 @@ async def run_all_radio_sequence(
 
                     # small buffer to avoid noise / abrupt transition
                     await asyncio.sleep(0.75)
+
+                    # 🎙️ STATION LINER (random, not every track)
+                    if random.random() < 0.35:  # ~35% chance
+                        liner_bucket, liner_key = get_random_station_liner()
+
+                        logger.info("📢 STATION LINER | %s", liner_key)
+
+                        await publish_narration_phase(
+                            "intro",  # reuse intro pipeline
+                            track=track,
+                            artist=artist,
+                            rank=rank,
+                            decade=decade_obj.decade_name,
+                            genre=genre,
+                            bucket=liner_bucket,
+                            key=liner_key,
+                            voice_style="before",
+                            extra_context={
+                                **radio_context,
+                                "station_liner": True,
+                                "liner_key": liner_key,
+                            },
+                        )
 
     except asyncio.CancelledError:
         logger.info("⛔ ALL RADIO sequence cancelled")
