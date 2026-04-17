@@ -152,6 +152,10 @@ async def run_collections_radio_sequence(
                                 **radio_context,
                                 "mode": "spotify",
                                 "spotify_track_id": track.spotify_track_id,
+
+                                # ✅ ADD THESE
+                                "collection_name": collection_name,
+                                "collection_group_name": group_name,
                             },
                         )
 

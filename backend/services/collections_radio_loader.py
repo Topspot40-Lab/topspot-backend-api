@@ -6,6 +6,7 @@ from backend.models import Collection, CollectionTrackRanking, Track, Artist
 
 logger = logging.getLogger(__name__)
 
+
 def get_valid_collections(session, collection_group_slug: str | None = None) -> list[dict]:
     stmt = select(Collection)
 
@@ -13,15 +14,10 @@ def get_valid_collections(session, collection_group_slug: str | None = None) -> 
 
     items: list[dict] = []
     for (c,) in rows:
-        group_slug = (
-                getattr(c, "collection_group_slug", None)
-                or getattr(c, "group_slug", None)
-        )
+        category = getattr(c, "category", None)
 
-        group_name = (
-                getattr(c, "collection_group_name", None)
-                or getattr(c, "group_name", None)
-        )
+        group_slug = getattr(category, "slug", None) if category else None
+        group_name = getattr(category, "name", None) if category else None
 
         if collection_group_slug and collection_group_slug != "ALL":
             if group_slug != collection_group_slug:
