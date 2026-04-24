@@ -1,0 +1,57 @@
+{
+  "collections": [
+    {
+      "collection_name": "Soft Rock Love Songs",
+      "tracks": [
+        {
+          "rank": 1,
+          "track_name": "Baker Street",
+          "artist_name": "Gerry Rafferty",
+          "year_released": 1978,
+          "fit_reason": "A smooth soft rock classic with an unforgettable saxophone hook."
+        },
+        {
+          "rank": 2,
+          "track_name": "Cool Change",
+          "artist_name": "Little River Band",
+          "year_released": 1979,
+          "fit_reason": "Its mellow ocean-breeze mood makes it a natural fit for relaxed soft rock listening."
+        },
+        {
+          "rank": 3,
+          "track_name": "Summer Breeze",
+          "artist_name": "Seals and Crofts",
+          "year_released": 1972,
+          "fit_reason": "The gentle groove and warm harmonies capture the easygoing heart of soft rock."
+        }
+      ]
+    },
+
+    {
+      "collection_name": "Smooth Instrumental Moods",
+      "tracks": [
+        {
+          "rank": 1,
+          "track_name": "Songbird",
+          "artist_name": "Kenny G",
+          "year_released": 1987,
+          "fit_reason": "A smooth saxophone instrumental that creates a calm, reflective atmosphere."
+        },
+        {
+          "rank": 2,
+          "track_name": "Love Theme",
+          "artist_name": "Barry White",
+          "year_released": 1973,
+          "fit_reason": "A lush orchestral groove with a romantic, laid-back instrumental vibe."
+        },
+        {
+          "rank": 3,
+          "track_name": "Rise",
+          "artist_name": "Herb Alpert",
+          "year_released": 1979,
+          "fit_reason": "A mellow trumpet-driven instrumental with a smooth, late-night feel."
+        }
+      ]
+    }
+  ]
+}
