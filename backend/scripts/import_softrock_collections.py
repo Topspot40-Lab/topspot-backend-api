@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import json
 import re
+import random
 from pathlib import Path
 from typing import Any
 
 from sqlmodel import Session, select
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 
 from backend.database import engine
 from backend.models.dbmodels import (
@@ -46,8 +47,17 @@ def title_case(value: str) -> str:
     special = {
         "bee gees": "Bee Gees",
         "foreigner": "Foreigner",
+        "waiting for a girl like you": "Waiting for a Girl Like You",
+        "how deep is your love": "How Deep Is Your Love",
     }
     return special.get(value.lower().strip(), value.title())
+
+def artist_pt_phrase(artist: str) -> str:
+    special = {
+        "Bee Gees": "dos Bee Gees",
+        "Foreigner": "de Foreigner",
+    }
+    return special.get(artist, f"de {artist}")
 
 
 def normalize_text(value: str | None) -> str:
@@ -96,74 +106,60 @@ def generate_track_detail_text(track_name: str, artist_name: str) -> dict[str, s
         "ptbr": f"{track_name} de {artist_name} tem um som suave e emocional.",
     }
 
+TEMPLATES_EN = [
+    "Coming in at number {rank}, it's '{track}' by {artist}, from '{album}' released in {year}, a standout in {collection}.",
+    "Did you know? '{track}' by {artist}, at rank {rank}, from '{album}' ({year}), is a {collection} classic.",
+    "At number {rank}, we’ve got '{track}' by {artist}, off '{album}' from {year}, right here in {collection}.",
+    "Holding the number {rank} spot, '{track}' by {artist}, from '{album}' released in {year}, shines in {collection}.",
+]
 
-import random
+TEMPLATES_ES = [
+    "En el puesto {rank}, '{track}' de {artist}, del álbum '{album}' ({year}), destaca en {collection}.",
+    "¿Sabías que '{track}' de {artist}, en el puesto {rank}, del álbum '{album}' lanzado en {year}, es un clásico de {collection}?",
+]
 
-def generate_intro(
-    rank: int,
-    collection: str,
-    track: str,
-    artist: str,
-    album: str | None = None,
-    year: int | None = None,
-) -> dict[str, str]:
+TEMPLATES_PTBR = [
+    "Na posição {rank}, '{track}' {artist}, do álbum '{album}' ({year}), se destaca em {collection}.",
+    "Você sabia? '{track}' {artist}, na posição {rank}, do álbum '{album}' lançado em {year}, é um clássico de {collection}.",
+]
 
-    # Fallbacks
-    album = album or "Unknown Album"
-    year = year or "Unknown Year"
 
+def generate_intro(rank, collection, track, artist, album, year):
     collection_es = "Canciones románticas de soft rock"
-    collection_pt = "Canções românticas de soft rock"
+    collection_ptbr = "Canções românticas de soft rock"
+    artist_ptbr = artist_pt_phrase(artist)
 
-    templates_en = [
-        "Did you know? '{track}' by {artist}, at rank {rank}, from '{album}' released in {year}, is a {collection} classic.",
-        "At rank {rank}, '{track}' by {artist}, from '{album}' ({year}), stands as a true {collection} favorite.",
-        "Coming in at number {rank}, it's '{track}' by {artist}, from '{album}' released in {year}, a standout in {collection}.",
-    ]
-
-    templates_es = [
-        "¿Sabías que '{track}' de {artist}, en el puesto {rank}, del álbum '{album}' lanzado en {year}, es un clásico de {collection}?",
-        "En el puesto {rank}, '{track}' de {artist}, del álbum '{album}' ({year}), destaca como un favorito de {collection}.",
-        "Ocupando el lugar {rank}, '{track}' de {artist}, incluido en '{album}' lanzado en {year}, representa lo mejor de {collection}.",
-    ]
-
-    templates_pt = [
-        "Você sabia? '{track}' do {artist}, na posição {rank}, do álbum '{album}' lançado em {year}, é um clássico de {collection}.",
-        "Na posição {rank}, '{track}' do {artist}, do álbum '{album}' ({year}), se destaca como um favorito de {collection}.",
-        "Ocupando o lugar {rank}, '{track}' do {artist}, presente em '{album}' lançado em {year}, representa o melhor de {collection}.",
-    ]
-
-    en = random.choice(templates_en).format(
+    en = random.choice(TEMPLATES_EN).format(
+        rank=rank,
+        collection=collection,
         track=track,
         artist=artist,
-        rank=rank,
         album=album,
         year=year,
-        collection=collection
     )
 
-    es = random.choice(templates_es).format(
+    es = random.choice(TEMPLATES_ES).format(
+        rank=rank,
+        collection=collection_es,
         track=track,
         artist=artist,
-        rank=rank,
         album=album,
         year=year,
-        collection=collection_es
     )
 
-    pt = random.choice(templates_pt).format(
-        track=track,
-        artist=artist,
+    ptbr = random.choice(TEMPLATES_PTBR).format(
         rank=rank,
+        collection=collection_ptbr,
+        track=track,
+        artist=artist_ptbr,
         album=album,
         year=year,
-        collection=collection_pt
     )
 
     return {
         "en": en,
         "es": es,
-        "pt-BR": pt
+        "ptbr": ptbr,
     }
 
 
@@ -229,7 +225,9 @@ def get_or_create_collection(session: Session, category: CollectionCategory, nam
 
 def find_artist(session: Session, name: str) -> Artist | None:
     return session.exec(
-        select(Artist).where(Artist.artist_name == name)
+        select(Artist).where(
+            func.lower(Artist.artist_name) == name.lower()
+        )
     ).first()
 
 def find_track_by_spotify_id(session: Session, spotify_id: str) -> Track | None:
@@ -313,9 +311,16 @@ def main():
                     print(f"Using existing track: {track.track_name}")
                 else:
                     track = Track(
-                        track_name=item["track_name"],
-                        artist_id=artist.id,
+                        track_name=title_case(item["track_name"]),
+                        album_name=spotify.get("album_name"),
+                        artist_display_name=title_case(item["artist_name"]),
                         spotify_track_id=spotify["spotify_track_id"],
+                        duration_ms=spotify.get("duration_ms"),
+                        popularity=spotify.get("popularity"),
+                        album_artwork=spotify.get("album_artwork"),
+                        year_released=spotify.get("year_released") or item.get("year_released"),
+                        artist_id=artist.id,
+                        language="en",
                     )
 
                     session.add(track)
@@ -329,8 +334,8 @@ def main():
                     collection=collection.name,
                     track=title_case(item["track_name"]),
                     artist=title_case(item["artist_name"]),
-                    album=track.album_name,
-                    year=track.year_released,
+                    album=track.album_name or item.get("album_name"),
+                    year=track.year_released or item.get("year_released"),
                 )
 
                 existing_ranking = find_ranking(session, collection.id, item["rank"])
@@ -359,11 +364,8 @@ def main():
 
                 # 👉 ADD THIS
                 upsert_collection_ranking_locale(session, ranking.id, "es", intro["es"])
-                upsert_collection_ranking_locale(session, ranking.id, LANG_PTBR, intro[LANG_PTBR])
+                upsert_collection_ranking_locale(session, ranking.id, LANG_PTBR, intro["ptbr"])
 
-                session.commit()
-
-                session.add(ranking)
                 session.commit()
 
     print("Import complete.")
