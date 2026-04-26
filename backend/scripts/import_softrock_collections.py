@@ -35,7 +35,7 @@ CATEGORY_SLUG = "soft_rock_70s_90s"
 LANG_ES = "es"
 LANG_PTBR = "pt-BR"
 
-LIMIT = 10  # set to None for full run
+LIMIT = 45  # set to None for full run
 
 
 # ─────────────────────────────────────────────
@@ -44,15 +44,24 @@ def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value.lower().strip()).strip("-")
 
 def title_case(value: str) -> str:
+    value_clean = value.lower().strip()
+
     special = {
         "bee gees": "Bee Gees",
         "foreigner": "Foreigner",
-        "waiting for a girl like you": "Waiting for a Girl Like You",
-        "how deep is your love": "How Deep Is Your Love",
-        "arthur's theme (best that you can do)": "Arthur's Theme (Best That You Can Do)",
         "michael mcdonald": "Michael McDonald",
+        "arthur's theme (best that you can do)": "Arthur's Theme (Best That You Can Do)",
+        "you're the inspiration": "You're the Inspiration",
+        "if ever you're in my arms again": "If Ever You're in My Arms Again",
+        "i just called to say i love you": "I Just Called to Say I Love You",
+        "earth wind and fire": "Earth, Wind & Fire",
+        "nsync": "NSYNC",
     }
-    return special.get(value.lower().strip(), value.title())
+
+    if value_clean in special:
+        return special[value_clean]
+
+    return value.title().replace("'S", "'s")
 
 def artist_pt_phrase(artist: str) -> str:
     special = {
@@ -86,6 +95,7 @@ def generate_artist_info_text(artist_name: str) -> dict[str, str]:
     )
 
     text = re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"\*\*", "", text)
 
     return {
         "en": text,
@@ -101,6 +111,7 @@ def generate_track_detail_text(track_name: str, artist_name: str) -> dict[str, s
     )
 
     text = re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"\*\*", "", text)
 
     return {
         "en": text,
@@ -286,18 +297,25 @@ def main():
             )
 
             for item in tracks:
-                artist = find_artist(session, item["artist_name"])
+                artist_name = title_case(item["artist_name"])
+                track_name = title_case(item["track_name"])
+
+                artist = find_artist(session, artist_name)
 
                 if not artist:
-                    artist = Artist(artist_name=item["artist_name"])
+                    artist = Artist(artist_name=artist_name)
                     session.add(artist)
                     session.commit()
                     session.refresh(artist)
 
-                spotify = get_spotify_track_data(
-                    item["track_name"],
-                    item["artist_name"]
-                )
+                if not artist.artist_description:
+                    artist_info = generate_artist_info_text(artist_name)
+                    artist.artist_description = artist_info["en"]
+                    session.add(artist)
+                    session.commit()
+                    print(f"Updated artist description: {artist_name}")
+
+                spotify = get_spotify_track_data(track_name, artist_name)
 
                 if not spotify:
                     print(f"Skipping {item['track_name']}")
@@ -331,11 +349,21 @@ def main():
 
                     print(f"Created track: {track.track_name}")
 
+                if not track.detail:
+                    detail = generate_track_detail_text(
+                        track_name=track_name,
+                        artist_name=artist_name,
+                    )
+                    track.detail = detail["en"]
+                    session.add(track)
+                    session.commit()
+                    print(f"Updated track detail: {track_name}")
+
                 intro = generate_intro(
                     rank=item["rank"],
                     collection=collection.name,
-                    track=title_case(item["track_name"]),
-                    artist=title_case(item["artist_name"]),
+                    track=track_name,
+                    artist=artist_name,
                     album=item.get("album_name") or track.album_name,
                     year=item.get("year_released") or track.year_released,
                 )
