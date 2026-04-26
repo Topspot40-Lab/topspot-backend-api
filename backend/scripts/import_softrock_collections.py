@@ -35,7 +35,7 @@ CATEGORY_SLUG = "soft_rock_70s_90s"
 LANG_ES = "es"
 LANG_PTBR = "pt-BR"
 
-LIMIT = 2  # set to None for full run
+LIMIT = 10  # set to None for full run
 
 
 # ─────────────────────────────────────────────
@@ -49,6 +49,8 @@ def title_case(value: str) -> str:
         "foreigner": "Foreigner",
         "waiting for a girl like you": "Waiting for a Girl Like You",
         "how deep is your love": "How Deep Is Your Love",
+        "arthur's theme (best that you can do)": "Arthur's Theme (Best That You Can Do)",
+        "michael mcdonald": "Michael McDonald",
     }
     return special.get(value.lower().strip(), value.title())
 
@@ -108,9 +110,9 @@ def generate_track_detail_text(track_name: str, artist_name: str) -> dict[str, s
 
 TEMPLATES_EN = [
     "Coming in at number {rank}, it's '{track}' by {artist}, from '{album}' released in {year}, a standout in {collection}.",
-    "Did you know? '{track}' by {artist}, at rank {rank}, from '{album}' ({year}), is a {collection} classic.",
-    "At number {rank}, we’ve got '{track}' by {artist}, off '{album}' from {year}, right here in {collection}.",
     "Holding the number {rank} spot, '{track}' by {artist}, from '{album}' released in {year}, shines in {collection}.",
+    "At number {rank}, we’ve got '{track}' by {artist}, off '{album}' from {year}, right here in {collection}.",
+    "Did you know? '{track}' by {artist}, at rank {rank}, from '{album}' ({year}), is a {collection} classic.",
 ]
 
 TEMPLATES_ES = [
@@ -119,8 +121,8 @@ TEMPLATES_ES = [
 ]
 
 TEMPLATES_PTBR = [
-    "Na posição {rank}, '{track}' {artist}, do álbum '{album}' ({year}), se destaca em {collection}.",
-    "Você sabia? '{track}' {artist}, na posição {rank}, do álbum '{album}' lançado em {year}, é um clássico de {collection}.",
+    "Na posição {rank}, '{track}' {artist}, do álbum '{album}' ({year}), é um dos destaques do soft rock romântico.",
+    "Você sabia? '{track}' {artist}, na posição {rank}, do álbum '{album}' lançado em {year}, é um clássico do soft rock romântico.",
 ]
 
 
@@ -318,7 +320,7 @@ def main():
                         duration_ms=spotify.get("duration_ms"),
                         popularity=spotify.get("popularity"),
                         album_artwork=spotify.get("album_artwork"),
-                        year_released=spotify.get("year_released") or item.get("year_released"),
+                        year_released=item.get("year_released") or spotify.get("year_released"),
                         artist_id=artist.id,
                         language="en",
                     )
@@ -334,8 +336,8 @@ def main():
                     collection=collection.name,
                     track=title_case(item["track_name"]),
                     artist=title_case(item["artist_name"]),
-                    album=track.album_name or item.get("album_name"),
-                    year=track.year_released or item.get("year_released"),
+                    album=item.get("album_name") or track.album_name,
+                    year=item.get("year_released") or track.year_released,
                 )
 
                 existing_ranking = find_ranking(session, collection.id, item["rank"])
@@ -362,7 +364,7 @@ def main():
 
                     print(f"Created ranking: {collection.name} #{item['rank']}")
 
-                # 👉 ADD THIS
+                # Upsert localized intros
                 upsert_collection_ranking_locale(session, ranking.id, "es", intro["es"])
                 upsert_collection_ranking_locale(session, ranking.id, LANG_PTBR, intro["ptbr"])
 

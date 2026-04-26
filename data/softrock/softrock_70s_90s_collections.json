@@ -18,6 +18,70 @@
           "album_name": "Saturday Night Fever",
           "year_released": 1977,
           "fit_reason": "Silky harmonies and tender lyrics make it one of the defining soft rock love songs."
+        },
+        {
+          "rank": 3,
+          "track_name": "If You Leave Me Now",
+          "artist_name": "Chicago",
+          "album_name": "Chicago X",
+          "year_released": 1976,
+          "fit_reason": "A tender breakup ballad with lush harmonies and classic soft rock emotion."
+        },
+        {
+          "rank": 4,
+          "track_name": "Just the Way You Are",
+          "artist_name": "Billy Joel",
+          "album_name": "The Stranger",
+          "year_released": 1977,
+          "fit_reason": "A warm, intimate love song built on smooth melody and gentle sincerity."
+        },
+        {
+          "rank": 5,
+          "track_name": "Baby Come Back",
+          "artist_name": "Player",
+          "album_name": "Player",
+          "year_released": 1977,
+          "fit_reason": "A polished soft rock plea with smooth vocals and an unforgettable chorus."
+        },
+        {
+          "rank": 6,
+          "track_name": "Reminiscing",
+          "artist_name": "Little River Band",
+          "album_name": "Sleeper Catcher",
+          "year_released": 1978,
+          "fit_reason": "A smooth nostalgic groove that perfectly captures the mellow side of soft rock."
+        },
+        {
+          "rank": 7,
+          "track_name": "Time After Time",
+          "artist_name": "Cyndi Lauper",
+          "album_name": "She's So Unusual",
+          "year_released": 1983,
+          "fit_reason": "A gentle, emotional ballad with timeless appeal and heartfelt lyrics."
+        },
+        {
+          "rank": 8,
+          "track_name": "Arthur's Theme (Best That You Can Do)",
+          "artist_name": "Christopher Cross",
+          "album_name": "Arthur - The Album",
+          "year_released": 1981,
+          "fit_reason": "A smooth, sophisticated soft rock hit with a relaxed, feel-good vibe."
+        },
+        {
+          "rank": 9,
+          "track_name": "I Keep Forgettin'",
+          "artist_name": "Michael McDonald",
+          "album_name": "If That's What It Takes",
+          "year_released": 1982,
+          "fit_reason": "A polished blend of soul and soft rock with a laid-back groove."
+        },
+        {
+          "rank": 10,
+          "track_name": "Sailing",
+          "artist_name": "Christopher Cross",
+          "album_name": "Christopher Cross",
+          "year_released": 1979,
+          "fit_reason": "A serene, iconic soft rock track that defines the genre’s smooth sound."
         }
       ]
     }
