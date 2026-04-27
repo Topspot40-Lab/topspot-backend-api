@@ -1,0 +1,369 @@
+{
+  "collections": [
+    {
+      "collection_name": "Singer-Songwriter",
+      "tracks": [
+        {
+          "rank": 1,
+          "track_name": "Fire and Rain",
+          "artist_name": "James Taylor",
+          "album_name": "Sweet Baby James",
+          "year_released": 1970,
+          "fit_reason": "Deeply personal storytelling with simple acoustic backing defines the genre."
+        },
+        {
+          "rank": 2,
+          "track_name": "You've Got a Friend",
+          "artist_name": "Carole King",
+          "album_name": "Tapestry",
+          "year_released": 1971,
+          "fit_reason": "Warm, intimate songwriting with emotional sincerity."
+        },
+        {
+          "rank": 3,
+          "track_name": "American Pie",
+          "artist_name": "Don McLean",
+          "album_name": "American Pie",
+          "year_released": 1971,
+          "fit_reason": "Narrative-driven songwriting with cultural reflection."
+        },
+        {
+          "rank": 4,
+          "track_name": "If You Could Read My Mind",
+          "artist_name": "Gordon Lightfoot",
+          "album_name": "Sit Down Young Stranger",
+          "year_released": 1970,
+          "fit_reason": "Poetic lyrics and gentle acoustic arrangement."
+        },
+        {
+          "rank": 5,
+          "track_name": "Time in a Bottle",
+          "artist_name": "Jim Croce",
+          "album_name": "You Don't Mess Around with Jim",
+          "year_released": 1973,
+          "fit_reason": "Simple, heartfelt songwriting with timeless emotional depth."
+        },
+        {
+          "rank": 6,
+          "track_name": "Vincent",
+          "artist_name": "Don McLean",
+          "album_name": "American Pie",
+          "year_released": 1971,
+          "fit_reason": "Artful storytelling and delicate acoustic delivery."
+        },
+        {
+          "rank": 7,
+          "track_name": "Operator (That's Not the Way It Feels)",
+          "artist_name": "Jim Croce",
+          "album_name": "You Don't Mess Around with Jim",
+          "year_released": 1972,
+          "fit_reason": "Conversational storytelling with emotional realism."
+        },
+        {
+          "rank": 8,
+          "track_name": "Sundown",
+          "artist_name": "Gordon Lightfoot",
+          "album_name": "Sundown",
+          "year_released": 1974,
+          "fit_reason": "Moody storytelling with restrained instrumentation."
+        },
+        {
+          "rank": 9,
+          "track_name": "Sweet Baby James",
+          "artist_name": "James Taylor",
+          "album_name": "Sweet Baby James",
+          "year_released": 1970,
+          "fit_reason": "Gentle, introspective songwriting with strong imagery."
+        },
+        {
+          "rank": 10,
+          "track_name": "It's Too Late",
+          "artist_name": "Carole King",
+          "album_name": "Tapestry",
+          "year_released": 1971,
+          "fit_reason": "Mature emotional reflection with understated arrangement."
+        },
+        {
+          "rank": 11,
+          "track_name": "The Boxer",
+          "artist_name": "Simon & Garfunkel",
+          "album_name": "Bridge Over Troubled Water",
+          "year_released": 1969,
+          "fit_reason": "Narrative lyricism and acoustic-driven structure."
+        },
+        {
+          "rank": 12,
+          "track_name": "Me and Julio Down by the Schoolyard",
+          "artist_name": "Paul Simon",
+          "album_name": "Paul Simon",
+          "year_released": 1972,
+          "fit_reason": "Storytelling with rhythmic acoustic style."
+        },
+        {
+          "rank": 13,
+          "track_name": "Wild World",
+          "artist_name": "Cat Stevens",
+          "album_name": "Tea for the Tillerman",
+          "year_released": 1970,
+          "fit_reason": "Simple chords and reflective lyrical perspective."
+        },
+        {
+          "rank": 14,
+          "track_name": "Peace Train",
+          "artist_name": "Cat Stevens",
+          "album_name": "Teaser and the Firecat",
+          "year_released": 1971,
+          "fit_reason": "Optimistic message with acoustic foundation."
+        },
+        {
+          "rank": 15,
+          "track_name": "Doctor My Eyes",
+          "artist_name": "Jackson Browne",
+          "album_name": "Jackson Browne",
+          "year_released": 1972,
+          "fit_reason": "Introspective lyricism paired with clean instrumentation."
+        },
+        {
+          "rank": 16,
+          "track_name": "Running on Empty",
+          "artist_name": "Jackson Browne",
+          "album_name": "Running on Empty",
+          "year_released": 1977,
+          "fit_reason": "Personal storytelling about life on the road with a stripped-down rock feel."
+        },
+        {
+          "rank": 17,
+          "track_name": "These Days",
+          "artist_name": "Jackson Browne",
+          "album_name": "For Everyman",
+          "year_released": 1973,
+          "fit_reason": "Reflective and introspective songwriting with emotional depth."
+        },
+        {
+          "rank": 18,
+          "track_name": "Late for the Sky",
+          "artist_name": "Jackson Browne",
+          "album_name": "Late for the Sky",
+          "year_released": 1974,
+          "fit_reason": "Poetic lyrics and understated instrumentation."
+        },
+        {
+          "rank": 19,
+          "track_name": "Rainy Day People",
+          "artist_name": "Gordon Lightfoot",
+          "album_name": "Cold on the Shoulder",
+          "year_released": 1975,
+          "fit_reason": "Gentle storytelling centered on emotional connection."
+        },
+        {
+          "rank": 20,
+          "track_name": "Carefree Highway",
+          "artist_name": "Gordon Lightfoot",
+          "album_name": "Sundown",
+          "year_released": 1974,
+          "fit_reason": "Melodic and reflective with classic acoustic structure."
+        },
+        {
+          "rank": 21,
+          "track_name": "You Don't Mess Around with Jim",
+          "artist_name": "Jim Croce",
+          "album_name": "You Don't Mess Around with Jim",
+          "year_released": 1972,
+          "fit_reason": "Narrative storytelling with character-driven lyrics."
+        },
+        {
+          "rank": 22,
+          "track_name": "Photographs and Memories",
+          "artist_name": "Jim Croce",
+          "album_name": "You Don't Mess Around with Jim",
+          "year_released": 1972,
+          "fit_reason": "Simple, heartfelt reflection with acoustic warmth."
+        },
+        {
+          "rank": 23,
+          "track_name": "I Got a Name",
+          "artist_name": "Jim Croce",
+          "album_name": "I Got a Name",
+          "year_released": 1973,
+          "fit_reason": "Personal identity expressed through clean melodic storytelling."
+        },
+        {
+          "rank": 24,
+          "track_name": "Big Yellow Taxi",
+          "artist_name": "Joni Mitchell",
+          "album_name": "Ladies of the Canyon",
+          "year_released": 1970,
+          "fit_reason": "Sharp lyrical commentary wrapped in a simple acoustic arrangement."
+        },
+        {
+          "rank": 25,
+          "track_name": "Both Sides Now",
+          "artist_name": "Joni Mitchell",
+          "album_name": "Clouds",
+          "year_released": 1969,
+          "fit_reason": "Poetic reflection on life and perspective."
+        },
+        {
+          "rank": 26,
+          "track_name": "A Case of You",
+          "artist_name": "Joni Mitchell",
+          "album_name": "Blue",
+          "year_released": 1971,
+          "fit_reason": "Deeply personal songwriting with emotional vulnerability."
+        },
+        {
+          "rank": 27,
+          "track_name": "Helplessly Hoping",
+          "artist_name": "Crosby, Stills & Nash",
+          "album_name": "Crosby, Stills & Nash",
+          "year_released": 1969,
+          "fit_reason": "Intricate harmonies paired with introspective lyrics."
+        },
+        {
+          "rank": 28,
+          "track_name": "Suite: Judy Blue Eyes",
+          "artist_name": "Crosby, Stills & Nash",
+          "album_name": "Crosby, Stills & Nash",
+          "year_released": 1969,
+          "fit_reason": "Multi-part storytelling with strong acoustic roots."
+        },
+        {
+          "rank": 29,
+          "track_name": "Teach Your Children",
+          "artist_name": "Crosby, Stills, Nash & Young",
+          "album_name": "Déjà Vu",
+          "year_released": 1970,
+          "fit_reason": "Warm, reflective songwriting with gentle instrumentation."
+        },
+        {
+          "rank": 30,
+          "track_name": "Heart of Gold",
+          "artist_name": "Neil Young",
+          "album_name": "Harvest",
+          "year_released": 1972,
+          "fit_reason": "Simple melody and honest lyrical expression."
+        },
+        {
+          "rank": 31,
+          "track_name": "Old Man",
+          "artist_name": "Neil Young",
+          "album_name": "Harvest",
+          "year_released": 1972,
+          "fit_reason": "Reflective storytelling with acoustic intimacy."
+        },
+        {
+          "rank": 32,
+          "track_name": "Harvest Moon",
+          "artist_name": "Neil Young",
+          "album_name": "Harvest Moon",
+          "year_released": 1992,
+          "fit_reason": "Gentle, mature songwriting with stripped-back arrangement."
+        },
+        {
+          "rank": 33,
+          "track_name": "The Sound of Silence",
+          "artist_name": "Simon & Garfunkel",
+          "album_name": "Sounds of Silence",
+          "year_released": 1966,
+          "fit_reason": "Iconic lyrical depth with minimal instrumentation."
+        },
+        {
+          "rank": 34,
+          "track_name": "Homeward Bound",
+          "artist_name": "Simon & Garfunkel",
+          "album_name": "Parsley, Sage, Rosemary and Thyme",
+          "year_released": 1966,
+          "fit_reason": "Traveling narrative expressed through simple arrangement."
+        },
+        {
+          "rank": 35,
+          "track_name": "Kodachrome",
+          "artist_name": "Paul Simon",
+          "album_name": "There Goes Rhymin' Simon",
+          "year_released": 1973,
+          "fit_reason": "Observational storytelling with rhythmic energy."
+        },
+        {
+          "rank": 36,
+          "track_name": "Still Crazy After All These Years",
+          "artist_name": "Paul Simon",
+          "album_name": "Still Crazy After All These Years",
+          "year_released": 1975,
+          "fit_reason": "Mature reflection with smooth, understated backing."
+        },
+        {
+          "rank": 37,
+          "track_name": "Peaceful Easy Feeling",
+          "artist_name": "Eagles",
+          "album_name": "Eagles",
+          "year_released": 1972,
+          "fit_reason": "Relaxed storytelling with acoustic country-rock influence."
+        },
+        {
+          "rank": 38,
+          "track_name": "Desperado",
+          "artist_name": "Eagles",
+          "album_name": "Desperado",
+          "year_released": 1973,
+          "fit_reason": "Narrative-driven songwriting with emotional depth."
+        },
+        {
+          "rank": 39,
+          "track_name": "Annie's Song",
+          "artist_name": "John Denver",
+          "album_name": "Back Home Again",
+          "year_released": 1974,
+          "fit_reason": "Simple, heartfelt expression with acoustic purity."
+        },
+        {
+          "rank": 40,
+          "track_name": "Take Me Home, Country Roads",
+          "artist_name": "John Denver",
+          "album_name": "Poems, Prayers & Promises",
+          "year_released": 1971,
+          "fit_reason": "Storytelling rooted in place and personal identity."
+        },
+        {
+          "rank": 41,
+          "track_name": "Leader of the Band",
+          "artist_name": "Dan Fogelberg",
+          "album_name": "Windows and Walls",
+          "year_released": 1981,
+          "fit_reason": "Personal tribute expressed through gentle instrumentation."
+        },
+        {
+          "rank": 42,
+          "track_name": "Part of the Plan",
+          "artist_name": "Dan Fogelberg",
+          "album_name": "Souvenirs",
+          "year_released": 1974,
+          "fit_reason": "Reflective lyrics with a soft acoustic foundation."
+        },
+        {
+          "rank": 43,
+          "track_name": "Romeo and Juliet",
+          "artist_name": "Dire Straits",
+          "album_name": "Making Movies",
+          "year_released": 1980,
+          "fit_reason": "Narrative storytelling with emotional resonance."
+        },
+        {
+          "rank": 44,
+          "track_name": "Year of the Cat",
+          "artist_name": "Al Stewart",
+          "album_name": "Year of the Cat",
+          "year_released": 1976,
+          "fit_reason": "Rich storytelling with cinematic detail."
+        },
+        {
+          "rank": 45,
+          "track_name": "Time Passages",
+          "artist_name": "Al Stewart",
+          "album_name": "Time Passages",
+          "year_released": 1978,
+          "fit_reason": "Reflective songwriting centered on memory and time."
+        }
+      ]
+    }
+  ]
+}

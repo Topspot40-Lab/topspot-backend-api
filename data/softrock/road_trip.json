@@ -1,0 +1,63 @@
+{
+  "collections": [
+    {
+      "collection_name": "Road Trip",
+      "tracks": [
+        { "rank": 1, "track_name": "Take It Easy", "artist_name": "Eagles", "album_name": "Eagles", "year_released": 1972, "fit_reason": "Laid-back groove with perfect open-road storytelling." },
+        { "rank": 2, "track_name": "Go Your Own Way", "artist_name": "Fleetwood Mac", "album_name": "Rumours", "year_released": 1977, "fit_reason": "Driving rhythm and emotional momentum." },
+        { "rank": 3, "track_name": "Don't Stop Believin'", "artist_name": "Journey", "album_name": "Escape", "year_released": 1981, "fit_reason": "Anthemic energy and sing-along appeal." },
+        { "rank": 4, "track_name": "Born to Run", "artist_name": "Bruce Springsteen", "album_name": "Born to Run", "year_released": 1975, "fit_reason": "Pure highway escape energy." },
+        { "rank": 5, "track_name": "Runnin' Down a Dream", "artist_name": "Tom Petty", "album_name": "Full Moon Fever", "year_released": 1989, "fit_reason": "Driving beat and forward momentum." },
+
+        { "rank": 6, "track_name": "The Joker", "artist_name": "Steve Miller Band", "album_name": "The Joker", "year_released": 1973, "fit_reason": "Cruising groove with relaxed energy." },
+        { "rank": 7, "track_name": "Take the Money and Run", "artist_name": "Steve Miller Band", "album_name": "Fly Like an Eagle", "year_released": 1976, "fit_reason": "Story-driven and rhythmically engaging." },
+        { "rank": 8, "track_name": "American Girl", "artist_name": "Tom Petty & The Heartbreakers", "album_name": "Tom Petty and the Heartbreakers", "year_released": 1976, "fit_reason": "Bright tempo and youthful energy." },
+        { "rank": 9, "track_name": "Start Me Up", "artist_name": "The Rolling Stones", "album_name": "Tattoo You", "year_released": 1981, "fit_reason": "Upbeat, guitar-driven drive music." },
+        { "rank": 10, "track_name": "Life in the Fast Lane", "artist_name": "Eagles", "album_name": "Hotel California", "year_released": 1976, "fit_reason": "Road-themed lyrics with driving groove." },
+
+        { "rank": 11, "track_name": "Jack & Diane", "artist_name": "John Mellencamp", "album_name": "American Fool", "year_released": 1982, "fit_reason": "Strong rhythm and storytelling." },
+        { "rank": 12, "track_name": "Summer of '69", "artist_name": "Bryan Adams", "album_name": "Reckless", "year_released": 1984, "fit_reason": "High-energy nostalgia anthem." },
+        { "rank": 13, "track_name": "Don't Stop", "artist_name": "Fleetwood Mac", "album_name": "Rumours", "year_released": 1977, "fit_reason": "Forward-moving rhythm and optimism." },
+        { "rank": 14, "track_name": "Ramblin' Man", "artist_name": "The Allman Brothers Band", "album_name": "Brothers and Sisters", "year_released": 1973, "fit_reason": "Southern rock road vibe." },
+        { "rank": 15, "track_name": "Free Fallin'", "artist_name": "Tom Petty", "album_name": "Full Moon Fever", "year_released": 1989, "fit_reason": "Relaxed highway cruising feel." },
+
+        { "rank": 16, "track_name": "Running on Empty", "artist_name": "Jackson Browne", "album_name": "Running on Empty", "year_released": 1977, "fit_reason": "Life-on-the-road storytelling." },
+        { "rank": 17, "track_name": "Born in the U.S.A.", "artist_name": "Bruce Springsteen", "album_name": "Born in the U.S.A.", "year_released": 1984, "fit_reason": "Big driving energy." },
+        { "rank": 18, "track_name": "Pink Houses", "artist_name": "John Mellencamp", "album_name": "Uh-Huh", "year_released": 1983, "fit_reason": "American road narrative." },
+        { "rank": 19, "track_name": "Centerfold", "artist_name": "The J. Geils Band", "album_name": "Freeze Frame", "year_released": 1981, "fit_reason": "Fun, upbeat driving song." },
+        { "rank": 20, "track_name": "867-5309/Jenny", "artist_name": "Tommy Tutone", "album_name": "Tommy Tutone 2", "year_released": 1981, "fit_reason": "Catchy sing-along energy." },
+
+        { "rank": 21, "track_name": "Working for the Weekend", "artist_name": "Loverboy", "album_name": "Get Lucky", "year_released": 1981, "fit_reason": "High-energy weekend anthem." },
+        { "rank": 22, "track_name": "Hold On Loosely", "artist_name": "38 Special", "album_name": "Wild-Eyed Southern Boys", "year_released": 1981, "fit_reason": "Driving Southern rock groove." },
+        { "rank": 23, "track_name": "Caught Up in You", "artist_name": "38 Special", "album_name": "Special Forces", "year_released": 1982, "fit_reason": "Melodic and upbeat." },
+        { "rank": 24, "track_name": "Lonely Boy", "artist_name": "Andrew Gold", "album_name": "What's Wrong with This Picture?", "year_released": 1977, "fit_reason": "Catchy rhythm and energy." },
+        { "rank": 25, "track_name": "Vehicle", "artist_name": "The Ides of March", "album_name": "Vehicle", "year_released": 1970, "fit_reason": "Driving horn section and rhythm." },
+
+        { "rank": 26, "track_name": "Radar Love", "artist_name": "Golden Earring", "album_name": "Moontan", "year_released": 1973, "fit_reason": "Ultimate long-distance driving song." },
+        { "rank": 27, "track_name": "Life is a Highway", "artist_name": "Tom Cochrane", "album_name": "Mad Mad World", "year_released": 1991, "fit_reason": "Literal road anthem." },
+        { "rank": 28, "track_name": "I Love Rock 'n Roll", "artist_name": "Joan Jett & the Blackhearts", "album_name": "I Love Rock 'n Roll", "year_released": 1981, "fit_reason": "High-energy driving music." },
+        { "rank": 29, "track_name": "Rockin' Down the Highway", "artist_name": "The Doobie Brothers", "album_name": "Toulouse Street", "year_released": 1972, "fit_reason": "Road-themed groove." },
+        { "rank": 30, "track_name": "Takin' Care of Business", "artist_name": "Bachman-Turner Overdrive", "album_name": "Bachman-Turner Overdrive II", "year_released": 1973, "fit_reason": "Classic driving rhythm." },
+
+        { "rank": 31, "track_name": "You Ain't Seen Nothing Yet", "artist_name": "Bachman-Turner Overdrive", "album_name": "Not Fragile", "year_released": 1974, "fit_reason": "Strong beat and fun vocals." },
+        { "rank": 32, "track_name": "My Sharona", "artist_name": "The Knack", "album_name": "Get the Knack", "year_released": 1979, "fit_reason": "Driving guitar energy." },
+        { "rank": 33, "track_name": "We're an American Band", "artist_name": "Grand Funk Railroad", "album_name": "We're an American Band", "year_released": 1973, "fit_reason": "Touring/road energy." },
+        { "rank": 34, "track_name": "Slow Ride", "artist_name": "Foghat", "album_name": "Fool for the City", "year_released": 1975, "fit_reason": "Cruising groove." },
+        { "rank": 35, "track_name": "La Grange", "artist_name": "ZZ Top", "album_name": "Tres Hombres", "year_released": 1973, "fit_reason": "Bluesy driving rhythm." },
+
+        { "rank": 36, "track_name": "Sharp Dressed Man", "artist_name": "ZZ Top", "album_name": "Eliminator", "year_released": 1983, "fit_reason": "Clean groove and tempo." },
+        { "rank": 37, "track_name": "Hurts So Good", "artist_name": "John Mellencamp", "album_name": "American Fool", "year_released": 1982, "fit_reason": "Upbeat rock energy." },
+        { "rank": 38, "track_name": "Authority Song", "artist_name": "John Mellencamp", "album_name": "Uh-Huh", "year_released": 1983, "fit_reason": "Driving beat." },
+        { "rank": 39, "track_name": "Roll with the Changes", "artist_name": "REO Speedwagon", "album_name": "You Can Tune a Piano, but You Can't Tuna Fish", "year_released": 1978, "fit_reason": "Piano-driven road anthem." },
+        { "rank": 40, "track_name": "Keep On Loving You", "artist_name": "REO Speedwagon", "album_name": "Hi Infidelity", "year_released": 1980, "fit_reason": "Borderline but still sing-along driving track." },
+
+        { "rank": 41, "track_name": "Hit Me with Your Best Shot", "artist_name": "Pat Benatar", "album_name": "Crimes of Passion", "year_released": 1980, "fit_reason": "High-energy road music." },
+        { "rank": 42, "track_name": "We Built This City", "artist_name": "Starship", "album_name": "Knee Deep in the Hoopla", "year_released": 1985, "fit_reason": "Big sing-along energy." },
+        { "rank": 43, "track_name": "Call Me", "artist_name": "Blondie", "album_name": "American Gigolo Soundtrack", "year_released": 1980, "fit_reason": "Fast tempo and driving rhythm." },
+        { "rank": 44, "track_name": "Footloose", "artist_name": "Kenny Loggins", "album_name": "Footloose Soundtrack", "year_released": 1984, "fit_reason": "High-energy driving anthem." },
+        { "rank": 45, "track_name": "Danger Zone", "artist_name": "Kenny Loggins", "album_name": "Top Gun Soundtrack", "year_released": 1986, "fit_reason": "Fast-paced, adrenaline-driven track."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,369 @@
+{
+  "collections": [
+    {
+      "collection_name": "Yacht Rock",
+      "tracks": [
+        {
+          "rank": 1,
+          "track_name": "What a Fool Believes",
+          "artist_name": "The Doobie Brothers",
+          "album_name": "Minute by Minute",
+          "year_released": 1979,
+          "fit_reason": "The definitive yacht rock track with smooth groove, jazz-influenced chords, and pristine production."
+        },
+        {
+          "rank": 2,
+          "track_name": "Ride Like the Wind",
+          "artist_name": "Christopher Cross",
+          "album_name": "Christopher Cross",
+          "year_released": 1979,
+          "fit_reason": "A perfect blend of driving rhythm and silky West Coast production."
+        },
+        {
+          "rank": 3,
+          "track_name": "Peg",
+          "artist_name": "Steely Dan",
+          "album_name": "Aja",
+          "year_released": 1977,
+          "fit_reason": "Studio perfection with jazz sophistication and iconic groove."
+        },
+        {
+          "rank": 4,
+          "track_name": "Rosanna",
+          "artist_name": "Toto",
+          "album_name": "Toto IV",
+          "year_released": 1982,
+          "fit_reason": "Complex rhythms and immaculate production define the genre."
+        },
+        {
+          "rank": 5,
+          "track_name": "Minute by Minute",
+          "artist_name": "The Doobie Brothers",
+          "album_name": "Minute by Minute",
+          "year_released": 1978,
+          "fit_reason": "Smooth, soulful, and anchored by Michael McDonald’s signature style."
+        },
+        {
+          "rank": 6,
+          "track_name": "Lowdown",
+          "artist_name": "Boz Scaggs",
+          "album_name": "Silk Degrees",
+          "year_released": 1976,
+          "fit_reason": "A groovy, laid-back fusion of soul and soft rock."
+        },
+        {
+          "rank": 7,
+          "track_name": "Lido Shuffle",
+          "artist_name": "Boz Scaggs",
+          "album_name": "Silk Degrees",
+          "year_released": 1976,
+          "fit_reason": "Polished rhythm and storytelling with a breezy feel."
+        },
+        {
+          "rank": 8,
+          "track_name": "This Is It",
+          "artist_name": "Kenny Loggins",
+          "album_name": "Keep the Fire",
+          "year_released": 1979,
+          "fit_reason": "Clean production and melodic strength with a confident groove."
+        },
+        {
+          "rank": 9,
+          "track_name": "Heart to Heart",
+          "artist_name": "Kenny Loggins",
+          "album_name": "High Adventure",
+          "year_released": 1982,
+          "fit_reason": "Laid-back groove with rich instrumentation and smooth vocals."
+        },
+        {
+          "rank": 10,
+          "track_name": "I.G.Y.",
+          "artist_name": "Donald Fagen",
+          "album_name": "The Nightfly",
+          "year_released": 1982,
+          "fit_reason": "Sleek, jazzy, and the epitome of polished studio craftsmanship."
+        },
+        {
+          "rank": 11,
+          "track_name": "Hey Nineteen",
+          "artist_name": "Steely Dan",
+          "album_name": "Gaucho",
+          "year_released": 1980,
+          "fit_reason": "Smooth groove and signature Steely Dan sophistication."
+        },
+        {
+          "rank": 12,
+          "track_name": "Georgy Porgy",
+          "artist_name": "Toto",
+          "album_name": "Toto",
+          "year_released": 1978,
+          "fit_reason": "Silky rhythm with strong R&B influence and clean production."
+        },
+        {
+          "rank": 13,
+          "track_name": "Turn Your Love Around",
+          "artist_name": "George Benson",
+          "album_name": "Give Me the Night",
+          "year_released": 1980,
+          "fit_reason": "A smooth jazz-pop crossover with impeccable groove."
+        },
+        {
+          "rank": 14,
+          "track_name": "You Make My Dreams",
+          "artist_name": "Daryl Hall & John Oates",
+          "album_name": "Voices",
+          "year_released": 1980,
+          "fit_reason": "Energetic yet polished, blending pop appeal with yacht rock sensibility."
+        },
+        {
+          "rank": 15,
+          "track_name": "How Long",
+          "artist_name": "Ace",
+          "album_name": "Five-a-Side",
+          "year_released": 1974,
+          "fit_reason": "A smooth groove-driven track often associated with the yacht rock sound."
+        },
+        {
+          "rank": 16,
+          "track_name": "Baby Be Mine",
+          "artist_name": "Michael Jackson",
+          "album_name": "Thriller",
+          "year_released": 1982,
+          "fit_reason": "Smooth groove and polished production align with yacht rock aesthetics."
+        },
+        {
+          "rank": 17,
+          "track_name": "Human Nature",
+          "artist_name": "Michael Jackson",
+          "album_name": "Thriller",
+          "year_released": 1982,
+          "fit_reason": "Silky, atmospheric production with a refined, mellow groove."
+        },
+        {
+          "rank": 18,
+          "track_name": "Give Me the Night",
+          "artist_name": "George Benson",
+          "album_name": "Give Me the Night",
+          "year_released": 1980,
+          "fit_reason": "A perfect blend of jazz, funk, and smooth production."
+        },
+        {
+          "rank": 19,
+          "track_name": "On and On",
+          "artist_name": "Stephen Bishop",
+          "album_name": "Careless",
+          "year_released": 1977,
+          "fit_reason": "Soft, melodic groove with polished studio feel."
+        },
+        {
+          "rank": 20,
+          "track_name": "Save It for a Rainy Day",
+          "artist_name": "Stephen Bishop",
+          "album_name": "Careless",
+          "year_released": 1976,
+          "fit_reason": "Light, smooth, and breezy with strong West Coast production."
+        },
+        {
+          "rank": 21,
+          "track_name": "Thunder Island",
+          "artist_name": "Jay Ferguson",
+          "album_name": "Thunder Island",
+          "year_released": 1977,
+          "fit_reason": "Sunny, polished sound that fits the yacht rock atmosphere."
+        },
+        {
+          "rank": 22,
+          "track_name": "Magnet and Steel",
+          "artist_name": "Walter Egan",
+          "album_name": "Not Shy",
+          "year_released": 1978,
+          "fit_reason": "Smooth rhythm and layered production with yacht rock sensibility."
+        },
+        {
+          "rank": 23,
+          "track_name": "Cool Night",
+          "artist_name": "Paul Davis",
+          "album_name": "Cool Night",
+          "year_released": 1981,
+          "fit_reason": "Laid-back groove and mellow production fit the style well."
+        },
+        {
+          "rank": 24,
+          "track_name": "You Are the Woman",
+          "artist_name": "Firefall",
+          "album_name": "Firefall",
+          "year_released": 1976,
+          "fit_reason": "Smooth harmonies and clean production align with the genre."
+        },
+        {
+          "rank": 25,
+          "track_name": "Just the Two of Us",
+          "artist_name": "Grover Washington Jr.",
+          "album_name": "Winelight",
+          "year_released": 1980,
+          "fit_reason": "Jazz-infused smooth groove with impeccable production."
+        },
+        {
+          "rank": 26,
+          "track_name": "Breezin'",
+          "artist_name": "George Benson",
+          "album_name": "Breezin'",
+          "year_released": 1976,
+          "fit_reason": "Instrumental smoothness with a polished, relaxed feel."
+        },
+        {
+          "rank": 27,
+          "track_name": "Who's Crying Now",
+          "artist_name": "Journey",
+          "album_name": "Escape",
+          "year_released": 1981,
+          "fit_reason": "A softer, polished side of Journey with smooth production."
+        },
+        {
+          "rank": 28,
+          "track_name": "Breakdown Dead Ahead",
+          "artist_name": "Boz Scaggs",
+          "album_name": "Middle Man",
+          "year_released": 1980,
+          "fit_reason": "A deeper cut with strong groove and polished sound."
+        },
+        {
+          "rank": 29,
+          "track_name": "Jojo",
+          "artist_name": "Boz Scaggs",
+          "album_name": "Middle Man",
+          "year_released": 1980,
+          "fit_reason": "Smooth rhythm and storytelling with yacht rock feel."
+        },
+        {
+          "rank": 30,
+          "track_name": "Miss Sun",
+          "artist_name": "Boz Scaggs",
+          "album_name": "Hits!",
+          "year_released": 1980,
+          "fit_reason": "Upbeat, groove-driven track with polished production."
+        },
+        {
+          "rank": 31,
+          "track_name": "Steal Away",
+          "artist_name": "Robbie Dupree",
+          "album_name": "Robbie Dupree",
+          "year_released": 1980,
+          "fit_reason": "A quintessential yacht rock hit with smooth rhythm and vocals."
+        },
+        {
+          "rank": 32,
+          "track_name": "Hot Rod Hearts",
+          "artist_name": "Robbie Dupree",
+          "album_name": "Robbie Dupree",
+          "year_released": 1980,
+          "fit_reason": "Polished and groove-oriented with strong melodic hooks."
+        },
+        {
+          "rank": 33,
+          "track_name": "Sweet Freedom",
+          "artist_name": "Michael McDonald",
+          "album_name": "Sweet Freedom",
+          "year_released": 1986,
+          "fit_reason": "Later-era extension of yacht rock sound with signature vocals."
+        },
+        {
+          "rank": 34,
+          "track_name": "No Lookin' Back",
+          "artist_name": "Michael McDonald",
+          "album_name": "No Lookin' Back",
+          "year_released": 1985,
+          "fit_reason": "Smooth, groove-driven with rich instrumentation."
+        },
+        {
+          "rank": 35,
+          "track_name": "It Keeps You Runnin'",
+          "artist_name": "The Doobie Brothers",
+          "album_name": "Takin' It to the Streets",
+          "year_released": 1976,
+          "fit_reason": "Signature McDonald-era groove and harmonic richness."
+        },
+        {
+          "rank": 36,
+          "track_name": "Takin' It to the Streets",
+          "artist_name": "The Doobie Brothers",
+          "album_name": "Takin' It to the Streets",
+          "year_released": 1976,
+          "fit_reason": "A defining transition into the yacht rock sound."
+        },
+        {
+          "rank": 37,
+          "track_name": "Black Cow",
+          "artist_name": "Steely Dan",
+          "album_name": "Aja",
+          "year_released": 1977,
+          "fit_reason": "Smooth jazz harmony and pristine studio sound."
+        },
+        {
+          "rank": 38,
+          "track_name": "Deacon Blues",
+          "artist_name": "Steely Dan",
+          "album_name": "Aja",
+          "year_released": 1977,
+          "fit_reason": "Sophisticated, atmospheric, and musically rich."
+        },
+        {
+          "rank": 39,
+          "track_name": "FM",
+          "artist_name": "Steely Dan",
+          "album_name": "FM Soundtrack",
+          "year_released": 1978,
+          "fit_reason": "A polished, radio-perfect example of yacht rock sound."
+        },
+        {
+          "rank": 40,
+          "track_name": "99",
+          "artist_name": "Toto",
+          "album_name": "Hydra",
+          "year_released": 1979,
+          "fit_reason": "Smooth rhythm and melodic sophistication."
+        },
+        {
+          "rank": 41,
+          "track_name": "I'll Supply the Love",
+          "artist_name": "Toto",
+          "album_name": "Deep cut",
+          "year_released": 1979,
+          "fit_reason": "Keeps Toto presence balanced with smooth groove."
+        },
+        {
+          "rank": 42,
+          "track_name": "Love Is Alive",
+          "artist_name": "Gary Wright",
+          "album_name": "The Dream Weaver",
+          "year_released": 1976,
+          "fit_reason": "Synth-driven but smooth and atmospheric."
+        },
+        {
+          "rank": 43,
+          "track_name": "You Can Do Magic",
+          "artist_name": "America",
+          "album_name": "View from the Ground",
+          "year_released": 1982,
+          "fit_reason": "Polished pop-rock with yacht-friendly production."
+        },
+        {
+          "rank": 44,
+          "track_name": "Heartbreaker",
+          "artist_name": "Dionne Warwick",
+          "album_name": "Heartbreaker",
+          "year_released": 1982,
+          "fit_reason": "Smooth crossover with polished arrangement."
+        },
+        {
+          "rank": 45,
+          "track_name": "After the Love Is Gone",
+          "artist_name": "Earth, Wind & Fire",
+          "album_name": "I Am",
+          "year_released": 1979,
+          "fit_reason": "Sophisticated blend of R&B and yacht rock production."
+        }
+      ]
+    }
+  ]
+}

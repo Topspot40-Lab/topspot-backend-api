@@ -1,0 +1,63 @@
+{
+  "collections": [
+    {
+      "collection_name": "Easy Listening",
+      "tracks": [
+        { "rank": 1, "track_name": "Just the Two of Us", "artist_name": "Grover Washington Jr.", "album_name": "Winelight", "year_released": 1980, "fit_reason": "Smooth jazz groove with gentle vocals and relaxing feel." },
+        { "rank": 2, "track_name": "Breezin'", "artist_name": "George Benson", "album_name": "Breezin'", "year_released": 1976, "fit_reason": "Instrumental smooth jazz classic." },
+        { "rank": 3, "track_name": "Feels So Good", "artist_name": "Chuck Mangione", "album_name": "Feels So Good", "year_released": 1977, "fit_reason": "Warm, melodic instrumental." },
+        { "rank": 4, "track_name": "Morning Dance", "artist_name": "Spyro Gyra", "album_name": "Morning Dance", "year_released": 1979, "fit_reason": "Light, upbeat jazz with a relaxed tone." },
+        { "rank": 5, "track_name": "Songbird", "artist_name": "Kenny G", "album_name": "Duotones", "year_released": 1986, "fit_reason": "Smooth saxophone-driven relaxation." },
+
+        { "rank": 6, "track_name": "Arthur's Theme (Best That You Can Do)", "artist_name": "Christopher Cross", "album_name": "Arthur - The Album", "year_released": 1981, "fit_reason": "Soft, polished and easygoing." },
+        { "rank": 7, "track_name": "Sailing", "artist_name": "Christopher Cross", "album_name": "Christopher Cross", "year_released": 1979, "fit_reason": "Calm and serene listening experience." },
+        { "rank": 8, "track_name": "Baby, Come to Me", "artist_name": "Patti Austin", "album_name": "Every Home Should Have One", "year_released": 1981, "fit_reason": "Smooth duet with gentle groove." },
+        { "rank": 9, "track_name": "After the Love Has Gone", "artist_name": "Earth, Wind & Fire", "album_name": "I Am", "year_released": 1979, "fit_reason": "Soft, soulful and polished." },
+        { "rank": 10, "track_name": "Sweet Love", "artist_name": "Commodores", "album_name": "Natural High", "year_released": 1978, "fit_reason": "Relaxed, romantic groove." },
+
+        { "rank": 11, "track_name": "You Are So Beautiful", "artist_name": "Joe Cocker", "album_name": "I Can Stand a Little Rain", "year_released": 1974, "fit_reason": "Gentle emotional delivery." },
+        { "rank": 12, "track_name": "If Ever You're in My Arms Again", "artist_name": "Peabo Bryson", "album_name": "Straight from the Heart", "year_released": 1984, "fit_reason": "Smooth and calming ballad." },
+        { "rank": 13, "track_name": "Nothing's Gonna Change My Love for You", "artist_name": "Glenn Medeiros", "album_name": "Glenn Medeiros", "year_released": 1987, "fit_reason": "Soft and melodic." },
+        { "rank": 14, "track_name": "Suddenly", "artist_name": "Olivia Newton-John", "album_name": "Xanadu", "year_released": 1980, "fit_reason": "Light romantic duet." },
+        { "rank": 15, "track_name": "The Closer I Get to You", "artist_name": "Roberta Flack", "album_name": "Blue Lights in the Basement", "year_released": 1978, "fit_reason": "Smooth and soothing duet." },
+
+        { "rank": 16, "track_name": "Theme from A Summer Place", "artist_name": "Percy Faith", "album_name": "A Summer Place", "year_released": 1960, "fit_reason": "Classic easy listening instrumental." },
+        { "rank": 17, "track_name": "Raindrops Keep Fallin' on My Head", "artist_name": "B.J. Thomas", "album_name": "Butch Cassidy Soundtrack", "year_released": 1969, "fit_reason": "Lighthearted and easygoing." },
+        { "rank": 18, "track_name": "Close to You", "artist_name": "The Carpenters", "album_name": "Close to You", "year_released": 1970, "fit_reason": "Soft vocals and gentle melody." },
+        { "rank": 19, "track_name": "We've Only Just Begun", "artist_name": "The Carpenters", "album_name": "Close to You", "year_released": 1970, "fit_reason": "Calm and uplifting tone." },
+        { "rank": 20, "track_name": "Rainy Days and Mondays", "artist_name": "The Carpenters", "album_name": "Carpenters", "year_released": 1971, "fit_reason": "Soft and reflective." },
+
+        { "rank": 21, "track_name": "How Sweet It Is (To Be Loved by You)", "artist_name": "James Taylor", "album_name": "Gorilla", "year_released": 1975, "fit_reason": "Smooth and relaxed cover." },
+        { "rank": 22, "track_name": "Your Song", "artist_name": "Elton John", "album_name": "Elton John", "year_released": 1970, "fit_reason": "Gentle piano-driven melody." },
+        { "rank": 23, "track_name": "Daniel", "artist_name": "Elton John", "album_name": "Don't Shoot Me I'm Only the Piano Player", "year_released": 1973, "fit_reason": "Calm and melodic." },
+        { "rank": 24, "track_name": "She's Always a Woman", "artist_name": "Billy Joel", "album_name": "The Stranger", "year_released": 1977, "fit_reason": "Soft piano ballad with subtle delivery." },
+        { "rank": 25, "track_name": "Just When I Needed You Most", "artist_name": "Randy VanWarmer", "album_name": "Warmer", "year_released": 1979, "fit_reason": "Gentle, soft rock feel." },
+
+        { "rank": 26, "track_name": "Make It Easy on Yourself", "artist_name": "The Walker Brothers", "album_name": "Take It Easy with the Walker Brothers", "year_released": 1965, "fit_reason": "Smooth orchestral pop." },
+        { "rank": 27, "track_name": "This Guy's in Love with You", "artist_name": "Herb Alpert", "album_name": "The Beat of the Brass", "year_released": 1968, "fit_reason": "Classic soft vocal delivery." },
+        { "rank": 28, "track_name": "Love Theme from Romeo and Juliet", "artist_name": "Henry Mancini", "album_name": "Romeo and Juliet Soundtrack", "year_released": 1968, "fit_reason": "Instrumental romance." },
+        { "rank": 29, "track_name": "Moon River", "artist_name": "Andy Williams", "album_name": "Moon River", "year_released": 1962, "fit_reason": "Iconic easy listening vocal." },
+        { "rank": 30, "track_name": "Can't Help Falling in Love", "artist_name": "Elvis Presley", "album_name": "Blue Hawaii", "year_released": 1961, "fit_reason": "Soft romantic classic." },
+
+        { "rank": 31, "track_name": "What the World Needs Now Is Love", "artist_name": "Jackie DeShannon", "album_name": "This Is Jackie DeShannon", "year_released": 1965, "fit_reason": "Gentle message and melody." },
+        { "rank": 32, "track_name": "A Groovy Kind of Love", "artist_name": "The Mindbenders", "album_name": "The Mindbenders", "year_released": 1966, "fit_reason": "Light and melodic." },
+        { "rank": 33, "track_name": "Up, Up and Away", "artist_name": "The 5th Dimension", "album_name": "Up, Up and Away", "year_released": 1967, "fit_reason": "Bright and easygoing." },
+        { "rank": 34, "track_name": "I'll Never Fall in Love Again", "artist_name": "Dionne Warwick", "album_name": "I'll Never Fall in Love Again", "year_released": 1969, "fit_reason": "Soft and smooth delivery." },
+        { "rank": 35, "track_name": "Do You Know the Way to San Jose", "artist_name": "Dionne Warwick", "album_name": "Valley of the Dolls", "year_released": 1968, "fit_reason": "Light, catchy and smooth." },
+
+        { "rank": 36, "track_name": "Light My Fire (Instrumental)", "artist_name": "José Feliciano", "album_name": "Feliciano!", "year_released": 1968, "fit_reason": "Relaxed instrumental reinterpretation." },
+        { "rank": 37, "track_name": "Wichita Lineman", "artist_name": "Glen Campbell", "album_name": "Wichita Lineman", "year_released": 1968, "fit_reason": "Melancholic but smooth." },
+        { "rank": 38, "track_name": "By the Time I Get to Phoenix", "artist_name": "Glen Campbell", "album_name": "By the Time I Get to Phoenix", "year_released": 1967, "fit_reason": "Soft storytelling tone." },
+        { "rank": 39, "track_name": "Gentle on My Mind", "artist_name": "Glen Campbell", "album_name": "Gentle on My Mind", "year_released": 1967, "fit_reason": "Relaxed acoustic feel." },
+        { "rank": 40, "track_name": "Try to Remember", "artist_name": "The Brothers Four", "album_name": "Try to Remember", "year_released": 1965, "fit_reason": "Soft folk-pop tone." },
+
+        { "rank": 41, "track_name": "A Summer Song", "artist_name": "Chad & Jeremy", "album_name": "A Summer Song", "year_released": 1964, "fit_reason": "Light and nostalgic." },
+        { "rank": 42, "track_name": "Windy", "artist_name": "The Association", "album_name": "Insight Out", "year_released": 1967, "fit_reason": "Bright, easygoing pop." },
+        { "rank": 43, "track_name": "Never My Love", "artist_name": "The Association", "album_name": "Insight Out", "year_released": 1967, "fit_reason": "Soft and flowing melody." },
+        { "rank": 44, "track_name": "Cherish", "artist_name": "The Association", "album_name": "And Then... Along Comes the Association", "year_released": 1966, "fit_reason": "Warm harmonies and gentle tone." },
+        { "rank": 45, "track_name": "This Magic Moment", "artist_name": "Jay and the Americans", "album_name": "Come a Little Bit Closer", "year_released": 1968, "fit_reason": "Smooth nostalgic vibe."
+        }
+      ]
+    }
+  ]
+}

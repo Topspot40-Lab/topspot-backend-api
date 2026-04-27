@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 import random
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -27,7 +28,10 @@ from backend.services.spotify.spotify_lookup import get_spotify_track_data
 from backend.services.xai_client import ask_xai
 
 
-INPUT_FILE = Path("data/softrock/softrock_70s_90s_collections.json")
+if len(sys.argv) > 1:
+    INPUT_FILE = Path(sys.argv[1])
+else:
+    INPUT_FILE = Path("data/softrock/softrock_70s_90s_collections.json")
 
 CATEGORY_NAME = "Soft Rock 70s-90s"
 CATEGORY_SLUG = "soft_rock_70s_90s"
