@@ -16,6 +16,9 @@ from backend.models.dbmodels import (
     DecadeGenre,
     Decade,
     Genre,
+    TrackLocale,
+    ArtistLocale,
+    TrackRankingLocale,
 )
 
 from backend.services.single_track_player import play_one_server_side
@@ -478,8 +481,10 @@ async def get_sequence_decade_genre(
         genre: str = Query(...),
         start_rank: int = Query(1),
         end_rank: int | None = Query(None),
+        language: Literal["en", "es", "ptbr", "pt-BR"] = Query("en"),
         db=Depends(get_db),
 ):
+    locale_code = "pt-BR" if language in ("ptbr", "pt-BR") else language
     conditions = []
 
     if decade != "ALL":
@@ -536,42 +541,83 @@ async def get_sequence_decade_genre(
         return {"status": "empty", "tracks": []}
 
     tracks = []
+    locale_code = "pt-BR" if language in ("ptbr", "pt-BR") else language
 
     for track, artist, ranking, decade_obj, genre_obj in rows:
+
+        track_locale = None
+        artist_locale = None
+        ranking_locale = None
+
+        if locale_code != "en":
+            track_locale = db.exec(
+                select(TrackLocale).where(
+                    TrackLocale.track_id == track.id,
+                    TrackLocale.language_code == locale_code,
+                )
+            ).first()
+
+            artist_locale = db.exec(
+                select(ArtistLocale).where(
+                    ArtistLocale.artist_id == artist.id,
+                    ArtistLocale.language_code == locale_code,
+                )
+            ).first()
+
+            ranking_locale = db.exec(
+                select(TrackRankingLocale).where(
+                    TrackRankingLocale.track_ranking_id == ranking.id,
+                    TrackRankingLocale.language_code == locale_code,
+                )
+            ).first()
+
+        detail_text = (
+            getattr(track_locale, "detail_text", None)
+            if track_locale
+            else getattr(track, "detail", None)
+        )
+
+        artist_description_text = (
+            getattr(artist_locale, "artist_description_text", None)
+            if artist_locale
+            else getattr(artist, "artist_description", None)
+        )
+
+        intro_text = (
+            getattr(ranking_locale, "intro_text", None)
+            if ranking_locale
+            else getattr(ranking, "intro", None)
+        )
+
         tracks.append({
             "rankingId": ranking.id,
             "rank": ranking.ranking,
-
             "trackName": track.track_name,
             "artistName": artist.artist_name,
-
             "spotifyTrackId": track.spotify_track_id,
             "durationMs": track.duration_ms,
             "yearReleased": track.year_released,
-
             "decade": decade_obj.slug,
             "genre": genre_obj.slug,
-
             "albumArtwork": track.album_artwork,
             "artistArtwork": artist.artist_artwork,
 
-            # narration text
-            "intro": getattr(ranking, "intro", None),
-            "detail": getattr(track, "detail", None),
-            "artistDescription": getattr(artist, "artist_description", None),
+            # ✅ FULLY LOCALIZED NOW
+            "intro": intro_text,
+            "detail": detail_text,
+            "artistDescription": artist_description_text,
 
-            # ⭐ ADD THESE
             "introKey": getattr(ranking, "intro_key", None),
             "detailKey": getattr(track, "detail_key", None),
             "artistKey": getattr(artist, "artist_description_key", None),
         })
 
+    # ✅ RETURN AFTER LOOP
     return {
         "status": "ok",
         "total": len(tracks),
         "tracks": tracks,
     }
-
 
 from pydantic import BaseModel
 from typing import List
