@@ -126,7 +126,7 @@ def key_for(kind: Kind, filename: str | None) -> Optional[str]:
 
     prefix = AUDIO_PREFIXES.get(kind)
     if prefix is None and kind == "collections_intro":
-        prefix = "collections-intro"
+        prefix = "collections-intros"
 
     if prefix is None:
         return None

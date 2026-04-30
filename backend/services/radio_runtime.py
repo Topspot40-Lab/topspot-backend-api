@@ -153,8 +153,8 @@ def log_collection_header_and_texts(
 
 
 def collection_intro_jobs(*, lang: str, collection_slug: str, rank: int):
-    if lang != "en":
-        return []
+    # allow all languages
+    pass
 
     bucket = bucket_for(lang, "collections_intro")
     filename = build_collection_intro_filename(collection_slug, rank)

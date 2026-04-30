@@ -174,7 +174,7 @@ BUCKETS: Dict[str, Dict[str, str]] = _env_dict("BUCKETS", {
 })
 AUDIO_PREFIXES: Dict[str, str] = _env_dict(
     "AUDIO_PREFIXES",
-    {"intro": "intro", "detail": "detail", "artist": "artist", "collections_intro": "collections-intro"}
+    {"intro": "intro", "detail": "detail", "artist": "artist", "collections_intro": "collections-intros"}
 )
 
 # Legacy single-purpose bucket names (kept for back-compat)

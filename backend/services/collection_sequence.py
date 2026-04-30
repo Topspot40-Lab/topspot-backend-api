@@ -179,6 +179,15 @@ async def run_collection_sequence(
     )
 
     # ───────── INTRO ─────────
+
+    logger.warning(
+        "COLLECTION INTRO DEBUG play_intro=%s collection_slug=%s rank=%s language=%s",
+        play_intro,
+        collection_slug,
+        rank,
+        tts_language,
+    )
+
     if play_intro:
         intro_jobs = collection_intro_jobs(
             lang=tts_language,
