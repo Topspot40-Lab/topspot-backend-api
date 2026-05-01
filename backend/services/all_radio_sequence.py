@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import random
 from sqlalchemy import select
 from backend.models import (
     Decade,
@@ -35,9 +34,10 @@ import random
 LINER_FILES = [f"liner_{i:02}.mp3" for i in range(1, 31)]
 
 
-def get_random_station_liner():
+def get_random_station_liner(lang: str = "en"):
     filename = random.choice(LINER_FILES)
 
+    # 🔥 Force English for now
     bucket = "audio-en"
     key = f"station-liner/{filename}"
 
@@ -78,7 +78,7 @@ def build_set_intro_bucket_key(decade_slug: str, genre_slug: str, lang: str = "e
     bucket_map = {
         "en": "audio-en",
         "es": "audio-es",
-        "pt_br": "audio-ptbr",
+        "ptbr": "audio-ptbr",
     }
 
     bucket = bucket_map.get(lang, "audio-en")
@@ -132,8 +132,24 @@ async def run_all_radio_sequence(
         *,
         tts_language: str = "en",
         category: str | None = None,
-        genre_filter: str | None = None,  # 👈 ADD THIS
+        genre_filter: str | None = None,
+        play_intro: bool = True,
+        play_detail: bool = True,
+        play_artist_description: bool = False,
+        voice_style: str = "before",   # ✅ ADD THIS
 ):
+    # 🌎 Normalize radio language once
+    lang = (tts_language or "en").lower()
+
+    if lang in ("pt-br", "ptbr", "pt_br"):
+        lang = "ptbr"
+    elif lang == "es":
+        lang = "es"
+    else:
+        lang = "en"
+
+    logger.info("🌎 NORMALIZED RADIO LANG: %s", lang)
+
     # 🎛️ Get selection from playback state (set by frontend)
     selection = getattr(status, "selection", {}) or {}
 
@@ -168,7 +184,7 @@ async def run_all_radio_sequence(
 
     status.stopped = False
     status.cancel_requested = False
-    status.language = tts_language
+    status.language = lang
 
     flags.is_playing = True
     flags.stopped = False
@@ -177,7 +193,7 @@ async def run_all_radio_sequence(
 
     mark_playing(
         mode="all_radio",
-        language=tts_language,
+        language=lang,
         context={
             "mode": "all_radio",
             "category": category,
@@ -390,7 +406,7 @@ async def run_all_radio_sequence(
                     track_name=track.track_name,
                     artist_name=artist.artist_name,
                     context={
-                        "lang": tts_language,
+                        "lang": lang,
                         "mode": "all_radio",
                         "rank": rank,
                         "track_name": track.track_name,
@@ -409,12 +425,12 @@ async def run_all_radio_sequence(
 
                 # ─────────── NARRATION JOBS ───────────
                 intro_jobs = build_intro_jobs(
-                    lang=tts_language,
+                    lang=lang,
                     tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
                 )
 
                 detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
-                    lang=tts_language,
+                    lang=lang,
                     track=track,
                     artist=artist,
                 )
@@ -438,8 +454,8 @@ async def run_all_radio_sequence(
                 if idx == 1:
 
                     # 🎙️ STATION LINER (between sets, skip first set)
-                    if set_number > 1 and random.random() < get_liner_probability():
-                        liner_bucket, liner_key = get_random_station_liner()
+                    if lang == "en" and set_number > 1 and random.random() < get_liner_probability():
+                        liner_bucket, liner_key = get_random_station_liner(lang)
 
                         logger.info("📢 STATION LINER (before set intro) | %s", liner_key)
 
@@ -463,7 +479,7 @@ async def run_all_radio_sequence(
 
                     # 🎙️ SET INTRO
                     await publish_set_intro_phase(
-                        tts_language=tts_language,
+                        tts_language=lang,
                         decade_slug=decade,
                         genre_slug=genre,
                         decade_name=decade_obj.decade_name,

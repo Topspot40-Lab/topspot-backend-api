@@ -217,7 +217,11 @@ async def play_sequence_decade_genre(
         await start_new_sequence(
             run_all_radio_sequence(
                 genre_filter=genre_filter,
-                # keep your existing params here
+                tts_language=tts_language,
+                play_intro=play_intro,
+                play_detail=play_detail,
+                play_artist_description=play_artist_description,
+                voice_style=voice_style,
             )
         )
 
