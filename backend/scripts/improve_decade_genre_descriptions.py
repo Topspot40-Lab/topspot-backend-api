@@ -71,7 +71,7 @@ def build_description(slug: str, index: int) -> str:
         decade_words=decade_words,
     )
 
-    return f"In {decade_words}, {phrase}. {transition}"
+    return " ".join(f"In {decade_words}, {phrase}. {transition}".split())
 
 
 def main() -> None:
