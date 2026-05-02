@@ -478,7 +478,7 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         return {"is_subscribed": False}
 
     res = supabase.table("subscriptions").select("*").eq("user_id", user_id).maybe_single().execute()
-    if not res.data:
+    if not res or not res.data:
         return {"is_subscribed": False}
         #return RedirectResponse(url="http://localhost:5173/app/create-account")
 
