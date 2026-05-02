@@ -23,4 +23,5 @@ def get_frontend_url(local: bool = True):
     """
     if local:
         return "http://localhost:5173"
-    return "https://resplendent-gaufre-032b1a.netlify.app"  # your Netlify site
+    #return "https://resplendent-gaufre-032b1a.netlify.app"  # Netlify site
+    return "https://topspot40.com" # domain site

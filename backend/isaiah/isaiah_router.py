@@ -169,7 +169,7 @@ async def spotify_callback(request: Request):
     if not is_premium:
         logger.warning(f"User {user_profile.get('id')} is not Spotify Premium")
         #return RedirectResponse("https://topspot40.com/app/not-spotify-premium")
-        return RedirectResponse("/not-spotify-premium") # "http://localhost:8000/app/not-spotify-premium"
+        return RedirectResponse(f"{get_frontend_url(local=IS_LOCAL)}/not-spotify-premium") # "http://localhost:8000/app/not-spotify-premium"
 
     # created user session JWT here
     #user_id = user_profile["id"]
