@@ -73,6 +73,7 @@ async def get_or_create_topspot_user(user_profile: dict):
                 "spotify_country": user_profile.get("country"),
                 "spotify_product": user_profile.get("product"),
                 "last_login_at": datetime.now(timezone.utc).isoformat(),
+                "spotify_profile_image": user_profile.get("images")[0]["url"] if user_profile.get("images") else None,
             }) \
             .eq("spotify_user_id", spotify_user_id) \
             .execute()
@@ -91,6 +92,7 @@ async def get_or_create_topspot_user(user_profile: dict):
         "spotify_country": user_profile.get("country"),
         "spotify_product": user_profile.get("product"),
         "role": "listener", # default permissions
+        "spotify_profile_image": user_profile.get("images")[0]["url"] if user_profile.get("images") else None,
     }).execute()
 
     
@@ -163,6 +165,13 @@ async def spotify_callback(request: Request):
 
 
     user_profile = await get_user_profile(access_token)
+
+    spotify_image = (
+        user_profile.get("images")[0]["url"]
+        if user_profile.get("images")
+        else None
+    )
+
 
     is_premium = user_profile.get("product") == "premium"
     #is_premium = await is_spotify_user_premium(code, redirect_uri)
@@ -597,5 +606,24 @@ async def stripe_webhook(request: Request):
         return JSONResponse(status_code=400, content={"error": str(e)})
 
     return JSONResponse({"status": "success"})
+
+
+
+@spotify_user_auth_router.get("/me")
+async def get_me(access_token: str = Cookie(None)):
+    payload = decode_jwt_token(access_token)
+    if not payload:
+        raise HTTPException(status_code=401)
+
+    user_id = payload["user_id"]
+
+    user = supabase.table("topspot_users") \
+        .select("*") \
+        .eq("id", user_id) \
+        .single() \
+        .execute()
+
+    return user.data
+
 
 
