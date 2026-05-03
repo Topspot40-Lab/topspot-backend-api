@@ -37,8 +37,15 @@ LINER_FILES = [f"liner_{i:02}.mp3" for i in range(1, 31)]
 def get_random_station_liner(lang: str = "en"):
     filename = random.choice(LINER_FILES)
 
-    # 🔥 Force English for now
-    bucket = "audio-en"
+    lang = (lang or "en").lower().replace("-", "")
+
+    if lang in ("ptbr", "pt_br", "pt-br", "pt"):
+        bucket = "audio-ptbr"
+    elif lang == "es":
+        bucket = "audio-es"
+    else:
+        bucket = "audio-en"
+
     key = f"station-liner/{filename}"
 
     return bucket, key
@@ -454,7 +461,7 @@ async def run_all_radio_sequence(
                 if idx == 1:
 
                     # 🎙️ STATION LINER (between sets, skip first set)
-                    if lang == "en" and set_number > 1 and random.random() < get_liner_probability():
+                    if set_number > 1 and random.random() < get_liner_probability():
                         liner_bucket, liner_key = get_random_station_liner(lang)
 
                         logger.info("📢 STATION LINER (before set intro) | %s", liner_key)

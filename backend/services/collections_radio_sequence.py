@@ -8,14 +8,15 @@ from backend.state.playback_state import status, mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
 from backend.services.collections_radio_loader import get_valid_collections, load_collection_rows
+from backend.services.block_builder import build_track_block
 
 logger = logging.getLogger(__name__)
 
 
 async def run_collections_radio_sequence(
-    *,
-    tts_language: str = "en",
-    collection_group_slug: str | None = None,
+        *,
+        tts_language: str = "en",
+        collection_group_slug: str | None = None,
 ) -> None:
     selection = getattr(status, "selection", {}) or {}
     voices = selection.get("voices", [])
@@ -103,10 +104,10 @@ async def run_collections_radio_sequence(
                     logger.warning("No rows for collection=%s", collection_slug)
                     continue
 
-                # For now: use all rows, or slice later if you want block sizing
-                block_rows = rows
+                block_rows = build_track_block(rows, set_number=set_number)
 
-                for idx, (track, artist, ctr, collection) in enumerate(block_rows, start=1):
+                for idx, (track, artist, ctr, collection, ctr_locale, track_locale, artist_locale) in enumerate(
+                        block_rows, start=1):
                     if status.stopped:
                         logger.info("🛑 Collections radio stopped")
                         return
@@ -128,6 +129,9 @@ async def run_collections_radio_sequence(
                         "ranking_id": ctr.id,
                         "album_artwork": getattr(track, "album_artwork", None),
                         "artist_artwork": getattr(artist, "artist_artwork", None),
+                        "intro": getattr(ctr_locale, "intro_text", None),
+                        "detail": getattr(track_locale, "detail_text", None),
+                        "artist_text": getattr(artist_locale, "artist_description_text", None),
                     }
 
                     # We'll wire liner / set_intro / intro-detail-artist / track next
