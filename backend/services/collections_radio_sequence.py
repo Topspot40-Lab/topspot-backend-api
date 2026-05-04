@@ -10,7 +10,7 @@ from backend.state.narration import track_done_event
 from backend.services.collections_radio_loader import get_valid_collections, load_collection_rows
 from backend.services.block_builder import build_track_block
 from backend.services.collection_sequence import publish_narration_phase, _extract_bucket_key
-from backend.services.radio_runtime import collection_intro_jobs
+from backend.services.radio_runtime import collection_intro_jobs, narration_keys_for
 
 logger = logging.getLogger(__name__)
 
@@ -172,37 +172,43 @@ async def run_collections_radio_sequence(
                                     voice_style=voice_style,
                                 )
 
+                    detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
+                        lang=tts_language,
+                        track=track,
+                        artist=artist,
+                    )
+
                     logger.info(
-                        "🧪 detail check | play_detail=%s track_locale=%s tts_bucket=%s tts_key=%s",
-                        play_detail,
-                        bool(track_locale),
-                        getattr(track_locale, "tts_bucket", None),
-                        getattr(track_locale, "tts_key", None),
+                        "🧪 narration keys | detail=%s/%s artist=%s/%s",
+                        detail_bucket,
+                        detail_key,
+                        artist_bucket,
+                        artist_key,
                     )
 
                     # ───────── DETAIL ─────────
-                    if play_detail and track_locale and track_locale.tts_key:
+                    if play_detail and detail_bucket and detail_key:
                         await publish_narration_phase(
                             "detail",
                             track=track,
                             artist=artist,
                             rank=rank,
                             collection_slug=collection_slug,
-                            bucket=track_locale.tts_bucket,
-                            key=track_locale.tts_key,
+                            bucket=detail_bucket,
+                            key=detail_key,
                             voice_style=voice_style,
                         )
 
                     # ───────── ARTIST ─────────
-                    if play_artist and artist_locale and artist_locale.tts_key:
+                    if play_artist and artist_bucket and artist_key:
                         await publish_narration_phase(
                             "artist",
                             track=track,
                             artist=artist,
                             rank=rank,
                             collection_slug=collection_slug,
-                            bucket=artist_locale.tts_bucket,
-                            key=artist_locale.tts_key,
+                            bucket=artist_bucket,
+                            key=artist_key,
                             voice_style=voice_style,
                         )
 
