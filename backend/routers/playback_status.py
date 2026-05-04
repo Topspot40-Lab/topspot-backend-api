@@ -9,13 +9,10 @@ from backend.state.playback_state import status
 from fastapi import APIRouter
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from backend.services.spotify.playback import (
-    play_spotify_track,
-    stop_spotify_playback,
-    ensure_active_device,  # ✅ add
+    stop_spotify_playback
 )
 
-from backend.config import SPOTIFY_BED_TRACK_ID
-from backend.state.narration import narration_done_event, track_done_event
+from backend.state.narration import narration_done_event
 
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
 logger = logging.getLogger(__name__)
@@ -55,17 +52,13 @@ async def get_status():
     phase = snap.get("phase")
     voice_style = ctx.get("voice_style")
 
-    # 🔥 Bed track control: ONLY for narration phases in BEFORE mode
-
+    # 🔥 Bed track control:
+    # Backend only marks bed active.
+    # Frontend actually plays bed_audio_url.
     if phase in ("set_intro", "liner", "intro", "detail", "artist") and voice_style == "before":
         if not getattr(status, "bed_playing", False):
-            logger.info("🎧 Starting narration bed track (BEFORE mode)")
-            try:
-                await ensure_active_device()  # ✅ add
-                await play_spotify_track(SPOTIFY_BED_TRACK_ID)  # ✅ keep
-                status.bed_playing = True
-            except Exception as e:
-                logger.warning("⚠️ Could not start bed track: %s", e)
+            status.bed_playing = True
+            logger.info("🎧 Bed marked active; frontend will play bed_audio_url")
 
     # Otherwise do nothing here; bed is stopped explicitly by narration-finished
 
@@ -141,23 +134,33 @@ async def narration_finished():
         logger.info("⏸️ Ignoring narration-finished because system is paused")
         return {"ok": True}
 
-    # Stop bed track only for BEFORE narration
-    if voice_style == "before" and getattr(status, "bed_playing", False):
-        logger.info("🔉 Stopping narration bed track (BEFORE mode)")
-        try:
-            await stop_spotify_playback(fade_out_seconds=1.2)
-        except Exception as e:
-            logger.warning("⚠️ Failed to stop bed track: %s", e)
+    last_narration_phase = getattr(status, "last_narration_phase", None)
 
+    should_stop_bed = (
+        voice_style == "before"
+        and getattr(status, "bed_playing", False)
+        and (
+            not last_narration_phase
+            or status.phase == last_narration_phase
+        )
+    )
+
+    if should_stop_bed:
+        logger.info("🔉 Marking bed as stopped (frontend will fade out)")
         status.bed_playing = False
+    else:
+        logger.info(
+            "🔁 Keeping narration bed running | phase=%s last=%s bed_playing=%s",
+            status.phase,
+            last_narration_phase,
+            getattr(status, "bed_playing", False),
+        )
 
     # ✅ ONLY fire event if NOT paused
     narration_done_event.set()
 
     return {"ok": True}
 
-
-from backend.state.narration import track_done_event
 
 from backend.state.narration import track_done_event
 

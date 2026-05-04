@@ -5,6 +5,7 @@ from backend.state.playback_state import update_phase, status, mark_paused, mark
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
+from backend.services.spotify.playback import stop_spotify_playback
 
 import asyncio
 import logging
@@ -148,7 +149,14 @@ async def cancel_current_sequence():
     flags.stopped = True
     flags.is_paused = False
 
-    # 🔥 brief delay gives radio_runtime time to unwind Spotify + narration
+    # 🔥 STOP SPOTIFY IMMEDIATELY WHEN CANCELING
+    try:
+        await stop_spotify_playback(fade_out_seconds=0.2)
+        logger.info("🛑 Spotify stopped during sequence cancel")
+    except Exception as exc:
+        logger.warning("⚠️ Failed to stop Spotify during cancel: %s", exc)
+
+    # 🔥 brief delay gives runtime time to unwind
     await asyncio.sleep(0.15)
 
     # ─────────────────────────────────────────────
@@ -551,6 +559,12 @@ def resume():
 @router.post("/stop", summary="Stop playback")
 async def stop():
     await cancel_current_sequence()
+
+    try:
+        await stop_spotify_playback(fade_out_seconds=0.3)
+    except Exception as exc:
+        logger.warning("⚠️ Spotify stop failed: %s", exc)
+
     touch()
     return {"ok": True, "status": asdict(flags)}
 

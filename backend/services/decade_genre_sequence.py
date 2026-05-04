@@ -9,6 +9,8 @@ from typing import Literal
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.playback_ordering import order_rows_for_mode
 from backend.state.narration import narration_done_event, track_done_event
+from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
+from backend.services.audio_urls import resolve_audio_ref
 
 # Legacy flags (still used by runtime helpers)
 from backend.state.playback_flags import flags
@@ -314,6 +316,24 @@ async def run_decade_genre_sequence(
             artist=artist,
         )
 
+        selected_phases = []
+
+        if play_intro and intro_jobs:
+            selected_phases.append("intro")
+        if play_detail and detail_bucket and detail_key:
+            selected_phases.append("detail")
+        if play_artist_description and artist_bucket and artist_key:
+            selected_phases.append("artist")
+
+        status.last_narration_phase = selected_phases[-1] if selected_phases else None
+
+        bed_key = get_genre_bed_key(genre)
+        bed_audio_url = resolve_audio_ref(BED_BUCKET, bed_key)
+
+        logger.info("🎧 Selected bed track: %s/%s", BED_BUCKET, bed_key)
+
+        logger.info("🎯 Last narration phase set to: %s", status.last_narration_phase)
+
         # ───────── INTRO (publish) ─────────
         if play_intro and intro_jobs:
             ib, ik = _extract_bucket_key(intro_jobs[0])
@@ -328,6 +348,11 @@ async def run_decade_genre_sequence(
                     bucket=ib,
                     key=ik,
                     voice_style=voice_style,
+                    extra_context={
+                        "bed_bucket": BED_BUCKET,
+                        "bed_key": bed_key,
+                        "bed_audio_url": bed_audio_url,
+                    }
                 )
 
         # ───────── DETAIL (publish) ─────────
@@ -342,6 +367,11 @@ async def run_decade_genre_sequence(
                 bucket=detail_bucket,
                 key=detail_key,
                 voice_style=voice_style,
+                extra_context={
+                    "bed_bucket": BED_BUCKET,
+                    "bed_key": bed_key,
+                    "bed_audio_url": bed_audio_url,
+                }
             )
 
         # ───────── ARTIST (publish) ─────────
@@ -356,6 +386,11 @@ async def run_decade_genre_sequence(
                 bucket=artist_bucket,
                 key=artist_key,
                 voice_style=voice_style,
+                extra_context={
+                    "bed_bucket": BED_BUCKET,
+                    "bed_key": bed_key,
+                    "bed_audio_url": bed_audio_url,
+                }
             )
 
         logger.info(
@@ -526,6 +561,24 @@ async def run_decade_genre_continuous_sequence(
                 artist=artist,
             )
 
+            selected_phases = []
+
+            if play_intro and intro_jobs:
+                selected_phases.append("intro")
+            if play_detail and detail_bucket and detail_key:
+                selected_phases.append("detail")
+            if play_artist_description and artist_bucket and artist_key:
+                selected_phases.append("artist")
+
+            status.last_narration_phase = selected_phases[-1] if selected_phases else None
+
+            bed_key = get_genre_bed_key(genre)
+            bed_audio_url = resolve_audio_ref(BED_BUCKET, bed_key)
+
+            logger.info("🎧 Selected bed track: %s/%s", BED_BUCKET, bed_key)
+
+            logger.info("🎯 Last narration phase set to: %s", status.last_narration_phase)
+
             # ───────── INTRO ─────────
             if play_intro and intro_jobs:
                 ib, ik = _extract_bucket_key(intro_jobs[0])
@@ -540,6 +593,11 @@ async def run_decade_genre_continuous_sequence(
                         bucket=ib,
                         key=ik,
                         voice_style=voice_style,
+                        extra_context={
+                            "bed_bucket": BED_BUCKET,
+                            "bed_key": bed_key,
+                            "bed_audio_url": bed_audio_url,
+                        }
                     )
 
             # ───────── DETAIL ─────────
@@ -554,6 +612,11 @@ async def run_decade_genre_continuous_sequence(
                     bucket=detail_bucket,
                     key=detail_key,
                     voice_style=voice_style,
+                    extra_context={
+                        "bed_bucket": BED_BUCKET,
+                        "bed_key": bed_key,
+                        "bed_audio_url": bed_audio_url,
+                    }
                 )
 
             # ───────── ARTIST ─────────
@@ -568,6 +631,11 @@ async def run_decade_genre_continuous_sequence(
                     bucket=artist_bucket,
                     key=artist_key,
                     voice_style=voice_style,
+                    extra_context={
+                        "bed_bucket": BED_BUCKET,
+                        "bed_key": bed_key,
+                        "bed_audio_url": bed_audio_url,
+                    }
                 )
 
             # ───────── TRACK ─────────
