@@ -398,6 +398,8 @@ async def play_track(payload: dict):
         coro = run_collections_radio_sequence(
             tts_language=selection.language,
             collection_group_slug=collection_group_slug,
+            voices=selection.voices,  # 🔥 THIS LINE
+            voice_style=selection.voicePlayMode,  # 🔥 AND THIS
         )
 
 

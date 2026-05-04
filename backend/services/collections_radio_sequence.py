@@ -9,6 +9,8 @@ from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
 from backend.services.collections_radio_loader import get_valid_collections, load_collection_rows
 from backend.services.block_builder import build_track_block
+from backend.services.collection_sequence import publish_narration_phase, _extract_bucket_key
+from backend.services.radio_runtime import collection_intro_jobs
 
 logger = logging.getLogger(__name__)
 
@@ -17,9 +19,10 @@ async def run_collections_radio_sequence(
         *,
         tts_language: str = "en",
         collection_group_slug: str | None = None,
+        voices: list[str] | None = None,
+        voice_style: str = "before",
 ) -> None:
-    selection = getattr(status, "selection", {}) or {}
-    voices = selection.get("voices", [])
+    voices = voices or []
 
     play_intro = "intro" in voices
     play_detail = "detail" in voices
@@ -98,7 +101,7 @@ async def run_collections_radio_sequence(
                 )
 
                 with get_db_session() as session:
-                    rows = await asyncio.to_thread(load_collection_rows, session, collection_slug)
+                    rows = await asyncio.to_thread(load_collection_rows, session, collection_slug, tts_language)
 
                 if not rows:
                     logger.warning("No rows for collection=%s", collection_slug)
@@ -143,7 +146,67 @@ async def run_collections_radio_sequence(
                         artist.artist_name,
                     )
 
-                    # placeholder for now so structure is in place
+                    # ───────── INTRO ─────────
+                    if play_intro:
+                        intro_jobs = collection_intro_jobs(
+                            lang=tts_language,
+                            collection_slug=collection_slug,
+                            rank=rank,
+                        )
+
+                        logger.info("🧪 intro_jobs: %s", intro_jobs)
+
+
+                        if intro_jobs:
+                            bucket, key = _extract_bucket_key(intro_jobs[0])
+
+                            if bucket and key:
+                                await publish_narration_phase(
+                                    "intro",
+                                    track=track,
+                                    artist=artist,
+                                    rank=rank,
+                                    collection_slug=collection_slug,
+                                    bucket=bucket,
+                                    key=key,
+                                    voice_style=voice_style,
+                                )
+
+                    logger.info(
+                        "🧪 detail check | play_detail=%s track_locale=%s tts_bucket=%s tts_key=%s",
+                        play_detail,
+                        bool(track_locale),
+                        getattr(track_locale, "tts_bucket", None),
+                        getattr(track_locale, "tts_key", None),
+                    )
+
+                    # ───────── DETAIL ─────────
+                    if play_detail and track_locale and track_locale.tts_key:
+                        await publish_narration_phase(
+                            "detail",
+                            track=track,
+                            artist=artist,
+                            rank=rank,
+                            collection_slug=collection_slug,
+                            bucket=track_locale.tts_bucket,
+                            key=track_locale.tts_key,
+                            voice_style=voice_style,
+                        )
+
+                    # ───────── ARTIST ─────────
+                    if play_artist and artist_locale and artist_locale.tts_key:
+                        await publish_narration_phase(
+                            "artist",
+                            track=track,
+                            artist=artist,
+                            rank=rank,
+                            collection_slug=collection_slug,
+                            bucket=artist_locale.tts_bucket,
+                            key=artist_locale.tts_key,
+                            voice_style=voice_style,
+                        )
+
+                    # ───────── TRACK ─────────
                     if getattr(track, "spotify_track_id", None):
                         track_done_event.clear()
 
@@ -156,8 +219,6 @@ async def run_collections_radio_sequence(
                                 **radio_context,
                                 "mode": "spotify",
                                 "spotify_track_id": track.spotify_track_id,
-
-                                # ✅ ADD THESE
                                 "collection_name": collection_name,
                                 "collection_group_name": group_name,
                             },

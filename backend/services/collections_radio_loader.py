@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import logging
-from sqlalchemy import select
+from sqlalchemy import select, and_
+
 from backend.models import Collection, CollectionTrackRanking, Track, Artist
 
 logger = logging.getLogger(__name__)
@@ -13,6 +14,7 @@ def get_valid_collections(session, collection_group_slug: str | None = None) -> 
     rows = session.exec(stmt).all()
 
     items: list[dict] = []
+
     for (c,) in rows:
         category = getattr(c, "category", None)
 
@@ -37,7 +39,7 @@ def get_valid_collections(session, collection_group_slug: str | None = None) -> 
     return items
 
 
-def load_collection_rows(session, collection_slug: str):
+def load_collection_rows(session, collection_slug: str, lang: str = "en"):
     from backend.models import (
         CollectionTrackRankingLocale,
         TrackLocale,
@@ -59,17 +61,26 @@ def load_collection_rows(session, collection_slug: str):
         .join(Artist, Artist.id == Track.artist_id)
         .join(
             CollectionTrackRankingLocale,
-            CollectionTrackRankingLocale.collection_track_ranking_id == CollectionTrackRanking.id,
+            and_(
+                CollectionTrackRankingLocale.collection_track_ranking_id == CollectionTrackRanking.id,
+                CollectionTrackRankingLocale.lang == lang,
+            ),
             isouter=True,
         )
         .join(
             TrackLocale,
-            TrackLocale.track_id == Track.id,
+            and_(
+                TrackLocale.track_id == Track.id,
+                TrackLocale.language_code == lang,
+            ),
             isouter=True,
         )
         .join(
             ArtistLocale,
-            ArtistLocale.artist_id == Artist.id,
+            and_(
+                ArtistLocale.artist_id == Artist.id,
+                ArtistLocale.language_code == lang,
+            ),
             isouter=True,
         )
         .where(Collection.slug == collection_slug)
@@ -79,6 +90,7 @@ def load_collection_rows(session, collection_slug: str):
     rows = session.exec(stmt).all()
 
     normalized = []
+
     for ctr, track, artist, collection, ctr_locale, track_locale, artist_locale in rows:
         normalized.append(
             (
