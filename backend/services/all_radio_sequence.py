@@ -25,6 +25,9 @@ from backend.state.playback_state import status, mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
 
+from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
+from backend.services.audio_urls import resolve_audio_ref
+
 logger = logging.getLogger(__name__)
 
 VALID_BUCKETS_CACHE = None
@@ -359,6 +362,10 @@ async def run_all_radio_sequence(
             # ─────────────────────────────
             # PLAY BLOCK
             # ─────────────────────────────
+            set_bed_key = get_genre_bed_key(genre)
+            set_bed_audio_url = resolve_audio_ref(BED_BUCKET, set_bed_key)
+
+            logger.info("🎧 RADIO set bed track: %s/%s", BED_BUCKET, set_bed_key)
             for idx, (track, artist, tr_rank, decade_obj, genre_obj) in enumerate(block_rows, start=1):
 
                 if status.stopped:
@@ -442,6 +449,25 @@ async def run_all_radio_sequence(
                     artist=artist,
                 )
 
+                # 🎯 Determine last narration phase for this track
+                selected_phases = []
+
+                if idx == 1:
+                    selected_phases.append("set_intro")
+
+                if play_intro and intro_jobs:
+                    selected_phases.append("intro")
+
+                if play_detail and detail_bucket and detail_key:
+                    selected_phases.append("detail")
+
+                if play_artist and artist_bucket and artist_key:
+                    selected_phases.append("artist")
+
+                status.last_narration_phase = selected_phases[-1] if selected_phases else None
+
+                logger.info("🎯 RADIO last narration phase set to: %s", status.last_narration_phase)
+
                 radio_context = {
                     "mode": "all_radio",
                     "decade_slug": decade,
@@ -455,6 +481,9 @@ async def run_all_radio_sequence(
                     "year": track.year_released,
                     "album_artwork": track.album_artwork,
                     "artist_artwork": artist.artist_artwork,
+                    "bed_bucket": BED_BUCKET,
+                    "bed_key": set_bed_key,
+                    "bed_audio_url": set_bed_audio_url,
                 }
 
                 # ───────── SET INTRO (first track in set only) ─────────

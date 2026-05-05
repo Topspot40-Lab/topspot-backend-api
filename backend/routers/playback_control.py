@@ -156,7 +156,13 @@ async def cancel_current_sequence():
     except Exception as exc:
         logger.warning("⚠️ Failed to stop Spotify during cancel: %s", exc)
 
-    # 🔥 brief delay gives runtime time to unwind
+    # 🔥 stop current Spotify track when Next/Prev/new sequence cancels old one
+    try:
+        await stop_spotify_playback(fade_out_seconds=0.2)
+        logger.info("🛑 Spotify stopped during sequence cancel")
+    except Exception as exc:
+        logger.warning("⚠️ Failed to stop Spotify during cancel: %s", exc)
+
     await asyncio.sleep(0.15)
 
     # ─────────────────────────────────────────────

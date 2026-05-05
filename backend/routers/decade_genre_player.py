@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import random
 from typing import Literal
+import asyncio
 
 from fastapi import APIRouter, Query, Depends
 from sqlmodel import select
@@ -227,56 +228,6 @@ async def play_sequence_decade_genre(
 
         return {"status": "started", "mode": f"radio_{genre}"}
 
-    # ─────────────────────────────────────────────
-    # ALL / ALL → RADIO MODE
-    # ─────────────────────────────────────────────
-    # if decade == "ALL" and genre == "ALL":
-    #     logger.info("📻 Switching to ALL-ALL single-step radio mode")
-    #
-    #     db = next(get_db())
-    #     max_rank = get_max_rank_for_decade_genre(db, decade, genre)
-    #     # Clamp start_rank to valid range
-    #     if start_rank > max_rank:
-    #         logger.warning("⚠️ start_rank (%d) > max_rank (%d), clamping", start_rank, max_rank)
-    #         start_rank = max_rank
-    #
-    #     if end_rank is None:
-    #         end_rank = max_rank
-    #
-    #     # ✅ ADD THIS BLOCK HERE 👇
-    #     status.selection = {
-    #         "voices": [
-    #             v for v, enabled in [
-    #                 ("intro", play_intro),
-    #                 ("detail", play_detail),
-    #                 ("artist", play_artist_description),
-    #             ] if enabled
-    #         ]
-    #     }
-    #
-    #     logger.info("✅ status.selection set: %s", status.selection)
-    #
-    #     flags.context = {
-    #         "type": "all_radio",
-    #         "decade": "ALL",
-    #         "genre": "ALL",
-    #     }
-    #     flags.mode = mode
-    #     flags.current_rank = None
-    #     flags.lang = tts_language
-    #     flags.voice_style = voice_style
-    #
-    #     await start_new_sequence(
-    #         run_all_radio_sequence(
-    #             tts_language=tts_language,
-    #             category="single",
-    #         )
-    #     )
-    #
-    #     return {
-    #         "status": "started",
-    #         "mode": "all_radio",
-    #     }
 
     db = next(get_db())
     max_rank = get_max_rank_for_decade_genre(db, decade, genre)
@@ -376,7 +327,7 @@ async def play_next_decade_genre():
     mode = flags.mode or "count_up"
     current_rank = flags.current_rank
 
-    if not decade or not genre or current_rank is None:
+    if not decade or not genre:
         return {"status": "error", "message": "Missing playback state."}
 
     from backend.state.narration import track_done_event  # ← ADD IMPORT AT TOP IF NOT THERE
@@ -384,22 +335,26 @@ async def play_next_decade_genre():
     if decade == "ALL":
         logger.info("⏭ NEXT (RADIO MODE) → skipping to next track")
 
+        try:
+            from backend.services.spotify.playback import stop_spotify_playback
+            await stop_spotify_playback(fade_out_seconds=0.2)
+            logger.info("🛑 Spotify stopped before radio next")
+        except Exception as exc:
+            logger.warning("⚠️ Spotify stop failed before radio next: %s", exc)
+
         status.cancel_requested = True
         track_done_event.set()
+
+        # 🔥 GIVE THE LOOP TIME TO DIE
+        await asyncio.sleep(0.3)
 
         return {
             "status": "skipping",
             "mode": "radio"
         }
-        logger.info("⏭ NEXT (ALL/ALL) → skipping to next track")
 
-        status.cancel_requested = True
-        track_done_event.set()  # 🔥 THIS IS THE KEY LINE
-
-        return {
-            "status": "skipping",
-            "mode": "all_radio"
-        }
+    if current_rank is None:
+        return {"status": "error", "message": "Missing current rank."}
 
     db = next(get_db())
     q = (
