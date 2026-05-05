@@ -14,7 +14,7 @@ from backend.models.dbmodels import (
     Collection,
     CollectionTrackRanking,
 )
-
+from backend.services.bed_tracks import BED_BUCKET, get_collection_group_bed_key
 from backend.state.playback_state import mark_playing, update_phase
 from backend.services.audio_urls import resolve_audio_ref, is_remote_audio
 
@@ -75,6 +75,10 @@ async def publish_narration_phase(
             "audio_url": audio_url,
             "source": "remote" if is_remote_audio() else "local",
             "voice_style": voice_style,
+
+            # 🔥 ADD THIS
+            "bed_bucket": BED_BUCKET,
+            "bed_key": getattr(status, "bed_key", None),
         },
     )
 
@@ -167,6 +171,11 @@ async def run_collection_sequence(
     track, artist, ctr = rows[0]
     rank = int(ctr.ranking)
     ranking_id = ctr.id
+
+    bed_key = get_collection_group_bed_key("soft_rock_70s_90s")
+    status.bed_key = bed_key
+
+    logger.info("🎧 COLLECTION bed track: %s/%s", BED_BUCKET, bed_key)
 
     logger.info("──────────────────────────────────────────────")
     logger.info("▶ Rank #%02d: %s — %s", rank, track.track_name, artist.artist_name)
