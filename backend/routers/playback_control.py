@@ -208,7 +208,6 @@ async def start_new_sequence(coro):
 @router.post("/play-track", summary="Play exactly one track via sequence engine")
 async def play_track(payload: dict):
     logger.info("🎯 /playback/play-track HIT")
-    logger.debug("PLAY_TRACK endpoint entered")
 
     track = TrackRef(
         track_id=payload["track"]["track_id"],
@@ -357,8 +356,6 @@ async def play_track(payload: dict):
             run_decade_genre_continuous_sequence
         )
         is_continuous = payload["selection"].get("continuous", False)
-        logger.debug("🔎 selection payload = %s", payload.get("selection"))
-        logger.debug("🔎 is_continuous parsed = %s", is_continuous)
 
         if is_continuous:
             logger.info("📻 RADIO MODE ENABLED (continuous)")
