@@ -146,6 +146,39 @@ async def run_collections_radio_sequence(
                         artist.artist_name,
                     )
 
+                    # ───────── COLLECTION SET INTRO ─────────
+                    if idx == 1:
+                        logger.info(
+                            "🎬 COLLECTION SET INTRO | %s",
+                            collection_slug,
+                        )
+
+                        if tts_language == "en":
+                            set_intro_bucket = getattr(collection, "set_intro_tts_bucket", None)
+                            set_intro_key = getattr(collection, "set_intro_tts_key", None)
+                        else:
+                            set_intro_bucket = getattr(ctr_locale, "set_intro_tts_bucket", None)
+                            set_intro_key = getattr(ctr_locale, "set_intro_tts_key", None)
+
+                        logger.info(
+                            "🧪 set intro mp3 | %s/%s",
+                            set_intro_bucket,
+                            set_intro_key,
+                        )
+
+                        if set_intro_bucket and set_intro_key:
+                            await publish_narration_phase(
+                                "collection_intro",
+                                track=track,
+                                artist=artist,
+                                rank=rank,
+                                collection_slug=collection_slug,
+                                bucket=set_intro_bucket,
+                                key=set_intro_key,
+                                voice_style=voice_style,
+                            )
+
+
                     # ───────── INTRO ─────────
                     if play_intro:
                         intro_jobs = collection_intro_jobs(

@@ -43,12 +43,15 @@ class CollectionCategory(SQLModel, table=True):
 # ────────────────────────────────────────────────
 class Collection(SQLModel, table=True):
     __tablename__ = "collection"
-    __table_args__ = (UniqueConstraint("slug", name="uq_collection_slug"),)
 
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     slug: str = Field(index=True)
     intro: Optional[str] = None
+
+    set_intro_tts_bucket: Optional[str] = None
+    set_intro_tts_key: Optional[str] = None
+
 
     # ✅ New category linkage
     category_id: Optional[int] = Field(
