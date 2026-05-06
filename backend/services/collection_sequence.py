@@ -85,7 +85,6 @@ async def publish_narration_phase(
     if voice_style == "before":
         narration_done_event.clear()
         await narration_done_event.wait()
-        logger.error("✅ narration_done_event received")
 
 
 # ─────────────────────────────────────────────
