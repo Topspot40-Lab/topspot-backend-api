@@ -2,13 +2,18 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from sqlalchemy import select
 from backend.models import (
     Decade,
     Genre,
     DecadeGenre,
-    TrackRanking
+    TrackRanking,
+    TrackLocale,
+    ArtistLocale,
+    TrackRankingLocale,
 )
+
+from sqlmodel import Session, select
+from backend.database import engine
 
 from backend.services.decade_genre_sequence import (
     _extract_bucket_key,
@@ -468,6 +473,54 @@ async def run_all_radio_sequence(
 
                 logger.info("🎯 RADIO last narration phase set to: %s", status.last_narration_phase)
 
+                locale_code = "pt-BR" if lang in ("ptbr", "pt-BR") else lang
+
+                intro_text = getattr(tr_rank, "intro", None)
+                detail_text = getattr(track, "detail", None)
+                artist_text = getattr(artist, "artist_description", None)
+
+                if locale_code != "en":
+
+                    with Session(engine) as db:
+
+                        ranking_locale = db.exec(
+                            select(TrackRankingLocale).where(
+                                TrackRankingLocale.track_ranking_id == tr_rank.id,
+                                TrackRankingLocale.language_code == locale_code,
+                            )
+                        ).first()
+
+                        track_locale = db.exec(
+                            select(TrackLocale).where(
+                                TrackLocale.track_id == track.id,
+                                TrackLocale.language_code == locale_code,
+                            )
+                        ).first()
+
+                        artist_locale = db.exec(
+                            select(ArtistLocale).where(
+                                ArtistLocale.artist_id == artist.id,
+                                ArtistLocale.language_code == locale_code,
+                            )
+                        ).first()
+
+                        if ranking_locale and ranking_locale.intro_text:
+                            intro_text = ranking_locale.intro_text
+
+                        if track_locale and track_locale.detail_text:
+                            detail_text = track_locale.detail_text
+
+                        if artist_locale and artist_locale.artist_description_text:
+                            artist_text = artist_locale.artist_description_text
+
+                logger.info(
+                    "🌎 FINAL RADIO TEXT | lang=%s | intro=%s | detail=%s",
+                    lang,
+                    (intro_text or "")[:60],
+                    (detail_text or "")[:60],
+                )
+
+
                 radio_context = {
                     "mode": "all_radio",
                     "decade_slug": decade,
@@ -484,6 +537,12 @@ async def run_all_radio_sequence(
                     "bed_bucket": BED_BUCKET,
                     "bed_key": set_bed_key,
                     "bed_audio_url": set_bed_audio_url,
+                    "intro": intro_text,
+                    "detail": detail_text,
+                    "artist_text": artist_text,
+                    "spotify_track_id": getattr(track, "spotify_track_id", None),
+                    "track_name": getattr(track, "track_name", None),
+                    "artist_name": getattr(artist, "artist_name", None),
                 }
 
                 # ───────── SET INTRO (first track in set only) ─────────
@@ -588,6 +647,11 @@ async def run_all_radio_sequence(
                             "mode": "spotify",
                             "decade": decade,
                             "genre": genre,
+
+                            "intro": intro_text,
+                            "detail": detail_text,
+                            "artist_text": artist_text,
+
                             "spotify_track_id": track.spotify_track_id,
                             "ranking_id": tr_rank.id,
                             "set_number": set_number,

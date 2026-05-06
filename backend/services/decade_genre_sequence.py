@@ -92,6 +92,7 @@ async def publish_narration_phase(
         "album_artwork": getattr(track, "album_artwork", None),
         "artist_artwork": getattr(artist, "artist_artwork", None),
         "year": getattr(track, "year_released", None),
+
     }
 
     if extra_context:
