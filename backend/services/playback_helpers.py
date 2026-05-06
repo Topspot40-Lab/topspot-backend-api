@@ -297,10 +297,6 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
 # ─────────────────────────────────────────────
 
 async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = None) -> bool:
-    print("🚨 SAFE_PLAY CALLED:", kind, bucket, key)
-
-    print("🚨 SAFE_PLAY KIND:", kind)
-
     owns = (
             ((kind == "intro" or kind == "set_intro") and FRONTEND_OWNS_INTRO)
             or (kind == "detail" and FRONTEND_OWNS_DETAIL)

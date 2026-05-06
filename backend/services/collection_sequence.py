@@ -83,7 +83,6 @@ async def publish_narration_phase(
     logger.info("🎙 Published %s frame: %s", phase.upper(), audio_url)
 
     if voice_style == "before":
-        logger.error("⏳ Waiting for narration_done_event")
         narration_done_event.clear()
         await narration_done_event.wait()
         logger.error("✅ narration_done_event received")
@@ -153,8 +152,6 @@ async def run_collection_sequence(
 
     status.total_tracks = len(total_rows)
 
-    logger.warning(f"🧪 TOTAL TRACKS SET: {status.total_tracks}")
-
     # Tell frontend a sequence is active
     mark_playing(mode="collection", language=tts_language)
 
@@ -186,14 +183,6 @@ async def run_collection_sequence(
     )
 
     # ───────── INTRO ─────────
-
-    logger.warning(
-        "COLLECTION INTRO DEBUG play_intro=%s collection_slug=%s rank=%s language=%s",
-        play_intro,
-        collection_slug,
-        rank,
-        tts_language,
-    )
 
     if play_intro:
         intro_jobs = collection_intro_jobs(
@@ -247,12 +236,6 @@ async def run_collection_sequence(
             voice_style=voice_style,
         )
 
-    logger.warning(
-        "DEBUG BEFORE TRACK: play_track=%s spotify_id=%s",
-        play_track,
-        track.spotify_track_id,
-    )
-
     # ─────────────────────────────────────────────
     # TRACK PHASE (publish spotify id for frontend to request playback)
     # ─────────────────────────────────────────────
@@ -296,17 +279,6 @@ async def run_collection_continuous_sequence(
         "📻 COLLECTION CONTINUOUS START: %s %d-%d mode=%s lang=%s voice=%s",
         collection_slug, start_rank, end_rank, mode, tts_language, voice_style
     )
-
-    logger.error("🔥🔥🔥 ENTERED run_collection_CONTINUOUS_SEQUENCE 🔥🔥🔥")
-
-    logger.error("🔥 STEP 1: before any waits")
-
-    # TEMP: comment this out if it exists here
-    # await _wait_if_paused()
-
-    logger.error("🔥 STEP 2: after pause check")
-
-    logger.error("🔥 STEP 3: about to load collection rows")
 
     # Reset playback state
     status.stopped = False
@@ -376,14 +348,6 @@ async def run_collection_continuous_sequence(
             total_rows = db.exec(total_stmt).all()
 
             status.total_tracks = len(total_rows)
-
-            logger.warning(f"🧪 TOTAL TRACKS SET (continuous): {status.total_tracks}")
-
-
-            print(f"🔥🔥🔥 COLLECTION DB rows={len(rows)} slug={collection_slug} range={start_rank}-{end_rank}")
-            if rows:
-                t0, a0, r0 = rows[0]
-                print(f"🔥🔥🔥 FIRST ROW rank={r0} track={t0.track_name} artist={a0.artist_name}")
 
         if not rows:
             logger.error("❌ NO TRACK ROWS — collection=%s", collection_slug)
@@ -486,13 +450,6 @@ async def run_collection_continuous_sequence(
                     voice_style=voice_style,
                 )
 
-            # ───────── TRACK ─────────
-            logger.error(
-                "🔥 TRACK CHECK: play_track=%s spotify_id=%s",
-                play_track,
-                track.spotify_track_id
-            )
-
             if play_track and track.spotify_track_id:
                 track_done_event.clear()
 
@@ -515,9 +472,7 @@ async def run_collection_continuous_sequence(
                 )
 
                 # 🔥 This is the heartbeat: wait for frontend to say Spotify finished
-                logger.error("⏳ Waiting for track_done_event")
                 await track_done_event.wait()
-                logger.error("✅ track_done_event received")
 
         logger.info("🏁 Collection sequence COMPLETE (continuous)")
 

@@ -19,7 +19,6 @@ def play_supabase_mp3(bucket: str, object_path: str) -> str:
       • Supabase public URL (Render)
     """
     ref = resolve_audio_ref(bucket, object_path)
-    print("🎧 MP3 REF:", ref)
 
     # Local file?
     if ref.startswith(("C:\\", "/", "./")):
@@ -33,10 +32,7 @@ def play_supabase_mp3(bucket: str, object_path: str) -> str:
             f.write(r.content)
             tmp_path = f.name
 
-        print("✅ Downloaded to:", tmp_path)
-
     if playsound is None:
-        print("⚠️ playsound3 not installed; skipping playback.")
         return ref
 
     playsound(tmp_path)
