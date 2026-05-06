@@ -50,7 +50,7 @@ def _extract_bucket_key(job):
 
 
 async def publish_narration_phase(
-        phase: Literal["set_intro", "liner", "intro", "detail", "artist"],
+        phase: Literal["set_intro", "liner", "intro", "detail", "artist", "collection_intro"],
         *,
         track,
         artist,
@@ -59,6 +59,7 @@ async def publish_narration_phase(
         bucket,
         key,
         voice_style,
+        extra_context: dict | None = None,
 ):
     audio_url = resolve_audio_ref(bucket, key)
 
@@ -75,10 +76,7 @@ async def publish_narration_phase(
             "audio_url": audio_url,
             "source": "remote" if is_remote_audio() else "local",
             "voice_style": voice_style,
-
-            # 🔥 ADD THIS
-            "bed_bucket": BED_BUCKET,
-            "bed_key": getattr(status, "bed_key", None),
+            **(extra_context or {}),
         },
     )
 

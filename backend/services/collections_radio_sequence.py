@@ -11,6 +11,8 @@ from backend.services.collections_radio_loader import get_valid_collections, loa
 from backend.services.block_builder import build_track_block
 from backend.services.collection_sequence import publish_narration_phase, _extract_bucket_key
 from backend.services.radio_runtime import collection_intro_jobs, narration_keys_for
+from backend.services.audio_urls import resolve_audio_ref
+from backend.services.bed_tracks import BED_BUCKET, get_collection_group_bed_key
 
 logger = logging.getLogger(__name__)
 
@@ -132,9 +134,21 @@ async def run_collections_radio_sequence(
                         "ranking_id": ctr.id,
                         "album_artwork": getattr(track, "album_artwork", None),
                         "artist_artwork": getattr(artist, "artist_artwork", None),
-                        "intro": getattr(ctr_locale, "intro_text", None),
-                        "detail": getattr(track_locale, "detail_text", None),
-                        "artist_text": getattr(artist_locale, "artist_description_text", None),
+                        "intro": (
+                                getattr(ctr_locale, "intro_text", None)
+                                or getattr(ctr, "intro_text", None)
+                                or getattr(ctr, "intro", None)
+                        ),
+                        "detail": (
+                                getattr(track_locale, "detail_text", None)
+                                or getattr(track, "detail", None)
+                                or getattr(track, "detail_text", None)
+                        ),
+                        "artist_text": (
+                                getattr(artist_locale, "artist_description_text", None)
+                                or getattr(artist, "artist_description", None)
+                                or getattr(artist, "artist_description_text", None)
+                        ),
                     }
 
                     # We'll wire liner / set_intro / intro-detail-artist / track next
@@ -145,6 +159,10 @@ async def run_collections_radio_sequence(
                         track.track_name,
                         artist.artist_name,
                     )
+
+                    # ───────── BED TRACK ─────────
+                    bed_key = get_collection_group_bed_key(group_slug)
+                    bed_audio_url = resolve_audio_ref(BED_BUCKET, bed_key)
 
                     # ───────── COLLECTION SET INTRO ─────────
                     if idx == 1:
@@ -176,6 +194,11 @@ async def run_collections_radio_sequence(
                                 bucket=set_intro_bucket,
                                 key=set_intro_key,
                                 voice_style=voice_style,
+                                extra_context={
+                                    "bed_bucket": BED_BUCKET,
+                                    "bed_key": bed_key,
+                                    "bed_audio_url": bed_audio_url,
+                                },
                             )
 
 
@@ -203,6 +226,11 @@ async def run_collections_radio_sequence(
                                     bucket=bucket,
                                     key=key,
                                     voice_style=voice_style,
+                                    extra_context={
+                                        "bed_bucket": BED_BUCKET,
+                                        "bed_key": bed_key,
+                                        "bed_audio_url": bed_audio_url,
+                                    },
                                 )
 
                     detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
@@ -230,6 +258,11 @@ async def run_collections_radio_sequence(
                             bucket=detail_bucket,
                             key=detail_key,
                             voice_style=voice_style,
+                            extra_context={
+                                "bed_bucket": BED_BUCKET,
+                                "bed_key": bed_key,
+                                "bed_audio_url": bed_audio_url,
+                            },
                         )
 
                     # ───────── ARTIST ─────────
@@ -243,6 +276,11 @@ async def run_collections_radio_sequence(
                             bucket=artist_bucket,
                             key=artist_key,
                             voice_style=voice_style,
+                            extra_context={
+                                "bed_bucket": BED_BUCKET,
+                                "bed_key": bed_key,
+                                "bed_audio_url": bed_audio_url,
+                            },
                         )
 
                     # ───────── TRACK ─────────
