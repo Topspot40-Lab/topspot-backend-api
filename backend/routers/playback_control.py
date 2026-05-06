@@ -99,12 +99,12 @@ current_task: asyncio.Task | None = None
 
 
 async def _run_sequence_guarded(coro):
-    logger.warning("🔥 Sequence START")
+    logger.info("🔥 Sequence START")
     try:
         await coro
-        logger.warning("✅ Sequence END")
+        logger.info("✅ Sequence END")
     except asyncio.CancelledError:
-        logger.warning("🛑 Sequence CANCELLED")
+        logger.info("🛑 Sequence CANCELLED")
         raise
     except Exception:
         logger.exception("🔥 Playback sequence crashed")
@@ -208,7 +208,7 @@ async def start_new_sequence(coro):
 @router.post("/play-track", summary="Play exactly one track via sequence engine")
 async def play_track(payload: dict):
     logger.info("🎯 /playback/play-track HIT")
-    print("🔥🔥🔥 PLAY_TRACK ENDPOINT ENTERED 🔥🔥🔥")
+    logger.debug("PLAY_TRACK endpoint entered")
 
     track = TrackRef(
         track_id=payload["track"]["track_id"],
@@ -331,7 +331,6 @@ async def play_track(payload: dict):
         return {"ok": True, "message": "Favorites single-track playback started"}
 
     if context.get("type") == "decade_genre":
-        # logger.warning("DECADE GENRE CONTEXT → %s", context)
 
         if context.get("decade", "").lower() == "all":
             if not track.spotify_track_id:
@@ -358,11 +357,11 @@ async def play_track(payload: dict):
             run_decade_genre_continuous_sequence
         )
         is_continuous = payload["selection"].get("continuous", False)
-        logger.warning("🔎 selection payload = %s", payload.get("selection"))
-        logger.warning("🔎 is_continuous parsed = %s", is_continuous)
+        logger.debug("🔎 selection payload = %s", payload.get("selection"))
+        logger.debug("🔎 is_continuous parsed = %s", is_continuous)
 
         if is_continuous:
-            logger.warning("📻 RADIO MODE ENABLED (continuous)")
+            logger.info("📻 RADIO MODE ENABLED (continuous)")
 
             coro = run_decade_genre_continuous_sequence(
                 decade=context["decade"],
@@ -378,7 +377,7 @@ async def play_track(payload: dict):
                 voice_style=selection.voicePlayMode,
             )
         else:
-            logger.warning("🎯 SINGLE MODE ENABLED")
+            logger.info("🎯 SINGLE MODE ENABLED")
 
             coro = run_decade_genre_sequence(
                 decade=context["decade"],

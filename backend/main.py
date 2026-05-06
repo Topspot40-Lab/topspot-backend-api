@@ -42,7 +42,6 @@ from fastapi.responses import HTMLResponse
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
-    print("🔥🔥🔥 ROOT ENDPOINT HIT 🔥🔥🔥")
     return """
     <html>
       <head>

@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.backup.json
+log_audit_backend.txt
 
 # Virtual environments
 .venv/
