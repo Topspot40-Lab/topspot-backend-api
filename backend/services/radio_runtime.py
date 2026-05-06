@@ -55,10 +55,6 @@ def start_playback_sequence(coro) -> None:
     _play_task = asyncio.create_task(coro)
     logger.info("▶️ Playback sequence started")
 
-
-logger.warning("🧨 RADIO RUNTIME LOADED – TRACK HEARTBEAT FIX ACTIVE 🧨")
-
-
 # ─────────────────────────────────────────────
 # Safety guard: ensure Spotify volume is sane
 # ─────────────────────────────────────────────

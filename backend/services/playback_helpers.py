@@ -334,8 +334,6 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
 
     # Resolve first, always
     ref = resolve_audio_ref(bucket, key)
-    logger.warning("🔍 RESOLVED AUDIO REF = %s", ref)
-
     if not ref:
         logger.warning("🚫 %s MP3 not attempted (empty ref)", kind)
         return False
