@@ -134,6 +134,9 @@ async def run_collections_radio_sequence(
                         "ranking_id": ctr.id,
                         "album_artwork": getattr(track, "album_artwork", None),
                         "artist_artwork": getattr(artist, "artist_artwork", None),
+                        "spotify_track_id": getattr(track, "spotify_track_id", None),
+                        "track_name": getattr(track, "track_name", None),
+                        "artist_name": getattr(artist, "artist_name", None),
                         "intro": (
                                 getattr(ctr_locale, "intro_text", None)
                                 or getattr(ctr, "intro_text", None)
@@ -195,6 +198,7 @@ async def run_collections_radio_sequence(
                                 key=set_intro_key,
                                 voice_style=voice_style,
                                 extra_context={
+                                    **radio_context,
                                     "bed_bucket": BED_BUCKET,
                                     "bed_key": bed_key,
                                     "bed_audio_url": bed_audio_url,
@@ -227,6 +231,7 @@ async def run_collections_radio_sequence(
                                     key=key,
                                     voice_style=voice_style,
                                     extra_context={
+                                        **radio_context,
                                         "bed_bucket": BED_BUCKET,
                                         "bed_key": bed_key,
                                         "bed_audio_url": bed_audio_url,
@@ -259,6 +264,7 @@ async def run_collections_radio_sequence(
                             key=detail_key,
                             voice_style=voice_style,
                             extra_context={
+                                **radio_context,
                                 "bed_bucket": BED_BUCKET,
                                 "bed_key": bed_key,
                                 "bed_audio_url": bed_audio_url,
@@ -277,6 +283,7 @@ async def run_collections_radio_sequence(
                             key=artist_key,
                             voice_style=voice_style,
                             extra_context={
+                                **radio_context,
                                 "bed_bucket": BED_BUCKET,
                                 "bed_key": bed_key,
                                 "bed_audio_url": bed_audio_url,
