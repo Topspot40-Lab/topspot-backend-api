@@ -93,6 +93,9 @@ def whoami():
 
 
 # DEBUG ROUTE, TO CHECK IF SPOTIFY TOKEN CACHE FILE EXISTS ON RENDER
+# LEGACY/DEBUG ROUTE
+# Not used by the current frontend flow.
+# Candidate for removal after smoke testing and API cleanup.
 @router.get("/cache-check")
 def cache_check():
     """

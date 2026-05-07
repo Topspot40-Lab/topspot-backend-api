@@ -157,6 +157,9 @@ async def _run_single_track(
 # ─────────────────────────────────────────────
 # PUBLIC ENDPOINT
 # ─────────────────────────────────────────────
+# LEGACY/DEBUG ROUTE
+# Not used by the current frontend flow.
+# Candidate for removal after smoke testing and API cleanup.
 @router.get("/play-one")
 async def play_one_track(
     track_id: int = Query(...),

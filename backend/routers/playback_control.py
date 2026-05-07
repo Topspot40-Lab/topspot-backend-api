@@ -445,7 +445,9 @@ async def play_track(payload: dict):
         "message": "Single-step playback ran inline (sync) via sequence engine",
     }
 
-
+# LEGACY/DEBUG ROUTE
+# Not used by the current frontend flow.
+# Candidate for removal after smoke testing and API cleanup.
 @router.get("/flags-status", summary="Legacy flags snapshot (debug)")
 def flags_status():
     return asdict(flags)
