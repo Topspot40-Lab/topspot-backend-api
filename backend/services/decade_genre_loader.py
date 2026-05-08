@@ -70,7 +70,7 @@ def load_decade_genre_rows(
             )
 
         # 🔥 add summary log (like collections)
-        logger.info(
+        logger.debug(
             "🎶 DG '%s/%s': returning %d tracks (range %s-%s)",
             decade,
             genre,

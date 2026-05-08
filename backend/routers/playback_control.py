@@ -56,7 +56,7 @@ class PlaySpotifyRequest(BaseModel):
 
 @router.post("/play-spotify", summary="Start Spotify playback for a spotify_track_id")
 async def play_spotify(req: PlaySpotifyRequest):
-    logger.info("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
+    logger.debug("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
 
     # Start Spotify playback
     ok = await play_spotify_track(req.spotify_track_id)
@@ -137,7 +137,7 @@ async def cancel_current_sequence():
     global current_task
 
     if current_task:
-        logger.warning("🛑 Cancelling existing playback sequence…")
+        logger.info("🔄 Replacing existing playback sequence")
         flags.cancel_requested = True
         try:
             current_task.cancel()
@@ -187,7 +187,7 @@ async def start_new_sequence(coro):
         flags.is_playing = True
         flags.cancel_requested = False
 
-        logger.info("🎬 Launching new playback background task…")
+        logger.debug("🎬 Launching new playback background task…")
         current_task = asyncio.create_task(
             _run_sequence_guarded(coro)
         )
@@ -349,7 +349,7 @@ async def play_track(payload: dict):
         is_continuous = payload["selection"].get("continuous", False)
 
         if is_continuous:
-            logger.info("📻 RADIO MODE ENABLED (continuous)")
+            logger.debug("📻 RADIO MODE ENABLED (continuous)")
 
             coro = run_decade_genre_continuous_sequence(
                 decade=context["decade"],

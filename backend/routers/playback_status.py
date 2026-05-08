@@ -58,7 +58,7 @@ async def get_status():
     if phase in ("set_intro", "liner", "intro", "detail", "artist") and voice_style == "before":
         if not getattr(status, "bed_playing", False):
             status.bed_playing = True
-            logger.info("🎧 Bed marked active; frontend will play bed_audio_url")
+            logger.debug("🎧 Bed marked active; frontend will play bed_audio_url")
 
     # Otherwise do nothing here; bed is stopped explicitly by narration-finished
 
