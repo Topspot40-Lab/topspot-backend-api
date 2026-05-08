@@ -163,7 +163,7 @@ async def run_all_radio_sequence(
     else:
         lang = "en"
 
-    logger.info("🌎 NORMALIZED RADIO LANG: %s", lang)
+    logger.debug("🌎 NORMALIZED RADIO LANG: %s", lang)
 
     # 🎛️ Get selection from playback state (set by frontend)
     selection = getattr(status, "selection", {}) or {}
@@ -174,19 +174,13 @@ async def run_all_radio_sequence(
     play_detail = "detail" in voices
     play_artist = "artist" in voices
 
-    logger.info(
+    logger.debug(
         "🎛️ RADIO FLAGS | intro=%s detail=%s artist=%s",
         play_intro,
         play_detail,
         play_artist
     )
 
-    logger.info(
-        "🎛️ RADIO FLAGS | intro=%s detail=%s artist=%s",
-        play_intro,
-        play_detail,
-        play_artist
-    )
 
     """
     ALL / ALL radio mode.
@@ -376,14 +370,6 @@ async def run_all_radio_sequence(
                 if status.stopped:
                     logger.info("🛑 Radio mode stopped")
                     return
-
-                # if status.cancel_requested:
-                #     logger.info("⏭ Skip requested → moving to next track")
-                #     status.cancel_requested = False
-                #
-                #     # 🔥 FORCE IMMEDIATE ADVANCE
-                #     track_done_event.clear()
-                #     continue
 
                 rank = tr_rank.ranking
 
@@ -669,11 +655,6 @@ async def run_all_radio_sequence(
                         track.spotify_track_id,
                     )
 
-                    logger.info(
-                        "🎯 RADIO PUBLISHED track frame rank=%s spotify=%s",
-                        rank,
-                        track.spotify_track_id,
-                    )
 
                     # ✅ wait for Spotify track to finish
                     await track_done_event.wait()
