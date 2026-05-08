@@ -333,7 +333,7 @@ async def run_decade_genre_sequence(
 
         logger.info("🎧 Selected bed track: %s/%s", BED_BUCKET, bed_key)
 
-        logger.info("🎯 Last narration phase set to: %s", status.last_narration_phase)
+        logger.debug("🎯 Last narration phase set to: %s", status.last_narration_phase)
 
         # ───────── INTRO (publish) ─────────
         if play_intro and intro_jobs:
@@ -491,7 +491,7 @@ async def run_decade_genre_continuous_sequence(
 
     try:
         # ─────────── LOAD ROWS ONCE ───────────
-        logger.info("🧨 Loading decade/genre rows for continuous mode")
+        logger.debug("🧨 Loading decade/genre rows for continuous mode")
 
         rows = await asyncio.wait_for(
             asyncio.to_thread(
@@ -578,7 +578,7 @@ async def run_decade_genre_continuous_sequence(
 
             logger.info("🎧 Selected bed track: %s/%s", BED_BUCKET, bed_key)
 
-            logger.info("🎯 Last narration phase set to: %s", status.last_narration_phase)
+            logger.debug("🎯 Last narration phase set to: %s", status.last_narration_phase)
 
             # ───────── INTRO ─────────
             if play_intro and intro_jobs:

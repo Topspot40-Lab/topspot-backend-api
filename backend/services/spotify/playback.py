@@ -66,7 +66,7 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
             device_id = _pick_device_id(client, prefer_active=True)
 
         devices = client.devices().get("devices", [])
-        logger.info("🎧 Spotify devices: %s", devices)
+        logger.debug("🎧 Spotify devices: %s", devices)
 
         if not device_id:
             logger.error("🚫 No active Spotify device found.")
@@ -208,7 +208,7 @@ async def stop_spotify_playback(fade_out_seconds: float = 1.5, steps: int = 10) 
             if pb2 and pb2.get("is_playing"):
                 try:
                     sp.pause_playback(device_id=device_id)
-                    logger.info("⏸️ Fade-out complete.")
+                    logger.debug("⏸️ Fade-out complete.")
                 except Exception as e:
                     # Spotify timing glitch — safe to ignore
                     if hasattr(e, "http_status") and e.http_status == 403:

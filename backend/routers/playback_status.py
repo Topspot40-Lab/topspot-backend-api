@@ -146,10 +146,10 @@ async def narration_finished():
     )
 
     if should_stop_bed:
-        logger.info("🔉 Marking bed as stopped (frontend will fade out)")
+        logger.debug("🔉 Marking bed as stopped (frontend will fade out)")
         status.bed_playing = False
     else:
-        logger.info(
+        logger.debug(
             "🔁 Keeping narration bed running | phase=%s last=%s bed_playing=%s",
             status.phase,
             last_narration_phase,

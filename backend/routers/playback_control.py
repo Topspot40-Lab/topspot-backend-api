@@ -152,7 +152,7 @@ async def cancel_current_sequence():
     # 🔥 STOP SPOTIFY IMMEDIATELY WHEN CANCELING
     try:
         await stop_spotify_playback(fade_out_seconds=0.2)
-        logger.info("🛑 Spotify stopped during sequence cancel")
+        logger.debug("🛑 Spotify stopped during sequence cancel")
     except Exception as exc:
         logger.warning("⚠️ Failed to stop Spotify during cancel: %s", exc)
 
@@ -200,8 +200,6 @@ async def start_new_sequence(coro):
 # ─────────────────────────────────────────────
 @router.post("/play-track", summary="Play exactly one track via sequence engine")
 async def play_track(payload: dict):
-    logger.info("🎯 /playback/play-track HIT")
-
     track = TrackRef(
         track_id=payload["track"]["track_id"],
         spotify_track_id=payload["track"]["spotify_track_id"],
