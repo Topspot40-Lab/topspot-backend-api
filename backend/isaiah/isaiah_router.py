@@ -454,14 +454,15 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
 @stripe_router.get("/subscription-status")
 async def get_subscription_status(access_token: str = Cookie(None)):
     logger.critical("=== SUBSCRIPTION STATUS HIT ===")
-    #logger.critical("Cookie received: %s", access_token)
+    logger.critical("Cookie received: %s", access_token)
 
 
     payload = decode_jwt_token(access_token)
-    #logger.critical("Decoded JWT payload: %s", payload)
+    logger.critical("Decoded JWT payload: %s", payload)
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
+    logger.critical(f"JWT USER ID: {user_id}")
 
     # Get user
     user = supabase.table("topspot_users") \
@@ -469,20 +470,28 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         .eq("id", user_id) \
         .single() \
         .execute()
+    
+    logger.critical(f"TOPSPOT USER ROW: {user.data}")
 
     if not user.data:
         raise HTTPException(status_code=401)
 
     # ❌ Check Spotify premium AGAIN
     if user.data.get("spotify_product") != "premium":
+        logger.critical("❌ No spotify premium found")
         return {"is_subscribed": False}
 
     res = supabase.table("subscriptions").select("*").eq("user_id", user_id).maybe_single().execute()
+    
+    logger.critical(f"SUBSCRIPTION ROW: {res.data}")
+    
     if not res or not res.data:
+        logger.critical("❌ No subscription found")
         return {"is_subscribed": False}
         #return RedirectResponse(url="http://localhost:5173/app/create-account")
 
     status = res.data.get("status", "inactive")
+    logger.critical(f"SUBSCRIPTION STATUS FIELD: {status}")
     return {"is_subscribed": status in ("active", "trialing")}
     #return RedirectResponse(url="http://localhost:5173/dashboard")
 
