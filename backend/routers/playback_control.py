@@ -215,6 +215,13 @@ async def play_track(payload: dict):
         pauseMode=payload["selection"]["pauseMode"],
     )
 
+    tts_languages = (
+            payload["selection"].get("languages")
+            or [payload["selection"]["language"]]
+    )
+
+    logger.info("🌎 Playback languages requested: %s", tts_languages)
+
     context = payload.get("context")
     if not context:
         return {"ok": False, "error": "Missing playback context"}

@@ -168,6 +168,7 @@ async def play_sequence_decade_genre(
         end_rank: int | None = Query(None),
         mode: Literal["count_up", "count_down", "random"] = Query("count_up"),
         tts_language: Literal["en", "es", "ptbr", "pt-BR"] = Query("en"),
+        languages: str | None = Query(None),
         play_intro: bool = Query(True),
         play_detail: bool = Query(True),
         play_artist_description: bool = Query(True),
@@ -184,6 +185,14 @@ async def play_sequence_decade_genre(
         tts_language,
         voice_style,
     )
+
+    tts_languages = (
+        [x.strip() for x in languages.split(",") if x.strip()]
+        if languages
+        else [tts_language]
+    )
+
+    logger.info("🌎 Launch languages: %s", tts_languages)
 
     db = next(get_db())
     max_rank = get_max_rank_for_decade_genre(db, decade, genre)
@@ -208,7 +217,7 @@ async def play_sequence_decade_genre(
         genre_filter = None if genre == "ALL" else genre
 
         start_radio_mode(
-            tts_language,
+            tts_languages[0],
             play_intro,
             play_detail,
             play_artist_description,
@@ -218,7 +227,8 @@ async def play_sequence_decade_genre(
         await start_new_sequence(
             run_all_radio_sequence(
                 genre_filter=genre_filter,
-                tts_language=tts_language,
+                tts_language=tts_languages[0],
+                tts_languages=tts_languages,
                 play_intro=play_intro,
                 play_detail=play_detail,
                 play_artist_description=play_artist_description,

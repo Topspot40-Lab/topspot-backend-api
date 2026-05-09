@@ -146,6 +146,7 @@ async def publish_set_intro_phase(
 async def run_all_radio_sequence(
         *,
         tts_language: str = "en",
+        tts_languages: list[str] | None = None,
         category: str | None = None,
         genre_filter: str | None = None,
         play_intro: bool = True,
@@ -153,17 +154,26 @@ async def run_all_radio_sequence(
         play_artist_description: bool = False,
         voice_style: str = "before",   # ✅ ADD THIS
 ):
-    # 🌎 Normalize radio language once
-    lang = (tts_language or "en").lower()
+    def normalize_lang(value: str) -> str:
+        v = (value or "en").lower()
+        if v in ("pt-br", "ptbr", "pt_br"):
+            return "ptbr"
+        if v == "es":
+            return "es"
+        return "en"
 
-    if lang in ("pt-br", "ptbr", "pt_br"):
-        lang = "ptbr"
-    elif lang == "es":
-        lang = "es"
-    else:
-        lang = "en"
+    langs = [
+        normalize_lang(x)
+        for x in (tts_languages or [tts_language])
+    ]
 
-    logger.debug("🌎 NORMALIZED RADIO LANG: %s", lang)
+    # remove duplicates, preserve order
+    langs = list(dict.fromkeys(langs))
+
+    # current single-language compatibility
+    lang = langs[0] if langs else "en"
+
+    logger.info("🌎 RADIO LANGUAGES: %s", langs)
 
     # 🎛️ Get selection from playback state (set by frontend)
     selection = getattr(status, "selection", {}) or {}
@@ -429,16 +439,25 @@ async def run_all_radio_sequence(
                 )
 
                 # ─────────── NARRATION JOBS ───────────
-                intro_jobs = build_intro_jobs(
-                    lang=lang,
-                    tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
-                )
+                intro_jobs_by_lang = {}
+                detail_by_lang = {}
+                artist_by_lang = {}
 
-                detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
-                    lang=lang,
-                    track=track,
-                    artist=artist,
-                )
+                for narration_lang in langs:
+
+                    intro_jobs_by_lang[narration_lang] = build_intro_jobs(
+                        lang=narration_lang,
+                        tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
+                    )
+
+                    dbucket, dkey, abucket, akey = narration_keys_for(
+                        lang=narration_lang,
+                        track=track,
+                        artist=artist,
+                    )
+
+                    detail_by_lang[narration_lang] = (dbucket, dkey)
+                    artist_by_lang[narration_lang] = (abucket, akey)
 
                 # 🎯 Determine last narration phase for this track
                 selected_phases = []
@@ -446,13 +465,13 @@ async def run_all_radio_sequence(
                 if idx == 1:
                     selected_phases.append("set_intro")
 
-                if play_intro and intro_jobs:
+                if play_intro and any(intro_jobs_by_lang.values()):
                     selected_phases.append("intro")
 
-                if play_detail and detail_bucket and detail_key:
+                if play_detail and any(bucket and key for bucket, key in detail_by_lang.values()):
                     selected_phases.append("detail")
 
-                if play_artist and artist_bucket and artist_key:
+                if play_artist and any(bucket and key for bucket, key in artist_by_lang.values()):
                     selected_phases.append("artist")
 
                 status.last_narration_phase = selected_phases[-1] if selected_phases else None
@@ -574,9 +593,16 @@ async def run_all_radio_sequence(
                 # ───────── INTRO ─────────
                 # skip the normal track intro on the first track,
                 # because the set intro already used the intro lane
-                if play_intro and intro_jobs:
-                    ib, ik = _extract_bucket_key(intro_jobs[0])
-                    if ib and ik:
+                if play_intro:
+                    for narration_lang in langs:
+                        intro_jobs = intro_jobs_by_lang.get(narration_lang, [])
+                        if not intro_jobs:
+                            continue
+
+                        ib, ik = _extract_bucket_key(intro_jobs[0])
+                        if not ib or not ik:
+                            continue
+
                         await publish_narration_phase(
                             "intro",
                             track=track,
@@ -587,38 +613,57 @@ async def run_all_radio_sequence(
                             bucket=ib,
                             key=ik,
                             voice_style="before",
-                            extra_context=radio_context,
+                            extra_context={
+                                **radio_context,
+                                "lang": narration_lang,
+                            },
                         )
 
                 # ───────── DETAIL ─────────
-                if play_detail and detail_bucket and detail_key:
-                    await publish_narration_phase(
-                        "detail",
-                        track=track,
-                        artist=artist,
-                        rank=rank,
-                        decade=decade_obj.decade_name,
-                        genre=genre,
-                        bucket=detail_bucket,
-                        key=detail_key,
-                        voice_style="before",
-                        extra_context=radio_context,
-                    )
+                if play_detail:
+                    for narration_lang in langs:
+                        detail_bucket, detail_key = detail_by_lang.get(narration_lang, (None, None))
+                        if not detail_bucket or not detail_key:
+                            continue
+
+                        await publish_narration_phase(
+                            "detail",
+                            track=track,
+                            artist=artist,
+                            rank=rank,
+                            decade=decade_obj.decade_name,
+                            genre=genre,
+                            bucket=detail_bucket,
+                            key=detail_key,
+                            voice_style="before",
+                            extra_context={
+                                **radio_context,
+                                "lang": narration_lang,
+                            },
+                        )
 
                 # ───────── ARTIST ─────────
-                if play_artist and artist_bucket and artist_key:
-                    await publish_narration_phase(
-                        "artist",
-                        track=track,
-                        artist=artist,
-                        rank=rank,
-                        decade=decade_obj.decade_name,
-                        genre=genre,
-                        bucket=artist_bucket,
-                        key=artist_key,
-                        voice_style="before",
-                        extra_context=radio_context,
-                    )
+                if play_artist:
+                    for narration_lang in langs:
+                        artist_bucket, artist_key = artist_by_lang.get(narration_lang, (None, None))
+                        if not artist_bucket or not artist_key:
+                            continue
+
+                        await publish_narration_phase(
+                            "artist",
+                            track=track,
+                            artist=artist,
+                            rank=rank,
+                            decade=decade_obj.decade_name,
+                            genre=genre,
+                            bucket=artist_bucket,
+                            key=artist_key,
+                            voice_style="before",
+                            extra_context={
+                                **radio_context,
+                                "lang": narration_lang,
+                            },
+                        )
 
                 # ───────── TRACK ─────────
                 if track.spotify_track_id:
