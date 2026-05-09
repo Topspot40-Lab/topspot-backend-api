@@ -481,11 +481,11 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         logger.critical("❌ No spotify premium found")
         return {"is_subscribed": False}
 
-    res = supabase.table("subscriptions").select("*").eq("user_id", user_id).execute()
+    res = supabase.table("subscriptions").select("*").eq("user_id", user_id).eq("status", "active").limit(1).execute()
     
     logger.critical(f"SUBSCRIPTION ROW: {res.data}")
     
-    if not res or not res.data:
+    """if not res or not res.data:
         logger.critical("❌ No subscription found")
         return {"is_subscribed": False}
         #return RedirectResponse(url="http://localhost:5173/app/create-account")
@@ -494,7 +494,16 @@ async def get_subscription_status(access_token: str = Cookie(None)):
     logger.critical(f"SUBSCRIPTION STATUS FIELD: {status}")
     return {"is_subscribed": status in ("active", "trialing")}
     #return RedirectResponse(url="http://localhost:5173/dashboard")
+"""
+    sub = res.data[0] if res.data else None
 
+    if not sub:
+        return {"is_subscribed": False}
+
+    return {
+        "is_subscribed": True,
+        "status": sub.get("status")
+    }
 
 
 
