@@ -628,48 +628,62 @@ async def run_all_radio_sequence(
 
                 # ───────── DETAIL ─────────
                 if play_detail:
+                    detail_audio_queue = []
+
                     for narration_lang in langs:
                         detail_bucket, detail_key = detail_by_lang.get(narration_lang, (None, None))
                         if not detail_bucket or not detail_key:
                             continue
 
-                        await publish_narration_phase(
+                        detail_audio_queue.append({
+                            "language": narration_lang,
+                            "bucket": detail_bucket,
+                            "key": detail_key,
+                            "url": resolve_audio_ref(detail_bucket, detail_key),
+                        })
+
+                    if detail_audio_queue:
+                        await publish_narration_queue_phase(
                             "detail",
                             track=track,
                             artist=artist,
                             rank=rank,
                             decade=decade_obj.decade_name,
                             genre=genre,
-                            bucket=detail_bucket,
-                            key=detail_key,
+                            audio_queue=detail_audio_queue,
+                            texts={},  # later: multi-language More Info bundle
                             voice_style="before",
-                            extra_context={
-                                **radio_context,
-                                "lang": narration_lang,
-                            },
+                            extra_context=radio_context,
                         )
 
                 # ───────── ARTIST ─────────
                 if play_artist:
+                    artist_audio_queue = []
+
                     for narration_lang in langs:
                         artist_bucket, artist_key = artist_by_lang.get(narration_lang, (None, None))
                         if not artist_bucket or not artist_key:
                             continue
 
-                        await publish_narration_phase(
+                        artist_audio_queue.append({
+                            "language": narration_lang,
+                            "bucket": artist_bucket,
+                            "key": artist_key,
+                            "url": resolve_audio_ref(artist_bucket, artist_key),
+                        })
+
+                    if artist_audio_queue:
+                        await publish_narration_queue_phase(
                             "artist",
                             track=track,
                             artist=artist,
                             rank=rank,
                             decade=decade_obj.decade_name,
                             genre=genre,
-                            bucket=artist_bucket,
-                            key=artist_key,
+                            audio_queue=artist_audio_queue,
+                            texts={},
                             voice_style="before",
-                            extra_context={
-                                **radio_context,
-                                "lang": narration_lang,
-                            },
+                            extra_context=radio_context,
                         )
 
                 # ───────── TRACK ─────────
