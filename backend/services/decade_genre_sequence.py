@@ -115,6 +115,75 @@ async def publish_narration_phase(
         narration_done_event.clear()
         await narration_done_event.wait()
 
+async def publish_narration_queue_phase(
+        phase: Literal["set_intro", "liner", "intro", "detail", "artist"],
+        *,
+        track,
+        artist,
+        rank: int,
+        decade: str,
+        genre: str,
+        audio_queue: list[dict],
+        texts: dict | None,
+        voice_style: Literal["before", "over"],
+        extra_context: dict | None = None,
+):
+    """
+    Publishes one narration phase with multiple language audio URLs.
+    Frontend plays audio_queue in order, then sends narration-finished once.
+    """
+
+    logger.info(
+        "🎙 publish_narration_queue_phase phase=%s decade=%s genre=%s items=%d",
+        phase,
+        decade,
+        genre,
+        len(audio_queue),
+    )
+
+    base_context = {
+        "lang": audio_queue[0].get("language") if audio_queue else getattr(status, "language", None),
+        "languages": [item.get("language") for item in audio_queue],
+        "mode": "decade_genre",
+        "decade": decade,
+        "genre": genre,
+        "rank": int(rank),
+        "track_name": track.track_name,
+        "artist_name": artist.artist_name,
+
+        # backward compatibility: first audio URL
+        "audio_url": audio_queue[0].get("url") if audio_queue else None,
+
+        # new multi-language payload
+        "audio_queue": audio_queue,
+        "texts": texts or {},
+
+        "source": "remote" if is_remote_audio() else "local",
+        "voice_style": voice_style,
+
+        "spotify_track_id": getattr(track, "spotify_track_id", None),
+        "album_artwork": getattr(track, "album_artwork", None),
+        "artist_artwork": getattr(artist, "artist_artwork", None),
+        "year": getattr(track, "year_released", None),
+    }
+
+    if extra_context:
+        base_context.update(extra_context)
+
+    update_phase(
+        phase,
+        track_name=track.track_name,
+        artist_name=artist.artist_name,
+        current_rank=int(rank),
+        context=base_context,
+    )
+
+    logger.info("🎙 Published %s queue frame: %d item(s)", phase.upper(), len(audio_queue))
+
+    if voice_style == "before":
+        narration_done_event.clear()
+        await narration_done_event.wait()
+
 
 # ─────────────────────────────────────────────
 # PAUSE / CANCEL HELPERS

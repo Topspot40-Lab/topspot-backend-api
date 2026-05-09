@@ -18,6 +18,7 @@ from backend.database import engine
 from backend.services.decade_genre_sequence import (
     _extract_bucket_key,
     publish_narration_phase,
+    publish_narration_queue_phase,
 )
 from backend.services.radio_runtime import (
     build_intro_jobs,
@@ -591,9 +592,10 @@ async def run_all_radio_sequence(
                     )
 
                 # ───────── INTRO ─────────
-                # skip the normal track intro on the first track,
-                # because the set intro already used the intro lane
+                # ───────── INTRO ─────────
                 if play_intro:
+                    intro_audio_queue = []
+
                     for narration_lang in langs:
                         intro_jobs = intro_jobs_by_lang.get(narration_lang, [])
                         if not intro_jobs:
@@ -603,20 +605,25 @@ async def run_all_radio_sequence(
                         if not ib or not ik:
                             continue
 
-                        await publish_narration_phase(
+                        intro_audio_queue.append({
+                            "language": narration_lang,
+                            "bucket": ib,
+                            "key": ik,
+                            "url": resolve_audio_ref(ib, ik),
+                        })
+
+                    if intro_audio_queue:
+                        await publish_narration_queue_phase(
                             "intro",
                             track=track,
                             artist=artist,
                             rank=rank,
                             decade=decade_obj.decade_name,
                             genre=genre,
-                            bucket=ib,
-                            key=ik,
+                            audio_queue=intro_audio_queue,
+                            texts={},  # next step: multi-language text bundle
                             voice_style="before",
-                            extra_context={
-                                **radio_context,
-                                "lang": narration_lang,
-                            },
+                            extra_context=radio_context,
                         )
 
                 # ───────── DETAIL ─────────
