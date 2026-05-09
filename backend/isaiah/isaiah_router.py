@@ -481,7 +481,7 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         logger.critical("❌ No spotify premium found")
         return {"is_subscribed": False}
 
-    res = supabase.table("subscriptions").select("*").eq("user_id", user_id).maybe_single().execute()
+    res = supabase.table("subscriptions").select("*").eq("user_id", user_id).execute()
     
     logger.critical(f"SUBSCRIPTION ROW: {res.data}")
     
