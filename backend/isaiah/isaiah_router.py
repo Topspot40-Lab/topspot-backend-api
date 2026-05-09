@@ -634,6 +634,7 @@ async def get_me(access_token: str = Cookie(None)):
         raise HTTPException(status_code=401)
 
     user_id = payload["user_id"]
+    logger.critical("JWT USER ID: %s", user_id)
 
     user = supabase.table("topspot_users") \
         .select("*") \
@@ -641,6 +642,7 @@ async def get_me(access_token: str = Cookie(None)):
         .single() \
         .execute()
 
+    logger.critical("DB LOOKUP RESULT: %s", user.data)
     return user.data
 
 
