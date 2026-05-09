@@ -14,7 +14,7 @@ def get_spotify_redirect_uri(local: bool = True):
     Returns the Spotify redirect URI for OAuth callback.
     """
     if local:
-        return "http://127.0.0.1:8000/spotify/callback"
+        return "http://127.0.0.1:8000/api/auth/spotify/callback"
     return "https://api.topspot40.com/api/auth/spotify/callback"  # adjust to Netlify deploy
 
 def get_frontend_url(local: bool = True):
