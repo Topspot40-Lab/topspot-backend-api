@@ -365,6 +365,7 @@ async def play_track(payload: dict):
                 end_rank=track.rank,
                 mode=payload["selection"].get("playbackOrder", "count_up"),
                 tts_language=selection.language,
+                tts_languages=tts_languages,
                 play_intro=True,
                 play_detail="detail" in selection.voices,
                 play_artist_description="artist" in selection.voices,
