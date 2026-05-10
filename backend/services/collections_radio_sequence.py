@@ -10,6 +10,7 @@ from backend.state.narration import track_done_event
 from backend.services.collections_radio_loader import get_valid_collections, load_collection_rows
 from backend.services.block_builder import build_track_block
 from backend.services.collection_sequence import publish_narration_phase, _extract_bucket_key
+from backend.services.decade_genre_sequence import publish_narration_queue_phase
 from backend.services.radio_runtime import collection_intro_jobs, narration_keys_for
 from backend.services.audio_urls import resolve_audio_ref
 from backend.services.bed_tracks import BED_BUCKET, get_collection_group_bed_key
@@ -20,6 +21,7 @@ logger = logging.getLogger(__name__)
 async def run_collections_radio_sequence(
         *,
         tts_language: str = "en",
+        tts_languages: list[str] | None = None,
         collection_group_slug: str | None = None,
         voices: list[str] | None = None,
         voice_style: str = "before",
@@ -40,6 +42,23 @@ async def run_collections_radio_sequence(
     status.stopped = False
     status.cancel_requested = False
     status.language = tts_language
+
+    def normalize_lang(value: str) -> str:
+        v = (value or "en").lower()
+        if v in ("pt-br", "ptbr", "pt_br"):
+            return "ptbr"
+        if v == "es":
+            return "es"
+        return "en"
+
+    langs = [
+        normalize_lang(x)
+        for x in (tts_languages or [tts_language])
+    ]
+
+    langs = list(dict.fromkeys(langs))
+
+    logger.info("🌎 COLLECTION RADIO LANGUAGES: %s", langs)
 
     flags.is_playing = True
     flags.stopped = False
@@ -208,87 +227,140 @@ async def run_collections_radio_sequence(
 
                     # ───────── INTRO ─────────
                     if play_intro:
-                        intro_jobs = collection_intro_jobs(
-                            lang=tts_language,
-                            collection_slug=collection_slug,
-                            rank=rank,
-                        )
+                        intro_audio_queue = []
 
-                        logger.info("🧪 intro_jobs: %s", intro_jobs)
+                        for narration_lang in langs:
+                            intro_jobs = collection_intro_jobs(
+                                lang=narration_lang,
+                                collection_slug=collection_slug,
+                                rank=rank,
+                            )
 
+                            if not intro_jobs:
+                                continue
 
-                        if intro_jobs:
                             bucket, key = _extract_bucket_key(intro_jobs[0])
 
-                            if bucket and key:
-                                await publish_narration_phase(
-                                    "intro",
-                                    track=track,
-                                    artist=artist,
-                                    rank=rank,
-                                    collection_slug=collection_slug,
-                                    bucket=bucket,
-                                    key=key,
-                                    voice_style=voice_style,
-                                    extra_context={
-                                        **radio_context,
-                                        "bed_bucket": BED_BUCKET,
-                                        "bed_key": bed_key,
-                                        "bed_audio_url": bed_audio_url,
-                                    },
-                                )
+                            if not bucket or not key:
+                                continue
 
-                    detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
-                        lang=tts_language,
-                        track=track,
-                        artist=artist,
-                    )
+                            intro_audio_queue.append({
+                                "language": narration_lang,
+                                "bucket": bucket,
+                                "key": key,
+                                "url": resolve_audio_ref(bucket, key),
+                            })
 
-                    logger.info(
-                        "🧪 narration keys | detail=%s/%s artist=%s/%s",
-                        detail_bucket,
-                        detail_key,
-                        artist_bucket,
-                        artist_key,
-                    )
+                        if intro_audio_queue:
+                            await publish_narration_queue_phase(
+                                "intro",
+                                track=track,
+                                artist=artist,
+                                rank=rank,
+                                decade=collection_name,
+                                genre=group_name,
+                                audio_queue=intro_audio_queue,
+                                texts={},
+                                voice_style=voice_style,
+                                extra_context={
+                                    **radio_context,
+                                    "bed_bucket": BED_BUCKET,
+                                    "bed_key": bed_key,
+                                    "bed_audio_url": bed_audio_url,
+                                },
+                            )
+
+                    # ───────── DETAIL / ARTIST KEYS ─────────
+                    detail_by_lang = {}
+                    artist_by_lang = {}
+
+                    for narration_lang in langs:
+                        dbucket, dkey, abucket, akey = narration_keys_for(
+                            lang=narration_lang,
+                            track=track,
+                            artist=artist,
+                        )
+
+                        detail_by_lang[narration_lang] = (dbucket, dkey)
+                        artist_by_lang[narration_lang] = (abucket, akey)
 
                     # ───────── DETAIL ─────────
-                    if play_detail and detail_bucket and detail_key:
-                        await publish_narration_phase(
-                            "detail",
-                            track=track,
-                            artist=artist,
-                            rank=rank,
-                            collection_slug=collection_slug,
-                            bucket=detail_bucket,
-                            key=detail_key,
-                            voice_style=voice_style,
-                            extra_context={
-                                **radio_context,
-                                "bed_bucket": BED_BUCKET,
-                                "bed_key": bed_key,
-                                "bed_audio_url": bed_audio_url,
-                            },
-                        )
+                    if play_detail:
+                        detail_audio_queue = []
+
+                        for narration_lang in langs:
+                            detail_bucket, detail_key = detail_by_lang.get(
+                                narration_lang,
+                                (None, None),
+                            )
+
+                            if not detail_bucket or not detail_key:
+                                continue
+
+                            detail_audio_queue.append({
+                                "language": narration_lang,
+                                "bucket": detail_bucket,
+                                "key": detail_key,
+                                "url": resolve_audio_ref(detail_bucket, detail_key),
+                            })
+
+                        if detail_audio_queue:
+                            await publish_narration_queue_phase(
+                                "detail",
+                                track=track,
+                                artist=artist,
+                                rank=rank,
+                                decade=collection_name,
+                                genre=group_name,
+                                audio_queue=detail_audio_queue,
+                                texts={},
+                                voice_style=voice_style,
+                                extra_context={
+                                    **radio_context,
+                                    "bed_bucket": BED_BUCKET,
+                                    "bed_key": bed_key,
+                                    "bed_audio_url": bed_audio_url,
+                                },
+                            )
 
                     # ───────── ARTIST ─────────
-                    if play_artist and artist_bucket and artist_key:
-                        await publish_narration_phase(
-                            "artist",
-                            track=track,
-                            artist=artist,
-                            rank=rank,
-                            collection_slug=collection_slug,
-                            bucket=artist_bucket,
-                            key=artist_key,
-                            voice_style=voice_style,
-                            extra_context={
-                                **radio_context,
-                                "bed_bucket": BED_BUCKET,
-                                "bed_key": bed_key,
-                                "bed_audio_url": bed_audio_url,
-                            },
-                        )
+                    if play_artist:
+                        artist_audio_queue = []
+
+                        for narration_lang in langs:
+                            artist_bucket, artist_key = artist_by_lang.get(
+                                narration_lang,
+                                (None, None),
+                            )
+
+                            if not artist_bucket or not artist_key:
+                                continue
+
+                            artist_audio_queue.append({
+                                "language": narration_lang,
+                                "bucket": artist_bucket,
+                                "key": artist_key,
+                                "url": resolve_audio_ref(artist_bucket, artist_key),
+                            })
+
+                        if artist_audio_queue:
+                            await publish_narration_queue_phase(
+                                "artist",
+                                track=track,
+                                artist=artist,
+                                rank=rank,
+                                decade=collection_name,
+                                genre=group_name,
+                                audio_queue=artist_audio_queue,
+                                texts={},
+                                voice_style=voice_style,
+                                extra_context={
+                                    **radio_context,
+                                    "bed_bucket": BED_BUCKET,
+                                    "bed_key": bed_key,
+                                    "bed_audio_url": bed_audio_url,
+                                },
+                            )
 
                     # ───────── TRACK ─────────
                     if getattr(track, "spotify_track_id", None):

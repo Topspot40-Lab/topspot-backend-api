@@ -230,6 +230,7 @@ async def run_decade_genre_sequence(
         end_rank: int,
         mode: Literal["count_up", "count_down", "random"],
         tts_language: str,
+        tts_languages: list[str] | None = None,
         play_intro: bool,
         play_detail: bool,
         play_artist_description: bool,
@@ -251,6 +252,23 @@ async def run_decade_genre_sequence(
     status.stopped = False
     status.cancel_requested = False
     status.language = tts_language
+
+    def normalize_lang(value: str) -> str:
+        v = (value or "en").lower()
+        if v in ("pt-br", "ptbr", "pt_br"):
+            return "ptbr"
+        if v == "es":
+            return "es"
+        return "en"
+
+    langs = [
+        normalize_lang(x)
+        for x in (tts_languages or [tts_language])
+    ]
+
+    langs = list(dict.fromkeys(langs))
+
+    logger.info("🌎 DG SINGLE LANGUAGES: %s", langs)
 
     # 🔥 HARD RESET PHASE STATE
     status.phase = None
@@ -365,35 +383,54 @@ async def run_decade_genre_sequence(
             },
         )
 
-        # ─────────── NARRATION KEYS ───────────
-        log_header_and_texts(
-            lang=tts_language,
-            track=track,
-            artist=artist,
-            tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
-        )
+        # ─────────── NARRATION JOBS ───────────
+        intro_jobs_by_lang = {}
+        detail_by_lang = {}
+        artist_by_lang = {}
 
-        intro_jobs = build_intro_jobs(
-            lang=tts_language,
-            tr_rows=[(tr_rank, decade_obj.slug, genre_obj.slug)],
-        )
+        for narration_lang in langs:
+            log_header_and_texts(
+                lang=narration_lang,
+                track=track,
+                artist=artist,
+                tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
+            )
 
-        logger.info("🎙 intro_jobs=%s", intro_jobs)
+            intro_jobs_by_lang[narration_lang] = build_intro_jobs(
+                lang=narration_lang,
+                tr_rows=[(tr_rank, decade_obj.slug, genre_obj.slug)],
+            )
 
-        detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
-            lang=tts_language,
-            track=track,
-            artist=artist,
-        )
+            dbucket, dkey, abucket, akey = narration_keys_for(
+                lang=narration_lang,
+                track=track,
+                artist=artist,
+            )
+
+            detail_by_lang[narration_lang] = (dbucket, dkey)
+            artist_by_lang[narration_lang] = (abucket, akey)
 
         selected_phases = []
 
-        if play_intro and intro_jobs:
-            selected_phases.append("intro")
-        if play_detail and detail_bucket and detail_key:
-            selected_phases.append("detail")
-        if play_artist_description and artist_bucket and artist_key:
-            selected_phases.append("artist")
+        if play_intro:
+            for narration_lang in langs:
+                if intro_jobs_by_lang.get(narration_lang):
+                    selected_phases.append("intro")
+                    break
+
+        if play_detail:
+            for narration_lang in langs:
+                dbucket, dkey = detail_by_lang.get(narration_lang, (None, None))
+                if dbucket and dkey:
+                    selected_phases.append("detail")
+                    break
+
+        if play_artist_description:
+            for narration_lang in langs:
+                abucket, akey = artist_by_lang.get(narration_lang, (None, None))
+                if abucket and akey:
+                    selected_phases.append("artist")
+                    break
 
         status.last_narration_phase = selected_phases[-1] if selected_phases else None
 
@@ -404,19 +441,36 @@ async def run_decade_genre_sequence(
 
         logger.debug("🎯 Last narration phase set to: %s", status.last_narration_phase)
 
-        # ───────── INTRO (publish) ─────────
-        if play_intro and intro_jobs:
-            ib, ik = _extract_bucket_key(intro_jobs[0])
-            if ib and ik:
-                await publish_narration_phase(
+        # ───────── INTRO ─────────
+        if play_intro:
+            intro_audio_queue = []
+
+            for narration_lang in langs:
+                intro_jobs = intro_jobs_by_lang.get(narration_lang, [])
+                if not intro_jobs:
+                    continue
+
+                ib, ik = _extract_bucket_key(intro_jobs[0])
+                if not ib or not ik:
+                    continue
+
+                intro_audio_queue.append({
+                    "language": narration_lang,
+                    "bucket": ib,
+                    "key": ik,
+                    "url": resolve_audio_ref(ib, ik),
+                })
+
+            if intro_audio_queue:
+                await publish_narration_queue_phase(
                     "intro",
                     track=track,
                     artist=artist,
                     rank=rank,
                     decade=decade_obj.decade_name,
                     genre=genre,
-                    bucket=ib,
-                    key=ik,
+                    audio_queue=intro_audio_queue,
+                    texts={},
                     voice_style=voice_style,
                     extra_context={
                         "bed_bucket": BED_BUCKET,
@@ -425,43 +479,81 @@ async def run_decade_genre_sequence(
                     }
                 )
 
-        # ───────── DETAIL (publish) ─────────
-        if play_detail and detail_bucket and detail_key:
-            await publish_narration_phase(
-                "detail",
-                track=track,
-                artist=artist,
-                rank=rank,
-                decade=decade_obj.decade_name,
-                genre=genre,
-                bucket=detail_bucket,
-                key=detail_key,
-                voice_style=voice_style,
-                extra_context={
-                    "bed_bucket": BED_BUCKET,
-                    "bed_key": bed_key,
-                    "bed_audio_url": bed_audio_url,
-                }
-            )
+        # ───────── DETAIL ─────────
+        if play_detail:
+            detail_audio_queue = []
 
-        # ───────── ARTIST (publish) ─────────
-        if play_artist_description and artist_bucket and artist_key:
-            await publish_narration_phase(
-                "artist",
-                track=track,
-                artist=artist,
-                rank=rank,
-                decade=decade_obj.decade_name,
-                genre=genre,
-                bucket=artist_bucket,
-                key=artist_key,
-                voice_style=voice_style,
-                extra_context={
-                    "bed_bucket": BED_BUCKET,
-                    "bed_key": bed_key,
-                    "bed_audio_url": bed_audio_url,
-                }
-            )
+            for narration_lang in langs:
+                detail_bucket, detail_key = detail_by_lang.get(
+                    narration_lang,
+                    (None, None),
+                )
+
+                if not detail_bucket or not detail_key:
+                    continue
+
+                detail_audio_queue.append({
+                    "language": narration_lang,
+                    "bucket": detail_bucket,
+                    "key": detail_key,
+                    "url": resolve_audio_ref(detail_bucket, detail_key),
+                })
+
+            if detail_audio_queue:
+                await publish_narration_queue_phase(
+                    "detail",
+                    track=track,
+                    artist=artist,
+                    rank=rank,
+                    decade=decade_obj.decade_name,
+                    genre=genre,
+                    audio_queue=detail_audio_queue,
+                    texts={},
+                    voice_style=voice_style,
+                    extra_context={
+                        "bed_bucket": BED_BUCKET,
+                        "bed_key": bed_key,
+                        "bed_audio_url": bed_audio_url,
+                    }
+                )
+
+        # ───────── ARTIST ─────────
+        if play_artist_description:
+            artist_audio_queue = []
+
+            for narration_lang in langs:
+                artist_bucket, artist_key = artist_by_lang.get(
+                    narration_lang,
+                    (None, None),
+                )
+
+                if not artist_bucket or not artist_key:
+                    continue
+
+                artist_audio_queue.append({
+                    "language": narration_lang,
+                    "bucket": artist_bucket,
+                    "key": artist_key,
+                    "url": resolve_audio_ref(artist_bucket, artist_key),
+                })
+
+            if artist_audio_queue:
+                await publish_narration_queue_phase(
+                    "artist",
+                    track=track,
+                    artist=artist,
+                    rank=rank,
+                    decade=decade_obj.decade_name,
+                    genre=genre,
+                    audio_queue=artist_audio_queue,
+                    texts={},
+                    voice_style=voice_style,
+                    extra_context={
+                        "bed_bucket": BED_BUCKET,
+                        "bed_key": bed_key,
+                        "bed_audio_url": bed_audio_url,
+                    }
+                )
 
         logger.info(
             "🔍 DEBUG spotify id for rank %s → %s",

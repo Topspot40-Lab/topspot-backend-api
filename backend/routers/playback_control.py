@@ -208,17 +208,20 @@ async def play_track(payload: dict):
         artist_name=payload["track"]["artist_name"],
     )
 
+    tts_languages = (
+            payload["selection"].get("languages")
+            or [payload["selection"]["language"]]
+    )
+
     selection = PlaybackSelection(
         language=payload["selection"]["language"],
         voices=payload["selection"]["voices"],
         voicePlayMode=payload["selection"]["voicePlayMode"],
         pauseMode=payload["selection"]["pauseMode"],
+        languages=tts_languages,
     )
 
-    tts_languages = (
-            payload["selection"].get("languages")
-            or [payload["selection"]["language"]]
-    )
+
 
     logger.info("🌎 Playback languages requested: %s", tts_languages)
 
@@ -382,6 +385,7 @@ async def play_track(payload: dict):
                 end_rank=track.rank,
                 mode="count_up",
                 tts_language=selection.language,
+                tts_languages=tts_languages,
                 play_intro=True,
                 play_detail="detail" in selection.voices,
                 play_artist_description="artist" in selection.voices,
@@ -406,9 +410,10 @@ async def play_track(payload: dict):
 
         coro = run_collections_radio_sequence(
             tts_language=selection.language,
+            tts_languages=tts_languages,
             collection_group_slug=collection_group_slug,
-            voices=selection.voices,  # 🔥 THIS LINE
-            voice_style=selection.voicePlayMode,  # 🔥 AND THIS
+            voices=selection.voices,
+            voice_style=selection.voicePlayMode,
         )
 
 
@@ -421,6 +426,7 @@ async def play_track(payload: dict):
             end_rank=track.rank,
             mode="count_up",
             tts_language=selection.language,
+            tts_languages=selection.languages,
             play_intro=True,
             play_detail="detail" in selection.voices,
             play_artist_description="artist" in selection.voices,
