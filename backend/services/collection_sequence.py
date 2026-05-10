@@ -17,6 +17,8 @@ from backend.models.dbmodels import (
 from backend.services.bed_tracks import BED_BUCKET, get_collection_group_bed_key
 from backend.state.playback_state import mark_playing, update_phase
 from backend.services.audio_urls import resolve_audio_ref, is_remote_audio
+from backend.models.collection_models import CollectionTrackRankingLocale
+from backend.models.dbmodels import TrackLocale, ArtistLocale
 
 from backend.services.radio_runtime import (
     log_header_and_texts,
@@ -188,6 +190,62 @@ async def run_collection_sequence(
     rank = int(ctr.ranking)
     ranking_id = ctr.id
 
+    texts_by_language = {
+        lang: {
+            "intro": (
+                ctr.intro
+                if lang == "en"
+                else next(
+                    (
+                        row.intro_text
+                        for row in db.exec(
+                            select(CollectionTrackRankingLocale).where(
+                                CollectionTrackRankingLocale.collection_track_ranking_id == ranking_id,
+                                CollectionTrackRankingLocale.lang == ("pt-BR" if lang == "ptbr" else lang),
+                            )
+                        ).all()
+                    ),
+                    None,
+                )
+            ),
+
+            "detail": (
+                track.detail
+                if lang == "en"
+                else next(
+                    (
+                        row.detail_text
+                        for row in db.exec(
+                            select(TrackLocale).where(
+                                TrackLocale.track_id == track.id,
+                                TrackLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
+                            )
+                        ).all()
+                    ),
+                    None,
+                )
+            ),
+
+            "artist": (
+                artist.artist_description
+                if lang == "en"
+                else next(
+                    (
+                        row.artist_description_text
+                        for row in db.exec(
+                            select(ArtistLocale).where(
+                                ArtistLocale.artist_id == artist.id,
+                                ArtistLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
+                            )
+                        ).all()
+                    ),
+                    None,
+                )
+            ),
+        }
+        for lang in langs
+    }
+
     bed_key = get_collection_group_bed_key("soft_rock_70s_90s")
     status.bed_key = bed_key
 
@@ -238,8 +296,17 @@ async def run_collection_sequence(
                 decade=collection_slug,
                 genre="collection",
                 audio_queue=intro_audio_queue,
-                texts={},
+                texts=texts_by_language,
                 voice_style=voice_style,
+                extra_context={
+                    "textsByLanguage": texts_by_language,
+                    "intro": getattr(ctr, "intro", None),
+                    "detail": getattr(track, "detail", None),
+                    "artistText": getattr(artist, "artist_description", None),
+                    "spotify_track_id": track.spotify_track_id,
+                    "ranking_id": ranking_id,
+                    "collection_slug": collection_slug,
+                },
             )
 
     # ───────── DETAIL / ARTIST KEYS ─────────
@@ -285,8 +352,17 @@ async def run_collection_sequence(
                 decade=collection_slug,
                 genre="collection",
                 audio_queue=detail_audio_queue,
-                texts={},
+                texts=texts_by_language,
                 voice_style=voice_style,
+                extra_context={
+                    "textsByLanguage": texts_by_language,
+                    "intro": getattr(ctr, "intro", None),
+                    "detail": getattr(track, "detail", None),
+                    "artistText": getattr(artist, "artist_description", None),
+                    "spotify_track_id": track.spotify_track_id,
+                    "ranking_id": ranking_id,
+                    "collection_slug": collection_slug,
+                },
             )
 
     # ───────── ARTIST ─────────
@@ -318,8 +394,17 @@ async def run_collection_sequence(
                 decade=collection_slug,
                 genre="collection",
                 audio_queue=artist_audio_queue,
-                texts={},
+                texts=texts_by_language,
                 voice_style=voice_style,
+                extra_context={
+                    "textsByLanguage": texts_by_language,
+                    "intro": getattr(ctr, "intro", None),
+                    "detail": getattr(track, "detail", None),
+                    "artistText": getattr(artist, "artist_description", None),
+                    "spotify_track_id": track.spotify_track_id,
+                    "ranking_id": ranking_id,
+                    "collection_slug": collection_slug,
+                },
             )
 
     # ─────────────────────────────────────────────
@@ -335,7 +420,67 @@ async def run_collection_sequence(
                 "mode": "spotify",
                 "collection_slug": collection_slug,
                 "spotify_track_id": track.spotify_track_id,
-                "ranking_id": ranking_id,  # ⭐ THIS IS THE MAGIC
+                "ranking_id": ranking_id,
+
+                # More Info drawer text
+                "intro": getattr(ctr, "intro", None),
+                "detail": getattr(track, "detail", None),
+                "artistText": getattr(artist, "artist_description", None),
+                "textsByLanguage": {
+                    lang: {
+                        "intro": (
+                            ctr.intro
+                            if lang == "en"
+                            else next(
+                                (
+                                    row.intro_text
+                                    for row in db.exec(
+                                    select(CollectionTrackRankingLocale).where(
+                                        CollectionTrackRankingLocale.collection_track_ranking_id == ranking_id,
+                                        CollectionTrackRankingLocale.lang == ("pt-BR" if lang == "ptbr" else lang),
+                                    )
+                                ).all()
+                                ),
+                                None,
+                            )
+                        ),
+
+                        "detail": (
+                            track.detail
+                            if lang == "en"
+                            else next(
+                                (
+                                    row.detail_text
+                                    for row in db.exec(
+                                    select(TrackLocale).where(
+                                        TrackLocale.track_id == track.id,
+                                        TrackLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
+                                    )
+                                ).all()
+                                ),
+                                None,
+                            )
+                        ),
+
+                        "artist": (
+                            artist.artist_description
+                            if lang == "en"
+                            else next(
+                                (
+                                    row.artist_description_text
+                                    for row in db.exec(
+                                    select(ArtistLocale).where(
+                                        ArtistLocale.artist_id == artist.id,
+                                        ArtistLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
+                                    )
+                                ).all()
+                                ),
+                                None,
+                            )
+                        ),
+                    }
+                    for lang in langs
+                },
             },
         )
         logger.info("🎯 PUBLISHED track frame rank=%s spotify=%s", rank, track.spotify_track_id)
@@ -449,6 +594,20 @@ async def run_collection_continuous_sequence(
         logger.info("🔥 Collection radio loop START rows=%d", len(rows))
 
         # ─────────── MAIN RADIO LOOP ───────────
+        def normalize_lang(value: str) -> str:
+            v = (value or "en").lower()
+            if v in ("pt-br", "ptbr", "pt_br"):
+                return "ptbr"
+            if v == "es":
+                return "es"
+            return "en"
+
+        langs = [
+            normalize_lang(x)
+            for x in (tts_languages or [tts_language])
+        ]
+
+        langs = list(dict.fromkeys(langs))
         for (track, artist, ctr) in rows:
             rank = int(ctr.ranking)
             ranking_id = ctr.id
@@ -483,6 +642,60 @@ async def run_collection_continuous_sequence(
                     "voice_style": voice_style,
                 },
             )
+
+            texts_by_language = {
+                lang: {
+                    "intro": (
+                        ctr.intro
+                        if lang == "en"
+                        else next(
+                            (
+                                row.intro_text
+                                for row in db.exec(
+                                select(CollectionTrackRankingLocale).where(
+                                    CollectionTrackRankingLocale.collection_track_ranking_id == ranking_id,
+                                    CollectionTrackRankingLocale.lang == ("pt-BR" if lang == "ptbr" else lang),
+                                )
+                            ).all()
+                            ),
+                            None,
+                        )
+                    ),
+                    "detail": (
+                        track.detail
+                        if lang == "en"
+                        else next(
+                            (
+                                row.detail_text
+                                for row in db.exec(
+                                select(TrackLocale).where(
+                                    TrackLocale.track_id == track.id,
+                                    TrackLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
+                                )
+                            ).all()
+                            ),
+                            None,
+                        )
+                    ),
+                    "artist": (
+                        artist.artist_description
+                        if lang == "en"
+                        else next(
+                            (
+                                row.artist_description_text
+                                for row in db.exec(
+                                select(ArtistLocale).where(
+                                    ArtistLocale.artist_id == artist.id,
+                                    ArtistLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
+                                )
+                            ).all()
+                            ),
+                            None,
+                        )
+                    ),
+                }
+                for lang in langs
+            }
 
             # ───────── INTRO ─────────
             if play_intro:
