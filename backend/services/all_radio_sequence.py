@@ -106,7 +106,7 @@ def build_set_intro_bucket_key(decade_slug: str, genre_slug: str, lang: str = "e
 
 async def publish_set_intro_phase(
         *,
-        tts_language: str,
+        tts_languages: list[str],
         decade_slug: str,
         genre_slug: str,
         decade_name: str,
@@ -116,32 +116,52 @@ async def publish_set_intro_phase(
         rank: int,
         radio_context: dict,
 ) -> None:
-    bucket, key = build_set_intro_bucket_key(decade_slug, genre_slug, tts_language)
 
-    logger.info(
-        "🎙 SET INTRO | decade=%s genre=%s bucket=%s key=%s",
-        decade_slug,
-        genre_slug,
-        bucket,
-        key,
-    )
+    set_intro_audio_queue = []
 
-    await publish_narration_phase(
-        "set_intro",  # first-pass shortcut: reuse existing intro narration pipeline
-        track=track,
-        artist=artist,
-        rank=rank,
-        decade=decade_name,
-        genre=genre_name,
-        bucket=bucket,
-        key=key,
-        voice_style="before",
-        extra_context={
-            **radio_context,
-            "set_intro": True,
-            "set_intro_slug": f"{decade_slug}-{genre_slug}",
-        },
-    )
+    for lang in tts_languages:
+
+        normalized_lang = "ptbr" if lang in ("pt-BR", "ptbr") else lang
+
+        bucket, key = build_set_intro_bucket_key(
+            decade_slug,
+            genre_slug,
+            normalized_lang,
+        )
+
+        logger.info(
+            "🎙 SET INTRO | lang=%s decade=%s genre=%s bucket=%s key=%s",
+            normalized_lang,
+            decade_slug,
+            genre_slug,
+            bucket,
+            key,
+        )
+
+        set_intro_audio_queue.append({
+            "language": normalized_lang,
+            "bucket": bucket,
+            "key": key,
+            "url": resolve_audio_ref(bucket, key),
+        })
+
+    if set_intro_audio_queue:
+        await publish_narration_queue_phase(
+            "set_intro",
+            track=track,
+            artist=artist,
+            rank=rank,
+            decade=decade_name,
+            genre=genre_name,
+            audio_queue=set_intro_audio_queue,
+            texts={},
+            voice_style="before",
+            extra_context={
+                **radio_context,
+                "set_intro": True,
+                "set_intro_slug": f"{decade_slug}-{genre_slug}",
+            },
+        )
 
 
 async def run_all_radio_sequence(
@@ -592,7 +612,7 @@ async def run_all_radio_sequence(
 
                     # 🎙️ SET INTRO
                     await publish_set_intro_phase(
-                        tts_language=lang,
+                        tts_languages=langs,
                         decade_slug=decade,
                         genre_slug=genre,
                         decade_name=decade_obj.decade_name,
@@ -708,22 +728,15 @@ async def run_all_radio_sequence(
                         artist_name=artist.artist_name,
                         current_rank=rank,
                         context={
+                            **radio_context,
+
                             "mode": "spotify",
-                            "decade": decade,
-                            "genre": genre,
 
                             "intro": intro_text,
                             "detail": detail_text,
                             "artist_text": artist_text,
 
                             "spotify_track_id": track.spotify_track_id,
-                            "ranking_id": tr_rank.id,
-                            "set_number": set_number,
-                            "block_size": len(block_rows),
-                            "block_position": idx,
-                            "year": track.year_released,
-                            "album_artwork": track.album_artwork,
-                            "artist_artwork": artist.artist_artwork,
                         },
                     )
 
