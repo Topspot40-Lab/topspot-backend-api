@@ -479,51 +479,63 @@ async def run_all_radio_sequence(
 
                 logger.info("🎯 RADIO last narration phase set to: %s", status.last_narration_phase)
 
-                locale_code = "pt-BR" if lang in ("ptbr", "pt-BR") else lang
+                texts_by_language = {}
 
-                intro_text = getattr(tr_rank, "intro", None)
-                detail_text = getattr(track, "detail", None)
-                artist_text = getattr(artist, "artist_description", None)
+                with Session(engine) as db:
 
-                if locale_code != "en":
+                    for narration_lang in langs:
 
-                    with Session(engine) as db:
+                        locale_code = (
+                            "pt-BR"
+                            if narration_lang in ("ptbr", "pt-BR")
+                            else narration_lang
+                        )
 
-                        ranking_locale = db.exec(
-                            select(TrackRankingLocale).where(
-                                TrackRankingLocale.track_ranking_id == tr_rank.id,
-                                TrackRankingLocale.language_code == locale_code,
-                            )
-                        ).first()
+                        intro_text = getattr(tr_rank, "intro", None)
+                        detail_text = getattr(track, "detail", None)
+                        artist_text = getattr(artist, "artist_description", None)
 
-                        track_locale = db.exec(
-                            select(TrackLocale).where(
-                                TrackLocale.track_id == track.id,
-                                TrackLocale.language_code == locale_code,
-                            )
-                        ).first()
+                        if locale_code != "en":
 
-                        artist_locale = db.exec(
-                            select(ArtistLocale).where(
-                                ArtistLocale.artist_id == artist.id,
-                                ArtistLocale.language_code == locale_code,
-                            )
-                        ).first()
+                            ranking_locale = db.exec(
+                                select(TrackRankingLocale).where(
+                                    TrackRankingLocale.track_ranking_id == tr_rank.id,
+                                    TrackRankingLocale.language_code == locale_code,
+                                )
+                            ).first()
 
-                        if ranking_locale and ranking_locale.intro_text:
-                            intro_text = ranking_locale.intro_text
+                            track_locale = db.exec(
+                                select(TrackLocale).where(
+                                    TrackLocale.track_id == track.id,
+                                    TrackLocale.language_code == locale_code,
+                                )
+                            ).first()
 
-                        if track_locale and track_locale.detail_text:
-                            detail_text = track_locale.detail_text
+                            artist_locale = db.exec(
+                                select(ArtistLocale).where(
+                                    ArtistLocale.artist_id == artist.id,
+                                    ArtistLocale.language_code == locale_code,
+                                )
+                            ).first()
 
-                        if artist_locale and artist_locale.artist_description_text:
-                            artist_text = artist_locale.artist_description_text
+                            if ranking_locale and ranking_locale.intro_text:
+                                intro_text = ranking_locale.intro_text
+
+                            if track_locale and track_locale.detail_text:
+                                detail_text = track_locale.detail_text
+
+                            if artist_locale and artist_locale.artist_description_text:
+                                artist_text = artist_locale.artist_description_text
+
+                        texts_by_language[narration_lang] = {
+                            "intro": intro_text,
+                            "detail": detail_text,
+                            "artist": artist_text,
+                        }
 
                 logger.info(
-                    "🌎 FINAL RADIO TEXT | lang=%s | intro=%s | detail=%s",
-                    lang,
-                    (intro_text or "")[:60],
-                    (detail_text or "")[:60],
+                    "🌎 RADIO TEXTS BUILT | langs=%s",
+                    list(texts_by_language.keys()),
                 )
 
 
@@ -621,7 +633,7 @@ async def run_all_radio_sequence(
                             decade=decade_obj.decade_name,
                             genre=genre,
                             audio_queue=intro_audio_queue,
-                            texts={},  # next step: multi-language text bundle
+                            texts=texts_by_language,  # next step: multi-language text bundle
                             voice_style="before",
                             extra_context=radio_context,
                         )
@@ -651,7 +663,7 @@ async def run_all_radio_sequence(
                             decade=decade_obj.decade_name,
                             genre=genre,
                             audio_queue=detail_audio_queue,
-                            texts={},  # later: multi-language More Info bundle
+                            texts=texts_by_language,  # later: multi-language More Info bundle
                             voice_style="before",
                             extra_context=radio_context,
                         )
@@ -681,7 +693,7 @@ async def run_all_radio_sequence(
                             decade=decade_obj.decade_name,
                             genre=genre,
                             audio_queue=artist_audio_queue,
-                            texts={},
+                            texts=texts_by_language ,
                             voice_style="before",
                             extra_context=radio_context,
                         )
