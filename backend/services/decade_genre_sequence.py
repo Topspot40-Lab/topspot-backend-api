@@ -8,9 +8,15 @@ from typing import Literal
 
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.playback_ordering import order_rows_for_mode
-from backend.state.narration import narration_done_event, track_done_event
+from backend.state.narration import track_done_event
 from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
-from backend.services.audio_urls import resolve_audio_ref
+from sqlmodel import select
+from backend.database import get_db_session
+from backend.models.dbmodels import (
+    TrackLocale,
+    ArtistLocale,
+    TrackRankingLocale,
+)
 
 # Legacy flags (still used by runtime helpers)
 from backend.state.playback_flags import flags
@@ -115,6 +121,23 @@ async def publish_narration_phase(
         narration_done_event.clear()
         await narration_done_event.wait()
 
+def build_texts_by_language(
+        langs,
+        track,
+        artist,
+        tr_rank,
+):
+    texts = {}
+
+    for lang in langs:
+        texts[lang] = {
+            "intro": getattr(tr_rank, f"intro_{lang}", None),
+            "detail": getattr(track, f"detail_{lang}", None),
+            "artist": getattr(artist, f"artist_{lang}", None),
+        }
+
+    return texts
+
 async def publish_narration_queue_phase(
         phase: Literal["set_intro", "liner", "intro", "detail", "artist"],
         *,
@@ -157,6 +180,7 @@ async def publish_narration_queue_phase(
         # new multi-language payload
         "audio_queue": audio_queue,
         "texts": texts or {},
+        "textsByLanguage": texts or {},
 
         "source": "remote" if is_remote_audio() else "local",
         "voice_style": voice_style,
@@ -214,6 +238,65 @@ def _is_cancelled_or_stopped() -> bool:
         return True
 
     return False
+
+def build_decade_genre_texts_by_language(
+        session,
+        langs,
+        tr_rank,
+        track,
+        artist,
+):
+    texts = {}
+
+    for lang in langs:
+        lookup_langs = ["ptbr", "pt-BR"] if lang == "ptbr" else [lang]
+
+        intro_locale = session.exec(
+            select(TrackRankingLocale).where(
+                TrackRankingLocale.track_ranking_id == tr_rank.id,
+                TrackRankingLocale.language_code.in_(lookup_langs),
+            )
+        ).first()
+
+        track_locale = session.exec(
+            select(TrackLocale).where(
+                TrackLocale.track_id == track.id,
+                TrackLocale.language_code.in_(lookup_langs),
+            )
+        ).first()
+
+        artist_locale = session.exec(
+            select(ArtistLocale).where(
+                ArtistLocale.artist_id == artist.id,
+                ArtistLocale.language_code.in_(lookup_langs),
+            )
+        ).first()
+
+        intro_text = (
+            getattr(tr_rank, "intro", None)
+            if lang == "en"
+            else getattr(intro_locale, "intro_text", None)
+        )
+
+        detail_text = (
+            getattr(track, "detail", None)
+            if lang == "en"
+            else getattr(track_locale, "detail_text", None)
+        )
+
+        artist_text = (
+            getattr(artist, "artist_description", None)
+            if lang == "en"
+            else getattr(artist_locale, "artist_description_text", None)
+        )
+
+        texts[lang] = {
+            "intro": intro_text,
+            "detail": detail_text,
+            "artist": artist_text,
+        }
+
+    return texts
 
 
 # ─────────────────────────────────────────────
@@ -355,6 +438,14 @@ async def run_decade_genre_sequence(
             random.shuffle(rows)
 
         track, artist, tr_rank, decade_obj, genre_obj = rows[0]
+        with get_db_session() as session:
+            texts_by_language = build_decade_genre_texts_by_language(
+                session,
+                langs,
+                tr_rank,
+                track,
+                artist,
+            )
         rank = int(tr_rank.ranking)
         flags.current_rank = rank
 
@@ -470,7 +561,7 @@ async def run_decade_genre_sequence(
                     decade=decade_obj.decade_name,
                     genre=genre,
                     audio_queue=intro_audio_queue,
-                    texts={},
+                    texts=texts_by_language,
                     voice_style=voice_style,
                     extra_context={
                         "bed_bucket": BED_BUCKET,
@@ -508,7 +599,7 @@ async def run_decade_genre_sequence(
                     decade=decade_obj.decade_name,
                     genre=genre,
                     audio_queue=detail_audio_queue,
-                    texts={},
+                    texts=texts_by_language,
                     voice_style=voice_style,
                     extra_context={
                         "bed_bucket": BED_BUCKET,
@@ -546,7 +637,7 @@ async def run_decade_genre_sequence(
                     decade=decade_obj.decade_name,
                     genre=genre,
                     audio_queue=artist_audio_queue,
-                    texts={},
+                    texts=texts_by_language,
                     voice_style=voice_style,
                     extra_context={
                         "bed_bucket": BED_BUCKET,
@@ -703,6 +794,14 @@ async def run_decade_genre_continuous_sequence(
             await _wait_if_paused()
 
             rank = int(tr_rank.ranking)
+            with get_db_session() as session:
+                texts_by_language = build_decade_genre_texts_by_language(
+                    session,
+                    langs,
+                    tr_rank,
+                    track,
+                    artist,
+                )
             flags.current_rank = rank
 
             status.current_rank = rank  # ⭐ ADD
@@ -810,7 +909,7 @@ async def run_decade_genre_continuous_sequence(
                         decade=decade_obj.decade_name,
                         genre=genre,
                         audio_queue=intro_audio_queue,
-                        texts={},
+                        texts=texts_by_language,
                         voice_style=voice_style,
                         extra_context={
                             "bed_bucket": BED_BUCKET,
@@ -848,7 +947,7 @@ async def run_decade_genre_continuous_sequence(
                         decade=decade_obj.decade_name,
                         genre=genre,
                         audio_queue=detail_audio_queue,
-                        texts={},
+                        texts=texts_by_language,
                         voice_style=voice_style,
                         extra_context={
                             "bed_bucket": BED_BUCKET,
@@ -886,7 +985,7 @@ async def run_decade_genre_continuous_sequence(
                         decade=decade_obj.decade_name,
                         genre=genre,
                         audio_queue=artist_audio_queue,
-                        texts={},
+                        texts=texts_by_language,
                         voice_style=voice_style,
                         extra_context={
                             "bed_bucket": BED_BUCKET,
