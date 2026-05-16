@@ -122,13 +122,18 @@ def artist_tracks(
         artist_id: int = Query(...),
 ):
     sql = text("""
-        SELECT DISTINCT
-            t.id AS track_id,
-            t.track_name,
-            t.spotify_track_id,
-            t.duration_ms,
-            a.id AS artist_id,
-            a.artist_name
+    SELECT DISTINCT
+        t.id AS track_id,
+        t.track_name,
+        t.spotify_track_id,
+        t.album_name,
+        t.album_artwork,
+        t.year_released,
+        t.duration_ms,
+        t.detail,
+        a.id AS artist_id,
+        a.artist_name,
+        a.artist_description
         FROM track t
         JOIN artist a
             ON t.artist_id = a.id
@@ -162,12 +167,18 @@ def play_artist_spotlight(
         artist_id: int = Query(...),
 ):
     sql = text("""
-        SELECT DISTINCT
-            t.id AS track_id,
-            t.track_name,
-            t.spotify_track_id,
-            t.duration_ms,
-            a.artist_name
+    SELECT DISTINCT
+        t.id AS track_id,
+        t.track_name,
+        t.spotify_track_id,
+        t.album_name,
+        t.album_artwork,
+        t.year_released,
+        t.duration_ms,
+        t.detail,
+        a.id AS artist_id,
+        a.artist_name,
+        a.artist_description
 
         FROM track t
 

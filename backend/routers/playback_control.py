@@ -203,7 +203,7 @@ async def play_track(payload: dict):
     track = TrackRef(
         track_id=payload["track"]["track_id"],
         spotify_track_id=payload["track"]["spotify_track_id"],
-        rank=payload["track"]["rank"],
+        rank=payload["track"].get("rank", 1),
         track_name=payload["track"]["track_name"],
         artist_name=payload["track"]["artist_name"],
     )
@@ -220,8 +220,6 @@ async def play_track(payload: dict):
         pauseMode=payload["selection"]["pauseMode"],
         languages=tts_languages,
     )
-
-
 
     logger.info("🌎 Playback languages requested: %s", tts_languages)
 
@@ -329,6 +327,27 @@ async def play_track(payload: dict):
         reset_for_single_track()
         await start_new_sequence(_play_favorites_one())
         return {"ok": True, "message": "Favorites single-track playback started"}
+
+
+    elif context.get("type") == "artist_spotlight":
+        if not track.spotify_track_id:
+            return {"ok": False, "error": "Missing spotify_track_id for Artist Spotlight playback"}
+
+        await play_spotify_track(track.spotify_track_id)
+
+        update_phase(
+            "track",
+            track_name=track.track_name,
+            artist_name=track.artist_name,
+            current_rank=track.rank,
+            context={
+                **context,
+                "spotify_track_id": track.spotify_track_id,
+                "started_by": "frontend",
+            },
+        )
+
+        return {"ok": True, "message": "Artist Spotlight direct playback"}
 
     if context.get("type") == "decade_genre":
 
@@ -449,6 +468,7 @@ async def play_track(payload: dict):
         "rank": track.rank,
         "message": "Single-step playback ran inline (sync) via sequence engine",
     }
+
 
 # LEGACY/DEBUG ROUTE
 # Not used by the current frontend flow.
