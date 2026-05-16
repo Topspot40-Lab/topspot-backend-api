@@ -91,7 +91,8 @@ async def get_or_create_topspot_user(user_profile: dict):
         "spotify_display_name": user_profile.get("display_name"),
         "spotify_country": user_profile.get("country"),
         "spotify_product": user_profile.get("product"),
-        "role": "listener", # default permissions
+        "role": "user", # default permissions
+        "is_tester": False,
         "spotify_profile_image": user_profile.get("images")[0]["url"] if user_profile.get("images") else None,
     }).execute()
 
@@ -427,7 +428,6 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
             # Also update topspot_users.stripe_customer_id so the user is linked to Stripe
             supabase.table("topspot_users").update({
                 "stripe_customer_id": customer_id,
-                "is_active": True,
             }).eq("id", user_id).execute()
             logger.info(f"✅ Updated topspot_users.stripe_customer_id for user {user_id}")
 
@@ -477,9 +477,11 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         raise HTTPException(status_code=401)
 
     # ❌ Check Spotify premium AGAIN
+    """
     if user.data.get("spotify_product") != "premium":
         logger.critical("❌ No spotify premium found")
         return {"is_subscribed": False}
+        """
 
     res = supabase.table("subscriptions").select("*").eq("user_id", user_id).eq("status", "active").limit(1).execute()
     
@@ -497,12 +499,14 @@ async def get_subscription_status(access_token: str = Cookie(None)):
 """
     sub = res.data[0] if res.data else None
 
-    if not sub:
-        return {"is_subscribed": False}
+    #if not sub:
+        #return {"is_subscribed": False}
+    
+    valid = sub and sub.get("status") in ("active", "trialing")
 
     return {
-        "is_subscribed": True,
-        "status": sub.get("status")
+        "is_subscribed": valid,
+        "status": sub.get("status") if sub else "inactive" 
     }
 
 
@@ -514,6 +518,8 @@ or closes off tab, it does not write on Supabase,
 if requests fails, you LOSE the subscription, 
 and it depends on the frontend, which is unreliable. So, 
 we shall implement Stripe's webhooks. 
+
+HAVE NOT YET IMPLEMENTED
 """
 @stripe_router.post("/webhooks/stripe")
 async def stripe_webhook(request: Request):
@@ -580,7 +586,7 @@ async def stripe_webhook(request: Request):
                 # Also update topspot_users.stripe_customer_id for the webhook flow
                 supabase.table("topspot_users").update({
                     "stripe_customer_id": customer_id,
-                    "is_active": True,
+                    #"is_active": True,
                 }).eq("id", user_id).execute()
                 logger.info(f"✅ Webhook updated topspot_users.stripe_customer_id for user {user_id}")
 
