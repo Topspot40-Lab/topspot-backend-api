@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Literal
+from dataclasses import dataclass, field
 
 @dataclass(frozen=True)
 class TrackRef:
@@ -17,3 +18,4 @@ class PlaybackSelection:
     voices: list[str]
     voicePlayMode: Literal["before", "over"]
     pauseMode: Literal["pause", "continuous"]
+    languages: list[str] = field(default_factory=lambda: ["en"])

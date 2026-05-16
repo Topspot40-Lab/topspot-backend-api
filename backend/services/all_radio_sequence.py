@@ -18,6 +18,7 @@ from backend.database import engine
 from backend.services.decade_genre_sequence import (
     _extract_bucket_key,
     publish_narration_phase,
+    publish_narration_queue_phase,
 )
 from backend.services.radio_runtime import (
     build_intro_jobs,
@@ -105,7 +106,7 @@ def build_set_intro_bucket_key(decade_slug: str, genre_slug: str, lang: str = "e
 
 async def publish_set_intro_phase(
         *,
-        tts_language: str,
+        tts_languages: list[str],
         decade_slug: str,
         genre_slug: str,
         decade_name: str,
@@ -115,32 +116,52 @@ async def publish_set_intro_phase(
         rank: int,
         radio_context: dict,
 ) -> None:
-    bucket, key = build_set_intro_bucket_key(decade_slug, genre_slug, tts_language)
 
-    logger.info(
-        "🎙 SET INTRO | decade=%s genre=%s bucket=%s key=%s",
-        decade_slug,
-        genre_slug,
-        bucket,
-        key,
-    )
+    set_intro_audio_queue = []
 
-    await publish_narration_phase(
-        "set_intro",  # first-pass shortcut: reuse existing intro narration pipeline
-        track=track,
-        artist=artist,
-        rank=rank,
-        decade=decade_name,
-        genre=genre_name,
-        bucket=bucket,
-        key=key,
-        voice_style="before",
-        extra_context={
-            **radio_context,
-            "set_intro": True,
-            "set_intro_slug": f"{decade_slug}-{genre_slug}",
-        },
-    )
+    for lang in tts_languages:
+
+        normalized_lang = "ptbr" if lang in ("pt-BR", "ptbr") else lang
+
+        bucket, key = build_set_intro_bucket_key(
+            decade_slug,
+            genre_slug,
+            normalized_lang,
+        )
+
+        logger.info(
+            "🎙 SET INTRO | lang=%s decade=%s genre=%s bucket=%s key=%s",
+            normalized_lang,
+            decade_slug,
+            genre_slug,
+            bucket,
+            key,
+        )
+
+        set_intro_audio_queue.append({
+            "language": normalized_lang,
+            "bucket": bucket,
+            "key": key,
+            "url": resolve_audio_ref(bucket, key),
+        })
+
+    if set_intro_audio_queue:
+        await publish_narration_queue_phase(
+            "set_intro",
+            track=track,
+            artist=artist,
+            rank=rank,
+            decade=decade_name,
+            genre=genre_name,
+            audio_queue=set_intro_audio_queue,
+            texts={},
+            voice_style="before",
+            extra_context={
+                **radio_context,
+                "set_intro": True,
+                "set_intro_slug": f"{decade_slug}-{genre_slug}",
+            },
+        )
 
 
 async def run_all_radio_sequence(
@@ -478,51 +499,63 @@ async def run_all_radio_sequence(
 
                 logger.info("🎯 RADIO last narration phase set to: %s", status.last_narration_phase)
 
-                locale_code = "pt-BR" if lang in ("ptbr", "pt-BR") else lang
+                texts_by_language = {}
 
-                intro_text = getattr(tr_rank, "intro", None)
-                detail_text = getattr(track, "detail", None)
-                artist_text = getattr(artist, "artist_description", None)
+                with Session(engine) as db:
 
-                if locale_code != "en":
+                    for narration_lang in langs:
 
-                    with Session(engine) as db:
+                        locale_code = (
+                            "pt-BR"
+                            if narration_lang in ("ptbr", "pt-BR")
+                            else narration_lang
+                        )
 
-                        ranking_locale = db.exec(
-                            select(TrackRankingLocale).where(
-                                TrackRankingLocale.track_ranking_id == tr_rank.id,
-                                TrackRankingLocale.language_code == locale_code,
-                            )
-                        ).first()
+                        intro_text = getattr(tr_rank, "intro", None)
+                        detail_text = getattr(track, "detail", None)
+                        artist_text = getattr(artist, "artist_description", None)
 
-                        track_locale = db.exec(
-                            select(TrackLocale).where(
-                                TrackLocale.track_id == track.id,
-                                TrackLocale.language_code == locale_code,
-                            )
-                        ).first()
+                        if locale_code != "en":
 
-                        artist_locale = db.exec(
-                            select(ArtistLocale).where(
-                                ArtistLocale.artist_id == artist.id,
-                                ArtistLocale.language_code == locale_code,
-                            )
-                        ).first()
+                            ranking_locale = db.exec(
+                                select(TrackRankingLocale).where(
+                                    TrackRankingLocale.track_ranking_id == tr_rank.id,
+                                    TrackRankingLocale.language_code == locale_code,
+                                )
+                            ).first()
 
-                        if ranking_locale and ranking_locale.intro_text:
-                            intro_text = ranking_locale.intro_text
+                            track_locale = db.exec(
+                                select(TrackLocale).where(
+                                    TrackLocale.track_id == track.id,
+                                    TrackLocale.language_code == locale_code,
+                                )
+                            ).first()
 
-                        if track_locale and track_locale.detail_text:
-                            detail_text = track_locale.detail_text
+                            artist_locale = db.exec(
+                                select(ArtistLocale).where(
+                                    ArtistLocale.artist_id == artist.id,
+                                    ArtistLocale.language_code == locale_code,
+                                )
+                            ).first()
 
-                        if artist_locale and artist_locale.artist_description_text:
-                            artist_text = artist_locale.artist_description_text
+                            if ranking_locale and ranking_locale.intro_text:
+                                intro_text = ranking_locale.intro_text
+
+                            if track_locale and track_locale.detail_text:
+                                detail_text = track_locale.detail_text
+
+                            if artist_locale and artist_locale.artist_description_text:
+                                artist_text = artist_locale.artist_description_text
+
+                        texts_by_language[narration_lang] = {
+                            "intro": intro_text,
+                            "detail": detail_text,
+                            "artist": artist_text,
+                        }
 
                 logger.info(
-                    "🌎 FINAL RADIO TEXT | lang=%s | intro=%s | detail=%s",
-                    lang,
-                    (intro_text or "")[:60],
-                    (detail_text or "")[:60],
+                    "🌎 RADIO TEXTS BUILT | langs=%s",
+                    list(texts_by_language.keys()),
                 )
 
 
@@ -579,7 +612,7 @@ async def run_all_radio_sequence(
 
                     # 🎙️ SET INTRO
                     await publish_set_intro_phase(
-                        tts_language=lang,
+                        tts_languages=langs,
                         decade_slug=decade,
                         genre_slug=genre,
                         decade_name=decade_obj.decade_name,
@@ -591,9 +624,10 @@ async def run_all_radio_sequence(
                     )
 
                 # ───────── INTRO ─────────
-                # skip the normal track intro on the first track,
-                # because the set intro already used the intro lane
+                # ───────── INTRO ─────────
                 if play_intro:
+                    intro_audio_queue = []
+
                     for narration_lang in langs:
                         intro_jobs = intro_jobs_by_lang.get(narration_lang, [])
                         if not intro_jobs:
@@ -603,66 +637,85 @@ async def run_all_radio_sequence(
                         if not ib or not ik:
                             continue
 
-                        await publish_narration_phase(
+                        intro_audio_queue.append({
+                            "language": narration_lang,
+                            "bucket": ib,
+                            "key": ik,
+                            "url": resolve_audio_ref(ib, ik),
+                        })
+
+                    if intro_audio_queue:
+                        await publish_narration_queue_phase(
                             "intro",
                             track=track,
                             artist=artist,
                             rank=rank,
                             decade=decade_obj.decade_name,
                             genre=genre,
-                            bucket=ib,
-                            key=ik,
+                            audio_queue=intro_audio_queue,
+                            texts=texts_by_language,  # next step: multi-language text bundle
                             voice_style="before",
-                            extra_context={
-                                **radio_context,
-                                "lang": narration_lang,
-                            },
+                            extra_context=radio_context,
                         )
 
                 # ───────── DETAIL ─────────
                 if play_detail:
+                    detail_audio_queue = []
+
                     for narration_lang in langs:
                         detail_bucket, detail_key = detail_by_lang.get(narration_lang, (None, None))
                         if not detail_bucket or not detail_key:
                             continue
 
-                        await publish_narration_phase(
+                        detail_audio_queue.append({
+                            "language": narration_lang,
+                            "bucket": detail_bucket,
+                            "key": detail_key,
+                            "url": resolve_audio_ref(detail_bucket, detail_key),
+                        })
+
+                    if detail_audio_queue:
+                        await publish_narration_queue_phase(
                             "detail",
                             track=track,
                             artist=artist,
                             rank=rank,
                             decade=decade_obj.decade_name,
                             genre=genre,
-                            bucket=detail_bucket,
-                            key=detail_key,
+                            audio_queue=detail_audio_queue,
+                            texts=texts_by_language,  # later: multi-language More Info bundle
                             voice_style="before",
-                            extra_context={
-                                **radio_context,
-                                "lang": narration_lang,
-                            },
+                            extra_context=radio_context,
                         )
 
                 # ───────── ARTIST ─────────
                 if play_artist:
+                    artist_audio_queue = []
+
                     for narration_lang in langs:
                         artist_bucket, artist_key = artist_by_lang.get(narration_lang, (None, None))
                         if not artist_bucket or not artist_key:
                             continue
 
-                        await publish_narration_phase(
+                        artist_audio_queue.append({
+                            "language": narration_lang,
+                            "bucket": artist_bucket,
+                            "key": artist_key,
+                            "url": resolve_audio_ref(artist_bucket, artist_key),
+                        })
+
+                    if artist_audio_queue:
+                        await publish_narration_queue_phase(
                             "artist",
                             track=track,
                             artist=artist,
                             rank=rank,
                             decade=decade_obj.decade_name,
                             genre=genre,
-                            bucket=artist_bucket,
-                            key=artist_key,
+                            audio_queue=artist_audio_queue,
+                            texts=texts_by_language ,
                             voice_style="before",
-                            extra_context={
-                                **radio_context,
-                                "lang": narration_lang,
-                            },
+                            extra_context=radio_context,
                         )
 
                 # ───────── TRACK ─────────
@@ -675,22 +728,15 @@ async def run_all_radio_sequence(
                         artist_name=artist.artist_name,
                         current_rank=rank,
                         context={
+                            **radio_context,
+
                             "mode": "spotify",
-                            "decade": decade,
-                            "genre": genre,
 
                             "intro": intro_text,
                             "detail": detail_text,
                             "artist_text": artist_text,
 
                             "spotify_track_id": track.spotify_track_id,
-                            "ranking_id": tr_rank.id,
-                            "set_number": set_number,
-                            "block_size": len(block_rows),
-                            "block_position": idx,
-                            "year": track.year_released,
-                            "album_artwork": track.album_artwork,
-                            "artist_artwork": artist.artist_artwork,
                         },
                     )
 

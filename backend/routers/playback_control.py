@@ -203,9 +203,14 @@ async def play_track(payload: dict):
     track = TrackRef(
         track_id=payload["track"]["track_id"],
         spotify_track_id=payload["track"]["spotify_track_id"],
-        rank=payload["track"]["rank"],
+        rank=payload["track"].get("rank", 1),
         track_name=payload["track"]["track_name"],
         artist_name=payload["track"]["artist_name"],
+    )
+
+    tts_languages = (
+            payload["selection"].get("languages")
+            or [payload["selection"]["language"]]
     )
 
     selection = PlaybackSelection(
@@ -213,11 +218,7 @@ async def play_track(payload: dict):
         voices=payload["selection"]["voices"],
         voicePlayMode=payload["selection"]["voicePlayMode"],
         pauseMode=payload["selection"]["pauseMode"],
-    )
-
-    tts_languages = (
-            payload["selection"].get("languages")
-            or [payload["selection"]["language"]]
+        languages=tts_languages,
     )
 
     logger.info("🌎 Playback languages requested: %s", tts_languages)
@@ -327,6 +328,27 @@ async def play_track(payload: dict):
         await start_new_sequence(_play_favorites_one())
         return {"ok": True, "message": "Favorites single-track playback started"}
 
+
+    elif context.get("type") == "artist_spotlight":
+        if not track.spotify_track_id:
+            return {"ok": False, "error": "Missing spotify_track_id for Artist Spotlight playback"}
+
+        await play_spotify_track(track.spotify_track_id)
+
+        update_phase(
+            "track",
+            track_name=track.track_name,
+            artist_name=track.artist_name,
+            current_rank=track.rank,
+            context={
+                **context,
+                "spotify_track_id": track.spotify_track_id,
+                "started_by": "frontend",
+            },
+        )
+
+        return {"ok": True, "message": "Artist Spotlight direct playback"}
+
     if context.get("type") == "decade_genre":
 
         if context.get("decade", "").lower() == "all":
@@ -365,6 +387,7 @@ async def play_track(payload: dict):
                 end_rank=track.rank,
                 mode=payload["selection"].get("playbackOrder", "count_up"),
                 tts_language=selection.language,
+                tts_languages=tts_languages,
                 play_intro=True,
                 play_detail="detail" in selection.voices,
                 play_artist_description="artist" in selection.voices,
@@ -381,6 +404,7 @@ async def play_track(payload: dict):
                 end_rank=track.rank,
                 mode="count_up",
                 tts_language=selection.language,
+                tts_languages=tts_languages,
                 play_intro=True,
                 play_detail="detail" in selection.voices,
                 play_artist_description="artist" in selection.voices,
@@ -405,9 +429,10 @@ async def play_track(payload: dict):
 
         coro = run_collections_radio_sequence(
             tts_language=selection.language,
+            tts_languages=tts_languages,
             collection_group_slug=collection_group_slug,
-            voices=selection.voices,  # 🔥 THIS LINE
-            voice_style=selection.voicePlayMode,  # 🔥 AND THIS
+            voices=selection.voices,
+            voice_style=selection.voicePlayMode,
         )
 
 
@@ -420,6 +445,7 @@ async def play_track(payload: dict):
             end_rank=track.rank,
             mode="count_up",
             tts_language=selection.language,
+            tts_languages=selection.languages,
             play_intro=True,
             play_detail="detail" in selection.voices,
             play_artist_description="artist" in selection.voices,
@@ -442,6 +468,7 @@ async def play_track(payload: dict):
         "rank": track.rank,
         "message": "Single-step playback ran inline (sync) via sequence engine",
     }
+
 
 # LEGACY/DEBUG ROUTE
 # Not used by the current frontend flow.
