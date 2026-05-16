@@ -61,9 +61,28 @@ def artists_by_genre(
             a.id AS artist_id,
             a.artist_name,
 
-            COALESCE(dg.dg_track_count, 0) AS dg_track_count,
+COALESCE(dg.dg_track_count, 0) AS genre_track_count,
 
-            COALESCE(cc.collection_track_count, 0) AS collection_track_count
+(
+    SELECT COUNT(DISTINCT t2.id)
+
+    FROM track t2
+
+    WHERE t2.artist_id = a.id
+      AND (
+          EXISTS (
+              SELECT 1
+              FROM track_ranking tr2
+              WHERE tr2.track_id = t2.id
+          )
+          OR
+          EXISTS (
+              SELECT 1
+              FROM collection_track_ranking ctr2
+              WHERE ctr2.track_id = t2.id
+          )
+      )
+) AS total_track_count
 
         FROM artist a
 
@@ -79,10 +98,10 @@ def artists_by_genre(
                 OR dg.dg_track_count <= :max_tracks
               )
 
-        ORDER BY
-            dg.dg_track_count DESC,
-            collection_track_count DESC,
-            a.artist_name
+ORDER BY
+    genre_track_count DESC,
+    total_track_count DESC,
+    a.artist_name
     """)
 
     with engine.connect() as conn:
@@ -137,3 +156,51 @@ def artist_tracks(
         ).mappings().all()
 
     return [dict(row) for row in rows]
+
+@router.post("/play")
+def play_artist_spotlight(
+        artist_id: int = Query(...),
+):
+    sql = text("""
+        SELECT DISTINCT
+            t.id AS track_id,
+            t.track_name,
+            t.spotify_track_id,
+            t.duration_ms,
+            a.artist_name
+
+        FROM track t
+
+        JOIN artist a
+            ON t.artist_id = a.id
+
+        WHERE a.id = :artist_id
+          AND (
+              EXISTS (
+                  SELECT 1
+                  FROM track_ranking tr
+                  WHERE tr.track_id = t.id
+              )
+              OR
+              EXISTS (
+                  SELECT 1
+                  FROM collection_track_ranking ctr
+                  WHERE ctr.track_id = t.id
+              )
+          )
+
+        ORDER BY t.track_name
+    """)
+
+    with engine.connect() as conn:
+        rows = conn.execute(
+            sql,
+            {"artist_id": artist_id},
+        ).mappings().all()
+
+    return {
+        "ok": True,
+        "mode": "artist_spotlight",
+        "artist_id": artist_id,
+        "tracks": [dict(row) for row in rows],
+    }
