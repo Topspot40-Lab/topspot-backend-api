@@ -380,6 +380,19 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
+
+    user = supabase.table("topspot_users") \
+        .select("is_tester") \
+        .eq("id", user_id) \
+        .single() \
+        .execute()
+
+    if user.data and user.data.get("is_tester"):
+        return {
+            "status": "tester",
+            "subscription_id": None,
+            "is_active": True
+        }
     
     
 
@@ -482,6 +495,11 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         logger.critical("❌ No spotify premium found")
         return {"is_subscribed": False}
         """
+    if user.data and user.data.get("is_tester"):
+        return {
+            "is_subscribed": True,
+            "status": "tester"
+        }
 
     res = supabase.table("subscriptions").select("*").eq("user_id", user_id).eq("status", "active").limit(1).execute()
     
