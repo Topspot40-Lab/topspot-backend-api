@@ -215,3 +215,98 @@ def play_artist_spotlight(
         "artist_id": artist_id,
         "tracks": [dict(row) for row in rows],
     }
+
+@router.get("/radio-set")
+def artist_radio_set(
+        genre: str = Query(...),
+):
+    sql = text("""
+    WITH eligible_artists AS (
+
+        SELECT
+            a.id AS artist_id,
+            a.artist_name,
+            COUNT(DISTINCT t.id) AS track_count
+
+        FROM track_ranking tr
+
+        JOIN decade_genre dg
+            ON tr.decade_genre_id = dg.id
+
+        JOIN genre g
+            ON dg.genre_id = g.id
+
+        JOIN track t
+            ON tr.track_id = t.id
+
+        JOIN artist a
+            ON t.artist_id = a.id
+
+        WHERE (
+            :genre = 'ALL'
+            OR g.slug = :genre
+        )
+        AND g.slug != 'tv_themes'
+
+        GROUP BY a.id, a.artist_name
+
+        HAVING COUNT(DISTINCT t.id) >= 2
+    ),
+
+    selected_artist AS (
+
+        SELECT *
+        FROM eligible_artists
+        ORDER BY RANDOM()
+        LIMIT 1
+    )
+
+    SELECT
+        t.id AS track_id,
+        t.track_name,
+        t.spotify_track_id,
+        t.album_name,
+        t.album_artwork,
+        t.year_released,
+        t.duration_ms,
+        t.detail,
+        a.id AS artist_id,
+        a.artist_name,
+        a.artist_description
+
+    FROM track t
+
+    JOIN artist a
+        ON t.artist_id = a.id
+
+    JOIN selected_artist sa
+        ON sa.artist_id = a.id
+
+    ORDER BY RANDOM()
+    """)
+
+    with engine.connect() as conn:
+        rows = conn.execute(
+            sql,
+            {"genre": genre},
+        ).mappings().all()
+
+    tracks = [dict(row) for row in rows]
+
+    if not tracks:
+        return {
+            "ok": False,
+            "error": "No eligible artist set found."
+        }
+
+    limit = 2 if len(tracks) == 2 else 3
+
+    return {
+        "ok": True,
+        "mode": "artist_radio",
+        "genre": genre,
+        "artist_id": tracks[0]["artist_id"],
+        "artist_name": tracks[0]["artist_name"],
+        "track_count": len(tracks),
+        "tracks": tracks[:limit],
+    }
