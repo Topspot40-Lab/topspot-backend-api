@@ -116,6 +116,15 @@ async def run_artist_radio_sequence(
 
     logger.info("🎙️ Artist Radio set started: %s (%s tracks)", artist_name, len(tracks))
 
+    spotify_artist_id = tracks[0].get("spotify_artist_id")
+
+    artist_audio_url = (
+        f"https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/"
+        f"audio-en/artist/{spotify_artist_id}.mp3"
+        if spotify_artist_id
+        else None
+    )
+
     # V1 artist set intro: text-only for now
     update_phase(
         phase="artist",
@@ -139,11 +148,12 @@ async def run_artist_radio_sequence(
             # Actual narration text
             "artist_text": artist_description,
             "artistText": artist_description,
-            "audio_url": None,
+            "audio_url": artist_audio_url,
         },
     )
 
-    await asyncio.sleep(3)
+    track_done_event.clear()
+    await track_done_event.wait()
 
     for index, track in enumerate(tracks, start=1):
         track_done_event.clear()
