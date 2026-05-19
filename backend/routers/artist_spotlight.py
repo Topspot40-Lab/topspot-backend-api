@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Query
 from sqlalchemy import text
 from backend.database import engine
+import asyncio
 
 router = APIRouter(
     prefix="/artist-spotlight",
@@ -310,4 +311,32 @@ SELECT
         "artist_name": tracks[0]["artist_name"],
         "track_count": len(tracks),
         "tracks": tracks[:limit],
+    }
+
+@router.post("/play-radio")
+async def play_artist_radio(
+        genre: str = Query(...),
+        tts_language: str = Query("en"),
+        play_intro: bool = Query(True),
+        play_detail: bool = Query(True),
+        play_artist_description: bool = Query(False),
+        play_track: bool = Query(True),
+):
+    from backend.services.artist_radio_sequence import run_artist_radio_sequence
+
+    asyncio.create_task(
+        run_artist_radio_sequence(
+            genre=genre,
+            tts_language=tts_language,
+            play_intro=play_intro,
+            play_detail=play_detail,
+            play_artist_description=play_artist_description,
+            play_track=play_track,
+        )
+    )
+
+    return {
+        "ok": True,
+        "message": "Artist Radio started",
+        "genre": genre,
     }
