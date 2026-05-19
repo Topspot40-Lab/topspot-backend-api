@@ -261,18 +261,19 @@ def artist_radio_set(
         LIMIT 1
     )
 
-    SELECT
-        t.id AS track_id,
-        t.track_name,
-        t.spotify_track_id,
-        t.album_name,
-        t.album_artwork,
-        t.year_released,
-        t.duration_ms,
-        t.detail,
-        a.id AS artist_id,
-        a.artist_name,
-        a.artist_description
+SELECT
+    t.id AS track_id,
+    t.track_name,
+    t.spotify_track_id,
+    t.album_name,
+    t.album_artwork,
+    t.year_released,
+    t.duration_ms,
+    t.detail,
+    a.id AS artist_id,
+    a.artist_name,
+    a.spotify_artist_id,
+    a.artist_description
 
     FROM track t
 
