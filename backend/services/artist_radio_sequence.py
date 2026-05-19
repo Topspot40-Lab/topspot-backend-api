@@ -12,7 +12,11 @@ from backend.state.playback_state import update_phase, begin_track
 logger = logging.getLogger(__name__)
 
 
-def load_artist_radio_set(genre: str) -> dict:
+def load_artist_radio_set(
+        genre: str,
+        artist_id: int | None = None,
+        spotify_artist_id: str | None = None,
+) -> dict:
     sql = text("""
     WITH eligible_artists AS (
         SELECT
@@ -26,6 +30,8 @@ def load_artist_radio_set(genre: str) -> dict:
         JOIN artist a ON t.artist_id = a.id
         WHERE (:genre = 'ALL' OR g.slug = :genre)
           AND g.slug != 'tv_themes'
+          AND (:artist_id IS NULL OR a.id = :artist_id)
+          AND (:spotify_artist_id IS NULL OR a.spotify_artist_id = :spotify_artist_id)
         GROUP BY a.id, a.artist_name
         HAVING COUNT(DISTINCT t.id) >= 2
     ),
@@ -55,7 +61,14 @@ def load_artist_radio_set(genre: str) -> dict:
     """)
 
     with engine.connect() as conn:
-        rows = conn.execute(sql, {"genre": genre}).mappings().all()
+        rows = conn.execute(
+            sql,
+            {
+                "genre": genre,
+                "artist_id": artist_id,
+                "spotify_artist_id": spotify_artist_id,
+            }
+        ).mappings().all()
 
     tracks = [dict(row) for row in rows]
 
@@ -77,15 +90,21 @@ def load_artist_radio_set(genre: str) -> dict:
 
 
 async def run_artist_radio_sequence(
-    *,
-    genre: str,
-    tts_language: str = "en",
-    play_intro: bool = True,
-    play_detail: bool = True,
-    play_artist_description: bool = False,
-    play_track: bool = True,
+        *,
+        genre: str,
+        artist_id: int | None = None,
+        spotify_artist_id: str | None = None,
+        tts_language: str = "en",
+        play_intro: bool = True,
+        play_detail: bool = True,
+        play_artist_description: bool = False,
+        play_track: bool = True,
 ):
-    radio_set = load_artist_radio_set(genre)
+    radio_set = load_artist_radio_set(
+        genre,
+        artist_id,
+        spotify_artist_id,
+    )
 
     if not radio_set.get("ok"):
         logger.warning("Artist Radio failed: %s", radio_set)
@@ -106,7 +125,18 @@ async def run_artist_radio_sequence(
             "type": "artist_radio",
             "programType": "RADIO_ARTIST",
             "genre": genre,
+
+            # Fake card metadata for the set intro
+            "artist_id": tracks[0]["artist_id"],
             "artist_name": artist_name,
+            "spotify_artist_id": tracks[0].get("spotify_artist_id"),
+            "track_id": tracks[0]["track_id"],
+            "track_name": f"{artist_name} Artist Spotlight",
+            "spotify_track_id": tracks[0]["spotify_track_id"],
+            "album_artwork": tracks[0].get("album_artwork"),
+            "duration_ms": 3000,
+
+            # Actual narration text
             "artist_text": artist_description,
             "artistText": artist_description,
             "audio_url": None,

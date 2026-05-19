@@ -163,6 +163,7 @@ def artist_tracks(
 
     return [dict(row) for row in rows]
 
+
 @router.post("/play")
 def play_artist_spotlight(
         artist_id: int = Query(...),
@@ -216,6 +217,7 @@ def play_artist_spotlight(
         "artist_id": artist_id,
         "tracks": [dict(row) for row in rows],
     }
+
 
 @router.get("/radio-set")
 def artist_radio_set(
@@ -313,9 +315,12 @@ SELECT
         "tracks": tracks[:limit],
     }
 
+
 @router.post("/play-radio")
 async def play_artist_radio(
         genre: str = Query(...),
+        artist_id: int | None = Query(None),
+        spotify_artist_id: str | None = Query(None),
         tts_language: str = Query("en"),
         play_intro: bool = Query(True),
         play_detail: bool = Query(True),
@@ -332,6 +337,8 @@ async def play_artist_radio(
             play_detail=play_detail,
             play_artist_description=play_artist_description,
             play_track=play_track,
+            artist_id=artist_id,
+            spotify_artist_id=spotify_artist_id,
         )
     )
 
