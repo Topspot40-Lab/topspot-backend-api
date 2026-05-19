@@ -333,6 +333,12 @@ async def play_track(payload: dict):
         if not track.spotify_track_id:
             return {"ok": False, "error": "Missing spotify_track_id for Artist Spotlight playback"}
 
+        logger.info(
+            "🎙️ Artist Radio check | programType=%s spotify_artist_id=%s",
+            context.get("programType"),
+            context.get("spotify_artist_id"),
+        )
+
         await play_spotify_track(track.spotify_track_id)
 
         update_phase(
