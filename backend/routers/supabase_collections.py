@@ -92,6 +92,7 @@ async def get_sequence_collection(
 
     tracks = [
         {
+            "rankingId": ctr.id,
             "rank": ctr.ranking,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
