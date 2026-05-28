@@ -384,7 +384,7 @@ async def play_track(payload: dict):
         )
 
         return {"ok": True, "message": "Artist Spotlight playback started"}
-    if context.get("type") == "decade_genre":
+    elif context.get("type") == "decade_genre":
 
         if context.get("decade", "").lower() == "all":
             if not track.spotify_track_id:
