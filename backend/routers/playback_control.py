@@ -236,7 +236,7 @@ async def play_track(payload: dict):
         context.get("type"),
     )
 
-    # await cancel_current_sequence()
+    await cancel_current_sequence()
     reset_for_single_track()
 
     if context and context.get("type") == "favorites":

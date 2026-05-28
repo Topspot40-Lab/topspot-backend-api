@@ -306,6 +306,9 @@ async def run_collection_sequence(
                     "spotify_track_id": track.spotify_track_id,
                     "ranking_id": ranking_id,
                     "collection_slug": collection_slug,
+                    "bed_bucket": BED_BUCKET,
+                    "bed_key": bed_key,
+                    "bed_audio_url": resolve_audio_ref(BED_BUCKET, bed_key),
                 },
             )
 
@@ -362,6 +365,9 @@ async def run_collection_sequence(
                     "spotify_track_id": track.spotify_track_id,
                     "ranking_id": ranking_id,
                     "collection_slug": collection_slug,
+                    "bed_bucket": BED_BUCKET,
+                    "bed_key": bed_key,
+                    "bed_audio_url": resolve_audio_ref(BED_BUCKET, bed_key),
                 },
             )
 
@@ -404,6 +410,9 @@ async def run_collection_sequence(
                     "spotify_track_id": track.spotify_track_id,
                     "ranking_id": ranking_id,
                     "collection_slug": collection_slug,
+                    "bed_bucket": BED_BUCKET,
+                    "bed_key": bed_key,
+                    "bed_audio_url": resolve_audio_ref(BED_BUCKET, bed_key),
                 },
             )
 
