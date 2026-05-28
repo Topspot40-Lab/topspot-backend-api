@@ -6,6 +6,7 @@ from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
 from backend.services.spotify.playback import stop_spotify_playback
+from backend.state.narration import track_done_event
 
 import asyncio
 import logging
@@ -328,16 +329,45 @@ async def play_track(payload: dict):
         await start_new_sequence(_play_favorites_one())
         return {"ok": True, "message": "Favorites single-track playback started"}
 
-
     elif context.get("type") == "artist_spotlight":
         if not track.spotify_track_id:
             return {"ok": False, "error": "Missing spotify_track_id for Artist Spotlight playback"}
 
+        spotify_artist_id = context.get("spotify_artist_id")
+
         logger.info(
-            "🎙️ Artist Radio check | programType=%s spotify_artist_id=%s",
-            context.get("programType"),
-            context.get("spotify_artist_id"),
+            "🎙️ Artist Spotlight library branch | artist_id=%s artist_name=%s spotify_artist_id=%s",
+            context.get("artist_id"),
+            context.get("artist_name"),
+            spotify_artist_id,
         )
+
+        artist_audio_url = (
+            f"https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/"
+            f"audio-en/artist/{spotify_artist_id}.mp3"
+            if spotify_artist_id
+            else None
+        )
+
+        if artist_audio_url:
+            track_done_event.clear()
+
+            update_phase(
+                "artist",
+                is_playing=True,
+                voice_style=selection.voicePlayMode,
+                track_name=f"{context.get('artist_name') or track.artist_name} Artist Spotlight",
+                artist_name=context.get("artist_name") or track.artist_name,
+                current_rank=0,
+                context={
+                    **context,
+                    "spotify_track_id": track.spotify_track_id,
+                    "audio_url": artist_audio_url,
+                    "started_by": "frontend",
+                },
+            )
+
+            await track_done_event.wait()
 
         await play_spotify_track(track.spotify_track_id)
 
@@ -353,8 +383,7 @@ async def play_track(payload: dict):
             },
         )
 
-        return {"ok": True, "message": "Artist Spotlight direct playback"}
-
+        return {"ok": True, "message": "Artist Spotlight playback started"}
     if context.get("type") == "decade_genre":
 
         if context.get("decade", "").lower() == "all":
