@@ -5,7 +5,7 @@ from backend.state.playback_state import update_phase, status, mark_paused, mark
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
 from backend.services.spotify.playback import stop_spotify_playback
-from backend.state.narration import track_done_event
+from backend.state.narration import track_done_event, narration_done_event
 from sqlmodel import Session, select
 from backend.database import engine
 from backend.models.dbmodels import Artist
@@ -357,7 +357,13 @@ async def play_track(payload: dict):
             if not audio_url:
                 return
 
-            track_done_event.clear()
+            narration_done_event.clear()
+
+            logger.info(
+                "🎙️ Artist Spotlight phase publish | phase=%s url=%s",
+                phase,
+                audio_url,
+            )
 
             update_phase(
                 phase,
@@ -374,7 +380,8 @@ async def play_track(payload: dict):
                 },
             )
 
-            await track_done_event.wait()
+            await narration_done_event.wait()
+            logger.info("✅ Artist Spotlight phase finished | phase=%s", phase)
 
         base_url = "https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/audio-en"
 
@@ -384,16 +391,13 @@ async def play_track(payload: dict):
             else None
         )
 
-        track_intro = payload["track"].get("intro")
         track_detail = payload["track"].get("detail")
 
-        await _play_narration_phase("artist", artist_audio_url)
+        if context.get("play_artist_bio", True):
+            await _play_narration_phase("artist", artist_audio_url)
 
-        await _play_narration_phase(
-            "intro",
-            f"{base_url}/intro/{track.spotify_track_id}.mp3",
-        )
-
+        # Artist Spotlight skips intro MP3s because they are ranking-list specific.
+        # The artist bio plays once, then each track gets its detail narration.
         await _play_narration_phase(
             "detail",
             f"{base_url}/detail/{track.spotify_track_id}.mp3",
