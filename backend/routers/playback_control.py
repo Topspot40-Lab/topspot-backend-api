@@ -2,11 +2,15 @@
 from __future__ import annotations
 
 from backend.state.playback_state import update_phase, status, mark_paused, mark_playing
-from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
 from backend.services.spotify.playback import stop_spotify_playback
 from backend.state.narration import track_done_event
+from sqlmodel import Session, select
+from backend.database import engine
+from backend.models.dbmodels import Artist
+from backend.database import get_db
+from backend.models.dbmodels import TrackRanking, DecadeGenre, Decade, Genre
 
 import asyncio
 import logging
@@ -241,9 +245,6 @@ async def play_track(payload: dict):
     reset_for_single_track()
 
     if context and context.get("type") == "favorites":
-        from backend.database import get_db
-        from backend.models.dbmodels import TrackRanking, DecadeGenre, Decade, Genre
-        from sqlmodel import select
 
         ranking_id = payload.get("track", {}).get("ranking_id")
         if not ranking_id:
@@ -335,6 +336,16 @@ async def play_track(payload: dict):
 
         spotify_artist_id = context.get("spotify_artist_id")
 
+        if not spotify_artist_id and context.get("artist_id"):
+            with Session(engine) as session:
+                artist = session.exec(
+                    select(Artist).where(Artist.id == int(context["artist_id"]))
+                ).first()
+
+                if artist:
+                    spotify_artist_id = artist.spotify_artist_id
+                    context["spotify_artist_id"] = spotify_artist_id
+
         logger.info(
             "🎙️ Artist Spotlight library branch | artist_id=%s artist_name=%s spotify_artist_id=%s",
             context.get("artist_id"),
@@ -342,35 +353,53 @@ async def play_track(payload: dict):
             spotify_artist_id,
         )
 
-        artist_audio_url = (
-            f"https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/"
-            f"audio-en/artist/{spotify_artist_id}.mp3"
-            if spotify_artist_id
-            else None
-        )
+        async def _play_narration_phase(phase: str, audio_url: str | None):
+            if not audio_url:
+                return
 
-        if artist_audio_url:
             track_done_event.clear()
 
             update_phase(
-                "artist",
+                phase,
                 is_playing=True,
                 voice_style=selection.voicePlayMode,
-                track_name=f"{context.get('artist_name') or track.artist_name} Artist Spotlight",
-                artist_name=context.get("artist_name") or track.artist_name,
-                current_rank=0,
+                track_name=track.track_name,
+                artist_name=track.artist_name,
+                current_rank=track.rank,
                 context={
                     **context,
                     "spotify_track_id": track.spotify_track_id,
-                    "audio_url": artist_audio_url,
+                    "audio_url": audio_url,
                     "started_by": "frontend",
                 },
             )
 
             await track_done_event.wait()
 
-        await play_spotify_track(track.spotify_track_id)
+        base_url = "https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/audio-en"
 
+        artist_audio_url = (
+            f"{base_url}/artist/{spotify_artist_id}.mp3"
+            if spotify_artist_id
+            else None
+        )
+
+        track_intro = payload["track"].get("intro")
+        track_detail = payload["track"].get("detail")
+
+        await _play_narration_phase("artist", artist_audio_url)
+
+        await _play_narration_phase(
+            "intro",
+            f"{base_url}/intro/{track.spotify_track_id}.mp3",
+        )
+
+        await _play_narration_phase(
+            "detail",
+            f"{base_url}/detail/{track.spotify_track_id}.mp3",
+        )
+
+        await play_spotify_track(track.spotify_track_id)
         update_phase(
             "track",
             track_name=track.track_name,
@@ -384,6 +413,7 @@ async def play_track(payload: dict):
         )
 
         return {"ok": True, "message": "Artist Spotlight playback started"}
+
     elif context.get("type") == "decade_genre":
 
         if context.get("decade", "").lower() == "all":
@@ -722,7 +752,6 @@ async def warmup_playback():
 async def reset_playback_state():
     from backend.state.playback_state import status
     from backend.state.playback_flags import flags
-    from backend.routers.playback_control import cancel_current_sequence
 
     # Kill any running sequence first
     await cancel_current_sequence()
