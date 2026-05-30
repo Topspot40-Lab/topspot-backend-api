@@ -12,6 +12,7 @@ from supabase import create_client
 import logging
 from backend.isaiah.isaiah_helper import get_env_config, get_spotify_redirect_uri, get_frontend_url
 import uuid
+from backend.isaiah.isaiah_helper import get_stripe_config
 
 
 # Flag to switch between local dev and Netlify deployment
@@ -27,6 +28,11 @@ logger = logging.getLogger("topspot")
 config = get_env_config()  # returns dict with COOKIE_DOMAIN, SECURE_COOKIE, ENV
 
 
+stripe_config = get_stripe_config(IS_LOCAL)
+
+stripe.api_key = stripe_config["secret_key"]
+STRIPE_PRICE_ID = stripe_config["price_id"]
+STRIPE_WEBHOOK_SECRET = stripe_config["webhook_secret"]
 
 
 
@@ -322,8 +328,8 @@ async def spotify_token(access_token: str = Cookie(None)):
 # Stripe endpoint
 @stripe_router.post("/create-checkout-session")
 async def create_checkout_session(access_token: str = Cookie(None)):
-    stripe.api_key = os.environ.get("STRIPE_TEST_SECRET_KEY")
-    stripe_price_id = os.getenv("STRIPE_TEST_PRICE_ID")
+    stripe_price_id = STRIPE_PRICE_ID
+    stripe.api_key = stripe_config["secret_key"]
     
 
     if not stripe.api_key or not stripe_price_id:
@@ -368,7 +374,8 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 # verify if user has already subscribed to topspot40 app
 @stripe_router.get("/verify-subscription")
 async def verify_subscription(session_id: str, access_token: str = Cookie(None)):
-    stripe.api_key = os.getenv("STRIPE_TEST_SECRET_KEY")
+    #stripe.api_key = os.getenv("STRIPE_TEST_SECRET_KEY")
+    stripe.api_key = stripe_config["secret_key"]
     logger.critical("=== VERIFY SUBSCRIPTION HIT ===")
     #logger.critical(f"Session ID received: {session_id}")
     #logger.critical(f"JWT cookie: {access_token}")
@@ -417,14 +424,14 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
             status: {status}
             """)
         
-        current_period_start = subscription.get("current_period_start")
+        """current_period_start = subscription.get("current_period_start")
         current_period_end = subscription.get("current_period_end")
         if current_period_start:
             current_period_start = datetime.fromtimestamp(current_period_start, tz=timezone.utc).isoformat()
         if current_period_end:
             current_period_end = datetime.fromtimestamp(current_period_end, tz=timezone.utc).isoformat()
-
-        if status in ("active", "trialing"):
+        """
+        """if status in ("active", "trialing"):
             supabase.table("subscriptions").upsert({
                 "user_id": user_id,
                 "stripe_customer_id": customer_id,
@@ -443,6 +450,7 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
                 "stripe_customer_id": customer_id,
             }).eq("id", user_id).execute()
             logger.info(f"✅ Updated topspot_users.stripe_customer_id for user {user_id}")
+            """
 
 
 
@@ -530,6 +538,42 @@ async def get_subscription_status(access_token: str = Cookie(None)):
 
 
 # Stripe Webhook
+
+
+# Canonical write function — ALWAYS use this for subscription state.
+def sync_subscription_to_supabase(subscription, customer_id: str, user_id: str):
+
+    current_period_start = datetime.fromtimestamp(
+        subscription["current_period_start"], tz=timezone.utc
+    ).isoformat()
+
+    current_period_end = datetime.fromtimestamp(
+        subscription["current_period_end"], tz=timezone.utc
+    ).isoformat()
+
+    supabase.table("subscriptions").upsert({
+        "user_id": user_id,
+        "stripe_customer_id": customer_id,
+        "stripe_subscription_id": subscription["id"],
+        "stripe_price_id": subscription["items"]["data"][0]["price"]["id"],
+        "status": subscription["status"],
+        "current_period_start": current_period_start,
+        "current_period_end": current_period_end,
+        "cancel_at_period_end": subscription["cancel_at_period_end"] if "cancel_at_period_end" in subscription else False,
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }).execute()
+
+    logger.critical("✅ Webhook wrote subscription")
+
+    # user linked to stripe update topspot_users.stripe_customer_id for the webhook flow
+    supabase.table("topspot_users").update({
+        "stripe_customer_id": customer_id,
+    }).eq("id", user_id).execute()
+    logger.info(f"✅ Webhook updated topspot_users.stripe_customer_id for user {user_id}")
+
+
+
+
 """
 Edge case: if user accidentally clicks off the screen, 
 or closes off tab, it does not write on Supabase, 
@@ -537,13 +581,12 @@ if requests fails, you LOSE the subscription,
 and it depends on the frontend, which is unreliable. So, 
 we shall implement Stripe's webhooks. 
 
-HAVE NOT YET IMPLEMENTED
 """
 @stripe_router.post("/webhooks/stripe")
 async def stripe_webhook(request: Request):
     logger.critical("🚨 Stripe webhook endpoint HIT")
-    stripe.api_key = os.getenv("STRIPE_TEST_SECRET_KEY")
-    webhook_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
+    stripe.api_key = stripe_config["secret_key"]
+    webhook_secret = STRIPE_WEBHOOK_SECRET
 
     payload = await request.body()
     sig_header = request.headers.get("stripe-signature")
@@ -567,16 +610,35 @@ async def stripe_webhook(request: Request):
     logger.critical(f"🔥 Webhook event: {event_type}")
 
     try:
-        # ✅ Checkout completed (initial subscription)
+        # ✅ Checkout completed (initial subscription), CREATE subscription
         if event_type == "checkout.session.completed":
-            session = data
+            #session = data
 
-            user_id = session.get("metadata", {}).get("topspot_user_id")
-            customer_id = session.get("customer")
-            subscription_id = session.get("subscription")
+            metadata = data["metadata"] if "metadata" in data else {}
+            user_id = metadata["topspot_user_id"] if "topspot_user_id" in metadata else None
+            customer = data["customer"] if "customer" in data else None
+            customer_id = customer["id"] if isinstance(customer, dict) else customer
+            subscription_id = data["subscription"] if "subscription" in data else None
 
-            if user_id and subscription_id:
-                subscription = stripe.Subscription.retrieve(subscription_id)
+            if not subscription_id:
+                logger.warning(
+                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                )
+                return JSONResponse({"status": "ignored_missing_subscription"})
+            
+            if not user_id:
+                logger.critical(
+                    f"❌ CRITICAL: Missing topspot_user_id in metadata | "
+                    f"event_type={event_type} | customer={customer_id} | subscription={subscription_id}"
+                )
+                return JSONResponse({"status": "missing_user_id"})
+            
+            subscription = stripe.Subscription.retrieve(subscription_id)
+            sync_subscription_to_supabase(subscription, customer_id, user_id)
+            logger.critical("✅ Subscription CREATED via checkout.session.completed")
+
+
+            """subscription = stripe.Subscription.retrieve(subscription_id)
 
                 current_period_start = datetime.fromtimestamp(
                     subscription["current_period_start"], tz=timezone.utc
@@ -607,47 +669,184 @@ async def stripe_webhook(request: Request):
                     #"is_active": True,
                 }).eq("id", user_id).execute()
                 logger.info(f"✅ Webhook updated topspot_users.stripe_customer_id for user {user_id}")
+                """
 
-
-        # 💰 Renewal payments
+        # 💰 Payment success OR Renewal payments
         elif event_type == "invoice.payment_succeeded":
-            subscription_id = data.get("subscription")
+            #invoice = data
+            subscription_id = data["subscription"] if "subscription" in data else None
+            
 
-            supabase.table("subscriptions").update({
+            # IMPORTANT: renew = overwrite latest period dates
+            if not subscription_id:
+                logger.warning(
+                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                )
+                return JSONResponse({"status": "ignored_missing_subscription"})
+
+            subscription = stripe.Subscription.retrieve(subscription_id)
+            customer = subscription["customer"]
+            customer_id = customer["id"] if isinstance(customer, dict) else customer
+
+            user_row = supabase.table("topspot_users") \
+                .select("id") \
+                .eq("stripe_customer_id", customer_id) \
+                .execute().data
+            
+            if not user_row:
+                logger.critical(
+                    f"❌ CRITICAL: No user found for stripe_customer_id={customer_id} | "
+                    f"event_type={event_type}"
+                )
+                # fallback: try to recover user from subscription metadata
+                metadata = subscription.get("metadata", {})
+                fallback_user_id = metadata.get("topspot_user_id")
+
+                if fallback_user_id:
+                    user_id = fallback_user_id
+
+                    logger.warning(
+                        f"⚠️ Recovered user via metadata fallback | user_id={user_id}"
+                    )
+
+                    sync_subscription_to_supabase(subscription, customer_id, user_id)
+                    return JSONResponse({"status": "recovered_via_metadata"})
+                return JSONResponse({"status": "no_user_found"})
+            
+            if len(user_row) > 1:
+                logger.warning(f"⚠️ Multiple users for customer_id {customer_id}")
+
+            user_id = user_row[0]["id"]
+
+            sync_subscription_to_supabase(subscription, customer_id, user_id)
+            logger.critical("💰 Subscription RENEWED + period extended")
+
+
+            """ supabase.table("subscriptions").update({
                 "status": "active",
                 "updated_at": datetime.now(timezone.utc).isoformat()
             }).eq("stripe_subscription_id", subscription_id).execute()
 
             logger.critical("💰 Payment succeeded (renewal)")
+            """
+
 
         # 🔄 Subscription updates
         elif event_type == "customer.subscription.updated":
-            subscription_id = data.get("id")
+            #subscription = data
+            subscription_id = data["id"] if "id" in data else None
+            customer = data["customer"] if "customer" in data else None
+            customer_id = customer["id"] if isinstance(customer, dict) else customer
 
-            supabase.table("subscriptions").update({
+            if not subscription_id:
+                logger.warning(
+                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                )
+                return JSONResponse({"status": "ignored_missing_subscription"})
+
+            subscription = stripe.Subscription.retrieve(subscription_id)
+
+            user_row = supabase.table("topspot_users") \
+                .select("id") \
+                .eq("stripe_customer_id", customer_id) \
+                .execute().data
+            
+            if not user_row:
+                logger.critical(
+                    f"❌ CRITICAL: No user found for stripe_customer_id={customer_id} | "
+                    f"event_type={event_type}"
+                )
+                # fallback: try to recover user from subscription metadata
+                metadata = subscription.get("metadata", {})
+                fallback_user_id = metadata.get("topspot_user_id")
+
+                if fallback_user_id:
+                    user_id = fallback_user_id
+
+                    logger.warning(
+                        f"⚠️ Recovered user via metadata fallback | user_id={user_id}"
+                    )
+
+                    sync_subscription_to_supabase(subscription, customer_id, user_id)
+                    return JSONResponse({"status": "recovered_via_metadata"})
+                return JSONResponse({"status": "no_user_found"})
+            
+            if len(user_row) > 1:
+                logger.warning(f"⚠️ Multiple users for customer_id {customer_id}")
+            
+            user_id = user_row[0]["id"]
+
+            sync_subscription_to_supabase(subscription, customer_id, user_id)
+            logger.critical("🔄 Subscription FULL SYNC updated")
+
+
+            """supabase.table("subscriptions").update({
                 "status": data.get("status"),
                 "cancel_at_period_end": data.get("cancel_at_period_end", False),
                 "updated_at": datetime.now(timezone.utc).isoformat()
             }).eq("stripe_subscription_id", subscription_id).execute()
 
             logger.critical("🔄 Subscription updated")
+            """
+
+
 
         # ❌ Subscription canceled
         elif event_type == "customer.subscription.deleted":
-            subscription_id = data.get("id")
+            #subscription = data
+            subscription_id = data["id"] if "id" in data else None
+
+            if not subscription_id:
+                logger.warning(
+                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                )
+                return JSONResponse({"status": "ignored_missing_subscription"})
+
+            cancel_at_period_end = data.get("cancel_at_period_end", False)
+            status = "canceled" if not cancel_at_period_end else "active"
 
             supabase.table("subscriptions").update({
+                "status": status,
+                "cancel_at_period_end": cancel_at_period_end,
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }).eq("stripe_subscription_id", subscription_id).execute()
+
+            logger.critical("❌ Subscription HARD CANCELED | cancel_at_period_end={cancel_at_period_end}")
+
+
+            """supabase.table("subscriptions").update({
                 "status": "canceled",
                 "updated_at": datetime.now(timezone.utc).isoformat()
             }).eq("stripe_subscription_id", subscription_id).execute()
 
             logger.critical("❌ Subscription canceled")
+            """
+
+        elif event_type == "invoice.payment_failed":
+            subscription_id = data["subscription"] if "subscription" in data else None
+
+            if not subscription_id:
+                logger.warning(
+                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                )
+                return JSONResponse({"status": "ignored"})
+
+            supabase.table("subscriptions").update({
+                "status": "past_due",
+                "updated_at": datetime.now(timezone.utc).isoformat()
+            }).eq("stripe_subscription_id", subscription_id).execute()
+
+            logger.critical("⚠️ Payment failed — marked past_due")
+
+
+        return JSONResponse({"status": "success"})
+    
 
     except Exception as e:
-        logger.exception("Error processing webhook event")
-        return JSONResponse(status_code=400, content={"error": str(e)})
+        logger.exception("Error processing webhook event, or failed")
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
-    return JSONResponse({"status": "success"})
+    
 
 
 

@@ -1,4 +1,5 @@
 # backend/isaiah/isaiah_helper.py
+import os
 
 def get_env_config():
     """
@@ -25,3 +26,20 @@ def get_frontend_url(local: bool = True):
         return "http://localhost:5173"
     #return "https://resplendent-gaufre-032b1a.netlify.app"  # Netlify site
     return "https://topspot40.com" # domain site
+
+
+
+def get_stripe_config(local: bool):
+    if local:
+        return {
+            "secret_key": os.getenv("STRIPE_TEST_SECRET_KEY"),
+            "price_id": os.getenv("STRIPE_TEST_PRICE_ID"),
+            "webhook_secret": os.getenv("STRIPE_WEBHOOK_TEST_SECRET"),
+        }
+    else:
+        return {
+            "secret_key": os.getenv("STRIPE_SECRET_KEY"),
+            "price_id": os.getenv("STRIPE_PRICE_ID"),
+            "webhook_secret": os.getenv("STRIPE_WEBHOOK_SECRET"),
+        }
+    
