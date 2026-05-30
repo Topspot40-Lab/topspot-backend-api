@@ -346,8 +346,6 @@ async def play_track(payload: dict):
             f"{BED_BUCKET}/{bed_key}"
         )
 
-        logger.info("🎧 ARTIST SPOTLIGHT bed track: %s/%s", BED_BUCKET, bed_key)
-
         if not spotify_artist_id and context.get("artist_id"):
             with Session(engine) as session:
                 artist = session.exec(
@@ -375,12 +373,6 @@ async def play_track(payload: dict):
                 "🎙️ Artist Spotlight phase publish | phase=%s url=%s",
                 phase,
                 audio_url,
-            )
-
-            logger.info(
-                "🎧 Artist Spotlight bed url in phase | phase=%s bed=%s",
-                phase,
-                bed_audio_url,
             )
 
             update_phase(
@@ -421,6 +413,8 @@ async def play_track(payload: dict):
             "detail",
             f"{base_url}/detail/{track.spotify_track_id}.mp3",
         )
+
+        logger.info("🎵 Artist Spotlight about to start Spotify | track=%s", track.spotify_track_id)
 
         await play_spotify_track(track.spotify_track_id)
         update_phase(
