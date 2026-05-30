@@ -11,6 +11,7 @@ from backend.database import engine
 from backend.models.dbmodels import Artist
 from backend.database import get_db
 from backend.models.dbmodels import TrackRanking, DecadeGenre, Decade, Genre
+from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
 
 import asyncio
 import logging
@@ -336,6 +337,17 @@ async def play_track(payload: dict):
 
         spotify_artist_id = context.get("spotify_artist_id")
 
+        genre_slug = context.get("genre")
+
+        bed_key = get_genre_bed_key(genre_slug)
+
+        bed_audio_url = (
+            f"https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/"
+            f"{BED_BUCKET}/{bed_key}"
+        )
+
+        logger.info("🎧 ARTIST SPOTLIGHT bed track: %s/%s", BED_BUCKET, bed_key)
+
         if not spotify_artist_id and context.get("artist_id"):
             with Session(engine) as session:
                 artist = session.exec(
@@ -365,6 +377,12 @@ async def play_track(payload: dict):
                 audio_url,
             )
 
+            logger.info(
+                "🎧 Artist Spotlight bed url in phase | phase=%s bed=%s",
+                phase,
+                bed_audio_url,
+            )
+
             update_phase(
                 phase,
                 is_playing=True,
@@ -376,6 +394,7 @@ async def play_track(payload: dict):
                     **context,
                     "spotify_track_id": track.spotify_track_id,
                     "audio_url": audio_url,
+                    "bed_audio_url": bed_audio_url,
                     "started_by": "frontend",
                 },
             )
