@@ -127,26 +127,47 @@ Returns a valid token either way.
 And make it async function so that it works everywhere else
 """
 async def get_valid_access_token(user_id: str):
+    logger.critical("🔍 get_valid_access_token CALLED")
+    logger.critical("USER_ID: %s", user_id)
     record = supabase.table("spotify_tokens").select("*").eq("user_id", user_id).single().execute().data
+    logger.critical("DB RECORD: %s", record)
     if not record:
+        logger.critical("❌ NO TOKEN RECORD FOUND")
         raise Exception("No tokens found for user")
+    
+    logger.critical("RECORD USER_ID: %s", record.get("user_id"))
+    logger.critical("RECORD HAS ACCESS_TOKEN: %s", bool(record.get("access_token")))
+    logger.critical("RECORD HAS REFRESH_TOKEN: %s", bool(record.get("refresh_token")))
+    logger.critical("RECORD EXPIRES_AT RAW: %s", record.get("expires_at"))
 
     expires_at = datetime.fromisoformat(record["expires_at"])
+    logger.critical("PARSED EXPIRES_AT: %s", expires_at)
+    logger.critical("NOW UTC: %s", datetime.now(timezone.utc))
+    logger.critical("IS EXPIRED: %s", expires_at < datetime.now(timezone.utc))
     if expires_at < datetime.now(timezone.utc):
         # Token expired — refresh it
+        logger.critical("⚠️ TOKEN EXPIRED → ENTERING REFRESH PATH")
         refresh_token = record["refresh_token"]
+        logger.critical("USING REFRESH TOKEN (PREFIX): %s", refresh_token[:20] if refresh_token else None)
         refreshed = await refresh_spotify_token(refresh_token)
+        logger.critical("REFRESH RESPONSE KEYS: %s", list(refreshed.keys()))
+        logger.critical("NEW ACCESS TOKEN (PREFIX): %s", refreshed["access_token"][:20])
+        logger.critical("EXPIRES_IN: %s", refreshed.get("expires_in"))
         new_expires_at = datetime.now(timezone.utc) + timedelta(seconds=refreshed["expires_in"])
 
+        logger.critical("NEW EXPIRES_AT: %s", new_expires_at)
         # Update in Supabase
         supabase.table("spotify_tokens").update({
             "access_token": refreshed["access_token"],
             "expires_at": new_expires_at.isoformat()
         }).eq("user_id", user_id).execute()
+        logger.critical("✅ SUPABASE TOKEN UPDATED FOR USER_ID: %s", user_id)
 
         return refreshed["access_token"]
     else:
         # Still valid
+        logger.critical("✅ TOKEN STILL VALID → USING STORED ACCESS TOKEN")
+        logger.critical("ACCESS TOKEN (PREFIX): %s", record["access_token"][:20])
         return record["access_token"]
     
 
