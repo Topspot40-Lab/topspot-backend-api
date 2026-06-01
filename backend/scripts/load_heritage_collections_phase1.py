@@ -1,6 +1,18 @@
 from sqlalchemy import text
 from backend.database import engine
+import csv
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parents[2]
+
+CSV_COLLECTIONS = [
+    {
+        "category_slug": "american_heritage_favorites",
+        "collection_slug": "mexican_american_favorites",
+        "collection_name": "Mexican-American Favorites",
+        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "mexican_american_favorites.csv",
+    },
+]
 
 HERITAGE_COLLECTIONS = [
     {
@@ -13,6 +25,23 @@ HERITAGE_COLLECTIONS = [
         ],
     },
 ]
+
+def load_tracks_from_csv(csv_file: Path) -> list[dict]:
+    tracks = []
+
+    with csv_file.open("r", encoding="utf-8-sig", newline="") as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            tracks.append(
+                {
+                    "rank": int(row["ranking"]),
+                    "title": row["title"].strip(),
+                    "artist": row["artist"].strip(),
+                }
+            )
+
+    return tracks
 
 
 def seed_collection_category(conn, category_slug: str) -> int:
@@ -146,7 +175,7 @@ def seed_collection_track(conn, collection_id: int, track_id: int, rank: int) ->
 
 def main() -> None:
     with engine.begin() as conn:
-        for collection in HERITAGE_COLLECTIONS:
+        for collection in CSV_COLLECTIONS:
             category_id = seed_collection_category(
                 conn,
                 collection["category_slug"],
@@ -159,7 +188,8 @@ def main() -> None:
                 category_id,
             )
 
-            for track in collection["tracks"]:
+            tracks = load_tracks_from_csv(collection["csv_file"])
+            for track in tracks:
                 artist_id = get_or_create_artist(conn, track["artist"])
                 track_id = get_or_create_track(conn, track["title"], artist_id)
 
@@ -171,7 +201,7 @@ def main() -> None:
                 )
 
             print(
-                f"Loaded {len(collection['tracks'])} tracks into "
+                f"Loaded {len(tracks)} tracks into "
                 f"{collection['collection_name']}"
             )
 
