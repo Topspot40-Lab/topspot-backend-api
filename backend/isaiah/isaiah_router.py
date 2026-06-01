@@ -29,6 +29,7 @@ config = get_env_config()  # returns dict with COOKIE_DOMAIN, SECURE_COOKIE, ENV
 
 
 stripe_config = get_stripe_config(IS_LOCAL)
+logger.critical(f"Using Stripe key: {stripe_config['secret_key'][:7]}")
 
 stripe.api_key = stripe_config["secret_key"]
 STRIPE_PRICE_ID = stripe_config["price_id"]
@@ -344,6 +345,9 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 
     
     try:
+        logger.critical(f"IS_LOCAL={IS_LOCAL}")
+        logger.critical(f"STRIPE_PRICE_ID={stripe_price_id}")
+        logger.critical(f"STRIPE_KEY_PREFIX={stripe.api_key[:7]}")
         # Create Stripe checkout session
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
