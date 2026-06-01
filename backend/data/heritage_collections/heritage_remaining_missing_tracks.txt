@@ -1,0 +1,83 @@
+African-American Heritage Favorites
+Rank	Track	Artist
+12	Take My Hand Precious Lord	Mahalia Jackson
+American Folk Heroes
+Rank	Track	Artist
+15	The Erie Canal	The Weavers
+Bluegrass Favorites
+Rank	Track	Artist
+16	Orange Blossom Special	Chubby Wise
+23	You Don't Know My Mind	J.D. Crowe & The New South
+43	Feast Here Tonight	Jim & Jesse
+Celtic Favorites
+Rank	Track	Artist
+30	Wild Mountain Thyme	The Corries
+Civil War Songs
+Rank	Track	Artist
+4	The Battle Cry of Freedom	Tennessee Ernie Ford
+7	Tenting Tonight on the Old Camp Ground	Tennessee Ernie Ford
+9	Aura Lee	Tennessee Ernie Ford
+16	Beautiful Dreamer	Mandy Barnett
+17	Camptown Races	Bing Crosby
+19	My Old Kentucky Home	The Chieftains
+22	The Cumberland Gap	David Holt
+23	Kingdom Coming	Tennessee Ernie Ford
+24	Tramp Tramp Tramp	Tennessee Ernie Ford
+25	Weeping Sad and Lonely	Tennessee Ernie Ford
+26	Home Sweet Home	Jo Stafford
+31	The Girl I Left Behind Me	The Chieftains
+32	Arkansas Traveler	The 2nd South Carolina String Band
+33	Bonnie Eloise	Tennessee Ernie Ford
+35	The Year of Jubilo	Tennessee Ernie Ford
+38	The Faded Coat of Blue	Bobby Horton
+41	Johnny Has Gone for a Soldier	The Chieftains
+Cowboy Songs & Western Favorites
+Rank	Track	Artist
+24	Ragtime Cowboy Joe	The Hilltoppers
+37	There's a Gold Mine in the Sky	Gene Autry
+41	The Old Chisholm Trail	Tex Ritter
+Crooner Classics
+Rank	Track	Artist
+43	Try a Little Tenderness	Vic Damone
+45	Make Someone Happy	Perry Como
+German Heritage Favorites
+Rank	Track	Artist
+14	Too Fat Polka	Arthur Godfrey
+19	Du Du Liegst Mir Im Herzen	Marlene Dietrich
+21	Wooden Heart	Elvis Presley
+22	Sailor	Lolita
+Italian Favorites
+Rank	Track	Artist
+22	Anema e Core	Dean Martin
+Mexican-American Favorites
+Rank	Track	Artist
+20	Que Bonito Es El Amor	Little Joe y La Familia
+28	El Ausente	Conjunto Primavera
+42	Noa Noa	Juan Gabriel
+Patriotic Favorites
+Rank	Track	Artist
+7	My Country 'Tis of Thee	Tennessee Ernie Ford
+10	You're a Grand Old Flag	The American Patriots
+14	The Battle Cry of Freedom	Tennessee Ernie Ford
+Railroad & Train Songs
+Rank	Track	Artist
+34	Southbound Train	Nashville Bluegrass Band
+38	Nine Hundred Miles	Odetta
+40	Gospel Train	The Carter Family
+Southern Gospel Favorites
+Rank	Track	Artist
+30	It's Still the Cross	Gold City
+42	One Day at a Time	The McKameys
+44	Walk Around Me Jesus	The Perrys
+Traditional Hymns
+Rank	Track	Artist
+34	Great Is Thy Faithfulness	Josh Turner
+35	The Old Rugged Cross	Josh Turner
+42	Life's Railway to Heaven	Loretta Lynn
+Traditional Mexican Favorites
+Rank	Track	Artist
+44	Que Bonita Es Mi Tierra	Vicente Fernández
+45	Viva México	Vicente Fernández
+Western Heritage Favorites
+Rank	Track	Artist
+22	The Old Chisholm Trail	Tex Ritter
