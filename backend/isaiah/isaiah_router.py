@@ -175,7 +175,13 @@ async def spotify_callback(request: Request):
     expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
 
 
-    user_profile = await get_user_profile(access_token)
+    logger.critical("ABOUT TO CALL /v1/me WITH TOKEN")
+    try:
+        user_profile = await get_user_profile(access_token)
+        logger.critical("SPOTIFY /me SUCCESS: %s", user_profile.get("id"))
+    except Exception as e:
+        logger.critical("SPOTIFY /me FAILED: %s", str(e))
+        raise
 
     spotify_image = (
         user_profile.get("images")[0]["url"]
