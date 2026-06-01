@@ -97,6 +97,49 @@ def update_track_spotify_data(track_id: int, artist_id: int, data: dict) -> None
             },
         )
 
+def remap_to_existing_spotify_track(old_track_id: int, spotify_track_id: str) -> bool:
+    find_sql = text("""
+        SELECT id
+        FROM track
+        WHERE spotify_track_id = :spotify_track_id
+        LIMIT 1
+    """)
+
+    update_sql = text("""
+        UPDATE collection_track_ranking
+        SET track_id = :existing_track_id,
+            updated_at = NOW()
+        WHERE track_id = :old_track_id
+          AND NOT EXISTS (
+              SELECT 1
+              FROM collection_track_ranking ctr2
+              WHERE ctr2.collection_id = collection_track_ranking.collection_id
+                AND ctr2.track_id = :existing_track_id
+          )
+    """)
+
+    with engine.begin() as conn:
+        existing_track_id = conn.execute(
+            find_sql,
+            {"spotify_track_id": spotify_track_id},
+        ).scalar_one_or_none()
+
+        if existing_track_id is None:
+            return False
+
+        if existing_track_id == old_track_id:
+            return False
+
+        conn.execute(
+            update_sql,
+            {
+                "existing_track_id": existing_track_id,
+                "old_track_id": old_track_id,
+            },
+        )
+
+    return True
+
 
 def main() -> None:
     tracks = get_missing_heritage_tracks(limit=250)
@@ -130,12 +173,26 @@ def main() -> None:
             matched += 1
 
         except IntegrityError:
-            print(
-                f"⚠️ Duplicate Spotify ID already exists, skipped: "
-                f"{track_name} — {artist_name} "
-                f"({spotify_data['spotify_track_id']})"
+
+            was_remapped = remap_to_existing_spotify_track(
+                track_id,
+                spotify_data["spotify_track_id"],
             )
-            missed += 1
+
+            if was_remapped:
+                print(
+                    f"🔁 Remapped duplicate: {track_name} — {artist_name} "
+                    f"({spotify_data['spotify_track_id']})"
+                )
+                matched += 1
+
+            else:
+                print(
+                    f"⚠️ Duplicate Spotify ID already exists, skipped: "
+                    f"{track_name} — {artist_name} "
+                    f"({spotify_data['spotify_track_id']})"
+                )
+                missed += 1
 
     print()
     print(f"Matched: {matched}")
