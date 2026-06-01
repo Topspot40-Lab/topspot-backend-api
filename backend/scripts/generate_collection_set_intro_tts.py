@@ -12,6 +12,27 @@ from backend.services.supabase_storage import upload_bytes
 from backend.services.tts.elevenlabs_tts import generate_tts_mp3
 from backend.config.tts_config import TTS_PROFILES
 
+HERITAGE_SLUGS = (
+    "mexican_american_favorites",
+    "traditional_mexican_favorites",
+    "great_american_songbook",
+    "crooner_classics",
+    "traditional_hymns",
+    "southern_gospel_favorites",
+    "bluegrass_favorites",
+    "patriotic_favorites",
+    "railroad_train_songs",
+    "cowboy_songs_western_favorites",
+    "american_folk_heroes",
+    "western_heritage_favorites",
+    "civil_war_songs",
+    "celtic_favorites",
+    "italian_favorites",
+    "german_heritage_favorites",
+    "brazilian_classics",
+    "african_american_heritage_favorites",
+)
+
 
 def normalize_lang(lang: str) -> str:
     if lang == "pt-BR":
@@ -43,8 +64,11 @@ def query_for_lang(lang: str):
             from public.collection
             where intro is not null
               and trim(intro) <> ''
+              and slug = ANY(:slugs)
             order by id
-        """)
+        """).bindparams(
+            slugs=list(HERITAGE_SLUGS)
+        )
 
     return text("""
         select
@@ -57,8 +81,12 @@ def query_for_lang(lang: str):
         where cl.language_code = :lang
           and cl.intro is not null
           and trim(cl.intro) <> ''
+          and c.slug = ANY(:slugs)
         order by c.id
-    """).bindparams(lang=lang)
+    """).bindparams(
+        lang=lang,
+        slugs=list(HERITAGE_SLUGS),
+    )
 
 
 def main(lang: str, limit: int | None, overwrite: bool) -> None:
