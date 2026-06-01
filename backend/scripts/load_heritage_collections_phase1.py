@@ -7,116 +7,12 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 
 CSV_COLLECTIONS = [
     {
-        "category_slug": "world_heritage_favorites",
-        "collection_slug": "mexican_american_favorites",
-        "collection_name": "Mexican-American Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "mexican_american_favorites.csv",
-    },
-    {
-        "category_slug": "world_heritage_favorites",
-        "collection_slug": "traditional_mexican_favorites",
-        "collection_name": "Traditional Mexican Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "traditional_mexican_favorites.csv",
-    },
-    {
-        "category_slug": "traditional_favorites",
-        "collection_slug": "great_american_songbook",
-        "collection_name": "Great American Songbook",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "great_american_songbook.csv",
-    },
-    {
-        "category_slug": "traditional_favorites",
-        "collection_slug": "crooner_classics",
-        "collection_name": "Crooner Classics",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "crooner_classics.csv",
-    },
-    {
-        "category_slug": "traditional_favorites",
-        "collection_slug": "traditional_hymns",
-        "collection_name": "Traditional Hymns",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "traditional_hymns.csv",
-    },
-    {
-        "category_slug": "traditional_favorites",
-        "collection_slug": "southern_gospel_favorites",
-        "collection_name": "Southern Gospel Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "southern_gospel_favorites.csv",
-    },
-    {
-        "category_slug": "traditional_favorites",
-        "collection_slug": "bluegrass_favorites",
-        "collection_name": "Bluegrass Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "bluegrass_favorites.csv",
-    },
-
-    {
-        "category_slug": "american_heritage_favorites",
-        "collection_slug": "patriotic_favorites",
-        "collection_name": "Patriotic Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "patriotic_favorites.csv",
-    },
-    {
-        "category_slug": "american_heritage_favorites",
-        "collection_slug": "railroad_train_songs",
-        "collection_name": "Railroad & Train Songs",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "railroad_train_songs.csv",
-    },
-    {
-        "category_slug": "traditional_favorites",
-        "collection_slug": "cowboy_songs_western_favorites",
-        "collection_name": "Cowboy Songs & Western Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "cowboy_songs_western_favorites.csv",
-    },
-    {
-        "category_slug": "american_heritage_favorites",
-        "collection_slug": "american_folk_heroes",
-        "collection_name": "American Folk Heroes",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "american_folk_heroes.csv",
-    },
-    {
-        "category_slug": "american_heritage_favorites",
-        "collection_slug": "western_heritage_favorites",
-        "collection_name": "Western Heritage Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "western_heritage_favorites.csv",
-    },
-    {
         "category_slug": "american_heritage_favorites",
         "collection_slug": "civil_war_songs",
         "collection_name": "Civil War Songs",
         "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "civil_war_songs.csv",
     },
-    {
-        "category_slug": "world_heritage_favorites",
-        "collection_slug": "celtic_favorites",
-        "collection_name": "Celtic Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "celtic_favorites.csv",
-    },
-    {
-        "category_slug": "world_heritage_favorites",
-        "collection_slug": "italian_favorites",
-        "collection_name": "Italian Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "italian_favorites.csv",
-    },
-    {
-        "category_slug": "world_heritage_favorites",
-        "collection_slug": "german_heritage_favorites",
-        "collection_name": "German Heritage Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "german_heritage_favorites.csv",
-    },
-    {
-        "category_slug": "world_heritage_favorites",
-        "collection_slug": "brazilian_classics",
-        "collection_name": "Brazilian Classics",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "brazilian_classics.csv",
-    },
-    {
-        "category_slug": "world_heritage_favorites",
-        "collection_slug": "african_american_heritage_favorites",
-        "collection_name": "African-American Heritage Favorites",
-        "csv_file": BASE_DIR / "backend" / "data" / "heritage_collections" / "african_american_heritage_favorites.csv",
-    },
 ]
-
 
 def load_tracks_from_csv(csv_file: Path) -> list[dict]:
     tracks = []
