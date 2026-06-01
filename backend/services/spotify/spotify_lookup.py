@@ -25,8 +25,33 @@ def get_spotify_track_data(track_name: str, artist_name: str) -> Optional[Dict[s
         items = results.get("tracks", {}).get("items", [])
 
         if not items:
-            logger.warning(f"❌ No match: {track_name} - {artist_name}")
-            return None
+            logger.warning(
+                f"⚠️ Strict search failed. Trying fallback: {track_name} - {artist_name}"
+            )
+
+            results = sp.search(
+                q=track_name,
+                type="track",
+                limit=10,
+            )
+
+            fallback_items = results.get("tracks", {}).get("items", [])
+
+            artist_name_lower = artist_name.lower()
+
+            items = [
+                item
+                for item in fallback_items
+                if any(
+                    artist_name_lower in artist.get("name", "").lower()
+                    or artist.get("name", "").lower() in artist_name_lower
+                    for artist in item.get("artists", [])
+                )
+            ]
+
+            if not items:
+                logger.warning(f"❌ No match: {track_name} - {artist_name}")
+                return None
 
         track = items[0]
         album = track["album"]
