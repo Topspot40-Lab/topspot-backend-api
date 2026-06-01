@@ -163,7 +163,10 @@ async def spotify_callback(request: Request):
     redirect_uri = get_spotify_redirect_uri(local=IS_LOCAL)
 
     token_data = await exchange_code_for_token(code, redirect_uri)
+    logger.critical(token_data)
     access_token = token_data["access_token"]
+    logger.critical("SPOTIFY ACCESS TOKEN: %s", access_token)
+    logger.critical("TOKEN LENGTH: %s", len(access_token))
 
     refresh_token = token_data.get("refresh_token")   # sometimes only returned on first exchange
     expires_in = token_data.get("expires_in", 3600)
