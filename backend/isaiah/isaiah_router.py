@@ -124,7 +124,7 @@ def spotify_login():
     #redirect_uri = "https://api.topspot40.com/api/auth/spotify/callback"
     #redirect_uri = "http://127.0.0.1:8000/api/auth/spotify/callback"
     redirect_uri = get_spotify_redirect_uri(local=IS_LOCAL)
-    scopes = "user-read-private playlist-read-private user-read-email user-read-private user-read-playback-state user-modify-playback-state streaming" # "user-read-private playlist-read-private"
+    scopes = "user-read-private playlist-read-private user-read-email" #user-read-playback-state user-modify-playback-state streaming | user-read-private playlist-read-private"
     params = {
         "client_id": client_id, # client_id
         "response_type": "code",
