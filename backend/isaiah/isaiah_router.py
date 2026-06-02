@@ -555,17 +555,22 @@ async def get_subscription_status(access_token: str = Cookie(None)):
 
 # Stripe Webhook
 
+# Helper function for current_period_start and current_period_end
+def safe_ts(value):
+    if value is None:
+        return None
+    return datetime.fromtimestamp(value, tz=timezone.utc).isoformat()
 
 # Canonical write function — ALWAYS use this for subscription state.
 def sync_subscription_to_supabase(subscription, customer_id: str, user_id: str):
 
-    current_period_start = datetime.fromtimestamp(
-        subscription["current_period_start"], tz=timezone.utc
-    ).isoformat()
+    current_period_start = safe_ts(
+        getattr(subscription, "current_period_start", None) #subscription["current_period_start"]
+    )
 
-    current_period_end = datetime.fromtimestamp(
-        subscription["current_period_end"], tz=timezone.utc
-    ).isoformat()
+    current_period_end = safe_ts(
+        getattr(subscription, "current_period_end", None)
+    )
 
     supabase.table("subscriptions").upsert({
         "user_id": user_id,
