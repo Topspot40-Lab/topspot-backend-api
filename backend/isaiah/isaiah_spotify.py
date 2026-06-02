@@ -113,6 +113,7 @@ async def get_user_profile(access_token: str) -> dict:
         headers = {"Authorization": f"Bearer {access_token}"}
         response = await client.get(SPOTIFY_ME_URL, headers=headers)
         logger.critical("/me STATUS=%s", response.status_code)
+        logger.critical("ME BODY: %s", response.text)
         response.raise_for_status()
         return response.json()
 
