@@ -202,6 +202,7 @@ async def spotify_callback(request: Request):
 
     # Find or create TopSpot40 user
     topspot_user = await get_or_create_topspot_user(user_profile)
+    logger.critical("TOPSPOT USER RESULT=%s", topspot_user)
     topspot_user_id = topspot_user["id"]
 
     if not topspot_user or "id" not in topspot_user:
@@ -211,12 +212,14 @@ async def spotify_callback(request: Request):
 
     try:
         # Persist tokens in Supabase
+        logger.critical("WRITING TOKENS TO SUPABASE FOR USER=%s", topspot_user_id)
         supabase.table("spotify_tokens").upsert({
             "user_id": topspot_user_id, # not user_id, the spotify_tokens table must reference to topspot users, not spotify users
             "access_token": access_token,
             "refresh_token": refresh_token,
             "expires_at": expires_at.isoformat(),
         }).execute()
+        logger.critical("TOKEN WRITE COMPLETED")
         logger.info(f"Stored tokens for user {topspot_user_id} in Supabase")
     except Exception as e:
         logger.exception("Failed to persist tokens in Supabase")
@@ -251,7 +254,8 @@ async def spotify_callback(request: Request):
     #logger.critical("About to set cookie. JWT=%s", jwt_token)
 
 
-
+    logger.critical("SETTING COOKIE DOMAIN=%s", config["COOKIE_DOMAIN"])
+    logger.critical("SETTING COOKIE SECURE=%s", config["SECURE_COOKIE"])
     redirect_response.set_cookie(
         key="access_token",
         value=jwt_token,
@@ -265,9 +269,8 @@ async def spotify_callback(request: Request):
         path="/",
         domain=config["COOKIE_DOMAIN"],
     )
-
+    logger.critical("COOKIE SET SUCCESSFULLY")
     logger.info(f"Redirecting to {redirect_url} with JWT cookie {jwt_token}")
-
 
     return redirect_response
     

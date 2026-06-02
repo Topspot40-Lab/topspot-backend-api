@@ -72,8 +72,12 @@ async def exchange_code_for_token(code: str, redirect_uri: str) -> dict:
     """
     async with httpx.AsyncClient() as client:
         #debug statements 
+        logger.critical("=== TOKEN EXCHANGE START ===")
         print(f"CLIENT_ID: {client_id}")
+        logger.critical("CLIENT_ID EXISTS: %s", bool(client_id))
         print(f"CLIENT_SECRET is set: {bool(client_secret)}")
+        logger.critical("CLIENT_SECRET EXISTS: %s", bool(client_secret))
+        
 
         auth_header = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
         headers = {
@@ -86,11 +90,15 @@ async def exchange_code_for_token(code: str, redirect_uri: str) -> dict:
             "redirect_uri": redirect_uri,
         }
         #DEBUG STATEMENT 
+        logger.critical("REDIRECT_URI: %s", redirect_uri)
+        logger.critical("CODE PREFIX: %s", code[:20])
         print("POSTing to token URL:", SPOTIFY_TOKEN_URL)
         print("Headers:", headers)
         print("Data:", data)
 
+        logger.critical("POSTING TO SPOTIFY TOKEN ENDPOINT")
         response = await client.post(SPOTIFY_TOKEN_URL, headers=headers, data=data)
+        logger.critical("TOKEN RESPONSE STATUS=%s", response.status_code)
         if response.status_code != 200:
             print("Spotify error response:", response.text)
         response.raise_for_status()
@@ -100,9 +108,11 @@ async def get_user_profile(access_token: str) -> dict:
     """
     Get Spotify user profile with the access token.
     """
+    logger.critical("=== GET USER PROFILE START ===")
     async with httpx.AsyncClient() as client:
         headers = {"Authorization": f"Bearer {access_token}"}
         response = await client.get(SPOTIFY_ME_URL, headers=headers)
+        logger.critical("/me STATUS=%s", response.status_code)
         response.raise_for_status()
         return response.json()
 
