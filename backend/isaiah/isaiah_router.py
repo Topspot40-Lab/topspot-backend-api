@@ -16,7 +16,7 @@ from backend.isaiah.isaiah_helper import get_stripe_config
 
 
 # Flag to switch between local dev and Netlify deployment
-IS_LOCAL = False  # set False when deploying to Netlify, set True if running locally
+IS_LOCAL = True  # set False when deploying to Netlify, set True if running locally
 
 load_dotenv()
 
