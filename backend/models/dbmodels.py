@@ -179,6 +179,7 @@ class Track(SQLModel, table=True):
     is_explicit: Optional[bool] = Field(default=False)
     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
     detail: Optional[str] = Field(default=None)
+    short_detail: Optional[str] = Field(default=None)
     language: Optional[str] = Field(default="en", max_length=2)
 
     # ── NEW: media/source metadata for TV / film / stage etc. ───────────────
@@ -230,6 +231,7 @@ class TrackLocale(SQLModel, table=True):
     track_id: int = Field(foreign_key="track.id")
     language_code: str
     detail_text: str
+    short_detail_text: Optional[str] = Field(default=None)
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
 
