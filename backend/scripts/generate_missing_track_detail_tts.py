@@ -90,6 +90,7 @@ async def main() -> None:
     # ------------------------------------------------------------
     # Load tracks
     # ------------------------------------------------------------
+    engine.dispose()
     with Session(engine) as session:
         tracks = session.exec(
             select(Track)

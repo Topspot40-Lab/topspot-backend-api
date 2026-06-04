@@ -12,7 +12,7 @@ from backend.models.collection_models import (
     CollectionTrackRanking,
     CollectionTrackRankingLocale,
 )
-from backend.models.dbmodels import Track
+from backend.models.dbmodels import Track, Artist
 
 
 TEMPLATES_ES = [
@@ -86,10 +86,17 @@ def locale_exists(session: Session, ranking_id: int, lang: str) -> bool:
 def main(lang: str, limit: int | None, overwrite: bool) -> None:
     with Session(engine) as session:
         stmt = (
-            select(CollectionTrackRanking, Collection, CollectionCategory, Track)
+            select(
+                CollectionTrackRanking,
+                Collection,
+                CollectionCategory,
+                Track,
+                Artist,
+            )
             .join(Collection, Collection.id == CollectionTrackRanking.collection_id)
             .join(CollectionCategory, CollectionCategory.id == Collection.category_id)
             .join(Track, Track.id == CollectionTrackRanking.track_id)
+            .join(Artist, Artist.id == Track.artist_id)
             .order_by(CollectionCategory.name, Collection.name, CollectionTrackRanking.ranking)
         )
 
@@ -99,7 +106,7 @@ def main(lang: str, limit: int | None, overwrite: bool) -> None:
         updated = 0
         skipped = 0
 
-        for ranking, collection, category, track in rows:
+        for ranking, collection, category, track, artist in rows:
             if limit is not None and (inserted + updated) >= limit:
                 break
 
@@ -118,7 +125,7 @@ def main(lang: str, limit: int | None, overwrite: bool) -> None:
                 lang=lang,
                 rank=ranking.ranking,
                 track=track.track_name,
-                artist=track.artist_display_name,
+                artist=artist.artist_name,
                 album=track.album_name,
                 year=track.year_released,
             )

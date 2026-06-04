@@ -25,34 +25,23 @@ HERITAGE_SLUGS = (
 )
 
 
-def get_missing_heritage_tracks(limit: int = 10) -> list[dict]:
+def get_missing_tracks(limit: int = 250) -> list[dict]:
     sql = text("""
-        SELECT DISTINCT
+        SELECT
             t.id AS track_id,
             t.track_name,
             a.id AS artist_id,
             a.artist_name
-        FROM collection_track_ranking ctr
-        JOIN collection c
-            ON c.id = ctr.collection_id
-        JOIN track t
-            ON t.id = ctr.track_id
+        FROM track t
         JOIN artist a
             ON a.id = t.artist_id
-        WHERE c.slug = ANY(:slugs)
-          AND t.spotify_track_id IS NULL
+        WHERE t.spotify_track_id IS NULL
         ORDER BY t.id
         LIMIT :limit
     """)
 
     with engine.begin() as conn:
-        return conn.execute(
-            sql,
-            {
-                "slugs": list(HERITAGE_SLUGS),
-                "limit": limit,
-            },
-        ).mappings().all()
+        return conn.execute(sql, {"limit": limit}).mappings().all()
 
 
 def update_track_spotify_data(track_id: int, artist_id: int, data: dict) -> None:
@@ -142,7 +131,7 @@ def remap_to_existing_spotify_track(old_track_id: int, spotify_track_id: str) ->
 
 
 def main() -> None:
-    tracks = get_missing_heritage_tracks(limit=250)
+    tracks = get_missing_tracks(limit=250)
 
     matched = 0
     missed = 0
