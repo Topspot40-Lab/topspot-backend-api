@@ -4,14 +4,11 @@ from typing import List, Optional, TYPE_CHECKING
 from sqlalchemy import CheckConstraint, Column
 from sqlalchemy import Enum as SqlEnum
 from sqlmodel import SQLModel, Field, Relationship, UniqueConstraint
-from sqlalchemy.orm import relationship as sa_relationship  # add this
 
 from backend.models.enums import ModeFlag
 
 if TYPE_CHECKING:
     from backend.models.collection_models import CollectionTrackRanking
-
-
 # ─────────────────────────────────────────────────────────────────────────────
 # Core entities
 # ─────────────────────────────────────────────────────────────────────────────
@@ -48,15 +45,14 @@ class Artist(SQLModel, table=True):
         sa_relationship_kwargs={"foreign_keys": "[Track.featured_artist_id]"},
     )
 
-
 class Decade(SQLModel, table=True):
     __tablename__ = "decade"
     __table_args__ = {"extend_existing": True}
 
     id: Optional[int] = Field(default=None, primary_key=True)
     decade_name: str
-    slug: Optional[str] = Field(default=None, index=True)  # NEW (optional)
-    description: Optional[str] = Field(default=None)  # NEW (optional)
+    slug: Optional[str] = Field(default=None, index=True)         # NEW (optional)
+    description: Optional[str] = Field(default=None)              # NEW (optional)
 
 
 class Genre(SQLModel, table=True):
@@ -65,8 +61,8 @@ class Genre(SQLModel, table=True):
 
     id: Optional[int] = Field(default=None, primary_key=True)
     genre_name: str
-    slug: Optional[str] = Field(default=None, index=True)  # NEW (optional)
-    description: Optional[str] = Field(default=None)  # NEW (optional)
+    slug: Optional[str] = Field(default=None, index=True)         # NEW (optional)
+    description: Optional[str] = Field(default=None)              # NEW (optional)
 
 
 class Language(SQLModel, table=True):
@@ -157,7 +153,6 @@ class Tracklist(SQLModel, table=True):
     notes: Optional[str] = Field(default=None)
     created_at: Optional[datetime] = Field(default=None)
 
-
 class Track(SQLModel, table=True):
     __tablename__ = "track"
     __table_args__ = {"extend_existing": True}
@@ -177,7 +172,7 @@ class Track(SQLModel, table=True):
     album_artwork: Optional[str] = Field(default=None)
     year_released: Optional[int] = Field(default=None)
 
-    artist_id: int = Field(foreign_key="artist.id")  # main artist
+    artist_id: int = Field(foreign_key="artist.id")                     # main artist
     featured_artist_id: Optional[int] = Field(default=None, foreign_key="artist.id")
 
     is_explicit: Optional[bool] = Field(default=False)
@@ -187,11 +182,11 @@ class Track(SQLModel, table=True):
     language: Optional[str] = Field(default="en", max_length=2)
 
     # ── NEW: media/source metadata for TV / film / stage etc. ───────────────
-    source_type: Optional[str] = Field(default=None)  # e.g., "TV", "Film", "Stage", "Game"
-    source_title: Optional[str] = Field(default=None)  # e.g., show / film / production title
-    years_on_air: Optional[str] = Field(default=None)  # e.g., "1959–1973" (TEXT)
-    source_role: Optional[str] = Field(default=None)  # e.g., "THEME", "OPENING", "CLOSING"
-    version_notes: Optional[str] = Field(default=None)  # e.g., "TV Opening", "Single edit"
+    source_type: Optional[str] = Field(default=None)         # e.g., "TV", "Film", "Stage", "Game"
+    source_title: Optional[str] = Field(default=None)        # e.g., show / film / production title
+    years_on_air: Optional[str] = Field(default=None)        # e.g., "1959–1973" (TEXT)
+    source_role: Optional[str] = Field(default=None)         # e.g., "THEME", "OPENING", "CLOSING"
+    version_notes: Optional[str] = Field(default=None)       # e.g., "TV Opening", "Single edit"
 
     # Relationships
     artist: "Artist" = Relationship(
@@ -253,7 +248,6 @@ class ArtistLocale(SQLModel, table=True):
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
 
-
 class MusicDiscovery(SQLModel, table=True):
     __tablename__ = "music_discovery"
 
@@ -307,8 +301,11 @@ __all__ = [
     "TrackRankingLocale",
     "TrackLocale",
     "ArtistLocale",
+
+    # NEW
     "MusicDiscovery",
     "MusicDiscoveryLocale",
+
     # collections
     "Collection",
     "CollectionTrackRanking",
