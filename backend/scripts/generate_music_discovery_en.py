@@ -75,6 +75,38 @@ CATEGORY-SPECIFIC GUIDANCE:
     - Good examples: blues, rock and roll, bluegrass, mariachi, reggae, disco, samba, jazz, soul, gospel, bossa nova, country, flamenco
     """,
 
+    "instruments": """
+    CATEGORY-SPECIFIC GUIDANCE:
+    - Focus on fascinating musical instruments from around the world
+    - Highlight unusual construction, sounds, playing techniques, and cultural significance
+    - Prefer surprising facts and discoveries
+    - Avoid artist biographies
+    - Good examples: theremin, kora, sitar, didgeridoo, shakuhachi, steelpan, oud, balalaika, hurdy-gurdy, glass armonica
+    - Do not repeat common examples already used in this category
+- Prefer lesser-known instruments after the most famous examples are covered
+- Avoid theremin, didgeridoo, kora, sitar, oud, steelpan, shakuhachi, hurdy-gurdy, glass armonica, and balalaika unless specifically needed
+    """,
+        "recording_technology": """
+        CATEGORY-SPECIFIC GUIDANCE:
+        - Focus on inventions and technologies that changed how music is recorded, produced, distributed, or heard
+        - Highlight surprising technical breakthroughs and innovations
+        - Explain how the technology changed the music experience for musicians or listeners
+        - Avoid artist biographies unless directly tied to a technological invention
+        - Avoid general music history that is not technology-focused
+        - Prefer technologies that had widespread impact on the music industry
+        - Good examples: phonograph, radio, jukebox, LP records, stereo sound, magnetic tape, multitrack recording, synthesizers, cassette tapes, compact discs, MP3, streaming audio, Auto-Tune, drum machines
+        """,
+
+        "music_milestones": """
+    CATEGORY-SPECIFIC GUIDANCE:
+    - Focus on landmark moments that changed the course of music history
+    - Highlight firsts, breakthroughs, record-setting achievements, and historic events
+    - Prefer moments that had lasting worldwide impact
+    - Avoid instrument descriptions unless the invention changed music globally
+    - Avoid general music history that does not represent a major turning point
+    - Good examples: first recorded sound, invention of music notation, first electric guitar, multitrack recording, Voyager Golden Record, first radio broadcast, Woodstock, MTV launch
+    """
+
     }
 
     return guidance.get(category, "")
