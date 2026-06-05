@@ -164,6 +164,8 @@ def main(limit: int | None, track_id: int | None, overwrite: bool, save: bool, l
 
         for row in rows:
             processed += 1
+            row_updates = 0
+
             print("=" * 80)
             print(f"ID: {row.id}")
             print(f"Track: {row.track_name}")
@@ -192,11 +194,15 @@ def main(limit: int | None, track_id: int | None, overwrite: bool, save: bool, l
                             {"short_detail": english_short, "track_id": row.id},
                         )
                         updated += 1
+                        row_updates += 1
                 else:
                     print(f"EN existing: {english_short}")
 
                 if not english_short:
                     print("SKIP translations: no English short_detail available.")
+                    if save and row_updates > 0:
+                        session.commit()
+                        print(f"✅ Saved ID {row.id}")
                     continue
 
                 for lang in langs:
@@ -239,14 +245,20 @@ def main(limit: int | None, track_id: int | None, overwrite: bool, save: bool, l
                             },
                         )
                         updated += 1
+                        row_updates += 1
+
+                if save and row_updates > 0:
+                    session.commit()
+                    print(f"✅ Saved ID {row.id} ({row_updates} field(s))")
+                elif save:
+                    print(f"ℹ️ No updates needed for ID {row.id}")
 
             except Exception as exc:
                 errors += 1
-                print(f"ERROR: {exc}")
+                if save:
+                    session.rollback()
+                print(f"ERROR on ID {row.id}: {exc}")
                 continue
-
-        if save:
-            session.commit()
 
         print("\nDone.")
         print(f"Rows processed: {processed}")
