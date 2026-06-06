@@ -29,7 +29,7 @@ config = get_env_config()  # returns dict with COOKIE_DOMAIN, SECURE_COOKIE, ENV
 
 
 stripe_config = get_stripe_config(IS_LOCAL)
-logger.critical(f"Using Stripe key: {stripe_config['secret_key'][:7]}")
+# logger.critical(f"Using Stripe key: {stripe_config['secret_key'][:7]}")
 
 stripe.api_key = stripe_config["secret_key"]
 STRIPE_PRICE_ID = stripe_config["price_id"]
