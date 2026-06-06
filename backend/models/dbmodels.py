@@ -4,7 +4,6 @@ from typing import List, Optional, TYPE_CHECKING
 from sqlalchemy import CheckConstraint, Column
 from sqlalchemy import Enum as SqlEnum
 from sqlmodel import SQLModel, Field, Relationship, UniqueConstraint
-from sqlalchemy.orm import relationship as sa_relationship  # add this
 
 from backend.models.enums import ModeFlag
 
@@ -179,6 +178,7 @@ class Track(SQLModel, table=True):
     is_explicit: Optional[bool] = Field(default=False)
     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
     detail: Optional[str] = Field(default=None)
+    short_detail: Optional[str] = Field(default=None)
     language: Optional[str] = Field(default="en", max_length=2)
 
     # ── NEW: media/source metadata for TV / film / stage etc. ───────────────
@@ -230,6 +230,7 @@ class TrackLocale(SQLModel, table=True):
     track_id: int = Field(foreign_key="track.id")
     language_code: str
     detail_text: str
+    short_detail_text: Optional[str] = Field(default=None)
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
 
@@ -246,6 +247,34 @@ class ArtistLocale(SQLModel, table=True):
     artist_description_text: str
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
+
+class MusicDiscovery(SQLModel, table=True):
+    __tablename__ = "music_discovery"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    category: str
+    topic: Optional[str] = None
+    title: str
+    review_status: str = Field(default="draft")
+    is_active: bool = Field(default=True)
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+
+
+class MusicDiscoveryLocale(SQLModel, table=True):
+    __tablename__ = "music_discovery_locale"
+    __table_args__ = (
+        UniqueConstraint("music_discovery_id", "language_code", name="uix_music_discovery_locale_lang"),
+    )
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    music_discovery_id: int = Field(foreign_key="music_discovery.id")
+    language_code: str
+    discovery_text: str
+    tts_bucket: Optional[str] = None
+    tts_key: Optional[str] = None
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
 
 
 # Re-exports from collection_models
@@ -272,6 +301,11 @@ __all__ = [
     "TrackRankingLocale",
     "TrackLocale",
     "ArtistLocale",
+
+    # NEW
+    "MusicDiscovery",
+    "MusicDiscoveryLocale",
+
     # collections
     "Collection",
     "CollectionTrackRanking",

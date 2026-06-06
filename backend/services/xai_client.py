@@ -38,7 +38,10 @@ def ask_xai(system_prompt: str, user_prompt: str, temperature: float = 0.7) -> s
         timeout=60,
     )
 
-    response.raise_for_status()
+    if not response.ok:
+        print("XAI ERROR STATUS:", response.status_code)
+        print("XAI ERROR BODY:", response.text)
+        response.raise_for_status()
 
     data = response.json()
 
