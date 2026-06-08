@@ -304,13 +304,38 @@ class MusicDiscoveryLocale(SQLModel, table=True):
     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
 
 
+class CollectionStory(SQLModel, table=True):
+    __tablename__ = "collection_story"
+    __table_args__ = (
+        UniqueConstraint(
+            "collection_id",
+            "language_code",
+            name="uix_collection_story_collection_lang",
+        ),
+    )
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    collection_id: int = Field(foreign_key="collection.id")
+    language_code: str
+
+    title: Optional[str] = Field(default=None)
+    story_text: str
+    story_type: Optional[str] = Field(default="standard")
+    duration_seconds: Optional[int] = Field(default=None)
+
+    tts_bucket: Optional[str] = None
+    tts_key: Optional[str] = None
+
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+
+
 # Re-exports from collection_models
 from .collection_models import (
     Collection,
     CollectionTrackRanking,
     CollectionTrackRankingLocale,
 )
-
 
 __all__ = [
     "DecadeGenreTrivia",
@@ -334,4 +359,5 @@ __all__ = [
     "Collection",
     "CollectionTrackRanking",
     "CollectionTrackRankingLocale",
+    "CollectionStory",
 ]
