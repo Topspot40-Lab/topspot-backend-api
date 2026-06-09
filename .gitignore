@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.backup.json
+*.sh
 log_audit*.txt
 console_audit*.txt
 

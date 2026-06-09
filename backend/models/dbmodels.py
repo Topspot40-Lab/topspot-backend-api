@@ -9,6 +9,8 @@ from backend.models.enums import ModeFlag
 
 if TYPE_CHECKING:
     from backend.models.collection_models import CollectionTrackRanking
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Core entities
 # ─────────────────────────────────────────────────────────────────────────────
@@ -35,7 +37,6 @@ class Artist(SQLModel, table=True):
     not_on_spotify: bool = Field(default=False)
     language: Optional[str] = Field(default="en", max_length=2)
 
-    # Relationships
     tracks_as_main: list["Track"] = Relationship(
         back_populates="artist",
         sa_relationship_kwargs={"foreign_keys": "[Track.artist_id]"},
@@ -45,14 +46,15 @@ class Artist(SQLModel, table=True):
         sa_relationship_kwargs={"foreign_keys": "[Track.featured_artist_id]"},
     )
 
+
 class Decade(SQLModel, table=True):
     __tablename__ = "decade"
     __table_args__ = {"extend_existing": True}
 
     id: Optional[int] = Field(default=None, primary_key=True)
     decade_name: str
-    slug: Optional[str] = Field(default=None, index=True)         # NEW (optional)
-    description: Optional[str] = Field(default=None)              # NEW (optional)
+    slug: Optional[str] = Field(default=None, index=True)
+    description: Optional[str] = Field(default=None)
 
 
 class Genre(SQLModel, table=True):
@@ -61,8 +63,8 @@ class Genre(SQLModel, table=True):
 
     id: Optional[int] = Field(default=None, primary_key=True)
     genre_name: str
-    slug: Optional[str] = Field(default=None, index=True)         # NEW (optional)
-    description: Optional[str] = Field(default=None)              # NEW (optional)
+    slug: Optional[str] = Field(default=None, index=True)
+    description: Optional[str] = Field(default=None)
 
 
 class Language(SQLModel, table=True):
@@ -88,7 +90,7 @@ class DecadeGenre(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     decade_id: Optional[int] = Field(default=None, foreign_key="decade.id")
     genre_id: Optional[int] = Field(default=None, foreign_key="genre.id")
-    slug: Optional[str] = Field(default=None, index=True)  # NEW (optional)
+    slug: Optional[str] = Field(default=None, index=True)
 
     decade: Optional["Decade"] = Relationship()
 
@@ -129,14 +131,12 @@ class TrackRanking(SQLModel, table=True):
     track_id: int = Field(foreign_key="track.id", index=True)
     decade_genre_id: int = Field(foreign_key="decade_genre.id", index=True)
 
-    # single list for now
     tracklist_id: int = Field(default=1)
 
     ranking: int = Field(index=True)
     intro: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
-    # Relationships
     track: Optional["Track"] = Relationship(back_populates="rankings")
     decade_genre: Optional["DecadeGenre"] = Relationship()
 
@@ -152,6 +152,7 @@ class Tracklist(SQLModel, table=True):
     language: Optional[str] = Field(default="en", max_length=2)
     notes: Optional[str] = Field(default=None)
     created_at: Optional[datetime] = Field(default=None)
+
 
 class Track(SQLModel, table=True):
     __tablename__ = "track"
@@ -172,23 +173,22 @@ class Track(SQLModel, table=True):
     album_artwork: Optional[str] = Field(default=None)
     year_released: Optional[int] = Field(default=None)
 
-    artist_id: int = Field(foreign_key="artist.id")                     # main artist
+    artist_id: int = Field(foreign_key="artist.id")
     featured_artist_id: Optional[int] = Field(default=None, foreign_key="artist.id")
 
     is_explicit: Optional[bool] = Field(default=False)
     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
     detail: Optional[str] = Field(default=None)
     short_detail: Optional[str] = Field(default=None)
+    short_detail_tts_key: Optional[str] = Field(default=None)
     language: Optional[str] = Field(default="en", max_length=2)
 
-    # ── NEW: media/source metadata for TV / film / stage etc. ───────────────
-    source_type: Optional[str] = Field(default=None)         # e.g., "TV", "Film", "Stage", "Game"
-    source_title: Optional[str] = Field(default=None)        # e.g., show / film / production title
-    years_on_air: Optional[str] = Field(default=None)        # e.g., "1959–1973" (TEXT)
-    source_role: Optional[str] = Field(default=None)         # e.g., "THEME", "OPENING", "CLOSING"
-    version_notes: Optional[str] = Field(default=None)       # e.g., "TV Opening", "Single edit"
+    source_type: Optional[str] = Field(default=None)
+    source_title: Optional[str] = Field(default=None)
+    years_on_air: Optional[str] = Field(default=None)
+    source_role: Optional[str] = Field(default=None)
+    version_notes: Optional[str] = Field(default=None)
 
-    # Relationships
     artist: "Artist" = Relationship(
         back_populates="tracks_as_main",
         sa_relationship_kwargs={"foreign_keys": "[Track.artist_id]"},
@@ -199,7 +199,6 @@ class Track(SQLModel, table=True):
     )
     rankings: list["TrackRanking"] = Relationship(back_populates="track")
 
-    # ✅ FIX: use SQLModel's Relationship with kwargs, not a raw sa_relationship
     collection_rankings: List["CollectionTrackRanking"] = Relationship(
         back_populates="track",
         sa_relationship_kwargs={"cascade": "all, delete-orphan"},
@@ -231,6 +230,7 @@ class TrackLocale(SQLModel, table=True):
     language_code: str
     detail_text: str
     short_detail_text: Optional[str] = Field(default=None)
+    short_detail_tts_key: Optional[str] = Field(default=None)
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
 
@@ -247,6 +247,33 @@ class ArtistLocale(SQLModel, table=True):
     artist_description_text: str
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
+
+
+class ArtistStory(SQLModel, table=True):
+    __tablename__ = "artist_story"
+    __table_args__ = (
+        UniqueConstraint(
+            "artist_id",
+            "language_code",
+            name="uix_artist_story_artist_lang",
+        ),
+    )
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    artist_id: int = Field(foreign_key="artist.id")
+    language_code: str
+
+    title: Optional[str] = Field(default=None)
+    story_text: str
+    story_type: Optional[str] = Field(default="standard")
+    duration_seconds: Optional[int] = Field(default=None)
+
+    tts_bucket: Optional[str] = None
+    tts_key: Optional[str] = None
+
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+
 
 class MusicDiscovery(SQLModel, table=True):
     __tablename__ = "music_discovery"
@@ -277,6 +304,32 @@ class MusicDiscoveryLocale(SQLModel, table=True):
     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
 
 
+class CollectionStory(SQLModel, table=True):
+    __tablename__ = "collection_story"
+    __table_args__ = (
+        UniqueConstraint(
+            "collection_id",
+            "language_code",
+            name="uix_collection_story_collection_lang",
+        ),
+    )
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    collection_id: int = Field(foreign_key="collection.id")
+    language_code: str
+
+    title: Optional[str] = Field(default=None)
+    story_text: str
+    story_type: Optional[str] = Field(default="standard")
+    duration_seconds: Optional[int] = Field(default=None)
+
+    tts_bucket: Optional[str] = None
+    tts_key: Optional[str] = None
+
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+
+
 # Re-exports from collection_models
 from .collection_models import (
     Collection,
@@ -285,7 +338,6 @@ from .collection_models import (
 )
 
 __all__ = [
-    # core models
     "DecadeGenreTrivia",
     "Artist",
     "Decade",
@@ -301,13 +353,11 @@ __all__ = [
     "TrackRankingLocale",
     "TrackLocale",
     "ArtistLocale",
-
-    # NEW
+    "ArtistStory",
     "MusicDiscovery",
     "MusicDiscoveryLocale",
-
-    # collections
     "Collection",
     "CollectionTrackRanking",
     "CollectionTrackRankingLocale",
+    "CollectionStory",
 ]
