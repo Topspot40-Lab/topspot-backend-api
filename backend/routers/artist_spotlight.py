@@ -417,11 +417,11 @@ def play_artist_story(
             }
 
         story, artist = result
-
         return {
             "ok": True,
             "story_id": story.id,
             "title": story.title,
+            "story_text": story.story_text,
             "duration_seconds": story.duration_seconds,
             "tts_bucket": story.tts_bucket,
             "tts_key": story.tts_key,
