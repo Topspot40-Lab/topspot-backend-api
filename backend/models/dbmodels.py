@@ -275,6 +275,59 @@ class ArtistStory(SQLModel, table=True):
     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
 
 
+class MusicDocuseriesCollection(SQLModel, table=True):
+    __tablename__ = "music_docuseries_collection"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    slug: str = Field(index=True, unique=True)
+    name: str
+    description: Optional[str] = None
+    sort_order: int = Field(default=0)
+    is_active: bool = Field(default=True)
+
+
+class MusicDocuseries(SQLModel, table=True):
+    __tablename__ = "music_docuseries"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    collection_id: int = Field(foreign_key="music_docuseries_collection.id")
+
+    slug: str = Field(index=True, unique=True)
+    title: str
+    short_description: Optional[str] = None
+    artwork_url: Optional[str] = None
+
+    target_length: Optional[str] = Field(default="standard")
+    sort_order: int = Field(default=0)
+    is_active: bool = Field(default=True)
+
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+
+
+class MusicDocuseriesLocale(SQLModel, table=True):
+    __tablename__ = "music_docuseries_locale"
+    __table_args__ = (
+        UniqueConstraint(
+            "docuseries_id",
+            "language_code",
+            name="uix_music_docuseries_locale_doc_lang",
+        ),
+    )
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    docuseries_id: int = Field(foreign_key="music_docuseries.id")
+    language_code: str
+
+    story_text: str
+    duration_seconds: Optional[int] = None
+
+    tts_bucket: Optional[str] = None
+    tts_key: Optional[str] = None
+
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+
 class MusicDiscovery(SQLModel, table=True):
     __tablename__ = "music_discovery"
 
@@ -354,6 +407,9 @@ __all__ = [
     "TrackLocale",
     "ArtistLocale",
     "ArtistStory",
+    "MusicDocuseriesCollection",
+    "MusicDocuseries",
+    "MusicDocuseriesLocale",
     "MusicDiscovery",
     "MusicDiscoveryLocale",
     "Collection",
