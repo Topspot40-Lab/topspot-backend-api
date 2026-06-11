@@ -109,4 +109,6 @@ def play_docuseries(
             "tts_key": locale.tts_key if locale else None,
             "artwork_url": item.artwork_url,
             "target_length": item.target_length,
+            "bed_bucket": "audio-en",
+            "bed_key": "bed-tracks/docuseries/bed_01.mp3",
         }

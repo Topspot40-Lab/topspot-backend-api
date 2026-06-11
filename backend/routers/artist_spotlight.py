@@ -425,6 +425,8 @@ def play_artist_story(
             "duration_seconds": story.duration_seconds,
             "tts_bucket": story.tts_bucket,
             "tts_key": story.tts_key,
+            "bed_bucket": "audio-en",
+            "bed_key": "bed-tracks/docuseries/bed_01.mp3",
             "artist_id": artist.id,
             "artist_name": artist.artist_name,
             "artist_artwork": artist.artist_artwork,
