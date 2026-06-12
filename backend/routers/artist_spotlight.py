@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.get("/artists-by-genre")
 def artists_by_genre(
-        genre: str = Query(...),
+        genre: str | None = Query(None),
         min_tracks: int = Query(3, ge=1),
         max_tracks: int | None = Query(None, ge=1),
 ):
@@ -39,7 +39,11 @@ def artists_by_genre(
             JOIN artist a
                 ON t.artist_id = a.id
 
-            WHERE g.slug = :genre
+            WHERE (
+                :genre IS NULL
+                OR :genre = 'all'
+                OR g.slug = :genre
+            )
 
             GROUP BY a.id
         ),
