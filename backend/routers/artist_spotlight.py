@@ -17,6 +17,7 @@ def artists_by_genre(
         genre: str | None = Query(None),
         min_tracks: int = Query(3, ge=1),
         max_tracks: int | None = Query(None, ge=1),
+        featured_only: bool = Query(True),
 ):
     sql = text("""
         WITH dg_counts AS (
@@ -65,9 +66,16 @@ def artists_by_genre(
             GROUP BY a.id
         )
 
-        SELECT
-            a.id AS artist_id,
-            a.artist_name,
+SELECT
+a.id AS artist_id,
+a.artist_name,
+
+EXISTS (
+    SELECT 1
+    FROM artist_story s
+    WHERE s.artist_id = a.id
+      AND s.language_code = 'en'
+) AS has_story,
 
 COALESCE(dg.dg_track_count, 0) AS genre_track_count,
 
@@ -100,11 +108,22 @@ COALESCE(dg.dg_track_count, 0) AS genre_track_count,
         LEFT JOIN collection_counts cc
             ON a.id = cc.artist_id
 
-        WHERE dg.dg_track_count >= :min_tracks
-          AND (
-                :max_tracks IS NULL
-                OR dg.dg_track_count <= :max_tracks
-              )
+WHERE dg.dg_track_count >= :min_tracks
+
+  AND (
+        :max_tracks IS NULL
+        OR dg.dg_track_count <= :max_tracks
+      )
+
+  AND (
+        :featured_only = false
+        OR EXISTS (
+            SELECT 1
+            FROM artist_story s
+            WHERE s.artist_id = a.id
+              AND s.language_code = 'en'
+        )
+      )
 
 ORDER BY
     genre_track_count DESC,
@@ -119,6 +138,7 @@ ORDER BY
                 "genre": genre,
                 "min_tracks": min_tracks,
                 "max_tracks": max_tracks,
+                "featured_only": featured_only,
             },
         ).mappings().all()
 
