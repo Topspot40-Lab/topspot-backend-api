@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 import argparse
 import os
 
@@ -9,7 +10,7 @@ from sqlmodel import Session, col, select
 
 from backend.database import engine
 from backend.models.dbmodels import Track, TrackLocale
-
+from backend.models.collection_models import CollectionTrackRanking
 
 def clean_text(value: str) -> str:
     return (
@@ -91,15 +92,24 @@ def get_worklist_track_ids(session: Session) -> list[int]:
     return [int(row[0]) for row in rows if row[0] is not None]
 
 
-def main(lang: str, limit: int | None, track_id: int | None, overwrite: bool) -> None:
+def main(lang: str, limit: int | None, track_id: int | None, overwrite: bool, collection_ids: str | None) -> None:
     with Session(engine) as session:
-        track_ids = get_worklist_track_ids(session)
+        if collection_ids:
+            ids = [int(x.strip()) for x in collection_ids.split(",") if x.strip()]
+            stmt = (
+                select(Track)
+                .join(CollectionTrackRanking, CollectionTrackRanking.track_id == Track.id)
+                .where(CollectionTrackRanking.collection_id.in_(ids))
+                .order_by(Track.id)
+            )
+        else:
+            track_ids = get_worklist_track_ids(session)
 
-        if not track_ids:
-            print("No worklist track IDs found.")
-            return
+            if not track_ids:
+                print("No worklist track IDs found.")
+                return
 
-        stmt = select(Track).where(col(Track.id).in_(track_ids))
+            stmt = select(Track).where(col(Track.id).in_(track_ids)).order_by(Track.id)
 
         if track_id is not None:
             stmt = stmt.where(Track.id == track_id)
@@ -171,6 +181,7 @@ if __name__ == "__main__":
     parser.add_argument("--limit", type=int, default=10)
     parser.add_argument("--track-id", type=int, default=None)
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--collection-ids", default=None)
     args = parser.parse_args()
 
     main(
@@ -178,4 +189,5 @@ if __name__ == "__main__":
         limit=args.limit,
         track_id=args.track_id,
         overwrite=args.overwrite,
+        collection_ids=args.collection_ids,
     )

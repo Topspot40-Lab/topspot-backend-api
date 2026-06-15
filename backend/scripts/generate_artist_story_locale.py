@@ -202,6 +202,7 @@ def main() -> None:
     parser.add_argument("--language", required=True)
     parser.add_argument("--save", action="store_true")
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--limit", type=int, default=10)
     args = parser.parse_args()
 
     language = normalize_language(args.language)
@@ -224,7 +225,14 @@ def main() -> None:
                 select(Artist)
                 .join(ArtistStory, ArtistStory.artist_id == Artist.id)
                 .where(ArtistStory.language_code == "en")
+                .where(
+                    ~ArtistStory.artist_id.in_(
+                        select(ArtistStory.artist_id)
+                        .where(ArtistStory.language_code == language)
+                    )
+                )
                 .order_by(Artist.artist_name)
+                .limit(args.limit)
             ).all()
 
             print(f"Locale batch generation")
@@ -232,6 +240,7 @@ def main() -> None:
             print(f"Artists:   {len(rows)}")
             print(f"Save mode: {args.save}")
             print(f"Overwrite: {args.overwrite}")
+            print(f"Limit:     {args.limit}")
             print()
 
             for artist in rows:

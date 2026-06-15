@@ -170,7 +170,35 @@ async def track_finished():
     logger.info("🎵 Track finished signal received")
     logger.info(f"TRACK DONE EVENT ID (router): {id(track_done_event)}")
 
-    # Signal backend sequence loop that Spotify track is done
+    current_phase = getattr(status, "phase", None)
+    current_ranking_id = getattr(status, "current_ranking_id", None)
+    current_spotify_id = getattr(status, "spotify_track_id", None)
+    track_start_ts = getattr(status, "track_start_ts", None)
+
+    track_age = None
+    if track_start_ts is not None:
+        track_age = time.time() - track_start_ts
+
+    logger.info(
+        "🎵 track-finished check: phase=%s ranking_id=%s spotify=%s track_age=%s",
+        current_phase,
+        current_ranking_id,
+        current_spotify_id,
+        round(track_age, 2) if track_age is not None else None,
+    )
+
+    if current_phase != "track":
+        logger.info("🚫 Ignoring track-finished because phase=%s", current_phase)
+        return {"ok": True, "ignored": True, "reason": "not_in_track_phase"}
+
+    if track_start_ts is None:
+        logger.info("🚫 Ignoring track-finished because track clock has not started")
+        return {"ok": True, "ignored": True, "reason": "track_clock_not_started"}
+
+    if track_age < 10:
+        logger.info("🚫 Ignoring track-finished because track_age=%.2fs is too young", track_age)
+        return {"ok": True, "ignored": True, "reason": "track_too_young"}
+
     track_done_event.set()
 
     return {"ok": True}

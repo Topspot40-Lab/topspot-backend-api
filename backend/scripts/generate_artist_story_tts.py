@@ -113,6 +113,7 @@ def main() -> None:
     parser.add_argument("--story-type", default=None)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--play", action="store_true")
+    parser.add_argument("--limit", type=int, default=10)
     args = parser.parse_args()
 
     language = normalize_language(args.language)
@@ -150,12 +151,15 @@ def main() -> None:
             if args.story_type:
                 query = query.where(ArtistStory.story_type == args.story_type)
 
+            query = query.limit(args.limit)
+
             rows = session.exec(query).all()
 
             print("Artist Story TTS batch")
             print(f"Language:  {language}")
             print(f"Overwrite: {args.overwrite}")
             print(f"Rows:      {len(rows)}")
+            print(f"Limit:     {args.limit}")
             print()
 
             for story, artist in rows:
