@@ -30,17 +30,16 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> None:
-    args = parse_args()
+def generate_collection_page(slug: str) -> Path:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     with Session(engine) as session:
         collection = session.exec(
-            select(Collection).where(Collection.slug == args.slug)
+            select(Collection).where(Collection.slug == slug)
         ).first()
 
         if not collection:
-            raise SystemExit(f"Collection not found: {args.slug}")
+            raise SystemExit(f"Collection not found: {slug}")
 
         category_name = "Uncategorized"
         if collection.category_id:
@@ -85,7 +84,7 @@ def main() -> None:
 <head>
     <meta charset="utf-8">
     <title>{html.escape(collection.name)} - TopSpot40 Catalog</title>
-    
+
 <style>
     body {{
         font-family: Arial, sans-serif;
@@ -219,6 +218,12 @@ def main() -> None:
 """
 
     output_path.write_text(page, encoding="utf-8")
+    return output_path
+
+
+def main() -> None:
+    args = parse_args()
+    output_path = generate_collection_page(args.slug)
     print(f"Created: {output_path}")
 
 
