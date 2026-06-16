@@ -15,7 +15,7 @@ from backend.models.collection_models import (
 )
 from backend.models.dbmodels import Track, Artist
 
-OUTPUT_DIR = Path("backend/scripts/catalogs/output")
+OUTPUT_DIR = Path("backend/scripts/catalogs/output/collections")
 
 
 def parse_args() -> argparse.Namespace:

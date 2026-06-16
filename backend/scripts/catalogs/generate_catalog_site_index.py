@@ -1,4 +1,14 @@
-<!doctype html>
+from __future__ import annotations
+
+from pathlib import Path
+
+OUTPUT_DIR = Path("backend/scripts/catalogs/output")
+
+
+def generate_catalog_site_index() -> Path:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    page = """<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -74,3 +84,17 @@
     </div>
 </body>
 </html>
+"""
+
+    output_path = OUTPUT_DIR / "index.html"
+    output_path.write_text(page, encoding="utf-8")
+    return output_path
+
+
+def main() -> None:
+    output_path = generate_catalog_site_index()
+    print(f"Created: {output_path}")
+
+
+if __name__ == "__main__":
+    main()
