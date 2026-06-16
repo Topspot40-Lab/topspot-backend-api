@@ -180,8 +180,8 @@ def generate_collection_page(slug: str) -> Path:
         }}
 
         .track-list {{
-            font-size: 15px;
-            line-height: 1.2;
+            font-size: 14px;
+            line-height: 1.1;
             column-gap: 40px;
         }}
 
