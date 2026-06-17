@@ -66,6 +66,15 @@ def generate_about_topspot40_page() -> Path:
             line-height: 1.45;
             font-style: italic;
         }
+        
+        .note {
+            margin: 22px 0;
+            padding: 14px 18px;
+            background: #f8f8f8;
+            border-left: 4px solid #2c7be5;
+            font-size: 16px;
+            line-height: 1.45;
+        }
 
         .footer {
             margin-top: 40px;
@@ -94,6 +103,38 @@ def generate_about_topspot40_page() -> Path:
         songs. They created anticipation, told stories, introduced artists, and made music feel
         like a journey.
     </p>
+    
+        <h2>The Story Behind the Name</h2>
+    <p>
+        People occasionally ask where the name <strong>TopSpot40</strong> came from.
+        The answer reflects the three major influences behind the project.
+    </p>
+
+    <p>
+        The word <strong>Top</strong> refers to the ranked music programs that form
+        the foundation of TopSpot40. Like the countdown shows I enjoyed growing up,
+        songs are organized into ranked lists that highlight memorable tracks from
+        each decade, genre, or collection.
+    </p>
+
+    <p>
+        The word <strong>Spot</strong> is a nod to Spotify, the music streaming platform
+        that TopSpot40 integrates with for music playback. TopSpot40 focuses on music
+        discovery, rankings, artist biographies, storytelling, and historical context,
+        while Spotify provides the licensed music streaming experience.
+    </p>
+
+    <p>
+        The number <strong>40</strong> comes from the influence of Casey Kasem's
+        American Top 40 countdowns. Those programs inspired my love of music rankings,
+        artist stories, and the excitement of discovering what song would come next.
+    </p>
+
+    <p>
+        Put together, the name <strong>TopSpot40</strong> represents ranked music
+        discovery, Spotify-integrated listening, and the enduring influence of the Top 40
+        radio tradition that inspired the project.
+    </p>
 
     <p>
         I wanted to bring some of that feeling back. Streaming services make it easy to hear
@@ -116,22 +157,32 @@ def generate_about_topspot40_page() -> Path:
         and stories that came before them.
     </p>
 
-    <h2>Patty's Rule</h2>
-    <p>
-        My wife Patty has had a major influence on this project. Over time, I developed what I
-        jokingly call "Patty's Rule": if Patty cannot easily understand or enjoy a feature, it
-        probably needs to be simplified.
-    </p>
+<h2>Patty's Rule</h2>
 
-    <p>
-        That simple idea helped keep TopSpot40 focused on the listener instead of the technology.
-        I tend to think like an engineer, but Patty's practical perspective reminded me again
-        and again that music should be enjoyable, intuitive, and accessible.
-    </p>
+<p>
+My wife Patty has played an important role in shaping TopSpot40 from the very beginning. Fluent in English, Spanish, and Portuguese, she brought a unique perspective to the project as both a music lover and a multilingual listener.
+</p>
 
-    <div class="quote">
-        Patty's Rule: If a feature is too complicated to enjoy, it probably needs to be simplified.
-    </div>
+<p>
+Over time, I developed what I jokingly call "Patty's Rule": if Patty cannot easily understand or enjoy a feature, it probably needs to be simplified. That simple principle helped keep TopSpot40 focused on the listener rather than the technology. As an engineer, I naturally enjoy building systems and adding features, but Patty consistently reminded me that the experience should remain intuitive, enjoyable, and accessible.
+</p>
+
+<p>
+Patty also played a vital role in one of the most distinctive parts of TopSpot40—its narrated storytelling. As we explored the growing library of ElevenLabs voices, she helped evaluate and select many of the voices used throughout the platform. Her fluency in all three supported languages allowed her to judge pronunciation, pacing, tone, and overall authenticity in ways that I could not have done alone.
+</p>
+
+<p>
+The result is that TopSpot40 does not simply tell stories in English, Spanish, and Portuguese—it tells them in voices carefully chosen to sound natural and engaging to listeners in each language. Many of the voices heard throughout the platform were selected with Patty's guidance and encouragement.
+</p>
+
+<p>
+In many ways, Patty helped shape not only how TopSpot40 works, but also how it sounds.
+</p>
+
+<div class="quote">
+Patty's Rule: If a feature is too complicated to enjoy, it probably needs to be simplified.
+</div>
+
 
     <h2>Teaching, Isaiah, and the Python Class</h2>
     <p>
@@ -173,6 +224,11 @@ def generate_about_topspot40_page() -> Path:
         appreciation for music, history, heritage, creativity, and the experiences that connect
         us across generations.
     </p>
+    
+    <div class="quote">
+        TopSpot40 is not designed to help people listen to more music.
+        It is designed to help people connect more deeply with the music they already love.
+    </div>
 
     <h2>Discovery Never Ends</h2>
     <p>
@@ -192,6 +248,23 @@ def generate_about_topspot40_page() -> Path:
         another artist to learn about, another story to hear, another culture to appreciate,
         and another song waiting to become a favorite.
     </p>
+    
+    <h2>Spotify Integration</h2>
+
+    <p>
+        TopSpot40 is a music discovery and storytelling platform that integrates with
+        Spotify for music playback. TopSpot40 does not host, distribute, or provide
+        music files. Instead, it enhances the listening experience through rankings,
+        artist biographies, narrated stories, music history, and curated listening
+        programs.
+    </p>
+    
+   
+    <div class="note">
+        Spotify provides the licensed music streaming experience. TopSpot40 provides
+        the stories, rankings, historical context, artist biographies, and discovery
+        features that help listeners connect more deeply with the music.
+    </div>
 
     <div class="footer">
         TopSpot40.com — Music Discovery Through the Decades
