@@ -116,7 +116,7 @@ def generate_at_a_glance_page() -> Path:
     <div class="stats-grid">
         <div class="stat">
             <div class="stat-number">4,425+</div>
-            <div class="stat-label">Tracks</div>
+            <div class="stat-label">Songs Linked Through Spotify</div>
         </div>
         <div class="stat">
             <div class="stat-number">1,943</div>
@@ -129,20 +129,11 @@ def generate_at_a_glance_page() -> Path:
     </div>
 
     <h2>Listening Experiences</h2>
-    <div class="stats-grid">
-        <div class="stat">
-            <div class="stat-number">64</div>
-            <div class="stat-label">Nostalgia Programs</div>
-        </div>
-        <div class="stat">
-            <div class="stat-number">52</div>
-            <div class="stat-label">Curated Collections</div>
-        </div>
-        <div class="stat">
-            <div class="stat-number">9</div>
-            <div class="stat-label">Collection Groups</div>
-        </div>
-    </div>
+    <h2>Genre Coverage</h2>
+    <p>
+        TopSpot40 includes eight major genre categories: Country, Pop, Rock,
+        R&amp;B Soul, Latin Global, Blues Jazz, Folk Acoustic, and TV Themes.
+    </p>
 
     <h2>Featured Artist Storytelling</h2>
     <div class="stats-grid">

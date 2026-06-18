@@ -32,9 +32,9 @@ def generate_cover_page() -> Path:
         }}
 
         .cover-image {{
-            max-width: 520px;
-            width: 80%;
-            margin: 20px auto 28px auto;
+            max-width: 420px;
+            width: 70%;
+            margin: 10px auto 20px auto;
             display: block;
             border-radius: 8px;
         }}
@@ -89,8 +89,6 @@ def generate_cover_page() -> Path:
 <body>
 
     <img class="cover-image" src="assets/{IMAGE_FILENAME}" alt="TopSpot40 Old Dog New Tracks">
-
-    <h1>TOPSPOT40</h1>
 
     <div class="subtitle">
         Music Discovery Through the Decades
