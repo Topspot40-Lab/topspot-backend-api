@@ -270,7 +270,7 @@ def main(limit: int | None, track_id: int | None, overwrite: bool, save: bool, l
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--langs", nargs="+", default=["en"], choices=LANGS)
-    parser.add_argument("--limit", type=int, default=5)
+    parser.add_argument("--limit", type=int, default=50)
     parser.add_argument("--track-id", type=int, default=None)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--save", action="store_true")
