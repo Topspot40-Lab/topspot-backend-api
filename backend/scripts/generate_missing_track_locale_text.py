@@ -178,7 +178,7 @@ def main(lang: str, limit: int | None, track_id: int | None, overwrite: bool, co
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--lang", required=True, choices=["es", "pt-BR"])
-    parser.add_argument("--limit", type=int, default=10)
+    parser.add_argument("--limit", type=int, default=50)
     parser.add_argument("--track-id", type=int, default=None)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--collection-ids", default=None)
@@ -187,6 +187,7 @@ if __name__ == "__main__":
     main(
         lang=args.lang,
         limit=args.limit,
+
         track_id=args.track_id,
         overwrite=args.overwrite,
         collection_ids=args.collection_ids,
