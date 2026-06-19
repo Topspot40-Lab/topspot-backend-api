@@ -82,56 +82,66 @@ class PlaybackStatus:
 
 
 # 🔴 SINGLE GLOBAL INSTANCE
-from backend.state.playback_runtime import RuntimeObjectProxy
+#status = PlaybackStatus()
 
-status = RuntimeObjectProxy("status")
+statuses: dict[str, PlaybackStatus] = {}
+def get_status(user_id: str) -> PlaybackStatus:
+    if user_id not in statuses:
+        statuses[user_id] = PlaybackStatus()
+    return statuses[user_id]
 
 
 # ─────────────────────────────────────────────
 # Helpers
 # ─────────────────────────────────────────────
-def _touch() -> None:
-    status.last_action_ts = time.time()
+def _touch(user_id: str) -> None:
+    s = get_status(user_id)
+    s.last_action_ts = time.time()
 
 
-def begin_track(track_duration_seconds: float) -> None:
+def begin_track(user_id: str, track_duration_seconds: float) -> None:
     """
     Call this EXACTLY when a new Spotify track starts playing.
     This arms the per-track clock.
     """
-    status.track_start_ts = time.time()
-    status.track_elapsed_seconds = 0.0
-    status.track_duration_seconds = track_duration_seconds
-    status.track_percent_complete = 0.0
-    _touch()
+    s = get_status(user_id)
+    s.track_start_ts = time.time()
+    s.track_elapsed_seconds = 0.0
+    s.track_duration_seconds = track_duration_seconds
+    s.track_percent_complete = 0.0
+    _touch(user_id)
 
 
-def update_track_clock() -> None:
+def update_track_clock(user_id: str) -> None:
     """
     Advances the per-track clock. Safe to call repeatedly.
     """
+    s = get_status(user_id)
     if (
-            status.is_playing
-            and status.phase == "track"
-            and status.track_start_ts > 0
+            s.is_playing
+            and s.phase == "track"
+            and s.track_start_ts > 0
     ):
-        status.track_elapsed_seconds = time.time() - status.track_start_ts
+        s.track_elapsed_seconds = time.time() - s.track_start_ts
 
-        if status.track_duration_seconds > 0:
-            status.track_percent_complete = min(
+        if s.track_duration_seconds > 0:
+            s.track_percent_complete = min(
                 100.0,
-                (status.track_elapsed_seconds / status.track_duration_seconds) * 100.0,
+                (s.track_elapsed_seconds / s.track_duration_seconds) * 100.0,
             )
 
 
-def update_phase(phase: Phase, **kwargs) -> None:
-    status.phase = phase
+def update_phase(user_id: str, phase: Phase, **kwargs) -> None:
+    #status.phase = phase
+    s = get_status(user_id)
+    s.phase = phase
 
     # Apply direct attributes first
     for k, v in kwargs.items():
-        setattr(status, k, v)
+        setattr(s, k, v)
 
-    status.context = kwargs.get("context", {})
+    if "context" in kwargs:
+        s.context = kwargs["context"]
 
     # 🎯 Global (show-level) progress handling
     elapsed = None
@@ -151,62 +161,66 @@ def update_phase(phase: Phase, **kwargs) -> None:
         duration = ctx.get("durationSeconds", duration)
 
     if elapsed is not None:
-        status.elapsed_seconds = float(elapsed)
+        s.elapsed_seconds = float(elapsed)
 
     if duration is not None:
-        status.duration_seconds = float(duration)
+        s.duration_seconds = float(duration)
 
-    if status.duration_seconds > 0:
-        status.percent_complete = min(
+    if s.duration_seconds > 0:
+        s.percent_complete = min(
             100.0,
-            (status.elapsed_seconds / status.duration_seconds) * 100.0,
+            (s.elapsed_seconds / s.duration_seconds) * 100.0,
         )
     else:
-        status.percent_complete = 0.0
+        s.percent_complete = 0.0
 
-    _touch()
+    _touch(user_id)
 
 
 def mark_playing(
         *,
+        user_id: str,
         mode: Mode,
         language: str,
         context: Optional[dict[str, Any]] = None,
 ) -> None:
-    status.is_playing = True
-    status.is_paused = False
-    status.stopped = False
-    status.sequence_done = False
-    status.mode = mode
-    status.language = language
+    s = get_status(user_id)
+    s.is_playing = True
+    s.is_paused = False
+    s.stopped = False
+    s.sequence_done = False
+    s.mode = mode
+    s.language = language
     if context is not None:
-        status.context = context
-    _touch()
+        s.context = context
+    _touch(user_id)
 
 
-def mark_paused() -> None:
-    status.is_playing = False
-    status.is_paused = True
-    _touch()
+def mark_paused(user_id: str) -> None:
+    s = get_status(user_id)
+    s.is_playing = False
+    s.is_paused = True
+    _touch(user_id)
 
 
-def mark_stopped() -> None:
-    status.is_playing = False
-    status.is_paused = False
-    status.stopped = True
-    status.cancel_requested = False
-    status.sequence_done = True
-    status.phase = "idle"
+def mark_stopped(user_id: str) -> None:
+    s = get_status(user_id)
+    s.is_playing = False
+    s.is_paused = False
+    s.stopped = True
+    s.cancel_requested = False
+    s.sequence_done = True
+    s.phase = "idle"
 
     # Reset GLOBAL clocks
-    status.elapsed_seconds = 0.0
-    status.duration_seconds = 0.0
-    status.percent_complete = 0.0
+    s.elapsed_seconds = 0.0
+    s.duration_seconds = 0.0
+    s.percent_complete = 0.0
 
     # Reset TRACK clocks
-    status.track_start_ts = 0.0
-    status.track_elapsed_seconds = 0.0
-    status.track_duration_seconds = 0.0
-    status.track_percent_complete = 0.0
+    s.track_start_ts = 0.0
+    s.track_elapsed_seconds = 0.0
+    s.track_duration_seconds = 0.0
+    s.track_percent_complete = 0.0
 
-    _touch()
+    _touch(user_id)

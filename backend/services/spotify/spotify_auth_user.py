@@ -11,6 +11,9 @@ from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import CacheFileHandler
 
+from backend.isaiah.isaiah_spotify import get_valid_access_token
+
+
 logger = logging.getLogger(__name__)
 
 # ── Load .env from repo root once (non-destructive) ──────────────────────────
@@ -78,31 +81,33 @@ def _build_auth_manager(open_browser: bool = False) -> SpotifyOAuth:
     )
 
 
-def get_spotify_user_client(allow_prompt: bool = False) -> Spotify:
+async def get_spotify_user_client(user_id: str) -> Spotify:
     """
     Return a Spotipy client using a cached USER token.
     - If no cached token and allow_prompt=False, raise a RuntimeError
       (routes should instruct user to /spotify/authorize).
     - If allow_prompt=True (CLI only), the OAuth flow may open a browser.
     """
-    global _client, _auth_manager
+    #global _client, _auth_manager
 
-    if _client is not None:
-        return _client
+    #if _client is not None:
+     #   return _client
 
-    _auth_manager = _build_auth_manager(open_browser=allow_prompt)
+    #_auth_manager = _build_auth_manager(open_browser=allow_prompt)
 
-    token_info = _auth_manager.get_cached_token()
-    if not token_info:
-        raise RuntimeError(
-            "No Spotify user token found. "
-            "Visit /spotify/authorize to sign in and populate "
-            f"{CACHE_FILE}"
-        )
+    #token_info = _auth_manager.get_cached_token()
+    access_token = await get_valid_access_token(user_id)
+    #if not token_info:
+     #   raise RuntimeError(
+     #       "No Spotify user token found. "
+     #       "Visit /spotify/authorize to sign in and populate "
+     #       f"{CACHE_FILE}"
+     #   )
 
-    _client = spotipy.Spotify(auth_manager=_auth_manager)
-    logger.debug("✅ Spotify user-auth client ready (cache=%s)", CACHE_FILE)
-    return _client
+    #_client = spotipy.Spotify(auth_manager=_auth_manager)
+    #logger.debug("✅ Spotify user-auth client ready (cache=%s)", CACHE_FILE)
+    #return _client
+    return spotipy.Spotify(auth=access_token)
 
 
 # Optional: handy introspection for a /spotify/debug-config route

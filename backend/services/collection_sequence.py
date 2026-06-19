@@ -58,6 +58,7 @@ def _extract_bucket_key(job):
 async def publish_narration_phase(
         phase: Literal["set_intro", "liner", "intro", "detail", "artist", "collection_intro"],
         *,
+        user_id: str,
         track,
         artist,
         rank,
@@ -89,8 +90,8 @@ async def publish_narration_phase(
     logger.info("🎙 Published %s frame: %s", phase.upper(), audio_url)
 
     if voice_style == "before":
-        narration_done_event.clear()
-        await narration_done_event.wait()
+        narration_done_event(user_id).clear()
+        await narration_done_event(user_id).wait()
 
 
 # ─────────────────────────────────────────────
@@ -709,6 +710,7 @@ async def run_collection_continuous_sequence(
                     if bucket and key:
                         await publish_narration_phase(
                             "intro",
+                            user_id=user_id,
                             track=track,
                             artist=artist,
                             rank=rank,

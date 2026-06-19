@@ -1,22 +1,14 @@
+# backend/services/playback.py
 import asyncio
 import logging
 from typing import Optional
 
-import spotipy
 from spotipy.exceptions import SpotifyException
-from backend.isaiah.isaiah_spotify import get_valid_access_token
-from backend.state.playback_runtime import current_runtime, current_user_id
+from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from backend.state.playback_state import begin_track, status
-
+from backend.isaiah.isaiah_spotify import get_valid_access_token
 
 logger = logging.getLogger(__name__)
-
-
-async def get_spotify_playback_client():
-    runtime = current_runtime()
-    access_token = await get_valid_access_token(current_user_id())
-    runtime.spotify_client = spotipy.Spotify(auth=access_token)
-    return runtime.spotify_client
 
 
 # ──────────────────────────────────────────────────────────
@@ -43,8 +35,8 @@ def _pick_device_id(sp, prefer_active: bool = True) -> Optional[str]:
 # ──────────────────────────────────────────────────────────
 # Robust Spotify volume setter (ASYNC, but uses SYNC client)
 # ──────────────────────────────────────────────────────────
-async def set_device_volume(volume: int, device_id: str | None = None):
-    sp = await get_spotify_playback_client()
+async def set_device_volume(volume: int, user_id: str, device_id: str | None = None):
+    sp = await get_spotify_user_client(user_id)
 
     try:
         current = sp.current_playback()
@@ -67,12 +59,16 @@ async def set_device_volume(volume: int, device_id: str | None = None):
 # ──────────────────────────────────────────────────────────
 # INTERNAL async implementation
 # ──────────────────────────────────────────────────────────
-async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = None) -> bool:
+async def _play_spotify_track_async(track_id: str, user_id: str, device_id: Optional[str] = None) -> bool:
     try:
-        client = await get_spotify_playback_client()
+        client = await get_spotify_user_client(user_id)
+
+        devices = client.devices().get("devices", [])
+        device_id = next((d["id"] for d in devices if d.get("is_active")), None)
 
         if not device_id:
-            device_id = _pick_device_id(client, prefer_active=True)
+            #device_id = _pick_device_id(client, prefer_active=True)
+            device_id = devices[0]["id"] if devices else None
 
         devices = client.devices().get("devices", [])
         logger.debug("🎧 Spotify devices: %s", devices)
@@ -103,7 +99,7 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
         await asyncio.sleep(0.30)
 
         # Ensure main track plays at full volume
-        await set_device_volume(100, device_id)
+        await set_device_volume(100, user_id, device_id)
 
         logger.debug(f"🎵 Spotify track started at 100% volume: {track_id}")
         return True
@@ -120,20 +116,22 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
 # ──────────────────────────────────────────────────────────
 # PUBLIC API (LEGACY-SAFE SYNC WRAPPER)
 # ──────────────────────────────────────────────────────────
-async def play_spotify_track(track_id: str, device_id: Optional[str] = None) -> bool:
-    return await _play_spotify_track_async(track_id, device_id)
+async def play_spotify_track(track_id: str, user_id: str, device_id: Optional[str] = None) -> bool:
+    if not user_id:
+        raise ValueError("user_id is required for Spotify playback")
+    return await _play_spotify_track_async(track_id, user_id, device_id)
 
 
 
 # ──────────────────────────────────────────────────────────
 # HARD STOP (for skip / next / prev)
 # ──────────────────────────────────────────────────────────
-async def stop_spotify_track(*, device_id: Optional[str] = None) -> bool:
+async def stop_spotify_track(*, user_id: str, device_id: Optional[str] = None) -> bool:
     """
     Immediate stop (pause) without fade — used for hard skip/next.
     """
     try:
-        sp = await get_spotify_playback_client()
+        sp = await get_spotify_user_client(user_id)
 
         chosen_device_id = device_id or _pick_device_id(sp, prefer_active=True)
         if not chosen_device_id:
@@ -156,13 +154,13 @@ async def stop_spotify_track(*, device_id: Optional[str] = None) -> bool:
 # ──────────────────────────────────────────────────────────
 # SOFT STOP (Fade-Out) — with Spotify "restriction" safety patch
 # ──────────────────────────────────────────────────────────
-async def stop_spotify_playback(fade_out_seconds: float = 1.5, steps: int = 10) -> None:
+async def stop_spotify_playback(user_id: str, fade_out_seconds: float = 1.5, steps: int = 10) -> None:
     """
     Fade Spotify volume gradually to 0, then pause safely.
     Prevents 403 'Restriction violated' errors during fast transitions.
     """
     try:
-        sp = await get_spotify_playback_client()
+        sp = await get_spotify_user_client(user_id)
 
         # ──────────────────────────────────────────────
         # Locate active device
@@ -232,8 +230,8 @@ async def stop_spotify_playback(fade_out_seconds: float = 1.5, steps: int = 10) 
     except Exception as e:
         logger.warning("⚠️ stop_spotify_playback error: %s", e)
 
-async def ensure_active_device():
-    sp = await get_spotify_playback_client()
+async def ensure_active_device(user_id: str):
+    sp = await get_spotify_user_client(user_id)
     devices = sp.devices().get("devices", [])
     if not devices:
         raise RuntimeError("No Spotify devices available")

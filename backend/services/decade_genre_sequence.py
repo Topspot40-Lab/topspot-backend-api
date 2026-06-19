@@ -64,6 +64,7 @@ def _extract_bucket_key(job):
 async def publish_narration_phase(
         phase: Literal["set_intro", "liner", "intro", "detail", "artist"],
         *,
+        user_id,
         track,
         artist,
         rank: int,
@@ -118,8 +119,8 @@ async def publish_narration_phase(
     # - "before": backend waits until frontend signals narration finished
     # - "over": do not wait (narration overlaps track)
     if voice_style == "before":
-        narration_done_event.clear()
-        await narration_done_event.wait()
+        narration_done_event(user_id).clear()
+        await narration_done_event(user_id).wait()
 
 def build_texts_by_language(
         langs,
@@ -205,8 +206,8 @@ async def publish_narration_queue_phase(
     logger.info("🎙 Published %s queue frame: %d item(s)", phase.upper(), len(audio_queue))
 
     if voice_style == "before":
-        narration_done_event.clear()
-        await narration_done_event.wait()
+        narration_done_event(user_id).clear()
+        await narration_done_event(user_id).wait()
 
 
 # ─────────────────────────────────────────────

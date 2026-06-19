@@ -31,9 +31,14 @@ class PlaybackFlags:
     artist_name: str = ""
 
 
-from backend.state.playback_runtime import RuntimeObjectProxy
+#flags = PlaybackFlags()
+flags_by_user: dict[str, PlaybackFlags] = {}
+def get_flags(user_id: str) -> PlaybackFlags:
+    if user_id not in flags_by_user:
+        flags_by_user[user_id] = PlaybackFlags()
+    return flags_by_user[user_id]
 
-flags = RuntimeObjectProxy("flags")
+flags = PlaybackFlags()
 
 
 def touch():
