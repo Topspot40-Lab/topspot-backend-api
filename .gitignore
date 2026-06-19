@@ -7,6 +7,7 @@ __pycache__/
 *.sh
 log_audit*.txt
 console_audit*.txt
+backend/scripts/catalogs/output/*.html
 
 # Virtual environments
 .venv/
