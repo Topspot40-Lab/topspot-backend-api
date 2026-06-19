@@ -1,3 +1,4 @@
+# backend/isaiah/isaiah_router.py
 from fastapi import Query, APIRouter, Request, HTTPException, Cookie
 from fastapi.responses import RedirectResponse, JSONResponse
 from backend.isaiah.isaiah_spotify import exchange_code_for_token, get_user_profile, get_valid_access_token  # from spotify helper module
@@ -163,9 +164,9 @@ async def spotify_callback(request: Request):
     redirect_uri = get_spotify_redirect_uri(local=IS_LOCAL)
 
     token_data = await exchange_code_for_token(code, redirect_uri)
-    logger.critical(token_data)
+    #logger.critical(token_data)
     access_token = token_data["access_token"]
-    logger.critical("SPOTIFY ACCESS TOKEN: %s", access_token)
+    #logger.critical("SPOTIFY ACCESS TOKEN: %s", access_token)
     logger.critical("TOKEN LENGTH: %s", len(access_token))
 
     refresh_token = token_data.get("refresh_token")   # sometimes only returned on first exchange
@@ -475,7 +476,7 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
         return {
             "status": status,
             "subscription_id": subscription_id,
-            "is_active": status in ("active", "trialing")
+            "is_active": status in ("active", "trialing", "past_due")
         }
 
 
@@ -544,7 +545,7 @@ async def get_subscription_status(access_token: str = Cookie(None)):
     #if not sub:
         #return {"is_subscribed": False}
     
-    valid = sub and sub.get("status") in ("active", "trialing")
+    valid = sub and sub.get("status") in ("active", "trialing", "past_due")
 
     return {
         "is_subscribed": valid,
@@ -619,6 +620,7 @@ async def stripe_webhook(request: Request):
         event = stripe.Webhook.construct_event(
             payload, sig_header, webhook_secret
         )
+        event_id = event["id"]
     except stripe.error.SignatureVerificationError:
         raise HTTPException(status_code=400, detail="Invalid signature")
     except Exception as e:
@@ -627,6 +629,24 @@ async def stripe_webhook(request: Request):
 
     event_type = event["type"]
     data = event["data"]["object"]
+    try:
+        supabase.table("stripe_webhook_events").insert({
+            "id": event_id,
+            "type": event_type,
+        }).execute()
+
+    except Exception as e:
+        error_message = str(e).lower()
+        if ("duplicate key value" in error_message or "already exists" in error_message):
+            logger.warning(
+                f"Duplicate Stripe webhook ignored: "
+                f"{event_type} ({event_id})"
+            )
+
+            return JSONResponse({
+                "status": "duplicate_ignored"
+            })
+        raise
 
     logger.critical(f"🔥 Webhook event: {event_type}")
 

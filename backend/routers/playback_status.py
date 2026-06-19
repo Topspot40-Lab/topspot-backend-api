@@ -1,20 +1,24 @@
 from __future__ import annotations
 
-from dataclasses import asdict
 import time
 import logging
 
 from backend.state.playback_state import status
 
-from fastapi import APIRouter
-from backend.services.spotify.spotify_auth_user import get_spotify_user_client
+from fastapi import APIRouter, Depends
+from backend.services.spotify.playback import get_spotify_playback_client
 from backend.services.spotify.playback import (
     stop_spotify_playback
 )
 
 from backend.state.narration import narration_done_event
+from backend.state.playback_runtime import bind_request_user, snapshot_dataclass
 
-router = APIRouter(prefix="/playback", tags=["Playback Status"])
+router = APIRouter(
+    prefix="/playback",
+    tags=["Playback Status"],
+    dependencies=[Depends(bind_request_user)],
+)
 logger = logging.getLogger(__name__)
 
 
@@ -31,7 +35,7 @@ async def get_devices():
     """
     List available Spotify playback devices for the user.
     """
-    sp = get_spotify_user_client()
+    sp = await get_spotify_playback_client()
     data = sp.devices()
     return {
         "devices": data.get("devices", [])
@@ -42,7 +46,7 @@ async def get_devices():
 async def get_status():
     update_track_clock()
 
-    snap = asdict(status)
+    snap = snapshot_dataclass(status)
 
     ctx = snap.get("context") or status.context or {}
     ctx["ranking_id"] = snap.get("current_ranking_id")
@@ -113,7 +117,7 @@ async def transfer_playback(device_id: str):
     """
     Force Spotify playback onto a specific device.
     """
-    sp = get_spotify_user_client()
+    sp = await get_spotify_playback_client()
     sp.transfer_playback(device_id=device_id, force_play=True)
     return {"ok": True, "device_id": device_id}
 

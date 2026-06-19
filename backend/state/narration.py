@@ -1,5 +1,5 @@
 # backend/state/narration.py
-import asyncio
+from backend.state.playback_runtime import RuntimeEventProxy
 
-narration_done_event = asyncio.Event()
-track_done_event = asyncio.Event()
+narration_done_event = RuntimeEventProxy("narration_done_event")
+track_done_event = RuntimeEventProxy("track_done_event")

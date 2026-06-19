@@ -2,12 +2,21 @@ import asyncio
 import logging
 from typing import Optional
 
+import spotipy
 from spotipy.exceptions import SpotifyException
-from backend.services.spotify.spotify_auth_user import get_spotify_user_client
+from backend.isaiah.isaiah_spotify import get_valid_access_token
+from backend.state.playback_runtime import current_runtime, current_user_id
 from backend.state.playback_state import begin_track, status
 
 
 logger = logging.getLogger(__name__)
+
+
+async def get_spotify_playback_client():
+    runtime = current_runtime()
+    access_token = await get_valid_access_token(current_user_id())
+    runtime.spotify_client = spotipy.Spotify(auth=access_token)
+    return runtime.spotify_client
 
 
 # ──────────────────────────────────────────────────────────
@@ -35,7 +44,7 @@ def _pick_device_id(sp, prefer_active: bool = True) -> Optional[str]:
 # Robust Spotify volume setter (ASYNC, but uses SYNC client)
 # ──────────────────────────────────────────────────────────
 async def set_device_volume(volume: int, device_id: str | None = None):
-    sp = get_spotify_user_client()
+    sp = await get_spotify_playback_client()
 
     try:
         current = sp.current_playback()
@@ -60,7 +69,7 @@ async def set_device_volume(volume: int, device_id: str | None = None):
 # ──────────────────────────────────────────────────────────
 async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = None) -> bool:
     try:
-        client = get_spotify_user_client()
+        client = await get_spotify_playback_client()
 
         if not device_id:
             device_id = _pick_device_id(client, prefer_active=True)
@@ -119,12 +128,12 @@ async def play_spotify_track(track_id: str, device_id: Optional[str] = None) -> 
 # ──────────────────────────────────────────────────────────
 # HARD STOP (for skip / next / prev)
 # ──────────────────────────────────────────────────────────
-def stop_spotify_track(*, device_id: Optional[str] = None) -> bool:
+async def stop_spotify_track(*, device_id: Optional[str] = None) -> bool:
     """
     Immediate stop (pause) without fade — used for hard skip/next.
     """
     try:
-        sp = get_spotify_user_client()
+        sp = await get_spotify_playback_client()
 
         chosen_device_id = device_id or _pick_device_id(sp, prefer_active=True)
         if not chosen_device_id:
@@ -153,7 +162,7 @@ async def stop_spotify_playback(fade_out_seconds: float = 1.5, steps: int = 10) 
     Prevents 403 'Restriction violated' errors during fast transitions.
     """
     try:
-        sp = get_spotify_user_client()
+        sp = await get_spotify_playback_client()
 
         # ──────────────────────────────────────────────
         # Locate active device
@@ -224,7 +233,7 @@ async def stop_spotify_playback(fade_out_seconds: float = 1.5, steps: int = 10) 
         logger.warning("⚠️ stop_spotify_playback error: %s", e)
 
 async def ensure_active_device():
-    sp = get_spotify_user_client()
+    sp = await get_spotify_playback_client()
     devices = sp.devices().get("devices", [])
     if not devices:
         raise RuntimeError("No Spotify devices available")

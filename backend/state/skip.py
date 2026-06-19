@@ -1,4 +1,4 @@
 # backend/state/skip.py
-import asyncio
+from backend.state.playback_runtime import RuntimeEventProxy
 
-skip_event = asyncio.Event()
+skip_event = RuntimeEventProxy("skip_event")

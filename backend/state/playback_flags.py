@@ -1,3 +1,4 @@
+# backend/state/playback_flags.py
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal, Optional
@@ -30,7 +31,9 @@ class PlaybackFlags:
     artist_name: str = ""
 
 
-flags = PlaybackFlags()
+from backend.state.playback_runtime import RuntimeObjectProxy
+
+flags = RuntimeObjectProxy("flags")
 
 
 def touch():

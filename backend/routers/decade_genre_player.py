@@ -28,8 +28,12 @@ from backend.services.decade_genre_sequence import run_decade_genre_sequence
 from backend.routers.playback_control import start_new_sequence
 from backend.state.playback_flags import flags
 from backend.state.playback_state import status
+from backend.state.playback_runtime import bind_request_user
 
-router = APIRouter(prefix="/supabase/decade-genre", tags=["Supabase: Decade/Genre"])
+router = APIRouter(
+    prefix="/supabase/decade-genre",
+    tags=["Supabase: Decade/Genre"],
+)
 logger = logging.getLogger(__name__)
 
 
@@ -53,7 +57,7 @@ def get_max_rank_for_decade_genre(db, decade: str, genre: str) -> int:
 # ─────────────────────────────────────────────
 # FAST PLAY-FIRST (INSTANT START)
 # ─────────────────────────────────────────────
-@router.get("/play-first")
+@router.get("/play-first", dependencies=[Depends(bind_request_user)])
 async def play_first_decade_genre(
         decade: str = Query(...),
         genre: str = Query(...),
@@ -159,7 +163,7 @@ def start_radio_mode(
 # ─────────────────────────────────────────────
 # START NEW SEQUENCE (FULL RANGE)
 # ─────────────────────────────────────────────
-@router.get("/play-sequence")
+@router.get("/play-sequence", dependencies=[Depends(bind_request_user)])
 async def play_sequence_decade_genre(
         decade: str = Query(...),
         genre: str = Query(...),
@@ -320,7 +324,7 @@ async def play_sequence_decade_genre(
 # ─────────────────────────────────────────────
 # NEXT TRACK (SINGLE ADVANCE)
 # ─────────────────────────────────────────────
-@router.post("/next")
+@router.post("/next", dependencies=[Depends(bind_request_user)])
 async def play_next_decade_genre():
     """
     Advances playback to the NEXT logical track based on:

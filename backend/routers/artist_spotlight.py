@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy import text
 from backend.database import engine
 import asyncio
+from backend.state.playback_runtime import bind_request_user, bind_task, current_user_id
 
 router = APIRouter(
     prefix="/artist-spotlight",
@@ -316,7 +317,7 @@ SELECT
     }
 
 
-@router.post("/play-radio")
+@router.post("/play-radio", dependencies=[Depends(bind_request_user)])
 async def play_artist_radio(
         genre: str = Query(...),
         artist_id: int | None = Query(None),
@@ -329,7 +330,7 @@ async def play_artist_radio(
 ):
     from backend.services.artist_radio_sequence import run_artist_radio_sequence
 
-    asyncio.create_task(
+    task = asyncio.create_task(
         run_artist_radio_sequence(
             genre=genre,
             tts_language=tts_language,
@@ -341,6 +342,7 @@ async def play_artist_radio(
             spotify_artist_id=spotify_artist_id,
         )
     )
+    bind_task(task, current_user_id())
 
     return {
         "ok": True,

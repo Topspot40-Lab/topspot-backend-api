@@ -15,15 +15,13 @@ from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
 
 import asyncio
 import logging
-from dataclasses import asdict
 from typing import Literal, Optional
 import contextlib
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi import HTTPException
 
-from backend.services.spotify.spotify_auth_user import get_spotify_user_client
-from backend.services.spotify.playback import set_device_volume
+from backend.services.spotify.playback import get_spotify_playback_client, set_device_volume
 
 # ✅ KEEP data models, but not the pipeline
 from backend.services.playback_engine import (
@@ -37,12 +35,17 @@ from backend.state.playback_flags import (
     touch,
     reset_for_single_track,
 )
+from backend.state.playback_runtime import (
+    bind_request_user,
+    bind_task,
+    current_runtime,
+    current_user_id,
+    snapshot_dataclass,
+)
 
 logger = logging.getLogger(__name__)
 
 # 🔒 Global playback sequence lock — prevents overlapping launches
-sequence_lock = asyncio.Lock()
-
 # Try loading skip_event if available
 try:
     from backend.state.skip import skip_event
@@ -53,6 +56,7 @@ except Exception:
 router = APIRouter(
     prefix="/playback",
     tags=["Playback"],
+    dependencies=[Depends(bind_request_user)],
 )
 
 
@@ -101,9 +105,6 @@ async def play_spotify(req: PlaySpotifyRequest):
 # ─────────────────────────────────────────────
 # GLOBAL ASYNC TASK REFERENCE
 # ─────────────────────────────────────────────
-current_task: asyncio.Task | None = None
-
-
 async def _run_sequence_guarded(coro):
     logger.info("🔥 Sequence START")
     try:
@@ -118,14 +119,14 @@ async def _run_sequence_guarded(coro):
 
 def cancel_for_skip() -> None:
     """Cancel current playback immediately for Next/Prev without poisoning global flags."""
-    global current_task
+    runtime = current_runtime()
     logger.warning("🛑 cancel_for_skip CALLED by Next/Prev")
 
-    if current_task:
+    if runtime.current_task:
         logger.warning("⏭ Cancelling current playback for skip/next/prev")
         with contextlib.suppress(Exception):
-            current_task.cancel()
-        current_task = None
+            runtime.current_task.cancel()
+        runtime.current_task = None
 
     if skip_event is not None:
         with contextlib.suppress(Exception):
@@ -140,16 +141,16 @@ async def cancel_current_sequence():
     Cancels an in-flight playback coroutine (intros, details, track, bed, etc.).
     Ensures proper async cleanup before a new sequence can begin.
     """
-    global current_task
+    runtime = current_runtime()
 
-    if current_task:
+    if runtime.current_task:
         logger.info("🔄 Replacing existing playback sequence")
         flags.cancel_requested = True
         try:
-            current_task.cancel()
+            runtime.current_task.cancel()
         except Exception:
             pass
-        current_task = None
+        runtime.current_task = None
 
     flags.is_playing = False
     flags.stopped = True
@@ -185,20 +186,22 @@ async def start_new_sequence(coro):
     Ensures exclusive playback launch by protecting the entire
     cancel → start sequence with a global asyncio.Lock.
     """
-    async with sequence_lock:
+    runtime = current_runtime()
+    user_id = current_user_id()
+    async with runtime.sequence_lock:
         await cancel_current_sequence()
 
-        global current_task
         flags.stopped = False
         flags.is_playing = True
         flags.cancel_requested = False
 
         logger.debug("🎬 Launching new playback background task…")
-        current_task = asyncio.create_task(
+        runtime.current_task = asyncio.create_task(
             _run_sequence_guarded(coro)
         )
+        bind_task(runtime.current_task, user_id)
 
-        return current_task
+        return runtime.current_task
 
 
 # ─────────────────────────────────────────────
@@ -556,12 +559,12 @@ async def play_track(payload: dict):
 # Not used by the current frontend flow.
 # Candidate for removal after smoke testing and API cleanup.
 @router.get("/flags-status", summary="Legacy flags snapshot (debug)")
-def flags_status():
-    return asdict(flags)
+async def flags_status():
+    return snapshot_dataclass(flags)
 
 
 @router.post("/start", summary="Mark playback as started")
-def start(
+async def start(
         language: Literal["en", "es", "ptbr", "pt-BR"] = "en",
         mode: Optional[str] = None,
         current_rank: Optional[int] = None,
@@ -573,7 +576,7 @@ def start(
     flags.mode = mode
     flags.current_rank = current_rank
     touch()
-    return {"ok": True, "status": asdict(flags)}
+    return {"ok": True, "status": snapshot_dataclass(flags)}
 
 
 @router.post("/pause", summary="Pause playback")
@@ -584,7 +587,7 @@ async def pause():
 
     # 🔊 Capture current volume BEFORE fade
     try:
-        sp = get_spotify_user_client()
+        sp = await get_spotify_playback_client()
         pb = sp.current_playback()
         if pb and pb.get("device"):
             status.volume = pb["device"]["volume_percent"]
@@ -608,11 +611,11 @@ async def pause():
         logger.warning("⚠️ Pause Spotify stop failed: %s", exc)
 
     touch()
-    return {"ok": True, "status": asdict(flags)}
+    return {"ok": True, "status": snapshot_dataclass(flags)}
 
 
 @router.post("/resume", summary="Resume playback")
-def resume():
+async def resume():
     phase = status.phase
     logger.info(f"▶️ Resume requested from phase: {phase}")
 
@@ -625,7 +628,7 @@ def resume():
     try:
         # 🎯 CASE 1 — TRACK (existing logic)
         if phase == "track":
-            sp = get_spotify_user_client()
+            sp = await get_spotify_playback_client()
 
             sp.start_playback()
 
@@ -648,7 +651,7 @@ def resume():
                 logger.info(f"🔊 Restoring volume to {status.volume}")
                 sp.volume(status.volume, device_id=device_id)
 
-            return {"ok": True, "status": asdict(flags)}
+            return {"ok": True, "status": snapshot_dataclass(flags)}
 
         # 🎯 CASE 2 — NARRATION PHASES
         elif phase in ["set_intro", "liner", "intro", "detail", "artist"]:
@@ -657,14 +660,14 @@ def resume():
             return {
                 "ok": True,
                 "restart_track": True,
-                "status": asdict(flags)
+                "status": snapshot_dataclass(flags)
             }
 
     except Exception as exc:
         logger.warning("⚠️ Resume failed: %s", exc)
 
     touch()
-    return {"ok": True, "status": asdict(flags)}
+    return {"ok": True, "status": snapshot_dataclass(flags)}
 
 
 @router.post("/stop", summary="Stop playback")
@@ -677,11 +680,11 @@ async def stop():
         logger.warning("⚠️ Spotify stop failed: %s", exc)
 
     touch()
-    return {"ok": True, "status": asdict(flags)}
+    return {"ok": True, "status": snapshot_dataclass(flags)}
 
 
 @router.post("/skip", summary="Skip to next track")
-def skip():
+async def skip():
     if skip_event is not None:
         try:
             skip_event.set()
@@ -692,7 +695,7 @@ def skip():
     return {
         "ok": True,
         "message": "Skip signaled",
-        "status": asdict(flags),
+        "status": snapshot_dataclass(flags),
     }
 
 
@@ -712,7 +715,7 @@ async def warmup_playback():
 
     try:
         # 1️⃣ Ensure Spotify client (OAuth)
-        sp = get_spotify_user_client()
+        sp = await get_spotify_playback_client()
         logger.info("🎧 Spotify client ready")
 
         # 2️⃣ Discover devices

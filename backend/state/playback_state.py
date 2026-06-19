@@ -1,3 +1,4 @@
+# backend/state/playback_state.py
 from __future__ import annotations
 
 import time
@@ -81,7 +82,9 @@ class PlaybackStatus:
 
 
 # 🔴 SINGLE GLOBAL INSTANCE
-status = PlaybackStatus()
+from backend.state.playback_runtime import RuntimeObjectProxy
+
+status = RuntimeObjectProxy("status")
 
 
 # ─────────────────────────────────────────────

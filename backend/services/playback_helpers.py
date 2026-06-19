@@ -20,6 +20,7 @@ from backend.services.supabase_playback import play_mp3
 from backend.services.spotify.playback import play_spotify_track, stop_spotify_playback
 from backend.services.play_policy import compute_play_seconds, sleep_with_skip
 from backend.state.playback_state import status, update_phase
+from backend.state.playback_runtime import current_runtime
 from backend.state.skip import skip_event
 from backend.utils.tts_diagnostics import normalize_for_filename
 from backend.services.audio_urls import resolve_audio_ref
@@ -99,9 +100,6 @@ except Exception:
     INTRO_GAIN_DB = float(os.getenv("INTRO_GAIN_DB", "-4.0"))
     DETAIL_GAIN_DB = float(os.getenv("DETAIL_GAIN_DB", "0.0"))
     ARTIST_GAIN_DB = float(os.getenv("ARTIST_GAIN_DB", "0.0"))
-
-_play_lock = asyncio.Lock()
-
 
 # ─────────────────────────────────────────────
 # Bucket / Key Builders
@@ -342,7 +340,7 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
     gain_db = _gain_for_kind(phase)
     last_err: object | None = None
 
-    async with _play_lock:
+    async with current_runtime().play_lock:
         for attempt in range(1, _SUPA_FETCH_RETRIES + 1):
             try:
                 await _respect_user_controls()

@@ -1,3 +1,4 @@
+# backend/isaiah/jwt_session.py
 # After authenticating the user's spotify premium account, it should allow front end
 # know to keep them logged in
 import jwt

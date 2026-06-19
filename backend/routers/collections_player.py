@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from typing import Literal
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
 
 from backend.routers.playback_control import start_new_sequence
@@ -11,10 +11,12 @@ from backend.services.collection_sequence import (
     run_collection_sequence,
     run_collection_continuous_sequence,
 )
+from backend.state.playback_runtime import bind_request_user
 
 router = APIRouter(
     prefix="/supabase/collections",
     tags=["Supabase: Collections"],
+    dependencies=[Depends(bind_request_user)],
 )
 
 logger = logging.getLogger(__name__)

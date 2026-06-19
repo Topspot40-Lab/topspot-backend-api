@@ -35,24 +35,24 @@ from backend.state.playback_state import (
     update_phase,
     mark_playing,
 )
+from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
 from backend.services.radio.heartbeat import track_heartbeat
 from backend.services.radio.narration import play_narrations
 
-
-_play_task: asyncio.Task | None = None
 
 def start_playback_sequence(coro) -> None:
     """
     Register the main playback coroutine so skip_to_next / skip_to_prev can cancel it.
     """
-    global _play_task
+    runtime = current_runtime()
 
     # Cancel any previous running sequence
-    if _play_task and not _play_task.done():
+    if runtime.current_task and not runtime.current_task.done():
         logger.info("🔁 Cancelling old playback task")
-        _play_task.cancel()
+        runtime.current_task.cancel()
 
-    _play_task = asyncio.create_task(coro)
+    runtime.current_task = asyncio.create_task(coro)
+    bind_task(runtime.current_task, current_user_id())
     logger.info("▶️ Playback sequence started")
 
 # ─────────────────────────────────────────────

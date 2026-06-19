@@ -4,7 +4,7 @@ import asyncio
 import logging
 from typing import Literal
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 from sqlmodel import select
 
 from backend.database import get_db_session
@@ -24,8 +24,13 @@ from backend.services.radio_runtime import (
 
 from backend.services.spotify.playback import play_spotify_track
 from backend.config.volume import PLAY_FULL_TRACK
+from backend.state.playback_runtime import bind_request_user
 
-router = APIRouter(prefix="/supabase", tags=["Supabase: Single Track"])
+router = APIRouter(
+    prefix="/supabase",
+    tags=["Supabase: Single Track"],
+    dependencies=[Depends(bind_request_user)],
+)
 logger = logging.getLogger(__name__)
 
 
