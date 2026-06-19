@@ -10,16 +10,70 @@
         h1 { font-size: 46px; margin-bottom: 8px; text-transform: uppercase; }
         .subtitle { font-size: 20px; line-height: 1.4; color: #555; margin-bottom: 30px; }
         p { font-size: 18px; line-height: 1.6; }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 850px;
+            padding: 0 24px;
+        }
+
+        .nav {
+            display: none;
+        }
+
+        h1 {
+            font-size: 46px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
+            color: #555;
+            margin-bottom: 34px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
         .quote {
-            margin: 28px 0;
-            padding: 16px 20px;
+            margin: 34px 0;
+            padding: 18px 22px;
             background: #f4f4f4;
             border-left: 4px solid #777;
-            font-size: 22px;
+            font-size: 24px;
+            line-height: 1.35;
             font-style: italic;
             text-align: center;
         }
-        .signature { margin-top: 34px; font-size: 18px; line-height: 1.5; }
+
+        .signature {
+            margin-top: 38px;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 54px;
+            border-top: 1px solid #ccc;
+            padding-top: 14px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                max-width: none;
+                padding: 0;
+            }
+        }
+    </style>
         .footer { margin-top: 40px; border-top: 1px solid #ccc; padding-top: 14px; color: #555; font-size: 14px; }
     </style>
 </head>
