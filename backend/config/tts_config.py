@@ -11,6 +11,7 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 VOICE_ID_INTRO  = os.getenv("VOICE_ID_INTRO",  "EXAVITQu4vr4xnSDxMaL")
 VOICE_ID_ARTIST = os.getenv("VOICE_ID_ARTIST", "Vr6EZfGAz5W6T1wn6b4p")
 VOICE_ID_TRACK  = os.getenv("VOICE_ID_TRACK",  "oWAxZDx7w5VEj9dCyTzz")
+VOICE_ID_ARTIST_STORY = os.getenv("VOICE_ID_ARTIST_STORY", "XAezqB2SuTKEhjCMe7Oy")
 
 VOICE_STABILITY  = float(os.getenv("VOICE_STABILITY",  "0.5"))
 VOICE_SIMILARITY = float(os.getenv("VOICE_SIMILARITY", "0.75"))
@@ -36,15 +37,47 @@ TTS_PROFILES = {
         "intro":  {"voice_id": "PrwKJdvtTbJVdosRhS1O",  "settings": {"stability": 0.5,  "similarity_boost": 0.8, "style": 0.4,  "use_speaker_boost": True}},
         "detail": {"voice_id": "pqHfZKP75CvOlQylNhV4", "settings": {"stability": 0.6,  "similarity_boost": 0.6, "style": 0.2,  "use_speaker_boost": False}},
         "artist": {"voice_id": "94zOad0g7T7K4oa7zhDq", "settings": {"stability": 0.55, "similarity_boost": 0.7, "style": 0.35, "use_speaker_boost": True}},
+
+        "artist_story": {
+            "voice_id": VOICE_ID_ARTIST_STORY,
+            "settings": {
+                "stability": 0.55,
+                "similarity_boost": 0.75,
+                "style": 0.35,
+                "use_speaker_boost": True,
+            },
+        },
     },
+
     "es": {
         "intro":  {"voice_id": "PrwKJdvtTbJVdosRhS1O", "settings": {"stability": 0.5, "similarity_boost": 0.85, "style": 0.5, "use_speaker_boost": True}},
         "detail": {"voice_id": "94zOad0g7T7K4oa7zhDq", "settings": {"stability": 0.65, "similarity_boost": 0.7, "style": 0.25, "use_speaker_boost": False}},
         "artist": {"voice_id": "bIHbv24MWmeRgasZH58o", "settings": {"stability": 0.6, "similarity_boost": 0.8, "style": 0.4, "use_speaker_boost": True}},
+
+        "artist_story": {
+            "voice_id": "94zOad0g7T7K4oa7zhDq",
+            "settings": {
+                "stability": 0.6,
+                "similarity_boost": 0.8,
+                "style": 0.4,
+                "use_speaker_boost": True,
+            },
+        },
     },
+
     "pt-BR": {
         "intro":  {"voice_id": "cyD08lEy76q03ER1jZ7y", "settings": {"stability": 0.5, "similarity_boost": 0.85, "style": 0.7, "use_speaker_boost": True}},
         "detail": {"voice_id": "cyD08lEy76q03ER1jZ7y", "settings": {"stability": 0.65, "similarity_boost": 0.7, "style": 0.25, "use_speaker_boost": False}},
         "artist": {"voice_id": "CstacWqMhJQlnfLPxRG4", "settings": {"stability": 0.6, "similarity_boost": 0.8, "style": 0.4, "use_speaker_boost": True}},
+
+        "artist_story": {
+            "voice_id": "n1PvBOwxb8X6m7tahp2h",
+            "settings": {
+                "stability": 0.6,
+                "similarity_boost": 0.8,
+                "style": 0.4,
+                "use_speaker_boost": True,
+            },
+        },
     },
 }

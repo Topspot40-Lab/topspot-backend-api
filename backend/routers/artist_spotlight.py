@@ -4,6 +4,9 @@ from backend.database import engine
 import asyncio
 from backend.state.playback_runtime import bind_request_user, bind_task, current_user_id
 
+from sqlmodel import Session, select
+from backend.models.dbmodels import Artist, ArtistStory
+
 router = APIRouter(
     prefix="/artist-spotlight",
     tags=["artist-spotlight"],
@@ -12,9 +15,10 @@ router = APIRouter(
 
 @router.get("/artists-by-genre")
 def artists_by_genre(
-        genre: str = Query(...),
+        genre: str | None = Query(None),
         min_tracks: int = Query(3, ge=1),
         max_tracks: int | None = Query(None, ge=1),
+        featured_only: bool = Query(True),
 ):
     sql = text("""
         WITH dg_counts AS (
@@ -37,7 +41,11 @@ def artists_by_genre(
             JOIN artist a
                 ON t.artist_id = a.id
 
-            WHERE g.slug = :genre
+            WHERE (
+                :genre IS NULL
+                OR :genre = 'all'
+                OR g.slug = :genre
+            )
 
             GROUP BY a.id
         ),
@@ -59,9 +67,16 @@ def artists_by_genre(
             GROUP BY a.id
         )
 
-        SELECT
-            a.id AS artist_id,
-            a.artist_name,
+SELECT
+a.id AS artist_id,
+a.artist_name,
+
+EXISTS (
+    SELECT 1
+    FROM artist_story s
+    WHERE s.artist_id = a.id
+      AND s.language_code = 'en'
+) AS has_story,
 
 COALESCE(dg.dg_track_count, 0) AS genre_track_count,
 
@@ -94,11 +109,22 @@ COALESCE(dg.dg_track_count, 0) AS genre_track_count,
         LEFT JOIN collection_counts cc
             ON a.id = cc.artist_id
 
-        WHERE dg.dg_track_count >= :min_tracks
-          AND (
-                :max_tracks IS NULL
-                OR dg.dg_track_count <= :max_tracks
-              )
+WHERE dg.dg_track_count >= :min_tracks
+
+  AND (
+        :max_tracks IS NULL
+        OR dg.dg_track_count <= :max_tracks
+      )
+
+  AND (
+        :featured_only = false
+        OR EXISTS (
+            SELECT 1
+            FROM artist_story s
+            WHERE s.artist_id = a.id
+              AND s.language_code = 'en'
+        )
+      )
 
 ORDER BY
     genre_track_count DESC,
@@ -113,6 +139,7 @@ ORDER BY
                 "genre": genre,
                 "min_tracks": min_tracks,
                 "max_tracks": max_tracks,
+                "featured_only": featured_only,
             },
         ).mappings().all()
 
@@ -349,3 +376,84 @@ async def play_artist_radio(
         "message": "Artist Radio started",
         "genre": genre,
     }
+
+@router.get("/artist-story")
+def artist_story(
+        artist_id: int = Query(...),
+        language: str = Query("en"),
+):
+    sql = text("""
+        SELECT
+            s.id AS story_id,
+            s.artist_id,
+            s.language_code,
+            s.title,
+            s.story_type,
+            s.duration_seconds,
+            s.tts_bucket,
+            s.tts_key
+        FROM artist_story s
+        WHERE s.artist_id = :artist_id
+          AND s.language_code = :language
+          AND s.tts_key IS NOT NULL
+        LIMIT 1
+    """)
+
+    with engine.connect() as conn:
+        row = conn.execute(
+            sql,
+            {
+                "artist_id": artist_id,
+                "language": language,
+            },
+        ).mappings().first()
+
+    if not row:
+        return {
+            "ok": False,
+            "has_story": False,
+            "artist_id": artist_id,
+            "language": language,
+        }
+
+    return {
+        "ok": True,
+        "has_story": True,
+        **dict(row),
+    }
+
+@router.post("/play-artist-story")
+def play_artist_story(
+        artist_id: int = Query(...),
+        language: str = Query("en"),
+):
+    with Session(engine) as session:
+        result = session.exec(
+            select(ArtistStory, Artist)
+            .join(Artist, Artist.id == ArtistStory.artist_id)
+            .where(ArtistStory.artist_id == artist_id)
+            .where(ArtistStory.language_code == language)
+            .where(ArtistStory.tts_key.is_not(None))
+        ).first()
+
+        if not result:
+            return {
+                "ok": False,
+                "message": "Artist story not found"
+            }
+
+        story, artist = result
+        return {
+            "ok": True,
+            "story_id": story.id,
+            "title": story.title,
+            "story_text": story.story_text,
+            "duration_seconds": story.duration_seconds,
+            "tts_bucket": story.tts_bucket,
+            "tts_key": story.tts_key,
+            "bed_bucket": "audio-en",
+            "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+            "artist_id": artist.id,
+            "artist_name": artist.artist_name,
+            "artist_artwork": artist.artist_artwork,
+        }

@@ -486,6 +486,21 @@ async def run_collection_sequence(
         )
         logger.info("🎯 PUBLISHED track frame rank=%s spotify=%s", rank, track.spotify_track_id)
 
+        status.current_rank = rank
+        status.current_ranking_id = ranking_id
+        status.spotify_track_id = track.spotify_track_id
+        status.track_start_ts = None
+        status.track_elapsed_seconds = 0
+        status.track_duration_seconds = None
+
+        logger.info(
+            "📊 STATUS AFTER PUBLISH phase=%s ranking_id=%s spotify=%s track_start_ts=%s",
+            getattr(status, "phase", None),
+            getattr(status, "current_ranking_id", None),
+            getattr(status, "spotify_track_id", None),
+            getattr(status, "track_start_ts", None),
+        )
+
     logger.info("✅ Collection publish finished (single-rank).")
 
 
