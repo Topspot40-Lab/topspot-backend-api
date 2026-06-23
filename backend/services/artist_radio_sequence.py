@@ -6,6 +6,7 @@ from sqlalchemy import text
 
 from backend.database import engine
 from backend.state.narration import track_done_event
+from backend.state.playback_runtime import current_user_id
 from backend.services.spotify.playback import play_spotify_track
 from backend.state.playback_state import update_phase, begin_track
 
@@ -100,6 +101,8 @@ async def run_artist_radio_sequence(
         play_artist_description: bool = False,
         play_track: bool = True,
 ):
+    user_id = current_user_id()
+
     radio_set = load_artist_radio_set(
         genre,
         artist_id,
@@ -152,11 +155,11 @@ async def run_artist_radio_sequence(
         },
     )
 
-    track_done_event.clear()
-    await track_done_event.wait()
+    track_done_event(user_id).clear()
+    await track_done_event(user_id).wait()
 
     for index, track in enumerate(tracks, start=1):
-        track_done_event.clear()
+        track_done_event(user_id).clear()
 
         update_phase(
             phase="detail",
@@ -214,7 +217,7 @@ async def run_artist_radio_sequence(
 
             logger.info("🎵 Artist Radio playing: %s - %s", track["artist_name"], track["track_name"])
 
-            await track_done_event.wait()
+            await track_done_event(user_id).wait()
 
     update_phase(
         phase="idle",

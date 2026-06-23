@@ -28,7 +28,7 @@ from backend.services.decade_genre_sequence import run_decade_genre_sequence
 from backend.routers.playback_control import start_new_sequence
 from backend.state.playback_flags import flags
 from backend.state.playback_state import status
-from backend.state.playback_runtime import bind_request_user
+from backend.state.playback_runtime import bind_request_user, current_user_id
 
 router = APIRouter(
     prefix="/supabase/decade-genre",
@@ -332,6 +332,7 @@ async def play_next_decade_genre():
     - current mode (count_up, count_down, random)
     - current decade/genre
     """
+    user_id = current_user_id()
 
     if not flags.context:
         return {"status": "error", "message": "No active decade/genre context."}
@@ -357,7 +358,7 @@ async def play_next_decade_genre():
             logger.warning("⚠️ Spotify stop failed before radio next: %s", exc)
 
         status.cancel_requested = True
-        track_done_event.set()
+        track_done_event(user_id).set()
 
         # 🔥 GIVE THE LOOP TIME TO DIE
         await asyncio.sleep(0.3)

@@ -209,6 +209,8 @@ async def start_new_sequence(coro):
 # ─────────────────────────────────────────────
 @router.post("/play-track", summary="Play exactly one track via sequence engine")
 async def play_track(payload: dict):
+    user_id = current_user_id()
+
     track = TrackRef(
         track_id=payload["track"]["track_id"],
         spotify_track_id=payload["track"]["spotify_track_id"],
@@ -370,7 +372,7 @@ async def play_track(payload: dict):
             if not audio_url:
                 return
 
-            narration_done_event.clear()
+            narration_done_event(user_id).clear()
 
             logger.info(
                 "🎙️ Artist Spotlight phase publish | phase=%s url=%s",
@@ -394,7 +396,7 @@ async def play_track(payload: dict):
                 },
             )
 
-            await narration_done_event.wait()
+            await narration_done_event(user_id).wait()
             logger.info("✅ Artist Spotlight phase finished | phase=%s", phase)
 
         base_url = "https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/audio-en"

@@ -505,6 +505,7 @@ async def run_collection_sequence(
 
 
 from backend.state.narration import track_done_event
+from backend.state.playback_runtime import current_user_id
 from backend.state.playback_flags import flags
 from backend.state.playback_state import status
 
@@ -523,6 +524,8 @@ async def run_collection_continuous_sequence(
         play_track: bool,
         voice_style: Literal["before", "over"] = "before",
 ) -> None:
+    user_id = current_user_id()
+
     logger.info(
         "📻 COLLECTION CONTINUOUS START: %s %d-%d mode=%s lang=%s voice=%s",
         collection_slug, start_rank, end_rank, mode, tts_language, voice_style
@@ -768,7 +771,7 @@ async def run_collection_continuous_sequence(
                 )
 
             if play_track and track.spotify_track_id:
-                track_done_event.clear()
+                track_done_event(user_id).clear()
 
                 update_phase(
                     "track",
@@ -789,7 +792,7 @@ async def run_collection_continuous_sequence(
                 )
 
                 # 🔥 This is the heartbeat: wait for frontend to say Spotify finished
-                await track_done_event.wait()
+                await track_done_event(user_id).wait()
 
         logger.info("🏁 Collection sequence COMPLETE (continuous)")
 

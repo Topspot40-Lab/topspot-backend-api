@@ -30,6 +30,7 @@ from backend.services.block_builder import build_track_block
 from backend.state.playback_state import status, mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
+from backend.state.playback_runtime import current_user_id
 
 from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
 from backend.services.audio_urls import resolve_audio_ref
@@ -175,6 +176,8 @@ async def run_all_radio_sequence(
         play_artist_description: bool = False,
         voice_style: str = "before",   # ✅ ADD THIS
 ):
+    user_id = current_user_id()
+
     def normalize_lang(value: str) -> str:
         v = (value or "en").lower()
         if v in ("pt-br", "ptbr", "pt_br"):
@@ -720,7 +723,7 @@ async def run_all_radio_sequence(
 
                 # ───────── TRACK ─────────
                 if track.spotify_track_id:
-                    track_done_event.clear()
+                    track_done_event(user_id).clear()
 
                     update_phase(
                         "track",
@@ -748,7 +751,7 @@ async def run_all_radio_sequence(
 
 
                     # ✅ wait for Spotify track to finish
-                    await track_done_event.wait()
+                    await track_done_event(user_id).wait()
 
                     # small buffer to avoid noise / abrupt transition
                     await asyncio.sleep(0.75)
