@@ -9,8 +9,10 @@ from sqlalchemy import text
 from sqlmodel import Session
 
 from backend.database import engine
+from collections import defaultdict
 
 OUTPUT_DIR = Path("backend/scripts/catalogs/output/artists")
+DEFAULT_AUDIO_BUCKET = "audio-en"
 
 
 def h(value) -> str:
@@ -19,9 +21,24 @@ def h(value) -> str:
 
 def audio_url(bucket: str | None, key: str | None) -> str | None:
     supabase_url = os.getenv("SUPABASE_URL")
-    if not supabase_url or not bucket or not key:
+    if not supabase_url or not key:
         return None
-    return f"{supabase_url.rstrip('/')}/storage/v1/object/public/{bucket}/{key}"
+
+    final_bucket = bucket or DEFAULT_AUDIO_BUCKET
+    return f"{supabase_url.rstrip('/')}/storage/v1/object/public/{final_bucket}/{key}"
+
+
+def audio_player(bucket: str | None, key: str | None, label: str) -> str:
+    url = audio_url(bucket, key)
+    if not url:
+        return f'<p class="small">No {h(label)} MP3 available.</p>'
+
+    return (
+        f'<div class="audio">'
+        f'<div class="small">{h(label)}</div>'
+        f'<audio controls src="{h(url)}"></audio>'
+        f"</div>"
+    )
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,9 +54,18 @@ def main() -> None:
     with Session(engine) as session:
         artist = session.execute(
             text("""
-                SELECT id, artist_name, artist_description
-                FROM artist
-                WHERE id = :artist_id
+                SELECT
+                    a.id,
+                    a.artist_name,
+                    a.artist_description,
+                    al.artist_description_text,
+                    al.tts_bucket AS artist_tts_bucket,
+                    al.tts_key AS artist_tts_key
+                FROM artist a
+                LEFT JOIN artist_locale al
+                    ON al.artist_id = a.id
+                   AND al.language_code = 'en'
+                WHERE a.id = :artist_id
             """),
             {"artist_id": args.artist_id},
         ).first()
@@ -49,7 +75,13 @@ def main() -> None:
 
         story = session.execute(
             text("""
-                SELECT title, story_text, story_type, duration_seconds, tts_bucket, tts_key
+                SELECT
+                    title,
+                    story_text,
+                    story_type,
+                    duration_seconds,
+                    tts_bucket,
+                    tts_key
                 FROM artist_story
                 WHERE artist_id = :artist_id
                   AND language_code = 'en'
@@ -61,10 +93,24 @@ def main() -> None:
 
         tracks = session.execute(
             text("""
-                SELECT id, track_name, year_released, detail, short_detail
-                FROM track
-                WHERE artist_id = :artist_id
-                ORDER BY track_name
+                SELECT
+                    t.id AS track_id,
+                    t.track_name,
+                    t.year_released,
+                    t.detail,
+                    t.short_detail,
+                    t.short_detail_tts_key AS track_short_detail_tts_key,
+                    tl.detail_text,
+                    tl.tts_bucket AS detail_tts_bucket,
+                    tl.tts_key AS detail_tts_key,
+                    tl.short_detail_text,
+                    tl.short_detail_tts_key AS locale_short_detail_tts_key
+                FROM track t
+                LEFT JOIN track_locale tl
+                    ON tl.track_id = t.id
+                   AND tl.language_code = 'en'
+                WHERE t.artist_id = :artist_id
+                ORDER BY t.track_name
             """),
             {"artist_id": args.artist_id},
         ).all()
@@ -75,10 +121,16 @@ def main() -> None:
                     t.track_name,
                     tr.ranking,
                     tr.intro,
-                    dg.slug AS program_slug
+                    dg.slug AS program_slug,
+                    trl.intro_text,
+                    trl.tts_bucket AS intro_tts_bucket,
+                    trl.tts_key AS intro_tts_key
                 FROM track_ranking tr
                 JOIN track t ON t.id = tr.track_id
                 JOIN decade_genre dg ON dg.id = tr.decade_genre_id
+                LEFT JOIN track_ranking_locale trl
+                    ON trl.track_ranking_id = tr.id
+                   AND trl.language_code = 'en'
                 WHERE t.artist_id = :artist_id
                 ORDER BY dg.slug, tr.ranking
             """),
@@ -92,17 +144,32 @@ def main() -> None:
                     ctr.ranking,
                     ctr.intro,
                     c.name AS collection_name,
-                    c.slug AS collection_slug
+                    c.slug AS collection_slug,
+                    ctrl.intro_text,
+                    ctrl.tts_key AS intro_tts_key
                 FROM collection_track_ranking ctr
                 JOIN track t ON t.id = ctr.track_id
                 JOIN collection c ON c.id = ctr.collection_id
+                LEFT JOIN collection_track_ranking_locale ctrl
+                    ON ctrl.collection_track_ranking_id = ctr.id
+                   AND ctrl.lang = 'en'
                 WHERE t.artist_id = :artist_id
                 ORDER BY c.name, ctr.ranking
             """),
             {"artist_id": args.artist_id},
         ).all()
 
-    story_audio = audio_url(story.tts_bucket, story.tts_key) if story else None
+    artist_description = artist.artist_description_text or artist.artist_description
+
+    nostalgia_groups = defaultdict(list)
+
+    for row in nostalgia:
+        nostalgia_groups[row.program_slug].append(row)
+
+    collection_groups = defaultdict(list)
+
+    for row in collections:
+        collection_groups[row.collection_name].append(row)
 
     html_parts = [
         "<!doctype html>",
@@ -119,9 +186,7 @@ body {
     padding: 0 24px;
     line-height: 1.5;
 }
-.nav {
-    margin-bottom: 24px;
-}
+.nav { margin-bottom: 24px; }
 .nav a {
     color: #0645ad;
     text-decoration: none;
@@ -159,9 +224,7 @@ h1 {
     font-size: 28px;
     font-weight: bold;
 }
-.stat .label {
-    color: #555;
-}
+.stat .label { color: #555; }
 details {
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -184,19 +247,17 @@ th, td {
     text-align: left;
     vertical-align: top;
 }
-th {
-    background: #f0f0f0;
-}
-.audio {
-    margin: 10px 0;
+th { background: #f0f0f0; }
+.audio { margin: 10px 0 18px; }
+audio {
+    width: 100%;
+    max-width: 520px;
 }
 .small {
     color: #666;
     font-size: 14px;
 }
-.text-block {
-    white-space: pre-wrap;
-}
+.text-block { white-space: pre-wrap; }
 </style>
 """,
         "</head>",
@@ -221,10 +282,7 @@ th {
         minutes = round((story.duration_seconds or 0) / 60, 1)
         html_parts.append(f"<h3>{h(story.title)}</h3>")
         html_parts.append(f'<p class="small">Type: {h(story.story_type)} • Duration: {minutes} minutes</p>')
-        if story_audio:
-            html_parts.append(f'<div class="audio"><audio controls src="{h(story_audio)}"></audio></div>')
-        else:
-            html_parts.append('<p class="small">No artist story MP3 URL available.</p>')
+        html_parts.append(audio_player(story.tts_bucket, story.tts_key, "Artist Story MP3"))
         html_parts.append('<details open><summary>Story Text</summary>')
         html_parts.append(f'<div class="text-block">{h(story.story_text)}</div>')
         html_parts.append("</details>")
@@ -234,66 +292,106 @@ th {
 
     html_parts.append('<div class="card">')
     html_parts.append("<h2>Artist Description</h2>")
+    html_parts.append(audio_player(artist.artist_tts_bucket, artist.artist_tts_key, "Artist Description MP3"))
     html_parts.append(
-        f'<div class="text-block">{h(artist.artist_description)}</div>'
-        if artist.artist_description
+        f'<div class="text-block">{h(artist_description)}</div>'
+        if artist_description
         else "<p>No artist description found.</p>"
     )
     html_parts.append("</div>")
 
     html_parts.append('<div class="card">')
     html_parts.append("<h2>Track Detail Review</h2>")
+
     for track in tracks:
+        detail_text = track.detail_text or track.detail
+        short_detail_text = track.short_detail_text or track.short_detail
+        short_detail_key = track.locale_short_detail_tts_key or track.track_short_detail_tts_key
+
         html_parts.append("<details>")
         html_parts.append(
             f"<summary>{h(track.track_name)}"
             + (f" ({h(track.year_released)})" if track.year_released else "")
             + "</summary>"
         )
+
         html_parts.append("<h4>Detail Text</h4>")
-        html_parts.append(f'<div class="text-block">{h(track.detail) if track.detail else "<em>Missing</em>"}</div>')
+        html_parts.append(audio_player(track.detail_tts_bucket, track.detail_tts_key, "Detail MP3"))
+        html_parts.append(
+            f'<div class="text-block">{h(detail_text)}</div>'
+            if detail_text
+            else '<div class="text-block"><em>Missing</em></div>'
+        )
+
         html_parts.append("<h4>Short Detail Text</h4>")
-        html_parts.append(f'<div class="text-block">{h(track.short_detail) if track.short_detail else "<em>Missing</em>"}</div>')
+        html_parts.append(audio_player(DEFAULT_AUDIO_BUCKET, short_detail_key, "Short Detail MP3"))
+        html_parts.append(
+            f'<div class="text-block">{h(short_detail_text)}</div>'
+            if short_detail_text
+            else '<div class="text-block"><em>Missing</em></div>'
+        )
+
         html_parts.append("</details>")
+
     html_parts.append("</div>")
 
     html_parts.append('<div class="card">')
     html_parts.append("<h2>Nostalgia Program Appearances</h2>")
+
     if nostalgia:
-        html_parts.append("<table>")
-        html_parts.append("<tr><th>Program</th><th>Rank</th><th>Track</th><th>Intro</th></tr>")
+        nostalgia_groups = defaultdict(list)
+
         for row in nostalgia:
-            program = str(row.program_slug or "").replace("_", " ").title()
+            nostalgia_groups[row.program_slug].append(row)
+
+        for program_slug, rows in sorted(nostalgia_groups.items()):
+            program = str(program_slug or "").replace("_", " ").title()
+
+            html_parts.append("<details>")
             html_parts.append(
-                "<tr>"
-                f"<td>{h(program)}</td>"
-                f"<td>#{h(row.ranking)}</td>"
-                f"<td>{h(row.track_name)}</td>"
-                f"<td>{h(row.intro)}</td>"
-                "</tr>"
+                f"<summary>{h(program)} ({len(rows)} tracks)</summary>"
             )
-        html_parts.append("</table>")
+
+            html_parts.append("<ul>")
+
+            for row in rows:
+                html_parts.append(
+                    f"<li>#{row.ranking} - {h(row.track_name)}</li>"
+                )
+
+            html_parts.append("</ul>")
+            html_parts.append("</details>")
+
     else:
         html_parts.append("<p>No nostalgia appearances found.</p>")
+
     html_parts.append("</div>")
 
     html_parts.append('<div class="card">')
     html_parts.append("<h2>Collection Appearances</h2>")
+
     if collections:
-        html_parts.append("<table>")
-        html_parts.append("<tr><th>Collection</th><th>Rank</th><th>Track</th><th>Intro</th></tr>")
-        for row in collections:
+
+        for collection_name, rows in sorted(collection_groups.items()):
+
+            html_parts.append("<details>")
             html_parts.append(
-                "<tr>"
-                f"<td>{h(row.collection_name)}</td>"
-                f"<td>#{h(row.ranking)}</td>"
-                f"<td>{h(row.track_name)}</td>"
-                f"<td>{h(row.intro)}</td>"
-                "</tr>"
+                f"<summary>{h(collection_name)} ({len(rows)} tracks)</summary>"
             )
-        html_parts.append("</table>")
+
+            html_parts.append("<ul>")
+
+            for row in rows:
+                html_parts.append(
+                    f"<li>#{row.ranking} - {h(row.track_name)}</li>"
+                )
+
+            html_parts.append("</ul>")
+            html_parts.append("</details>")
+
     else:
         html_parts.append("<p>No collection appearances found.</p>")
+
     html_parts.append("</div>")
 
     html_parts.append("</body></html>")
