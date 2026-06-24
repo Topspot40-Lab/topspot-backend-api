@@ -13,8 +13,6 @@ from backend.routers.collections_player import router as collections_player_rout
 from backend.routers.decade_genre_pause import router as decade_genre_pause_router
 from backend.routers.music_docuseries import router as music_docuseries_router
 
-# 🔐 Spotify Auth (THIS WAS MISSING)
-from backend.routers.spotify_auth import router as spotify_auth_router
 from backend.routers.feedback import feedback_router
 from backend.routers.artist_spotlight import router as artist_spotlight_router
 
@@ -87,9 +85,6 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(catalog_router)
 app.include_router(artist_spotlight_router)
-
-# 🔐 Spotify Auth (NOW LIVE)
-app.include_router(spotify_auth_router)
 
 # 🚗 Car-Mode + Playback
 app.include_router(playback_status_router)
