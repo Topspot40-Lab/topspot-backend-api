@@ -14,6 +14,7 @@ from backend.services.spotify.playback import (
 )
 from backend.config import SPOTIFY_BED_TRACK_ID
 from backend.services.playback_helpers import safe_play
+from backend.state.playback_runtime import bind_task, current_user_id
 
 logger = logging.getLogger(__name__)
 
@@ -33,9 +34,11 @@ async def _run_voice_clip_with_skip(
     *,
     voice_style: str,
 ) -> bool:
+    user_id = current_user_id()
     play_task = asyncio.create_task(
         safe_play(kind, bucket, key, voice_style=voice_style)
     )
+    bind_task(play_task, user_id)
 
     try:
         while not play_task.done():

@@ -315,6 +315,7 @@ async def play_track_with_skip(
             await play_spotify_track(spotify_id)
 
         start_ts = time.time()
+        user_id = current_user_id()
         heartbeat_task = asyncio.create_task(
             track_heartbeat(
                 start_ts=start_ts,
@@ -326,6 +327,7 @@ async def play_track_with_skip(
                 artist_name=artist_label,
             )
         )
+        bind_task(heartbeat_task, user_id)
 
         skipped = await sleep_with_skip(skip_event, play_secs)
 

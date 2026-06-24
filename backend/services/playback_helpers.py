@@ -20,7 +20,7 @@ from backend.services.supabase_playback import play_mp3
 from backend.services.spotify.playback import play_spotify_track, stop_spotify_playback
 from backend.services.play_policy import compute_play_seconds, sleep_with_skip
 from backend.state.playback_state import status, update_phase
-from backend.state.playback_runtime import current_runtime
+from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
 from backend.state.skip import skip_event
 from backend.utils.tts_diagnostics import normalize_for_filename
 from backend.services.audio_urls import resolve_audio_ref
@@ -388,7 +388,9 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
                 await _respect_user_controls()
 
                 # Single authority: narration timing lives here
+                user_id = current_user_id()
                 heartbeat_task = asyncio.create_task(_run_progress_heartbeat(phase, duration))
+                bind_task(heartbeat_task, user_id)
 
                 try:
                     # Playback in worker thread
