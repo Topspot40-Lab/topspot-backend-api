@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from typing import Literal, Optional
 import time
 
+from backend.state.playback_runtime import RuntimeObjectProxy
+
 
 @dataclass
 class PlaybackFlags:
@@ -38,7 +40,7 @@ def get_flags(user_id: str) -> PlaybackFlags:
         flags_by_user[user_id] = PlaybackFlags()
     return flags_by_user[user_id]
 
-flags = PlaybackFlags()
+flags = RuntimeObjectProxy("flags")
 
 
 def touch():
