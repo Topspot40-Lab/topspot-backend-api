@@ -66,10 +66,11 @@ class PlaySpotifyRequest(BaseModel):
 
 @router.post("/play-spotify", summary="Start Spotify playback for a spotify_track_id")
 async def play_spotify(req: PlaySpotifyRequest):
+    user_id = current_user_id()
     logger.debug("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
 
     # Start Spotify playback
-    ok = await play_spotify_track(req.spotify_track_id)
+    ok = await play_spotify_track(req.spotify_track_id, user_id)
 
     if not ok:
         logger.error("❌ Spotify playback failed for %s", req.spotify_track_id)
@@ -142,6 +143,7 @@ async def cancel_current_sequence():
     Ensures proper async cleanup before a new sequence can begin.
     """
     runtime = current_runtime()
+    user_id = current_user_id()
 
     if runtime.current_task:
         logger.info("🔄 Replacing existing playback sequence")
@@ -158,7 +160,7 @@ async def cancel_current_sequence():
 
     # 🔥 STOP SPOTIFY IMMEDIATELY WHEN CANCELING
     try:
-        await stop_spotify_playback(fade_out_seconds=0.2)
+        await stop_spotify_playback(user_id, fade_out_seconds=0.2)
         logger.debug("🛑 Spotify stopped during sequence cancel")
     except Exception as exc:
         logger.warning("⚠️ Failed to stop Spotify during cancel: %s", exc)
@@ -170,7 +172,7 @@ async def cancel_current_sequence():
     # ─────────────────────────────────────────────
     try:
         from backend.services.spotify.playback import set_device_volume
-        await set_device_volume(100)
+        await set_device_volume(100, user_id)
         logger.debug("🔊 Restored Spotify volume to 100% after cancel")
     except Exception as exc:
         logger.warning(f"⚠️ Failed to restore volume after cancel: {exc}")
@@ -310,7 +312,7 @@ async def play_track(payload: dict):
 
         async def _play_favorites_one():
             # Minimal v1: just start the Spotify track (keeps pipeline separate)
-            await play_spotify_track(spotify_id)
+            await play_spotify_track(spotify_id, user_id)
 
             existing_context = getattr(status, "context", {}) or {}
             merged_context = {
@@ -421,7 +423,7 @@ async def play_track(payload: dict):
 
         logger.info("🎵 Artist Spotlight about to start Spotify | track=%s", track.spotify_track_id)
 
-        await play_spotify_track(track.spotify_track_id)
+        await play_spotify_track(track.spotify_track_id, user_id)
         update_phase(
             "track",
             track_name=track.track_name,
@@ -442,7 +444,7 @@ async def play_track(payload: dict):
             if not track.spotify_track_id:
                 return {"ok": False, "error": "Missing spotify_track_id for ALL decade playback"}
 
-            await play_spotify_track(track.spotify_track_id)
+            await play_spotify_track(track.spotify_track_id, user_id)
 
             update_phase(
                 "track",
@@ -583,6 +585,7 @@ async def start(
 
 @router.post("/pause", summary="Pause playback")
 async def pause():
+    user_id = current_user_id()
     logger.info("⏸️ Pause requested")
 
     mark_paused()
@@ -608,7 +611,7 @@ async def pause():
     # 2️⃣ Fade out Spotify
     try:
         from backend.services.spotify.playback import stop_spotify_playback
-        await stop_spotify_playback(fade_out_seconds=0.3)
+        await stop_spotify_playback(user_id, fade_out_seconds=0.3)
     except Exception as exc:
         logger.warning("⚠️ Pause Spotify stop failed: %s", exc)
 
@@ -674,10 +677,11 @@ async def resume():
 
 @router.post("/stop", summary="Stop playback")
 async def stop():
+    user_id = current_user_id()
     await cancel_current_sequence()
 
     try:
-        await stop_spotify_playback(fade_out_seconds=0.3)
+        await stop_spotify_playback(user_id, fade_out_seconds=0.3)
     except Exception as exc:
         logger.warning("⚠️ Spotify stop failed: %s", exc)
 
@@ -715,6 +719,8 @@ async def warmup_playback():
 
     logger.info("🎛️ /playback/warmup requested")
 
+    user_id = current_user_id()
+
     try:
         # 1️⃣ Ensure Spotify client (OAuth)
         sp = await get_spotify_playback_client()
@@ -751,7 +757,7 @@ async def warmup_playback():
         # 4️⃣ Set baseline volume
         # NOTE: set_device_volume may be async in some versions; yours supports await
         try:
-            await set_device_volume(100, device_id=device_id)
+            await set_device_volume(100, user_id, device_id=device_id)
             logger.debug("🔊 Spotify volume set to 100%%")
         except Exception as exc:
             logger.warning("⚠️ Failed to set volume during warmup: %s", exc)

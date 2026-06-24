@@ -210,10 +210,10 @@ async def run_artist_radio_sequence(
                 },
             )
 
-            await play_spotify_track(track["spotify_track_id"])
+            await play_spotify_track(track["spotify_track_id"], user_id)
 
             duration_seconds = (track.get("duration_ms") or 0) / 1000
-            begin_track(duration_seconds)
+            begin_track(user_id, duration_seconds)
 
             logger.info("🎵 Artist Radio playing: %s - %s", track["artist_name"], track["track_name"])
 

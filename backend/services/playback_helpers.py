@@ -472,13 +472,14 @@ async def play_track_with_skip(
     track_name: str,
     artist_name: str,
 ) -> bool:
+    user_id = current_user_id()
     spotify_id = getattr(track, "spotify_track_id", None)
     if not spotify_id:
         logger.warning("🚫 No spotify_track_id for %s — skipping.", track_name)
         return False
 
     try:
-        await stop_spotify_playback(fade_out_seconds=0.8)
+        await stop_spotify_playback(user_id, fade_out_seconds=0.8)
     except Exception:
         pass
 
@@ -499,7 +500,7 @@ async def play_track_with_skip(
 
     logger.info("🎵 Playing Spotify track: %s — rank %s", track_name, rank)
 
-    ok = await play_spotify_track(spotify_id)
+    ok = await play_spotify_track(spotify_id, user_id)
     if not ok:
         logger.warning("❌ Spotify refused playback.")
         return False
@@ -508,7 +509,7 @@ async def play_track_with_skip(
     skipped = await sleep_with_skip(skip_event, play_secs)
 
     try:
-        await stop_spotify_playback(fade_out_seconds=1.0)
+        await stop_spotify_playback(user_id, fade_out_seconds=1.0)
     except Exception:
         pass
 

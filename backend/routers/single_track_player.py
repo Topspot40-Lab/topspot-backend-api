@@ -24,7 +24,7 @@ from backend.services.radio_runtime import (
 
 from backend.services.spotify.playback import play_spotify_track
 from backend.config.volume import PLAY_FULL_TRACK
-from backend.state.playback_runtime import bind_request_user
+from backend.state.playback_runtime import bind_request_user, current_user_id
 
 router = APIRouter(
     prefix="/supabase",
@@ -50,6 +50,8 @@ async def _run_single_track(
     logger.info("🎧 SINGLE-PLAY: track_id=%s voice_style=%s", track_id, voice_style)
 
     # ─────────── DB LOOKUP ───────────
+    user_id = current_user_id()
+
     with get_db_session() as db:
         q = (
             select(Track, Artist)
@@ -90,7 +92,7 @@ async def _run_single_track(
     if voice_style == "over" and play_track and track.spotify_track_id:
         logger.info("🎧 SINGLE: over-track mode")
 
-        await play_spotify_track(track.spotify_track_id)
+        await play_spotify_track(track.spotify_track_id, user_id)
         await asyncio.sleep(0.4)
 
         await play_narrations(

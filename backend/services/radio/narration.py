@@ -86,6 +86,7 @@ async def play_narrations(
     voice_style = "over": assume main track already playing, duck volume and narrate over it
     """
     async with _narration_lock:
+        user_id = current_user_id()
         try:
             # Clear stale skip
             if skip_event.is_set():
@@ -109,7 +110,7 @@ async def play_narrations(
                     )
                     if any_voice:
                         with contextlib.suppress(Exception):
-                            await set_device_volume(40)
+                            await set_device_volume(40, user_id)
                             ducked = True
                             logger.info("🔉 Ducking Spotify volume for narration.")
 
@@ -143,7 +144,7 @@ async def play_narrations(
                 finally:
                     if ducked:
                         with contextlib.suppress(Exception):
-                            await set_device_volume(100)
+                            await set_device_volume(100, user_id)
                 return
 
             # ───────────── VOICE BEFORE MODE ─────────────
@@ -151,7 +152,7 @@ async def play_narrations(
                 update_phase("intro", current_rank=rank,
                              track_name=track_name, artist_name=artist_name)
 
-                await play_spotify_track(SPOTIFY_BED_TRACK_ID)
+                await play_spotify_track(SPOTIFY_BED_TRACK_ID, user_id)
                 try:
                     for bkt, key, *_ in intro_jobs:
                         skipped = await _run_voice_clip_with_skip(
@@ -161,7 +162,7 @@ async def play_narrations(
                             break
                 finally:
                     with contextlib.suppress(Exception):
-                        await stop_spotify_playback(fade_out_seconds=1.2)
+                        await stop_spotify_playback(user_id, fade_out_seconds=1.2)
 
             if play_detail and detail_bucket and detail_key:
                 update_phase("detail", current_rank=rank,
@@ -184,5 +185,5 @@ async def play_narrations(
         except asyncio.CancelledError:
             logger.info("⏹ Narration aborted.")
             with contextlib.suppress(Exception):
-                await stop_spotify_playback(fade_out_seconds=1.0)
+                await stop_spotify_playback(user_id, fade_out_seconds=1.0)
             raise

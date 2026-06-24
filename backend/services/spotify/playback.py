@@ -91,7 +91,7 @@ async def _play_spotify_track_async(track_id: str, user_id: str, device_id: Opti
         track = client.track(track_id)  # fetch metadata
         duration_sec = track["duration_ms"] / 1000
 
-        begin_track(track_duration_seconds=duration_sec)
+        begin_track(user_id, track_duration_seconds=duration_sec)
 
         logger.info(f"🎵 Track clock started: {duration_sec:.2f}s")
 

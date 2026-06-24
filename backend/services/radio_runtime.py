@@ -60,8 +60,9 @@ def start_playback_sequence(coro) -> None:
 # ─────────────────────────────────────────────
 async def _ensure_volume_ok() -> None:
     """Safety guard so Spotify is never left muted."""
+    user_id = current_user_id()
     with contextlib.suppress(Exception):
-        await set_device_volume(100)
+        await set_device_volume(100, user_id)
 
 
 from backend.state.playback_flags import flags
@@ -264,6 +265,7 @@ async def play_track_with_skip(
     already_playing: bool = False,
 ) -> bool:
     heartbeat_task: Optional[asyncio.Task] = None
+    user_id = current_user_id()
 
     try:
         rank_val = rank if rank is not None else getattr(track, "ranking", None)
@@ -312,10 +314,9 @@ async def play_track_with_skip(
 
         if not already_playing:
             await _ensure_volume_ok()
-            await play_spotify_track(spotify_id)
+            await play_spotify_track(spotify_id, user_id)
 
         start_ts = time.time()
-        user_id = current_user_id()
         heartbeat_task = asyncio.create_task(
             track_heartbeat(
                 start_ts=start_ts,
@@ -334,13 +335,13 @@ async def play_track_with_skip(
         if skipped:
             logger.info("⏭️ Track skipped → fading out Spotify.")
             with contextlib.suppress(Exception):
-                await stop_spotify_playback(fade_out_seconds=1.5)
+                await stop_spotify_playback(user_id, fade_out_seconds=1.5)
             return True
 
         if already_playing:
             logger.info("🔇 Track finished (over-style) — stopping Spotify cleanly.")
             with contextlib.suppress(Exception):
-                await stop_spotify_playback(fade_out_seconds=1.0)
+                await stop_spotify_playback(user_id, fade_out_seconds=1.0)
 
         logger.info("✅ Track finished normally.")
 
@@ -352,12 +353,12 @@ async def play_track_with_skip(
     except asyncio.CancelledError:
         logger.info("🛑 Track playback cancelled.")
         with contextlib.suppress(Exception):
-            await stop_spotify_playback(fade_out_seconds=1.5)
+            await stop_spotify_playback(user_id, fade_out_seconds=1.5)
         return True
     except Exception as e:
         logger.warning("⚠️ play_track_with_skip error: %s", e)
         with contextlib.suppress(Exception):
-            await stop_spotify_playback(fade_out_seconds=1.5)
+            await stop_spotify_playback(user_id, fade_out_seconds=1.5)
         return True
     finally:
         if heartbeat_task is not None:

@@ -352,7 +352,7 @@ async def play_next_decade_genre():
 
         try:
             from backend.services.spotify.playback import stop_spotify_playback
-            await stop_spotify_playback(fade_out_seconds=0.2)
+            await stop_spotify_playback(user_id, fade_out_seconds=0.2)
             logger.info("🛑 Spotify stopped before radio next")
         except Exception as exc:
             logger.warning("⚠️ Spotify stop failed before radio next: %s", exc)
