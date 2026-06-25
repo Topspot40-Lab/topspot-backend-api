@@ -80,6 +80,7 @@ def main() -> None:
                 .join(Track, CollectionTrackRanking.track_id == Track.id)
                 .join(Artist, Track.artist_id == Artist.id)
                 .where(CollectionTrackRanking.collection_id == collection.id)
+                .where(CollectionTrackRanking.ranking < 900)
                 .order_by(CollectionTrackRanking.ranking)
             ).all()
 
@@ -185,7 +186,21 @@ def main() -> None:
                 total_ok += lang_ok
                 total_possible += lang_total
 
-            overall = pct(total_ok, total_possible)
+                failure_counts = {}
+
+                for _code, label in LANGUAGES:
+                    failures = 0
+
+                    for item in ITEMS:
+                        c = collection_counts[label][item]
+                        failures += c["text_total"] - c["text_ok"]
+                        failures += c["audio_total"] - c["audio_ok"]
+
+                    failure_counts[label] = failures
+
+                failure_counts["All"] = sum(failure_counts.values())
+
+                overall = pct(total_ok, total_possible)
 
             summary_rows.append({
                 "name": collection.name,
@@ -194,6 +209,7 @@ def main() -> None:
                 "scores": lang_scores,
                 "overall": overall,
                 "counts": collection_counts,
+                "failures": failure_counts,
             })
 
     summary_rows.sort(key=lambda row: row["overall"])
@@ -225,8 +241,18 @@ def main() -> None:
         pt = row["scores"]["Portuguese"]
         overall = row["overall"]
 
+        failures_all = row["failures"]["All"]
+        failures_en = row["failures"]["English"]
+        failures_es = row["failures"]["Spanish"]
+        failures_pt = row["failures"]["Portuguese"]
+
         table_rows.append(f"""
-            <tr>
+            <tr
+                data-english="{en}"
+                data-spanish="{es}"
+                data-portuguese="{pt}"
+                data-overall="{overall}"
+            >
                 <td>
                     <a href="collection_qa_{html.escape(row["slug"])}.html">
                         {html.escape(row["name"])}
@@ -234,6 +260,7 @@ def main() -> None:
                     <div class="slug">{html.escape(row["slug"])}</div>
                 </td>
                 <td>{row["tracks"]}</td>
+                <td class="failure-count"><strong>{failures_all}</strong></td>
                 <td class="{css_class(en)}">{en}%</td>
                 <td class="{css_class(es)}">{es}%</td>
                 <td class="{css_class(pt)}">{pt}%</td>
@@ -318,8 +345,26 @@ def main() -> None:
 </head>
 <body>
     <h1>Collection QA Summary</h1>
+
     <div class="subtitle">
         Worst collections appear first. Click a collection name to open its drill-down QA page.
+    </div>
+
+    <div style="margin:20px 0;">
+        <label>
+            <input type="checkbox" id="showFailuresOnly">
+            Show Failures Only
+        </label>
+
+        <label style="margin-left:20px;">
+            Failure Language:
+            <select id="failureLanguage">
+                <option value="all">All</option>
+                <option value="English">English</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Portuguese">Portuguese</option>
+            </select>
+        </label>
     </div>
 
     <div class="summary">
@@ -331,6 +376,7 @@ def main() -> None:
             <tr>
                 <th>Collection</th>
                 <th>Tracks</th>
+                <th id="failureHeader">Total Failures</th>
                 <th>English</th>
                 <th>Spanish</th>
                 <th>Portuguese</th>
@@ -341,6 +387,51 @@ def main() -> None:
             {''.join(table_rows)}
         </tbody>
     </table>
+
+<script>
+
+function applyFilters() {{
+
+    const failureHeader =
+        document.getElementById("failureHeader");
+        
+    const showFailuresOnly =
+        document.getElementById("showFailuresOnly").checked;
+
+    const language =
+        document.getElementById("failureLanguage").value;
+
+    document.querySelectorAll("tbody tr").forEach(row => {{
+
+        const en = Number(row.dataset.english);
+        const es = Number(row.dataset.spanish);
+        const pt = Number(row.dataset.portuguese);
+
+        let failed;
+
+        if (language === "English")
+            failed = en < 100;
+        else if (language === "Spanish")
+            failed = es < 100;
+        else if (language === "Portuguese")
+            failed = pt < 100;
+        else
+            failed = (en < 100 || es < 100 || pt < 100);
+
+        row.style.display =
+            (!showFailuresOnly || failed) ? "" : "none";
+    }});
+}}
+
+document.getElementById("showFailuresOnly")
+    .addEventListener("change", applyFilters);
+
+document.getElementById("failureLanguage")
+    .addEventListener("change", applyFilters);
+
+applyFilters();
+</script>
+
 </body>
 </html>
 """
