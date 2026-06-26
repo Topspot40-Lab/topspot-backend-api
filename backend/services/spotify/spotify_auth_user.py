@@ -58,7 +58,7 @@ def _build_auth_manager(open_browser: bool = False) -> SpotifyOAuth:
     # ✅ Ensure cache directory exists (Spotipy does NOT create it)
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-    logger.info(
+    logger.debug(
         "SpotifyOAuth init | client=%s | redirect=%s | cache=%s",
         f"...{cid[-6:]}",
         redirect,
@@ -87,6 +87,8 @@ def get_spotify_user_client(allow_prompt: bool = False) -> Spotify:
     """
     global _client, _auth_manager
 
+    logger.debug("🎧 get_spotify_user_client() called")
+
     if _client is not None:
         return _client
 
@@ -103,7 +105,6 @@ def get_spotify_user_client(allow_prompt: bool = False) -> Spotify:
     _client = spotipy.Spotify(auth_manager=_auth_manager)
     logger.debug("✅ Spotify user-auth client ready (cache=%s)", CACHE_FILE)
     return _client
-
 
 # Optional: handy introspection for a /spotify/debug-config route
 def current_oauth_config() -> dict[str, str | None]:
