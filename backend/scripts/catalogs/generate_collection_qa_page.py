@@ -78,6 +78,9 @@ def parse_args() -> argparse.Namespace:
 def collection_intro_key(collection_slug: str, ranking: int) -> str:
     return f"collections-intros/{collection_slug}_{ranking:02d}.mp3"
 
+def is_artist_audio_na(artist_name: str | None) -> bool:
+    return "," in (artist_name or "")
+
 
 def main() -> None:
     args = parse_args()
@@ -96,6 +99,7 @@ def main() -> None:
             .join(Track, CollectionTrackRanking.track_id == Track.id)
             .join(Artist, Track.artist_id == Artist.id)
             .where(CollectionTrackRanking.collection_id == collection.id)
+            .where(CollectionTrackRanking.ranking <= 45)
             .order_by(CollectionTrackRanking.ranking)
         ).all()
 
@@ -172,11 +176,14 @@ def main() -> None:
                 artist_text = getattr(artist, "artist_description", None)
 
                 artist_filename = build_artist_filename(artist.spotify_artist_id)
-                artist_mp3 = (
-                    key_for("artist", artist_filename)
-                    if artist_filename
-                    else None
-                )
+                if "," in (artist.artist_name or ""):
+                    artist_mp3 = "N/A"
+                else:
+                    artist_mp3 = (
+                        key_for("artist", artist_filename)
+                        if artist_filename
+                        else None
+                    )
 
                 detail_long_audio_unknown = False
             else:

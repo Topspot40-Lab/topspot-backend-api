@@ -139,6 +139,7 @@ async def run_collection_sequence(
                 Collection.slug == collection_slug,
                 CollectionTrackRanking.ranking >= start_rank,
                 CollectionTrackRanking.ranking <= end_rank,
+                CollectionTrackRanking.ranking < 900,
             )
             .order_by(CollectionTrackRanking.ranking)
         )
@@ -152,7 +153,10 @@ async def run_collection_sequence(
     total_stmt = (
         select(CollectionTrackRanking)
         .join(Collection)
-        .where(Collection.slug == collection_slug)
+        .where(
+            Collection.slug == collection_slug,
+            CollectionTrackRanking.ranking < 900,
+        )
     )
     total_rows = db.exec(total_stmt).all()
 
@@ -582,6 +586,7 @@ async def run_collection_continuous_sequence(
                     Collection.slug == collection_slug,
                     CollectionTrackRanking.ranking >= start_rank,
                     CollectionTrackRanking.ranking <= end_rank,
+                    CollectionTrackRanking.ranking < 900,
                 )
                 .order_by(CollectionTrackRanking.ranking)
             )
@@ -590,7 +595,10 @@ async def run_collection_continuous_sequence(
             total_stmt = (
                 select(CollectionTrackRanking)
                 .join(Collection)
-                .where(Collection.slug == collection_slug)
+                .where(
+                    Collection.slug == collection_slug,
+                    CollectionTrackRanking.ranking < 900,
+                )
             )
             total_rows = db.exec(total_stmt).all()
 

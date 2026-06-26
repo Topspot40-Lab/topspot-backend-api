@@ -55,6 +55,9 @@ def css_class(value: float) -> str:
         return "warn"
     return "bad"
 
+def is_artist_audio_na(artist_name: str | None) -> bool:
+    return "," in (artist_name or "")
+
 
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -144,7 +147,10 @@ def main() -> None:
 
                         artist_text = getattr(artist, "artist_description", None)
                         artist_filename = build_artist_filename(artist.spotify_artist_id)
-                        artist_mp3 = key_for("artist", artist_filename) if artist_filename else None
+                        if is_artist_audio_na(artist.artist_name):
+                            artist_mp3 = "N/A"
+                        else:
+                            artist_mp3 = key_for("artist", artist_filename) if artist_filename else None
                     else:
                         intro_text = getattr(intro_locale, "intro_text", None)
                         intro_mp3 = getattr(intro_locale, "tts_key", None)
