@@ -135,7 +135,7 @@ def cancel_for_skip() -> None:
 # ─────────────────────────────────────────────
 # CANCEL ANY EXISTING TASK
 # ─────────────────────────────────────────────
-async def cancel_current_sequence():
+async def cancel_current_sequence(stop_spotify: bool = True):
     """
     Cancels an in-flight playback coroutine (intros, details, track, bed, etc.).
     Ensures proper async cleanup before a new sequence can begin.
@@ -155,12 +155,14 @@ async def cancel_current_sequence():
     flags.stopped = True
     flags.is_paused = False
 
-    # 🔥 STOP SPOTIFY IMMEDIATELY WHEN CANCELING
-    try:
-        await stop_spotify_playback(fade_out_seconds=0.2)
-        logger.debug("🛑 Spotify stopped during sequence cancel")
-    except Exception as exc:
-        logger.warning("⚠️ Failed to stop Spotify during cancel: %s", exc)
+    if stop_spotify:
+        try:
+            await stop_spotify_playback(fade_out_seconds=0.2)
+            logger.debug("🛑 Spotify stopped during sequence cancel")
+        except Exception as exc:
+            logger.warning("⚠️ Failed to stop Spotify during cancel: %s", exc)
+    else:
+        logger.info("🔄 Sequence cancel requested; Spotify stop skipped")
 
     await asyncio.sleep(0.15)
 
@@ -180,13 +182,13 @@ async def cancel_current_sequence():
 # ─────────────────────────────────────────────
 # START NEW BACKGROUND TASK SAFELY
 # ─────────────────────────────────────────────
-async def start_new_sequence(coro):
+async def start_new_sequence(coro, stop_spotify: bool = True):
     """
     Ensures exclusive playback launch by protecting the entire
     cancel → start sequence with a global asyncio.Lock.
     """
     async with sequence_lock:
-        await cancel_current_sequence()
+        await cancel_current_sequence(stop_spotify=stop_spotify)
 
         global current_task
         flags.stopped = False
@@ -284,7 +286,7 @@ async def play_track(payload: dict):
             voice_style=selection.voicePlayMode,
         )
 
-        await start_new_sequence(coro)
+        await start_new_sequence(coro, stop_spotify=False)
 
         return {
             "ok": True,
@@ -543,7 +545,7 @@ async def play_track(payload: dict):
     # Cancel anything already running (keeps behavior sane)
 
     # ✅ Run single-step inline so Spotify actually starts
-    await start_new_sequence(coro)
+    await start_new_sequence(coro, stop_spotify=False)
 
     return {
         "ok": True,
@@ -671,11 +673,6 @@ def resume():
 async def stop():
     await cancel_current_sequence()
 
-    try:
-        await stop_spotify_playback(fade_out_seconds=0.3)
-    except Exception as exc:
-        logger.warning("⚠️ Spotify stop failed: %s", exc)
-
     touch()
     return {"ok": True, "status": asdict(flags)}
 
@@ -770,8 +767,11 @@ async def reset_playback_state():
     from backend.state.playback_state import status
     from backend.state.playback_flags import flags
 
-    # Kill any running sequence first
-    await cancel_current_sequence()
+    # Mark any running sequence as canceled, but do NOT call Spotify here.
+    # Reset can fire on page load, and cancel_current_sequence() stops Spotify,
+    # which can trigger Spotify rate limits.
+    flags.cancel_requested = True
+    logger.info("🔄 Reset requested: app state reset only; Spotify stop skipped")
 
     # Reset public playback state
     status.is_playing = False
