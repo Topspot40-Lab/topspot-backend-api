@@ -106,7 +106,6 @@ async def get_or_create_topspot_user(user_profile: dict):
 
     
 
-    print("Insert data:", insert.data)
     if not insert.data:
         logger.error("Failed to create TopSpot user: %s", insert.error)
         raise HTTPException(status_code=500, detail="User creation failed")
@@ -143,15 +142,11 @@ def spotify_login():
 async def spotify_callback(request: Request):
     logger.critical("=== SPOTIFY CALLBACK ENTERED ===")
 
-    logger.critical("Request headers: %s", dict(request.headers))
-
-
     code = request.query_params.get("code")
     if not code:
         logger.error("Spotify callback missing authorization code")
         raise HTTPException(status_code=400, detail="Missing code")
-    logger.info("Spotify callback HIT! code=%s", code)
-    print("Spotify callback HIT! code=", code)
+    logger.info("Spotify callback received with authorization code")
 
 
     #redirect_uri = "https://api.topspot40.com/api/auth/spotify/callback"
@@ -166,8 +161,7 @@ async def spotify_callback(request: Request):
     token_data = await exchange_code_for_token(code, redirect_uri)
     #logger.critical(token_data)
     access_token = token_data["access_token"]
-    #logger.critical("SPOTIFY ACCESS TOKEN: %s", access_token)
-    logger.critical("TOKEN LENGTH: %s", len(access_token))
+    logger.info("Spotify token exchange succeeded")
 
     refresh_token = token_data.get("refresh_token")   # sometimes only returned on first exchange
     expires_in = token_data.get("expires_in", 3600)
@@ -251,7 +245,7 @@ async def spotify_callback(request: Request):
     redirect_response = RedirectResponse(redirect_url, status_code=302)
 
 
-    logger.info(f"About to set JWT cookie for user {topspot_user_id}")
+    logger.info(f"About to set session cookie for user {topspot_user_id}")
     #logger.critical("About to set cookie. JWT=%s", jwt_token)
 
 
@@ -271,7 +265,7 @@ async def spotify_callback(request: Request):
         domain=config["COOKIE_DOMAIN"],
     )
     logger.critical("COOKIE SET SUCCESSFULLY")
-    logger.info(f"Redirecting to {redirect_url} with JWT cookie {jwt_token}")
+    logger.info("Redirecting to %s after session cookie creation", redirect_url)
 
     return redirect_response
     
@@ -395,7 +389,6 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
     stripe.api_key = stripe_config["secret_key"]
     logger.critical("=== VERIFY SUBSCRIPTION HIT ===")
     #logger.critical(f"Session ID received: {session_id}")
-    #logger.critical(f"JWT cookie: {access_token}")
 
 
 

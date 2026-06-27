@@ -74,9 +74,7 @@ async def exchange_code_for_token(code: str, redirect_uri: str) -> dict:
     async with httpx.AsyncClient() as client:
         #debug statements 
         logger.critical("=== TOKEN EXCHANGE START ===")
-        print(f"CLIENT_ID: {client_id}")
         logger.critical("CLIENT_ID EXISTS: %s", bool(client_id))
-        print(f"CLIENT_SECRET is set: {bool(client_secret)}")
         logger.critical("CLIENT_SECRET EXISTS: %s", bool(client_secret))
         
 
@@ -92,16 +90,13 @@ async def exchange_code_for_token(code: str, redirect_uri: str) -> dict:
         }
         #DEBUG STATEMENT 
         logger.critical("REDIRECT_URI: %s", redirect_uri)
-        logger.critical("CODE PREFIX: %s", code[:20])
-        print("POSTing to token URL:", SPOTIFY_TOKEN_URL)
-        print("Headers:", headers)
-        print("Data:", data)
+        logger.info("Spotify token exchange request prepared")
 
         logger.critical("POSTING TO SPOTIFY TOKEN ENDPOINT")
         response = await client.post(SPOTIFY_TOKEN_URL, headers=headers, data=data)
         logger.critical("TOKEN RESPONSE STATUS=%s", response.status_code)
         if response.status_code != 200:
-            print("Spotify error response:", response.text)
+            logger.warning("Spotify token exchange failed with status=%s", response.status_code)
         response.raise_for_status()
         return response.json()
 
@@ -114,7 +109,7 @@ async def get_user_profile(access_token: str) -> dict:
         headers = {"Authorization": f"Bearer {access_token}"}
         response = await client.get(SPOTIFY_ME_URL, headers=headers)
         logger.critical("/me STATUS=%s", response.status_code)
-        logger.critical("ME BODY: %s", response.text)
+        logger.info("Spotify profile fetch completed with status=%s", response.status_code)
         response.raise_for_status()
         return response.json()
 
@@ -142,7 +137,7 @@ async def get_valid_access_token(user_id: str):
     logger.critical("🔍 get_valid_access_token CALLED")
     logger.critical("USER_ID: %s", user_id)
     record = supabase.table("spotify_tokens").select("*").eq("user_id", user_id).single().execute().data
-    logger.critical("DB RECORD: %s", record)
+    logger.info("Spotify token record found=%s for user_id=%s", bool(record), user_id)
     if not record:
         logger.critical("❌ NO TOKEN RECORD FOUND")
         raise Exception("No tokens found for user")
@@ -160,10 +155,10 @@ async def get_valid_access_token(user_id: str):
         # Token expired — refresh it
         logger.critical("⚠️ TOKEN EXPIRED → ENTERING REFRESH PATH")
         refresh_token = record["refresh_token"]
-        logger.critical("USING REFRESH TOKEN (PREFIX): %s", refresh_token[:20] if refresh_token else None)
+        logger.info("Spotify token refresh started for user_id=%s has_refresh_token=%s", user_id, bool(refresh_token))
         refreshed = await refresh_spotify_token(refresh_token)
         logger.critical("REFRESH RESPONSE KEYS: %s", list(refreshed.keys()))
-        logger.critical("NEW ACCESS TOKEN (PREFIX): %s", refreshed["access_token"][:20])
+        logger.info("Spotify token refresh succeeded for user_id=%s", user_id)
         logger.critical("EXPIRES_IN: %s", refreshed.get("expires_in"))
         new_expires_at = datetime.now(timezone.utc) + timedelta(seconds=refreshed["expires_in"])
 
@@ -178,8 +173,7 @@ async def get_valid_access_token(user_id: str):
         return refreshed["access_token"]
     else:
         # Still valid
-        logger.critical("✅ TOKEN STILL VALID → USING STORED ACCESS TOKEN")
-        logger.critical("ACCESS TOKEN (PREFIX): %s", record["access_token"][:20])
+        logger.info("Spotify token still valid")
         return record["access_token"]
     
 
