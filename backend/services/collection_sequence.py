@@ -115,6 +115,8 @@ async def run_collection_sequence(
         text_artist_description: bool,
         voice_style: Literal["before", "over"] = "before",
 ):
+    status = current_runtime().status
+
     logger.info(
         "🎧 COLLECTION START: %s %s-%s mode=%s voice_style=%s",
         collection_slug,
@@ -505,9 +507,8 @@ async def run_collection_sequence(
 
 
 from backend.state.narration import track_done_event
-from backend.state.playback_runtime import current_user_id
+from backend.state.playback_runtime import current_runtime, current_user_id
 from backend.state.playback_flags import flags
-from backend.state.playback_state import status
 
 
 async def run_collection_continuous_sequence(
@@ -525,6 +526,7 @@ async def run_collection_continuous_sequence(
         voice_style: Literal["before", "over"] = "before",
 ) -> None:
     user_id = current_user_id()
+    status = current_runtime().status
 
     logger.info(
         "📻 COLLECTION CONTINUOUS START: %s %d-%d mode=%s lang=%s voice=%s",

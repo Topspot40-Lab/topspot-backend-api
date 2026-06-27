@@ -31,7 +31,6 @@ from backend.services.play_policy import compute_play_seconds, sleep_with_skip
 from backend.services.radio_render import render_header, box, clean_text, BOX_WIDTH
 from backend.state.skip import skip_event
 from backend.state.playback_state import (
-    status,
     update_phase,
     mark_playing,
 )
@@ -73,6 +72,7 @@ async def _respect_user_controls() -> None:
     Central cooperative checkpoint for pause / stop.
     IMPORTANT: Do NOT abort if a new playback session is actively running.
     """
+    status = current_runtime().status
     while status.is_paused:
         await asyncio.sleep(0.25)
 
@@ -266,6 +266,7 @@ async def play_track_with_skip(
 ) -> bool:
     heartbeat_task: Optional[asyncio.Task] = None
     user_id = current_user_id()
+    status = current_runtime().status
 
     try:
         rank_val = rank if rank is not None else getattr(track, "ranking", None)

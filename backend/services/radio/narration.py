@@ -6,7 +6,7 @@ import logging
 from typing import Optional
 
 from backend.state.skip import skip_event
-from backend.state.playback_state import status, update_phase
+from backend.state.playback_state import update_phase
 from backend.services.spotify.playback import (
     play_spotify_track,
     stop_spotify_playback,
@@ -14,7 +14,7 @@ from backend.services.spotify.playback import (
 )
 from backend.config import SPOTIFY_BED_TRACK_ID
 from backend.services.playback_helpers import safe_play
-from backend.state.playback_runtime import bind_task, current_user_id
+from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +23,7 @@ _narration_lock = asyncio.Lock()
 
 
 async def _respect_user_controls() -> None:
+    status = current_runtime().status
     while status.is_paused:
         await asyncio.sleep(0.25)
 

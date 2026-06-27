@@ -27,10 +27,10 @@ from backend.services.radio_runtime import (
 from backend.config.playback_block_config import MIN_TRACKS_PER_BLOCK
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.block_builder import build_track_block
-from backend.state.playback_state import status, mark_playing, update_phase
+from backend.state.playback_state import mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
-from backend.state.playback_runtime import current_user_id
+from backend.state.playback_runtime import current_runtime, current_user_id
 
 from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
 from backend.services.audio_urls import resolve_audio_ref
@@ -177,6 +177,7 @@ async def run_all_radio_sequence(
         voice_style: str = "before",   # ✅ ADD THIS
 ):
     user_id = current_user_id()
+    status = current_runtime().status
 
     def normalize_lang(value: str) -> str:
         v = (value or "en").lower()

@@ -7,7 +7,8 @@ import time
 from typing import Optional
 
 from backend.state.skip import skip_event
-from backend.state.playback_state import status, update_phase
+from backend.state.playback_state import update_phase
+from backend.state.playback_runtime import current_runtime
 
 logger = logging.getLogger(__name__)
 
@@ -54,6 +55,7 @@ async def track_heartbeat(
     Updates playback_state.status elapsed/duration/percent during TRACK phase.
     On completion (elapsed >= total_secs OR skip_event set), pushes phase to idle and marks stopped.
     """
+    status = current_runtime().status
     try:
         while True:
             elapsed = time.time() - start_ts

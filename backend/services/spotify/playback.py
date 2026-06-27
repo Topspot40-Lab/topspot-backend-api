@@ -5,7 +5,7 @@ from typing import Optional
 
 from spotipy.exceptions import SpotifyException
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
-from backend.state.playback_state import begin_track, status
+from backend.state.playback_state import begin_track
 from backend.isaiah.isaiah_spotify import get_valid_access_token
 
 logger = logging.getLogger(__name__)

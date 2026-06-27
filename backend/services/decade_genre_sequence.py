@@ -9,7 +9,7 @@ from typing import Literal
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.playback_ordering import order_rows_for_mode
 from backend.state.narration import track_done_event
-from backend.state.playback_runtime import current_user_id
+from backend.state.playback_runtime import current_runtime, current_user_id
 from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
 from sqlmodel import select
 from backend.database import get_db_session
@@ -31,7 +31,6 @@ from backend.services.radio_runtime import (
 from backend.services.audio_urls import resolve_audio_ref, is_remote_audio
 
 from backend.state.playback_state import (
-    status,
     mark_playing,
     update_phase,
 )
@@ -77,6 +76,7 @@ async def publish_narration_phase(
         extra_context: dict | None = None,
 ):
     audio_url = resolve_audio_ref(bucket, key)
+    status = current_runtime().status
 
     logger.info("🎙 publish_narration_phase phase=%s decade=%s genre=%s bucket=%s key=%s",
                 phase, decade, genre, bucket, key)
@@ -158,6 +158,7 @@ async def publish_narration_queue_phase(
     Frontend plays audio_queue in order, then sends narration-finished once.
     """
     user_id = current_user_id()
+    status = current_runtime().status
 
     logger.info(
         "🎙 publish_narration_queue_phase phase=%s decade=%s genre=%s items=%d",
@@ -217,6 +218,7 @@ async def publish_narration_queue_phase(
 # ─────────────────────────────────────────────
 async def _wait_if_paused() -> None:
     """Cooperative pause loop driven by playback_state.status."""
+    status = current_runtime().status
     while getattr(status, "is_paused", False):
         await asyncio.sleep(0.25)
 
@@ -230,6 +232,7 @@ def _is_cancelled_or_stopped() -> bool:
     and playback_flags (legacy) because runtime helpers
     still rely on flags during Option A.
     """
+    status = current_runtime().status
     if getattr(status, "stopped", False):
         return True
     if getattr(status, "cancel_requested", False):
@@ -323,6 +326,8 @@ async def run_decade_genre_sequence(
         play_track: bool,
         voice_style: Literal["before", "over"] = "before",
 ) -> None:
+    status = current_runtime().status
+
     logger.info(
         "🎧 Starting sequence (publisher): %s/%s %d-%d mode=%s lang=%s voice=%s",
         decade,
@@ -703,6 +708,7 @@ async def run_decade_genre_continuous_sequence(
         voice_style: Literal["before", "over"] = "before",
 ) -> None:
     user_id = current_user_id()
+    status = current_runtime().status
 
     logger.info(
         "📻 CONTINUOUS MODE START: %s/%s %d-%d mode=%s lang=%s voice=%s",

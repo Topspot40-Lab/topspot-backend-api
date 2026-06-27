@@ -19,7 +19,7 @@ from backend.config import (
 from backend.services.supabase_playback import play_mp3
 from backend.services.spotify.playback import play_spotify_track, stop_spotify_playback
 from backend.services.play_policy import compute_play_seconds, sleep_with_skip
-from backend.state.playback_state import status, update_phase
+from backend.state.playback_state import update_phase
 from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
 from backend.state.skip import skip_event
 from backend.utils.tts_diagnostics import normalize_for_filename
@@ -39,6 +39,7 @@ FRONTEND_OWNS_ARTIST = False
 
 async def _respect_user_controls() -> None:
     """Pause / stop cooperative checkpoint."""
+    status = current_runtime().status
     while status.is_paused:
         await asyncio.sleep(0.25)
 
@@ -302,6 +303,7 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
     )
 
     if owns:
+        status = current_runtime().status
         logger.info("🧭 FRONTEND OWNS %s — announcing only, not playing backend audio", kind)
 
         ref = resolve_audio_ref(bucket, key)

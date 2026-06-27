@@ -27,8 +27,7 @@ from backend.services.decade_genre_sequence import run_decade_genre_sequence
 
 from backend.routers.playback_control import start_new_sequence
 from backend.state.playback_flags import flags
-from backend.state.playback_state import status
-from backend.state.playback_runtime import bind_request_user, current_user_id
+from backend.state.playback_runtime import bind_request_user, current_runtime, current_user_id
 
 router = APIRouter(
     prefix="/supabase/decade-genre",
@@ -135,6 +134,8 @@ def start_radio_mode(
         play_artist_description,
         voice_style,
 ):
+    status = current_runtime().status
+
     # Build voice selection
     status.selection = {
         "voices": [
@@ -333,6 +334,7 @@ async def play_next_decade_genre():
     - current decade/genre
     """
     user_id = current_user_id()
+    status = current_runtime().status
 
     if not flags.context:
         return {"status": "error", "message": "No active decade/genre context."}

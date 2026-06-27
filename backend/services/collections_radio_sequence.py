@@ -4,10 +4,10 @@ import asyncio
 import logging
 import random
 
-from backend.state.playback_state import status, mark_playing, update_phase
+from backend.state.playback_state import mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
-from backend.state.playback_runtime import current_user_id
+from backend.state.playback_runtime import current_runtime, current_user_id
 from backend.services.collections_radio_loader import get_valid_collections, load_collection_rows
 from backend.services.block_builder import build_track_block
 from backend.services.collection_sequence import publish_narration_phase, _extract_bucket_key
@@ -81,6 +81,7 @@ async def run_collections_radio_sequence(
         voice_style: str = "before",
 ) -> None:
     user_id = current_user_id()
+    status = current_runtime().status
     voices = voices or []
 
     play_intro = "intro" in voices

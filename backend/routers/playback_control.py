@@ -1,7 +1,7 @@
 # backend/routers/playback_control.py
 from __future__ import annotations
 
-from backend.state.playback_state import update_phase, status, mark_paused, mark_playing
+from backend.state.playback_state import update_phase, mark_paused, mark_playing
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
 from backend.services.spotify.playback import stop_spotify_playback
@@ -21,7 +21,8 @@ import contextlib
 from fastapi import APIRouter, Depends
 from fastapi import HTTPException
 
-from backend.services.spotify.playback import get_spotify_playback_client, set_device_volume
+from backend.services.spotify.playback import set_device_volume
+from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 
 # ✅ KEEP data models, but not the pipeline
 from backend.services.playback_engine import (
@@ -67,6 +68,7 @@ class PlaySpotifyRequest(BaseModel):
 @router.post("/play-spotify", summary="Start Spotify playback for a spotify_track_id")
 async def play_spotify(req: PlaySpotifyRequest):
     user_id = current_user_id()
+    status = current_runtime().status
     logger.debug("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
 
     # Start Spotify playback
@@ -212,6 +214,7 @@ async def start_new_sequence(coro):
 @router.post("/play-track", summary="Play exactly one track via sequence engine")
 async def play_track(payload: dict):
     user_id = current_user_id()
+    status = current_runtime().status
 
     track = TrackRef(
         track_id=payload["track"]["track_id"],
@@ -586,13 +589,14 @@ async def start(
 @router.post("/pause", summary="Pause playback")
 async def pause():
     user_id = current_user_id()
+    status = current_runtime().status
     logger.info("⏸️ Pause requested")
 
     mark_paused()
 
     # 🔊 Capture current volume BEFORE fade
     try:
-        sp = await get_spotify_playback_client()
+        sp = await get_spotify_user_client(user_id)
         pb = sp.current_playback()
         if pb and pb.get("device"):
             status.volume = pb["device"]["volume_percent"]
@@ -621,6 +625,8 @@ async def pause():
 
 @router.post("/resume", summary="Resume playback")
 async def resume():
+    user_id = current_user_id()
+    status = current_runtime().status
     phase = status.phase
     logger.info(f"▶️ Resume requested from phase: {phase}")
 
@@ -633,7 +639,7 @@ async def resume():
     try:
         # 🎯 CASE 1 — TRACK (existing logic)
         if phase == "track":
-            sp = await get_spotify_playback_client()
+            sp = await get_spotify_user_client(user_id)
 
             sp.start_playback()
 
@@ -723,7 +729,7 @@ async def warmup_playback():
 
     try:
         # 1️⃣ Ensure Spotify client (OAuth)
-        sp = await get_spotify_playback_client()
+        sp = await get_spotify_user_client(user_id)
         logger.info("🎧 Spotify client ready")
 
         # 2️⃣ Discover devices
@@ -778,8 +784,8 @@ async def warmup_playback():
 
 @router.post("/reset")
 async def reset_playback_state():
-    from backend.state.playback_state import status
     from backend.state.playback_flags import flags
+    status = current_runtime().status
 
     # Kill any running sequence first
     await cancel_current_sequence()
