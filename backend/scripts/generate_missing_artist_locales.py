@@ -72,12 +72,14 @@ def main() -> None:
             a.artist_name,
             a.artist_description
         FROM artist a
+        LEFT JOIN artist_locale al
+          ON al.artist_id = a.id
+         AND al.language_code = :language_code
         WHERE a.artist_description IS NOT NULL
-          AND NOT EXISTS (
-              SELECT 1
-              FROM artist_locale al
-              WHERE al.artist_id = a.id
-                AND al.language_code = :language_code
+          AND (
+              al.id IS NULL
+              OR al.artist_description_text IS NULL
+              OR trim(al.artist_description_text) = ''
           )
         ORDER BY a.id
         LIMIT :limit

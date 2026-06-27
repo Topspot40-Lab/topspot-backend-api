@@ -4,6 +4,7 @@ from pathlib import Path
 
 from sqlmodel import Session, select
 from supabase import create_client
+import argparse
 
 from backend.database import engine
 from backend.models.dbmodels import Track, TrackLocale
@@ -36,7 +37,12 @@ def filename_for(spotify_track_id: str) -> str:
     return f"{spotify_track_id}.mp3"
 
 
-async def generate_for_language(language: str) -> None:
+async def generate_for_language(
+    language: str,
+    spotify_id_filter: str | None = None,
+    limit: int | None = None,
+    overwrite: bool = False,
+) -> None:
     bucket = bucket_for(language)
     voice_id = TTS_PROFILES[language][KIND]["voice_id"]
 
@@ -91,6 +97,13 @@ async def generate_for_language(language: str) -> None:
             .order_by(TrackLocale.track_id)
         ).all()
 
+        if spotify_id_filter:
+            rows = [
+                (locale, track)
+                for locale, track in rows
+                if track.spotify_track_id == spotify_id_filter
+            ]
+
         print(f"Found {len(rows)} locale rows with detail text")
 
         for locale, track in rows:
@@ -104,11 +117,11 @@ async def generate_for_language(language: str) -> None:
             filename = filename_for(spotify_id)
             key = key_for(spotify_id)
 
-            if not OVERWRITE and locale.tts_key:
+            if not overwrite and locale.tts_key:
                 skipped_existing_db += 1
                 continue
 
-            if not OVERWRITE and filename in existing_files:
+            if not overwrite and filename in existing_files:
                 locale.tts_bucket = bucket
                 locale.tts_key = key
                 session.add(locale)
@@ -147,7 +160,7 @@ async def generate_for_language(language: str) -> None:
 
                 print(f"Uploaded: {bucket}/{key}")
 
-                if LIMIT_PER_LANGUAGE is not None and generated >= LIMIT_PER_LANGUAGE:
+                if limit is not None and generated >= limit:
                     break
 
             finally:
@@ -162,8 +175,22 @@ async def generate_for_language(language: str) -> None:
 
 
 async def main() -> None:
-    for language in LANGUAGES:
-        await generate_for_language(language)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--language", choices=LANGUAGES, default=None)
+    parser.add_argument("--spotify-id", default=None)
+    parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--overwrite", action="store_true")
+    args = parser.parse_args()
+
+    languages = [args.language] if args.language else list(LANGUAGES)
+
+    for language in languages:
+        await generate_for_language(
+            language=language,
+            spotify_id_filter=args.spotify_id,
+            limit=args.limit,
+            overwrite=args.overwrite,
+        )
 
 
 if __name__ == "__main__":
