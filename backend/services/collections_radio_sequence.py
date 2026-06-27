@@ -252,6 +252,16 @@ async def run_collections_radio_sequence(
                         bed_key = get_collection_group_bed_key(group_slug)
                         bed_audio_url = resolve_audio_ref(BED_BUCKET, bed_key)
 
+                        if not bed_audio_url:
+                            fallback_bed_key = get_collection_group_bed_key("default")
+                            bed_audio_url = resolve_audio_ref(BED_BUCKET, fallback_bed_key)
+
+                            logger.warning(
+                                "🎧 Missing collection-group bed %s; using fallback %s",
+                                bed_key,
+                                fallback_bed_key,
+                            )
+
                         # ───────── COLLECTION SET INTRO ─────────
                         if idx == 1:
                             logger.info(

@@ -75,6 +75,8 @@ async def get_sequence_collection(
 
     if end_rank is not None:
         filters.append(CollectionTrackRanking.ranking <= end_rank)
+    else:
+        filters.append(CollectionTrackRanking.ranking <= 100)
 
     q = (
         select(Track, Artist, CollectionTrackRanking, Collection)
