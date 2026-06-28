@@ -130,6 +130,7 @@ async def run_collection_sequence(
                 Track,
                 Artist,
                 CollectionTrackRanking,
+                Collection,
             )
 
             .join(Artist, Artist.id == Track.artist_id)
@@ -190,7 +191,25 @@ async def run_collection_sequence(
 
     # ✅ CRITICAL: publish ONE rank only, then return
     # Frontend Next/Prev calls this endpoint again with a new start_rank.
-    track, artist, ctr = rows[0]
+    track, artist, ctr, collection = rows[0]
+    collection_intro_text = getattr(collection, "intro", None)
+    collection_intro_bucket = (
+        getattr(collection, "set_intro_tts_bucket", None)
+        if tts_language == "en"
+        else None
+    )
+
+    collection_intro_key = (
+        getattr(collection, "set_intro_tts_key", None)
+        if tts_language == "en"
+        else None
+    )
+
+    collection_intro_audio_url = (
+        resolve_audio_ref(collection_intro_bucket, collection_intro_key)
+        if collection_intro_bucket and collection_intro_key
+        else None
+    )
     rank = int(ctr.ranking)
     ranking_id = ctr.id
 
@@ -310,6 +329,8 @@ async def run_collection_sequence(
                     "spotify_track_id": track.spotify_track_id,
                     "ranking_id": ranking_id,
                     "collection_slug": collection_slug,
+                    "collection_intro": collection_intro_text,
+                    "collection_intro_audio_url": collection_intro_audio_url,
                 },
             )
 
@@ -366,6 +387,8 @@ async def run_collection_sequence(
                     "spotify_track_id": track.spotify_track_id,
                     "ranking_id": ranking_id,
                     "collection_slug": collection_slug,
+                    "collection_intro": collection_intro_text,
+                    "collection_intro_audio_url": collection_intro_audio_url,
                 },
             )
 
@@ -408,6 +431,8 @@ async def run_collection_sequence(
                     "spotify_track_id": track.spotify_track_id,
                     "ranking_id": ranking_id,
                     "collection_slug": collection_slug,
+                    "collection_intro": collection_intro_text,
+                    "collection_intro_audio_url": collection_intro_audio_url,
                 },
             )
 
@@ -423,6 +448,8 @@ async def run_collection_sequence(
             context={
                 "mode": "spotify",
                 "collection_slug": collection_slug,
+                "collection_intro": collection_intro_text,
+                "collection_intro_audio_url": collection_intro_audio_url,
                 "spotify_track_id": track.spotify_track_id,
                 "ranking_id": ranking_id,
 
@@ -577,6 +604,7 @@ async def run_collection_continuous_sequence(
                     Track,
                     Artist,
                     CollectionTrackRanking,
+                    Collection,
                 )
 
                 .join(Artist, Artist.id == Track.artist_id)
@@ -631,7 +659,8 @@ async def run_collection_continuous_sequence(
         ]
 
         langs = list(dict.fromkeys(langs))
-        for (track, artist, ctr) in rows:
+        for (track, artist, ctr, collection) in rows:
+            collection_intro_text = getattr(collection, "intro", None)
             rank = int(ctr.ranking)
             ranking_id = ctr.id
 
@@ -784,6 +813,8 @@ async def run_collection_continuous_sequence(
                     context={
                         "mode": "spotify",
                         "collection_slug": collection_slug,
+                        "collection_intro": collection_intro_text,
+                        "collection_intro_audio_url": collection_intro_audio_url,
                         "spotify_track_id": track.spotify_track_id,
                         "ranking_id": ranking_id,  # ⭐ THIS IS THE MAGIC
                     },
