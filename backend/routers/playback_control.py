@@ -63,6 +63,7 @@ router = APIRouter(
 
 class PlaySpotifyRequest(BaseModel):
     spotify_track_id: str
+    device_id: Optional[str] = None
 
 
 @router.post("/play-spotify", summary="Start Spotify playback for a spotify_track_id")
@@ -72,7 +73,7 @@ async def play_spotify(req: PlaySpotifyRequest):
     logger.debug("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
 
     # Start Spotify playback
-    ok = await play_spotify_track(req.spotify_track_id, user_id)
+    ok = await play_spotify_track(req.spotify_track_id, user_id, req.device_id)
 
     if not ok:
         logger.error("❌ Spotify playback failed for %s", req.spotify_track_id)
