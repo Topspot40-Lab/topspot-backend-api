@@ -278,7 +278,7 @@ async def play_track_with_skip(
             logger.warning("⚠️ No spotify_track_id — skipping track playback.")
             return True
 
-        mark_playing(mode=mode, language=lang)
+        mark_playing(user_id=user_id, mode=mode, language=lang)
 
         play_secs = compute_play_seconds(track)
 

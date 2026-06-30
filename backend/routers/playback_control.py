@@ -631,6 +631,7 @@ async def resume():
     logger.info(f"▶️ Resume requested from phase: {phase}")
 
     mark_playing(
+        user_id=user_id,
         mode=status.mode,
         language=status.language,
         context=status.context

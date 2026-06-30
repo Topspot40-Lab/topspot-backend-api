@@ -236,6 +236,7 @@ async def run_all_radio_sequence(
     flags.mode = "all_radio"
 
     mark_playing(
+        user_id=user_id,
         mode="all_radio",
         language=lang,
         context={

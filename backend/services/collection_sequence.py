@@ -115,6 +115,7 @@ async def run_collection_sequence(
         text_artist_description: bool,
         voice_style: Literal["before", "over"] = "before",
 ):
+    user_id = current_user_id()
     status = current_runtime().status
 
     logger.info(
@@ -162,7 +163,7 @@ async def run_collection_sequence(
     status.total_tracks = len(total_rows)
 
     # Tell frontend a sequence is active
-    mark_playing(mode="collection", language=tts_language)
+    mark_playing(user_id=user_id, mode="collection", language=tts_language)
 
     def normalize_lang(value: str) -> str:
         v = (value or "en").lower()
@@ -547,6 +548,7 @@ async def run_collection_continuous_sequence(
     flags.mode = "collection"
 
     mark_playing(
+        user_id=user_id,
         mode="collection",
         language=tts_language,
         context={

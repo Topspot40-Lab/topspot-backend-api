@@ -122,6 +122,7 @@ async def run_collections_radio_sequence(
     flags.mode = "collections_radio"
 
     mark_playing(
+        user_id=user_id,
         mode="collection",
         language=tts_language,
         context={

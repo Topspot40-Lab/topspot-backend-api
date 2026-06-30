@@ -326,6 +326,7 @@ async def run_decade_genre_sequence(
         play_track: bool,
         voice_style: Literal["before", "over"] = "before",
 ) -> None:
+    user_id = current_user_id()
     status = current_runtime().status
 
     logger.info(
@@ -373,6 +374,7 @@ async def run_decade_genre_sequence(
     flags.mode = "decade_genre"
 
     mark_playing(
+        user_id=user_id,
         mode="decade_genre",
         language=tts_language,
         context={
@@ -746,6 +748,7 @@ async def run_decade_genre_continuous_sequence(
     flags.mode = "decade_genre"
 
     mark_playing(
+        user_id=user_id,
         mode="decade_genre",
         language=tts_language,
         context={
