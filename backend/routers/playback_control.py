@@ -597,7 +597,7 @@ async def pause():
     status = current_runtime().status
     logger.info("⏸️ Pause requested")
 
-    mark_paused()
+    mark_paused(user_id)
 
     # 🔊 Capture current volume BEFORE fade
     try:

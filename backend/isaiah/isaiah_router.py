@@ -73,7 +73,7 @@ async def get_or_create_topspot_user(user_profile: dict):
 
     if res.data and len(res.data) > 0:
         # Update last login & display info
-        logger.info("Found existing TopSpot user: %s", res.data[0])
+        logger.info("Found existing TopSpot user for Spotify ID: %s", spotify_user_id)
         supabase.table("topspot_users") \
             .update({
                 "display_name": user_profile.get("display_name"),
@@ -159,7 +159,6 @@ async def spotify_callback(request: Request):
     redirect_uri = get_spotify_redirect_uri(local=IS_LOCAL)
 
     token_data = await exchange_code_for_token(code, redirect_uri)
-    #logger.critical(token_data)
     access_token = token_data["access_token"]
     logger.info("Spotify token exchange succeeded")
 
@@ -197,11 +196,11 @@ async def spotify_callback(request: Request):
 
     # Find or create TopSpot40 user
     topspot_user = await get_or_create_topspot_user(user_profile)
-    logger.critical("TOPSPOT USER RESULT=%s", topspot_user)
+    logger.critical("TOPSPOT USER RESULT FOUND=%s", bool(topspot_user))
     topspot_user_id = topspot_user["id"]
 
     if not topspot_user or "id" not in topspot_user:
-        logger.error("TopSpot user creation failed. Profile=%s", user_profile)
+        logger.error("TopSpot user creation failed")
         raise HTTPException(status_code=500, detail="Failed to create user")
 
 
@@ -246,7 +245,6 @@ async def spotify_callback(request: Request):
 
 
     logger.info(f"About to set session cookie for user {topspot_user_id}")
-    #logger.critical("About to set cookie. JWT=%s", jwt_token)
 
 
     logger.critical("SETTING COOKIE DOMAIN=%s", config["COOKIE_DOMAIN"])
@@ -354,7 +352,7 @@ async def create_checkout_session(access_token: str = Cookie(None)):
     try:
         logger.critical(f"IS_LOCAL={IS_LOCAL}")
         logger.critical(f"STRIPE_PRICE_ID={stripe_price_id}")
-        logger.critical(f"STRIPE_KEY_PREFIX={stripe.api_key[:7]}")
+        logger.critical("STRIPE_KEY_CONFIGURED=%s", bool(stripe.api_key))
         # Create Stripe checkout session
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
@@ -393,7 +391,6 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
 
 
     payload = decode_jwt_token(access_token)
-    #logger.critical(f"Decoded JWT payload: {payload}")
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
@@ -417,13 +414,16 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
     try:
         # Retrieve the checkout session
         session = stripe.checkout.Session.retrieve(session_id)
-        #logger.critical(f"Stripe session: {session}")
         customer_id = session.get("customer")
         subscription_id = session.get("subscription")
         if not subscription_id or not customer_id:
             raise HTTPException(status_code=400, detail="Invalid session")
         subscription = stripe.Subscription.retrieve(subscription_id)
-        logger.critical(f"Stripe subscription: {subscription}")
+        logger.critical(
+            "Stripe subscription fetched id=%s status=%s",
+            subscription.get("id"),
+            subscription.get("status"),
+        )
         status = subscription.get("status")
 
         logger.critical(f"""
@@ -485,11 +485,11 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
 @stripe_router.get("/subscription-status")
 async def get_subscription_status(access_token: str = Cookie(None)):
     logger.critical("=== SUBSCRIPTION STATUS HIT ===")
-    logger.critical("Cookie received: %s", access_token)
+    logger.critical("Session cookie present: %s", bool(access_token))
 
 
     payload = decode_jwt_token(access_token)
-    logger.critical("Decoded JWT payload: %s", payload)
+    logger.critical("Session JWT decoded: %s", bool(payload))
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
@@ -502,7 +502,7 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         .single() \
         .execute()
     
-    logger.critical(f"TOPSPOT USER ROW: {user.data}")
+    logger.critical("TOPSPOT USER ROW FOUND=%s", bool(user.data))
 
     if not user.data:
         raise HTTPException(status_code=401)
@@ -521,7 +521,7 @@ async def get_subscription_status(access_token: str = Cookie(None)):
 
     res = supabase.table("subscriptions").select("*").eq("user_id", user_id).eq("status", "active").limit(1).execute()
     
-    logger.critical(f"SUBSCRIPTION ROW: {res.data}")
+    logger.critical("SUBSCRIPTION ROW FOUND=%s", bool(res.data))
     
     """if not res or not res.data:
         logger.critical("❌ No subscription found")
@@ -656,7 +656,7 @@ async def stripe_webhook(request: Request):
 
             if not subscription_id:
                 logger.warning(
-                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                    f"⚠️ Missing subscription_id | event_type={event_type}"
                 )
                 return JSONResponse({"status": "ignored_missing_subscription"})
             
@@ -714,7 +714,7 @@ async def stripe_webhook(request: Request):
             # IMPORTANT: renew = overwrite latest period dates
             if not subscription_id:
                 logger.warning(
-                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                    f"⚠️ Missing subscription_id | event_type={event_type}"
                 )
                 return JSONResponse({"status": "ignored_missing_subscription"})
 
@@ -774,7 +774,7 @@ async def stripe_webhook(request: Request):
 
             if not subscription_id:
                 logger.warning(
-                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                    f"⚠️ Missing subscription_id | event_type={event_type}"
                 )
                 return JSONResponse({"status": "ignored_missing_subscription"})
 
@@ -832,7 +832,7 @@ async def stripe_webhook(request: Request):
 
             if not subscription_id:
                 logger.warning(
-                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                    f"⚠️ Missing subscription_id | event_type={event_type}"
                 )
                 return JSONResponse({"status": "ignored_missing_subscription"})
 
@@ -861,7 +861,7 @@ async def stripe_webhook(request: Request):
 
             if not subscription_id:
                 logger.warning(
-                    f"⚠️ Missing subscription_id | event_type={event_type} | raw_data={data}"
+                    f"⚠️ Missing subscription_id | event_type={event_type}"
                 )
                 return JSONResponse({"status": "ignored"})
 
@@ -899,7 +899,7 @@ async def get_me(access_token: str = Cookie(None)):
         .single() \
         .execute()
 
-    logger.critical("DB LOOKUP RESULT: %s", user.data)
+    logger.critical("DB LOOKUP RESULT FOUND=%s", bool(user.data))
     return user.data
 
 
