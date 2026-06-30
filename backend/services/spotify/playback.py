@@ -98,6 +98,34 @@ async def _play_spotify_track_async(track_id: str, user_id: str, device_id: Opti
         )
 
         # ⏱ ARM THE TRACK CLOCK HERE
+        confirmed_playback = None
+        for _ in range(10):
+            await asyncio.sleep(0.25)
+            confirmed_playback = client.current_playback()
+            if not confirmed_playback or not confirmed_playback.get("is_playing"):
+                continue
+
+            current_item = confirmed_playback.get("item") or {}
+            current_device = confirmed_playback.get("device") or {}
+            current_track_id = current_item.get("id")
+            current_device_id = current_device.get("id")
+
+            track_matches = not current_track_id or current_track_id == track_id
+            device_matches = not current_device_id or current_device_id == device_id
+
+            if track_matches and device_matches:
+                break
+        else:
+            confirmed_playback = None
+
+        if not confirmed_playback:
+            logger.warning(
+                "Spotify playback confirmation failed track_id=%s device_id=%s",
+                track_id,
+                device_id,
+            )
+            return False
+
         track = client.track(track_id)  # fetch metadata
         duration_sec = track["duration_ms"] / 1000
 
