@@ -7,15 +7,20 @@ import logging
 
 from backend.state.playback_state import get_status as get_playback_status
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from backend.services.spotify.playback import (
     stop_spotify_playback
 )
 
 from backend.state.narration import narration_done_event, track_done_event
+from backend.state.playback_runtime import bind_request_user, current_user_id
 
-router = APIRouter(prefix="/playback", tags=["Playback Status"])
+router = APIRouter(
+    prefix="/playback",
+    tags=["Playback Status"],
+    dependencies=[Depends(bind_request_user)],
+)
 logger = logging.getLogger(__name__)
 
 
@@ -29,10 +34,11 @@ def update_track_clock(user_id: str):
 
 
 @router.get("/devices")
-async def get_devices(user_id: str):
+async def get_devices():
     """
     List available Spotify playback devices for the user.
     """
+    user_id = current_user_id()
     sp = await get_spotify_user_client(user_id)
     data = sp.devices()
     return {
@@ -41,7 +47,8 @@ async def get_devices(user_id: str):
 
 
 @router.get("/status")
-async def get_status(user_id: str):
+async def get_status():
+    user_id = current_user_id()
     update_track_clock(user_id)
 
     s = get_playback_status(user_id)
@@ -113,17 +120,19 @@ async def get_status(user_id: str):
 
 
 @router.post("/transfer/{device_id}")
-async def transfer_playback(device_id: str, user_id: str):
+async def transfer_playback(device_id: str):
     """
     Force Spotify playback onto a specific device.
     """
+    user_id = current_user_id()
     sp = await get_spotify_user_client(user_id)
     sp.transfer_playback(device_id=device_id, force_play=True)
     return {"ok": True, "device_id": device_id}
 
 
 @router.post("/narration-finished")
-async def narration_finished(user_id: str):
+async def narration_finished():
+    user_id = current_user_id()
     s = get_playback_status(user_id)
     ctx = s.context or {}
     voice_style = ctx.get("voice_style")
@@ -171,7 +180,8 @@ async def narration_finished(user_id: str):
 
 
 @router.post("/track-finished")
-async def track_finished(user_id: str):
+async def track_finished():
+    user_id = current_user_id()
     logger.info("🎵 Track finished signal received")
     event = track_done_event(user_id)
     logger.info(f"TRACK DONE EVENT ID (router): {id(event)}")
