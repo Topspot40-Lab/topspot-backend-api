@@ -17,7 +17,10 @@ from backend.models.dbmodels import (
 from backend.services.bed_tracks import BED_BUCKET, get_collection_group_bed_key
 from backend.state.playback_state import mark_playing, update_phase
 from backend.services.audio_urls import resolve_audio_ref, is_remote_audio
-from backend.models.collection_models import CollectionTrackRankingLocale
+from backend.models.collection_models import (
+    CollectionTrackRankingLocale,
+    CollectionCategory,
+)
 from backend.models.dbmodels import TrackLocale, ArtistLocale
 
 from backend.services.radio_runtime import (
@@ -131,11 +134,16 @@ async def run_collection_sequence(
                 Artist,
                 CollectionTrackRanking,
                 Collection,
+                CollectionCategory,
             )
 
             .join(Artist, Artist.id == Track.artist_id)
             .join(CollectionTrackRanking, CollectionTrackRanking.track_id == Track.id)
             .join(Collection, Collection.id == CollectionTrackRanking.collection_id)
+            .join(
+                CollectionCategory,
+                CollectionCategory.id == Collection.category_id,
+            )
             .where(
                 Collection.slug == collection_slug,
                 CollectionTrackRanking.ranking >= start_rank,
@@ -191,7 +199,7 @@ async def run_collection_sequence(
 
     # ✅ CRITICAL: publish ONE rank only, then return
     # Frontend Next/Prev calls this endpoint again with a new start_rank.
-    track, artist, ctr, collection = rows[0]
+    track, artist, ctr, collection, category = rows[0]
     collection_intro_text = getattr(collection, "intro", None)
     collection_intro_bucket = (
         getattr(collection, "set_intro_tts_bucket", None)
@@ -222,11 +230,11 @@ async def run_collection_sequence(
                     (
                         row.intro_text
                         for row in db.exec(
-                            select(CollectionTrackRankingLocale).where(
-                                CollectionTrackRankingLocale.collection_track_ranking_id == ranking_id,
-                                CollectionTrackRankingLocale.lang == ("pt-BR" if lang == "ptbr" else lang),
-                            )
-                        ).all()
+                        select(CollectionTrackRankingLocale).where(
+                            CollectionTrackRankingLocale.collection_track_ranking_id == ranking_id,
+                            CollectionTrackRankingLocale.lang == ("pt-BR" if lang == "ptbr" else lang),
+                        )
+                    ).all()
                     ),
                     None,
                 )
@@ -239,11 +247,11 @@ async def run_collection_sequence(
                     (
                         row.detail_text
                         for row in db.exec(
-                            select(TrackLocale).where(
-                                TrackLocale.track_id == track.id,
-                                TrackLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
-                            )
-                        ).all()
+                        select(TrackLocale).where(
+                            TrackLocale.track_id == track.id,
+                            TrackLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
+                        )
+                    ).all()
                     ),
                     None,
                 )
@@ -256,11 +264,11 @@ async def run_collection_sequence(
                     (
                         row.artist_description_text
                         for row in db.exec(
-                            select(ArtistLocale).where(
-                                ArtistLocale.artist_id == artist.id,
-                                ArtistLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
-                            )
-                        ).all()
+                        select(ArtistLocale).where(
+                            ArtistLocale.artist_id == artist.id,
+                            ArtistLocale.language_code == ("pt-BR" if lang == "ptbr" else lang),
+                        )
+                    ).all()
                     ),
                     None,
                 )
@@ -269,10 +277,23 @@ async def run_collection_sequence(
         for lang in langs
     }
 
-    bed_key = get_collection_group_bed_key("soft_rock_70s_90s")
+    collection_group_slug = (
+        category.slug
+        if category and category.slug
+        else "soft_rock_70s_90s"
+    )
+
+    bed_key = get_collection_group_bed_key(collection_group_slug)
     status.bed_key = bed_key
 
-    logger.info("🎧 COLLECTION bed track: %s/%s", BED_BUCKET, bed_key)
+    bed_audio_url = resolve_audio_ref(BED_BUCKET, bed_key)
+
+    logger.info(
+        "🎧 COLLECTION group=%s bed track: %s/%s",
+        collection_group_slug,
+        BED_BUCKET,
+        bed_key,
+    )
 
     logger.info("──────────────────────────────────────────────")
     logger.info("▶ Rank #%02d: %s — %s", rank, track.track_name, artist.artist_name)
@@ -283,6 +304,10 @@ async def run_collection_sequence(
         artist=artist,
         tr_rows=[],
     )
+
+    intro_audio_url = None
+    detail_audio_url = None
+    artist_audio_url = None
 
     # ───────── INTRO ─────────
     if play_intro:
@@ -311,6 +336,11 @@ async def run_collection_sequence(
             })
 
         if intro_audio_queue:
+            intro_audio_url = (
+                intro_audio_queue[0]["url"]
+                if intro_audio_queue
+                else None
+            )
             await publish_narration_queue_phase(
                 "intro",
                 track=track,
@@ -321,6 +351,7 @@ async def run_collection_sequence(
                 audio_queue=intro_audio_queue,
                 texts=texts_by_language,
                 voice_style=voice_style,
+
                 extra_context={
                     "textsByLanguage": texts_by_language,
                     "intro": getattr(ctr, "intro", None),
@@ -331,6 +362,10 @@ async def run_collection_sequence(
                     "collection_slug": collection_slug,
                     "collection_intro": collection_intro_text,
                     "collection_intro_audio_url": collection_intro_audio_url,
+                    "intro_audio_url": intro_audio_url,
+                    "detail_audio_url": detail_audio_url,
+                    "artist_audio_url": artist_audio_url,
+                    "bed_audio_url": bed_audio_url,
                 },
             )
 
@@ -347,6 +382,23 @@ async def run_collection_sequence(
 
         detail_by_lang[narration_lang] = (dbucket, dkey)
         artist_by_lang[narration_lang] = (abucket, akey)
+
+        primary_lang = normalize_lang(tts_language)
+
+        detail_bucket, detail_key = detail_by_lang.get(primary_lang, (None, None))
+        artist_bucket, artist_key = artist_by_lang.get(primary_lang, (None, None))
+
+        detail_audio_url = (
+            resolve_audio_ref(detail_bucket, detail_key)
+            if detail_bucket and detail_key
+            else None
+        )
+
+        artist_audio_url = (
+            resolve_audio_ref(artist_bucket, artist_key)
+            if artist_bucket and artist_key
+            else None
+        )
 
     # ───────── DETAIL ─────────
     if play_detail:
@@ -369,6 +421,11 @@ async def run_collection_sequence(
             })
 
         if detail_audio_queue:
+            detail_audio_url = (
+                detail_audio_queue[0]["url"]
+                if detail_audio_queue
+                else None
+            )
             await publish_narration_queue_phase(
                 "detail",
                 track=track,
@@ -389,6 +446,10 @@ async def run_collection_sequence(
                     "collection_slug": collection_slug,
                     "collection_intro": collection_intro_text,
                     "collection_intro_audio_url": collection_intro_audio_url,
+                    "intro_audio_url": intro_audio_url,
+                    "detail_audio_url": detail_audio_url,
+                    "artist_audio_url": artist_audio_url,
+                    "bed_audio_url": bed_audio_url,
                 },
             )
 
@@ -413,6 +474,11 @@ async def run_collection_sequence(
             })
 
         if artist_audio_queue:
+            artist_audio_url = (
+                artist_audio_queue[0]["url"]
+                if artist_audio_queue
+                else None
+            )
             await publish_narration_queue_phase(
                 "artist",
                 track=track,
@@ -433,6 +499,10 @@ async def run_collection_sequence(
                     "collection_slug": collection_slug,
                     "collection_intro": collection_intro_text,
                     "collection_intro_audio_url": collection_intro_audio_url,
+                    "intro_audio_url": intro_audio_url,
+                    "detail_audio_url": detail_audio_url,
+                    "artist_audio_url": artist_audio_url,
+                    "bed_audio_url": bed_audio_url,
                 },
             )
 
@@ -450,6 +520,9 @@ async def run_collection_sequence(
                 "collection_slug": collection_slug,
                 "collection_intro": collection_intro_text,
                 "collection_intro_audio_url": collection_intro_audio_url,
+                "intro_audio_url": intro_audio_url,
+                "detail_audio_url": detail_audio_url,
+                "artist_audio_url": artist_audio_url,
                 "spotify_track_id": track.spotify_track_id,
                 "ranking_id": ranking_id,
 
@@ -605,11 +678,16 @@ async def run_collection_continuous_sequence(
                     Artist,
                     CollectionTrackRanking,
                     Collection,
+                    CollectionCategory,
                 )
 
                 .join(Artist, Artist.id == Track.artist_id)
                 .join(CollectionTrackRanking, CollectionTrackRanking.track_id == Track.id)
                 .join(Collection, Collection.id == CollectionTrackRanking.collection_id)
+                .join(
+                    CollectionCategory,
+                    CollectionCategory.id == Collection.category_id,
+                )
                 .where(
                     Collection.slug == collection_slug,
                     CollectionTrackRanking.ranking >= start_rank,
@@ -659,8 +737,41 @@ async def run_collection_continuous_sequence(
         ]
 
         langs = list(dict.fromkeys(langs))
-        for (track, artist, ctr, collection) in rows:
+        for (track, artist, ctr, collection, category) in rows:
+            collection_group_slug = (
+                category.slug
+                if category and category.slug
+                else "soft_rock_70s_90s"
+            )
+
+            bed_key = get_collection_group_bed_key(collection_group_slug)
+            status.bed_key = bed_key
+            bed_audio_url = resolve_audio_ref(BED_BUCKET, bed_key)
+
+            logger.info(
+                "🎧 COLLECTION group=%s bed track: %s/%s",
+                collection_group_slug,
+                BED_BUCKET,
+                bed_key,
+            )
             collection_intro_text = getattr(collection, "intro", None)
+            collection_intro_bucket = (
+                getattr(collection, "set_intro_tts_bucket", None)
+                if tts_language == "en"
+                else None
+            )
+
+            collection_intro_key = (
+                getattr(collection, "set_intro_tts_key", None)
+                if tts_language == "en"
+                else None
+            )
+
+            collection_intro_audio_url = (
+                resolve_audio_ref(collection_intro_bucket, collection_intro_key)
+                if collection_intro_bucket and collection_intro_key
+                else None
+            )
             rank = int(ctr.ranking)
             ranking_id = ctr.id
 
@@ -749,6 +860,10 @@ async def run_collection_continuous_sequence(
                 for lang in langs
             }
 
+            intro_audio_url = None
+            detail_audio_url = None
+            artist_audio_url = None
+
             # ───────── INTRO ─────────
             if play_intro:
                 intro_jobs = collection_intro_jobs(
@@ -768,6 +883,9 @@ async def run_collection_continuous_sequence(
                             bucket=bucket,
                             key=key,
                             voice_style=voice_style,
+                            extra_context={
+                                "bed_audio_url": bed_audio_url,
+                            },
                         )
 
             detail_bucket, detail_key, artist_bucket, artist_key = narration_keys_for(
@@ -787,6 +905,9 @@ async def run_collection_continuous_sequence(
                     bucket=detail_bucket,
                     key=detail_key,
                     voice_style=voice_style,
+                    extra_context={
+                        "bed_audio_url": bed_audio_url,
+                    },
                 )
 
             # ───────── ARTIST ─────────
@@ -800,6 +921,9 @@ async def run_collection_continuous_sequence(
                     bucket=artist_bucket,
                     key=artist_key,
                     voice_style=voice_style,
+                    extra_context={
+                        "bed_audio_url": bed_audio_url,
+                    },
                 )
 
             if play_track and track.spotify_track_id:

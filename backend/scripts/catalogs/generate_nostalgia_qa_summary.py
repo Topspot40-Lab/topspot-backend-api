@@ -4,6 +4,7 @@ import html
 from pathlib import Path
 
 from sqlmodel import Session, select
+from backend.services.supabase_storage import object_exists_cached
 
 from backend.database import engine
 from backend.models.dbmodels import (
@@ -31,9 +32,16 @@ LANGUAGES = [
 
 ITEMS = ["Intro", "D Long", "D Short", "Artist"]
 
+def verified_audio_key(bucket: str, key: str | None) -> str | None:
+    if not key:
+        return None
 
-def decade_genre_intro_key(slug: str) -> str:
-    return f"decade-genre-intro/{slug}.mp3"
+    return key if object_exists_cached(bucket, key) else None
+
+
+def decade_genre_intro_key(slug: str, ranking: int) -> str:
+    filename_slug = slug.replace("-", "_")
+    return f"intro/{filename_slug}_{ranking:02d}.mp3"
 
 
 def add_count(counts: dict, lang: str, item: str, text_value: object, audio_value: object) -> None:
@@ -133,38 +141,63 @@ def main() -> None:
 
                     if lang_code == "en":
                         intro_text = getattr(ranking, "intro", None)
-                        intro_mp3 = decade_genre_intro_key(program.slug)
+                        intro_mp3 = verified_audio_key(
+                            "audio-en",
+                            decade_genre_intro_key(
+                                program.slug,
+                                ranking.ranking,
+                            ),
+                        )
 
                         detail_long_text = getattr(track, "detail", None)
                         detail_long_filename = build_detail_filename(track.spotify_track_id)
-                        detail_long_mp3 = (
+                        detail_long_key = (
                             key_for("detail", detail_long_filename)
                             if detail_long_filename
                             else None
                         )
+                        detail_long_mp3 = verified_audio_key("audio-en", detail_long_key)
 
                         detail_short_text = getattr(track, "short_detail", None)
-                        detail_short_mp3 = getattr(track, "short_detail_tts_key", None)
+                        detail_short_mp3 = verified_audio_key(
+                            "audio-en",
+                            getattr(track, "short_detail_tts_key", None),
+                        )
 
                         artist_text = getattr(artist, "artist_description", None)
                         artist_filename = build_artist_filename(artist.spotify_artist_id)
-                        artist_mp3 = (
+                        artist_key = (
                             key_for("artist", artist_filename)
                             if artist_filename
                             else None
                         )
+                        artist_mp3 = verified_audio_key("audio-en", artist_key)
                     else:
                         intro_text = getattr(intro_locale, "intro_text", None)
-                        intro_mp3 = getattr(intro_locale, "tts_key", None)
+                        bucket = "audio-es" if lang_code == "es" else "audio-ptbr"
+
+                        intro_mp3 = verified_audio_key(
+                            bucket,
+                            getattr(intro_locale, "tts_key", None),
+                        )
 
                         detail_long_text = getattr(track_locale, "detail_text", None)
-                        detail_long_mp3 = getattr(track_locale, "tts_key", None)
+                        detail_long_mp3 = verified_audio_key(
+                            bucket,
+                            getattr(track_locale, "tts_key", None),
+                        )
 
                         detail_short_text = getattr(track_locale, "short_detail_text", None)
-                        detail_short_mp3 = getattr(track_locale, "short_detail_tts_key", None)
+                        detail_short_mp3 = verified_audio_key(
+                            bucket,
+                            getattr(track_locale, "short_detail_tts_key", None),
+                        )
 
                         artist_text = getattr(artist_locale, "artist_description_text", None)
-                        artist_mp3 = getattr(artist_locale, "tts_key", None)
+                        artist_mp3 = verified_audio_key(
+                            bucket,
+                            getattr(artist_locale, "tts_key", None),
+                        )
 
                     pairs = {
                         "Intro": (intro_text, intro_mp3),

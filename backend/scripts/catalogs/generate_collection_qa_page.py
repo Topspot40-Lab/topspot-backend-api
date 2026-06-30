@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import html
 from pathlib import Path
+from backend.services.supabase_storage import object_exists_cached
 
 from sqlmodel import Session, select
 
@@ -28,6 +29,11 @@ LANGUAGES = [
     ("pt-BR", "Portuguese"),
 ]
 
+def verified_audio_key(bucket: str, key: str | None) -> str | None:
+    if not key:
+        return None
+
+    return key if object_exists_cached(bucket, key) else None
 
 def mark(value: object) -> str:
     return "✅" if value else "❌"
@@ -164,46 +170,78 @@ def main() -> None:
                 detail_long_text = getattr(track, "detail", None)
 
                 detail_long_filename = build_detail_filename(track.spotify_track_id)
-                detail_long_mp3 = (
+                detail_long_key = (
                     key_for("detail", detail_long_filename)
                     if detail_long_filename
                     else None
                 )
 
+                detail_long_mp3 = verified_audio_key(
+                    "audio-en",
+                    detail_long_key,
+                )
+
                 detail_short_text = getattr(track, "short_detail", None)
-                detail_short_mp3 = getattr(track, "short_detail_tts_key", None)
+
+                detail_short_mp3 = verified_audio_key(
+                    "audio-en",
+                    getattr(track, "short_detail_tts_key", None),
+                )
 
                 artist_text = getattr(artist, "artist_description", None)
 
                 artist_filename = build_artist_filename(artist.spotify_artist_id)
+
                 if "," in (artist.artist_name or ""):
                     artist_mp3 = "N/A"
                 else:
-                    artist_mp3 = (
+                    artist_key = (
                         key_for("artist", artist_filename)
                         if artist_filename
                         else None
+                    )
+                    artist_mp3 = verified_audio_key(
+                        "audio-en",
+                        artist_key,
                     )
 
                 detail_long_audio_unknown = False
             else:
                 intro_text = getattr(intro_locale, "intro_text", None)
+                bucket = "audio-es" if lang_code == "es" else "audio-ptbr"
 
                 detail_long_text = getattr(track_locale, "detail_text", None)
-                detail_long_mp3 = getattr(track_locale, "tts_key", None)
+                detail_long_mp3 = verified_audio_key(
+                    bucket,
+                    getattr(track_locale, "tts_key", None),
+                )
 
                 detail_short_text = getattr(track_locale, "short_detail_text", None)
-                detail_short_mp3 = getattr(track_locale, "short_detail_tts_key", None)
+                detail_short_mp3 = verified_audio_key(
+                    bucket,
+                    getattr(track_locale, "short_detail_tts_key", None),
+                )
 
                 artist_text = getattr(artist_locale, "artist_description_text", None)
-                artist_mp3 = getattr(artist_locale, "tts_key", None)
+                artist_mp3 = verified_audio_key(
+                    bucket,
+                    getattr(artist_locale, "tts_key", None),
+                )
 
                 detail_long_audio_unknown = False
 
             if lang_code == "en":
-                intro_mp3 = collection_intro_key(collection.slug, ranking.ranking)
+                intro_mp3 = verified_audio_key(
+                    "audio-en",
+                    collection_intro_key(collection.slug, ranking.ranking),
+                )
             else:
-                intro_mp3 = getattr(intro_locale, "tts_key", None)
+                bucket = "audio-es" if lang_code == "es" else "audio-ptbr"
+
+                intro_mp3 = verified_audio_key(
+                    bucket,
+                    getattr(intro_locale, "tts_key", None),
+                )
 
             count_pair(intro_text, intro_mp3, summary_counts, label, "Intro")
             count_pair(detail_long_text, detail_long_mp3, summary_counts, label, "D Long")

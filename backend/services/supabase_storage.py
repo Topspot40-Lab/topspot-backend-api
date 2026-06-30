@@ -21,23 +21,81 @@ def upload_bytes(bucket: str, key: str, data: bytes, content_type: str = "audio/
 
 
 def object_exists(bucket: str, key: str) -> bool:
-    """Lightweight existence check by listing the parent folder."""
     parent = key.rsplit("/", 1)[0] if "/" in key else ""
     name = key.split("/")[-1]
-    try:
-        objs = supabase.storage.from_(bucket).list(
-            path=parent,
-            limit=1000,
-            sort_by={"column": "name", "order": "asc"},
-            search=name,  # newer clients
+
+    offset = 0
+    limit = 1000
+
+    while True:
+        objs = (
+            supabase.storage.from_(bucket).list(
+                parent,
+                {
+                    "limit": limit,
+                    "offset": offset,
+                    "sortBy": {"column": "name", "order": "asc"},
+                },
+            )
+            or []
         )
-    except TypeError:
-        # older client signature
-        opts = {"limit": 1000, "sortBy": {"column": "name", "order": "asc"}}
-        objs = supabase.storage.from_(bucket).list(parent, opts)
-        if name:
-            objs = [o for o in (objs or []) if name.lower() in (o.get("name", "").lower())]
-    return any(o.get("name") == name for o in (objs or []))
+
+        if any(o.get("name") == name for o in objs):
+            return True
+
+        if len(objs) < limit:
+            return False
+
+        offset += limit
+
+
+_folder_cache: dict[tuple[str, str], set[str]] = {}
+
+
+def list_folder_keys(bucket: str, folder: str) -> set[str]:
+    """
+    Load all object keys in one folder into memory.
+    Returns full keys like: artist/abc123.mp3
+    """
+    cache_key = (bucket, folder)
+
+    if cache_key in _folder_cache:
+        return _folder_cache[cache_key]
+
+    limit = 1000
+    offset = 0
+    keys: set[str] = set()
+
+    while True:
+        objs = supabase.storage.from_(bucket).list(
+            folder,
+            {
+                "limit": limit,
+                "offset": offset,
+                "sortBy": {"column": "name", "order": "asc"},
+            },
+        ) or []
+
+        for obj in objs:
+            name = obj.get("name")
+            if name:
+                keys.add(f"{folder}/{name}")
+
+        if len(objs) < limit:
+            break
+
+        offset += limit
+
+    _folder_cache[cache_key] = keys
+    return keys
+
+
+def object_exists_cached(bucket: str, key: str) -> bool:
+    """
+    Fast object check using a cached folder listing.
+    """
+    folder = key.rsplit("/", 1)[0] if "/" in key else ""
+    return key in list_folder_keys(bucket, folder)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
