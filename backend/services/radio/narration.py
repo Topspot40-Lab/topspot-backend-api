@@ -116,7 +116,7 @@ async def play_narrations(
                             logger.info("🔉 Ducking Spotify volume for narration.")
 
                     if play_intro and intro_jobs:
-                        update_phase("intro", current_rank=rank,
+                        update_phase(user_id, "intro", current_rank=rank,
                                      track_name=track_name, artist_name=artist_name)
                         for bkt, key, *_ in intro_jobs:
                             skipped = await _run_voice_clip_with_skip(
@@ -126,7 +126,7 @@ async def play_narrations(
                                 return
 
                     if play_detail and detail_bucket and detail_key:
-                        update_phase("detail", current_rank=rank,
+                        update_phase(user_id, "detail", current_rank=rank,
                                      track_name=track_name, artist_name=artist_name)
                         skipped = await _run_voice_clip_with_skip(
                             "detail", detail_bucket, detail_key, voice_style=voice_style
@@ -135,7 +135,7 @@ async def play_narrations(
                             return
 
                     if play_artist and artist_bucket and artist_key:
-                        update_phase("artist", current_rank=rank,
+                        update_phase(user_id, "artist", current_rank=rank,
                                      track_name=track_name, artist_name=artist_name)
                         skipped = await _run_voice_clip_with_skip(
                             "artist", artist_bucket, artist_key, voice_style=voice_style
@@ -150,7 +150,7 @@ async def play_narrations(
 
             # ───────────── VOICE BEFORE MODE ─────────────
             if play_intro and intro_jobs:
-                update_phase("intro", current_rank=rank,
+                update_phase(user_id, "intro", current_rank=rank,
                              track_name=track_name, artist_name=artist_name)
 
                 await play_spotify_track(SPOTIFY_BED_TRACK_ID, user_id)
@@ -166,7 +166,7 @@ async def play_narrations(
                         await stop_spotify_playback(user_id, fade_out_seconds=1.2)
 
             if play_detail and detail_bucket and detail_key:
-                update_phase("detail", current_rank=rank,
+                update_phase(user_id, "detail", current_rank=rank,
                              track_name=track_name, artist_name=artist_name)
                 skipped = await _run_voice_clip_with_skip(
                     "detail", detail_bucket, detail_key, voice_style=voice_style
@@ -175,7 +175,7 @@ async def play_narrations(
                     return
 
             if play_artist and artist_bucket and artist_key:
-                update_phase("artist", current_rank=rank,
+                update_phase(user_id, "artist", current_rank=rank,
                              track_name=track_name, artist_name=artist_name)
                 skipped = await _run_voice_clip_with_skip(
                     "artist", artist_bucket, artist_key, voice_style=voice_style

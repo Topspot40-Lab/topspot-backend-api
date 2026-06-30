@@ -130,6 +130,7 @@ async def run_artist_radio_sequence(
 
     # V1 artist set intro: text-only for now
     update_phase(
+        user_id,
         phase="artist",
         is_playing=True,
         current_rank=0,
@@ -162,6 +163,7 @@ async def run_artist_radio_sequence(
         track_done_event(user_id).clear()
 
         update_phase(
+            user_id,
             phase="detail",
             is_playing=True,
             current_rank=index,
@@ -187,6 +189,7 @@ async def run_artist_radio_sequence(
 
         if play_track and track.get("spotify_track_id"):
             update_phase(
+                user_id,
                 phase="track",
                 is_playing=True,
                 current_rank=index,
@@ -220,6 +223,7 @@ async def run_artist_radio_sequence(
             await track_done_event(user_id).wait()
 
     update_phase(
+        user_id,
         phase="idle",
         is_playing=False,
         context={

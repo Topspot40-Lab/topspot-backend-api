@@ -92,6 +92,7 @@ async def play_spotify(req: PlaySpotifyRequest):
     }
 
     update_phase(
+        user_id,
         "track",
         track_name=getattr(status, "track_name", None),
         artist_name=getattr(status, "artist_name", None),
@@ -330,6 +331,7 @@ async def play_track(payload: dict):
             }
 
             update_phase(
+                user_id,
                 "track",
                 track_name=track.track_name,
                 artist_name=track.artist_name,
@@ -386,6 +388,7 @@ async def play_track(payload: dict):
             )
 
             update_phase(
+                user_id,
                 phase,
                 is_playing=True,
                 voice_style=selection.voicePlayMode,
@@ -428,6 +431,7 @@ async def play_track(payload: dict):
 
         await play_spotify_track(track.spotify_track_id, user_id)
         update_phase(
+            user_id,
             "track",
             track_name=track.track_name,
             artist_name=track.artist_name,
@@ -450,6 +454,7 @@ async def play_track(payload: dict):
             await play_spotify_track(track.spotify_track_id, user_id)
 
             update_phase(
+                user_id,
                 "track",
                 track_name=track.track_name,
                 artist_name=track.artist_name,

@@ -287,6 +287,7 @@ async def play_track_with_skip(
         status.percent_complete = 0.0
 
         update_phase(
+            user_id,
             "track",
             current_rank=rank_val,
             track_name=track_label,

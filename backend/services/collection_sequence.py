@@ -71,6 +71,7 @@ async def publish_narration_phase(
     audio_url = resolve_audio_ref(bucket, key)
 
     update_phase(
+        user_id,
         phase,
         track_name=track.track_name,
         artist_name=artist.artist_name,
@@ -416,6 +417,7 @@ async def run_collection_sequence(
     # ─────────────────────────────────────────────
     if play_track and track.spotify_track_id:
         update_phase(
+            user_id,
             "track",
             track_name=track.track_name,
             artist_name=artist.artist_name,
@@ -560,6 +562,7 @@ async def run_collection_continuous_sequence(
     )
 
     update_phase(
+        user_id,
         "loading",
         current_rank=start_rank,
         track_name="",
@@ -650,6 +653,7 @@ async def run_collection_continuous_sequence(
             )
 
             update_phase(
+                user_id,
                 "prelude",
                 is_playing=True,
                 current_rank=int(rank),
@@ -778,6 +782,7 @@ async def run_collection_continuous_sequence(
                 track_done_event(user_id).clear()
 
                 update_phase(
+                    user_id,
                     "track",
                     track_name=track.track_name,
                     artist_name=artist.artist_name,

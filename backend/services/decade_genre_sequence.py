@@ -107,6 +107,7 @@ async def publish_narration_phase(
         base_context.update(extra_context)
 
     update_phase(
+        user_id,
         phase,
         track_name=track.track_name,
         artist_name=artist.artist_name,
@@ -199,6 +200,7 @@ async def publish_narration_queue_phase(
         base_context.update(extra_context)
 
     update_phase(
+        user_id,
         phase,
         track_name=track.track_name,
         artist_name=artist.artist_name,
@@ -387,6 +389,7 @@ async def run_decade_genre_sequence(
     )
 
     update_phase(
+        user_id,
         "loading",
         current_rank=start_rank,
         track_name="",
@@ -467,6 +470,7 @@ async def run_decade_genre_sequence(
         logger.info("▶ Publish Rank #%02d: %s — %s", rank, track.track_name, artist.artist_name)
 
         update_phase(
+            user_id,
             "prelude",
             is_playing=True,
             current_rank=rank,
@@ -665,6 +669,7 @@ async def run_decade_genre_sequence(
         # ───────── TRACK (publish spotify id) ─────────
         if play_track and track.spotify_track_id:
             update_phase(
+                user_id,
                 "track",
                 track_name=track.track_name,
                 artist_name=artist.artist_name,
@@ -761,6 +766,7 @@ async def run_decade_genre_continuous_sequence(
     )
 
     update_phase(
+        user_id,
         "loading",
         current_rank=start_rank,
         track_name="",
@@ -825,6 +831,7 @@ async def run_decade_genre_continuous_sequence(
                         rank, track.track_name, artist.artist_name)
 
             update_phase(
+                user_id,
                 "prelude",
                 is_playing=True,
                 current_rank=rank,
@@ -1013,6 +1020,7 @@ async def run_decade_genre_continuous_sequence(
                 track_done_event(user_id).clear()
 
                 update_phase(
+                    user_id,
                     "track",
                     track_name=track.track_name,
                     artist_name=artist.artist_name,

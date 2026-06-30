@@ -163,6 +163,7 @@ async def run_collections_radio_sequence(
                 )
 
                 update_phase(
+                    user_id,
                     "loading",
                     track_name="",
                     artist_name="",
@@ -437,6 +438,7 @@ async def run_collections_radio_sequence(
                             track_done_event(user_id).clear()
 
                             update_phase(
+                                user_id,
                                 "track",
                                 track_name=track.track_name,
                                 artist_name=artist.artist_name,

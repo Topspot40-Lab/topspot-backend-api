@@ -50,7 +50,9 @@ async def _respect_user_controls() -> None:
 
 def _update_state_for_play(kind: str, bucket: str, key: str) -> None:
     """Mark which audio asset is currently playing."""
+    user_id = current_user_id()
     update_phase(
+        user_id,
         kind.lower(),
         is_playing=True,
         is_paused=False,
@@ -265,6 +267,7 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
     Update playback_state while narration audio is playing.
     percent_complete stays normalized 0.0 -> 1.0 (same as track).
     """
+    user_id = current_user_id()
     start = asyncio.get_running_loop().time()
 
     while True:
@@ -279,6 +282,7 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
             percent = 0.0
 
         update_phase(
+            user_id,
             phase,
             elapsed_seconds=min(elapsed, duration) if duration > 0 else elapsed,
             duration_seconds=duration,
@@ -296,6 +300,7 @@ async def _run_progress_heartbeat(phase: str, duration: float) -> None:
 # ─────────────────────────────────────────────
 
 async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = None) -> bool:
+    user_id = current_user_id()
     owns = (
             ((kind == "intro" or kind == "set_intro") and FRONTEND_OWNS_INTRO)
             or (kind == "detail" and FRONTEND_OWNS_DETAIL)
@@ -311,6 +316,7 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
         logger.info("🧭 FRONTEND INTRO URL = %s", ref)
 
         update_phase(
+            user_id,
             kind,
             is_playing=True,
             is_paused=False,
@@ -372,6 +378,7 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
 
                 # Initialize state so status endpoint never shows zero timing
                 update_phase(
+                    user_id,
                     phase,
                     is_playing=True,
                     is_paused=False,
@@ -390,7 +397,6 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
                 await _respect_user_controls()
 
                 # Single authority: narration timing lives here
-                user_id = current_user_id()
                 heartbeat_task = asyncio.create_task(_run_progress_heartbeat(phase, duration))
                 bind_task(heartbeat_task, user_id)
 
@@ -426,6 +432,7 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
 
                     # Final state
                     update_phase(
+                        user_id,
                         phase,
                         elapsed_seconds=duration,
                         duration_seconds=duration,
@@ -486,6 +493,7 @@ async def play_track_with_skip(
         pass
 
     update_phase(
+        user_id,
         "track",
         is_playing=True,
         language=lang,

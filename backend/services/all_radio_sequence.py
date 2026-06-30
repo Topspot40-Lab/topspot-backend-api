@@ -338,6 +338,7 @@ async def run_all_radio_sequence(
             logger.info("🎲 Bucket chosen: %s / %s", decade, genre)
 
             update_phase(
+                user_id,
                 "loading",
                 track_name="",
                 artist_name="",
@@ -441,6 +442,7 @@ async def run_all_radio_sequence(
 
                 # Optional prelude, same idea as DG mode
                 update_phase(
+                    user_id,
                     "prelude",
                     is_playing=True,
                     current_rank=rank,
@@ -728,6 +730,7 @@ async def run_all_radio_sequence(
                     track_done_event(user_id).clear()
 
                     update_phase(
+                        user_id,
                         "track",
                         track_name=track.track_name,
                         artist_name=artist.artist_name,
