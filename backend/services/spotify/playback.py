@@ -64,14 +64,24 @@ async def _play_spotify_track_async(track_id: str, user_id: str, device_id: Opti
         client = await get_spotify_user_client(user_id)
 
         devices = client.devices().get("devices", [])
-        device_id = next((d["id"] for d in devices if d.get("is_active")), None)
+        if device_id is None:
+            device_id = next((d["id"] for d in devices if d.get("is_active")), None)
 
-        if not device_id:
-            #device_id = _pick_device_id(client, prefer_active=True)
-            device_id = devices[0]["id"] if devices else None
+            if not device_id:
+                #device_id = _pick_device_id(client, prefer_active=True)
+                device_id = devices[0]["id"] if devices else None
 
         devices = client.devices().get("devices", [])
-        logger.debug("🎧 Spotify devices: %s", devices)
+        selected_device = next((d for d in devices if d.get("id") == device_id), None)
+        logger.debug(
+            "Spotify devices count=%s active_count=%s selected_type=%s selected_name=%s selected_active=%s selected_restricted=%s",
+            len(devices),
+            sum(1 for d in devices if d.get("is_active")),
+            selected_device.get("type") if selected_device else None,
+            selected_device.get("name") if selected_device else None,
+            selected_device.get("is_active") if selected_device else None,
+            selected_device.get("is_restricted") if selected_device else None,
+        )
 
         if not device_id:
             logger.error("🚫 No active Spotify device found.")
