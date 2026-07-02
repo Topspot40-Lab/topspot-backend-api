@@ -570,6 +570,7 @@ async def get_sequence_decade_genre(
             "rank": ranking.ranking,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
+            "artistId": artist.id,
             "spotifyTrackId": track.spotify_track_id,
             "durationMs": track.duration_ms,
             "yearReleased": track.year_released,
@@ -644,7 +645,7 @@ async def get_favorites_decade(
             "trackId": track.id,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
-
+            "artistId": artist.id,
             # ✅ NEW
             "genreSlug": getattr(genre, "slug", None),
             "genreName": getattr(genre, "name", None),
