@@ -96,6 +96,7 @@ async def get_sequence_collection(
             "rank": ctr.ranking,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
+            "artistId": artist.id,
             "yearReleased": getattr(track, "year_released", None),
             "durationMs": getattr(track, "duration_ms", None),
             "albumArtwork": getattr(track, "album_artwork", None),

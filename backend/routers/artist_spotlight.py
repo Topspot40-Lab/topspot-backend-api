@@ -193,6 +193,86 @@ def artist_tracks(
     return [dict(row) for row in rows]
 
 
+@router.get("/artist-summary")
+def artist_summary(
+        artist_id: int = Query(...),
+        language: str = Query("en"),
+):
+    locale_code = "pt-BR" if language in ("ptbr", "pt-BR") else language
+
+    artist_sql = text("""
+        SELECT
+            a.id AS artist_id,
+            a.artist_name,
+            NULL AS artist_artwork,
+            COALESCE(al.artist_description_text, a.artist_description) AS artist_description
+        FROM artist a
+        LEFT JOIN artist_locale al
+            ON al.artist_id = a.id
+           AND al.language_code = :locale_code
+        WHERE a.id = :artist_id
+    """)
+
+    nostalgia_sql = text("""
+        SELECT
+            d.decade_name || ' ' || g.genre_name AS program_name,
+            tr.ranking AS rank,
+            t.track_name
+        FROM track_ranking tr
+        JOIN decade_genre dg ON tr.decade_genre_id = dg.id
+        JOIN decade d ON dg.decade_id = d.id
+        JOIN genre g ON dg.genre_id = g.id
+        JOIN track t ON tr.track_id = t.id
+        WHERE t.artist_id = :artist_id
+        ORDER BY d.decade_name, g.genre_name, tr.ranking
+    """)
+
+    collection_sql = text("""
+        SELECT
+            c.name AS program_name,
+            ctr.ranking AS rank,
+            t.track_name
+        FROM collection_track_ranking ctr
+        JOIN collection c ON ctr.collection_id = c.id
+        JOIN track t ON ctr.track_id = t.id
+        WHERE t.artist_id = :artist_id
+        ORDER BY c.name, ctr.ranking
+    """)
+
+    with engine.connect() as conn:
+        artist = conn.execute(
+            artist_sql,
+            {
+                "artist_id": artist_id,
+                "locale_code": locale_code,
+            },
+        ).mappings().first()
+
+        if not artist:
+            return {
+                "ok": False,
+                "artist_id": artist_id,
+                "message": "Artist not found",
+            }
+
+        nostalgia_rows = conn.execute(
+            nostalgia_sql,
+            {"artist_id": artist_id},
+        ).mappings().all()
+
+        collection_rows = conn.execute(
+            collection_sql,
+            {"artist_id": artist_id},
+        ).mappings().all()
+
+    return {
+        "ok": True,
+        "artist": dict(artist),
+        "nostalgiaAppearances": [dict(row) for row in nostalgia_rows[:6]],
+        "collectionAppearances": [dict(row) for row in collection_rows[:6]],
+        "appearanceCount": len(nostalgia_rows) + len(collection_rows),
+    }
+
 @router.post("/play")
 def play_artist_spotlight(
         artist_id: int = Query(...),
