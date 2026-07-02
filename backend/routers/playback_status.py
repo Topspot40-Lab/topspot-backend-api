@@ -4,10 +4,12 @@ from __future__ import annotations
 from dataclasses import asdict
 import time
 import logging
+from typing import Optional
 
 from backend.state.playback_state import get_status as get_playback_status
 
 from fastapi import APIRouter, Depends
+from pydantic import BaseModel
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 from backend.services.spotify.playback import (
     stop_spotify_playback
@@ -22,6 +24,17 @@ router = APIRouter(
     dependencies=[Depends(bind_request_user)],
 )
 logger = logging.getLogger(__name__)
+
+
+class ClientDiagnosticRequest(BaseModel):
+    event: Optional[str] = None
+    phase: Optional[str] = None
+    mode: Optional[str] = None
+    programType: Optional[str] = None
+    hasCurrentTrack: Optional[bool] = None
+    trackRank: Optional[int] = None
+    decade: Optional[str] = None
+    genre: Optional[str] = None
 
 
 def update_track_clock(user_id: str):
@@ -117,6 +130,23 @@ async def get_status():
 
         "context": ctx,
     }
+
+
+@router.post("/client-diagnostic")
+async def client_diagnostic(diagnostic: ClientDiagnosticRequest):
+    logger.info(
+        "Client diagnostic event=%s phase=%s mode=%s programType=%s "
+        "hasCurrentTrack=%s trackRank=%s decade=%s genre=%s",
+        diagnostic.event,
+        diagnostic.phase,
+        diagnostic.mode,
+        diagnostic.programType,
+        diagnostic.hasCurrentTrack,
+        diagnostic.trackRank,
+        diagnostic.decade,
+        diagnostic.genre,
+    )
+    return {"ok": True}
 
 
 @router.post("/transfer/{device_id}")
