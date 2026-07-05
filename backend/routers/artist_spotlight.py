@@ -20,115 +20,100 @@ def artists_by_genre(
         featured_only: bool = Query(True),
 ):
     sql = text("""
-        WITH dg_counts AS (
-
+        WITH nostalgia_counts AS (
             SELECT
                 a.id AS artist_id,
-                COUNT(DISTINCT tr.track_id) AS dg_track_count
-
+                COUNT(DISTINCT tr.track_id) AS nostalgia_track_count
             FROM track_ranking tr
-
-            JOIN decade_genre dg
-                ON tr.decade_genre_id = dg.id
-
-            JOIN genre g
-                ON dg.genre_id = g.id
-
-            JOIN track t
-                ON tr.track_id = t.id
-
-            JOIN artist a
-                ON t.artist_id = a.id
-
+            JOIN decade_genre dg ON tr.decade_genre_id = dg.id
+            JOIN genre g ON dg.genre_id = g.id
+            JOIN track t ON tr.track_id = t.id
+            JOIN artist a ON t.artist_id = a.id
             WHERE (
                 :genre IS NULL
                 OR :genre = 'all'
                 OR g.slug = :genre
             )
-
             GROUP BY a.id
         ),
 
         collection_counts AS (
-
             SELECT
                 a.id AS artist_id,
                 COUNT(DISTINCT ctr.track_id) AS collection_track_count
-
             FROM collection_track_ranking ctr
-
-            JOIN track t
-                ON ctr.track_id = t.id
-
-            JOIN artist a
-                ON t.artist_id = a.id
-
+            JOIN collection c ON ctr.collection_id = c.id
+            JOIN track t ON ctr.track_id = t.id
+            JOIN artist a ON t.artist_id = a.id
+            WHERE (
+                :genre IS NULL
+                OR :genre = 'all'
+                OR c.artist_spotlight_genre = :genre
+            )
             GROUP BY a.id
+        ),
+
+        artist_counts AS (
+            SELECT
+                a.id AS artist_id,
+                a.artist_name,
+
+                COALESCE(nc.nostalgia_track_count, 0)
+                + COALESCE(cc.collection_track_count, 0)
+                AS genre_track_count,
+
+                EXISTS (
+                    SELECT 1
+                    FROM artist_story s
+                    WHERE s.artist_id = a.id
+                      AND s.language_code = 'en'
+                ) AS has_story,
+
+                (
+                    SELECT COUNT(DISTINCT t2.id)
+                    FROM track t2
+                    WHERE t2.artist_id = a.id
+                      AND (
+                          EXISTS (
+                              SELECT 1
+                              FROM track_ranking tr2
+                              WHERE tr2.track_id = t2.id
+                          )
+                          OR
+                            EXISTS (
+                                SELECT 1
+                                FROM collection_track_ranking ctr2
+                                WHERE ctr2.track_id = t2.id
+                                  AND ctr2.ranking BETWEEN 1 AND 100
+                            )
+                      )
+                ) AS total_track_count
+
+            FROM artist a
+            LEFT JOIN nostalgia_counts nc ON a.id = nc.artist_id
+            LEFT JOIN collection_counts cc ON a.id = cc.artist_id
         )
 
-SELECT
-a.id AS artist_id,
-a.artist_name,
-
-EXISTS (
-    SELECT 1
-    FROM artist_story s
-    WHERE s.artist_id = a.id
-      AND s.language_code = 'en'
-) AS has_story,
-
-COALESCE(dg.dg_track_count, 0) AS genre_track_count,
-
-(
-    SELECT COUNT(DISTINCT t2.id)
-
-    FROM track t2
-
-    WHERE t2.artist_id = a.id
-      AND (
-          EXISTS (
-              SELECT 1
-              FROM track_ranking tr2
-              WHERE tr2.track_id = t2.id
-          )
-          OR
-          EXISTS (
-              SELECT 1
-              FROM collection_track_ranking ctr2
-              WHERE ctr2.track_id = t2.id
-          )
-      )
-) AS total_track_count
-
-        FROM artist a
-
-        JOIN dg_counts dg
-            ON a.id = dg.artist_id
-
-        LEFT JOIN collection_counts cc
-            ON a.id = cc.artist_id
-
-WHERE dg.dg_track_count >= :min_tracks
-
-  AND (
-        :max_tracks IS NULL
-        OR dg.dg_track_count <= :max_tracks
-      )
-
-  AND (
-        :featured_only = false
-        OR EXISTS (
-            SELECT 1
-            FROM artist_story s
-            WHERE s.artist_id = a.id
-              AND s.language_code = 'en'
-        )
-      )
-
-ORDER BY
-    genre_track_count DESC,
-    total_track_count DESC,
-    a.artist_name
+        SELECT
+            artist_id,
+            artist_name,
+            has_story,
+            genre_track_count,
+            total_track_count
+        FROM artist_counts
+        WHERE genre_track_count >= :min_tracks
+          AND (
+                :max_tracks IS NULL
+                OR genre_track_count <= :max_tracks
+              )
+          AND (
+                :featured_only = false
+                OR has_story = true
+              )
+        ORDER BY
+            genre_track_count DESC,
+            total_track_count DESC,
+            artist_name
     """)
 
     with engine.connect() as conn:
@@ -173,11 +158,12 @@ def artist_tracks(
                   WHERE tr.track_id = t.id
               )
               OR
-              EXISTS (
-                  SELECT 1
-                  FROM collection_track_ranking ctr
-                  WHERE ctr.track_id = t.id
-              )
+                EXISTS (
+                    SELECT 1
+                    FROM collection_track_ranking ctr
+                    WHERE ctr.track_id = t.id
+                      AND ctr.ranking BETWEEN 1 AND 100
+                )
           )
         ORDER BY t.track_name
     """)
@@ -221,7 +207,8 @@ def artist_summary(
         JOIN decade d ON dg.decade_id = d.id
         JOIN genre g ON dg.genre_id = g.id
         JOIN track t ON tr.track_id = t.id
-        WHERE t.artist_id = :artist_id
+            WHERE t.artist_id = :artist_id
+              AND ctr.ranking BETWEEN 1 AND 100
         ORDER BY d.decade_name, g.genre_name, tr.ranking
     """)
 
@@ -271,6 +258,7 @@ def artist_summary(
         "appearanceCount": len(nostalgia_rows) + len(collection_rows),
     }
 
+
 @router.post("/play")
 def play_artist_spotlight(
         artist_id: int = Query(...),
@@ -302,11 +290,12 @@ def play_artist_spotlight(
                   WHERE tr.track_id = t.id
               )
               OR
-              EXISTS (
-                  SELECT 1
-                  FROM collection_track_ranking ctr
-                  WHERE ctr.track_id = t.id
-              )
+                EXISTS (
+                    SELECT 1
+                    FROM collection_track_ranking ctr
+                    WHERE ctr.track_id = t.id
+                      AND ctr.ranking BETWEEN 1 AND 100
+                )
           )
 
         ORDER BY t.track_name
@@ -455,6 +444,7 @@ async def play_artist_radio(
         "genre": genre,
     }
 
+
 @router.get("/artist-story")
 def artist_story(
         artist_id: int = Query(...),
@@ -499,6 +489,7 @@ def artist_story(
         "has_story": True,
         **dict(row),
     }
+
 
 @router.post("/play-artist-story")
 def play_artist_story(
