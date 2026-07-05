@@ -396,7 +396,9 @@ async def play_track(payload: dict):
             await narration_done_event.wait()
             logger.info("✅ Artist Spotlight phase finished | phase=%s", phase)
 
-        base_url = "https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/audio-en"
+        tts_language = context.get("language") or selection.language or "en"
+        audio_bucket = "audio-ptbr" if tts_language == "pt-BR" else f"audio-{tts_language}"
+        base_url = f"https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/{audio_bucket}"
 
         artist_audio_url = (
             f"{base_url}/artist/{spotify_artist_id}.mp3"
