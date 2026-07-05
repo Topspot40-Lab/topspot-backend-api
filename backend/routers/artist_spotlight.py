@@ -237,7 +237,7 @@ def artist_summary(
         JOIN genre g ON dg.genre_id = g.id
         JOIN track t ON tr.track_id = t.id
             WHERE t.artist_id = :artist_id
-              AND ctr.ranking BETWEEN 1 AND 100
+                AND tr.ranking BETWEEN 1 AND 100
         ORDER BY d.decade_name, g.genre_name, tr.ranking
     """)
 

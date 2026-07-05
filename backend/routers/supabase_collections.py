@@ -123,7 +123,7 @@ async def get_sequence_collection(
             ranking_locale = db.exec(
                 select(CollectionTrackRankingLocale).where(
                     CollectionTrackRankingLocale.collection_track_ranking_id == ctr.id,
-                    CollectionTrackRankingLocale.language_code == locale_code,
+                    CollectionTrackRankingLocale.lang == locale_code,
                 )
             ).first()
 
