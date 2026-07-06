@@ -37,6 +37,11 @@ class ClientDiagnosticRequest(BaseModel):
     genre: Optional[str] = None
 
 
+class NarrationFinishedRequest(BaseModel):
+    playbackSessionId: Optional[str] = None
+    phase: Optional[str] = None
+
+
 def update_track_clock(user_id: str):
     s = get_playback_status(user_id)
     if s.is_playing and s.phase == "track":
@@ -101,6 +106,7 @@ async def get_status():
         "isPaused": snap.get("is_paused", False),
         "stopped": snap.get("stopped", False),
         "phase": phase,
+        "playbackSessionId": snap.get("playback_session_id") or ctx.get("playback_session_id"),
 
         "track_name": snap.get("track_name"),
         "artist_name": snap.get("artist_name"),
@@ -161,11 +167,14 @@ async def transfer_playback(device_id: str):
 
 
 @router.post("/narration-finished")
-async def narration_finished():
+async def narration_finished(payload: Optional[NarrationFinishedRequest] = None):
     user_id = current_user_id()
     s = get_playback_status(user_id)
     ctx = s.context or {}
     voice_style = ctx.get("voice_style")
+    current_session_id = getattr(s, "playback_session_id", None) or ctx.get("playback_session_id")
+    received_session_id = payload.playbackSessionId if payload else None
+    received_phase = payload.phase if payload else None
 
     logger.info(
         "🔔 Narration finished signal received (phase=%s, voice_style=%s)",
@@ -176,7 +185,28 @@ async def narration_finished():
     # 🛑 NEW: ignore if paused
     if s.is_paused:
         logger.info("⏸️ Ignoring narration-finished because system is paused")
-        return {"ok": True}
+        return {"ok": True, "ignored": True, "reason": "paused"}
+
+    if not received_session_id:
+        logger.info("Ignoring narration-finished because playbackSessionId is missing")
+        return {"ok": True, "ignored": True, "reason": "missing_session"}
+
+    if received_session_id != current_session_id:
+        logger.info("Ignoring narration-finished because playbackSessionId is stale")
+        return {"ok": True, "ignored": True, "reason": "stale_session"}
+
+    narration_phases = {"set_intro", "liner", "intro", "detail", "artist"}
+    if s.phase not in narration_phases:
+        logger.info("Ignoring narration-finished because phase=%s is not narration", s.phase)
+        return {"ok": True, "ignored": True, "reason": "not_narration_phase"}
+
+    if received_phase != s.phase:
+        logger.info(
+            "Ignoring narration-finished because received phase=%s current phase=%s",
+            received_phase,
+            s.phase,
+        )
+        return {"ok": True, "ignored": True, "reason": "phase_mismatch"}
 
     last_narration_phase = getattr(s, "last_narration_phase", None)
 

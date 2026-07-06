@@ -1,7 +1,13 @@
 # backend/routers/playback_control.py
 from __future__ import annotations
 
-from backend.state.playback_state import update_phase, mark_paused, mark_playing
+from backend.state.playback_state import (
+    clear_public_playback_status,
+    mark_paused,
+    mark_playing,
+    start_playback_session,
+    update_phase,
+)
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
 from backend.services.spotify.playback import stop_spotify_playback
@@ -196,6 +202,9 @@ async def start_new_sequence(coro):
     user_id = current_user_id()
     async with runtime.sequence_lock:
         await cancel_current_sequence()
+        session_id = start_playback_session(user_id)
+        if callable(coro):
+            coro = coro(session_id)
 
         flags.stopped = False
         flags.is_playing = True
@@ -478,7 +487,7 @@ async def play_track(payload: dict):
         if is_continuous:
             logger.debug("📻 RADIO MODE ENABLED (continuous)")
 
-            coro = run_decade_genre_continuous_sequence(
+            coro = lambda session_id: run_decade_genre_continuous_sequence(
                 decade=context["decade"],
                 genre=context["genre"],
                 start_rank=track.rank,
@@ -491,11 +500,12 @@ async def play_track(payload: dict):
                 play_artist_description="artist" in selection.voices,
                 play_track=True,
                 voice_style=selection.voicePlayMode,
+                playback_session_id=session_id,
             )
         else:
             logger.info("🎯 SINGLE MODE ENABLED")
 
-            coro = run_decade_genre_sequence(
+            coro = lambda session_id: run_decade_genre_sequence(
                 decade=context["decade"],
                 genre=context["genre"],
                 start_rank=track.rank,
@@ -508,6 +518,7 @@ async def play_track(payload: dict):
                 play_artist_description="artist" in selection.voices,
                 play_track=True,
                 voice_style=selection.voicePlayMode,
+                playback_session_id=session_id,
             )
 
     elif context.get("type") == "collection_radio":
@@ -698,6 +709,7 @@ async def stop():
     except Exception as exc:
         logger.warning("⚠️ Spotify stop failed: %s", exc)
 
+    clear_public_playback_status(user_id)
     touch()
     return {"ok": True, "status": snapshot_dataclass(flags)}
 
@@ -792,6 +804,7 @@ async def warmup_playback():
 @router.post("/reset")
 async def reset_playback_state():
     from backend.state.playback_flags import flags
+    user_id = current_user_id()
     status = current_runtime().status
 
     # Kill any running sequence first
@@ -816,5 +829,7 @@ async def reset_playback_state():
     flags.is_playing = False
     flags.stopped = True
     flags.cancel_requested = False
+
+    clear_public_playback_status(user_id)
 
     return {"ok": True}

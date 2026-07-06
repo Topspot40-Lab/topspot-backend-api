@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import time
+import uuid
 from dataclasses import dataclass, field
 from typing import Any, Optional, Literal
 
@@ -46,6 +47,7 @@ class PlaybackStatus:
     language: str = "en"
     mode: Optional[Mode] = None
     context: dict[str, Any] = field(default_factory=dict)
+    playback_session_id: str | None = None
     current_rank: Optional[int] = None
     current_ranking_id: int | None = None
 
@@ -91,6 +93,47 @@ def get_status(user_id: str) -> PlaybackStatus:
     return statuses[user_id]
 
 
+def start_playback_session(user_id: str) -> str:
+    s = get_status(user_id)
+    session_id = uuid.uuid4().hex
+    s.playback_session_id = session_id
+    s.phase = "idle"
+    s.context = {}
+    s.bed_playing = False
+    s.cancel_requested = False
+    s.sequence_done = False
+    _touch(user_id)
+    return session_id
+
+
+def clear_public_playback_status(user_id: str) -> None:
+    s = get_status(user_id)
+    s.is_playing = False
+    s.is_paused = False
+    s.stopped = True
+    s.cancel_requested = False
+    s.sequence_done = True
+    s.bed_playing = False
+    s.playback_session_id = None
+    s.context = {}
+    s.current_rank = None
+    s.current_ranking_id = None
+    s.phase = "idle"
+    s.track_name = ""
+    s.artist_name = ""
+    s.intro = None
+    s.detail = None
+    s.artist_text = None
+    s.elapsed_seconds = 0.0
+    s.duration_seconds = 0.0
+    s.percent_complete = 0.0
+    s.track_start_ts = 0.0
+    s.track_elapsed_seconds = 0.0
+    s.track_duration_seconds = 0.0
+    s.track_percent_complete = 0.0
+    _touch(user_id)
+
+
 # ─────────────────────────────────────────────
 # Helpers
 # ─────────────────────────────────────────────
@@ -134,6 +177,24 @@ def update_track_clock(user_id: str) -> None:
 def update_phase(user_id: str, phase: Phase, **kwargs) -> None:
     #status.phase = phase
     s = get_status(user_id)
+    playback_session_id = kwargs.pop("playback_session_id", None)
+
+    if playback_session_id is not None:
+        if playback_session_id != s.playback_session_id:
+            logger.info(
+                "Ignoring stale phase publish phase=%s playback_session_id=%s current=%s",
+                phase,
+                playback_session_id,
+                s.playback_session_id,
+            )
+            return
+
+    if isinstance(kwargs.get("context"), dict):
+        ctx_with_session = dict(kwargs["context"])
+        if playback_session_id is not None:
+            ctx_with_session["playback_session_id"] = playback_session_id
+        kwargs["context"] = ctx_with_session
+
     s.phase = phase
 
     # Apply direct attributes first
@@ -211,6 +272,16 @@ def mark_stopped(user_id: str) -> None:
     s.cancel_requested = False
     s.sequence_done = True
     s.phase = "idle"
+    s.context = {}
+    s.playback_session_id = None
+    s.bed_playing = False
+    s.current_rank = None
+    s.current_ranking_id = None
+    s.track_name = ""
+    s.artist_name = ""
+    s.intro = None
+    s.detail = None
+    s.artist_text = None
 
     # Reset GLOBAL clocks
     s.elapsed_seconds = 0.0

@@ -3,6 +3,7 @@ from sqlalchemy import text
 from backend.database import engine
 import asyncio
 from backend.state.playback_runtime import bind_request_user, bind_task, current_user_id
+from backend.state.playback_state import start_playback_session
 
 from sqlmodel import Session, select
 from backend.models.dbmodels import Artist, ArtistStory
@@ -357,6 +358,9 @@ async def play_artist_radio(
 ):
     from backend.services.artist_radio_sequence import run_artist_radio_sequence
 
+    user_id = current_user_id()
+    start_playback_session(user_id)
+
     task = asyncio.create_task(
         run_artist_radio_sequence(
             genre=genre,
@@ -369,7 +373,7 @@ async def play_artist_radio(
             spotify_artist_id=spotify_artist_id,
         )
     )
-    bind_task(task, current_user_id())
+    bind_task(task, user_id)
 
     return {
         "ok": True,

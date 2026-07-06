@@ -153,6 +153,7 @@ async def publish_narration_queue_phase(
         texts: dict | None,
         voice_style: Literal["before", "over"],
         extra_context: dict | None = None,
+        playback_session_id: str | None = None,
 ):
     """
     Publishes one narration phase with multiple language audio URLs.
@@ -202,6 +203,7 @@ async def publish_narration_queue_phase(
     update_phase(
         user_id,
         phase,
+        playback_session_id=playback_session_id,
         track_name=track.track_name,
         artist_name=artist.artist_name,
         current_rank=int(rank),
@@ -327,6 +329,7 @@ async def run_decade_genre_sequence(
         play_artist_description: bool,
         play_track: bool,
         voice_style: Literal["before", "over"] = "before",
+        playback_session_id: str | None = None,
 ) -> None:
     user_id = current_user_id()
     status = current_runtime().status
@@ -391,6 +394,7 @@ async def run_decade_genre_sequence(
     update_phase(
         user_id,
         "loading",
+        playback_session_id=playback_session_id,
         current_rank=start_rank,
         track_name="",
         artist_name="",
@@ -472,6 +476,7 @@ async def run_decade_genre_sequence(
         update_phase(
             user_id,
             "prelude",
+            playback_session_id=playback_session_id,
             is_playing=True,
             current_rank=rank,
             track_name=track.track_name,
@@ -577,6 +582,7 @@ async def run_decade_genre_sequence(
                     audio_queue=intro_audio_queue,
                     texts=texts_by_language,
                     voice_style=voice_style,
+                    playback_session_id=playback_session_id,
                     extra_context={
                         "bed_bucket": BED_BUCKET,
                         "bed_key": bed_key,
@@ -615,6 +621,7 @@ async def run_decade_genre_sequence(
                     audio_queue=detail_audio_queue,
                     texts=texts_by_language,
                     voice_style=voice_style,
+                    playback_session_id=playback_session_id,
                     extra_context={
                         "bed_bucket": BED_BUCKET,
                         "bed_key": bed_key,
@@ -653,6 +660,7 @@ async def run_decade_genre_sequence(
                     audio_queue=artist_audio_queue,
                     texts=texts_by_language,
                     voice_style=voice_style,
+                    playback_session_id=playback_session_id,
                     extra_context={
                         "bed_bucket": BED_BUCKET,
                         "bed_key": bed_key,
@@ -671,6 +679,7 @@ async def run_decade_genre_sequence(
             update_phase(
                 user_id,
                 "track",
+                playback_session_id=playback_session_id,
                 track_name=track.track_name,
                 artist_name=artist.artist_name,
                 current_rank=rank,
@@ -713,6 +722,7 @@ async def run_decade_genre_continuous_sequence(
         play_artist_description: bool,
         play_track: bool,
         voice_style: Literal["before", "over"] = "before",
+        playback_session_id: str | None = None,
 ) -> None:
     user_id = current_user_id()
     status = current_runtime().status
@@ -768,6 +778,7 @@ async def run_decade_genre_continuous_sequence(
     update_phase(
         user_id,
         "loading",
+        playback_session_id=playback_session_id,
         current_rank=start_rank,
         track_name="",
         artist_name="",
@@ -833,6 +844,7 @@ async def run_decade_genre_continuous_sequence(
             update_phase(
                 user_id,
                 "prelude",
+                playback_session_id=playback_session_id,
                 is_playing=True,
                 current_rank=rank,
                 track_name=track.track_name,
@@ -932,6 +944,7 @@ async def run_decade_genre_continuous_sequence(
                         audio_queue=intro_audio_queue,
                         texts=texts_by_language,
                         voice_style=voice_style,
+                        playback_session_id=playback_session_id,
                         extra_context={
                             "bed_bucket": BED_BUCKET,
                             "bed_key": bed_key,
@@ -970,6 +983,7 @@ async def run_decade_genre_continuous_sequence(
                         audio_queue=detail_audio_queue,
                         texts=texts_by_language,
                         voice_style=voice_style,
+                        playback_session_id=playback_session_id,
                         extra_context={
                             "bed_bucket": BED_BUCKET,
                             "bed_key": bed_key,
@@ -1008,6 +1022,7 @@ async def run_decade_genre_continuous_sequence(
                         audio_queue=artist_audio_queue,
                         texts=texts_by_language,
                         voice_style=voice_style,
+                        playback_session_id=playback_session_id,
                         extra_context={
                             "bed_bucket": BED_BUCKET,
                             "bed_key": bed_key,
@@ -1022,6 +1037,7 @@ async def run_decade_genre_continuous_sequence(
                 update_phase(
                     user_id,
                     "track",
+                    playback_session_id=playback_session_id,
                     track_name=track.track_name,
                     artist_name=artist.artist_name,
                     current_rank=rank,
