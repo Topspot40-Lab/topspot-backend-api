@@ -151,6 +151,7 @@ async def get_sequence_collection(
             "trackName": track.track_name,
             "artistName": artist.artist_name,
             "artistId": artist.id,
+            "spotify_artist_id": artist.spotify_artist_id,
             "yearReleased": getattr(track, "year_released", None),
             "durationMs": getattr(track, "duration_ms", None),
             "albumArtwork": getattr(track, "album_artwork", None),
