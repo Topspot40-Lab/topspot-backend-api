@@ -282,8 +282,8 @@ def artist_summary(
     return {
         "ok": True,
         "artist": dict(artist),
-        "nostalgiaAppearances": [dict(row) for row in nostalgia_rows[:6]],
-        "collectionAppearances": [dict(row) for row in collection_rows[:6]],
+        "nostalgiaAppearances": [dict(row) for row in nostalgia_rows],
+        "collectionAppearances": [dict(row) for row in collection_rows],
         "appearanceCount": len(nostalgia_rows) + len(collection_rows),
     }
 
