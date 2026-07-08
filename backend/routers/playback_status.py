@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import asdict
 import time
 import logging
-from typing import Optional
+from typing import Any, Optional
 
 from backend.state.playback_state import get_status as get_playback_status
 
@@ -35,11 +35,52 @@ class ClientDiagnosticRequest(BaseModel):
     trackRank: Optional[int] = None
     decade: Optional[str] = None
     genre: Optional[str] = None
+    bedAudioState: Optional[dict[str, Any]] = None
+    narrationAudioState: Optional[dict[str, Any]] = None
 
 
 class NarrationFinishedRequest(BaseModel):
     playbackSessionId: Optional[str] = None
     phase: Optional[str] = None
+
+
+def _sanitize_diagnostic_state(value: Any) -> Any:
+    sensitive_key_parts = (
+        "authorization",
+        "cookie",
+        "error",
+        "header",
+        "jwt",
+        "secret",
+        "token",
+        "url",
+    )
+
+    if isinstance(value, dict):
+        sanitized = {}
+        for key, item in value.items():
+            key_text = str(key)
+            key_lower = key_text.lower()
+            if key_lower == "errorcode":
+                sanitized[key_text] = _sanitize_diagnostic_state(item)
+                continue
+            if any(part in key_lower for part in sensitive_key_parts):
+                continue
+            sanitized[key_text] = _sanitize_diagnostic_state(item)
+        return sanitized
+
+    if isinstance(value, list):
+        return [_sanitize_diagnostic_state(item) for item in value[:10]]
+
+    if isinstance(value, str):
+        if "://" in value:
+            return "[redacted]"
+        return value[:200]
+
+    if isinstance(value, (bool, int, float)) or value is None:
+        return value
+
+    return type(value).__name__
 
 
 def update_track_clock(user_id: str):
@@ -142,7 +183,8 @@ async def get_status():
 async def client_diagnostic(diagnostic: ClientDiagnosticRequest):
     logger.info(
         "Client diagnostic event=%s phase=%s mode=%s programType=%s "
-        "hasCurrentTrack=%s trackRank=%s decade=%s genre=%s",
+        "hasCurrentTrack=%s trackRank=%s decade=%s genre=%s "
+        "bedAudioState=%s narrationAudioState=%s",
         diagnostic.event,
         diagnostic.phase,
         diagnostic.mode,
@@ -151,6 +193,8 @@ async def client_diagnostic(diagnostic: ClientDiagnosticRequest):
         diagnostic.trackRank,
         diagnostic.decade,
         diagnostic.genre,
+        _sanitize_diagnostic_state(diagnostic.bedAudioState),
+        _sanitize_diagnostic_state(diagnostic.narrationAudioState),
     )
     return {"ok": True}
 
