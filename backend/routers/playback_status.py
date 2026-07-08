@@ -99,9 +99,21 @@ async def get_devices():
     """
     user_id = current_user_id()
     sp = await get_spotify_user_client(user_id)
+    profile = sp.current_user()
     data = sp.devices()
+    devices = data.get("devices", [])
+    logger.info(
+        "Spotify devices diagnostic spotify_user_id=%s product=%s country=%s explicit_content=%s device_count=%s active_count=%s restricted_count=%s",
+        profile.get("id"),
+        profile.get("product"),
+        profile.get("country"),
+        profile.get("explicit_content"),
+        len(devices),
+        sum(1 for device in devices if device.get("is_active")),
+        sum(1 for device in devices if device.get("is_restricted")),
+    )
     return {
-        "devices": data.get("devices", [])
+        "devices": devices
     }
 
 
