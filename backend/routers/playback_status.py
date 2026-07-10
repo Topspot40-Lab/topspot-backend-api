@@ -100,10 +100,15 @@ async def get_devices():
     """
     List available Spotify playback devices for the user.
     """
+    logger.warning("Spotify devices diagnostic route entered version=e017aaa")
     user_id = current_user_id()
     sp = await get_spotify_user_client(user_id)
     data = sp.devices()
     devices = data.get("devices", [])
+    logger.warning(
+        "Spotify devices diagnostic sp.devices returned device_count=%s",
+        len(devices),
+    )
 
     direct_devices_status = None
     direct_devices_count = None
@@ -165,7 +170,8 @@ async def get_devices():
         current_playback_device_is_restricted,
     )
     return {
-        "devices": devices
+        "devices": devices,
+        "diagnostic_version": "e017aaa",
     }
 
 
