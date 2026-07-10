@@ -6,6 +6,9 @@ import time
 import logging
 from typing import Any, Optional
 
+import httpx
+
+from backend.isaiah.isaiah_spotify import get_valid_access_token
 from backend.state.playback_state import get_status as get_playback_status
 
 from fastapi import APIRouter, Depends
@@ -99,18 +102,67 @@ async def get_devices():
     """
     user_id = current_user_id()
     sp = await get_spotify_user_client(user_id)
-    profile = sp.current_user()
     data = sp.devices()
     devices = data.get("devices", [])
+
+    direct_devices_status = None
+    direct_devices_count = None
+    spotipy_equals_direct = None
+    try:
+        access_token = await get_valid_access_token(user_id)
+        async with httpx.AsyncClient(timeout=5) as client:
+            direct_response = await client.get(
+                "https://api.spotify.com/v1/me/player/devices",
+                headers={"Authorization": f"Bearer {access_token}"},
+            )
+        direct_devices_status = direct_response.status_code
+        if direct_response.status_code == 200:
+            direct_data = direct_response.json()
+            direct_devices = direct_data.get("devices", [])
+            direct_devices_count = len(direct_devices)
+            spotipy_equals_direct = direct_devices == devices
+    except Exception:
+        pass
+
+    current_playback_present = None
+    current_playback_is_playing = None
+    current_playback_has_device = None
+    current_playback_device_type = None
+    current_playback_device_is_active = None
+    current_playback_device_is_restricted = None
+    try:
+        current_playback = sp.current_playback()
+        current_playback_present = current_playback is not None
+        current_playback_is_playing = (
+            current_playback.get("is_playing")
+            if current_playback
+            else None
+        )
+        current_device = (
+            current_playback.get("device")
+            if current_playback
+            else None
+        )
+        current_playback_has_device = current_device is not None
+        if current_device:
+            current_playback_device_type = current_device.get("type")
+            current_playback_device_is_active = current_device.get("is_active")
+            current_playback_device_is_restricted = current_device.get("is_restricted")
+    except Exception:
+        pass
+
     logger.info(
-        "Spotify devices diagnostic spotify_user_id=%s product=%s country=%s explicit_content=%s device_count=%s active_count=%s restricted_count=%s",
-        profile.get("id"),
-        profile.get("product"),
-        profile.get("country"),
-        profile.get("explicit_content"),
+        "Spotify devices diagnostic spotipy_devices_count=%s direct_devices_status=%s direct_devices_count=%s spotipy_equals_direct=%s current_playback_present=%s current_playback_is_playing=%s current_playback_has_device=%s current_playback_device_type=%s current_playback_device_is_active=%s current_playback_device_is_restricted=%s",
         len(devices),
-        sum(1 for device in devices if device.get("is_active")),
-        sum(1 for device in devices if device.get("is_restricted")),
+        direct_devices_status,
+        direct_devices_count,
+        spotipy_equals_direct,
+        current_playback_present,
+        current_playback_is_playing,
+        current_playback_has_device,
+        current_playback_device_type,
+        current_playback_device_is_active,
+        current_playback_device_is_restricted,
     )
     return {
         "devices": devices
