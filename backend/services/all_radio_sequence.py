@@ -14,6 +14,7 @@ from backend.models import (
 
 from sqlmodel import Session, select
 from backend.database import engine
+from backend.models.dbmodels import MusicDiscovery, MusicDiscoveryLocale
 
 from backend.services.decade_genre_sequence import (
     _extract_bucket_key,
@@ -59,7 +60,49 @@ def get_random_station_liner(lang: str = "en"):
 
     return bucket, key
 
+
 import os
+
+_last_music_discovery_id: int | None = None
+
+
+def get_random_music_discovery(lang: str = "en"):
+    global _last_music_discovery_id
+
+    normalized_lang = (lang or "en").strip()
+
+    with Session(engine) as session:
+        rows = session.exec(
+            select(MusicDiscovery, MusicDiscoveryLocale)
+            .join(
+                MusicDiscoveryLocale,
+                MusicDiscoveryLocale.music_discovery_id == MusicDiscovery.id,
+            )
+            .where(MusicDiscovery.is_active == True)
+            .where(MusicDiscoveryLocale.language_code == normalized_lang)
+            .where(MusicDiscoveryLocale.tts_bucket != None)
+            .where(MusicDiscoveryLocale.tts_key != None)
+        ).all()
+
+    if not rows:
+        raise RuntimeError(
+            f"No active music-discovery audio found for language={normalized_lang}"
+        )
+
+    choices = [
+        (discovery, locale)
+        for discovery, locale in rows
+        if discovery.id != _last_music_discovery_id
+    ]
+
+    if not choices:
+        choices = rows
+
+    discovery, locale = random.choice(choices)
+    _last_music_discovery_id = discovery.id
+
+    return locale.tts_bucket, locale.tts_key
+
 
 def get_liner_probability() -> float:
     try:
@@ -116,11 +159,9 @@ async def publish_set_intro_phase(
         rank: int,
         radio_context: dict,
 ) -> None:
-
     set_intro_audio_queue = []
 
     for lang in tts_languages:
-
         normalized_lang = "ptbr" if lang in ("pt-BR", "ptbr") else lang
 
         bucket, key = build_set_intro_bucket_key(
@@ -173,7 +214,7 @@ async def run_all_radio_sequence(
         play_intro: bool = True,
         play_detail: bool = True,
         play_artist_description: bool = False,
-        voice_style: str = "before",   # ✅ ADD THIS
+        voice_style: str = "before",  # ✅ ADD THIS
 ):
     def normalize_lang(value: str) -> str:
         v = (value or "en").lower()
@@ -211,7 +252,6 @@ async def run_all_radio_sequence(
         play_detail,
         play_artist
     )
-
 
     """
     ALL / ALL radio mode.
@@ -465,7 +505,6 @@ async def run_all_radio_sequence(
                 artist_by_lang = {}
 
                 for narration_lang in langs:
-
                     intro_jobs_by_lang[narration_lang] = build_intro_jobs(
                         lang=narration_lang,
                         tr_rows=[(tr_rank, decade_obj.decade_name, genre_obj.genre_name)],
@@ -557,7 +596,6 @@ async def run_all_radio_sequence(
                     "🌎 RADIO TEXTS BUILT | langs=%s",
                     list(texts_by_language.keys()),
                 )
-
 
                 radio_context = {
                     "mode": "all_radio",
@@ -713,7 +751,7 @@ async def run_all_radio_sequence(
                             decade=decade_obj.decade_name,
                             genre=genre,
                             audio_queue=artist_audio_queue,
-                            texts=texts_by_language ,
+                            texts=texts_by_language,
                             voice_style="before",
                             extra_context=radio_context,
                         )
@@ -745,7 +783,6 @@ async def run_all_radio_sequence(
                         rank,
                         track.spotify_track_id,
                     )
-
 
                     # ✅ wait for Spotify track to finish
                     await track_done_event.wait()

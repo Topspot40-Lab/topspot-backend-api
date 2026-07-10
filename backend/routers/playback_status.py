@@ -6,11 +6,8 @@ import logging
 
 from backend.state.playback_state import status
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from backend.services.spotify.spotify_auth_user import get_spotify_user_client
-from backend.services.spotify.playback import (
-    stop_spotify_playback
-)
 
 from backend.state.narration import narration_done_event
 
@@ -137,12 +134,12 @@ async def narration_finished():
     last_narration_phase = getattr(status, "last_narration_phase", None)
 
     should_stop_bed = (
-        voice_style == "before"
-        and getattr(status, "bed_playing", False)
-        and (
-            not last_narration_phase
-            or status.phase == last_narration_phase
-        )
+            voice_style == "before"
+            and getattr(status, "bed_playing", False)
+            and (
+                    not last_narration_phase
+                    or status.phase == last_narration_phase
+            )
     )
 
     if should_stop_bed:
@@ -166,7 +163,7 @@ from backend.state.narration import track_done_event
 
 
 @router.post("/track-finished")
-async def track_finished():
+async def track_finished(payload: dict = Body(default_factory=dict)):
     logger.info("🎵 Track finished signal received")
     logger.info(f"TRACK DONE EVENT ID (router): {id(track_done_event)}")
 
@@ -198,6 +195,27 @@ async def track_finished():
     if track_age < 10:
         logger.info("🚫 Ignoring track-finished because track_age=%.2fs is too young", track_age)
         return {"ok": True, "ignored": True, "reason": "track_too_young"}
+
+    payload_ranking_id = payload.get("ranking_id")
+    payload_spotify_id = payload.get("spotify_track_id")
+
+    if payload_ranking_id is not None and current_ranking_id is not None:
+        if int(payload_ranking_id) != int(current_ranking_id):
+            logger.info(
+                "🚫 Ignoring stale track-finished because ranking_id payload=%s current=%s",
+                payload_ranking_id,
+                current_ranking_id,
+            )
+            return {"ok": True, "ignored": True, "reason": "stale_ranking_id"}
+
+    if payload_spotify_id and current_spotify_id:
+        if payload_spotify_id != current_spotify_id:
+            logger.info(
+                "🚫 Ignoring stale track-finished because spotify payload=%s current=%s",
+                payload_spotify_id,
+                current_spotify_id,
+            )
+            return {"ok": True, "ignored": True, "reason": "stale_spotify_id"}
 
     track_done_event.set()
 

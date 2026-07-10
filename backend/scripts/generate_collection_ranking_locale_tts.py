@@ -32,7 +32,13 @@ def profile_for_lang(lang: str) -> dict:
     return TTS_PROFILES[lang]["intro"]
 
 
-def main(lang: str, limit: int | None, overwrite: bool) -> None:
+def main(
+    lang: str,
+    limit: int | None,
+    overwrite: bool,
+    collection_slug: str | None,
+    rank: int | None,
+) -> None:
     with Session(engine) as session:
         stmt = (
             select(CollectionTrackRankingLocale, CollectionTrackRanking, Collection)
@@ -44,6 +50,12 @@ def main(lang: str, limit: int | None, overwrite: bool) -> None:
             .where(CollectionTrackRankingLocale.lang == lang)
             .order_by(Collection.slug, CollectionTrackRanking.ranking)
         )
+
+        if collection_slug:
+            stmt = stmt.where(Collection.slug == collection_slug)
+
+        if rank is not None:
+            stmt = stmt.where(CollectionTrackRanking.ranking == rank)
 
         rows = session.exec(stmt).all()
 
@@ -119,6 +131,14 @@ if __name__ == "__main__":
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--overwrite", action="store_true")
 
+    parser.add_argument("--collection", default=None)
+    parser.add_argument("--rank", type=int, default=None)
     args = parser.parse_args()
 
-    main(lang=args.lang, limit=args.limit, overwrite=args.overwrite)
+    main(
+        lang=args.lang,
+        limit=args.limit,
+        overwrite=args.overwrite,
+        collection_slug=args.collection,
+        rank=args.rank,
+    )

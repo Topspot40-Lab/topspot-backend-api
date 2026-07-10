@@ -10,15 +10,14 @@ from backend.database import engine
 from backend.models.collection_models import Collection, CollectionTrackRanking
 from backend.config.tts_config import TTS_PROFILES
 from backend.services.tts.elevenlabs_tts import generate_tts_mp3
-from backend.services.supabase_storage import upload_bytes
-
+from backend.services.supabase_storage import object_exists_cached, upload_bytes
 
 def tts_key_for(collection_slug: str, ranking: int) -> str:
     return f"collections-intros/{collection_slug}_{ranking:02d}.mp3"
 
 
 def main(collection_slug: str | None, limit: int | None, overwrite: bool) -> None:
-    with Session(engine) as session:
+    with Session(engine, expire_on_commit=False) as session:
         stmt = (
             select(CollectionTrackRanking, Collection)
             .join(Collection, Collection.id == CollectionTrackRanking.collection_id)
@@ -40,16 +39,21 @@ def main(collection_slug: str | None, limit: int | None, overwrite: bool) -> Non
         settings = profile.get("settings")
 
         for ranking, collection in rows:
-            if limit is not None and attempted >= limit:
-                break
-
-            attempted += 1
-
             if not ranking.intro:
                 skipped += 1
                 continue
 
             key = tts_key_for(collection.slug, ranking.ranking)
+
+            if not overwrite and object_exists_cached("audio-en", key):
+                skipped += 1
+                print(f"Skipped existing: {collection.slug} #{ranking.ranking}")
+                continue
+
+            if limit is not None and attempted >= limit:
+                break
+
+            attempted += 1
 
             try:
                 with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as tmp:
@@ -83,7 +87,6 @@ def main(collection_slug: str | None, limit: int | None, overwrite: bool) -> Non
 
             except Exception as e:
                 print(f"ERROR {collection.slug} #{ranking.ranking}: {e}")
-
         session.commit()
 
         print("\nDone.")

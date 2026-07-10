@@ -5,13 +5,18 @@ from backend.state.playback_state import update_phase, status, mark_paused, mark
 from pydantic import BaseModel
 from backend.services.spotify.playback import play_spotify_track
 from backend.services.spotify.playback import stop_spotify_playback
-from backend.state.narration import track_done_event, narration_done_event
+from backend.services.audio_urls import resolve_audio_ref
 from sqlmodel import Session, select
 from backend.database import engine
 from backend.models.dbmodels import Artist
 from backend.database import get_db
 from backend.models.dbmodels import TrackRanking, DecadeGenre, Decade, Genre
 from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
+from backend.services.all_radio_sequence import (
+    get_random_station_liner,
+    get_random_music_discovery,
+)
+from backend.state.narration import narration_done_event
 
 import asyncio
 import logging
@@ -796,3 +801,234 @@ async def reset_playback_state():
     flags.cancel_requested = False
 
     return {"ok": True}
+
+
+@router.post("/studio/discovery", summary="Play a random station liner followed by a random music discovery clip")
+async def play_studio_discovery():
+    liner_bucket, liner_key = get_random_station_liner("en")
+    discovery_bucket, discovery_key = get_random_music_discovery("en")
+
+    liner_url = resolve_audio_ref(liner_bucket, liner_key)
+    discovery_url = resolve_audio_ref(discovery_bucket, discovery_key)
+
+    if not liner_url or not discovery_url:
+        raise HTTPException(
+            status_code=404,
+            detail="Could not resolve station liner or music discovery audio",
+        )
+
+    async def _run_studio_discovery():
+        narration_done_event.clear()
+
+        update_phase(
+            "liner",
+            is_playing=True,
+            context={
+                "type": "studio_discovery",
+                "audio_url": liner_url,
+                "audio_queue": [
+                    {
+                        "language": "en",
+                        "url": liner_url,
+                        "kind": "station_liner",
+                    },
+                    {
+                        "language": "en",
+                        "url": discovery_url,
+                        "kind": "music_discovery",
+                    },
+                ],
+                "started_by": "studio_shortcut",
+            },
+        )
+
+        await narration_done_event.wait()
+
+        update_phase(
+            "idle",
+            is_playing=False,
+            context={
+                "type": "studio_discovery",
+                "completed": True,
+            },
+        )
+
+    await start_new_sequence(
+        _run_studio_discovery(),
+        stop_spotify=False,
+    )
+
+    return {
+        "ok": True,
+        "liner": {
+            "bucket": liner_bucket,
+            "key": liner_key,
+        },
+        "discovery": {
+            "bucket": discovery_bucket,
+            "key": discovery_key,
+        },
+    }
+
+@router.post("/studio/intro", summary="Play the generic TopSpot40 studio intro")
+async def play_studio_intro():
+    intro_url = resolve_audio_ref(
+        "audio-en",
+        "studio/intro.mp3",
+    )
+
+    if not intro_url:
+        raise HTTPException(
+            status_code=404,
+            detail="Studio intro audio could not be resolved",
+        )
+
+    async def _run_studio_intro():
+        narration_done_event.clear()
+
+        update_phase(
+            "liner",
+            is_playing=True,
+            context={
+                "type": "studio_intro",
+                "audio_url": intro_url,
+                "audio_queue": [
+                    {
+                        "language": "en",
+                        "url": intro_url,
+                        "kind": "studio_intro",
+                    }
+                ],
+                "started_by": "studio_shortcut",
+            },
+        )
+
+        await narration_done_event.wait()
+
+        update_phase(
+            "idle",
+            is_playing=False,
+            context={
+                "type": "studio_intro",
+                "completed": True,
+            },
+        )
+
+    await start_new_sequence(
+        _run_studio_intro(),
+        stop_spotify=False,
+    )
+
+    return {
+        "ok": True,
+        "bucket": "audio-en",
+        "key": "studio/intro.mp3",
+    }
+
+
+HAPPY_TRAILS_SPOTIFY_TRACK_ID = "5b0YtDfsUHz5NOiErLCIK7"
+
+
+@router.post(
+    "/studio/happy-trails",
+    summary="Play Happy Trails by Roy Rogers on Spotify",
+)
+async def play_studio_happy_trails():
+    ok = await play_spotify_track(HAPPY_TRAILS_SPOTIFY_TRACK_ID)
+
+    if not ok:
+        raise HTTPException(
+            status_code=500,
+            detail="Spotify playback failed for Happy Trails",
+        )
+
+    update_phase(
+        "track",
+        track_name="Happy Trails",
+        artist_name="Roy Rogers",
+        context={
+            "type": "studio_happy_trails",
+            "spotify_track_id": HAPPY_TRAILS_SPOTIFY_TRACK_ID,
+            "started_by": "studio_shortcut",
+        },
+    )
+
+    return {
+        "ok": True,
+        "spotify_track_id": HAPPY_TRAILS_SPOTIFY_TRACK_ID,
+        "track_name": "Happy Trails",
+        "artist_name": "Roy Rogers",
+    }
+
+@router.post(
+    "/studio/signoff",
+    summary="Play the studio outro, then Happy Trails",
+)
+async def play_studio_signoff():
+    outro_url = resolve_audio_ref(
+        "audio-en",
+        "studio/outro.mp3",
+    )
+
+    if not outro_url:
+        raise HTTPException(
+            status_code=404,
+            detail="Studio outro audio could not be resolved",
+        )
+
+    async def _run_studio_signoff():
+        narration_done_event.clear()
+
+        update_phase(
+            "liner",
+            is_playing=True,
+            context={
+                "type": "studio_signoff",
+                "audio_url": outro_url,
+                "audio_queue": [
+                    {
+                        "language": "en",
+                        "url": outro_url,
+                        "kind": "studio_outro",
+                    }
+                ],
+                "started_by": "studio_shortcut",
+            },
+        )
+
+        await narration_done_event.wait()
+
+        ok = await play_spotify_track(HAPPY_TRAILS_SPOTIFY_TRACK_ID)
+
+        if not ok:
+            logger.error("Spotify playback failed during studio signoff")
+            update_phase(
+                "idle",
+                is_playing=False,
+                context={
+                    "type": "studio_signoff",
+                    "error": "Spotify playback failed",
+                },
+            )
+            return
+
+        update_phase(
+            "track",
+            track_name="Happy Trails",
+            artist_name="Roy Rogers",
+            context={
+                "type": "studio_signoff",
+                "spotify_track_id": HAPPY_TRAILS_SPOTIFY_TRACK_ID,
+                "started_by": "studio_shortcut",
+            },
+        )
+
+    await start_new_sequence(
+        _run_studio_signoff(),
+        stop_spotify=False,
+    )
+
+    return {
+        "ok": True,
+        "message": "Studio signoff started",
+    }
