@@ -5,6 +5,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 from backend.studio.production import Production
+from backend.studio.timeline import build_opening_timeline
 
 from backend.studio.studio_config import (
     BLACK_SECONDS,
@@ -139,6 +140,16 @@ def main() -> None:
     languages = production.card("languages")
     title = production.card("title")
 
+    timeline = build_opening_timeline(
+        logo=logo,
+        languages=languages,
+        title=title,
+        logo_seconds=LOGO_SECONDS,
+        language_seconds=LANGUAGE_SECONDS,
+        title_seconds=TITLE_SECONDS,
+        black_seconds=BLACK_SECONDS,
+    )
+
     output = production.output("video").with_name("opening.mp4")
     output.parent.mkdir(parents=True, exist_ok=True)
 
@@ -148,46 +159,39 @@ def main() -> None:
 
     with tempfile.TemporaryDirectory() as tmpdir:
         work = Path(tmpdir)
+        rendered_parts: list[Path] = []
 
-        logo_video = work / "01_logo.mp4"
-        language_video = work / "02_languages.mp4"
-        title_video = work / "03_title.mp4"
-        black_video = work / "04_black.mp4"
+        for index, item in enumerate(timeline.items, start=1):
+            destination = work / f"{index:02d}_{item.name.replace(' ', '_')}.mp4"
 
-        render_card(
-            source=logo,
-            destination=logo_video,
-            duration=LOGO_SECONDS,
-        )
-        print("✓ Logo card")
+            if item.kind == "card":
+                if item.source is None:
+                    raise RuntimeError(
+                        f"Timeline card has no source: {item.name}"
+                    )
 
-        render_card(
-            source=languages,
-            destination=language_video,
-            duration=LANGUAGE_SECONDS,
-        )
-        print("✓ Language card")
+                render_card(
+                    source=item.source,
+                    destination=destination,
+                    duration=item.duration_seconds or 0.0,
+                )
 
-        render_card(
-            source=title,
-            destination=title_video,
-            duration=TITLE_SECONDS,
-        )
-        print("✓ Title card")
+            elif item.kind == "black":
+                render_black(
+                    destination=destination,
+                    duration=item.duration_seconds or 0.0,
+                )
 
-        render_black(
-            destination=black_video,
-            duration=BLACK_SECONDS,
-        )
-        print("✓ Black transition")
+            else:
+                raise RuntimeError(
+                    f"Unsupported opening timeline item: {item.kind}"
+                )
+
+            rendered_parts.append(destination)
+            print(f"✓ {item.name}")
 
         concatenate_videos(
-            [
-                logo_video,
-                language_video,
-                title_video,
-                black_video,
-            ],
+            rendered_parts,
             output,
         )
     print()
