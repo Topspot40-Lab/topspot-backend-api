@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import argparse
-import json
 import subprocess
 import tempfile
 from pathlib import Path
+from backend.studio.production import Production
 
 from backend.studio.studio_config import (
     BLACK_SECONDS,
@@ -12,9 +12,7 @@ from backend.studio.studio_config import (
     FPS,
     LANGUAGE_SECONDS,
     LOGO_SECONDS,
-    PRODUCTIONS_DIR,
     TITLE_SECONDS,
-    WORK_DIR,
 )
 
 
@@ -64,6 +62,7 @@ def render_card(
     ]
 
     run_ffmpeg(command)
+
 
 def render_black(
         *,
@@ -126,28 +125,25 @@ def main() -> None:
     parser.add_argument("--slug", required=True)
     args = parser.parse_args()
 
-    production_root = PRODUCTIONS_DIR / args.slug
-    work_root = WORK_DIR / args.slug
-    manifest_path = production_root / "manifest.json"
+    production = Production(args.slug)
+    production.ensure_work_dirs()
 
-    if not manifest_path.exists():
-        raise SystemExit(
-            f"Manifest not found: {manifest_path}"
-        )
+    missing = production.validate()
+    if missing:
+        print("❌ Production is missing required files:")
+        for item in missing:
+            print(f"  {item}")
+        raise SystemExit(1)
 
-    manifest = json.loads(
-        manifest_path.read_text(encoding="utf-8")
-    )
+    logo = production.card("logo")
+    languages = production.card("languages")
+    title = production.card("title")
 
-    logo = work_root / manifest["cards"]["logo"]
-    languages = work_root / manifest["cards"]["languages"]
-    title = work_root / manifest["cards"]["title"]
-
-    output = work_root / "output" / "opening.mp4"
+    output = production.output("video").with_name("opening.mp4")
     output.parent.mkdir(parents=True, exist_ok=True)
 
     print("🎬 TopSpot40 Studio")
-    print(f"Production: {manifest['title']}")
+    print(f"Production: {production.title}")
     print()
 
     with tempfile.TemporaryDirectory() as tmpdir:
