@@ -13,6 +13,7 @@ from pathlib import Path
 
 STUDIO_ROOT = Path("backend/studio")
 PRODUCTIONS_DIR = STUDIO_ROOT / "productions"
+WORK_DIR = STUDIO_ROOT / "work"
 ASSETS_DIR = STUDIO_ROOT / "assets"
 
 

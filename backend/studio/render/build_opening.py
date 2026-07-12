@@ -14,6 +14,7 @@ from backend.studio.studio_config import (
     LOGO_SECONDS,
     PRODUCTIONS_DIR,
     TITLE_SECONDS,
+    WORK_DIR,
 )
 
 
@@ -125,8 +126,9 @@ def main() -> None:
     parser.add_argument("--slug", required=True)
     args = parser.parse_args()
 
-    root = PRODUCTIONS_DIR / args.slug
-    manifest_path = root / "manifest.json"
+    production_root = PRODUCTIONS_DIR / args.slug
+    work_root = WORK_DIR / args.slug
+    manifest_path = production_root / "manifest.json"
 
     if not manifest_path.exists():
         raise SystemExit(
@@ -137,11 +139,11 @@ def main() -> None:
         manifest_path.read_text(encoding="utf-8")
     )
 
-    logo = root / manifest["cards"]["logo"]
-    languages = root / manifest["cards"]["languages"]
-    title = root / manifest["cards"]["title"]
+    logo = work_root / manifest["cards"]["logo"]
+    languages = work_root / manifest["cards"]["languages"]
+    title = work_root / manifest["cards"]["title"]
 
-    output = root / "output" / "opening.mp4"
+    output = work_root / "output" / "opening.mp4"
     output.parent.mkdir(parents=True, exist_ok=True)
 
     print("🎬 TopSpot40 Studio")

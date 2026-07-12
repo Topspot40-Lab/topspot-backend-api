@@ -27,3 +27,6 @@ venv/
 .cache-topspot/
 *.cache
 **/spotify_token.cache
+
+# TopSpot40 Studio generated media
+backend/studio/work/
