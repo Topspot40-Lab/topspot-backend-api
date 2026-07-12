@@ -84,6 +84,96 @@ CATALOG = [
             ("woodstock", "Woodstock", "feature"),
         ],
     },
+    {
+        "slug": "people_behind_the_music",
+        "name": "The People Behind the Music",
+        "description": (
+            "Meet the broadcasters, producers, executives, managers, engineers, "
+            "inventors, and visionaries who shaped popular music behind the scenes."
+        ),
+        "items": [
+            (
+                "ed_sullivan",
+                "Ed Sullivan: The Man Who Introduced America to Rock & Roll",
+                "standard",
+            ),
+            (
+                "dick_clark",
+                "Dick Clark: America's Oldest Teenager",
+                "standard",
+            ),
+            (
+                "don_cornelius",
+                "Don Cornelius: The Soul Train Revolution",
+                "standard",
+            ),
+            (
+                "casey_kasem",
+                "Casey Kasem: The Voice of America's Top 40",
+                "standard",
+            ),
+            (
+                "alan_freed",
+                "Alan Freed: The DJ Who Named Rock & Roll",
+                "standard",
+            ),
+            (
+                "sam_phillips",
+                "Sam Phillips: The Man Who Discovered Elvis",
+                "standard",
+            ),
+            (
+                "berry_gordy",
+                "Berry Gordy: Building the Motown Sound",
+                "standard",
+            ),
+            (
+                "george_martin",
+                "George Martin: The Fifth Beatle",
+                "standard",
+            ),
+            (
+                "quincy_jones",
+                "Quincy Jones: The Producer Who Changed Pop Music",
+                "standard",
+            ),
+            (
+                "phil_spector",
+                "Phil Spector: The Wall of Sound",
+                "standard",
+            ),
+            (
+                "tom_dowd",
+                "Tom Dowd: The Engineer Who Changed Recording Forever",
+                "standard",
+            ),
+            (
+                "ahmet_ertegun",
+                "Ahmet Ertegun: The Atlantic Records Story",
+                "standard",
+            ),
+            (
+                "clive_davis",
+                "Clive Davis: The Executive with the Golden Ear",
+                "standard",
+            ),
+            (
+                "brian_epstein",
+                "Brian Epstein: The Man Who Managed the Beatles",
+                "standard",
+            ),
+            (
+                "colonel_tom_parker",
+                "Colonel Tom Parker: The Business of Elvis Presley",
+                "standard",
+            ),
+            (
+                "les_paul",
+                "Les Paul: The Inventor Who Changed Recording Forever",
+                "standard",
+            ),
+        ],
+    },
 ]
 
 

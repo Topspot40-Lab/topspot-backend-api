@@ -30,6 +30,149 @@ def _pick_device_id(sp, prefer_active: bool = True) -> Optional[str]:
 
     return devices[0].get("id")
 
+async def ensure_spotify_ready(
+    sp,
+    preferred_device_id: str | None = None,
+    *,
+    device_attempts: int = 4,
+    transfer_attempts: int = 3,
+) -> str | None:
+    """
+    Find an available Spotify device, transfer playback to it if needed,
+    and verify that Spotify reports it as active.
+
+    Returns the ready device ID, or None when no device becomes ready.
+    """
+
+    chosen_device_id = preferred_device_id
+
+    # Give mobile Spotify clients a few seconds to appear.
+    for attempt in range(1, device_attempts + 1):
+        devices = sp.devices().get("devices", [])
+
+        logger.info(
+            "🎧 Spotify device check %s/%s: %s",
+            attempt,
+            device_attempts,
+            [
+                {
+                    "id": d.get("id"),
+                    "name": d.get("name"),
+                    "type": d.get("type"),
+                    "active": d.get("is_active"),
+                }
+                for d in devices
+            ],
+        )
+
+        if devices:
+            if chosen_device_id:
+                matching = next(
+                    (
+                        d for d in devices
+                        if d.get("id") == chosen_device_id
+                    ),
+                    None,
+                )
+
+                if matching is None:
+                    chosen_device_id = None
+
+            if not chosen_device_id:
+                active = next(
+                    (
+                        d for d in devices
+                        if d.get("is_active") and d.get("id")
+                    ),
+                    None,
+                )
+
+                fallback = next(
+                    (d for d in devices if d.get("id")),
+                    None,
+                )
+
+                selected = active or fallback
+                chosen_device_id = (
+                    selected.get("id")
+                    if selected
+                    else None
+                )
+
+            if chosen_device_id:
+                break
+
+        await asyncio.sleep(0.75 * attempt)
+
+    if not chosen_device_id:
+        logger.error("🚫 No Spotify device became available.")
+        return None
+
+    # If it is already active, we are ready.
+    devices = sp.devices().get("devices", [])
+    selected = next(
+        (
+            d for d in devices
+            if d.get("id") == chosen_device_id
+        ),
+        None,
+    )
+
+    if selected and selected.get("is_active"):
+        logger.info(
+            "✅ Spotify device already active: %s",
+            selected.get("name"),
+        )
+        return chosen_device_id
+
+    # Transfer and then verify. Spotify Connect can take a moment,
+    # especially when waking a mobile app.
+    for attempt in range(1, transfer_attempts + 1):
+        try:
+            logger.info(
+                "🔄 Spotify transfer attempt %s/%s to device %s",
+                attempt,
+                transfer_attempts,
+                chosen_device_id,
+            )
+
+            sp.transfer_playback(
+                device_id=chosen_device_id,
+                force_play=False,
+            )
+
+        except SpotifyException as exc:
+            logger.warning(
+                "⚠️ Spotify transfer attempt %s failed: %s",
+                attempt,
+                exc,
+            )
+
+        await asyncio.sleep(0.6 * attempt)
+
+        devices = sp.devices().get("devices", [])
+        selected = next(
+            (
+                d for d in devices
+                if d.get("id") == chosen_device_id
+            ),
+            None,
+        )
+
+        if selected and selected.get("is_active"):
+            logger.info(
+                "✅ Spotify device ready: %s (%s)",
+                selected.get("name"),
+                chosen_device_id,
+            )
+            return chosen_device_id
+
+    logger.error(
+        "🚫 Spotify device never became active: %s",
+        chosen_device_id,
+    )
+    return None
+
 
 # ──────────────────────────────────────────────────────────
 # Robust Spotify volume setter (ASYNC, but uses SYNC client)
@@ -62,25 +205,43 @@ async def _play_spotify_track_async(track_id: str, device_id: Optional[str] = No
     try:
         client = get_spotify_user_client()
 
-        if not device_id:
-            device_id = _pick_device_id(client, prefer_active=True)
+        device_id = await ensure_spotify_ready(
+            client,
+            preferred_device_id=device_id,
+        )
 
-        devices = client.devices().get("devices", [])
-        logger.debug("🎧 Spotify devices: %s", devices)
-
         if not device_id:
-            logger.error("🚫 No active Spotify device found.")
+            logger.error("🚫 Spotify playback aborted: no ready device.")
             return False
 
-        # Claim the device WITHOUT forcing playback
-        client.transfer_playback(device_id=device_id, force_play=True)
-        await asyncio.sleep(0.25)
-
         # 🔥 START SPOTIFY PLAYBACK
-        client.start_playback(
-            device_id=device_id,
-            uris=[f"spotify:track:{track_id}"]
-        )
+        playback_started = False
+
+        for attempt in range(1, 3):
+            try:
+                client.start_playback(
+                    device_id=device_id,
+                    uris=[f"spotify:track:{track_id}"],
+                )
+                playback_started = True
+                break
+
+            except SpotifyException as exc:
+                logger.warning(
+                    "⚠️ Spotify start attempt %s/2 failed: %s",
+                    attempt,
+                    exc,
+                )
+
+                if attempt < 2:
+                    await asyncio.sleep(0.8)
+
+        if not playback_started:
+            logger.error(
+                "🚫 Spotify could not start track after retries: %s",
+                track_id,
+            )
+            return False
 
         # ⏱ ARM THE TRACK CLOCK HERE
         track = client.track(track_id)  # fetch metadata

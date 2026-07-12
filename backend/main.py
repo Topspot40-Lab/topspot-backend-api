@@ -18,8 +18,7 @@ from backend.routers.spotify_auth import router as spotify_auth_router
 from backend.routers.feedback import feedback_router
 from backend.routers.artist_spotlight import router as artist_spotlight_router
 
-
-# Isaiah's endpoints 
+# Isaiah's endpoints
 from backend.isaiah.isaiah_router import stripe_router
 from backend.isaiah.isaiah_router import spotify_user_auth_router
 
@@ -30,13 +29,14 @@ from backend.routers import supabase_collections
 
 import logging
 
+
 class IgnorePlaybackStatus(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
         # uvicorn.access puts the whole access line in record.getMessage()
         return "/playback/status" not in record.getMessage()
 
-logging.getLogger("uvicorn.access").addFilter(IgnorePlaybackStatus())
 
+logging.getLogger("uvicorn.access").addFilter(IgnorePlaybackStatus())
 
 app = FastAPI(
     title="TopSpot Backend API",
@@ -44,6 +44,7 @@ app = FastAPI(
 )
 
 from fastapi.responses import HTMLResponse
+
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
@@ -61,8 +62,6 @@ async def root():
     """
 
 
-
-
 # 🔓 CORS — REQUIRED for frontend access
 app.add_middleware(
     CORSMiddleware,
@@ -74,18 +73,18 @@ app.add_middleware(
         "http://localhost:5175",
         "http://127.0.0.1:5175",
         "http://127.0.0.1:8000",
+        "http://192.168.1.146:5173",
         "https://topspot40.com",
         "https://www.topspot40.com",
         "https://topspot40.netlify.app",
         "https://sparkling-croissant-23bbac.netlify.app",
         "https://resplendent-gaufre-032b1a.netlify.app",
     ],
-    #allow_credentials=False,
-    allow_credentials=True, # must be True for Cookies
+    # allow_credentials=False,
+    allow_credentials=True,  # must be True for Cookies
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # 🧪 Basic health + catalog
 app.include_router(health_router)
@@ -103,18 +102,15 @@ app.include_router(decade_genre_pause_router)
 app.include_router(playback_control_router)
 app.include_router(feedback_router, prefix="/api")
 
-
-
-# Spotify Auth endpoints 
+# Spotify Auth endpoints
 app.include_router(spotify_user_auth_router, prefix="/api/auth")
 # Stripe endpoints
 app.include_router(stripe_router, prefix="/api")
-app.include_router(stripe_router, prefix="/api") # stripe webhook
+app.include_router(stripe_router, prefix="/api")  # stripe webhook
 # Feedback/bug report logic endpoint
 app.include_router(feedback_router, prefix="/api")
 app.include_router(supabase_collections.router)
 app.include_router(music_docuseries_router)
-
 
 # ADMIN endpoints
 app.include_router(admin_router)

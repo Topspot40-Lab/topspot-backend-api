@@ -51,67 +51,150 @@ Approximate length:
 """.strip()
 
 
+def generate_one(
+    *,
+    session: Session,
+    item: MusicDocuseries,
+    language: str,
+    save: bool,
+    overwrite: bool,
+) -> bool:
+    locale = session.exec(
+        select(MusicDocuseriesLocale)
+        .where(MusicDocuseriesLocale.docuseries_id == item.id)
+        .where(MusicDocuseriesLocale.language_code == language)
+    ).first()
+
+    if locale and locale.story_text and not overwrite:
+        print(f"Skipping existing English story: {item.slug}")
+        return False
+
+    prompt = build_prompt(
+        item.title,
+        item.target_length or "standard",
+    )
+
+    story_text = ask_xai(
+        "You create warm, engaging, factual music documentary narration scripts for TopSpot.",
+        prompt,
+        temperature=0.5,
+    )
+
+    story_text = clean_story_text(story_text)
+
+    if not story_text:
+        raise RuntimeError(
+            f"Empty story returned for: {item.slug}"
+        )
+
+    print("=" * 80)
+    print(item.title)
+    print("=" * 80)
+    print(story_text)
+    print("=" * 80)
+    print(f"Words: {len(story_text.split())}")
+    print(f"Save mode: {save}")
+
+    if not save:
+        print("Preview only. Re-run with --save to write to database.")
+        return False
+
+    if not locale:
+        locale = MusicDocuseriesLocale(
+            docuseries_id=item.id,
+            language_code=language,
+            story_text=story_text,
+        )
+        session.add(locale)
+    else:
+        locale.story_text = story_text
+        locale.duration_seconds = None
+        locale.tts_bucket = None
+        locale.tts_key = None
+        session.add(locale)
+
+    session.commit()
+    print("✅ Music Docuseries story text saved.")
+    return True
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--slug", required=True)
+    parser.add_argument("--slug", default=None)
+    parser.add_argument("--all", action="store_true")
     parser.add_argument("--language", default="en")
     parser.add_argument("--save", action="store_true")
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
 
     if args.language != "en":
-        raise SystemExit("This starter script only generates English for now.")
-
-    with Session(engine) as session:
-        item = session.exec(
-            select(MusicDocuseries).where(MusicDocuseries.slug == args.slug)
-        ).first()
-
-        if not item:
-            raise SystemExit(f"Docuseries item not found: {args.slug}")
-
-        locale = session.exec(
-            select(MusicDocuseriesLocale)
-            .where(MusicDocuseriesLocale.docuseries_id == item.id)
-            .where(MusicDocuseriesLocale.language_code == args.language)
-        ).first()
-
-        if locale and locale.story_text and not args.overwrite:
-            print("Existing story text found. Use --overwrite to replace.")
-            return
-
-        prompt = build_prompt(item.title, item.target_length or "standard")
-        story_text = ask_xai(
-            "You create warm, engaging, factual music documentary narration scripts for TopSpot.",
-            prompt,
-            temperature=0.5,
+        raise SystemExit(
+            "This script generates English only. "
+            "Use generate_music_docuseries_locale for translations."
         )
 
-        story_text = clean_story_text(story_text)
+    if not args.slug and not args.all:
+        raise SystemExit('Use --slug "ed_sullivan" or --all')
 
-        print("=" * 80)
-        print(item.title)
-        print("=" * 80)
-        print(story_text)
-        print("=" * 80)
-        print(f"Words: {len(story_text.split())}")
-        print(f"Save mode: {args.save}")
+    if args.slug and args.all:
+        raise SystemExit("Use either --slug or --all, not both")
 
-        if not args.save:
-            return
+    generated = 0
+    skipped = 0
+    failed = 0
 
-        if not locale:
-            locale = MusicDocuseriesLocale(
-                docuseries_id=item.id,
-                language_code=args.language,
-                story_text=story_text,
-            )
-            session.add(locale)
+    with Session(engine) as session:
+        if args.all:
+            items = session.exec(
+                select(MusicDocuseries)
+                .where(MusicDocuseries.is_active == True)
+                .order_by(
+                    MusicDocuseries.collection_id,
+                    MusicDocuseries.sort_order,
+                )
+            ).all()
         else:
-            locale.story_text = story_text
+            item = session.exec(
+                select(MusicDocuseries)
+                .where(MusicDocuseries.slug == args.slug)
+            ).first()
 
-        session.commit()
-        print("✅ Music Docuseries story text saved.")
+            if not item:
+                raise SystemExit(
+                    f"Docuseries item not found: {args.slug}"
+                )
+
+            items = [item]
+
+        for item in items:
+            try:
+                did_generate = generate_one(
+                    session=session,
+                    item=item,
+                    language=args.language,
+                    save=args.save,
+                    overwrite=args.overwrite,
+                )
+
+                if did_generate:
+                    generated += 1
+                else:
+                    skipped += 1
+
+            except Exception as exc:
+                failed += 1
+                session.rollback()
+                print(
+                    f"❌ Failed: {item.slug}: "
+                    f"{type(exc).__name__}: {exc}"
+                )
+                continue
+
+    print("=" * 80)
+    print("Done.")
+    print(f"Generated: {generated}")
+    print(f"Skipped:   {skipped}")
+    print(f"Failed:    {failed}")
 
 
 if __name__ == "__main__":
