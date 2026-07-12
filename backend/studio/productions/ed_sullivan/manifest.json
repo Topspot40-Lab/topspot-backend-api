@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "production_type": "music_docuseries",
+  "slug": "ed_sullivan",
+  "docuseries_id": 33,
+  "title": "Ed Sullivan",
+  "subtitle": "The Man Who Introduced America to Rock & Roll",
+  "website": "TopSpot40.com",
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 97,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/97.mp3",
+      "youtube_key": "music-docuseries-youtube/97.mp3",
+      "local_audio": "audio/en_97.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 113,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/113.mp3",
+      "youtube_key": "music-docuseries-youtube/113.mp3",
+      "local_audio": "audio/es_113.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 116,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/116.mp3",
+      "youtube_key": "music-docuseries-youtube/116.mp3",
+      "local_audio": "audio/pt-BR_116.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/ed_sullivan.mp4",
+    "thumbnail": "output/thumbnail.png"
+  }
+}
