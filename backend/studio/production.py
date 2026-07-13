@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from backend.studio.documentary import Documentary
 from backend.studio.studio_config import (
     PRODUCTIONS_DIR,
     WORK_DIR,
@@ -33,6 +34,7 @@ class Production:
             )
 
         self.manifest = self._load_manifest()
+        self.documentary = self._load_documentary()
 
     def _load_manifest(self) -> dict[str, Any]:
         try:
@@ -43,6 +45,27 @@ class Production:
             raise ValueError(
                 f"Invalid production manifest JSON: {self.manifest_path}"
             ) from exc
+
+    def _load_documentary(self) -> Documentary:
+        source = self.manifest.get("source", {})
+        source_type = source.get("type")
+        source_id = source.get("id")
+
+        # Backward compatibility for the original Ed Sullivan manifest.
+        if source_type is None:
+            legacy_docuseries_id = self.manifest.get("docuseries_id")
+
+            if legacy_docuseries_id is not None:
+                source_type = "music_docuseries"
+                source_id = legacy_docuseries_id
+
+        if source_type == "music_docuseries" and source_id is not None:
+            return Documentary.from_docuseries(int(source_id))
+
+        raise ValueError(
+            f"Unsupported documentary source for production "
+            f"{self.slug}: type={source_type!r}, id={source_id!r}"
+        )
 
     @property
     def title(self) -> str:

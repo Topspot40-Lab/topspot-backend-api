@@ -1,0 +1,535 @@
+from __future__ import annotations
+
+import argparse
+import json
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any
+
+from backend.studio.production import Production
+from backend.studio.studio_config import PRODUCTIONS_DIR
+
+
+def run_module(
+    module: str,
+    *arguments: str,
+) -> None:
+    """
+    Run one factory station as a Python module.
+
+    The subprocess inherits the current environment, including credentials
+    loaded through python-dotenv.
+    """
+    command = [
+        sys.executable,
+        "-m",
+        module,
+        *arguments,
+    ]
+
+    print()
+    print("=" * 80)
+    print(f"Running: {' '.join(command)}")
+    print("=" * 80)
+    print()
+
+    subprocess.run(
+        command,
+        check=True,
+    )
+
+
+def load_json(path: Path) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def production_exists(slug: str) -> bool:
+    return (
+        PRODUCTIONS_DIR
+        / slug
+        / "manifest.json"
+    ).exists()
+
+
+def find_docuseries_slug(docuseries_id: int) -> str:
+    """
+    Read the database-backed documentary through the existing creator logic
+    without duplicating SQL here.
+    """
+    from backend.studio.documentary import Documentary
+
+    documentary = Documentary.from_docuseries(docuseries_id)
+    return documentary.slug
+
+
+def create_production_if_needed(
+    docuseries_id: int,
+    slug: str,
+) -> None:
+    if production_exists(slug):
+        print(f"✓ Production already exists: {slug}")
+        return
+
+    run_module(
+        "backend.studio.stations.create_production",
+        "--docuseries-id",
+        str(docuseries_id),
+    )
+
+
+def prepare_source_assets_if_needed(
+    production: Production,
+) -> None:
+    status = production.manifest.get("status", {})
+
+    if (
+        status.get("audio_ready")
+        and status.get("story_ready")
+    ):
+        print("✓ Source assets already ready")
+        return
+
+    run_module(
+        "backend.studio.stations.prepare_source_assets",
+        "--slug",
+        production.slug,
+    )
+
+
+def build_storyboard_if_needed(
+    production: Production,
+) -> None:
+    storyboard_path = (
+        production.production_root
+        / "storyboard.json"
+    )
+
+    if storyboard_path.exists():
+        storyboard = load_json(storyboard_path)
+
+        if storyboard.get("scenes"):
+            print(
+                "✓ Storyboard already ready: "
+                f"{len(storyboard['scenes'])} narration scenes"
+            )
+            return
+
+    run_module(
+        "backend.studio.stations.build_storyboard",
+        "--slug",
+        production.slug,
+    )
+
+
+def generate_visual_plan_if_needed(
+    production: Production,
+) -> None:
+    storyboard_path = (
+        production.production_root
+        / "storyboard.json"
+    )
+    storyboard = load_json(storyboard_path)
+
+    shots = [
+        shot
+        for scene in storyboard.get("scenes", [])
+        for shot in scene.get("visual_shots", [])
+    ]
+
+    all_ready = bool(shots) and all(
+        shot.get("status") in {
+            "prompt_ready",
+            "image_ready",
+            "approved",
+        }
+        and shot.get("prompt")
+        for shot in shots
+    )
+
+    if all_ready:
+        print(f"✓ Visual plan already ready: {len(shots)} shots")
+        return
+
+    run_module(
+        "backend.studio.stations.generate_visual_plan",
+        "--slug",
+        production.slug,
+    )
+
+
+def generate_images_if_needed(
+    production: Production,
+) -> None:
+    run_module(
+        "backend.studio.stations.generate_images",
+        "--slug",
+        production.slug,
+        "--all",
+    )
+
+
+def build_cards(
+    production: Production,
+) -> None:
+    run_module(
+        "backend.studio.stations.build_opening_cards",
+        "--slug",
+        production.slug,
+    )
+
+
+def download_if_missing(
+    *,
+    bucket: str,
+    key: str,
+    destination: Path,
+) -> None:
+    # Import only when an actual storage download is required.
+    from backend.services.supabase_client import supabase
+
+    if destination.exists() and destination.stat().st_size > 0:
+        print(
+            f"✓ Using existing audio: {destination} "
+            f"({destination.stat().st_size:,} bytes)"
+        )
+        return
+
+    print(f"Downloading: {bucket}/{key}")
+
+    data = supabase.storage.from_(bucket).download(key)
+
+    if not data:
+        raise RuntimeError(
+            f"Downloaded audio was empty: {bucket}/{key}"
+        )
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(data)
+
+    print(
+        f"✓ Downloaded: {destination} "
+        f"({destination.stat().st_size:,} bytes)"
+    )
+
+
+def prepare_render_audio(
+    production: Production,
+    language_code: str,
+) -> None:
+    """
+    Prepare the local filenames expected by build_story_video.py.
+    """
+    language = production.documentary.language(language_code)
+
+    if not language.tts_bucket:
+        raise RuntimeError(
+            f"Missing audio bucket for language {language_code}"
+        )
+
+    safe_language = language_code.replace("/", "-").replace("\\", "-")
+    audio_dir = production.work_root / "audio"
+    audio_dir.mkdir(parents=True, exist_ok=True)
+
+    intro = audio_dir / f"intro_{safe_language}.mp3"
+    outro = audio_dir / f"outro_{safe_language}.mp3"
+
+    download_if_missing(
+        bucket=language.tts_bucket,
+        key="youtube/intro.mp3",
+        destination=intro,
+    )
+
+    download_if_missing(
+        bucket=language.tts_bucket,
+        key="youtube/outro.mp3",
+        destination=outro,
+    )
+
+    source_story = production.audio(language_code)
+
+    if not source_story.exists():
+        raise FileNotFoundError(
+            f"Prepared source narration not found: {source_story}"
+        )
+
+    story_target = (
+        audio_dir
+        / f"story_{safe_language}_{language.locale_id}.mp3"
+    )
+
+    if (
+        story_target.exists()
+        and story_target.stat().st_size > 0
+    ):
+        print(
+            f"✓ Using existing story audio: {story_target} "
+            f"({story_target.stat().st_size:,} bytes)"
+        )
+    else:
+        shutil.copy2(
+            source_story,
+            story_target,
+        )
+
+        print(
+            f"✓ Prepared story audio: {story_target} "
+            f"({story_target.stat().st_size:,} bytes)"
+        )
+
+
+def render_opening(production: Production) -> None:
+    run_module(
+        "backend.studio.render.build_opening",
+        "--slug",
+        production.slug,
+    )
+
+
+def render_image_sequence(production: Production) -> None:
+    run_module(
+        "backend.studio.render.build_image_sequence",
+        "--slug",
+        production.slug,
+    )
+
+
+def render_story_video(
+    production: Production,
+    language_code: str,
+) -> Path:
+    run_module(
+        "backend.studio.render.build_story_video",
+        "--slug",
+        production.slug,
+        "--language",
+        language_code,
+    )
+
+    safe_language = language_code.replace("/", "-").replace("\\", "-")
+
+    output = (
+        production.work_root
+        / "output"
+        / f"{production.slug}_{safe_language}.mp4"
+    )
+
+    if not output.exists() or output.stat().st_size == 0:
+        raise RuntimeError(
+            f"Review video was not created correctly: {output}"
+        )
+
+    return output
+
+
+def create_review_package(
+    production: Production,
+    *,
+    video_path: Path,
+    language_code: str,
+) -> Path:
+    """
+    Place the review copy and minimal review instructions in one predictable
+    folder. YouTube metadata automation will be added as a later station.
+    """
+    package_dir = (
+        production.work_root
+        / "review_package"
+    )
+    package_dir.mkdir(parents=True, exist_ok=True)
+
+    safe_language = language_code.replace("/", "-").replace("\\", "-")
+
+    review_video = (
+        package_dir
+        / f"{production.slug}_{safe_language}_review.mp4"
+    )
+
+    shutil.copy2(
+        video_path,
+        review_video,
+    )
+
+    title_path = package_dir / "title.txt"
+    title_path.write_text(
+        (
+            production.documentary.title
+            + (
+                f" — {production.documentary.subtitle}"
+                if production.documentary.subtitle
+                else ""
+            )
+            + "\n"
+        ),
+        encoding="utf-8",
+    )
+
+    notes_path = package_dir / "review_notes.md"
+    notes_path.write_text(
+        (
+            f"# {production.documentary.title} — Review Notes\n\n"
+            "## Reviewer\n\n"
+            "Gary / Paty\n\n"
+            "## Decision\n\n"
+            "- [ ] Approved\n"
+            "- [ ] Needs changes\n\n"
+            "## Notes\n\n"
+        ),
+        encoding="utf-8",
+    )
+
+    return review_video
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Run the TopSpot Studio factory and produce a complete "
+            "documentary MP4 ready for human review."
+        )
+    )
+
+    parser.add_argument(
+        "--docuseries-id",
+        required=True,
+        type=int,
+        help="Existing music_docuseries database ID.",
+    )
+
+    parser.add_argument(
+        "--language",
+        default="en",
+        help="Review-video language. Default: en.",
+    )
+
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+
+    slug = find_docuseries_slug(args.docuseries_id)
+
+    print()
+    print("#" * 80)
+    print("TopSpot Studio — Build Review Package")
+    print(f"Docuseries ID: {args.docuseries_id}")
+    print(f"Slug:          {slug}")
+    print(f"Language:      {args.language}")
+    print("#" * 80)
+
+    create_production_if_needed(
+        args.docuseries_id,
+        slug,
+    )
+
+    production = Production(slug)
+
+    prepare_source_assets_if_needed(production)
+
+    # Reload after any station that may update manifest.json.
+    production = Production(slug)
+
+    build_storyboard_if_needed(production)
+
+    production = Production(slug)
+
+    generate_visual_plan_if_needed(production)
+
+    production = Production(slug)
+
+    generate_images_if_needed(production)
+
+    production = Production(slug)
+
+    build_cards(production)
+
+    production = Production(slug)
+
+    print()
+    print("=" * 80)
+    print("Preparing render audio")
+    print("=" * 80)
+    prepare_render_audio(
+        production,
+        args.language,
+    )
+
+    render_opening(production)
+    render_image_sequence(production)
+
+    final_video = render_story_video(
+        production,
+        args.language,
+    )
+
+    review_video = create_review_package(
+        production,
+        video_path=final_video,
+        language_code=args.language,
+    )
+
+    run_module(
+        "backend.studio.audio.build_language_masters",
+        "--slug",
+        production.slug,
+    )
+
+    run_module(
+        "backend.studio.render.build_youtube_master",
+        "--slug",
+        production.slug,
+    )
+
+    youtube_dir = (
+        production.work_root
+        / "output"
+        / "youtube"
+    )
+
+    required_outputs = [
+        final_video,
+        youtube_dir / f"{production.slug}.mp4",
+        youtube_dir / f"{production.slug}_en.mp3",
+        youtube_dir / f"{production.slug}_es.mp3",
+        youtube_dir / f"{production.slug}_pt-BR.mp3",
+    ]
+
+    missing_outputs = [
+        output
+        for output in required_outputs
+        if not output.exists() or output.stat().st_size == 0
+    ]
+
+    if missing_outputs:
+        formatted = "\n".join(
+            f"  - {output}"
+            for output in missing_outputs
+        )
+        raise RuntimeError(
+            "Documentary build finished with missing outputs:\n"
+            f"{formatted}"
+        )
+
+    print()
+    print("#" * 80)
+    print("✅ DOCUMENTARY PACKAGE COMPLETE")
+    print("#" * 80)
+    print()
+    print("English combined version:")
+    print(f"  {final_video}")
+    print()
+    print("YouTube upload package:")
+    print(f"  {youtube_dir / f'{production.slug}.mp4'}")
+    print(f"  {youtube_dir / f'{production.slug}_en.mp3'}")
+    print(f"  {youtube_dir / f'{production.slug}_es.mp3'}")
+    print(f"  {youtube_dir / f'{production.slug}_pt-BR.mp3'}")
+    print()
+    print(f"Review copy: {review_video}")
+    print()
+    print("Ready for Gary or Paty to review.")
+
+
+if __name__ == "__main__":
+    main()

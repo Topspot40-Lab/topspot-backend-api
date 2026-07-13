@@ -5,13 +5,13 @@ import json
 import subprocess
 import tempfile
 from pathlib import Path
+from typing import Any
 
 from backend.studio.production import Production
 from backend.studio.studio_config import (
+    ASSETS_DIR,
     FADE_SECONDS,
     FPS,
-    ASSETS_DIR,
-    IMAGE_SECONDS,
 )
 
 
@@ -51,7 +51,7 @@ def render_image(
         "-i",
         str(source),
         "-t",
-        str(duration),
+        f"{duration:.6f}",
         "-vf",
         (
             "scale=1920:1080:"
@@ -59,7 +59,7 @@ def render_image(
             "pad=1920:1080:"
             "(ow-iw)/2:(oh-ih)/2:black,"
             f"fade=t=in:st=0:d={FADE_SECONDS},"
-            f"fade=t=out:st={fade_out_start}:d={FADE_SECONDS},"
+            f"fade=t=out:st={fade_out_start:.6f}:d={FADE_SECONDS},"
             "format=yuv420p"
         ),
         "-r",
@@ -89,107 +89,142 @@ def concatenate_videos(
         encoding="utf-8",
     )
 
-    command = [
-        "ffmpeg",
-        "-y",
-        "-f",
-        "concat",
-        "-safe",
-        "0",
-        "-i",
-        str(concat_file),
-        "-c",
-        "copy",
-        str(destination),
-    ]
+    run_ffmpeg(
+        [
+            "ffmpeg",
+            "-y",
+            "-f",
+            "concat",
+            "-safe",
+            "0",
+            "-i",
+            str(concat_file),
+            "-c",
+            "copy",
+            str(destination),
+        ]
+    )
 
-    run_ffmpeg(command)
+
+def load_storyboard(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        raise FileNotFoundError(f"Storyboard not found: {path}")
+
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid storyboard JSON: {path}") from exc
+
+
+def find_historical_image(
+    *,
+    historical_dir: Path,
+    shot_number: int,
+) -> Path | None:
+    if not historical_dir.exists():
+        return None
+
+    prefixes = (
+        f"{shot_number:03d}_",
+        f"{shot_number:02d}_",
+    )
+
+    matches = sorted(
+        candidate
+        for candidate in historical_dir.iterdir()
+        if candidate.is_file()
+        and candidate.name.startswith(prefixes)
+        and candidate.suffix.lower() in SUPPORTED_EXTENSIONS
+    )
+
+    return matches[0] if matches else None
+
+
+def collect_image_entries(
+    production: Production,
+) -> list[tuple[Path, float, str]]:
+    storyboard_path = (
+        production.production_root / "storyboard.json"
+    )
+    storyboard = load_storyboard(storyboard_path)
+
+    images_dir = production.work_root / "images"
+    historical_dir = (
+        ASSETS_DIR
+        / "historical"
+        / production.slug
+    )
+
+    entries: list[tuple[Path, float, str]] = []
+
+    for scene in storyboard.get("scenes", []):
+        for shot in scene.get("visual_shots", []):
+            shot_number = int(shot["shot_number"])
+            filename = str(
+                shot.get("filename")
+                or f"{shot_number:03d}.png"
+            )
+            duration = float(shot["estimated_seconds"])
+
+            historical_image = find_historical_image(
+                historical_dir=historical_dir,
+                shot_number=shot_number,
+            )
+
+            if historical_image is not None:
+                image_path = historical_image
+                source_kind = "historical"
+            else:
+                image_path = images_dir / filename
+                source_kind = "AI"
+
+            if not image_path.exists():
+                raise FileNotFoundError(
+                    f"Storyboard image missing: {image_path}"
+                )
+
+            entries.append(
+                (
+                    image_path,
+                    duration,
+                    source_kind,
+                )
+            )
+
+    return entries
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description=(
+            "Render the visual shots in a TopSpot Studio storyboard "
+            "into one silent image-sequence video."
+        )
+    )
     parser.add_argument("--slug", required=True)
     args = parser.parse_args()
 
     production = Production(args.slug)
     production.ensure_work_dirs()
 
-    images_dir = production.work_root / "images"
-    storyboard_path = production.work_root / "storyboard.json"
-
-    image_entries: list[tuple[Path, float, str]] = []
-
-    if storyboard_path.exists():
-        storyboard = json.loads(
-            storyboard_path.read_text(encoding="utf-8")
-        )
-
-        historical_dir = (
-            ASSETS_DIR
-            / "historical"
-            / production.slug
-        )
-
-        for scene in storyboard.get("scenes", []):
-            scene_number = int(scene["scene"])
-            scene_prefix = f"{scene_number:03d}_"
-
-            historical_matches = []
-
-            if historical_dir.exists():
-                historical_matches = sorted(
-                    candidate
-                    for candidate in historical_dir.iterdir()
-                    if candidate.is_file()
-                    and candidate.name.startswith(scene_prefix)
-                    and candidate.suffix.lower()
-                    in SUPPORTED_EXTENSIONS
-                )
-
-            if historical_matches:
-                image_path = historical_matches[0]
-                source_kind = "historical"
-            else:
-                image_path = images_dir / scene["image_file"]
-                source_kind = "AI"
-
-            if not image_path.exists():
-                raise SystemExit(
-                    f"Storyboard image missing: {image_path}"
-                )
-
-            image_entries.append(
-                (
-                    image_path,
-                    float(scene["duration_seconds"]),
-                    source_kind,
-                )
-            )
-    else:
-        images = sorted(
-            path
-            for path in images_dir.iterdir()
-            if path.is_file()
-            and path.suffix.lower() in SUPPORTED_EXTENSIONS
-        )
-
-        image_entries = [
-            (image, IMAGE_SECONDS, "folder")
-            for image in images
-        ]
+    image_entries = collect_image_entries(production)
 
     if not image_entries:
         raise SystemExit(
-            f"No images found: {images_dir}"
+            f"No visual shots found for production: {args.slug}"
         )
 
-    output = production.work_root / "output" / "image_sequence.mp4"
+    output = (
+        production.work_root
+        / "output"
+        / "image_sequence.mp4"
+    )
     output.parent.mkdir(parents=True, exist_ok=True)
 
     print("🎬 TopSpot40 Studio")
-    print(f"Production: {production.title}")
-    print(f"Images: {len(image_entries)}")
-    print("Timing: storyboard-driven" if storyboard_path.exists() else f"Seconds per image: {IMAGE_SECONDS}")
+    print(f"Production: {production.documentary.title}")
+    print(f"Visual shots: {len(image_entries)}")
+    print("Timing: storyboard-driven")
     print()
 
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -209,6 +244,7 @@ def main() -> None:
             )
 
             rendered_parts.append(destination)
+
             print(
                 f"✓ {image.name} "
                 f"({duration:.3f} seconds, {source_kind})"
