@@ -17,6 +17,7 @@ WORK_DIR = STUDIO_ROOT / "work"
 ASSETS_DIR = STUDIO_ROOT / "assets"
 
 
+
 # ─────────────────────────────────────────────
 # Video
 # ─────────────────────────────────────────────
@@ -25,6 +26,7 @@ VIDEO_WIDTH = 1920
 VIDEO_HEIGHT = 1080
 FPS = 30
 
+IMAGE_SECONDS = 8.0
 
 # ─────────────────────────────────────────────
 # Opening sequence
@@ -35,6 +37,13 @@ LANGUAGE_SECONDS = 8.0
 TITLE_SECONDS = 8.0
 BLACK_SECONDS = 1.5
 FADE_SECONDS = 1.25
+
+OPENING_VISUAL_SECONDS = (
+    LOGO_SECONDS
+    + LANGUAGE_SECONDS
+    + TITLE_SECONDS
+    + BLACK_SECONDS
+)
 
 
 # ─────────────────────────────────────────────

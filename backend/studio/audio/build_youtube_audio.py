@@ -11,23 +11,20 @@ from sqlmodel import Session, select
 from backend.database import engine
 from backend.models.dbmodels import MusicDocuseries, MusicDocuseriesLocale
 from backend.services.supabase_storage import upload_bytes
+from backend.studio.studio_config import (
+    INTRO_KEY,
+    INTRO_PAUSE_SECONDS,
+    OPENING_VISUAL_SECONDS,
+    OUTRO_KEY,
+    OUTRO_PAUSE_SECONDS,
+    YOUTUBE_FOLDER,
+)
 
 
 SUPABASE_PUBLIC_BASE = (
     "https://iizlnzmmhkzedqkolgir.supabase.co"
     "/storage/v1/object/public"
 )
-
-# ─────────── YouTube Production Settings ───────────
-
-INTRO_PAUSE_SECONDS = 3.0
-OUTRO_PAUSE_SECONDS = 3.0
-
-INTRO_KEY = "youtube/intro.mp3"
-OUTRO_KEY = "youtube/outro.mp3"
-
-YOUTUBE_FOLDER = "music-docuseries-youtube"
-
 
 def public_url(bucket: str, key: str) -> str:
     return f"{SUPABASE_PUBLIC_BASE}/{bucket}/{key}"
@@ -134,6 +131,7 @@ def build_one(locale: MusicDocuseriesLocale) -> None:
     print(f"Bucket:   {locale.tts_bucket}")
     print(f"Story:    {locale.tts_key}")
     print(f"Output:   {output_key}")
+    print(f"Opening silence: {OPENING_VISUAL_SECONDS} seconds")
     print(f"Intro pause: {INTRO_PAUSE_SECONDS} seconds")
     print(f"Outro pause: {OUTRO_PAUSE_SECONDS} seconds")
 
@@ -148,6 +146,7 @@ def build_one(locale: MusicDocuseriesLocale) -> None:
         story = work / "story.mp3"
         outro = work / "outro.mp3"
 
+        opening_silence = work / "opening_silence.mp3"
         pause_after_intro = work / "pause_after_intro.mp3"
         pause_before_outro = work / "pause_before_outro.mp3"
 
@@ -171,6 +170,11 @@ def build_one(locale: MusicDocuseriesLocale) -> None:
         normalize_mp3(raw_outro, outro)
 
         create_silence(
+            opening_silence,
+            OPENING_VISUAL_SECONDS,
+        )
+
+        create_silence(
             pause_after_intro,
             INTRO_PAUSE_SECONDS,
         )
@@ -181,6 +185,7 @@ def build_one(locale: MusicDocuseriesLocale) -> None:
 
         concatenate_mp3s(
             [
+                opening_silence,
                 intro,
                 pause_after_intro,
                 story,
