@@ -12,6 +12,10 @@ from backend.studio.visuals.image_quality import (
     build_corrective_prompt,
     evaluate_image_bytes,
 )
+from backend.studio.visuals.image_qa_summary import (
+    print_image_qa_summary,
+    write_image_qa_summary,
+)
 
 
 IMAGE_MODEL = "grok-imagine-image"
@@ -462,6 +466,11 @@ def generate_images(
         storyboard,
     )
 
+    qa_summary = write_image_qa_summary(
+        production_slug=slug,
+        qa_root=qa_root,
+    )
+
     if all_ready:
         update_production_record(
             production,
@@ -477,6 +486,8 @@ def generate_images(
         f"Entire image set ready: "
         f"{'yes' if all_ready else 'no'}"
     )
+
+    print_image_qa_summary(qa_summary)
 
 
 def parse_args() -> argparse.Namespace:
