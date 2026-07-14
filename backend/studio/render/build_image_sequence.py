@@ -4,11 +4,15 @@ import argparse
 import json
 import subprocess
 import tempfile
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 from backend.studio.production import Production
-from backend.studio.render.motion_controller import select_motion
+from backend.studio.render.motion_controller import (
+    MotionKind,
+    select_motion,
+)
 from backend.studio.studio_config import (
     ASSETS_DIR,
     FADE_SECONDS,
@@ -22,6 +26,15 @@ SUPPORTED_EXTENSIONS = {
     ".png",
     ".webp",
 }
+
+
+@dataclass(frozen=True)
+class ImageEntry:
+    shot_number: int
+    image: Path
+    duration: float
+    source_kind: str
+    scene_text: str
 
 
 def run_ffmpeg(command: list[str]) -> None:
@@ -40,7 +53,10 @@ def build_ken_burns_filter(
     *,
     duration: float,
     shot_number: int,
-) -> tuple[str, str]:
+    source_kind: str,
+    scene_text: str,
+    previous_kind: MotionKind | None,
+) -> tuple[str, str, MotionKind]:
     """
     Build the FFmpeg filter for a controller-selected camera move.
 
@@ -61,6 +77,9 @@ def build_ken_burns_filter(
         shot_number=shot_number,
         total_frames=total_frames,
         duration=duration,
+        source_kind=source_kind,
+        scene_text=scene_text,
+        previous_kind=previous_kind,
     )
 
     visual_filter = (
@@ -81,7 +100,7 @@ def build_ken_burns_filter(
         "format=yuv420p"
     )
 
-    return visual_filter, motion.name
+    return visual_filter, motion.name, motion.kind
 
 def render_image(
     *,
@@ -89,10 +108,20 @@ def render_image(
     destination: Path,
     duration: float,
     shot_number: int,
-) -> str:
-    visual_filter, motion_name = build_ken_burns_filter(
+    source_kind: str,
+    scene_text: str,
+    previous_kind: MotionKind | None,
+) -> tuple[str, MotionKind]:
+    (
+        visual_filter,
+        motion_name,
+        motion_kind,
+    ) = build_ken_burns_filter(
         duration=duration,
         shot_number=shot_number,
+        source_kind=source_kind,
+        scene_text=scene_text,
+        previous_kind=previous_kind,
     )
 
     command = [
@@ -120,7 +149,7 @@ def render_image(
 
     run_ffmpeg(command)
 
-    return motion_name
+    return motion_name, motion_kind
 
 
 def concatenate_videos(
@@ -190,7 +219,7 @@ def find_historical_image(
 
 def collect_image_entries(
     production: Production,
-) -> list[tuple[int, Path, float, str]]:
+) -> list[ImageEntry]:
     storyboard_path = (
         production.production_root / "storyboard.json"
     )
@@ -203,7 +232,7 @@ def collect_image_entries(
         / production.slug
     )
 
-    entries: list[tuple[int, Path, float, str]] = []
+    entries: list[ImageEntry] = []
 
     for scene in storyboard.get("scenes", []):
         for shot in scene.get("visual_shots", []):
@@ -231,12 +260,24 @@ def collect_image_entries(
                     f"Storyboard image missing: {image_path}"
                 )
 
+            scene_text = " ".join(
+                value
+                for value in (
+                    str(scene.get("narration") or ""),
+                    str(scene.get("visual_intent") or ""),
+                    str(shot.get("visual_intent") or ""),
+                    str(shot.get("prompt") or ""),
+                )
+                if value
+            )
+
             entries.append(
-                (
-                    shot_number,
-                    image_path,
-                    duration,
-                    source_kind,
+                ImageEntry(
+                    shot_number=shot_number,
+                    image=image_path,
+                    duration=duration,
+                    source_kind=source_kind,
+                    scene_text=scene_text,
                 )
             )
 
@@ -280,29 +321,31 @@ def main() -> None:
         work = Path(tmpdir)
         rendered_parts: list[Path] = []
 
-        for index, (
-            shot_number,
-            image,
-            duration,
-            source_kind,
-        ) in enumerate(
+        previous_kind: MotionKind | None = None
+
+        for index, entry in enumerate(
             image_entries,
             start=1,
         ):
             destination = work / f"{index:03d}.mp4"
 
-            motion_name = render_image(
-                source=image,
+            motion_name, motion_kind = render_image(
+                source=entry.image,
                 destination=destination,
-                duration=duration,
-                shot_number=shot_number,
+                duration=entry.duration,
+                shot_number=entry.shot_number,
+                source_kind=entry.source_kind,
+                scene_text=entry.scene_text,
+                previous_kind=previous_kind,
             )
 
+            previous_kind = motion_kind
             rendered_parts.append(destination)
 
             print(
-                f"✓ {image.name} "
-                f"({duration:.3f} seconds, {source_kind}, "
+                f"✓ {entry.image.name} "
+                f"({entry.duration:.3f} seconds, "
+                f"{entry.source_kind}, "
                 f"Ken Burns: {motion_name})"
             )
 
