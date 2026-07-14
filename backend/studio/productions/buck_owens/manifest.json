@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "buck_owens",
+  "title": "buck owens",
+  "subtitle": "The Story of Buck Owens",
+  "website": "TopSpot40.com",
+  "artwork_url": "https://i.scdn.co/image/d0599c6fc86ed31cac9dd2b52ee58e1e1b01d17c",
+  "source": {
+    "type": "artist_story",
+    "id": 145
+  },
+  "docuseries_id": null,
+  "status": {
+    "current_station": "cards_ready",
+    "production_created": true,
+    "story_ready": true,
+    "audio_ready": true,
+    "cards_ready": true,
+    "storyboard_ready": true,
+    "visual_plan_ready": true,
+    "images_ready": true,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 844,
+      "duration_seconds": 355,
+      "bucket": "audio-en",
+      "source_key": "artist-story/844.mp3",
+      "youtube_key": "artist-story-youtube/844.mp3",
+      "local_audio": "audio/en_844.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 880,
+      "duration_seconds": 344,
+      "bucket": "audio-es",
+      "source_key": "artist-story/880.mp3",
+      "youtube_key": "artist-story-youtube/880.mp3",
+      "local_audio": "audio/es_880.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 921,
+      "duration_seconds": 335,
+      "bucket": "audio-ptbr",
+      "source_key": "artist-story/921.mp3",
+      "youtube_key": "artist-story-youtube/921.mp3",
+      "local_audio": "audio/pt-BR_921.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/buck_owens.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  },
+  "artifacts": {
+    "stories": [
+      "story/en.md",
+      "story/es.md",
+      "story/pt-BR.md"
+    ],
+    "audio": [
+      "audio/en_844.mp3",
+      "audio/es_880.mp3",
+      "audio/pt-BR_921.mp3"
+    ],
+    "storyboard": "storyboard.json",
+    "storyboard_scene_count": 25,
+    "visual_plan": "storyboard.json",
+    "visual_shot_count": 46,
+    "images_directory": "images",
+    "image_count": 46,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
+  },
+  "updated_at": "2026-07-14T06:23:41.961936+00:00"
+}

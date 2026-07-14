@@ -53,29 +53,39 @@ def production_exists(slug: str) -> bool:
     ).exists()
 
 
-def find_docuseries_slug(docuseries_id: int) -> str:
-    """
-    Read the database-backed documentary through the existing creator logic
-    without duplicating SQL here.
-    """
+def resolve_documentary(
+    *,
+    source_type: str,
+    source_id: int,
+):
     from backend.studio.documentary import Documentary
 
-    documentary = Documentary.from_docuseries(docuseries_id)
-    return documentary.slug
+    return Documentary.load(
+        source_type=source_type,
+        source_id=source_id,
+    )
 
 
 def create_production_if_needed(
-    docuseries_id: int,
+    *,
+    source_type: str,
+    source_id: int,
     slug: str,
 ) -> None:
     if production_exists(slug):
         print(f"✓ Production already exists: {slug}")
         return
 
+    arguments = [
+        "--source-type",
+        source_type,
+        "--source-id",
+        str(source_id),
+    ]
+
     run_module(
         "backend.studio.stations.create_production",
-        "--docuseries-id",
-        str(docuseries_id),
+        *arguments,
     )
 
 
@@ -390,11 +400,20 @@ def parse_args() -> argparse.Namespace:
         )
     )
 
-    parser.add_argument(
+    source_group = parser.add_mutually_exclusive_group(
+        required=True
+    )
+
+    source_group.add_argument(
         "--docuseries-id",
-        required=True,
         type=int,
         help="Existing music_docuseries database ID.",
+    )
+
+    source_group.add_argument(
+        "--artist-id",
+        type=int,
+        help="Existing premium artist database ID.",
     )
 
     parser.add_argument(
@@ -409,19 +428,33 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
-    slug = find_docuseries_slug(args.docuseries_id)
+    if args.docuseries_id is not None:
+        source_type = "music_docuseries"
+        source_id = args.docuseries_id
+    else:
+        source_type = "artist_story"
+        source_id = args.artist_id
+
+    documentary = resolve_documentary(
+        source_type=source_type,
+        source_id=source_id,
+    )
+    slug = documentary.slug
 
     print()
     print("#" * 80)
-    print("TopSpot Studio — Build Review Package")
-    print(f"Docuseries ID: {args.docuseries_id}")
-    print(f"Slug:          {slug}")
-    print(f"Language:      {args.language}")
+    print("TopSpot Studio — Build Documentary Package")
+    print(f"Source type: {source_type}")
+    print(f"Source ID:   {source_id}")
+    print(f"Title:       {documentary.title}")
+    print(f"Slug:        {slug}")
+    print(f"Language:    {args.language}")
     print("#" * 80)
 
     create_production_if_needed(
-        args.docuseries_id,
-        slug,
+        source_type=source_type,
+        source_id=source_id,
+        slug=slug,
     )
 
     production = Production(slug)
@@ -447,28 +480,53 @@ def main() -> None:
 
     production = Production(slug)
 
+    language_codes = production.documentary.language_codes()
+
     print()
     print("=" * 80)
-    print("Preparing render audio")
+    print("Preparing multilingual render audio")
     print("=" * 80)
-    prepare_render_audio(
-        production,
-        args.language,
+    print(
+        "Languages: "
+        + ", ".join(language_codes)
     )
 
+    for language_code in language_codes:
+        print()
+        print(f"Preparing {language_code} audio...")
+        prepare_render_audio(
+            production,
+            language_code,
+        )
+
+    # The opening cards and image sequence are shared by every language.
     render_opening(production)
     render_image_sequence(production)
 
-    final_video = render_story_video(
-        production,
-        args.language,
-    )
+    final_videos: dict[str, Path] = {}
+    review_videos: dict[str, Path] = {}
 
-    review_video = create_review_package(
-        production,
-        video_path=final_video,
-        language_code=args.language,
-    )
+    for language_code in language_codes:
+        print()
+        print("=" * 80)
+        print(
+            f"Rendering complete {language_code} documentary"
+        )
+        print("=" * 80)
+
+        final_video = render_story_video(
+            production,
+            language_code,
+        )
+
+        review_video = create_review_package(
+            production,
+            video_path=final_video,
+            language_code=language_code,
+        )
+
+        final_videos[language_code] = final_video
+        review_videos[language_code] = review_video
 
     run_module(
         "backend.studio.audio.build_language_masters",
@@ -489,11 +547,13 @@ def main() -> None:
     )
 
     required_outputs = [
-        final_video,
+        *final_videos.values(),
         youtube_dir / f"{production.slug}.mp4",
-        youtube_dir / f"{production.slug}_en.mp3",
-        youtube_dir / f"{production.slug}_es.mp3",
-        youtube_dir / f"{production.slug}_pt-BR.mp3",
+        *[
+            youtube_dir
+            / f"{production.slug}_{language_code}.mp3"
+            for language_code in language_codes
+        ],
     ]
 
     missing_outputs = [
@@ -514,19 +574,40 @@ def main() -> None:
 
     print()
     print("#" * 80)
-    print("✅ DOCUMENTARY PACKAGE COMPLETE")
+    print("✅ MULTILINGUAL DOCUMENTARY PACKAGE COMPLETE")
     print("#" * 80)
     print()
-    print("English combined version:")
-    print(f"  {final_video}")
+
+    print("Complete language videos:")
+
+    for language_code in language_codes:
+        print(
+            f"  {language_code}: "
+            f"{final_videos[language_code]}"
+        )
+
     print()
-    print("YouTube upload package:")
+    print("YouTube / audio package:")
     print(f"  {youtube_dir / f'{production.slug}.mp4'}")
-    print(f"  {youtube_dir / f'{production.slug}_en.mp3'}")
-    print(f"  {youtube_dir / f'{production.slug}_es.mp3'}")
-    print(f"  {youtube_dir / f'{production.slug}_pt-BR.mp3'}")
+
+    for language_code in language_codes:
+        print(
+            "  "
+            + str(
+                youtube_dir
+                / f"{production.slug}_{language_code}.mp3"
+            )
+        )
+
     print()
-    print(f"Review copy: {review_video}")
+    print("Review copies:")
+
+    for language_code in language_codes:
+        print(
+            f"  {language_code}: "
+            f"{review_videos[language_code]}"
+        )
+
     print()
     print("Ready for Gary or Paty to review.")
 

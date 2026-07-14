@@ -9,6 +9,7 @@ from backend.services.supabase_client import supabase
 from backend.studio.production import Production
 from backend.studio.studio_config import (
     ASSETS_DIR,
+    BED_TRACK_BUCKET,
     INTRO_PAUSE_SECONDS,
     OUTRO_PAUSE_SECONDS,
 )
@@ -423,7 +424,7 @@ def main() -> None:
     bed_audio = audio_dir / f"bed_{safe_language}_{bed_name}"
 
     ensure_bed_track(
-        bucket=bucket,
+        bucket=BED_TRACK_BUCKET,
         bed_key=bed_key,
         destination=bed_audio,
     )

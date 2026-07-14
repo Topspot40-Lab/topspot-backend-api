@@ -1,15 +1,36 @@
 {
   "version": 1,
-  "production_type": "music_docuseries",
+  "production_type": "documentary",
   "slug": "ed_sullivan",
-  "docuseries_id": 33,
   "title": "Ed Sullivan",
   "subtitle": "The Man Who Introduced America to Rock & Roll",
   "website": "TopSpot40.com",
+  "source": {
+    "type": "music_docuseries",
+    "id": 33
+  },
+  "docuseries_id": 33,
+  "status": {
+    "current_station": "cards_ready",
+    "production_created": true,
+    "audio_ready": true,
+    "cards_ready": true,
+    "storyboard_ready": true,
+    "images_ready": true,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false,
+    "story_ready": true,
+    "visual_plan_ready": true
+  },
   "languages": [
     {
       "language_code": "en",
       "locale_id": 97,
+      "duration_seconds": 534,
       "bucket": "audio-en",
       "source_key": "music-docuseries/97.mp3",
       "youtube_key": "music-docuseries-youtube/97.mp3",
@@ -18,6 +39,7 @@
     {
       "language_code": "es",
       "locale_id": 113,
+      "duration_seconds": 583,
       "bucket": "audio-es",
       "source_key": "music-docuseries/113.mp3",
       "youtube_key": "music-docuseries-youtube/113.mp3",
@@ -26,6 +48,7 @@
     {
       "language_code": "pt-BR",
       "locale_id": 116,
+      "duration_seconds": 560,
       "bucket": "audio-ptbr",
       "source_key": "music-docuseries/116.mp3",
       "youtube_key": "music-docuseries-youtube/116.mp3",
@@ -49,5 +72,29 @@
     "duck_ratio": 8.0,
     "duck_attack_ms": 25,
     "duck_release_ms": 500
-  }
+  },
+  "artifacts": {
+    "stories": [
+      "story/en.md",
+      "story/es.md",
+      "story/pt-BR.md"
+    ],
+    "audio": [
+      "audio/en_97.mp3",
+      "audio/es_113.mp3",
+      "audio/pt-BR_116.mp3"
+    ],
+    "storyboard": "storyboard.json",
+    "storyboard_scene_count": 49,
+    "visual_plan": "storyboard.json",
+    "visual_shot_count": 65,
+    "images_directory": "images",
+    "image_count": 65,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
+  },
+  "updated_at": "2026-07-13T21:59:01.289766+00:00"
 }

@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "merle_haggard",
+  "title": "merle haggard",
+  "subtitle": "The Story of Merle Haggard",
+  "website": "TopSpot40.com",
+  "artwork_url": "https://i.scdn.co/image/3c40c48783d62db32dff0bd510250d7532b856ee",
+  "source": {
+    "type": "artist_story",
+    "id": 155
+  },
+  "docuseries_id": null,
+  "status": {
+    "current_station": "cards_ready",
+    "production_created": true,
+    "story_ready": true,
+    "audio_ready": true,
+    "cards_ready": true,
+    "storyboard_ready": true,
+    "visual_plan_ready": true,
+    "images_ready": true,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 315,
+      "duration_seconds": 387,
+      "bucket": "audio-en",
+      "source_key": "artist-story/315.mp3",
+      "youtube_key": "artist-story-youtube/315.mp3",
+      "local_audio": "audio/en_315.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 470,
+      "duration_seconds": 324,
+      "bucket": "audio-es",
+      "source_key": "artist-story/470.mp3",
+      "youtube_key": "artist-story-youtube/470.mp3",
+      "local_audio": "audio/es_470.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 570,
+      "duration_seconds": 332,
+      "bucket": "audio-ptbr",
+      "source_key": "artist-story/570.mp3",
+      "youtube_key": "artist-story-youtube/570.mp3",
+      "local_audio": "audio/pt-BR_570.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/merle_haggard.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  },
+  "artifacts": {
+    "stories": [
+      "story/en.md",
+      "story/es.md",
+      "story/pt-BR.md"
+    ],
+    "audio": [
+      "audio/en_315.mp3",
+      "audio/es_470.mp3",
+      "audio/pt-BR_570.mp3"
+    ],
+    "storyboard": "storyboard.json",
+    "storyboard_scene_count": 35,
+    "visual_plan": "storyboard.json",
+    "visual_shot_count": 49,
+    "images_directory": "images",
+    "image_count": 49,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
+  },
+  "updated_at": "2026-07-14T05:48:05.784014+00:00"
+}

@@ -5,12 +5,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-from sqlmodel import Session, select
-
-from backend.database import engine
-from backend.models.dbmodels import (
-    MusicDocuseries,
-    MusicDocuseriesLocale,
+from backend.studio.documentary import (
+    Documentary,
+    DocumentaryLanguage,
 )
 from backend.studio.production import Production
 from backend.studio.studio_config import (
@@ -19,144 +16,55 @@ from backend.studio.studio_config import (
 )
 
 
-LANGUAGE_SORT = {
-    "en": 0,
-    "es": 1,
-    "pt-BR": 2,
-}
-
-
-def split_title(full_title: str) -> tuple[str, str]:
-    """
-    Split a database title such as:
-
-        Casey Kasem: The Voice of America's Top 40
-
-    into title and subtitle. Titles without a colon remain unchanged.
-    """
-    title, separator, subtitle = full_title.partition(":")
-
-    if not separator:
-        return full_title.strip(), ""
-
-    return title.strip(), subtitle.strip()
-
-
-def youtube_key_from_source(source_key: str | None) -> str | None:
-    """
-    Convert:
-
-        music-docuseries/100.mp3
-
-    into:
-
-        music-docuseries-youtube/100.mp3
-    """
-    if not source_key:
-        return None
-
-    prefix = "music-docuseries/"
-
-    if source_key.startswith(prefix):
-        filename = source_key[len(prefix):]
-        return f"music-docuseries-youtube/{filename}"
-
-    return source_key
-
-
 def build_language_entry(
-    locale: MusicDocuseriesLocale,
+    language: DocumentaryLanguage,
 ) -> dict[str, Any]:
-    language_code = locale.language_code
-
-    entry: dict[str, Any] = {
-        "language_code": language_code,
-        "locale_id": locale.id,
-        "duration_seconds": locale.duration_seconds,
-        "bucket": locale.tts_bucket,
-        "source_key": locale.tts_key,
-        "youtube_key": youtube_key_from_source(locale.tts_key),
-        "local_audio": f"audio/{language_code}_{locale.id}.mp3",
+    return {
+        "language_code": language.language_code,
+        "locale_id": language.locale_id,
+        "duration_seconds": language.duration_seconds,
+        "bucket": language.tts_bucket,
+        "source_key": language.tts_key,
+        "youtube_key": language.youtube_key,
+        "local_audio": (
+            f"audio/{language.local_audio_name}"
+        ),
     }
-
-    return entry
-
-
-def load_docuseries(
-    docuseries_id: int,
-) -> tuple[MusicDocuseries, list[MusicDocuseriesLocale]]:
-    with Session(engine) as db:
-        item = db.exec(
-            select(MusicDocuseries).where(
-                MusicDocuseries.id == docuseries_id
-            )
-        ).first()
-
-        if item is None:
-            raise LookupError(
-                f"Music docuseries ID not found: {docuseries_id}"
-            )
-
-        locales = list(
-            db.exec(
-                select(MusicDocuseriesLocale)
-                .where(
-                    MusicDocuseriesLocale.docuseries_id
-                    == docuseries_id
-                )
-            ).all()
-        )
-
-    locales.sort(
-        key=lambda row: LANGUAGE_SORT.get(
-            row.language_code,
-            99,
-        )
-    )
-
-    if not locales:
-        raise LookupError(
-            f"No locale records found for docuseries ID "
-            f"{docuseries_id}"
-        )
-
-    return item, locales
 
 
 def build_production_record(
-    item: MusicDocuseries,
-    locales: list[MusicDocuseriesLocale],
+    documentary: Documentary,
 ) -> dict[str, Any]:
-    title, subtitle_from_title = split_title(item.title)
-
-    subtitle = (
-        item.short_description
-        or subtitle_from_title
-        or ""
-    )
-
     return {
         "version": 1,
         "production_type": "documentary",
-        "slug": item.slug,
-        "title": title,
-        "subtitle": subtitle,
+        "slug": documentary.slug,
+        "title": documentary.title,
+        "subtitle": documentary.subtitle,
         "website": WEBSITE,
+        "artwork_url": documentary.artwork_url,
+
         "source": {
-            "type": "music_docuseries",
-            "id": item.id,
+            "type": documentary.source_type,
+            "id": documentary.source_id,
         },
 
-        # Kept for compatibility with the current Production class
-        # and existing Studio scripts.
-        "docuseries_id": item.id,
+        # Retain compatibility for older code while docuseries
+        # productions are being migrated.
+        "docuseries_id": (
+            documentary.source_id
+            if documentary.source_type == "music_docuseries"
+            else None
+        ),
 
         "status": {
             "current_station": "production_created",
             "production_created": True,
+            "story_ready": False,
             "audio_ready": False,
             "cards_ready": False,
             "storyboard_ready": False,
+            "visual_plan_ready": False,
             "images_ready": False,
             "image_review_complete": False,
             "preview_ready": False,
@@ -167,8 +75,8 @@ def build_production_record(
         },
 
         "languages": [
-            build_language_entry(locale)
-            for locale in locales
+            build_language_entry(language)
+            for language in documentary.languages
         ],
 
         "cards": {
@@ -180,7 +88,7 @@ def build_production_record(
         "images": [],
 
         "output": {
-            "video": f"output/{item.slug}.mp4",
+            "video": f"output/{documentary.slug}.mp4",
             "thumbnail": "output/thumbnail.png",
         },
 
@@ -197,18 +105,15 @@ def build_production_record(
 
 def write_support_files(
     production_root: Path,
-    item: MusicDocuseries,
+    documentary: Documentary,
 ) -> None:
-    """
-    These files track production work. The documentary story itself
-    remains in the database, which is the source of truth.
-    """
     notes_path = production_root / "notes.md"
     review_path = production_root / "review.md"
+    storyboard_path = production_root / "storyboard.json"
 
     notes_path.write_text(
         (
-            f"# {item.title} — Production Notes\n\n"
+            f"# {documentary.title} — Production Notes\n\n"
             "## Research notes\n\n"
             "## Historical assets\n\n"
             "## Production decisions\n\n"
@@ -219,7 +124,7 @@ def write_support_files(
 
     review_path.write_text(
         (
-            f"# {item.title} — Review Log\n\n"
+            f"# {documentary.title} — Review Log\n\n"
             "## Story review\n\n"
             "Not reviewed.\n\n"
             "## Image review\n\n"
@@ -234,15 +139,16 @@ def write_support_files(
         encoding="utf-8",
     )
 
-    storyboard_path = production_root / "storyboard.json"
     storyboard_path.write_text(
         json.dumps(
             {
                 "version": 1,
                 "source": {
-                    "type": "music_docuseries",
-                    "id": item.id,
+                    "type": documentary.source_type,
+                    "id": documentary.source_id,
                 },
+                "title": documentary.title,
+                "subtitle": documentary.subtitle,
                 "scenes": [],
             },
             indent=2,
@@ -253,12 +159,19 @@ def write_support_files(
     )
 
 
-def create_docuseries_production(
-    docuseries_id: int,
+def create_production(
+    *,
+    source_type: str,
+    source_id: int,
 ) -> Path:
-    item, locales = load_docuseries(docuseries_id)
+    documentary = Documentary.load(
+        source_type=source_type,
+        source_id=source_id,
+    )
 
-    production_root = PRODUCTIONS_DIR / item.slug
+    production_root = (
+        PRODUCTIONS_DIR / documentary.slug
+    )
     record_path = production_root / "manifest.json"
 
     if production_root.exists():
@@ -268,7 +181,7 @@ def create_docuseries_production(
 
     production_root.mkdir(parents=True)
 
-    record = build_production_record(item, locales)
+    record = build_production_record(documentary)
 
     record_path.write_text(
         json.dumps(
@@ -280,11 +193,12 @@ def create_docuseries_production(
         encoding="utf-8",
     )
 
-    write_support_files(production_root, item)
+    write_support_files(
+        production_root,
+        documentary,
+    )
 
-    # Load the new record through the existing Production class,
-    # then create the standard disposable work directories.
-    production = Production(item.slug)
+    production = Production(documentary.slug)
     production.ensure_work_dirs()
 
     return production_root
@@ -294,27 +208,84 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Create a TopSpot Studio production from an "
-            "existing database documentary."
+            "existing database source."
         )
     )
 
-    parser.add_argument(
+    source_group = parser.add_mutually_exclusive_group(
+        required=True
+    )
+
+    source_group.add_argument(
         "--docuseries-id",
-        required=True,
         type=int,
         help="Existing music_docuseries database ID.",
     )
 
+    source_group.add_argument(
+        "--artist-id",
+        type=int,
+        help="Existing premium artist database ID.",
+    )
+
+    source_group.add_argument(
+        "--source-id",
+        type=int,
+        help="Source database ID used with --source-type.",
+    )
+
+    parser.add_argument(
+        "--source-type",
+        choices=[
+            "music_docuseries",
+            "artist_story",
+        ],
+        help="Generic source type used with --source-id.",
+    )
+
     return parser.parse_args()
+
+
+def resolve_source(
+    args: argparse.Namespace,
+) -> tuple[str, int]:
+    if args.docuseries_id is not None:
+        return (
+            "music_docuseries",
+            args.docuseries_id,
+        )
+
+    if args.artist_id is not None:
+        return (
+            "artist_story",
+            args.artist_id,
+        )
+
+    if args.source_id is not None:
+        if not args.source_type:
+            raise ValueError(
+                "--source-type is required with --source-id."
+            )
+
+        return (
+            args.source_type,
+            args.source_id,
+        )
+
+    raise ValueError("No production source was supplied.")
 
 
 def main() -> None:
     args = parse_args()
 
     try:
-        root = create_docuseries_production(
-            args.docuseries_id
+        source_type, source_id = resolve_source(args)
+
+        root = create_production(
+            source_type=source_type,
+            source_id=source_id,
         )
+
     except (
         LookupError,
         FileExistsError,
@@ -328,7 +299,8 @@ def main() -> None:
     print(f"   Work:      backend/studio/work/{root.name}")
     print()
     print("Factory Station 1 complete.")
-    print("Source: existing database documentary")
+    print(f"Source type: {source_type}")
+    print(f"Source ID:   {source_id}")
     print("No audio, images, cards, or video generated yet.")
 
 

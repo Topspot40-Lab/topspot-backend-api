@@ -133,6 +133,14 @@ Rules:
 - Do not specify an exact decade unless the narration or surrounding
   historical context supports it.
 - visual_intent should be a brief plain-language description.
+- historical_search should be a concise web-archive search phrase.
+- historical_search should contain only useful names, places, events,
+  programs, organizations, and dates supported by the narration.
+- Keep historical_search short, normally 3 to 10 words.
+- Do not include cinematic styling, camera instructions, lighting,
+  aspect ratio, moods, or phrases such as "documentary image."
+- When the shot is generic and no specific historical photograph is
+  likely to exist, return an empty string for historical_search.
 - image_prompt should be ready for a 16:9 documentary image generator.
 - Include camera framing, setting, era, subjects, lighting, and mood.
 - Return valid JSON only.
@@ -143,6 +151,7 @@ JSON format:
   {{
     "shot_number": 1,
     "visual_intent": "Brief description of what the viewer sees",
+    "historical_search": "Concise archive search phrase or empty string",
     "image_prompt": "Complete image-generation prompt"
   }}
 ]
@@ -192,6 +201,9 @@ def validate_scene_plan(
         visual_intent = str(
             item.get("visual_intent", "")
         ).strip()
+        historical_search = str(
+            item.get("historical_search", "")
+        ).strip()
         image_prompt = str(
             item.get("image_prompt", "")
         ).strip()
@@ -199,6 +211,12 @@ def validate_scene_plan(
         if not visual_intent:
             raise RuntimeError(
                 f"Shot {shot_number}: visual_intent is empty."
+            )
+
+        if len(historical_search) > 160:
+            raise RuntimeError(
+                f"Shot {shot_number}: historical_search is too long "
+                f"({len(historical_search)} characters)."
             )
 
         if not image_prompt:
@@ -231,6 +249,10 @@ def apply_scene_plan(
 
         shot["visual_intent"] = str(
             plan_item["visual_intent"]
+        ).strip()
+
+        shot["historical_search"] = str(
+            plan_item.get("historical_search", "")
         ).strip()
 
         shot["prompt"] = str(

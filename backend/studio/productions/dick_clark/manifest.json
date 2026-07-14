@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "dick_clark",
+  "title": "Dick Clark",
+  "subtitle": "America's Oldest Teenager",
+  "website": "TopSpot40.com",
+  "source": {
+    "type": "music_docuseries",
+    "id": 34
+  },
+  "docuseries_id": 34,
+  "status": {
+    "current_station": "cards_ready",
+    "production_created": true,
+    "audio_ready": true,
+    "cards_ready": true,
+    "storyboard_ready": true,
+    "images_ready": true,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false,
+    "story_ready": true,
+    "visual_plan_ready": true
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 98,
+      "duration_seconds": 498,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/98.mp3",
+      "youtube_key": "music-docuseries-youtube/98.mp3",
+      "local_audio": "audio/en_98.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 114,
+      "duration_seconds": 553,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/114.mp3",
+      "youtube_key": "music-docuseries-youtube/114.mp3",
+      "local_audio": "audio/es_114.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 118,
+      "duration_seconds": 515,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/118.mp3",
+      "youtube_key": "music-docuseries-youtube/118.mp3",
+      "local_audio": "audio/pt-BR_118.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/dick_clark.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  },
+  "artifacts": {
+    "stories": [
+      "story/en.md",
+      "story/es.md",
+      "story/pt-BR.md"
+    ],
+    "audio": [
+      "audio/en_98.mp3",
+      "audio/es_114.mp3",
+      "audio/pt-BR_118.mp3"
+    ],
+    "storyboard": "storyboard.json",
+    "storyboard_scene_count": 39,
+    "visual_plan": "storyboard.json",
+    "visual_shot_count": 63,
+    "images_directory": "images",
+    "image_count": 63,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
+  },
+  "updated_at": "2026-07-13T18:02:01.770671+00:00"
+}

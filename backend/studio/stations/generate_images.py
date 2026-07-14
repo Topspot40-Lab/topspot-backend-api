@@ -53,7 +53,7 @@ def all_visual_shots(
     ]
 
 
-def generate_image(prompt: str) -> bytes:
+def generate_image_once(prompt: str) -> bytes:
     """
     Generate one image through xAI.
 
@@ -104,6 +104,81 @@ def generate_image(prompt: str) -> bytes:
         )
 
     return base64.b64decode(encoded)
+
+def generate_image(
+    prompt: str,
+    *,
+    max_attempts: int = 5,
+    initial_delay_seconds: float = 3.0,
+) -> bytes:
+    """
+    Generate one image with retries for temporary network failures.
+
+    Existing image files are still skipped by the normal station logic,
+    so rerunning the pipeline resumes at the first missing shot.
+    """
+    import random
+    import time
+
+    import requests
+
+    delay = initial_delay_seconds
+    last_error: Exception | None = None
+
+    for attempt in range(1, max_attempts + 1):
+        try:
+            return generate_image_once(prompt)
+
+        except requests.exceptions.HTTPError as exc:
+            status = (
+                exc.response.status_code
+                if exc.response is not None
+                else None
+            )
+
+            # Authentication, permissions, and most bad requests will not
+            # improve by retrying. Rate limits and server errors may.
+            retryable = (
+                status is None
+                or status in {408, 409, 425, 429}
+                or status >= 500
+            )
+
+            if not retryable:
+                raise
+
+            last_error = exc
+
+        except (
+            requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout,
+            requests.exceptions.SSLError,
+            requests.exceptions.ChunkedEncodingError,
+            OSError,
+        ) as exc:
+            last_error = exc
+
+        if attempt == max_attempts:
+            break
+
+        jitter = random.uniform(0.0, 1.5)
+        wait_seconds = delay + jitter
+
+        print(
+            f"  ⚠ Image request failed "
+            f"(attempt {attempt}/{max_attempts}): "
+            f"{type(last_error).__name__}: {last_error}"
+        )
+        print(
+            f"  ↻ Retrying in {wait_seconds:.1f} seconds..."
+        )
+
+        time.sleep(wait_seconds)
+        delay = min(delay * 2.0, 30.0)
+
+    raise RuntimeError(
+        f"Image generation failed after {max_attempts} attempts."
+    ) from last_error
 
 
 def validate_prompt(shot: dict[str, Any]) -> str:

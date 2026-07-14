@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "casey_kasem",
+  "title": "Casey Kasem",
+  "subtitle": "The Voice of America's Top 40",
+  "website": "TopSpot40.com",
+  "source": {
+    "type": "music_docuseries",
+    "id": 36
+  },
+  "docuseries_id": 36,
+  "status": {
+    "current_station": "cards_ready",
+    "production_created": true,
+    "audio_ready": true,
+    "cards_ready": true,
+    "storyboard_ready": true,
+    "images_ready": true,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false,
+    "story_ready": true,
+    "visual_plan_ready": true
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 100,
+      "duration_seconds": 431,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/100.mp3",
+      "youtube_key": "music-docuseries-youtube/100.mp3",
+      "local_audio": "audio/en_100.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 117,
+      "duration_seconds": 478,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/117.mp3",
+      "youtube_key": "music-docuseries-youtube/117.mp3",
+      "local_audio": "audio/es_117.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 123,
+      "duration_seconds": 454,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/123.mp3",
+      "youtube_key": "music-docuseries-youtube/123.mp3",
+      "local_audio": "audio/pt-BR_123.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/casey_kasem.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  },
+  "artifacts": {
+    "stories": [
+      "story/en.md",
+      "story/es.md",
+      "story/pt-BR.md"
+    ],
+    "audio": [
+      "audio/en_100.mp3",
+      "audio/es_117.mp3",
+      "audio/pt-BR_123.mp3"
+    ],
+    "storyboard": "storyboard.json",
+    "storyboard_scene_count": 29,
+    "visual_plan": "storyboard.json",
+    "visual_shot_count": 53,
+    "images_directory": "images",
+    "image_count": 53,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
+  },
+  "updated_at": "2026-07-13T20:42:50.151196+00:00"
+}

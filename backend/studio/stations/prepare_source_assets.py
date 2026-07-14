@@ -157,11 +157,14 @@ def prepare_audio(
                 f"{language.language_code}"
             )
 
-        preferred_key = language.youtube_key or language.tts_key
+        # Always prefer the raw documentary narration.
+        # A legacy YouTube file may already contain opening silence,
+        # intro narration, pauses, and outro narration.
+        preferred_key = language.tts_key
 
         if not preferred_key:
             raise RuntimeError(
-                f"Missing narration key for "
+                f"Missing raw narration key for "
                 f"{language.language_code}"
             )
 
@@ -172,7 +175,7 @@ def prepare_audio(
         data, downloaded_key = download_storage_object(
             bucket=language.tts_bucket,
             primary_key=preferred_key,
-            fallback_key=language.tts_key,
+            fallback_key=None,
         )
 
         destination.parent.mkdir(parents=True, exist_ok=True)

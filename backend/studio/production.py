@@ -59,8 +59,11 @@ class Production:
                 source_type = "music_docuseries"
                 source_id = legacy_docuseries_id
 
-        if source_type == "music_docuseries" and source_id is not None:
-            return Documentary.from_docuseries(int(source_id))
+        if source_type is not None and source_id is not None:
+            return Documentary.load(
+                source_type=str(source_type),
+                source_id=int(source_id),
+            )
 
         raise ValueError(
             f"Unsupported documentary source for production "
