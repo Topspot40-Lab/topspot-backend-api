@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from backend.studio.documentary import Documentary
+from backend.studio.factory.production_session import ProductionSession
 from backend.studio.studio_config import (
     PRODUCTIONS_DIR,
     WORK_DIR,
@@ -35,6 +36,10 @@ class Production:
 
         self.manifest = self._load_manifest()
         self.documentary = self._load_documentary()
+        self.session = ProductionSession(
+            production_slug=self.slug,
+            work_root=self.work_root,
+        )
 
     def _load_manifest(self) -> dict[str, Any]:
         try:
@@ -137,6 +142,7 @@ class Production:
         (self.work_root / "cards").mkdir(parents=True, exist_ok=True)
         (self.work_root / "images").mkdir(parents=True, exist_ok=True)
         (self.work_root / "output").mkdir(parents=True, exist_ok=True)
+        (self.work_root / "factory").mkdir(parents=True, exist_ok=True)
 
     def validate(self) -> list[str]:
         """

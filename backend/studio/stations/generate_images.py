@@ -258,6 +258,9 @@ def generate_images(
     production = Production(slug)
     production.ensure_work_dirs()
 
+    station_name = "generate_images"
+    production.session.start_station(station_name)
+
     storyboard_path = (
         production.production_root / "storyboard.json"
     )
@@ -485,6 +488,63 @@ def generate_images(
     print(
         f"Entire image set ready: "
         f"{'yes' if all_ready else 'no'}"
+    )
+
+    production.session.metric(
+        "generated",
+        generated_count,
+        station=station_name,
+    )
+    production.session.metric(
+        "regenerated",
+        regenerated_count,
+        station=station_name,
+    )
+    production.session.metric(
+        "skipped",
+        skipped_count,
+        station=station_name,
+    )
+    production.session.metric(
+        "ready_images",
+        len(ready_shots),
+        station=station_name,
+    )
+    production.session.metric(
+        "total_images",
+        len(shots),
+        station=station_name,
+    )
+    production.session.metric(
+        "qa_average_score",
+        qa_summary.average_score,
+        station=station_name,
+    )
+    production.session.metric(
+        "qa_passed",
+        qa_summary.passed,
+        station=station_name,
+    )
+    production.session.metric(
+        "qa_below_threshold",
+        qa_summary.below_threshold,
+        station=station_name,
+    )
+
+    production.session.artifact(
+        "images_directory",
+        images_root,
+        station=station_name,
+    )
+    production.session.artifact(
+        "qa_summary",
+        qa_root / "summary.json",
+        station=station_name,
+    )
+
+    production.session.finish_station(
+        station_name,
+        success=all_ready,
     )
 
     print_image_qa_summary(qa_summary)
