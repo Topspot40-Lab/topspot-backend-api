@@ -12,6 +12,9 @@ from backend.studio.production import Production
 from backend.studio.studio_config import PRODUCTIONS_DIR
 
 
+_ACTIVE_PRODUCTION: Production | None = None
+
+
 def run_module(
     module: str,
     *arguments: str,
@@ -426,6 +429,8 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    global _ACTIVE_PRODUCTION
+
     args = parse_args()
 
     if args.docuseries_id is not None:
@@ -458,6 +463,21 @@ def main() -> None:
     )
 
     production = Production(slug)
+    _ACTIVE_PRODUCTION = production
+    production.session.start_production()
+
+    production.session.metric(
+        "source_type",
+        source_type,
+    )
+    production.session.metric(
+        "source_id",
+        source_id,
+    )
+    production.session.metric(
+        "requested_language",
+        args.language,
+    )
 
     prepare_source_assets_if_needed(production)
 
@@ -608,9 +628,86 @@ def main() -> None:
             f"{review_videos[language_code]}"
         )
 
+    production.session.metric(
+        "language_count",
+        len(language_codes),
+    )
+    production.session.metric(
+        "languages",
+        language_codes,
+    )
+    production.session.metric(
+        "final_video_count",
+        len(final_videos),
+    )
+    production.session.metric(
+        "review_video_count",
+        len(review_videos),
+    )
+
+    for language_code, final_video in final_videos.items():
+        production.session.artifact(
+            f"final_video_{language_code}",
+            final_video,
+        )
+
+    for language_code, review_video in review_videos.items():
+        production.session.artifact(
+            f"review_video_{language_code}",
+            review_video,
+        )
+
+    youtube_video = (
+        youtube_dir / f"{production.slug}.mp4"
+    )
+
+    production.session.artifact(
+        "youtube_video",
+        youtube_video,
+    )
+
+    for language_code in language_codes:
+        production.session.artifact(
+            f"youtube_audio_{language_code}",
+            (
+                youtube_dir
+                / f"{production.slug}_{language_code}.mp3"
+            ),
+        )
+
+    production.session.finish_production(
+        success=True,
+    )
+
     print()
     print("Ready for Gary or Paty to review.")
 
 
+def record_factory_failure(
+    exc: BaseException,
+) -> None:
+    production = _ACTIVE_PRODUCTION
+
+    if production is None:
+        return
+
+    try:
+        production.session.error(
+            f"{type(exc).__name__}: {exc}"
+        )
+        production.session.finish_production(
+            success=False,
+        )
+    except Exception as session_exc:
+        print(
+            "⚠ Could not update ProductionSession after "
+            f"factory failure: {session_exc}"
+        )
+
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except BaseException as exc:
+        record_factory_failure(exc)
+        raise
