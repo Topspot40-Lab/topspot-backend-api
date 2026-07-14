@@ -297,6 +297,9 @@ def main() -> None:
     production = Production(args.slug)
     production.ensure_work_dirs()
 
+    station_name = "render_image_sequence"
+    production.session.start_station(station_name)
+
     image_entries = collect_image_entries(production)
 
     if not image_entries:
@@ -353,6 +356,59 @@ def main() -> None:
             rendered_parts,
             output,
         )
+
+    ai_count = sum(
+        1
+        for entry in image_entries
+        if entry.source_kind.casefold() == "ai"
+    )
+    historical_count = len(image_entries) - ai_count
+    total_duration = round(
+        sum(entry.duration for entry in image_entries),
+        3,
+    )
+
+    production.session.metric(
+        "visual_shots",
+        len(image_entries),
+        station=station_name,
+    )
+    production.session.metric(
+        "ai_images",
+        ai_count,
+        station=station_name,
+    )
+    production.session.metric(
+        "historical_images",
+        historical_count,
+        station=station_name,
+    )
+    production.session.metric(
+        "video_duration_seconds",
+        total_duration,
+        station=station_name,
+    )
+    production.session.metric(
+        "fps",
+        FPS,
+        station=station_name,
+    )
+    production.session.metric(
+        "resolution",
+        "1920x1080",
+        station=station_name,
+    )
+
+    production.session.artifact(
+        "image_sequence",
+        output,
+        station=station_name,
+    )
+
+    production.session.finish_station(
+        station_name,
+        success=True,
+    )
 
     print()
     print(f"✅ Image sequence rendered: {output}")
