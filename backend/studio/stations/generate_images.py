@@ -8,6 +8,10 @@ from pathlib import Path
 from typing import Any
 
 from backend.studio.production import Production
+from backend.studio.visuals.image_quality import (
+    build_corrective_prompt,
+    evaluate_image_bytes,
+)
 
 
 IMAGE_MODEL = "grok-imagine-image"
@@ -281,7 +285,11 @@ def generate_images(
     images_root = production.work_root / "images"
     images_root.mkdir(parents=True, exist_ok=True)
 
+    qa_root = production.work_root / "image_qa"
+    qa_root.mkdir(parents=True, exist_ok=True)
+
     generated_count = 0
+    regenerated_count = 0
     skipped_count = 0
 
     for shot in selected:
@@ -316,19 +324,104 @@ def generate_images(
             f"{shot.get('visual_intent', '')}"
         )
 
-        image_bytes = generate_image(prompt)
+        attempts: list[dict[str, Any]] = []
 
-        if not image_bytes:
+        first_bytes = generate_image(prompt)
+
+        if not first_bytes:
             raise RuntimeError(
                 f"Shot {number:03d}: xAI returned an empty image."
             )
 
-        destination.write_bytes(image_bytes)
+        first_quality = evaluate_image_bytes(first_bytes)
+
+        attempts.append(
+            {
+                "attempt": 1,
+                "score": first_quality.score,
+                "passed": first_quality.passed,
+                "quality": first_quality.to_dict(),
+            }
+        )
+
+        best_bytes = first_bytes
+        best_quality = first_quality
+        selected_attempt = 1
+
+        print(
+            f"  QA attempt 1: {first_quality.score}/100 "
+            f"({'pass' if first_quality.passed else 'retry'})"
+        )
+
+        if not first_quality.passed:
+            retry_prompt = build_corrective_prompt(
+                prompt,
+                first_quality,
+            )
+
+            print(
+                f"  ↻ Shot {number:03d}: "
+                "local QA requested one regeneration"
+            )
+
+            second_bytes = generate_image(retry_prompt)
+
+            if second_bytes:
+                second_quality = evaluate_image_bytes(
+                    second_bytes
+                )
+
+                attempts.append(
+                    {
+                        "attempt": 2,
+                        "score": second_quality.score,
+                        "passed": second_quality.passed,
+                        "quality": second_quality.to_dict(),
+                    }
+                )
+
+                print(
+                    f"  QA attempt 2: "
+                    f"{second_quality.score}/100 "
+                    f"({'pass' if second_quality.passed else 'best available'})"
+                )
+
+                regenerated_count += 1
+
+                if second_quality.score > first_quality.score:
+                    best_bytes = second_bytes
+                    best_quality = second_quality
+                    selected_attempt = 2
+
+        destination.write_bytes(best_bytes)
+
+        qa_payload = {
+            "shot_number": number,
+            "filename": filename,
+            "evaluated_at": datetime.now(UTC).isoformat(),
+            "selected_attempt": selected_attempt,
+            "final_score": best_quality.score,
+            "passed": best_quality.passed,
+            "attempt_count": len(attempts),
+            "attempts": attempts,
+        }
+
+        save_json_atomic(
+            qa_root / f"{number:03d}.json",
+            qa_payload,
+        )
 
         shot["status"] = "image_ready"
         shot["image_path"] = f"images/{filename}"
         shot["generated_at"] = datetime.now(UTC).isoformat()
         shot["approved"] = False
+        shot["image_qa"] = {
+            "score": best_quality.score,
+            "passed": best_quality.passed,
+            "attempts": len(attempts),
+            "selected_attempt": selected_attempt,
+            "report": f"image_qa/{number:03d}.json",
+        }
 
         storyboard["updated_at"] = datetime.now(UTC).isoformat()
 
@@ -376,9 +469,10 @@ def generate_images(
         )
 
     print()
-    print(f"Generated: {generated_count}")
-    print(f"Skipped:   {skipped_count}")
-    print(f"Ready:     {len(ready_shots)} of {len(shots)}")
+    print(f"Generated:   {generated_count}")
+    print(f"Regenerated: {regenerated_count}")
+    print(f"Skipped:     {skipped_count}")
+    print(f"Ready:       {len(ready_shots)} of {len(shots)}")
     print(
         f"Entire image set ready: "
         f"{'yes' if all_ready else 'no'}"
