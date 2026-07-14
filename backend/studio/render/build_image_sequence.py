@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from backend.studio.production import Production
+from backend.studio.render.motion_controller import select_motion
 from backend.studio.studio_config import (
     ASSETS_DIR,
     FADE_SECONDS,
@@ -35,33 +36,78 @@ def run_ffmpeg(command: list[str]) -> None:
         raise RuntimeError("FFmpeg failed.")
 
 
+def build_ken_burns_filter(
+    *,
+    duration: float,
+    shot_number: int,
+) -> tuple[str, str]:
+    """
+    Build the FFmpeg filter for a controller-selected camera move.
+
+    The Motion Controller owns motion selection. This renderer only
+    translates the decision into the final video filter.
+    """
+    fade_out_start = max(
+        0.0,
+        duration - FADE_SECONDS,
+    )
+
+    total_frames = max(
+        2,
+        round(duration * FPS),
+    )
+
+    motion = select_motion(
+        shot_number=shot_number,
+        total_frames=total_frames,
+        duration=duration,
+    )
+
+    visual_filter = (
+        "scale=1920:1080:"
+        "force_original_aspect_ratio=decrease,"
+        "pad=1920:1080:"
+        "(ow-iw)/2:(oh-ih)/2:black,"
+        "zoompan="
+        f"z='{motion.zoom_expression}':"
+        f"x='{motion.x_expression}':"
+        f"y='{motion.y_expression}':"
+        "d=1:"
+        "s=1920x1080:"
+        f"fps={FPS},"
+        f"fade=t=in:st=0:d={FADE_SECONDS},"
+        f"fade=t=out:st={fade_out_start:.6f}:"
+        f"d={FADE_SECONDS},"
+        "format=yuv420p"
+    )
+
+    return visual_filter, motion.name
+
 def render_image(
     *,
     source: Path,
     destination: Path,
     duration: float,
-) -> None:
-    fade_out_start = max(0.0, duration - FADE_SECONDS)
+    shot_number: int,
+) -> str:
+    visual_filter, motion_name = build_ken_burns_filter(
+        duration=duration,
+        shot_number=shot_number,
+    )
 
     command = [
         "ffmpeg",
         "-y",
         "-loop",
         "1",
+        "-framerate",
+        str(FPS),
         "-i",
         str(source),
         "-t",
         f"{duration:.6f}",
         "-vf",
-        (
-            "scale=1920:1080:"
-            "force_original_aspect_ratio=decrease,"
-            "pad=1920:1080:"
-            "(ow-iw)/2:(oh-ih)/2:black,"
-            f"fade=t=in:st=0:d={FADE_SECONDS},"
-            f"fade=t=out:st={fade_out_start:.6f}:d={FADE_SECONDS},"
-            "format=yuv420p"
-        ),
+        visual_filter,
         "-r",
         str(FPS),
         "-c:v",
@@ -73,6 +119,8 @@ def render_image(
     ]
 
     run_ffmpeg(command)
+
+    return motion_name
 
 
 def concatenate_videos(
@@ -142,7 +190,7 @@ def find_historical_image(
 
 def collect_image_entries(
     production: Production,
-) -> list[tuple[Path, float, str]]:
+) -> list[tuple[int, Path, float, str]]:
     storyboard_path = (
         production.production_root / "storyboard.json"
     )
@@ -155,7 +203,7 @@ def collect_image_entries(
         / production.slug
     )
 
-    entries: list[tuple[Path, float, str]] = []
+    entries: list[tuple[int, Path, float, str]] = []
 
     for scene in storyboard.get("scenes", []):
         for shot in scene.get("visual_shots", []):
@@ -185,6 +233,7 @@ def collect_image_entries(
 
             entries.append(
                 (
+                    shot_number,
                     image_path,
                     duration,
                     source_kind,
@@ -231,23 +280,30 @@ def main() -> None:
         work = Path(tmpdir)
         rendered_parts: list[Path] = []
 
-        for index, (image, duration, source_kind) in enumerate(
+        for index, (
+            shot_number,
+            image,
+            duration,
+            source_kind,
+        ) in enumerate(
             image_entries,
             start=1,
         ):
             destination = work / f"{index:03d}.mp4"
 
-            render_image(
+            motion_name = render_image(
                 source=image,
                 destination=destination,
                 duration=duration,
+                shot_number=shot_number,
             )
 
             rendered_parts.append(destination)
 
             print(
                 f"✓ {image.name} "
-                f"({duration:.3f} seconds, {source_kind})"
+                f"({duration:.3f} seconds, {source_kind}, "
+                f"Ken Burns: {motion_name})"
             )
 
         concatenate_videos(
