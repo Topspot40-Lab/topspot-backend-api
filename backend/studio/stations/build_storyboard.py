@@ -462,6 +462,9 @@ def build_storyboard(
     refresh: bool,
 ) -> Path:
     production = Production(slug)
+
+    station_name = "build_storyboard"
+    production.session.start_station(station_name)
     storyboard_path = (
         production.production_root / "storyboard.json"
     )
@@ -485,14 +488,43 @@ def build_storyboard(
 
     payload = build_storyboard_payload(production)
 
+    production.session.metric(
+        "scene_count",
+        payload["scene_count"],
+        station=station_name,
+    )
+
+    production.session.metric(
+        "visual_shot_count",
+        payload["visual_shot_count"],
+        station=station_name,
+    )
+
+    production.session.metric(
+        "narration_duration_seconds",
+        payload["narration_duration_seconds"],
+        station=station_name,
+    )
+
     save_json_atomic(
         storyboard_path,
         payload,
     )
 
+    production.session.artifact(
+        "storyboard",
+        storyboard_path,
+        station=station_name,
+    )
+
     update_production_record(
         production,
         scene_count=payload["scene_count"],
+    )
+
+    production.session.finish_station(
+        station_name,
+        success=True,
     )
 
     return storyboard_path
