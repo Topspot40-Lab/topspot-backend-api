@@ -9,8 +9,8 @@ BED_BUCKET = "audio-en"
 def get_genre_bed_key(genre: str | None) -> str:
     genre_slug = (genre or "").strip().lower()
 
-    if not genre_slug:
-        genre_slug = "default"
+    if not genre_slug or genre_slug == "all":
+        return f"bed-tracks/default/bed_{random.randint(1, 5):02d}.mp3"
 
     choices = [
         f"bed-tracks/genres/{genre_slug}/bed_{i:02d}.mp3"
