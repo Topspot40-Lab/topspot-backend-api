@@ -26,6 +26,7 @@ class HistoricalImageCandidate:
     attribution_required: bool = False
 
     score: float = 0.0
+    identity_confidence: float = 0.0
 
     @property
     def aspect_ratio(self) -> float:

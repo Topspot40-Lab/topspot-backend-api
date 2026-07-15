@@ -83,8 +83,11 @@ def backfill_scene(
         shot
         for shot in shots
         if force
-        or "historical_search" not in shot
-        or not str(shot.get("historical_search") or "").strip()
+        or "historical_plan" not in shot
+        or not isinstance(
+            shot.get("historical_plan"),
+            dict,
+        )
     ]
 
     if not needs_search:
@@ -105,11 +108,15 @@ def backfill_scene(
 
     for shot in shots:
         number = int(shot["shot_number"])
-        existing = str(
-            shot.get("historical_search") or ""
-        ).strip()
+        existing_plan = shot.get(
+            "historical_plan"
+        )
 
-        if existing and not force:
+        if (
+            isinstance(existing_plan, dict)
+            and existing_plan
+            and not force
+        ):
             skipped += 1
             continue
 
@@ -131,8 +138,58 @@ def backfill_scene(
                 "160 characters."
             )
 
-        # Intentionally modify only this one field.
+        historical_plan = plan_item.get(
+            "historical_plan",
+            {},
+        )
+
+        if not isinstance(historical_plan, dict):
+            historical_plan = {}
+
+        # Preserve generated images and shot status. Only historical
+        # research metadata is upgraded.
         shot["historical_search"] = historical_search
+        shot["historical_plan"] = {
+            "subject": str(
+                historical_plan.get(
+                    "subject",
+                    "",
+                )
+            ).strip(),
+            "subject_type": str(
+                historical_plan.get(
+                    "subject_type",
+                    "generic",
+                )
+            ).strip(),
+            "era": str(
+                historical_plan.get("era", "")
+            ).strip(),
+            "required_terms": [
+                str(value).strip()
+                for value in historical_plan.get(
+                    "required_terms",
+                    [],
+                )
+                if str(value).strip()
+            ],
+            "avoid_terms": [
+                str(value).strip()
+                for value in historical_plan.get(
+                    "avoid_terms",
+                    [],
+                )
+                if str(value).strip()
+            ],
+            "search_queries": [
+                str(value).strip()
+                for value in historical_plan.get(
+                    "search_queries",
+                    [],
+                )
+                if str(value).strip()
+            ],
+        }
         updated += 1
 
     return updated, skipped

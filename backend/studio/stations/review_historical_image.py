@@ -8,11 +8,16 @@ from typing import Any
 from backend.studio.historical.downloader import (
     download_candidate,
 )
+from backend.studio.historical.identity import (
+    build_search_queries,
+    load_or_build_identity,
+    strengthen_query,
+)
 from backend.studio.historical.ranking import (
     rank_candidates,
 )
 from backend.studio.historical.search import (
-    search_all_providers,
+    search_query_variants,
 )
 from backend.studio.production import Production
 
@@ -76,6 +81,10 @@ def main() -> None:
 
     production = Production(args.slug)
 
+    identity = load_or_build_identity(
+        production
+    )
+
     storyboard_path = (
         production.production_root
         / "storyboard.json"
@@ -97,6 +106,11 @@ def main() -> None:
             f"Shot {args.shot} has no "
             "historical_search value."
         )
+
+    enhanced_query = strengthen_query(
+        query,
+        identity,
+    )
 
     destination_directory = (
         production.work_root
@@ -132,18 +146,95 @@ def main() -> None:
         f"Shot:       {args.shot:03d}"
     )
     print(
-        f"Search:     {query}"
+        f"Identity:   {identity.canonical_name}"
+    )
+
+    if identity.aliases:
+        print(
+            "Aliases:    "
+            + ", ".join(identity.aliases)
+        )
+
+    if identity.identity_terms:
+        print(
+            "Anchors:    "
+            + ", ".join(identity.identity_terms)
+        )
+
+    print(
+        f"Original:   {query}"
+    )
+    print(
+        f"Search:     {enhanced_query}"
     )
     print()
 
-    candidates = search_all_providers(
+    historical_plan = shot.get(
+        "historical_plan",
+        {},
+    )
+
+    if not isinstance(historical_plan, dict):
+        historical_plan = {}
+
+    planned_queries = [
+        str(value).strip()
+        for value in historical_plan.get(
+            "search_queries",
+            [],
+        )
+        if str(value).strip()
+    ]
+
+    fallback_queries = build_search_queries(
         query,
+        identity,
+    )
+
+    search_queries: list[str] = []
+    seen_queries: set[str] = set()
+
+    for search_query in [
+        *planned_queries,
+        *fallback_queries,
+    ]:
+        key = search_query.casefold()
+
+        if key not in seen_queries:
+            search_queries.append(search_query)
+            seen_queries.add(key)
+
+    print("Queries:")
+    for search_query in search_queries:
+        print(f"  - {search_query}")
+    print()
+
+    candidates = search_query_variants(
+        search_queries,
         limit_per_provider=args.limit,
+    )
+
+    identity_names = [
+        identity.canonical_name,
+        *identity.aliases,
+    ]
+
+    normalized_original = query.casefold()
+
+    require_exact_identity = any(
+        name.casefold() in normalized_original
+        for name in identity_names
+        if name.strip()
     )
 
     ranked = rank_candidates(
         candidates,
-        query,
+        enhanced_query,
+        identity=identity,
+        require_exact_identity=(
+            require_exact_identity
+        ),
+        historical_plan=historical_plan,
     )
 
     print(
@@ -189,6 +280,10 @@ def main() -> None:
     )
     print(
         f"  Score:   {winner.score}"
+    )
+    print(
+        "  Identity confidence: "
+        f"{winner.identity_confidence:.3f}"
     )
     print()
     print(

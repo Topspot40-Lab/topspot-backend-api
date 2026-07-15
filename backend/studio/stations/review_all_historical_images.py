@@ -10,11 +10,17 @@ from typing import Any
 from backend.studio.historical.downloader import (
     download_candidate,
 )
+from backend.studio.historical.identity import (
+    build_search_queries,
+    identity_path,
+    load_or_build_identity,
+    strengthen_query,
+)
 from backend.studio.historical.ranking import (
     rank_candidates,
 )
 from backend.studio.historical.search import (
-    search_all_providers,
+    search_query_variants,
 )
 from backend.studio.production import Production
 
@@ -70,6 +76,21 @@ def run(
 
     station_name = "historical_candidate_search"
     production.session.start_station(station_name)
+
+    identity = load_or_build_identity(
+        production
+    )
+
+    print(
+        "Identity:   "
+        f"{identity.canonical_name}"
+    )
+
+    if identity.identity_terms:
+        print(
+            "Anchors:    "
+            + ", ".join(identity.identity_terms)
+        )
 
     storyboard_path = (
         production.production_root
@@ -129,10 +150,20 @@ def run(
             shot.get("historical_search") or ""
         ).strip()
 
+        enhanced_query = (
+            strengthen_query(
+                query,
+                identity,
+            )
+            if query
+            else ""
+        )
+
         result: dict[str, Any] = {
             "scene_number": int(scene["scene_number"]),
             "shot_number": shot_number,
             "historical_search": query,
+            "enhanced_search": enhanced_query,
         }
 
         if not query:
@@ -180,20 +211,79 @@ def run(
 
         print(
             f"Shot {shot_number:03d}: "
-            f"searching {query!r}"
+            f"searching {enhanced_query!r}"
         )
 
         searched += 1
 
         try:
-            candidates = search_all_providers(
+            historical_plan = shot.get(
+                "historical_plan",
+                {},
+            )
+
+            if not isinstance(
+                historical_plan,
+                dict,
+            ):
+                historical_plan = {}
+
+            planned_queries = [
+                str(value).strip()
+                for value in historical_plan.get(
+                    "search_queries",
+                    [],
+                )
+                if str(value).strip()
+            ]
+
+            fallback_queries = build_search_queries(
                 query,
+                identity,
+            )
+
+            search_queries: list[str] = []
+            seen_queries: set[str] = set()
+
+            for search_query in [
+                *planned_queries,
+                *fallback_queries,
+            ]:
+                key = search_query.casefold()
+
+                if key not in seen_queries:
+                    search_queries.append(
+                        search_query
+                    )
+                    seen_queries.add(key)
+
+            candidates = search_query_variants(
+                search_queries,
                 limit_per_provider=limit,
+            )
+
+            identity_names = [
+                identity.canonical_name,
+                *identity.aliases,
+            ]
+
+            normalized_original = query.casefold()
+
+            require_exact_identity = any(
+                name.casefold()
+                in normalized_original
+                for name in identity_names
+                if name.strip()
             )
 
             ranked = rank_candidates(
                 candidates,
-                query,
+                enhanced_query,
+                identity=identity,
+                require_exact_identity=(
+                    require_exact_identity
+                ),
+                historical_plan=historical_plan,
             )
 
             result["raw_candidate_count"] = len(
@@ -228,6 +318,9 @@ def run(
                     "selected_title": winner.title,
                     "selected_provider": winner.provider,
                     "selected_score": winner.score,
+                    "identity_confidence": (
+                        winner.identity_confidence
+                    ),
                     "selected_license": (
                         winner.license_name
                     ),
@@ -347,6 +440,11 @@ def run(
         station=station_name,
     )
 
+    production.session.artifact(
+        "historical_identity",
+        identity_path(production),
+        station=station_name,
+    )
     production.session.artifact(
         "batch_report",
         report_path,
