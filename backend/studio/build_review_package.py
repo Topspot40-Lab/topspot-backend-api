@@ -187,6 +187,13 @@ def historical_candidate_search_if_needed(
         for shot in scene.get("visual_shots", [])
     ]
 
+    if not shots:
+        print(
+            "✓ Historical candidate search skipped: "
+            "storyboard has no visual shots"
+        )
+        return
+
     searchable_shots = [
         shot
         for shot in shots
@@ -195,10 +202,57 @@ def historical_candidate_search_if_needed(
         ).strip()
     ]
 
+    missing_search_fields = any(
+        "historical_search" not in shot
+        for shot in shots
+    )
+
+    # Older productions were created before historical_search was part
+    # of the visual plan. Upgrade them automatically so the user never
+    # needs to know about or run a migration command.
+    if not searchable_shots or missing_search_fields:
+        print()
+        print(
+            "Historical search phrases are missing "
+            "from this older storyboard."
+        )
+        print(
+            "Automatically upgrading the storyboard..."
+        )
+
+        run_module(
+            "backend.studio.stations.backfill_historical_search",
+            "--slug",
+            production.slug,
+            "--all",
+        )
+
+        # Reload the storyboard after the backfill station updates it.
+        storyboard = load_json(storyboard_path)
+
+        shots = [
+            shot
+            for scene in storyboard.get("scenes", [])
+            for shot in scene.get("visual_shots", [])
+        ]
+
+        searchable_shots = [
+            shot
+            for shot in shots
+            if str(
+                shot.get("historical_search") or ""
+            ).strip()
+        ]
+
+        print(
+            "✓ Historical-search upgrade complete: "
+            f"{len(searchable_shots)} searchable shot(s)"
+        )
+
     if not searchable_shots:
         print(
             "✓ Historical candidate search skipped: "
-            "no searchable historical shots"
+            "no specific historical photographs are appropriate"
         )
         return
 
