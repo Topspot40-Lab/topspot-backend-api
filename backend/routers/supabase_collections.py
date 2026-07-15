@@ -9,6 +9,9 @@ from backend.models.dbmodels import (
     Artist,
     Collection,
     CollectionTrackRanking,
+    TrackLocale,
+    ArtistLocale,
+    CollectionTrackRankingLocale,
 )
 
 collection_category_table = Table(
@@ -27,6 +30,7 @@ async def get_sequence_collection(
     collection_group_slug: str | None = Query(None),
     start_rank: int = Query(1),
     end_rank: int | None = Query(None),
+    language: str = Query("en"),
     db=Depends(get_db),
 ):
     if not collection_slug and not collection_group_slug:
@@ -75,6 +79,8 @@ async def get_sequence_collection(
 
     if end_rank is not None:
         filters.append(CollectionTrackRanking.ranking <= end_rank)
+    else:
+        filters.append(CollectionTrackRanking.ranking <= 100)
 
     q = (
         select(Track, Artist, CollectionTrackRanking, Collection)
@@ -90,21 +96,69 @@ async def get_sequence_collection(
     if not rows:
         return {"status": "empty", "total": 0, "tracks": []}
 
-    tracks = [
-        {
+    locale_code = "pt-BR" if language in ("ptbr", "pt-BR") else language
+
+    tracks = []
+
+    for track, artist, ctr, collection in rows:
+        track_locale = None
+        artist_locale = None
+        ranking_locale = None
+
+        if locale_code != "en":
+            track_locale = db.exec(
+                select(TrackLocale).where(
+                    TrackLocale.track_id == track.id,
+                    TrackLocale.language_code == locale_code,
+                )
+            ).first()
+
+            artist_locale = db.exec(
+                select(ArtistLocale).where(
+                    ArtistLocale.artist_id == artist.id,
+                    ArtistLocale.language_code == locale_code,
+                )
+            ).first()
+
+            ranking_locale = db.exec(
+                select(CollectionTrackRankingLocale).where(
+                    CollectionTrackRankingLocale.collection_track_ranking_id == ctr.id,
+                    CollectionTrackRankingLocale.lang == locale_code,
+                )
+            ).first()
+
+        detail_text = (
+            getattr(track_locale, "detail_text", None)
+            or getattr(track, "detail", None)
+        )
+
+        artist_description_text = (
+            getattr(artist_locale, "artist_description_text", None)
+            or getattr(artist, "artist_description", None)
+        )
+
+        intro_text = (
+            getattr(ranking_locale, "intro_text", None)
+            or getattr(ctr, "intro", None)
+        )
+
+        tracks.append({
             "rankingId": ctr.id,
             "rank": ctr.ranking,
             "trackName": track.track_name,
             "artistName": artist.artist_name,
+            "artistId": artist.id,
+            "spotify_artist_id": artist.spotify_artist_id,
             "yearReleased": getattr(track, "year_released", None),
             "durationMs": getattr(track, "duration_ms", None),
             "albumArtwork": getattr(track, "album_artwork", None),
             "spotifyTrackId": getattr(track, "spotify_track_id", None),
             "albumName": getattr(track, "album_name", None),
             "collectionSlug": collection.slug,
-        }
-        for track, artist, ctr, collection in rows
-    ]
+            "intro": intro_text,
+            "detail": detail_text,
+            "artistDescription": artist_description_text,
+        })
 
     logger.info(
         "📚 Collection '%s': returning %d tracks (range %s-%s)",

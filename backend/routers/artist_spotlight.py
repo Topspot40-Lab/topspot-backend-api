@@ -163,25 +163,55 @@ def artist_tracks(
         t.detail,
         a.id AS artist_id,
         a.artist_name,
-        a.artist_description
-        FROM track t
-        JOIN artist a
-            ON t.artist_id = a.id
-        WHERE a.id = :artist_id
-          AND (
-              EXISTS (
-                  SELECT 1
-                  FROM track_ranking tr
-                  WHERE tr.track_id = t.id
-              )
-              OR
-              EXISTS (
-                  SELECT 1
-                  FROM collection_track_ranking ctr
-                  WHERE ctr.track_id = t.id
-              )
+        a.artist_description,
+        jsonb_build_object(
+            'en', jsonb_build_object(
+                'intro', NULL,
+                'detail', t.detail,
+                'artist', a.artist_description
+            ),
+            'es', jsonb_build_object(
+                'intro', NULL,
+                'detail', COALESCE(tl_es.detail_text, t.detail),
+                'artist', COALESCE(al_es.artist_description_text, a.artist_description)
+            ),
+            'ptbr', jsonb_build_object(
+                'intro', NULL,
+                'detail', COALESCE(tl_ptbr.detail_text, t.detail),
+                'artist', COALESCE(al_ptbr.artist_description_text, a.artist_description)
+            )
+        ) AS texts_by_language
+    FROM track t
+    JOIN artist a
+        ON t.artist_id = a.id
+    LEFT JOIN track_locale tl_es
+        ON tl_es.track_id = t.id
+       AND tl_es.language_code = 'es'
+    LEFT JOIN track_locale tl_ptbr
+        ON tl_ptbr.track_id = t.id
+       AND tl_ptbr.language_code = 'pt-BR'
+    LEFT JOIN artist_locale al_es
+        ON al_es.artist_id = a.id
+       AND al_es.language_code = 'es'
+    LEFT JOIN artist_locale al_ptbr
+        ON al_ptbr.artist_id = a.id
+       AND al_ptbr.language_code = 'pt-BR'
+    WHERE a.id = :artist_id
+      AND (
+          EXISTS (
+              SELECT 1
+              FROM track_ranking tr
+              WHERE tr.track_id = t.id
           )
-        ORDER BY t.track_name
+          OR
+          EXISTS (
+              SELECT 1
+              FROM collection_track_ranking ctr
+              WHERE ctr.track_id = t.id
+                AND ctr.ranking BETWEEN 1 AND 100
+          )
+      )
+    ORDER BY t.track_name
     """)
 
     with engine.connect() as conn:
@@ -192,6 +222,87 @@ def artist_tracks(
 
     return [dict(row) for row in rows]
 
+
+@router.get("/artist-summary")
+def artist_summary(
+        artist_id: int = Query(...),
+        language: str = Query("en"),
+):
+    locale_code = "pt-BR" if language in ("ptbr", "pt-BR") else language
+
+    artist_sql = text("""
+        SELECT
+            a.id AS artist_id,
+            a.artist_name,
+            NULL AS artist_artwork,
+            COALESCE(al.artist_description_text, a.artist_description) AS artist_description
+        FROM artist a
+        LEFT JOIN artist_locale al
+            ON al.artist_id = a.id
+           AND al.language_code = :locale_code
+        WHERE a.id = :artist_id
+    """)
+
+    nostalgia_sql = text("""
+        SELECT
+            d.decade_name || ' ' || g.genre_name AS program_name,
+            tr.ranking AS rank,
+            t.track_name
+        FROM track_ranking tr
+        JOIN decade_genre dg ON tr.decade_genre_id = dg.id
+        JOIN decade d ON dg.decade_id = d.id
+        JOIN genre g ON dg.genre_id = g.id
+        JOIN track t ON tr.track_id = t.id
+        WHERE t.artist_id = :artist_id
+          AND tr.ranking BETWEEN 1 AND 100
+        ORDER BY d.decade_name, g.genre_name, tr.ranking
+    """)
+
+    collection_sql = text("""
+        SELECT
+            c.name AS program_name,
+            ctr.ranking AS rank,
+            t.track_name
+        FROM collection_track_ranking ctr
+        JOIN collection c ON ctr.collection_id = c.id
+        JOIN track t ON ctr.track_id = t.id
+        WHERE t.artist_id = :artist_id
+        ORDER BY c.name, ctr.ranking
+    """)
+
+    with engine.connect() as conn:
+        artist = conn.execute(
+            artist_sql,
+            {
+                "artist_id": artist_id,
+                "locale_code": locale_code,
+            },
+        ).mappings().first()
+
+        if not artist:
+            return {
+                "ok": False,
+                "artist_id": artist_id,
+                "message": "Artist not found",
+            }
+
+        nostalgia_rows = conn.execute(
+            nostalgia_sql,
+            {"artist_id": artist_id},
+        ).mappings().all()
+
+        collection_rows = conn.execute(
+            collection_sql,
+            {"artist_id": artist_id},
+        ).mappings().all()
+
+    return {
+        "ok": True,
+        "artist": dict(artist),
+        "nostalgiaAppearances": [dict(row) for row in nostalgia_rows[:6]],
+        "collectionAppearances": [dict(row) for row in collection_rows[:6]],
+        "appearanceCount": len(nostalgia_rows) + len(collection_rows),
+    }
 
 @router.post("/play")
 def play_artist_spotlight(
@@ -228,6 +339,7 @@ def play_artist_spotlight(
                   SELECT 1
                   FROM collection_track_ranking ctr
                   WHERE ctr.track_id = t.id
+                    AND ctr.ranking BETWEEN 1 AND 100
               )
           )
 

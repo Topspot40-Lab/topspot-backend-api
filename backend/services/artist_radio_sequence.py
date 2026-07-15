@@ -13,10 +13,26 @@ from backend.state.playback_state import update_phase, begin_track
 logger = logging.getLogger(__name__)
 
 
+def _normalize_tts_locale(language: str | None) -> str:
+    value = (language or "").strip()
+    if not value:
+        return "en"
+
+    normalized = value.lower().replace("_", "-")
+    if normalized.startswith("en"):
+        return "en"
+    if normalized.startswith("es"):
+        return "es"
+    if normalized in ("pt", "ptbr", "pt-br"):
+        return "pt-BR"
+    return "en"
+
+
 def load_artist_radio_set(
         genre: str,
         artist_id: int | None = None,
         spotify_artist_id: str | None = None,
+        tts_language: str = "en",
 ) -> dict:
     sql = text("""
     WITH eligible_artists AS (
@@ -54,9 +70,12 @@ def load_artist_radio_set(
         a.id AS artist_id,
         a.artist_name,
         a.spotify_artist_id,
-        a.artist_description
+        COALESCE(al.artist_description_text, a.artist_description) AS artist_description
     FROM track t
     JOIN artist a ON t.artist_id = a.id
+    LEFT JOIN artist_locale al
+        ON al.artist_id = a.id
+        AND al.language_code = :tts_language
     JOIN selected_artist sa ON sa.artist_id = a.id
     ORDER BY RANDOM()
     """)
@@ -68,6 +87,7 @@ def load_artist_radio_set(
                 "genre": genre,
                 "artist_id": artist_id,
                 "spotify_artist_id": spotify_artist_id,
+                "tts_language": tts_language,
             }
         ).mappings().all()
 
@@ -102,11 +122,13 @@ async def run_artist_radio_sequence(
         play_track: bool = True,
 ):
     user_id = current_user_id()
+    locale_code = _normalize_tts_locale(tts_language)
 
     radio_set = load_artist_radio_set(
         genre,
         artist_id,
         spotify_artist_id,
+        locale_code,
     )
 
     if not radio_set.get("ok"):
@@ -120,10 +142,11 @@ async def run_artist_radio_sequence(
     logger.info("🎙️ Artist Radio set started: %s (%s tracks)", artist_name, len(tracks))
 
     spotify_artist_id = tracks[0].get("spotify_artist_id")
+    audio_bucket = "audio-ptbr" if locale_code == "pt-BR" else f"audio-{locale_code}"
 
     artist_audio_url = (
         f"https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/"
-        f"audio-en/artist/{spotify_artist_id}.mp3"
+        f"{audio_bucket}/artist/{spotify_artist_id}.mp3"
         if spotify_artist_id
         else None
     )

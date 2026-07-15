@@ -52,6 +52,21 @@ from backend.state.playback_runtime import (
 
 logger = logging.getLogger(__name__)
 
+
+def _normalize_tts_locale(language: str | None) -> str:
+    value = (language or "").strip()
+    if not value:
+        return "en"
+
+    normalized = value.lower().replace("_", "-")
+    if normalized.startswith("en"):
+        return "en"
+    if normalized.startswith("es"):
+        return "es"
+    if normalized in ("pt", "ptbr", "pt-br"):
+        return "pt-BR"
+    return "en"
+
 # 🔒 Global playback sequence lock — prevents overlapping launches
 # Try loading skip_event if available
 try:
@@ -417,7 +432,9 @@ async def play_track(payload: dict):
             await narration_done_event(user_id).wait()
             logger.info("✅ Artist Spotlight phase finished | phase=%s", phase)
 
-        base_url = "https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/audio-en"
+        tts_language = _normalize_tts_locale(context.get("language") or selection.language or "en")
+        audio_bucket = "audio-ptbr" if tts_language == "pt-BR" else f"audio-{tts_language}"
+        base_url = f"https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/{audio_bucket}"
 
         artist_audio_url = (
             f"{base_url}/artist/{spotify_artist_id}.mp3"
