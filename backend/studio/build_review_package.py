@@ -511,7 +511,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--language",
         default="en",
-        help="Review-video language. Default: en.",
+        help=(
+            "Full-render language. Default: en."
+        ),
+    )
+    parser.add_argument(
+        "--all-languages",
+        action="store_true",
+        help=(
+            "Render full documentaries and audio masters "
+            "for en, es, and pt-BR."
+        ),
     )
 
     return parser.parse_args()
@@ -567,6 +577,10 @@ def main() -> None:
         "requested_language",
         args.language,
     )
+    production.session.metric(
+        "all_languages_requested",
+        args.all_languages,
+    )
 
     prepare_source_assets_if_needed(production)
 
@@ -595,11 +609,31 @@ def main() -> None:
 
     production = Production(slug)
 
-    language_codes = production.documentary.language_codes()
+    available_language_codes = (
+        production.documentary.language_codes()
+    )
+
+    language_codes = (
+        available_language_codes
+        if args.all_languages
+        else [args.language]
+    )
+
+    unsupported_languages = [
+        language_code
+        for language_code in language_codes
+        if language_code not in available_language_codes
+    ]
+
+    if unsupported_languages:
+        raise RuntimeError(
+            "Unsupported production language(s): "
+            + ", ".join(unsupported_languages)
+        )
 
     print()
     print("=" * 80)
-    print("Preparing multilingual render audio")
+    print("Preparing render audio")
     print("=" * 80)
     print(
         "Languages: "
@@ -643,10 +677,26 @@ def main() -> None:
         final_videos[language_code] = final_video
         review_videos[language_code] = review_video
 
-    run_module(
-        "backend.studio.audio.build_language_masters",
+    language_master_arguments = [
         "--slug",
         production.slug,
+    ]
+
+    if args.all_languages:
+        language_master_arguments.append(
+            "--all-languages"
+        )
+    else:
+        language_master_arguments.extend(
+            [
+                "--language",
+                args.language,
+            ]
+        )
+
+    run_module(
+        "backend.studio.audio.build_language_masters",
+        *language_master_arguments,
     )
 
     run_module(

@@ -333,6 +333,22 @@ def main() -> None:
         )
     )
     parser.add_argument("--slug", required=True)
+    parser.add_argument(
+        "--language",
+        default="en",
+        help=(
+            "Build one language master. "
+            "Default: en."
+        ),
+    )
+    parser.add_argument(
+        "--all-languages",
+        action="store_true",
+        help=(
+            "Build all supported language masters "
+            "(en, es, pt-BR)."
+        ),
+    )
     args = parser.parse_args()
 
     production = Production(args.slug)
@@ -345,7 +361,29 @@ def main() -> None:
     print(f"Target duration: {targets.total:.3f} seconds")
     print()
 
-    for language_code in LANGUAGES:
+    language_codes = (
+        list(LANGUAGES)
+        if args.all_languages
+        else [args.language]
+    )
+
+    available_languages = set(
+        production.documentary.language_codes()
+    )
+
+    unsupported = [
+        language_code
+        for language_code in language_codes
+        if language_code not in available_languages
+    ]
+
+    if unsupported:
+        raise SystemExit(
+            "Unsupported production language(s): "
+            + ", ".join(unsupported)
+        )
+
+    for language_code in language_codes:
         build_language_master(
             production=production,
             language_code=language_code,
@@ -353,7 +391,12 @@ def main() -> None:
         )
 
     print()
-    print("✅ Three language MP3 masters complete")
+    print(
+        "✅ Language MP3 master"
+        + ("s" if len(language_codes) != 1 else "")
+        + " complete: "
+        + ", ".join(language_codes)
+    )
 
 
 if __name__ == "__main__":
