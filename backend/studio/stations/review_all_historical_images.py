@@ -68,6 +68,9 @@ def run(
     production = Production(slug)
     production.ensure_work_dirs()
 
+    station_name = "historical_candidate_search"
+    production.session.start_station(station_name)
+
     storyboard_path = (
         production.production_root
         / "storyboard.json"
@@ -303,6 +306,72 @@ def run(
     print(f"Already approved:      {skipped_approved}")
     print(f"No candidate:          {no_candidate}")
     print(f"Failures:              {failures}")
+    production.session.metric(
+        "selected_shots",
+        len(selected),
+        station=station_name,
+    )
+    production.session.metric(
+        "searched",
+        searched,
+        station=station_name,
+    )
+    production.session.metric(
+        "downloaded",
+        downloaded,
+        station=station_name,
+    )
+    production.session.metric(
+        "skipped_blank",
+        skipped_blank,
+        station=station_name,
+    )
+    production.session.metric(
+        "skipped_existing",
+        skipped_existing,
+        station=station_name,
+    )
+    production.session.metric(
+        "skipped_approved",
+        skipped_approved,
+        station=station_name,
+    )
+    production.session.metric(
+        "no_candidate",
+        no_candidate,
+        station=station_name,
+    )
+    production.session.metric(
+        "failures",
+        failures,
+        station=station_name,
+    )
+
+    production.session.artifact(
+        "batch_report",
+        report_path,
+        station=station_name,
+    )
+    production.session.artifact(
+        "candidate_directory",
+        production.work_root / "historical_candidates",
+        station=station_name,
+    )
+
+    if failures:
+        production.session.warning(
+            (
+                f"Historical candidate search completed "
+                f"with {failures} failed shot search(es)."
+            ),
+            station=station_name,
+        )
+
+    production.session.finish_station(
+        station_name,
+        success=True,
+    )
+
     print()
     print(f"Report: {report_path}")
     print()

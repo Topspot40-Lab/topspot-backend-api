@@ -172,6 +172,95 @@ def generate_visual_plan_if_needed(
     )
 
 
+def historical_candidate_search_if_needed(
+    production: Production,
+) -> None:
+    storyboard_path = (
+        production.production_root
+        / "storyboard.json"
+    )
+    storyboard = load_json(storyboard_path)
+
+    shots = [
+        shot
+        for scene in storyboard.get("scenes", [])
+        for shot in scene.get("visual_shots", [])
+    ]
+
+    searchable_shots = [
+        shot
+        for shot in shots
+        if str(
+            shot.get("historical_search") or ""
+        ).strip()
+    ]
+
+    if not searchable_shots:
+        print(
+            "✓ Historical candidate search skipped: "
+            "no searchable historical shots"
+        )
+        return
+
+    candidates_root = (
+        production.work_root
+        / "historical_candidates"
+    )
+
+    existing_candidates = sum(
+        1
+        for shot in searchable_shots
+        if (
+            candidates_root
+            / f"{int(shot['shot_number']):03d}"
+            / "candidate.json"
+        ).exists()
+    )
+
+    approved_count = sum(
+        1
+        for shot in searchable_shots
+        if shot.get("historical_asset")
+    )
+
+    covered_count = sum(
+        1
+        for shot in searchable_shots
+        if (
+            shot.get("historical_asset")
+            or (
+                candidates_root
+                / f"{int(shot['shot_number']):03d}"
+                / "candidate.json"
+            ).exists()
+        )
+    )
+
+    remaining = (
+        len(searchable_shots)
+        - covered_count
+    )
+
+    if remaining <= 0:
+        print(
+            "✓ Historical candidates already ready: "
+            f"{existing_candidates} downloaded, "
+            f"{approved_count} approved"
+        )
+        return
+
+    print(
+        "Historical candidate search: "
+        f"{remaining} shot(s) still need candidates"
+    )
+
+    run_module(
+        "backend.studio.stations.review_all_historical_images",
+        "--slug",
+        production.slug,
+    )
+
+
 def generate_images_if_needed(
     production: Production,
 ) -> None:
@@ -489,6 +578,12 @@ def main() -> None:
     production = Production(slug)
 
     generate_visual_plan_if_needed(production)
+
+    production = Production(slug)
+
+    historical_candidate_search_if_needed(
+        production
+    )
 
     production = Production(slug)
 
