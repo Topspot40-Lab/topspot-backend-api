@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from backend.studio.documentary import Documentary
+from backend.studio.factory.production_session import ProductionSession
 from backend.studio.studio_config import (
     PRODUCTIONS_DIR,
     WORK_DIR,
@@ -33,6 +35,11 @@ class Production:
             )
 
         self.manifest = self._load_manifest()
+        self.documentary = self._load_documentary()
+        self.session = ProductionSession(
+            production_slug=self.slug,
+            work_root=self.work_root,
+        )
 
     def _load_manifest(self) -> dict[str, Any]:
         try:
@@ -43,6 +50,30 @@ class Production:
             raise ValueError(
                 f"Invalid production manifest JSON: {self.manifest_path}"
             ) from exc
+
+    def _load_documentary(self) -> Documentary:
+        source = self.manifest.get("source", {})
+        source_type = source.get("type")
+        source_id = source.get("id")
+
+        # Backward compatibility for the original Ed Sullivan manifest.
+        if source_type is None:
+            legacy_docuseries_id = self.manifest.get("docuseries_id")
+
+            if legacy_docuseries_id is not None:
+                source_type = "music_docuseries"
+                source_id = legacy_docuseries_id
+
+        if source_type is not None and source_id is not None:
+            return Documentary.load(
+                source_type=str(source_type),
+                source_id=int(source_id),
+            )
+
+        raise ValueError(
+            f"Unsupported documentary source for production "
+            f"{self.slug}: type={source_type!r}, id={source_id!r}"
+        )
 
     @property
     def title(self) -> str:
@@ -111,6 +142,7 @@ class Production:
         (self.work_root / "cards").mkdir(parents=True, exist_ok=True)
         (self.work_root / "images").mkdir(parents=True, exist_ok=True)
         (self.work_root / "output").mkdir(parents=True, exist_ok=True)
+        (self.work_root / "factory").mkdir(parents=True, exist_ok=True)
 
     def validate(self) -> list[str]:
         """
