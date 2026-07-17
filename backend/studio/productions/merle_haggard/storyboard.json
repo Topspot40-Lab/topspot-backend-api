@@ -40,7 +40,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/001.png",
-          "generated_at": "2026-07-14T05:42:57.896484+00:00"
+          "generated_at": "2026-07-14T05:42:57.896484+00:00",
+          "historical_search": "Bakersfield California fields",
+          "historical_plan": {
+            "subject": "Bakersfield fields",
+            "subject_type": "place",
+            "era": "Bakersfield years",
+            "required_terms": [
+              "dusty fields",
+              "agricultural"
+            ],
+            "avoid_terms": [
+              "oil wells",
+              "people",
+              "buildings"
+            ],
+            "search_queries": [
+              "Bakersfield California fields historical",
+              "Central Valley dusty farmland archival",
+              "Bakersfield agricultural landscape vintage"
+            ]
+          }
         },
         {
           "shot_number": 2,
@@ -57,7 +77,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/002.png",
-          "generated_at": "2026-07-14T05:43:03.353592+00:00"
+          "generated_at": "2026-07-14T05:43:03.353592+00:00",
+          "historical_search": "San Quentin prison bars",
+          "historical_plan": {
+            "subject": "San Quentin State Prison",
+            "subject_type": "place",
+            "era": "San Quentin years",
+            "required_terms": [
+              "steel bars",
+              "prison cell"
+            ],
+            "avoid_terms": [
+              "inmates",
+              "guards",
+              "modern updates"
+            ],
+            "search_queries": [
+              "San Quentin prison bars historical",
+              "vintage San Quentin cell interior",
+              "San Quentin State Prison archival photos",
+              "California prison bars 1950s"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -87,7 +128,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/003.png",
-          "generated_at": "2026-07-14T05:43:09.556682+00:00"
+          "generated_at": "2026-07-14T05:43:09.556682+00:00",
+          "historical_search": "Merle Haggard boxcar house",
+          "historical_plan": {
+            "subject": "Merle Haggard's boxcar house",
+            "subject_type": "place",
+            "era": "Great Depression",
+            "required_terms": [
+              "boxcar",
+              "converted home"
+            ],
+            "avoid_terms": [
+              "interior",
+              "train tracks",
+              "modern"
+            ],
+            "search_queries": [
+              "Merle Haggard boxcar house photo",
+              "Merle Haggard birthplace boxcar",
+              "Haggard converted boxcar home",
+              "Depression boxcar house"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -117,7 +179,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/004.png",
-          "generated_at": "2026-07-14T05:43:16.997266+00:00"
+          "generated_at": "2026-07-14T05:43:16.997266+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1930s",
+            "required_terms": [
+              "migrant family",
+              "possessions"
+            ],
+            "avoid_terms": [
+              "performance",
+              "stage",
+              "modern"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -147,7 +225,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/005.png",
-          "generated_at": "2026-07-14T05:43:22.684401+00:00"
+          "generated_at": "2026-07-14T05:43:22.684401+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "boxcar",
+              "alone"
+            ],
+            "avoid_terms": [
+              "adult",
+              "stage",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 6,
@@ -164,7 +258,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/006.png",
-          "generated_at": "2026-07-14T05:43:29.287678+00:00"
+          "generated_at": "2026-07-14T05:43:29.287678+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "object",
+            "era": "childhood",
+            "required_terms": [
+              "78 record",
+              "phonograph"
+            ],
+            "avoid_terms": [
+              "visible text",
+              "modern player",
+              "album cover"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -194,7 +304,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/007.png",
-          "generated_at": "2026-07-14T05:43:36.821178+00:00"
+          "generated_at": "2026-07-14T05:43:36.821178+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "with father",
+              "playing guitar"
+            ],
+            "avoid_terms": [
+              "stage",
+              "microphone",
+              "adult performer"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 8,
@@ -211,7 +337,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/008.png",
-          "generated_at": "2026-07-14T05:43:43.359627+00:00"
+          "generated_at": "2026-07-14T05:43:43.359627+00:00",
+          "historical_search": "Merle Haggard performing at microphone",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "microphone",
+              "singing"
+            ],
+            "avoid_terms": [
+              "child",
+              "home interior",
+              "with father"
+            ],
+            "search_queries": [
+              "Merle Haggard singing into microphone",
+              "Merle Haggard live performance vintage",
+              "Merle Haggard on stage microphone",
+              "archive photo Merle Haggard performing"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -241,7 +388,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/009.png",
-          "generated_at": "2026-07-14T05:43:49.709783+00:00"
+          "generated_at": "2026-07-14T05:43:49.709783+00:00",
+          "historical_search": "Merle Haggard childhood",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "young boy",
+              "rural poverty"
+            ],
+            "avoid_terms": [
+              "adult",
+              "stage",
+              "performance"
+            ],
+            "search_queries": [
+              "young Merle Haggard childhood",
+              "Merle Haggard as a boy Bakersfield",
+              "early life Merle Haggard photos"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -271,7 +438,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/010.png",
-          "generated_at": "2026-07-14T05:43:55.713769+00:00"
+          "generated_at": "2026-07-14T05:43:55.713769+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "teens",
+            "required_terms": [
+              "jail cell",
+              "behind bars"
+            ],
+            "avoid_terms": [
+              "guitar",
+              "stage",
+              "adult",
+              "performance"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -301,7 +485,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/011.png",
-          "generated_at": "2026-07-14T05:44:01.538165+00:00"
+          "generated_at": "2026-07-14T05:44:01.538165+00:00",
+          "historical_search": "Merle Haggard San Quentin 1958",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1958",
+            "required_terms": [
+              "San Quentin",
+              "prison inmate",
+              "cell"
+            ],
+            "avoid_terms": [
+              "performing",
+              "guitar",
+              "stage"
+            ],
+            "search_queries": [
+              "Merle Haggard San Quentin inmate 1950s",
+              "Merle Haggard prison photo 1958",
+              "young Merle Haggard San Quentin cell",
+              "Merle Haggard burglary conviction jail"
+            ]
+          }
         },
         {
           "shot_number": 12,
@@ -318,7 +524,30 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/012.png",
-          "generated_at": "2026-07-14T05:44:07.086949+00:00"
+          "generated_at": "2026-07-14T05:44:07.086949+00:00",
+          "historical_search": "Johnny Cash San Quentin concert 1958",
+          "historical_plan": {
+            "subject": "Johnny Cash",
+            "subject_type": "person",
+            "era": "1958",
+            "required_terms": [
+              "guitar",
+              "performing",
+              "San Quentin",
+              "inmates"
+            ],
+            "avoid_terms": [
+              "cell",
+              "alone",
+              "Merle Haggard"
+            ],
+            "search_queries": [
+              "Johnny Cash San Quentin concert 1958",
+              "Johnny Cash performing for prisoners guitar",
+              "Johnny Cash January 1958 prison show",
+              "historical photos Johnny Cash San Quentin stage"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -348,7 +577,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/013.png",
-          "generated_at": "2026-07-14T05:44:13.432454+00:00"
+          "generated_at": "2026-07-14T05:44:13.432454+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1969",
+            "required_terms": [
+              "prison inmate",
+              "audience member"
+            ],
+            "avoid_terms": [
+              "performing",
+              "on stage",
+              "guitar"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -378,7 +623,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/014.png",
-          "generated_at": "2026-07-14T05:44:22.004060+00:00"
+          "generated_at": "2026-07-14T05:44:22.004060+00:00",
+          "historical_search": "Johnny Cash San Quentin 1958",
+          "historical_plan": {
+            "subject": "Johnny Cash",
+            "subject_type": "person",
+            "era": "1958",
+            "required_terms": [
+              "San Quentin",
+              "prison concert"
+            ],
+            "avoid_terms": [
+              "1969",
+              "Folsom",
+              "studio"
+            ],
+            "search_queries": [
+              "Johnny Cash San Quentin concert 1958",
+              "Johnny Cash performing for inmates 1958",
+              "Johnny Cash prison stage photos",
+              "historical images Johnny Cash San Quentin"
+            ]
+          }
         },
         {
           "shot_number": 15,
@@ -395,7 +661,25 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/015.png",
-          "generated_at": "2026-07-14T05:44:28.085624+00:00"
+          "generated_at": "2026-07-14T05:44:28.085624+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1958",
+            "required_terms": [
+              "young prisoner",
+              "inspired expression",
+              "listening"
+            ],
+            "avoid_terms": [
+              "performing",
+              "guitar",
+              "stage",
+              "older"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -425,7 +709,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/016.png",
-          "generated_at": "2026-07-14T05:44:34.956400+00:00"
+          "generated_at": "2026-07-14T05:44:34.956400+00:00",
+          "historical_search": "Bakersfield oil workers honky tonks 1960",
+          "historical_plan": {
+            "subject": "Bakersfield California",
+            "subject_type": "place",
+            "era": "1960",
+            "required_terms": [
+              "oil-field workers",
+              "honky-tonks",
+              "nighttime"
+            ],
+            "avoid_terms": [
+              "daytime",
+              "modern cars",
+              "crowded downtown"
+            ],
+            "search_queries": [
+              "Bakersfield street scene 1960 oil workers",
+              "1960 Bakersfield honky tonk exterior at night",
+              "California oil town bars 1960 archival",
+              "Bakersfield Kern County nightlife 1960"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -455,7 +761,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/017.png",
-          "generated_at": "2026-07-14T05:44:42.130436+00:00"
+          "generated_at": "2026-07-14T05:44:42.130436+00:00",
+          "historical_search": "Merle Haggard early career performances",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "guitar",
+              "small venue",
+              "performance"
+            ],
+            "avoid_terms": [
+              "large stage",
+              "band",
+              "fame"
+            ],
+            "search_queries": [
+              "Merle Haggard young performing guitar",
+              "early Merle Haggard live gig photo",
+              "Merle Haggard small bar performance",
+              "vintage Merle Haggard early shows"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -485,7 +813,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/018.png",
-          "generated_at": "2026-07-14T05:44:47.635808+00:00"
+          "generated_at": "2026-07-14T05:44:47.635808+00:00",
+          "historical_search": "Merle Haggard The Strangers early performances",
+          "historical_plan": {
+            "subject": "Merle Haggard and The Strangers",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "The Strangers",
+              "live performance"
+            ],
+            "avoid_terms": [
+              "large venue",
+              "later fame"
+            ],
+            "search_queries": [
+              "Merle Haggard with The Strangers on stage",
+              "early Merle Haggard band performance",
+              "vintage Merle Haggard The Strangers live",
+              "Merle Haggard early career band photos"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -515,7 +863,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/019.png",
-          "generated_at": "2026-07-14T05:44:53.514050+00:00"
+          "generated_at": "2026-07-14T05:44:53.514050+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "late 1950s",
+            "required_terms": [
+              "prison corridor",
+              "guards escorting",
+              "gas chamber"
+            ],
+            "avoid_terms": [
+              "modern prison",
+              "electric chair",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 20,
@@ -532,7 +897,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/020.png",
-          "generated_at": "2026-07-14T05:44:59.343113+00:00"
+          "generated_at": "2026-07-14T05:44:59.343113+00:00",
+          "historical_search": "Merle Haggard with guitar 1960s",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1960s",
+            "required_terms": [
+              "acoustic guitar",
+              "thoughtful expression",
+              "songwriting"
+            ],
+            "avoid_terms": [
+              "on stage",
+              "performing with band",
+              "later years"
+            ],
+            "search_queries": [
+              "Merle Haggard acoustic guitar portrait 1960s",
+              "young Merle Haggard songwriting",
+              "Merle Haggard early career thoughtful",
+              "Merle Haggard sitting with guitar"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -562,7 +949,25 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/021.png",
-          "generated_at": "2026-07-14T05:45:04.955440+00:00"
+          "generated_at": "2026-07-14T05:45:04.955440+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1969",
+            "required_terms": [
+              "tour bus",
+              "window seat",
+              "thoughtful"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "guitar",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -592,7 +997,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/022.png",
-          "generated_at": "2026-07-14T05:45:11.129799+00:00"
+          "generated_at": "2026-07-14T05:45:11.129799+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1960s",
+            "required_terms": [
+              "on the road",
+              "thoughtful"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -622,7 +1043,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/023.png",
-          "generated_at": "2026-07-14T05:45:17.401904+00:00"
+          "generated_at": "2026-07-14T05:45:17.401904+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1969",
+            "required_terms": [
+              "songwriting",
+              "notebook"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "guitar"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -652,7 +1089,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/024.png",
-          "generated_at": "2026-07-14T05:45:24.165498+00:00"
+          "generated_at": "2026-07-14T05:45:24.165498+00:00",
+          "historical_search": "Merle Haggard live performance",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "late 1960s",
+            "required_terms": [
+              "performing live",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "studio",
+              "portrait",
+              "interview"
+            ],
+            "search_queries": [
+              "Merle Haggard on stage singing",
+              "Merle Haggard live concert audience",
+              "archival Merle Haggard performance photo",
+              "Merle Haggard with band in venue"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -682,7 +1140,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/025.png",
-          "generated_at": "2026-07-14T05:45:29.923035+00:00"
+          "generated_at": "2026-07-14T05:45:29.923035+00:00",
+          "historical_search": "Merle Haggard performing onstage 1970",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "early 1970s",
+            "required_terms": [
+              "live performance",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "Nixon",
+              "White House",
+              "studio"
+            ],
+            "search_queries": [
+              "Merle Haggard onstage 1969",
+              "Merle Haggard live performance early 1970s",
+              "Merle Haggard singing country concert 1970",
+              "archival Merle Haggard stage photo"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -712,7 +1191,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/026.png",
-          "generated_at": "2026-07-14T05:45:35.993681+00:00"
+          "generated_at": "2026-07-14T05:45:35.993681+00:00",
+          "historical_search": "Merle Haggard reflective interview later career",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "Merle Haggard",
+              "thoughtful expression"
+            ],
+            "avoid_terms": [
+              "stage performance",
+              "young"
+            ],
+            "search_queries": [
+              "Merle Haggard candid interview portrait",
+              "Merle Haggard pensive later years",
+              "Merle Haggard reflective close up photo",
+              "Merle Haggard honest conversation shot"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -742,7 +1241,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/027.png",
-          "generated_at": "2026-07-14T05:45:42.494903+00:00"
+          "generated_at": "2026-07-14T05:45:42.494903+00:00",
+          "historical_search": "Merle Haggard reflective portrait",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "thoughtful expression"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "smiling"
+            ],
+            "search_queries": [
+              "Merle Haggard contemplative portrait",
+              "Merle Haggard serious thoughtful photo",
+              "archival Merle Haggard reflective",
+              "Merle Haggard introspective image"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -772,7 +1291,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/028.png",
-          "generated_at": "2026-07-14T05:45:48.416218+00:00"
+          "generated_at": "2026-07-14T05:45:48.416218+00:00",
+          "historical_search": "Merle Haggard 1968 portrait",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1968",
+            "required_terms": [
+              "remorseful expression",
+              "with guitar"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "smiling"
+            ],
+            "search_queries": [
+              "Merle Haggard candid 1968",
+              "Merle Haggard introspective portrait",
+              "Merle Haggard offstage early career",
+              "Merle Haggard thoughtful 1960s"
+            ]
+          }
         },
         {
           "shot_number": 29,
@@ -789,7 +1329,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/029.png",
-          "generated_at": "2026-07-14T05:45:54.845701+00:00"
+          "generated_at": "2026-07-14T05:45:54.845701+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1968",
+            "required_terms": [
+              "tearful expression",
+              "heartbroken"
+            ],
+            "avoid_terms": [
+              "young woman",
+              "joyful",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -819,7 +1375,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/030.png",
-          "generated_at": "2026-07-14T05:46:00.771729+00:00"
+          "generated_at": "2026-07-14T05:46:00.771729+00:00",
+          "historical_search": "Merle Haggard childhood",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "young boy",
+              "1940s"
+            ],
+            "avoid_terms": [
+              "adult",
+              "guitar",
+              "stage"
+            ],
+            "search_queries": [
+              "Merle Haggard as young boy",
+              "Merle Haggard childhood portrait",
+              "early Merle Haggard family photos"
+            ]
+          }
         },
         {
           "shot_number": 31,
@@ -836,7 +1412,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/031.png",
-          "generated_at": "2026-07-14T05:46:07.144893+00:00"
+          "generated_at": "2026-07-14T05:46:07.144893+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "late 1960s",
+            "required_terms": [
+              "crowded room",
+              "whispering"
+            ],
+            "avoid_terms": [
+              "performer",
+              "microphone",
+              "stage"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -866,7 +1458,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/032.png",
-          "generated_at": "2026-07-14T05:46:13.158830+00:00"
+          "generated_at": "2026-07-14T05:46:13.158830+00:00",
+          "historical_search": "Merle Haggard 1969 portrait",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1969",
+            "required_terms": [
+              "reflective expression",
+              "candid"
+            ],
+            "avoid_terms": [
+              "stage performance",
+              "smiling",
+              "guitar"
+            ],
+            "search_queries": [
+              "Merle Haggard close-up 1969",
+              "Merle Haggard candid portrait 1960s",
+              "Merle Haggard serious expression early career",
+              "Merle Haggard offstage photograph 1969"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -896,7 +1509,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/033.png",
-          "generated_at": "2026-07-14T05:46:19.200047+00:00"
+          "generated_at": "2026-07-14T05:46:19.200047+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "candid",
+              "weary",
+              "offstage"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "smiling"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -926,7 +1556,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/034.png",
-          "generated_at": "2026-07-14T05:46:24.962993+00:00"
+          "generated_at": "2026-07-14T05:46:24.962993+00:00",
+          "historical_search": "Merle Haggard San Quentin live 1969",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1969",
+            "required_terms": [
+              "performing",
+              "stage",
+              "guitar"
+            ],
+            "avoid_terms": [
+              "studio",
+              "outdoor",
+              "later career"
+            ],
+            "search_queries": [
+              "Merle Haggard live at San Quentin 1969",
+              "Merle Haggard San Quentin concert stage",
+              "Merle Haggard prison performance 1969",
+              "Merle Haggard recording live album San Quentin"
+            ]
+          }
         },
         {
           "shot_number": 35,
@@ -943,7 +1595,30 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/035.png",
-          "generated_at": "2026-07-14T05:46:31.043672+00:00"
+          "generated_at": "2026-07-14T05:46:31.043672+00:00",
+          "historical_search": "San Quentin prison concert audience 1969",
+          "historical_plan": {
+            "subject": "San Quentin inmates",
+            "subject_type": "group",
+            "era": "1969",
+            "required_terms": [
+              "audience",
+              "seated",
+              "prison interior"
+            ],
+            "avoid_terms": [
+              "women",
+              "children",
+              "outdoor yard",
+              "modern"
+            ],
+            "search_queries": [
+              "San Quentin inmates concert audience 1969",
+              "prisoners watching live music San Quentin",
+              "San Quentin auditorium performance crowd 1960s",
+              "inmate audience at San Quentin show"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -973,7 +1648,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/036.png",
-          "generated_at": "2026-07-14T05:46:36.832077+00:00"
+          "generated_at": "2026-07-14T05:46:36.832077+00:00",
+          "historical_search": "San Quentin inmates concert 1969",
+          "historical_plan": {
+            "subject": "San Quentin inmates",
+            "subject_type": "group",
+            "era": "1969",
+            "required_terms": [
+              "inmates",
+              "prison",
+              "crowd"
+            ],
+            "avoid_terms": [
+              "guards",
+              "modern",
+              "outdoor"
+            ],
+            "search_queries": [
+              "San Quentin prison concert audience",
+              "Merle Haggard San Quentin inmates 1969",
+              "prisoners hollering at San Quentin show",
+              "San Quentin auditorium prisoners"
+            ]
+          }
         },
         {
           "shot_number": 37,
@@ -990,7 +1687,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/037.png",
-          "generated_at": "2026-07-14T05:46:43.259817+00:00"
+          "generated_at": "2026-07-14T05:46:43.259817+00:00",
+          "historical_search": "Merle Haggard Willie Nelson",
+          "historical_plan": {
+            "subject": "Merle Haggard and Willie Nelson",
+            "subject_type": "group",
+            "era": "later career",
+            "required_terms": [
+              "Merle Haggard",
+              "Willie Nelson",
+              "together"
+            ],
+            "avoid_terms": [
+              "young",
+              "performing",
+              "1970s"
+            ],
+            "search_queries": [
+              "Merle Haggard and Willie Nelson friends",
+              "Merle Haggard Willie Nelson relaxed portrait",
+              "Merle Haggard Willie Nelson later years",
+              "Haggard Nelson peaceful moment"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1020,7 +1739,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/038.png",
-          "generated_at": "2026-07-14T05:46:49.152837+00:00"
+          "generated_at": "2026-07-14T05:46:49.152837+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Merle Haggard and Willie Nelson",
+            "subject_type": "group",
+            "era": "late career",
+            "required_terms": [
+              "campfire",
+              "seated together"
+            ],
+            "avoid_terms": [
+              "stage",
+              "microphones"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 39,
@@ -1037,7 +1771,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/039.png",
-          "generated_at": "2026-07-14T05:46:55.318039+00:00"
+          "generated_at": "2026-07-14T05:46:55.318039+00:00",
+          "historical_search": "Merle Haggard live performance later years",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "late career",
+            "required_terms": [
+              "on stage",
+              "performing live"
+            ],
+            "avoid_terms": [
+              "young",
+              "studio",
+              "porch"
+            ],
+            "search_queries": [
+              "Merle Haggard onstage with band",
+              "Merle Haggard live concert later years",
+              "Merle Haggard touring performance",
+              "Merle Haggard elderly stage show"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1067,7 +1822,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/040.png",
-          "generated_at": "2026-07-14T05:47:01.694755+00:00"
+          "generated_at": "2026-07-14T05:47:01.694755+00:00",
+          "historical_search": "Merle Haggard live bar performance",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "on stage",
+              "performing",
+              "small venue"
+            ],
+            "avoid_terms": [
+              "large crowd",
+              "festival",
+              "outdoor"
+            ],
+            "search_queries": [
+              "Merle Haggard performing live in bar",
+              "Merle Haggard small club show",
+              "Merle Haggard honky tonk stage",
+              "vintage Merle Haggard intimate performance"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1097,7 +1874,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/041.png",
-          "generated_at": "2026-07-14T05:47:07.862746+00:00"
+          "generated_at": "2026-07-14T05:47:07.862746+00:00",
+          "historical_search": "Merle Haggard candid portrait 1970s",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "candid",
+              "serious expression"
+            ],
+            "avoid_terms": [
+              "performing",
+              "on stage",
+              "smiling"
+            ],
+            "search_queries": [
+              "Merle Haggard candid portrait 1970s",
+              "Merle Haggard informal photo",
+              "Merle Haggard personal candid",
+              "Merle Haggard unposed 1970"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1127,7 +1925,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/042.png",
-          "generated_at": "2026-07-14T05:47:13.675207+00:00"
+          "generated_at": "2026-07-14T05:47:13.675207+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "manual labor",
+              "bloodied hands"
+            ],
+            "avoid_terms": [
+              "indoor setting",
+              "prison cell"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 43,
@@ -1144,7 +1957,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/043.png",
-          "generated_at": "2026-07-14T05:47:19.740077+00:00"
+          "generated_at": "2026-07-14T05:47:19.740077+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "prison cell",
+              "barred window",
+              "proud stance"
+            ],
+            "avoid_terms": [
+              "outdoor labor",
+              "crowded space",
+              "musical instrument"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1174,7 +2004,30 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/044.png",
-          "generated_at": "2026-07-14T05:47:26.306236+00:00"
+          "generated_at": "2026-07-14T05:47:26.306236+00:00",
+          "historical_search": "Merle Haggard live performance",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1980s",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "performance"
+            ],
+            "avoid_terms": [
+              "studio",
+              "interview",
+              "crowd"
+            ],
+            "search_queries": [
+              "Merle Haggard singing on stage",
+              "Merle Haggard emotional vocal performance",
+              "Merle Haggard I Think I'll Just Stay Here and Drink",
+              "Merle Haggard live country concert 1980",
+              "Merle Haggard close-up singing microphone"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1204,7 +2057,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/045.png",
-          "generated_at": "2026-07-14T05:47:32.203840+00:00"
+          "generated_at": "2026-07-14T05:47:32.203840+00:00",
+          "historical_search": "Merle Haggard emotional singing performance",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "emotional",
+              "performing"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "studio portrait"
+            ],
+            "search_queries": [
+              "Merle Haggard close-up singing on stage",
+              "Merle Haggard heartfelt live performance",
+              "Merle Haggard expressive face while singing",
+              "vintage Merle Haggard concert photo"
+            ]
+          }
         },
         {
           "shot_number": 46,
@@ -1221,7 +2094,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/046.png",
-          "generated_at": "2026-07-14T05:47:38.984020+00:00"
+          "generated_at": "2026-07-14T05:47:38.984020+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "listening to music",
+              "bar setting"
+            ],
+            "avoid_terms": [
+              "dancing",
+              "talking"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1251,7 +2139,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/047.png",
-          "generated_at": "2026-07-14T05:47:44.918299+00:00"
+          "generated_at": "2026-07-14T05:47:44.918299+00:00",
+          "historical_search": "young Merle Haggard Jimmie Rodgers",
+          "historical_plan": {
+            "subject": "Merle Haggard",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "listening",
+              "phonograph"
+            ],
+            "avoid_terms": [
+              "performing",
+              "guitar",
+              "stage"
+            ],
+            "search_queries": [
+              "young Merle Haggard childhood",
+              "Merle Haggard as a boy",
+              "early Merle Haggard Jimmie Rodgers"
+            ]
+          }
         },
         {
           "shot_number": 48,
@@ -1268,7 +2176,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/048.png",
-          "generated_at": "2026-07-14T05:47:50.777753+00:00"
+          "generated_at": "2026-07-14T05:47:50.777753+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "nighttime",
+            "required_terms": [
+              "listening",
+              "solitary"
+            ],
+            "avoid_terms": [
+              "child",
+              "performing",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1298,7 +2222,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/049.png",
-          "generated_at": "2026-07-14T05:47:56.930415+00:00"
+          "generated_at": "2026-07-14T05:47:56.930415+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "listening to music"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "concert"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""

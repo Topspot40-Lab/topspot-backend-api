@@ -200,7 +200,8 @@ def build_story_video(
         # Story images scaled to the actual narration duration.
         f"[1:v]"
         f"setpts=PTS*{visual_scale:.12f},"
-        f"setpts=PTS-STARTPTS"
+        f"setpts=PTS-STARTPTS,"
+        f"setsar=1"
         f"[story_video];"
 
         # Old Dog artwork used for both branded sections.
@@ -210,6 +211,7 @@ def build_story_video(
         f"pad=1920:1080:"
         f"(ow-iw)/2:(oh-ih)/2:black,"
         f"format=yuv420p,"
+        f"setsar=1,"
         f"split=2"
         f"[dog_intro_source][dog_outro_source];"
 
@@ -230,7 +232,8 @@ def build_story_video(
         f"[outro_video];"
 
         f"[0:v]"
-        f"setpts=PTS-STARTPTS"
+        f"setpts=PTS-STARTPTS,"
+        f"setsar=1"
         f"[opening_video];"
 
         # Complete visual program.

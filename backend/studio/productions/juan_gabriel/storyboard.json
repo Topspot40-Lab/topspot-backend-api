@@ -40,7 +40,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/001.png",
-          "generated_at": "2026-07-14T04:38:34.836093+00:00"
+          "generated_at": "2026-07-14T04:38:34.836093+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "person stopped still",
+              "listening intently"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "concert"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -70,7 +86,16 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/002.png",
-          "generated_at": "2026-07-14T04:38:41.039128+00:00"
+          "generated_at": "2026-07-14T04:38:41.039128+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 3,
@@ -87,7 +112,16 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/003.png",
-          "generated_at": "2026-07-14T04:38:47.194597+00:00"
+          "generated_at": "2026-07-14T04:38:47.194597+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -117,7 +151,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/004.png",
-          "generated_at": "2026-07-14T04:38:52.836992+00:00"
+          "generated_at": "2026-07-14T04:38:52.836992+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "childhood",
+            "required_terms": [
+              "rural poverty",
+              "aftermath of accident"
+            ],
+            "avoid_terms": [
+              "healthy adult",
+              "urban setting"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 5,
@@ -134,7 +183,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/005.png",
-          "generated_at": "2026-07-14T04:38:59.677899+00:00"
+          "generated_at": "2026-07-14T04:38:59.677899+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "childhood",
+            "required_terms": [
+              "large poor family",
+              "distraught mother"
+            ],
+            "avoid_terms": [
+              "small family",
+              "happy domestic scene"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -164,7 +228,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/006.png",
-          "generated_at": "2026-07-14T04:39:06.279989+00:00"
+          "generated_at": "2026-07-14T04:39:06.279989+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "childhood",
+            "required_terms": [
+              "orphanage walls",
+              "small boy"
+            ],
+            "avoid_terms": [
+              "adult",
+              "crowd",
+              "performance"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -194,7 +274,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/007.png",
-          "generated_at": "2026-07-14T04:39:12.392100+00:00"
+          "generated_at": "2026-07-14T04:39:12.392100+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "young Juan Gabriel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "singing",
+              "orphanage",
+              "dormitory"
+            ],
+            "avoid_terms": [
+              "piano",
+              "street"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 8,
@@ -211,7 +307,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/008.png",
-          "generated_at": "2026-07-14T04:39:18.152867+00:00"
+          "generated_at": "2026-07-14T04:39:18.152867+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "young Juan Gabriel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "piano",
+              "corner",
+              "orphanage"
+            ],
+            "avoid_terms": [
+              "children in beds",
+              "singing",
+              "nuns"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -241,7 +354,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/009.png",
-          "generated_at": "2026-07-14T04:39:23.640220+00:00"
+          "generated_at": "2026-07-14T04:39:23.640220+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "young Juan Gabriel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "singing",
+              "night",
+              "orphanage"
+            ],
+            "avoid_terms": [
+              "adult",
+              "stage",
+              "microphone"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 10,
@@ -258,7 +388,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/010.png",
-          "generated_at": "2026-07-14T04:39:28.940343+00:00"
+          "generated_at": "2026-07-14T04:39:28.940343+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "group",
+            "era": "childhood",
+            "required_terms": [
+              "orphan children",
+              "beds",
+              "night"
+            ],
+            "avoid_terms": [
+              "singer",
+              "daytime",
+              "outdoors"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 11,
@@ -268,14 +415,41 @@
           "end_seconds": 82.287,
           "estimated_seconds": 7.456,
           "visual_intent": "Adult Juan Gabriel performing a love song with deep emotional vulnerability carrying childhood ache",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/001-young-television-performance.jpg",
+            "library_filename": "001-young-television-performance.jpg",
+            "library_id": "001",
+            "curated": true
+          },
           "prompt": "16:9 documentary style re-enactment, close-up cinematic portrait of adult Juan Gabriel on a simple stage passionately singing into a vintage microphone, expressive face conveying profound emotion and inner ache with eyes half-closed, dramatic warm spotlight against dark background, soulful and heartfelt mood, realistic live performance portrayal with subtle film grain",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 001-young-television-performance.jpg assigned manually.",
           "image_path": "images/011.png",
-          "generated_at": "2026-07-14T04:39:34.515728+00:00"
+          "generated_at": "2026-07-14T04:39:34.515728+00:00",
+          "historical_search": "Juan Gabriel performing",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "emotional"
+            ],
+            "avoid_terms": [
+              "child",
+              "orphanage",
+              "group"
+            ],
+            "search_queries": [
+              "Juan Gabriel singing on stage",
+              "Juan Gabriel live performance",
+              "Juan Gabriel emotional concert",
+              "Juan Gabriel heartfelt singing"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -298,14 +472,43 @@
           "end_seconds": 89.077,
           "estimated_seconds": 6.791,
           "visual_intent": "Intimate close-up of Juan Gabriel singing with tender vulnerability into a studio microphone",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/007-black-suit-performance-closeup.jpg",
+            "library_filename": "007-black-suit-performance-closeup.jpg",
+            "library_id": "007",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style shot, warm softly lit vintage recording studio, respectful close-up of Juan Gabriel with gentle tender expression and soft eyes as he sings intimately into a large studio microphone, warm key lighting with subtle shadows, calm and vulnerable mood, historically grounded 1970s Latin music setting, simple elegant period clothing, slight film grain, naturalistic colors, no text or logos",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 007-black-suit-performance-closeup.jpg assigned manually.",
           "image_path": "images/012.png",
-          "generated_at": "2026-07-14T04:39:40.592020+00:00"
+          "generated_at": "2026-07-14T04:39:40.592020+00:00",
+          "historical_search": "Juan Gabriel singing microphone",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "tender expression"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "stage",
+              "energetic"
+            ],
+            "search_queries": [
+              "Juan Gabriel singing close up",
+              "Juan Gabriel microphone performance",
+              "Juan Gabriel vocal recording photo",
+              "Juan Gabriel intimate singing image",
+              "archive Juan Gabriel gentle expression"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -335,7 +538,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/013.png",
-          "generated_at": "2026-07-14T04:39:47.014354+00:00"
+          "generated_at": "2026-07-14T04:39:47.014354+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "orphanage",
+              "Juárez",
+              "children"
+            ],
+            "avoid_terms": [
+              "cantina",
+              "stage",
+              "adult"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 14,
@@ -352,7 +572,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/014.png",
-          "generated_at": "2026-07-14T04:39:53.640578+00:00"
+          "generated_at": "2026-07-14T04:39:53.640578+00:00",
+          "historical_search": "Juan Gabriel El Noa Noa Juarez",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "cantina",
+              "Juárez",
+              "singer"
+            ],
+            "avoid_terms": [
+              "orphanage",
+              "children",
+              "daylight"
+            ],
+            "search_queries": [
+              "Juan Gabriel El Noa Noa Juarez",
+              "early Juan Gabriel performing in cantina",
+              "interior Juarez Mexico cantina singer",
+              "young Juan Gabriel border town bar"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -382,7 +624,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/015.png",
-          "generated_at": "2026-07-14T04:40:00.923048+00:00"
+          "generated_at": "2026-07-14T04:40:00.923048+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "rough bar interior",
+              "audience throwing bottles"
+            ],
+            "avoid_terms": [
+              "modern venue",
+              "positive reaction",
+              "famous performer"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -412,7 +670,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/016.png",
-          "generated_at": "2026-07-14T04:40:07.206813+00:00"
+          "generated_at": "2026-07-14T04:40:07.206813+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "bar patrons",
+              "setting down drinks",
+              "attentive faces"
+            ],
+            "avoid_terms": [
+              "performer visible",
+              "stage",
+              "modern clothing"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -442,7 +717,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/017.png",
-          "generated_at": "2026-07-14T04:40:12.985304+00:00"
+          "generated_at": "2026-07-14T04:40:12.985304+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "Juan Gabriel",
+              "writing",
+              "bar table"
+            ],
+            "avoid_terms": [
+              "stage performance",
+              "microphone",
+              "audience"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -465,14 +757,42 @@
           "end_seconds": 137.011,
           "estimated_seconds": 11.983,
           "visual_intent": "Older club regular speaking encouragingly to young Juan Gabriel at a table inside the dimly lit venue",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/003-pink-vest-stage-performance.jpg",
+            "library_filename": "003-pink-vest-stage-performance.jpg",
+            "library_id": "003",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 still, medium two-shot inside a dimly lit vintage Mexican nightclub, older Mexican man in simple period attire leaning forward as he speaks to a young Juan Gabriel who listens attentively, wooden table with glasses between them, warm practical lamp light casting soft shadows and gentle haze, small stage visible in soft-focus background, intimate and reflective mood, photorealistic, historically believable details, no text, no logos, no writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 003-pink-vest-stage-performance.jpg assigned manually.",
           "image_path": "images/018.png",
-          "generated_at": "2026-07-14T04:40:19.306033+00:00"
+          "generated_at": "2026-07-14T04:40:19.306033+00:00",
+          "historical_search": "young Juan Gabriel early club performance",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "young",
+              "singing",
+              "club stage"
+            ],
+            "avoid_terms": [
+              "stadium",
+              "later years",
+              "television"
+            ],
+            "search_queries": [
+              "young Juan Gabriel singing in nightclub",
+              "Juan Gabriel early career live performance",
+              "historical photos young Juan Gabriel on stage",
+              "Juan Gabriel kid singer club"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -495,14 +815,42 @@
           "end_seconds": 144.201,
           "estimated_seconds": 7.19,
           "visual_intent": "Intimate view inside the little Juárez bar capturing Juan Gabriel performing his flashy yet tender uncategorizable style as it first catches fire with a small audience",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/010-black-suit-with-mariachi-band.jpg",
+            "library_filename": "010-black-suit-with-mariachi-band.jpg",
+            "library_id": "010",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style cinematic image of a small modest bar interior in Juárez, wide camera framing from mid-room showing Juan Gabriel on a tiny wooden stage singing tenderly with expressive emotion into a vintage microphone, wearing a flashy satin shirt, warm spotlight illuminating him against the dim ambient lighting of the bar, small group of patrons leaning forward in rapt attention, hazy smoky atmosphere, wooden tables and stools, historically believable period setting, vibrant energy mixed with tender intimacy, realistic live-action documentary feel with subtle film grain, no text, no logos, no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 010-black-suit-with-mariachi-band.jpg assigned manually.",
           "image_path": "images/019.png",
-          "generated_at": "2026-07-14T04:40:26.276994+00:00"
+          "generated_at": "2026-07-14T04:40:26.276994+00:00",
+          "historical_search": "Juan Gabriel Juárez bar performance",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "Juárez",
+              "bar",
+              "performing"
+            ],
+            "avoid_terms": [
+              "large venue",
+              "later years",
+              "studio"
+            ],
+            "search_queries": [
+              "Juan Gabriel Juárez bar performance",
+              "young Juan Gabriel early live singing",
+              "Juan Gabriel first Juárez appearances",
+              "Juan Gabriel modest bar stage"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -532,7 +880,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/020.png",
-          "generated_at": "2026-07-14T04:40:32.635032+00:00"
+          "generated_at": "2026-07-14T04:40:32.635032+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "colorful clothes",
+              "dramatic gestures"
+            ],
+            "avoid_terms": [
+              "business suit",
+              "restrained pose"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -555,14 +918,42 @@
           "end_seconds": 165.372,
           "estimated_seconds": 9.986,
           "visual_intent": "Juan Gabriel singing with authentic passion in a vintage recording studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/001-young-television-performance.jpg",
+            "library_filename": "001-young-television-performance.jpg",
+            "library_id": "001",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style cinematic still of Juan Gabriel, a recognizably Mexican singer with dark hair, captured in a medium shot inside a vintage analog recording studio, standing before a large diaphragm microphone pouring out emotional performance with expressive face and natural gesture, warm tungsten lighting with soft shadows across wooden panels and tape machines in the background, conveying quiet defiance and authenticity, subtle film grain, historically believable 1970s details, realistic, no text, no logos, no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 001-young-television-performance.jpg assigned manually.",
           "image_path": "images/021.png",
-          "generated_at": "2026-07-14T04:40:38.715220+00:00"
+          "generated_at": "2026-07-14T04:40:38.715220+00:00",
+          "historical_search": "Juan Gabriel early career singing",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "expressive"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "stage",
+              "later years"
+            ],
+            "search_queries": [
+              "Juan Gabriel recording studio",
+              "Juan Gabriel singing microphone",
+              "Juan Gabriel early career vocalist",
+              "Juan Gabriel studio session"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -585,14 +976,39 @@
           "end_seconds": 171.963,
           "estimated_seconds": 6.591,
           "visual_intent": "Juan Gabriel performing with unapologetic confidence on stage",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/004-black-shirt-arms-raised.jpg",
+            "library_filename": "004-black-shirt-arms-raised.jpg",
+            "library_id": "004",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style medium close-up of Mexican singer Juan Gabriel performing live on a modest concert stage, expressive face mid-vocal with head tilted back in emotional release, wearing bright colorful stage attire, standing at vintage microphone under warm theatrical spotlights with soft haze, 1970s Mexican venue setting, high contrast dramatic lighting, mood of liberation and strength, subtle film grain, realistic period details, 16:9 aspect ratio",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 004-black-shirt-arms-raised.jpg assigned manually.",
           "image_path": "images/022.png",
-          "generated_at": "2026-07-14T04:40:44.156450+00:00"
+          "generated_at": "2026-07-14T04:40:44.156450+00:00",
+          "historical_search": "Juan Gabriel live performance early career",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "performing on stage",
+              "expressive"
+            ],
+            "avoid_terms": [
+              "interview",
+              "formal pose"
+            ],
+            "search_queries": [
+              "Juan Gabriel singing on stage",
+              "Juan Gabriel concert performance",
+              "Juan Gabriel live show early years"
+            ]
+          }
         },
         {
           "shot_number": 23,
@@ -609,7 +1025,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/023.png",
-          "generated_at": "2026-07-14T04:40:50.437402+00:00"
+          "generated_at": "2026-07-14T04:40:50.437402+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "audience",
+              "emotional reaction"
+            ],
+            "avoid_terms": [
+              "performer on stage",
+              "modern setting"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -632,14 +1063,42 @@
           "end_seconds": 184.945,
           "estimated_seconds": 6.391,
           "visual_intent": "Intimate close-up of Juan Gabriel crying openly with raw emotion",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/009-listening-to-audience.jpg",
+            "library_filename": "009-listening-to-audience.jpg",
+            "library_id": "009",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style close-up of Juan Gabriel on a television studio stage, dark wavy hair, expressive face with tears streaming down his cheeks, eyes glistening with deep feeling, soft warm stage lighting from above, gentle shadows, vulnerable and courageous mood, 1970s Mexican performance setting, realistic filmic texture, natural colors, no text, no logos, no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 009-listening-to-audience.jpg assigned manually.",
           "image_path": "images/024.png",
-          "generated_at": "2026-07-14T04:40:55.413205+00:00"
+          "generated_at": "2026-07-14T04:40:55.413205+00:00",
+          "historical_search": "Juan Gabriel crying on television",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "crying",
+              "tears",
+              "emotional"
+            ],
+            "avoid_terms": [
+              "dancing",
+              "joyful",
+              "smile"
+            ],
+            "search_queries": [
+              "Juan Gabriel crying television performance",
+              "Juan Gabriel emotional tears on TV",
+              "Juan Gabriel llorando en television",
+              "Juan Gabriel vulnerable performance"
+            ]
+          }
         },
         {
           "shot_number": 25,
@@ -649,14 +1108,42 @@
           "end_seconds": 191.336,
           "estimated_seconds": 6.391,
           "visual_intent": "Energetic full shot of Juan Gabriel dancing with pure joy",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/014-blowing-kiss-to-audience.png",
+            "library_filename": "014-blowing-kiss-to-audience.png",
+            "library_id": "014",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style medium-wide shot of Juan Gabriel dancing with unrestrained joy on a television stage, arms open wide, bright smile, body in fluid motion, colorful era-appropriate outfit, vibrant warm stage lighting, simple vintage studio backdrop, liberating and exuberant mood, realistic filmic texture, natural colors, no text, no logos, no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 014-blowing-kiss-to-audience.png assigned manually.",
           "image_path": "images/025.png",
-          "generated_at": "2026-07-14T04:41:02.202384+00:00"
+          "generated_at": "2026-07-14T04:41:02.202384+00:00",
+          "historical_search": "Juan Gabriel dancing on stage",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "dancing",
+              "joyful",
+              "performance"
+            ],
+            "avoid_terms": [
+              "crying",
+              "tears",
+              "sad"
+            ],
+            "search_queries": [
+              "Juan Gabriel dancing joyfully stage",
+              "Juan Gabriel energetic dance performance",
+              "Juan Gabriel happy live television",
+              "Juan Gabriel expressive movement"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -686,7 +1173,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/026.png",
-          "generated_at": "2026-07-14T04:41:08.080238+00:00"
+          "generated_at": "2026-07-14T04:41:08.080238+00:00",
+          "historical_search": "Palacio de Bellas Artes Mexico City exterior historical",
+          "historical_plan": {
+            "subject": "Palacio de Bellas Artes",
+            "subject_type": "place",
+            "era": "1980s",
+            "required_terms": [
+              "exterior",
+              "Mexico City",
+              "night"
+            ],
+            "avoid_terms": [
+              "interior",
+              "daytime",
+              "crowds"
+            ],
+            "search_queries": [
+              "Palacio de Bellas Artes exterior night Mexico",
+              "historical photograph Bellas Artes building illuminated",
+              "Palacio de Bellas Artes facade archival 1980",
+              "Bellas Artes Mexico City exterior vintage"
+            ]
+          }
         },
         {
           "shot_number": 27,
@@ -703,7 +1212,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/027.png",
-          "generated_at": "2026-07-14T04:41:14.557907+00:00"
+          "generated_at": "2026-07-14T04:41:14.557907+00:00",
+          "historical_search": "Palacio de Bellas Artes interior auditorium historical",
+          "historical_plan": {
+            "subject": "Palacio de Bellas Artes auditorium",
+            "subject_type": "place",
+            "era": "1980s",
+            "required_terms": [
+              "interior",
+              "concert hall",
+              "stage"
+            ],
+            "avoid_terms": [
+              "audience",
+              "pop concert",
+              "modern stage"
+            ],
+            "search_queries": [
+              "Palacio de Bellas Artes interior hall archival",
+              "Bellas Artes theater auditorium Mexico historical",
+              "Palacio de Bellas Artes concert hall vintage photo",
+              "Bellas Artes Tiffany curtain stage view"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -733,7 +1264,30 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/028.png",
-          "generated_at": "2026-07-14T04:41:21.022130+00:00"
+          "generated_at": "2026-07-14T04:41:21.022130+00:00",
+          "historical_search": "Palacio de Bellas Artes exterior entrance",
+          "historical_plan": {
+            "subject": "Palacio de Bellas Artes",
+            "subject_type": "place",
+            "era": "1970s",
+            "required_terms": [
+              "main entrance",
+              "facade",
+              "doors"
+            ],
+            "avoid_terms": [
+              "interior",
+              "stage",
+              "performance",
+              "crowd"
+            ],
+            "search_queries": [
+              "Palacio de Bellas Artes historic exterior",
+              "Bellas Artes Mexico City facade archival",
+              "Palacio de Bellas Artes entrance 1970s",
+              "Bellas Artes building doors historic photo"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -763,7 +1317,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/029.png",
-          "generated_at": "2026-07-14T04:41:27.032459+00:00"
+          "generated_at": "2026-07-14T04:41:27.032459+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "ushers",
+              "working-class fans",
+              "concert entrance"
+            ],
+            "avoid_terms": [
+              "performer on stage",
+              "modern dress",
+              "sports event"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 30,
@@ -780,7 +1351,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/030.png",
-          "generated_at": "2026-07-14T04:41:33.279291+00:00"
+          "generated_at": "2026-07-14T04:41:33.279291+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "working-class fans",
+              "finest clothes",
+              "handkerchiefs"
+            ],
+            "avoid_terms": [
+              "ushers",
+              "theater exterior",
+              "musicians"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -803,14 +1391,40 @@
           "end_seconds": 239.27,
           "estimated_seconds": 9.986,
           "visual_intent": "Juan Gabriel delivering an emotional performance onstage in a white charro suit with silver embroidery",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/018-white-suit-arms-open.png",
+            "library_filename": "018-white-suit-arms-open.png",
+            "library_id": "018",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style photorealistic cinematic still, medium-wide low-angle shot of Juan Gabriel standing center stage in a pristine white charro suit covered in intricate silver embroidery, singing passionately with eyes closed and expressive face conveying deep emotion, dramatic stage spotlights casting warm highlights and subtle lens flare, dark concert hall background with faint audience silhouettes, vintage live performance setting, realistic fabric textures and metallic sheen on embroidery, powerful and heartfelt mood, natural stage lighting, highly detailed, authentic documentary visual tone",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 018-white-suit-arms-open.png assigned manually.",
           "image_path": "images/031.png",
-          "generated_at": "2026-07-14T04:41:39.537369+00:00"
+          "generated_at": "2026-07-14T04:41:39.537369+00:00",
+          "historical_search": "Juan Gabriel white charro suit performance",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "peak career",
+            "required_terms": [
+              "white charro suit",
+              "silver embroidery"
+            ],
+            "avoid_terms": [
+              "casual clothing",
+              "studio setting"
+            ],
+            "search_queries": [
+              "Juan Gabriel white charro suit stage",
+              "Juan Gabriel emotional live performance",
+              "Juan Gabriel silver embroidered charro concert",
+              "Juan Gabriel charro suit singing onstage"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -840,7 +1454,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/032.png",
-          "generated_at": "2026-07-14T04:41:46.054139+00:00"
+          "generated_at": "2026-07-14T04:41:46.054139+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "peak career",
+            "required_terms": [
+              "weeping audience",
+              "tiered seating"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "modern technology"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -863,14 +1493,41 @@
           "end_seconds": 259.642,
           "estimated_seconds": 10.386,
           "visual_intent": "Juan Gabriel delivering a triumphant performance to a capacity crowd inside an ornate palace hall",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/002-white-mariachi-concert-stage.jpg",
+            "library_filename": "002-white-mariachi-concert-stage.jpg",
+            "library_id": "002",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style shot of Juan Gabriel on the stage of a grand ornate Mexican palace concert hall, captured from a low wide audience perspective, the vast venue completely filled with enthusiastic listeners, Juan Gabriel centered under warm golden spotlights wearing an elegant dark suit with open arms in mid-song, opulent classical architecture and chandeliers visible, rich theatrical lighting with dramatic beams through the air, triumphant celebratory mood, historically accurate details for Juan Gabriel's era, realistic filmic look with subtle grain, no text no logos no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 002-white-mariachi-concert-stage.jpg assigned manually.",
           "image_path": "images/033.png",
-          "generated_at": "2026-07-14T04:41:52.662275+00:00"
+          "generated_at": "2026-07-14T04:41:52.662275+00:00",
+          "historical_search": "Juan Gabriel Palacio de Bellas Artes",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "peak career",
+            "required_terms": [
+              "live performance",
+              "grand hall",
+              "audience"
+            ],
+            "avoid_terms": [
+              "studio recording",
+              "outdoor venue"
+            ],
+            "search_queries": [
+              "Juan Gabriel Bellas Artes performance",
+              "Juan Gabriel Palacio de Bellas Artes concert",
+              "Juan Gabriel live stage Palacio Mexico",
+              "Juan Gabriel triumphant hall concert"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -900,7 +1557,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/034.png",
-          "generated_at": "2026-07-14T04:41:59.129912+00:00"
+          "generated_at": "2026-07-14T04:41:59.129912+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Juan Gabriel's mother",
+            "subject_type": "person",
+            "era": "later life",
+            "required_terms": [
+              "family home",
+              "reunion"
+            ],
+            "avoid_terms": [
+              "young",
+              "poverty",
+              "alone"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -923,14 +1596,40 @@
           "end_seconds": 278.017,
           "estimated_seconds": 6.391,
           "visual_intent": "Juan Gabriel alone in a modest room composing at the piano, face heavy with personal pain",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/012-stage-toast-with-wine-glass.jpg",
+            "library_filename": "012-stage-toast-with-wine-glass.jpg",
+            "library_id": "012",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style color photograph, intimate medium shot of Mexican singer Juan Gabriel in period attire seated at a wooden upright piano in a simply furnished room, soft window light casting gentle shadows across his expressive face as he writes on sheet music with deep emotion, downcast eyes and furrowed brow conveying childhood pain, warm earthy tones, quiet and reflective mood, photorealistic, historically believable late 20th century Mexican interior, 16:9 aspect ratio, no text, no logos, no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 012-stage-toast-with-wine-glass.jpg assigned manually.",
           "image_path": "images/035.png",
-          "generated_at": "2026-07-14T04:42:05.673521+00:00"
+          "generated_at": "2026-07-14T04:42:05.673521+00:00",
+          "historical_search": "Juan Gabriel songwriting",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "writing",
+              "emotional"
+            ],
+            "avoid_terms": [
+              "stage",
+              "microphone"
+            ],
+            "search_queries": [
+              "Juan Gabriel songwriting",
+              "Juan Gabriel composing",
+              "Juan Gabriel writing lyrics",
+              "Juan Gabriel thoughtful"
+            ]
+          }
         },
         {
           "shot_number": 36,
@@ -940,14 +1639,41 @@
           "end_seconds": 284.408,
           "estimated_seconds": 6.391,
           "visual_intent": "Juan Gabriel performing live on stage, voice cracking with visible emotion",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/013-singing-with-mariachi-violinist.png",
+            "library_filename": "013-singing-with-mariachi-violinist.png",
+            "library_id": "013",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style color photograph, medium close-up of Mexican singer Juan Gabriel on a concert stage singing into a vintage microphone, face contorted with raw pain and eyes glistening as his voice cracks, dramatic stage lighting with warm spotlights highlighting his flamboyant performance attire, conveying deep carried trauma, intense and vulnerable mood, photorealistic, historically believable live setting, 16:9 aspect ratio, no text, no logos, no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 013-singing-with-mariachi-violinist.png assigned manually.",
           "image_path": "images/036.png",
-          "generated_at": "2026-07-14T04:42:11.694201+00:00"
+          "generated_at": "2026-07-14T04:42:11.694201+00:00",
+          "historical_search": "Juan Gabriel live performance",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "live performances",
+            "required_terms": [
+              "singing",
+              "emotional"
+            ],
+            "avoid_terms": [
+              "desk",
+              "writing",
+              "private"
+            ],
+            "search_queries": [
+              "Juan Gabriel live performance",
+              "Juan Gabriel singing on stage",
+              "Juan Gabriel emotional concert",
+              "Juan Gabriel microphone"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -977,7 +1703,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/037.png",
-          "generated_at": "2026-07-14T04:42:17.254335+00:00"
+          "generated_at": "2026-07-14T04:42:17.254335+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "Mother's Day in Latin America",
+            "required_terms": [
+              "cemetery grave",
+              "flowers"
+            ],
+            "avoid_terms": [
+              "crowds",
+              "musician",
+              "text"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 38,
@@ -994,7 +1736,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/038.png",
-          "generated_at": "2026-07-14T04:42:23.134625+00:00"
+          "generated_at": "2026-07-14T04:42:23.134625+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "Mother's Day in Latin America",
+            "required_terms": [
+              "cemetery landscape",
+              "multiple graves"
+            ],
+            "avoid_terms": [
+              "closeups",
+              "people in foreground",
+              "urban"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1017,14 +1775,40 @@
           "end_seconds": 310.638,
           "estimated_seconds": 8.255,
           "visual_intent": "Juan Gabriel delivering an exhaustive passionate performance on stage",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/005-full-mariachi-orchestra.jpg",
+            "library_filename": "005-full-mariachi-orchestra.jpg",
+            "library_id": "005",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style cinematic shot of Juan Gabriel the iconic Mexican singer performing with deep emotion and visible fatigue on a concert stage after hours of singing, wide framing capturing his full figure in flamboyant era-appropriate attire under warm theatrical spotlights, subtle haze in the air, faint audience silhouettes in the background, film grain, sincere and tireless human mood, historical Mexican music venue setting, natural lighting and shadows, no text logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 005-full-mariachi-orchestra.jpg assigned manually.",
           "image_path": "images/039.png",
-          "generated_at": "2026-07-14T04:42:30.188456+00:00"
+          "generated_at": "2026-07-14T04:42:30.188456+00:00",
+          "historical_search": "Juan Gabriel live concert performance",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "1980s",
+            "required_terms": [
+              "on stage",
+              "singing",
+              "concert"
+            ],
+            "avoid_terms": [
+              "studio",
+              "interview"
+            ],
+            "search_queries": [
+              "Juan Gabriel performing live on stage",
+              "Juan Gabriel concert performance",
+              "Juan Gabriel singing onstage"
+            ]
+          }
         },
         {
           "shot_number": 40,
@@ -1034,14 +1818,40 @@
           "end_seconds": 318.893,
           "estimated_seconds": 8.255,
           "visual_intent": "Juan Gabriel standing at the stage door signing autographs late at night",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/015-applauding-on-stage.png",
+            "library_filename": "015-applauding-on-stage.png",
+            "library_id": "015",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style cinematic shot framed at eye level outside a concert venue stage door at night, Juan Gabriel standing humbly among a small group of everyday fans as he signs autographs, medium-wide composition showing his approachable posture and their grateful faces, dim practical lighting from overhead venue lamps casting gentle glows and long shadows, cool night atmosphere with vintage cars and architecture in soft focus behind, film grain, sincere and human mood, era-appropriate clothing, no text logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 015-applauding-on-stage.png assigned manually.",
           "image_path": "images/040.png",
-          "generated_at": "2026-07-14T04:42:37.079184+00:00"
+          "generated_at": "2026-07-14T04:42:37.079184+00:00",
+          "historical_search": "Juan Gabriel signing autographs fans after concert",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "1980s",
+            "required_terms": [
+              "with fans",
+              "autographs",
+              "stage door"
+            ],
+            "avoid_terms": [
+              "performing",
+              "on stage"
+            ],
+            "search_queries": [
+              "Juan Gabriel with fans at stage door",
+              "Juan Gabriel signing autographs after show",
+              "Juan Gabriel meeting audience at exit"
+            ]
+          }
         },
         {
           "shot_number": 41,
@@ -1058,7 +1868,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/041.png",
-          "generated_at": "2026-07-14T04:42:43.249305+00:00"
+          "generated_at": "2026-07-14T04:42:43.249305+00:00",
+          "historical_search": "Juan Gabriel charity giving cars",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "1980s",
+            "required_terms": [
+              "generosity",
+              "helping people",
+              "charity"
+            ],
+            "avoid_terms": [
+              "performance",
+              "autographs",
+              "crowd"
+            ],
+            "search_queries": [
+              "Juan Gabriel philanthropy donation",
+              "Juan Gabriel giving car to family",
+              "Juan Gabriel acts of kindness"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1081,14 +1912,39 @@
           "end_seconds": 333.54,
           "estimated_seconds": 6.391,
           "visual_intent": "Juan Gabriel laughing easily at himself during an interview, showing genuine humility",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/006-white-embroidered-stage-costume.jpg",
+            "library_filename": "006-white-embroidered-stage-costume.jpg",
+            "library_id": "006",
+            "curated": true
+          },
           "prompt": "Documentary style close-up cinematic still of Juan Gabriel seated in a simple warmly lit interview room, captured mid natural laugh with crinkled eyes and open smile as if gently mocking himself, soft side lighting creating gentle shadows, humble and approachable expression, period-appropriate attire and vintage furnishings, photorealistic filmic quality with subtle grain, intimate mood, no text or logos, 16:9 aspect ratio",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 006-white-embroidered-stage-costume.jpg assigned manually.",
           "image_path": "images/042.png",
-          "generated_at": "2026-07-14T04:42:48.427118+00:00"
+          "generated_at": "2026-07-14T04:42:48.427118+00:00",
+          "historical_search": "Juan Gabriel laughing interview",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "laughing",
+              "humble"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performing"
+            ],
+            "search_queries": [
+              "Juan Gabriel interview laughing",
+              "Juan Gabriel humorous interview photo",
+              "Juan Gabriel self-deprecating smile"
+            ]
+          }
         },
         {
           "shot_number": 43,
@@ -1098,14 +1954,39 @@
           "end_seconds": 339.931,
           "estimated_seconds": 6.391,
           "visual_intent": "Juan Gabriel combining glamorous presence with sincere gratitude and humility",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/017-arms-wide-with-wine-glass.png",
+            "library_filename": "017-arms-wide-with-wine-glass.png",
+            "library_id": "017",
+            "curated": true
+          },
           "prompt": "Documentary style medium shot cinematic still of Juan Gabriel in elegant glamorous stage-inspired attire sitting in a refined yet understated interview setting, gazing thoughtfully off-camera with a sincere grateful expression as if reflecting on music rescuing him, soft dramatic lighting highlighting his features and clothing textures, genuine humble demeanor mixed with star quality, photorealistic filmic quality with subtle grain, warm inviting mood, no text or logos, 16:9 aspect ratio",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 017-arms-wide-with-wine-glass.png assigned manually.",
           "image_path": "images/043.png",
-          "generated_at": "2026-07-14T04:42:53.942906+00:00"
+          "generated_at": "2026-07-14T04:42:53.942906+00:00",
+          "historical_search": "Juan Gabriel glamorous humble portrait",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "glamorous attire",
+              "humble expression"
+            ],
+            "avoid_terms": [
+              "laughing",
+              "interview"
+            ],
+            "search_queries": [
+              "Juan Gabriel glamorous portrait",
+              "Juan Gabriel elegant humble photo",
+              "Juan Gabriel charismatic stylish image"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1128,14 +2009,41 @@
           "end_seconds": 351.116,
           "estimated_seconds": 11.185,
           "visual_intent": "Juan Gabriel gliding across the stage in an outrageous feathered cape",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/020-orange-suit-opening-jacket.png",
+            "library_filename": "020-orange-suit-opening-jacket.png",
+            "library_id": "020",
+            "curated": true
+          },
           "prompt": "Cinematic documentary-style 16:9 still of Juan Gabriel in the prime of his career gliding gracefully across a concert stage, wearing an extravagant floor-length feathered cape in vibrant colors that flows dramatically behind him, mid-motion capture, warm theatrical spotlights cutting through stage haze, dark background with faint silhouettes of musicians, charismatic and flamboyant yet historically accurate 1970s Mexican live performance atmosphere, realistic film grain, natural color palette, respectful recognizable likeness, no text, no logos, no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 020-orange-suit-opening-jacket.png assigned manually.",
           "image_path": "images/044.png",
-          "generated_at": "2026-07-14T04:43:00.483504+00:00"
+          "generated_at": "2026-07-14T04:43:00.483504+00:00",
+          "historical_search": "Juan Gabriel feathered cape stage",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "performing career",
+            "required_terms": [
+              "feathered cape",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "childhood",
+              "humble home",
+              "beans"
+            ],
+            "search_queries": [
+              "Juan Gabriel feathered cape performance",
+              "Juan Gabriel extravagant stage cape",
+              "Juan Gabriel gliding concert stage",
+              "Juan Gabriel flamboyant live show"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1165,7 +2073,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/045.png",
-          "generated_at": "2026-07-14T04:43:06.763671+00:00"
+          "generated_at": "2026-07-14T04:43:06.763671+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "listener",
+              "smiling"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 46,
@@ -1182,7 +2105,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/046.png",
-          "generated_at": "2026-07-14T04:43:12.226103+00:00"
+          "generated_at": "2026-07-14T04:43:12.226103+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "couple",
+              "holding hands"
+            ],
+            "avoid_terms": [
+              "smiling broadly",
+              "performer"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1212,7 +2150,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/047.png",
-          "generated_at": "2026-07-14T04:43:17.721654+00:00"
+          "generated_at": "2026-07-14T04:43:17.721654+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Juan Gabriel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "orphanage",
+              "children"
+            ],
+            "avoid_terms": [
+              "adult",
+              "concert",
+              "stage"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1242,7 +2196,16 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/048.png",
-          "generated_at": "2026-07-14T04:43:23.637626+00:00"
+          "generated_at": "2026-07-14T04:43:23.637626+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "after 2016",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 49,
@@ -1259,7 +2222,16 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/049.png",
-          "generated_at": "2026-07-14T04:43:29.661429+00:00"
+          "generated_at": "2026-07-14T04:43:29.661429+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "after 2016",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1282,14 +2254,29 @@
           "end_seconds": 400.647,
           "estimated_seconds": 6.791,
           "visual_intent": "A young singer intently practices phrasing with focused emotion in a rehearsal room",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/011-opening-jacket-on-stage.jpg",
+            "library_filename": "011-opening-jacket-on-stage.jpg",
+            "library_id": "011",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 color photograph, medium close-up of a young Latina singer in her twenties with dark hair in casual clothes, standing in a quiet sunlit rehearsal room with wooden floors and large windows, eyes closed in deep concentration while singing, soft natural side lighting, warm earthy tones, thoughtful and dedicated mood, realistic live-action feel, no text, logos, or writing visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 011-opening-jacket-on-stage.jpg assigned manually.",
           "image_path": "images/050.png",
-          "generated_at": "2026-07-14T04:43:36.473046+00:00"
+          "generated_at": "2026-07-14T04:43:36.473046+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "contemporary",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 51,
@@ -1299,14 +2286,29 @@
           "end_seconds": 407.438,
           "estimated_seconds": 6.791,
           "visual_intent": "An elderly grandmother moved to tears while listening to the radio in her home",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/019-pink-suit-emotional-performance.png",
+            "library_filename": "019-pink-suit-emotional-performance.png",
+            "library_id": "019",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 color photograph, medium shot of an elderly Mexican grandmother with graying hair seated on a sofa in a modest traditional living room with simple furnishings, listening to a vintage radio on a side table, gentle tears on her cheek and a bittersweet expression, warm afternoon light from a window, soft shadows, melancholic and nostalgic mood, realistic live-action feel, no text, logos, or writing visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 019-pink-suit-emotional-performance.png assigned manually.",
           "image_path": "images/051.png",
-          "generated_at": "2026-07-14T04:43:43.161604+00:00"
+          "generated_at": "2026-07-14T04:43:43.161604+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "contemporary",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 52,
@@ -1316,14 +2318,29 @@
           "end_seconds": 414.229,
           "estimated_seconds": 6.791,
           "visual_intent": "A smiling little boy plays an old piano in a peaceful afterlife setting",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/021-white-suit-with-stage-performers.png",
+            "library_filename": "021-white-suit-with-stage-performers.png",
+            "library_id": "021",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 color photograph, wide shot of a young Mexican boy with dark hair sitting at an old wooden upright piano, pure joyful smile on his face as he plays, set in a bright ethereal open space with soft glowing diffused light suggesting peace after life, timeless and hopeful atmosphere, gentle backlighting, realistic yet dreamlike quality, no text, logos, or writing visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 021-white-suit-with-stage-performers.png assigned manually.",
           "image_path": "images/052.png",
-          "generated_at": "2026-07-14T04:43:48.581829+00:00"
+          "generated_at": "2026-07-14T04:43:48.581829+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "childhood",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1346,14 +2363,36 @@
           "end_seconds": 426.212,
           "estimated_seconds": 11.983,
           "visual_intent": "Young Juan Gabriel as an orphan expressing deep feelings through unrestrained song in a sparse orphanage",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/008-floral-jacket-mariachi-performance.jpg",
+            "library_filename": "008-floral-jacket-mariachi-performance.jpg",
+            "library_id": "008",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style image of a young Mexican boy representing Juan Gabriel as an orphan, standing in a modest mid-20th century Mexican orphanage room with plain wooden beds and high windows in soft focus background, medium-wide framing with slight low angle, singing with open arms and raw passionate expression as if sharing emotions at full volume, gentle natural daylight creating warm earthy tones and soft shadows, introspective yet powerful mood, realistic historical detail, subtle film grain, no text no logos no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 008-floral-jacket-mariachi-performance.jpg assigned manually.",
           "image_path": "images/053.png",
-          "generated_at": "2026-07-14T04:43:55.123913+00:00"
+          "generated_at": "2026-07-14T04:43:55.123913+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "childhood",
+            "required_terms": [
+              "orphan",
+              "singing"
+            ],
+            "avoid_terms": [
+              "adult",
+              "stage",
+              "audience"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1376,20 +2415,43 @@
           "end_seconds": 435.0,
           "estimated_seconds": 8.788,
           "visual_intent": "A serene listener sitting peacefully in a cozy living room, eyes closed in deep emotional connection as the music plays",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/juan_gabriel/photos/016-presenting-mariachi-trumpet-solo.png",
+            "library_filename": "016-presenting-mariachi-trumpet-solo.png",
+            "library_id": "016",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 image, intimate medium shot of a person seated comfortably in an armchair within a warmly lit living room, eyes gently closed with a soft peaceful expression conveying belonging, golden natural window light casting gentle warmth across the scene, soft focus on lived-in domestic details in background, nostalgic heartfelt mood, realistic filmic look with subtle grain, natural color palette, no text logos or markings",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 016-presenting-mariachi-trumpet-solo.png assigned manually.",
           "image_path": "images/054.png",
-          "generated_at": "2026-07-14T04:44:00.405825+00:00"
+          "generated_at": "2026-07-14T04:44:00.405825+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "later career",
+            "required_terms": [
+              "emotional connection",
+              "peaceful expression"
+            ],
+            "avoid_terms": [
+              "stage",
+              "concert",
+              "microphone",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
     }
   ],
-  "updated_at": "2026-07-14T04:44:00.434864+00:00",
+  "updated_at": "2026-07-16T20:40:31.834425+00:00",
   "visual_plan_ready": true,
   "images_ready": true
 }

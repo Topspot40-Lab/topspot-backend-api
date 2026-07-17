@@ -1,0 +1,2695 @@
+{
+  "version": 1,
+  "production_slug": "luis_miguel",
+  "source": {
+    "type": "artist_story",
+    "id": 777,
+    "language_code": "en",
+    "locale_id": 75
+  },
+  "title": "Luis Miguel",
+  "subtitle": "The Story of Luis Miguel",
+  "narration_duration_seconds": 489.0,
+  "target_image_seconds": 8.0,
+  "scene_count": 44,
+  "visual_shot_count": 62,
+  "created_at": "2026-07-14T04:11:06.055257+00:00",
+  "scenes": [
+    {
+      "scene_number": 1,
+      "narration": "Luis Miguel never really had a choice about becoming a star. The voice was simply there from the beginning, rich and warm even when it belonged to a boy who still had to stand on a wooden crate to reach the microphone.",
+      "word_count": 42,
+      "start_seconds": 0.0,
+      "end_seconds": 16.779,
+      "estimated_seconds": 16.779,
+      "visual_intent": "Luis Miguel never really had a choice about becoming a star.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 1,
+          "scene_shot_number": 1,
+          "filename": "001.png",
+          "start_seconds": 0.0,
+          "end_seconds": 8.39,
+          "estimated_seconds": 8.39,
+          "visual_intent": "Young Luis Miguel as a boy standing on a wooden crate to reach a tall microphone while singing",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/luis_miguel/photos/009-early-career-performance.png",
+            "library_filename": "009-early-career-performance.png",
+            "library_id": "009",
+            "curated": true
+          },
+          "prompt": "Photorealistic documentary style 16:9 still, wide low-angle shot of a young boy version of Luis Miguel with dark hair standing on a simple wooden crate to reach a tall vintage microphone on a stand, captured mid-performance on a modest stage, warm tungsten stage lighting with gentle shadows, intimate nostalgic mood, simple 1970s Mexican venue background softly out of focus, cinematic composition, historically believable details, no text, no logos, no writing",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 009-early-career-performance.png assigned manually.",
+          "image_path": "images/001.png",
+          "generated_at": "2026-07-14T04:24:53.315893+00:00",
+          "historical_search": "Luis Miguel childhood microphone performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "wooden crate",
+              "microphone",
+              "singing"
+            ],
+            "avoid_terms": [
+              "adult",
+              "studio booth",
+              "modern equipment"
+            ],
+            "search_queries": [
+              "Luis Miguel child singer on stage",
+              "young Luis Miguel wooden crate microphone",
+              "early Luis Miguel live performance",
+              "Luis Miguel boy singing vintage mic"
+            ]
+          }
+        },
+        {
+          "shot_number": 2,
+          "scene_shot_number": 2,
+          "filename": "002.png",
+          "start_seconds": 8.39,
+          "end_seconds": 16.779,
+          "estimated_seconds": 8.39,
+          "visual_intent": "Close-up of the boy's face conveying the rich warm quality of his voice",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Photorealistic documentary style 16:9 still, tight close-up on the face of young Luis Miguel as a boy singing with eyes softly closed and mature emotional expression, warm golden lighting highlighting facial features, vintage microphone visible at edge of frame, soft dramatic side lighting, intimate and powerful mood, clean background, historically believable details for classic era performances, cinematic depth, no text, no logos, no writing",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/002.png",
+          "generated_at": "2026-07-14T04:24:58.949723+00:00",
+          "historical_search": "young Luis Miguel singing close-up",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "singing",
+              "youthful face",
+              "expressive performance"
+            ],
+            "avoid_terms": [
+              "crate",
+              "full body",
+              "adult"
+            ],
+            "search_queries": [
+              "young Luis Miguel singing close up",
+              "Luis Miguel child vocalist portrait",
+              "early Luis Miguel performance face",
+              "Luis Miguel boy rich voice expression"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 2,
+      "narration": "You can hear that destined quality in those very first recordings, a depth that made people stop and listen twice.",
+      "word_count": 20,
+      "start_seconds": 16.779,
+      "end_seconds": 24.77,
+      "estimated_seconds": 7.99,
+      "visual_intent": "You can hear that destined quality in those very first recordings, a depth that made people stop and listen twice.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 3,
+          "scene_shot_number": 1,
+          "filename": "003.png",
+          "start_seconds": 16.779,
+          "end_seconds": 24.77,
+          "estimated_seconds": 7.99,
+          "visual_intent": "Listeners pausing mid-action with captivated expressions as they focus on the music",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary-style photograph, wide framing inside a modest Mexican living room of the vintage analog era, several people of varied ages and backgrounds frozen in place while listening, one woman halted mid-step carrying a tray, a man leaning forward in his chair with hand on chin, another figure paused at the doorway, all faces showing rapt attention and subtle surprise, soft diffused natural light from windows casting gentle shadows, warm earthy color palette, thoughtful and immersive mood, historically believable details, realistic live-action feel, no text, logos, writing or album covers",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/003.png",
+          "generated_at": "2026-07-14T04:25:05.801931+00:00",
+          "historical_search": "young Luis Miguel recording studio",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "young",
+              "studio microphone"
+            ],
+            "avoid_terms": [
+              "adult",
+              "live concert"
+            ],
+            "search_queries": [
+              "young Luis Miguel in recording studio",
+              "Luis Miguel early recordings archival",
+              "Luis Miguel child singer microphone",
+              "Luis Miguel first album session photos"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 3,
+      "narration": "But the story behind the voice is far more complicated than the golden image that eventually beamed from every magazine cover in Latin America.",
+      "word_count": 24,
+      "start_seconds": 24.77,
+      "end_seconds": 34.358,
+      "estimated_seconds": 9.588,
+      "visual_intent": "But the story behind the voice is far more complicated than the golden image that eventually beamed from every magazine cover in Latin America.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 4,
+          "scene_shot_number": 1,
+          "filename": "004.png",
+          "start_seconds": 24.77,
+          "end_seconds": 34.358,
+          "estimated_seconds": 9.588,
+          "visual_intent": "Luis Miguel projecting a flawless golden image under warm glowing light with subtle shadows hinting at hidden complexity",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary-style photorealistic still, medium close-up of recognizable Mexican singer Luis Miguel in elegant 1980s tailored suit with perfectly styled hair, standing in a softly lit luxurious Latin American interior, rich golden side lighting creating a beaming halo glow across his face and shoulders while deep shadows fall on the opposite side suggesting untold depths, charismatic yet enigmatic expression looking just off camera, sophisticated and intriguing mood, subtle film grain, natural window light, historically believable details, no text, logos, writing or magazine covers visible",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/004.png",
+          "generated_at": "2026-07-14T04:25:11.976864+00:00",
+          "historical_search": "Luis Miguel young portrait photo",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "studio portrait",
+              "confident smile",
+              "young adult"
+            ],
+            "avoid_terms": [
+              "child",
+              "on stage",
+              "family"
+            ],
+            "search_queries": [
+              "Luis Miguel early career portrait",
+              "Luis Miguel young studio headshot",
+              "Luis Miguel polished smiling photo",
+              "Luis Miguel charismatic close-up"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 4,
+      "narration": "His father, Luis Rey, recognized the gift immediately and treated it like currency. The man had been a struggling singer himself, and suddenly he saw in his son the ticket to everything he’d never achieved.",
+      "word_count": 35,
+      "start_seconds": 34.358,
+      "end_seconds": 48.341,
+      "estimated_seconds": 13.983,
+      "visual_intent": "His father, Luis Rey, recognized the gift immediately and treated it like currency.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 5,
+          "scene_shot_number": 1,
+          "filename": "005.png",
+          "start_seconds": 34.358,
+          "end_seconds": 41.349,
+          "estimated_seconds": 6.991,
+          "visual_intent": "Luis Rey listening intently to his young son with sudden recognition of his singing gift",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary-style 16:9 cinematic shot, medium close-up inside a modest 1970s Mexican apartment, middle-aged Luis Rey seated on a worn sofa leaning forward with an expression of dawning realization, warm natural daylight from a side window casting soft shadows across his face, young Luis Miguel visible in soft focus in the mid-ground singing, period clothing and simple furnishings, realistic live-action feel, contemplative mood, no text or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/005.png",
+          "generated_at": "2026-07-14T04:25:17.352038+00:00",
+          "historical_search": "Luis Rey with young Luis Miguel",
+          "historical_plan": {
+            "subject": "Luis Rey and Luis Miguel",
+            "subject_type": "group",
+            "era": "childhood",
+            "required_terms": [
+              "Luis Rey",
+              "young son"
+            ],
+            "avoid_terms": [
+              "teenager",
+              "large stage",
+              "modern"
+            ],
+            "search_queries": [
+              "Luis Rey with young Luis Miguel",
+              "Luis Miguel childhood father photos",
+              "early Luis Rey and son images"
+            ]
+          }
+        },
+        {
+          "shot_number": 6,
+          "scene_shot_number": 2,
+          "filename": "006.png",
+          "start_seconds": 41.349,
+          "end_seconds": 48.341,
+          "estimated_seconds": 6.991,
+          "visual_intent": "Luis Rey gazing at his son with opportunistic ambition, seeing him as the path to unfulfilled success",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary-style 16:9 cinematic shot, medium side-angle profile in a humble 1970s Mexican home, Luis Rey standing slightly behind his young son with an intense, calculating expression as if envisioning future glory, cool dramatic side lighting creating contrast and depth, both in period-appropriate attire, realistic and moody atmosphere with subtle film grain, no text or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/006.png",
+          "generated_at": "2026-07-14T04:25:23.426311+00:00",
+          "historical_search": "Luis Rey early career singer",
+          "historical_plan": {
+            "subject": "Luis Rey",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "Luis Rey",
+              "singer"
+            ],
+            "avoid_terms": [
+              "Luis Miguel",
+              "famous",
+              "with child"
+            ],
+            "search_queries": [
+              "young Luis Rey singer photos",
+              "Luis Rey early career performance",
+              "vintage Luis Rey Spanish singer"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 5,
+      "narration": "By the time Luis Miguel was eleven he was already on national television, a small boy in a grown-up tuxedo delivering adult emotions with a maturity that felt almost supernatural.",
+      "word_count": 30,
+      "start_seconds": 48.341,
+      "end_seconds": 60.326,
+      "estimated_seconds": 11.985,
+      "visual_intent": "By the time Luis Miguel was eleven he was already on national television, a small boy in a grown-up tuxedo delivering adult emotions with a maturity that felt almost supernatural.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 7,
+          "scene_shot_number": 1,
+          "filename": "007.png",
+          "start_seconds": 48.341,
+          "end_seconds": 60.326,
+          "estimated_seconds": 11.985,
+          "visual_intent": "Young Luis Miguel as a small boy in an oversized tuxedo singing with supernatural maturity on national television",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary style photorealistic image of eleven-year-old Luis Miguel standing center stage on a vintage national television studio set, small child body wearing a formal adult black tuxedo jacket and bow tie that hangs slightly large on his frame, captured mid-performance singing with intense adult emotion and an almost supernatural mature expression on his youthful face, warm dramatic stage lighting with soft spotlights, simple period curtain backdrop, medium-wide eye-level shot, historically accurate early career details, respectful recognizable portrayal, solemn and captivating mood, no text, no logos, no watermarks",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/007.png",
+          "generated_at": "2026-07-14T04:25:29.312473+00:00",
+          "historical_search": "Luis Miguel age 11 television performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "tuxedo",
+              "young performer",
+              "television stage"
+            ],
+            "avoid_terms": [
+              "adult Luis Miguel",
+              "casual clothing",
+              "modern stage"
+            ],
+            "search_queries": [
+              "Luis Miguel child TV performance",
+              "young Luis Miguel tuxedo singing",
+              "Luis Miguel eleven national television",
+              "early Luis Miguel television appearance"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 6,
+      "narration": "The audience fell hard. What they didn’t see was the price being paid backstage. The endless rehearsals, the missed childhood, the father who controlled every minute of his life.",
+      "word_count": 29,
+      "start_seconds": 60.326,
+      "end_seconds": 71.912,
+      "estimated_seconds": 11.586,
+      "visual_intent": "The audience fell hard.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 8,
+          "scene_shot_number": 1,
+          "filename": "008.png",
+          "start_seconds": 60.326,
+          "end_seconds": 71.912,
+          "estimated_seconds": 11.586,
+          "visual_intent": "Young Luis Miguel rehearsing wearily under the strict gaze of his controlling father backstage",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style still in 16:9 aspect ratio, medium-wide side angle shot inside a sparse vintage rehearsal room with plain walls, wooden floor, and single microphone stand. A tired young Luis Miguel, teenage Latino boy with dark hair in a formal suit, sings with visible exhaustion and strain into the microphone. His father Luis Rey stands nearby in a suit with arms crossed and stern authoritative expression, watching his every move. Dramatic side lighting casts long shadows across the space, somber and tense mood conveying pressure, lost childhood, and hidden personal cost, realistic historical recreation, no text, no logos, no watermarks",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/008.png",
+          "generated_at": "2026-07-14T04:25:35.301987+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "rehearsal",
+              "father"
+            ],
+            "avoid_terms": [
+              "stage",
+              "audience",
+              "performance"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 7,
+      "narration": "Luis Rey wasn’t just managing a career. He was manufacturing one. Yet even under that pressure, something authentic kept breaking through.",
+      "word_count": 21,
+      "start_seconds": 71.912,
+      "end_seconds": 80.301,
+      "estimated_seconds": 8.39,
+      "visual_intent": "Luis Rey wasn’t just managing a career.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 9,
+          "scene_shot_number": 1,
+          "filename": "009.png",
+          "start_seconds": 71.912,
+          "end_seconds": 80.301,
+          "estimated_seconds": 8.39,
+          "visual_intent": "Luis Rey standing sternly in the control room overseeing production as Luis Miguel sings with raw authentic emotion breaking through",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary-style shot inside a dimly lit vintage Mexican recording studio, middle-aged Luis Rey visible through control-room glass with an intense controlling expression as he watches, Luis Miguel standing at a vintage microphone in the vocal booth with eyes closed delivering a passionate heartfelt vocal performance conveying genuine authenticity, dramatic warm key light on the singer contrasting with cooler shadows in the control room, subtle film grain, moody and pressurized atmosphere, historically believable period studio details with analog equipment, no text, no logos, no writing",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/009.png",
+          "generated_at": "2026-07-14T04:25:41.068374+00:00",
+          "historical_search": "Luis Miguel early career performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "emotional expression"
+            ],
+            "avoid_terms": [
+              "adult",
+              "casual",
+              "with manager"
+            ],
+            "search_queries": [
+              "Luis Miguel singing with emotion",
+              "Luis Miguel live performance archival",
+              "Luis Miguel passionate early concert",
+              "Luis Miguel genuine stage expression"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 8,
+      "narration": "There’s a story from those early years that tells you everything about the young singer’s character.",
+      "word_count": 16,
+      "start_seconds": 80.301,
+      "end_seconds": 86.694,
+      "estimated_seconds": 6.392,
+      "visual_intent": "There’s a story from those early years that tells you everything about the young singer’s character.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 10,
+          "scene_shot_number": 1,
+          "filename": "010.png",
+          "start_seconds": 80.301,
+          "end_seconds": 86.694,
+          "estimated_seconds": 6.392,
+          "visual_intent": "Close-up portrait of young Luis Miguel conveying strength of character in his early years",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Photorealistic 16:9 documentary style cinematic shot, medium close-up of a young Luis Miguel as a child performer, serious and determined expression on his face that reveals inner character and drive, soft warm side lighting from a window, modest interior setting in Mexico during his early years, subtle film grain, nostalgic and introspective mood, historically accurate hairstyle and simple clothing of the period, natural color palette, no text, no logos, no watermarks",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/010.png",
+          "generated_at": "2026-07-14T04:25:47.231244+00:00",
+          "historical_search": "young Luis Miguel early career",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "young",
+              "singer",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "adult",
+              "recent",
+              "studio"
+            ],
+            "search_queries": [
+              "young Luis Miguel performing on stage",
+              "Luis Miguel child singer photos",
+              "early Luis Miguel concert images",
+              "young Luis Miguel with microphone"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 9,
+      "narration": "During one important television appearance, the boy froze under the hot lights. Millions were watching. Instead of pushing through or pretending, he simply walked off the stage.",
+      "word_count": 27,
+      "start_seconds": 86.694,
+      "end_seconds": 97.48,
+      "estimated_seconds": 10.787,
+      "visual_intent": "During one important television appearance, the boy froze under the hot lights.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 11,
+          "scene_shot_number": 1,
+          "filename": "011.png",
+          "start_seconds": 86.694,
+          "end_seconds": 97.48,
+          "estimated_seconds": 10.787,
+          "visual_intent": "Young Luis Miguel frozen under hot television lights before walking off stage",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary style photograph, wide side-angle shot inside a vintage television studio, young Luis Miguel as a boy standing center stage under intense bright hot spotlights that create harsh highlights and visible heat haze, his face shows sudden overwhelm and paralysis as he begins to turn and walk toward the wing, old-fashioned studio cameras positioned around the stage perimeter, indistinct audience seated in darkened background, dramatic high-contrast lighting with strong pools of white light on the boy against cooler peripheral shadows, poignant and vulnerable mood, realistic historical recreation with period-appropriate stage and formal boy singer attire, photorealistic, no text or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/011.png",
+          "generated_at": "2026-07-14T04:25:53.450084+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "television stage",
+              "bright lights"
+            ],
+            "avoid_terms": [
+              "adult",
+              "singing",
+              "smiling"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 10,
+      "narration": "His father was furious. The producers were horrified. But the child had already learned something most adult performers never master: respect for the song.",
+      "word_count": 24,
+      "start_seconds": 97.48,
+      "end_seconds": 107.069,
+      "estimated_seconds": 9.588,
+      "visual_intent": "His father was furious.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 12,
+          "scene_shot_number": 1,
+          "filename": "012.png",
+          "start_seconds": 97.48,
+          "end_seconds": 107.069,
+          "estimated_seconds": 9.588,
+          "visual_intent": "Young Luis Miguel singing with deep respect and concentration while his father stands furious and producers look on horrified in the background",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary-style recreation of an early 1980s Mexican recording studio, young Luis Miguel as a child stands centered at a vintage microphone with eyes closed singing in profound respectful concentration, soft dramatic lighting focused on him, his father visible in mid-ground with furious expression and crossed arms, record producers behind glass in control room looking horrified, warm tungsten tones, somber intense mood, subtle film grain, historically accurate clothing and equipment, realistic live-action feel, no text or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "image_path": "images/012.png",
+          "generated_at": "2026-07-14T04:26:00.476192+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "young singer",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "adult",
+              "audience"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 11,
+      "narration": "If he couldn’t feel it that night, he wouldn’t fake it. That stubborn integrity would define him long after the boy had become a man.",
+      "word_count": 25,
+      "start_seconds": 107.069,
+      "end_seconds": 117.056,
+      "estimated_seconds": 9.988,
+      "visual_intent": "If he couldn’t feel it that night, he wouldn’t fake it.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 13,
+          "scene_shot_number": 1,
+          "filename": "013.png",
+          "start_seconds": 107.069,
+          "end_seconds": 117.056,
+          "estimated_seconds": 9.988,
+          "visual_intent": "Adult Luis Miguel standing alone on stage with a resolute, uncompromised expression that reveals his stubborn integrity",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic 16:9 documentary-style image of recognizable adult Luis Miguel standing alone on a wooden concert stage, medium-wide eye-level framing, wearing a simple dark suit with open collar, warm theatrical spotlight from above casting soft shadows across his face, quiet empty auditorium visible in soft focus behind him, thoughtful and determined mood conveying inner strength and authenticity, late twentieth century Latin music performance setting, realistic film grain, naturalistic colors, no text, no logos, no watermarks",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel live performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "adulthood",
+            "required_terms": [
+              "live stage",
+              "singing"
+            ],
+            "avoid_terms": [
+              "child",
+              "boy",
+              "duet"
+            ],
+            "search_queries": [
+              "Luis Miguel live concert performance",
+              "Luis Miguel singing on stage",
+              "Luis Miguel passionate live show",
+              "archival Luis Miguel adult performance"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 12,
+      "narration": "The private pain running beneath the public triumph was even deeper than anyone knew. When Luis Miguel was sixteen, his mother, Marcela Basteri, disappeared during a trip to Spain.",
+      "word_count": 29,
+      "start_seconds": 117.056,
+      "end_seconds": 128.642,
+      "estimated_seconds": 11.586,
+      "visual_intent": "The private pain running beneath the public triumph was even deeper than anyone knew.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 14,
+          "scene_shot_number": 1,
+          "filename": "014.png",
+          "start_seconds": 117.056,
+          "end_seconds": 128.642,
+          "estimated_seconds": 11.586,
+          "visual_intent": "Teenage Luis Miguel sitting alone, his face quietly revealing deep private pain",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary-style cinematic still, intimate medium close-up of a sixteen-year-old Luis Miguel seated alone in a quiet dimly lit 1980s residential room, soft side window light gently illuminating his face while leaving parts in shadow, wearing period-appropriate simple clothing, sorrowful and introspective expression conveying hidden grief, melancholic and restrained mood, realistic historically grounded details, natural color palette, no text, no logos, no watermarks",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Marcela Basteri portrait",
+          "historical_plan": {
+            "subject": "Marcela Basteri",
+            "subject_type": "person",
+            "era": "when Luis Miguel was sixteen",
+            "required_terms": [
+              "Marcela Basteri",
+              "mother"
+            ],
+            "avoid_terms": [
+              "Luis Miguel",
+              "stage"
+            ],
+            "search_queries": [
+              "Marcela Basteri archival photo",
+              "Marcela Basteri Luis Miguel mother",
+              "Marcela Basteri portrait",
+              "Marcela Basteri Spain"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 13,
+      "narration": "One day she was there, the quiet center of his universe. The next, she was gone.",
+      "word_count": 16,
+      "start_seconds": 128.642,
+      "end_seconds": 135.034,
+      "estimated_seconds": 6.392,
+      "visual_intent": "One day she was there, the quiet center of his universe.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 15,
+          "scene_shot_number": 1,
+          "filename": "015.png",
+          "start_seconds": 128.642,
+          "end_seconds": 135.034,
+          "estimated_seconds": 6.392,
+          "visual_intent": "Empty chair standing alone in a quiet domestic interior conveying sudden absence and loss",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary cinematic still, wide static shot of a modest Mexican home interior with simple wooden furniture and tiled floors, an empty chair positioned as the quiet center of the room, soft natural daylight from a single window casting long gentle shadows across the space, warm earthy tones with subtle dust motes in the light beams, somber reflective mood of emptiness and longing, peaceful yet heavy atmosphere, historically believable mid-20th century details, realistic live-action documentary style, no people, no text, no logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Marcela Basteri 1970s home",
+          "historical_plan": {
+            "subject": "Marcela Basteri",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "quiet domestic",
+              "home interior"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "public event"
+            ],
+            "search_queries": [
+              "Marcela Basteri candid home 1970s",
+              "Luis Miguel mother family photos",
+              "Marcela Basteri domestic portrait",
+              "1970s Mexican family mother interior"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 14,
+      "narration": "No body. No explanation that ever satisfied. To this day the circumstances remain shrouded in mystery, and he has never spoken about it publicly.",
+      "word_count": 24,
+      "start_seconds": 135.034,
+      "end_seconds": 144.623,
+      "estimated_seconds": 9.588,
+      "visual_intent": "No body.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 16,
+          "scene_shot_number": 1,
+          "filename": "016.png",
+          "start_seconds": 135.034,
+          "end_seconds": 144.623,
+          "estimated_seconds": 9.588,
+          "visual_intent": "Luis Miguel stands alone partially veiled in shadow, conveying public silence and unresolved mystery",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary style photograph of Luis Miguel as an adult man standing alone in a dimly lit elegant room, body facing slightly away while his partially shadowed face looks into the distance, low-key dramatic lighting with deep shadows and subtle highlights, somber and mysterious mood, late twentieth century interior details, photorealistic, respectful representation, no text, no logos, no writing, no album covers",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "adult years",
+            "required_terms": [
+              "solo portrait",
+              "serious expression"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "smiling"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 15,
+      "narration": "Those of us who have followed his music for decades can only hear the absence in certain ballads, the way some phrases seem to carry an extra weight, a sorrow too personal for words.",
+      "word_count": 34,
+      "start_seconds": 144.623,
+      "end_seconds": 158.206,
+      "estimated_seconds": 13.583,
+      "visual_intent": "Those of us who have followed his music for decades can only hear the absence in certain ballads, the way some phrases seem to carry an extra weight, a sorrow too personal for...",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 17,
+          "scene_shot_number": 1,
+          "filename": "017.png",
+          "start_seconds": 144.623,
+          "end_seconds": 151.414,
+          "estimated_seconds": 6.792,
+          "visual_intent": "Close-up of Luis Miguel singing a ballad with eyes closed and profound emotional sorrow",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary style extreme close-up of Luis Miguel singing a ballad into a microphone, eyes closed, face conveying deep personal sorrow and weighted emotion, soft dramatic side lighting with gentle shadows across his features, intimate performance setting with warm moody tones, melancholic and introspective atmosphere, historically grounded late twentieth century Latin music performance, photorealistic, natural film grain, 16:9 aspect ratio",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "late 20th century",
+            "required_terms": [
+              "pensive expression",
+              "sorrow"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "smiling",
+              "youthful"
+            ],
+            "search_queries": []
+          }
+        },
+        {
+          "shot_number": 18,
+          "scene_shot_number": 2,
+          "filename": "018.png",
+          "start_seconds": 151.414,
+          "end_seconds": 158.206,
+          "estimated_seconds": 6.792,
+          "visual_intent": "Wide shot of Luis Miguel alone on stage under spotlight emphasizing isolation and absence",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary style wide shot of Luis Miguel standing solitary in a pool of light on an otherwise empty stage, body language conveying heavy unspoken sorrow, vast dark space around him suggesting absence, single overhead spotlight with cool blue edges and warm center tones, somber and reflective mood, historically grounded concert setting for Latin ballads, photorealistic, natural film grain, 16:9 aspect ratio",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel emotional ballad performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "singing",
+              "emotional expression"
+            ],
+            "avoid_terms": [
+              "smiling",
+              "upbeat",
+              "crowd"
+            ],
+            "search_queries": [
+              "Luis Miguel singing ballad close-up",
+              "Luis Miguel emotional live performance 1990s",
+              "Luis Miguel melancholic stage expression",
+              "Luis Miguel romance ballad concert"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 16,
+      "narration": "The boy who had everything suddenly understood that some losses could never be replaced, no matter how many records he sold or how loudly the crowds cheered.",
+      "word_count": 27,
+      "start_seconds": 158.206,
+      "end_seconds": 168.993,
+      "estimated_seconds": 10.787,
+      "visual_intent": "The boy who had everything suddenly understood that some losses could never be replaced, no matter how many records he sold or how loudly the crowds cheered.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 19,
+          "scene_shot_number": 1,
+          "filename": "019.png",
+          "start_seconds": 158.206,
+          "end_seconds": 168.993,
+          "estimated_seconds": 10.787,
+          "visual_intent": "Young Luis Miguel alone in quiet reflection, his face showing sudden realization of irreplaceable personal loss despite success",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary style photograph, medium close-up of a young Latino man resembling Luis Miguel seated alone in a dimly lit elegant interior, soft dramatic side lighting illuminating his contemplative face and casting gentle shadows, distant thoughtful gaze with melancholic expression conveying profound sadness and understanding, luxurious yet empty surroundings suggesting wealth without fulfillment, realistic live-action aesthetic, somber introspective mood, historically believable period clothing, no text, logos, writing or album covers visible",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "young",
+              "solemn"
+            ],
+            "avoid_terms": [
+              "stage",
+              "crowd",
+              "smiling"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 17,
+      "narration": "Perhaps that’s why, when he reached his early twenties, he began making decisions that surprised everyone.",
+      "word_count": 16,
+      "start_seconds": 168.993,
+      "end_seconds": 175.385,
+      "estimated_seconds": 6.392,
+      "visual_intent": "Perhaps that’s why, when he reached his early twenties, he began making decisions that surprised everyone.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 20,
+          "scene_shot_number": 1,
+          "filename": "020.png",
+          "start_seconds": 168.993,
+          "end_seconds": 175.385,
+          "estimated_seconds": 6.392,
+          "visual_intent": "Young Luis Miguel in his early twenties gazing pensively into the distance, evoking the weight of unexpected personal decisions",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary-style still, close-up portrait of a young Luis Miguel in his early twenties with dark wavy hair and intense dark eyes, wearing a simple open-collar shirt, standing near a window with soft natural side-lighting casting gentle shadows across his face, thoughtful and quietly determined expression suggesting inner resolve, blurred neutral interior background, subtle film grain, realistic and historically believable early-career appearance, moody and introspective atmosphere, no text, no logos, no album covers",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel early twenties",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early twenties",
+            "required_terms": [
+              "young adult",
+              "portrait"
+            ],
+            "avoid_terms": [
+              "child",
+              "teenager",
+              "performing"
+            ],
+            "search_queries": [
+              "Luis Miguel young adult portrait",
+              "Luis Miguel early twenties photo",
+              "Luis Miguel early career close-up",
+              "Luis Miguel 20 years old"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 18,
+      "narration": "The teen idol phase had made him wealthy beyond imagination, but it no longer fed his soul.",
+      "word_count": 17,
+      "start_seconds": 175.385,
+      "end_seconds": 182.176,
+      "estimated_seconds": 6.792,
+      "visual_intent": "The teen idol phase had made him wealthy beyond imagination, but it no longer fed his soul.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 21,
+          "scene_shot_number": 1,
+          "filename": "021.png",
+          "start_seconds": 175.385,
+          "end_seconds": 182.176,
+          "estimated_seconds": 6.792,
+          "visual_intent": "Young Luis Miguel standing alone in an opulent 1980s mansion, gazing emptily out a grand window despite visible luxury around him",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style still in 16:9, 1980s era, recognizable young Luis Miguel as the Mexican singer with characteristic dark hair and period-appropriate elegant clothing, standing pensively in an opulent mansion interior with high ceilings, crystal chandelier, and fine furnishings visible but out of focus behind him, he stares through a large window with a distant and unfulfilled expression conveying inner emptiness, soft cool window light contrasting with warm interior illumination, melancholic and introspective mood, realistic filmic color grading, no text, logos, or writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "teen idol phase",
+            "required_terms": [
+              "introspective expression",
+              "luxury interior"
+            ],
+            "avoid_terms": [
+              "performing",
+              "smiling",
+              "stage"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 19,
+      "narration": "He wanted to sing the music that had filled his parents’ house when he was small, those elegant, heartbreaking boleros that spoke of love in full sentences instead of catchy hooks.",
+      "word_count": 31,
+      "start_seconds": 182.176,
+      "end_seconds": 194.561,
+      "estimated_seconds": 12.385,
+      "visual_intent": "He wanted to sing the music that had filled his parents’ house when he was small, those elegant, heartbreaking boleros that spoke of love in full sentences instead of catchy hooks.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 22,
+          "scene_shot_number": 1,
+          "filename": "022.png",
+          "start_seconds": 182.176,
+          "end_seconds": 188.369,
+          "estimated_seconds": 6.192,
+          "visual_intent": "Record player spinning in a warmly lit parents' living room",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary style cinematic shot of a cozy Mexican family living room, warm intimate lighting from table lamps and window, vintage wooden record player with spinning vinyl record on a side table as the focal point, period-appropriate furniture and soft shadows in the background, nostalgic and reflective mood, historically believable details, no text visible anywhere",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "living room",
+              "record player"
+            ],
+            "avoid_terms": [
+              "people",
+              "modern electronics"
+            ],
+            "search_queries": []
+          }
+        },
+        {
+          "shot_number": 23,
+          "scene_shot_number": 2,
+          "filename": "023.png",
+          "start_seconds": 188.369,
+          "end_seconds": 194.561,
+          "estimated_seconds": 6.192,
+          "visual_intent": "Elegant male singer performing an emotional bolero",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary style cinematic shot of a male bolero singer in a tailored dark suit standing before a vintage microphone, expressive face conveying deep heartbreak and longing, dramatic stage lighting with warm spotlights and rich shadows, intimate classic nightclub setting, elegant and melancholic mood, historically believable details, no text visible anywhere",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1960s",
+            "required_terms": [
+              "bolero singer",
+              "microphone",
+              "stage"
+            ],
+            "avoid_terms": [
+              "guitarist",
+              "large audience",
+              "rock instruments"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 20,
+      "narration": "The record company thought he was crazy. Boleros? In 1991? Who would buy that? The result was “Romance,” an album that didn’t just succeed.",
+      "word_count": 24,
+      "start_seconds": 194.561,
+      "end_seconds": 204.15,
+      "estimated_seconds": 9.588,
+      "visual_intent": "The record company thought he was crazy.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 24,
+          "scene_shot_number": 1,
+          "filename": "024.png",
+          "start_seconds": 194.561,
+          "end_seconds": 204.15,
+          "estimated_seconds": 9.588,
+          "visual_intent": "Luis Miguel performing a bolero passionately on a 1991 concert stage to a large appreciative audience",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style still in 16:9, medium-wide eye-level shot of Luis Miguel on a warmly lit 1991 concert stage, young Mexican singer dressed in elegant dark suit and open-collar shirt singing with deep emotion into a vintage microphone, soft stage lighting with gentle haze, silhouettes of an enthusiastic crowd visible in the background, early 90s theater setting with rich wooden architecture, film grain, naturalistic colors, contemplative and triumphant mood, photorealistic, historically accurate details, no text, no logos, no writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel recording studio 1991",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "1991",
+            "required_terms": [
+              "singing",
+              "studio microphone"
+            ],
+            "avoid_terms": [
+              "concert stage",
+              "audience",
+              "album cover"
+            ],
+            "search_queries": [
+              "Luis Miguel in recording studio 1991",
+              "Luis Miguel vocal session early 1990s",
+              "Luis Miguel Romance album photos 1991",
+              "archival Luis Miguel singing in booth 1991"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 21,
+      "narration": "It changed the temperature of Latin music. Working with the legendary composer Armando Manzanero, Luis Miguel approached those classic songs with the reverence of a scholar and the passion of a heartbroken son.",
+      "word_count": 33,
+      "start_seconds": 204.15,
+      "end_seconds": 217.333,
+      "estimated_seconds": 13.184,
+      "visual_intent": "It changed the temperature of Latin music.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 25,
+          "scene_shot_number": 1,
+          "filename": "025.png",
+          "start_seconds": 204.15,
+          "end_seconds": 210.741,
+          "estimated_seconds": 6.592,
+          "visual_intent": "Luis Miguel and Armando Manzanero collaborating with scholarly reverence over classic sheet music",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary style shot in a sophisticated late 20th century recording studio, young Luis Miguel and older composer Armando Manzanero seated side by side at a grand piano intently studying handwritten musical scores, soft natural light from tall windows mixing with warm desk lamps, calm focused mood conveying deep respect and scholarly attention, medium wide shot at eye level, realistic film grain and period details, no text logos or writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel Armando Manzanero",
+          "historical_plan": {
+            "subject": "Luis Miguel and Armando Manzanero",
+            "subject_type": "group",
+            "era": "early 1990s",
+            "required_terms": [
+              "piano",
+              "studio",
+              "together"
+            ],
+            "avoid_terms": [
+              "stage",
+              "audience",
+              "performance"
+            ],
+            "search_queries": [
+              "Luis Miguel and Armando Manzanero at piano",
+              "Luis Miguel Manzanero recording studio",
+              "Armando Manzanero Luis Miguel working",
+              "Luis Miguel with composer Manzanero"
+            ]
+          }
+        },
+        {
+          "shot_number": 26,
+          "scene_shot_number": 2,
+          "filename": "026.png",
+          "start_seconds": 210.741,
+          "end_seconds": 217.333,
+          "estimated_seconds": 6.592,
+          "visual_intent": "Luis Miguel singing with the raw emotional passion of a heartbroken son",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary style close-up of Luis Miguel singing with intense heartfelt passion into a vintage studio microphone, eyes closed and face filled with raw emotion, dramatic side lighting creating strong contrast and shadows, powerful and moving mood, late 20th century recording studio setting, realistic film grain, no text logos or writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel singing",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "emotional"
+            ],
+            "avoid_terms": [
+              "piano",
+              "Manzanero",
+              "group"
+            ],
+            "search_queries": [
+              "Luis Miguel emotional singing studio",
+              "Luis Miguel passionate vocal performance",
+              "Luis Miguel bolero recording session",
+              "Luis Miguel heartbroken expression"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 22,
+      "narration": "He spent months perfecting every nuance, driving the musicians to exhaustion with his relentless pursuit of perfection.",
+      "word_count": 17,
+      "start_seconds": 217.333,
+      "end_seconds": 224.125,
+      "estimated_seconds": 6.792,
+      "visual_intent": "He spent months perfecting every nuance, driving the musicians to exhaustion with his relentless pursuit of perfection.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 27,
+          "scene_shot_number": 1,
+          "filename": "027.png",
+          "start_seconds": 217.333,
+          "end_seconds": 224.125,
+          "estimated_seconds": 6.792,
+          "visual_intent": "Luis Miguel intently directing fatigued musicians during a grueling studio session",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary-style cinematic still, eye-level medium-wide shot inside a dimly lit analog recording studio with vintage mixing console and microphones, Luis Miguel stands in sharp focus with determined expression and raised hand giving precise instructions, several weary studio musicians seated with instruments show clear exhaustion with slumped postures and tired faces, warm low-key lighting casting long shadows, tense and serious mood of relentless pursuit, realistic film grain and natural color palette, historically believable late-20th-century details, no text, no logos, no watermarks",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "1980s",
+            "required_terms": [
+              "recording studio",
+              "Luis Miguel",
+              "musicians"
+            ],
+            "avoid_terms": [
+              "stage",
+              "concert",
+              "audience"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 23,
+      "narration": "The album sold millions, of course, but the numbers don’t tell the real story. The real story is what happened when middle-aged couples heard “La Mentira” or “No Sé Tú” coming from their children’s bedrooms.",
+      "word_count": 35,
+      "start_seconds": 224.125,
+      "end_seconds": 238.108,
+      "estimated_seconds": 13.983,
+      "visual_intent": "The album sold millions, of course, but the numbers don’t tell the real story.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 28,
+          "scene_shot_number": 1,
+          "filename": "028.png",
+          "start_seconds": 224.125,
+          "end_seconds": 231.116,
+          "estimated_seconds": 6.991,
+          "visual_intent": "Middle-aged couple standing in hallway outside closed child's bedroom door listening to music",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Photorealistic cinematic documentary still in 16:9 aspect ratio, early 1990s middle-class Mexican home interior, medium shot of a middle-aged couple standing still in a narrow hallway before a closed wooden bedroom door, both parents turned toward the door with quiet attention, soft warm daylight from a side window, simple period furniture and wallpaper visible in background, intimate and reflective mood, natural filmic lighting, historically accurate 1990s clothing and hairstyles, no text, logos, or writing visible anywhere",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early 1990s",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
+        },
+        {
+          "shot_number": 29,
+          "scene_shot_number": 2,
+          "filename": "029.png",
+          "start_seconds": 231.116,
+          "end_seconds": 238.108,
+          "estimated_seconds": 6.991,
+          "visual_intent": "Close-up of the middle-aged couple's faces showing emotional reaction while hearing the song",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Photorealistic cinematic documentary still in 16:9 aspect ratio, early 1990s domestic setting, close-up framing on the faces of a middle-aged couple as they listen, subtle expressions of surprise and nostalgia, soft side lighting catching their features, warm intimate mood, shallow depth of field with blurred hallway behind them, historically accurate 1990s appearance, no text, logos, or writing visible anywhere",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early 1990s",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 24,
+      "narration": "Something ancient and beautiful had been returned to them. I love the story Manzanero used to tell about their first meeting.",
+      "word_count": 21,
+      "start_seconds": 238.108,
+      "end_seconds": 246.498,
+      "estimated_seconds": 8.39,
+      "visual_intent": "Something ancient and beautiful had been returned to them.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 30,
+          "scene_shot_number": 1,
+          "filename": "030.png",
+          "start_seconds": 238.108,
+          "end_seconds": 246.498,
+          "estimated_seconds": 8.39,
+          "visual_intent": "Armando Manzanero in a reflective moment evoking the warmth of recounting a personal story",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary style 16:9 medium shot of Armando Manzanero seated in a quiet elegant room with warm wooden tones and soft diffused window light, the renowned Mexican songwriter appears thoughtful and gentle with a subtle smile as if sharing a cherished memory, late twentieth century period clothing, shallow depth of field with blurred classical piano in background, nostalgic and intimate mood, natural filmic lighting, realistic live-action documentary aesthetic, no text, no logos, no writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Armando Manzanero interview",
+          "historical_plan": {
+            "subject": "Armando Manzanero",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "Armando Manzanero",
+              "seated",
+              "interview"
+            ],
+            "avoid_terms": [
+              "performing",
+              "with Luis Miguel",
+              "young"
+            ],
+            "search_queries": [
+              "Armando Manzanero interview photos",
+              "Armando Manzanero seated conversation",
+              "Manzanero composer late career portrait",
+              "Armando Manzanero speaking warmly"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 25,
+      "narration": "The old master composer was skeptical of this young pop star wanting to record his sophisticated material.",
+      "word_count": 17,
+      "start_seconds": 246.498,
+      "end_seconds": 253.289,
+      "estimated_seconds": 6.792,
+      "visual_intent": "The old master composer was skeptical of this young pop star wanting to record his sophisticated material.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 31,
+          "scene_shot_number": 1,
+          "filename": "031.png",
+          "start_seconds": 246.498,
+          "end_seconds": 253.289,
+          "estimated_seconds": 6.792,
+          "visual_intent": "Elderly master composer looks on with clear skepticism toward the young pop star seeking to record his work",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style reenactment in 16:9 aspect ratio, an elderly refined male composer with gray hair and formal attire sits at a wooden desk with sheet music scattered before him, his face showing skeptical furrowed brow and doubtful eyes as he gazes toward a young charismatic male Latin pop singer standing nearby with an eager expression, elegant wood-paneled music studio with grand piano in soft background, warm interior lighting with gentle shadows creating tension and mood of reservation, realistic filmic look with subtle grain, historically believable late twentieth century details, no text, no logos, no writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "late career",
+            "required_terms": [
+              "elderly composer",
+              "skeptical"
+            ],
+            "avoid_terms": [
+              "young singer",
+              "performance",
+              "microphone"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 26,
+      "narration": "Then Luis Miguel opened his mouth and sang. When he finished, Manzanero had tears in his eyes. “This boy,” he said, “understands the bolero better than most people who grew up with it.” That respect between generations became the heart of the project.",
+      "word_count": 43,
+      "start_seconds": 253.289,
+      "end_seconds": 270.468,
+      "estimated_seconds": 17.179,
+      "visual_intent": "Then Luis Miguel opened his mouth and sang.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 32,
+          "scene_shot_number": 1,
+          "filename": "032.png",
+          "start_seconds": 253.289,
+          "end_seconds": 261.879,
+          "estimated_seconds": 8.589,
+          "visual_intent": "Young Luis Miguel singing with deep emotion into a studio microphone",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style medium shot in 16:9 aspect ratio of a young Luis Miguel with dark hair standing in a warmly lit vintage recording studio, singing passionately into a large-diaphragm microphone with eyes closed and expressive face conveying profound feeling, soft dramatic key lighting with gentle shadows, soundproof panels and period equipment visible in the background, intimate and focused mood, historically believable late twentieth century details, no text, logos, or writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel singing bolero",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "young"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "stage"
+            ],
+            "search_queries": [
+              "Luis Miguel young singer studio",
+              "Luis Miguel bolero performance",
+              "Luis Miguel vocal recording early"
+            ]
+          }
+        },
+        {
+          "shot_number": 33,
+          "scene_shot_number": 2,
+          "filename": "033.png",
+          "start_seconds": 261.879,
+          "end_seconds": 270.468,
+          "estimated_seconds": 8.589,
+          "visual_intent": "Armando Manzanero moved to tears while listening",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style close-up shot in 16:9 aspect ratio of Armando Manzanero seated in a recording studio control room, older Mexican composer with characteristic features showing tears glistening in his eyes and a deeply moved, respectful expression, soft side lighting illuminating his face against a subtly blurred studio background, poignant and reflective mood capturing generational admiration, historically grounded details, no text, logos, or writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Armando Manzanero emotional",
+          "historical_plan": {
+            "subject": "Armando Manzanero",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "emotional",
+              "listening"
+            ],
+            "avoid_terms": [
+              "smiling",
+              "young"
+            ],
+            "search_queries": [
+              "Armando Manzanero portrait 1990s",
+              "Armando Manzanero thoughtful expression",
+              "Manzanero composer emotional"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 27,
+      "narration": "In interview after interview, Manzanero would say the same thing with wonder in his voice: “He sings like he has lived a hundred years.”",
+      "word_count": 24,
+      "start_seconds": 270.468,
+      "end_seconds": 280.056,
+      "estimated_seconds": 9.588,
+      "visual_intent": "In interview after interview, Manzanero would say the same thing with wonder in his voice: “He sings like he has lived a hundred years.”",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 34,
+          "scene_shot_number": 1,
+          "filename": "034.png",
+          "start_seconds": 270.468,
+          "end_seconds": 280.056,
+          "estimated_seconds": 9.588,
+          "visual_intent": "Armando Manzanero seated in interview with expression of wonder",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary style cinematic still, medium close-up framing of elderly Armando Manzanero with gray hair and signature mustache, seated comfortably in a quiet interview chair, soft warm side lighting creating gentle shadows across his face, expression of genuine wonder with slightly raised eyebrows and thoughtful eyes looking off-camera as if recalling a profound memory, neutral background with subtle vintage wooden furniture, historical late-20th-century interview setting, realistic live-action film aesthetic, contemplative and respectful mood, natural color grading, high detail, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Armando Manzanero 1990s interview",
+          "historical_plan": {
+            "subject": "Armando Manzanero",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "interview",
+              "Manzanero",
+              "speaking"
+            ],
+            "avoid_terms": [
+              "stage",
+              "Luis Miguel",
+              "performing"
+            ],
+            "search_queries": [
+              "Armando Manzanero interview photos",
+              "Manzanero composer 1990s interview",
+              "Armando Manzanero speaking close up",
+              "Armando Manzanero thoughtful expression"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 28,
+      "narration": "The father who had once pushed him so hard eventually pushed too far. Luis Miguel discovered that millions of dollars had disappeared from his accounts, funneled away by the man he had trusted most.",
+      "word_count": 34,
+      "start_seconds": 280.056,
+      "end_seconds": 293.64,
+      "estimated_seconds": 13.583,
+      "visual_intent": "The father who had once pushed him so hard eventually pushed too far.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 35,
+          "scene_shot_number": 1,
+          "filename": "035.png",
+          "start_seconds": 280.056,
+          "end_seconds": 286.848,
+          "estimated_seconds": 6.792,
+          "visual_intent": "Luis Miguel's father in a dimly lit office conveying moral compromise and betrayal",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary-style cinematic medium shot of Luis Miguel's father Luis Rey, a distinguished middle-aged man in a tailored suit, seated at a large wooden desk in an elegant wood-paneled home office with late twentieth century furnishings, dramatic low-key side lighting casting long shadows across his face and the room, serious and calculating expression, somber and tense mood, historically believable details, no visible text or objects with writing, realistic reenactment, 16:9 aspect ratio",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "Luis Miguel",
+              "serious expression",
+              "indoor setting"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "smiling"
+            ],
+            "search_queries": []
+          }
+        },
+        {
+          "shot_number": 36,
+          "scene_shot_number": 2,
+          "filename": "036.png",
+          "start_seconds": 286.848,
+          "end_seconds": 293.64,
+          "estimated_seconds": 6.792,
+          "visual_intent": "Luis Miguel reacting with shock and sadness to the financial betrayal",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary-style cinematic close-up of Luis Miguel, the Mexican singer in elegant dark clothing, standing in a luxurious living room with soft diffused window light and warm interior tones, expression of stunned disappointment and quiet pain on his face as he looks into the distance, melancholic and introspective mood, late twentieth century opulent setting, historically believable details, no visible text or objects with writing, realistic reenactment, 16:9 aspect ratio",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Rey",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "Luis Rey",
+              "suit and tie",
+              "serious expression"
+            ],
+            "avoid_terms": [
+              "Luis Miguel",
+              "family gathering",
+              "smiling"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 29,
+      "narration": "The legal battle that followed was ugly and public in a way that must have devastated someone so intensely private.",
+      "word_count": 20,
+      "start_seconds": 293.64,
+      "end_seconds": 301.63,
+      "estimated_seconds": 7.99,
+      "visual_intent": "The legal battle that followed was ugly and public in a way that must have devastated someone so intensely private.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 37,
+          "scene_shot_number": 1,
+          "filename": "037.png",
+          "start_seconds": 293.64,
+          "end_seconds": 301.63,
+          "estimated_seconds": 7.99,
+          "visual_intent": "Luis Miguel sitting alone in a dimly lit room conveying private devastation",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style 16:9 shot of recognizable Luis Miguel as a young man with dark hair, seated alone in an elegant dimly lit Mexican residence interior, medium framing from slightly above, soft directional window light casting long shadows across his downturned face and shoulders, somber and introspective mood emphasizing isolation, late twentieth century believable furnishings and clothing, realistic textures, muted color palette, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "mid-career",
+            "required_terms": [
+              "serious expression",
+              "private moment"
+            ],
+            "avoid_terms": [
+              "performing",
+              "smiling",
+              "crowd"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 30,
+      "narration": "To have to sue your own father, to stand in a courtroom and acknowledge that betrayal, would break most people.",
+      "word_count": 20,
+      "start_seconds": 301.63,
+      "end_seconds": 309.62,
+      "estimated_seconds": 7.99,
+      "visual_intent": "To have to sue your own father, to stand in a courtroom and acknowledge that betrayal, would break most people.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 38,
+          "scene_shot_number": 1,
+          "filename": "038.png",
+          "start_seconds": 301.63,
+          "end_seconds": 309.62,
+          "estimated_seconds": 7.99,
+          "visual_intent": "Luis Miguel standing at a courtroom witness stand with a heavy, pained expression acknowledging his father's betrayal",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary cinematic still, medium shot of Luis Miguel in a formal dark suit standing at a wooden witness stand inside a traditional courtroom with dark wood paneling and benches, his face showing deep sorrow and emotional strain as he confronts familial betrayal, soft side lighting from high windows creating gentle shadows across his features, somber and heavy mood, realistic live-action film photography, historically appropriate setting and attire, no text, no logos, no watermarks",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "courtroom",
+              "somber expression"
+            ],
+            "avoid_terms": [
+              "stage",
+              "microphone",
+              "audience",
+              "performance"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 31,
+      "narration": "Instead, it seemed to clarify something in Luis Miguel. He took control of his music completely.",
+      "word_count": 16,
+      "start_seconds": 309.62,
+      "end_seconds": 316.012,
+      "estimated_seconds": 6.392,
+      "visual_intent": "Instead, it seemed to clarify something in Luis Miguel.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 39,
+          "scene_shot_number": 1,
+          "filename": "039.png",
+          "start_seconds": 309.62,
+          "end_seconds": 316.012,
+          "estimated_seconds": 6.392,
+          "visual_intent": "Luis Miguel standing determined in a recording studio control room, taking full command of the session",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary style 16:9 shot of Luis Miguel with a clear, resolute expression as he takes complete control of his music, standing confidently in the control room of a professional recording studio behind a large mixing console, hands actively directing the session, warm focused lighting illuminating his face and the console, musicians faintly visible through the glass in the studio beyond, mood of personal clarity and empowerment, realistic filmic tones, historically believable details, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "mid-career",
+            "required_terms": [
+              "recording studio",
+              "mixing console"
+            ],
+            "avoid_terms": [
+              "stage",
+              "live performance",
+              "audience"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 32,
+      "narration": "The mariachi albums that followed, particularly “México en la Piel,” weren’t just commercial releases. They were acts of reclamation, a man reconnecting with his deepest cultural roots on his own terms.",
+      "word_count": 31,
+      "start_seconds": 316.012,
+      "end_seconds": 328.397,
+      "estimated_seconds": 12.385,
+      "visual_intent": "The mariachi albums that followed, particularly “México en la Piel,” weren’t just commercial releases.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 40,
+          "scene_shot_number": 1,
+          "filename": "040.png",
+          "start_seconds": 316.012,
+          "end_seconds": 322.205,
+          "estimated_seconds": 6.192,
+          "visual_intent": "Luis Miguel performing with emotional intensity alongside mariachi musicians",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary style medium-wide shot of Luis Miguel centered on stage singing with passionate conviction into a microphone, wearing a traditional black charro suit with silver embroidery, surrounded by mariachi musicians playing violins trumpets and guitars behind him, warm theatrical golden lighting with soft shadows, stage setting with understated Mexican architectural details, mood of cultural pride and reclamation, realistic filmic quality, natural colors, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel mariachi performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "mid career",
+            "required_terms": [
+              "mariachi attire",
+              "emotional expression"
+            ],
+            "avoid_terms": [
+              "youth",
+              "pop stage",
+              "casual clothing"
+            ],
+            "search_queries": [
+              "Luis Miguel mariachi singing close up",
+              "Luis Miguel emotional mariachi performance",
+              "Luis Miguel in charro suit singing"
+            ]
+          }
+        },
+        {
+          "shot_number": 41,
+          "scene_shot_number": 2,
+          "filename": "041.png",
+          "start_seconds": 322.205,
+          "end_seconds": 328.397,
+          "estimated_seconds": 6.192,
+          "visual_intent": "Luis Miguel in quiet personal reflection connecting to his Mexican roots",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary style intimate close-up of Luis Miguel with a thoughtful introspective expression gazing into the distance, soft natural window light illuminating his face from the side, simple interior with blurred traditional Mexican adobe textures and distant landscape visible, warm earthy tones and serene contemplative mood conveying personal reclamation on his own terms, realistic and filmic, no text or markings",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel mariachi band performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "mid career",
+            "required_terms": [
+              "leading ensemble",
+              "traditional mariachi"
+            ],
+            "avoid_terms": [
+              "close-up",
+              "solo",
+              "modern pop"
+            ],
+            "search_queries": [
+              "Luis Miguel with full mariachi orchestra onstage",
+              "Luis Miguel leading mariachi group concert",
+              "Luis Miguel traditional Mexican ensemble performance"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 33,
+      "narration": "Those of us who saw him live during those years witnessed something rare. Other artists might phone in a performance when they’ve had as much success as he had.",
+      "word_count": 29,
+      "start_seconds": 328.397,
+      "end_seconds": 339.983,
+      "estimated_seconds": 11.586,
+      "visual_intent": "Those of us who saw him live during those years witnessed something rare.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 42,
+          "scene_shot_number": 1,
+          "filename": "042.png",
+          "start_seconds": 328.397,
+          "end_seconds": 339.983,
+          "estimated_seconds": 11.586,
+          "visual_intent": "Luis Miguel delivering a rare, fully committed live performance with visible passion and energy on stage",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style 16:9 image of Luis Miguel performing live on a concert stage during the height of his career, medium-wide low-angle framing capturing him singing with intense emotional commitment into a handheld microphone, dynamic posture and expressive face showing dedication rather than going through the motions, bright stage spotlights cutting through atmospheric haze, faint silhouettes of audience members in the foreground, warm theatrical lighting with high contrast, realistic film grain, authentic 1980s-1990s concert setting, moody and immersive live atmosphere",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel live concert performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "peak career",
+            "required_terms": [
+              "live",
+              "stage",
+              "singing"
+            ],
+            "avoid_terms": [
+              "studio",
+              "interview",
+              "posed"
+            ],
+            "search_queries": [
+              "Luis Miguel on stage singing",
+              "Luis Miguel live concert photos",
+              "Luis Miguel energetic performance",
+              "Luis Miguel microphone concert"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 34,
+      "narration": "Not him. There’s a famous story from a concert in Buenos Aires where he stopped mid-show because the sound wasn’t perfect. Twenty thousand people waiting.",
+      "word_count": 25,
+      "start_seconds": 339.983,
+      "end_seconds": 349.971,
+      "estimated_seconds": 9.988,
+      "visual_intent": "Not him.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 43,
+          "scene_shot_number": 1,
+          "filename": "043.png",
+          "start_seconds": 339.983,
+          "end_seconds": 349.971,
+          "estimated_seconds": 9.988,
+          "visual_intent": "Luis Miguel pausing mid-song on stage in Buenos Aires as twenty thousand fans wait in silence",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary-style wide shot of Luis Miguel standing motionless at center stage under dramatic spotlights during a large Buenos Aires concert, microphone in hand, serious expression as he stops the performance over imperfect sound, vast dark arena filled with twenty thousand audience members seated quietly in the background waiting, tense expectant mood, historically believable concert setting with era-appropriate stage and lighting, realistic live-action film still, natural color grading, no text, no logos, no watermarks, 16:9 aspect ratio",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel Buenos Aires concert",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "concert stage",
+              "live performance",
+              "large audience"
+            ],
+            "avoid_terms": [
+              "television",
+              "studio",
+              "child"
+            ],
+            "search_queries": [
+              "Luis Miguel live concert Buenos Aires",
+              "Luis Miguel on stage Argentina",
+              "Luis Miguel 1990s stadium performance",
+              "crowd at Luis Miguel Buenos Aires show"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 35,
+      "narration": "Millions of dollars on the line. He made the sound engineer fix a monitor that only he could hear was slightly off. Most performers would have let it go.",
+      "word_count": 29,
+      "start_seconds": 349.971,
+      "end_seconds": 361.556,
+      "estimated_seconds": 11.586,
+      "visual_intent": "Millions of dollars on the line.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 44,
+          "scene_shot_number": 1,
+          "filename": "044.png",
+          "start_seconds": 349.971,
+          "end_seconds": 361.556,
+          "estimated_seconds": 11.586,
+          "visual_intent": "Luis Miguel on a grand concert stage directing his sound engineer to adjust a stage monitor only he could hear was off",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary cinematic style, medium-wide shot of Luis Miguel in elegant dark suit on a large-scale concert stage, intense focused expression as he gestures toward a kneeling sound engineer adjusting a wedge monitor speaker on the floor, dramatic concert spotlights with high contrast and deep shadows, vast dark audience filling background, tense perfectionist mood under pressure, realistic film grain, natural colors, historically believable live performance details, no text, no logos, no watermarks",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "peak career",
+            "required_terms": [
+              "live concert",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "recording studio",
+              "smiling"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 36,
+      "narration": "He couldn’t. The music mattered more than the moment. His life has had its share of tabloid chapters, the famous romances, the children, the periods where he seemed to vanish from public view.",
+      "word_count": 33,
+      "start_seconds": 361.556,
+      "end_seconds": 374.74,
+      "estimated_seconds": 13.184,
+      "visual_intent": "He couldn’t.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 45,
+          "scene_shot_number": 1,
+          "filename": "045.png",
+          "start_seconds": 361.556,
+          "end_seconds": 368.148,
+          "estimated_seconds": 6.592,
+          "visual_intent": "Luis Miguel lost in passionate performance on stage",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary style 16:9 still, tight close-up of Luis Miguel on a concert stage, eyes closed singing with total emotional absorption into a microphone, dramatic spotlights cutting through light haze highlighting his face and tailored suit, shallow depth of field with dark background, intense and dedicated mood, warm theatrical lighting, subtle film grain, historically accurate late twentieth century details",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel live performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "on stage",
+              "singing"
+            ],
+            "avoid_terms": [
+              "studio",
+              "private"
+            ],
+            "search_queries": [
+              "Luis Miguel on stage singing",
+              "Luis Miguel live concert performance",
+              "Luis Miguel with microphone on stage",
+              "Luis Miguel passionate performance"
+            ]
+          }
+        },
+        {
+          "shot_number": 46,
+          "scene_shot_number": 2,
+          "filename": "046.png",
+          "start_seconds": 368.148,
+          "end_seconds": 374.74,
+          "estimated_seconds": 6.592,
+          "visual_intent": "Luis Miguel in contemplative solitude away from public view",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic documentary style 16:9 still, medium-wide shot of Luis Miguel standing alone by a tall window in a spacious dimly lit luxury interior, gazing outward with a quiet pensive expression, soft sidelight from window creating deep shadows across elegant furnishings, restrained and mysterious mood, cool natural light with warm interior tones, subtle film grain, historically accurate late twentieth century details",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel candid portrait",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "mid career",
+            "required_terms": [
+              "alone",
+              "indoor"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "crowd"
+            ],
+            "search_queries": [
+              "Luis Miguel pensive portrait",
+              "Luis Miguel sitting alone",
+              "Luis Miguel thoughtful indoors",
+              "Luis Miguel private moment"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 37,
+      "narration": "Through all of it, that voice remained the constant. When he sings, you believe him. Whether he’s telling you about a love that will last forever or one that destroyed him, the emotional transaction feels complete.",
+      "word_count": 36,
+      "start_seconds": 374.74,
+      "end_seconds": 389.123,
+      "estimated_seconds": 14.382,
+      "visual_intent": "Through all of it, that voice remained the constant.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 47,
+          "scene_shot_number": 1,
+          "filename": "047.png",
+          "start_seconds": 374.74,
+          "end_seconds": 381.931,
+          "estimated_seconds": 7.191,
+          "visual_intent": "Close-up of Luis Miguel singing with sincere conviction about enduring love",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary style cinematic 16:9 close-up of Luis Miguel singing into a vintage microphone, warm golden stage lighting illuminating his face, eyes closed with an expression of deep belief and tenderness, soft bokeh of out-of-focus stage lights in background, intimate and constant mood, subtle film grain, elegant dark suit, natural skin tones, historically believable live performance setting",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel singing on stage",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "stage"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "heartbreak"
+            ],
+            "search_queries": [
+              "Luis Miguel live concert close-up",
+              "Luis Miguel performing ballad",
+              "Luis Miguel vocal performance photo",
+              "Luis Miguel microphone singing"
+            ]
+          }
+        },
+        {
+          "shot_number": 48,
+          "scene_shot_number": 2,
+          "filename": "048.png",
+          "start_seconds": 381.931,
+          "end_seconds": 389.123,
+          "estimated_seconds": 7.191,
+          "visual_intent": "Medium shot of Luis Miguel conveying raw pain of heartbreak through song",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary style cinematic 16:9 medium shot of Luis Miguel on stage with hand near his heart, face showing vulnerable torment as he sings, cool blue and purple dramatic spotlights against darker background, emotional depth and completeness, subtle atmospheric haze, film grain, tailored suit, historically believable concert setting with focus on authentic performance",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel emotional performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "emotional",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "smile",
+              "crowd"
+            ],
+            "search_queries": [
+              "Luis Miguel intense singing close-up",
+              "Luis Miguel passionate concert photo",
+              "Luis Miguel heartfelt live performance",
+              "Luis Miguel emotional vocal stage"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 38,
+      "narration": "That’s rarer than it sounds in popular music. Today, when younger generations discover him through streaming playlists or that Netflix series that tried to dramatize his life, they’re encountering something their parents and grandparents always understood.",
+      "word_count": 36,
+      "start_seconds": 389.123,
+      "end_seconds": 403.505,
+      "estimated_seconds": 14.382,
+      "visual_intent": "That’s rarer than it sounds in popular music.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 49,
+          "scene_shot_number": 1,
+          "filename": "049.png",
+          "start_seconds": 389.123,
+          "end_seconds": 396.314,
+          "estimated_seconds": 7.191,
+          "visual_intent": "Young adult absorbed in music through headphones in a bright modern apartment",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Photorealistic 16:9 cinematic documentary style medium close-up of a young adult wearing wireless headphones seated comfortably near a large window in a contemporary minimalist apartment, soft natural daylight streaming across their face, eyes gently closed with an expression of fresh discovery and connection, neutral casual clothing, calm introspective mood, clean setting with no visible text logos or writing",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "young adulthood",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
+        },
+        {
+          "shot_number": 50,
+          "scene_shot_number": 2,
+          "filename": "050.png",
+          "start_seconds": 396.314,
+          "end_seconds": 403.505,
+          "estimated_seconds": 7.191,
+          "visual_intent": "Elderly couple sharing knowing expressions of lifelong understanding in a warmly lit traditional living room",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Photorealistic 16:9 cinematic documentary style medium shot of an elderly couple sitting side by side on a sofa in a cozy traditional living room, soft warm lamplight casting gentle golden tones, both with subtle smiles and wise expressions of deep familiarity, comfortable period-appropriate furnishings softly out of focus in background, heartfelt nostalgic mood, no visible text logos writing or album covers",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "later adulthood",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 39,
+      "narration": "Here was an artist who refused to be small. In an industry that often rewards convenience and trend-chasing, Luis Miguel demanded excellence. He restored dignity to romantic music at a time when it had fallen out of fashion.",
+      "word_count": 38,
+      "start_seconds": 403.505,
+      "end_seconds": 418.686,
+      "estimated_seconds": 15.181,
+      "visual_intent": "Here was an artist who refused to be small.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 51,
+          "scene_shot_number": 1,
+          "filename": "051.png",
+          "start_seconds": 403.505,
+          "end_seconds": 411.096,
+          "estimated_seconds": 7.591,
+          "visual_intent": "Wide shot of Luis Miguel commanding a large-scale concert stage with full orchestra",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary-style cinematic shot of Luis Miguel in elegant black tuxedo standing center stage under dramatic spotlights, wide low-angle framing showing a full symphony orchestra arranged behind him on a grand concert hall stage, powerful and expansive atmosphere with theatrical lighting beams cutting through subtle haze, dignified and commanding mood, film grain, historically believable Latin music performance setting, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel live performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "on stage",
+              "performance"
+            ],
+            "avoid_terms": [
+              "studio",
+              "close-up"
+            ],
+            "search_queries": [
+              "Luis Miguel on stage",
+              "Luis Miguel live concert",
+              "Luis Miguel performing 1990s",
+              "Luis Miguel bolero stage"
+            ]
+          }
+        },
+        {
+          "shot_number": 52,
+          "scene_shot_number": 2,
+          "filename": "052.png",
+          "start_seconds": 411.096,
+          "end_seconds": 418.686,
+          "estimated_seconds": 7.591,
+          "visual_intent": "Medium close-up of Luis Miguel singing a romantic ballad with elegant poise",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary-style cinematic shot of Luis Miguel in tailored suit captured in medium close-up while singing passionately into a microphone, soft dramatic side lighting highlighting his expressive face and sophisticated posture, blurred classic theater background with indistinct audience silhouettes, warm intimate tones conveying restored dignity and emotional depth, film grain, historically believable romantic music performance, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel recording studio",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "recording session",
+              "studio"
+            ],
+            "avoid_terms": [
+              "live stage",
+              "audience"
+            ],
+            "search_queries": [
+              "Luis Miguel recording studio",
+              "Luis Miguel in studio booth",
+              "Luis Miguel microphone session",
+              "Luis Miguel producing music"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 40,
+      "narration": "He proved that tradition and modernity could not only coexist but could make each other stronger. Listen to him now, all these years later, and you understand why the nickname fits so perfectly.",
+      "word_count": 33,
+      "start_seconds": 418.686,
+      "end_seconds": 431.87,
+      "estimated_seconds": 13.184,
+      "visual_intent": "He proved that tradition and modernity could not only coexist but could make each other stronger.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 53,
+          "scene_shot_number": 1,
+          "filename": "053.png",
+          "start_seconds": 418.686,
+          "end_seconds": 425.278,
+          "estimated_seconds": 6.592,
+          "visual_intent": "Luis Miguel performing with passion on stage illustrating the blend of tradition and modernity",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic 16:9 documentary style wide shot of Luis Miguel singing with intensity into a microphone on an elegant concert stage, backed by orchestra musicians with violins and acoustic instruments alongside contemporary rhythm section, sophisticated dark suit, dramatic warm golden stage lighting with subtle haze, powerful harmonious mood, realistic filmic details, historically grounded setting",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel live performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "singing",
+              "stage"
+            ],
+            "avoid_terms": [
+              "child",
+              "early career"
+            ],
+            "search_queries": [
+              "Luis Miguel on stage singing",
+              "Luis Miguel concert performance",
+              "Luis Miguel live show photo"
+            ]
+          }
+        },
+        {
+          "shot_number": 54,
+          "scene_shot_number": 2,
+          "filename": "054.png",
+          "start_seconds": 425.278,
+          "end_seconds": 431.87,
+          "estimated_seconds": 6.592,
+          "visual_intent": "Inclusive listener absorbed in his music years later conveying lasting impact and understanding",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic 16:9 documentary style medium close-up of a generic listener seen from side profile wearing headphones, eyes closed in quiet appreciation, seated in a sunlit room with soft natural window light, neutral timeless interior, calm reflective nostalgic mood, gentle shadows, realistic filmic details, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel performance close-up",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "expressive face",
+              "singing"
+            ],
+            "avoid_terms": [
+              "young",
+              "wide shot"
+            ],
+            "search_queries": [
+              "Luis Miguel close up singing",
+              "Luis Miguel emotional performance",
+              "Luis Miguel mature years portrait"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 41,
+      "narration": "He is El Sol de México, not just because of his talent or his popularity, but because his voice has that same reliable warmth. You can count on it to illuminate the corners of your memory, to make you feel twenty years younger or a hundred years wiser, sometimes both at once.",
+      "word_count": 52,
+      "start_seconds": 431.87,
+      "end_seconds": 452.645,
+      "estimated_seconds": 20.775,
+      "visual_intent": "He is El Sol de México, not just because of his talent or his popularity, but because his voice has that same reliable warmth.",
+      "visual_shot_count": 3,
+      "visual_shots": [
+        {
+          "shot_number": 55,
+          "scene_shot_number": 1,
+          "filename": "055.png",
+          "start_seconds": 431.87,
+          "end_seconds": 438.795,
+          "estimated_seconds": 6.925,
+          "visual_intent": "Luis Miguel singing on stage bathed in warm sun-like golden light",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic 16:9 documentary-style medium close-up of Luis Miguel singing passionately into a microphone on an elegant concert stage, face illuminated by reliable warm golden stage lighting that evokes the sun, soft glow and subtle shadows, period-appropriate attire and classic Mexican venue in soft background focus, warm color palette, emotional and steady mood, subtle film grain, historically grounded",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel live stage performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "peak career",
+            "required_terms": [
+              "singing",
+              "stage"
+            ],
+            "avoid_terms": [
+              "interview",
+              "child"
+            ],
+            "search_queries": [
+              "Luis Miguel singing on stage",
+              "Luis Miguel live concert archival",
+              "Luis Miguel El Sol performance"
+            ]
+          }
+        },
+        {
+          "shot_number": 56,
+          "scene_shot_number": 2,
+          "filename": "056.png",
+          "start_seconds": 438.795,
+          "end_seconds": 445.72,
+          "estimated_seconds": 6.925,
+          "visual_intent": "Warm sunlight beam illuminating a thoughtful listener in a quiet room",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic 16:9 documentary-style medium shot of a thoughtful listener seated in a dimly lit vintage Mexican home interior, warm sunlight rays streaming through a window to illuminate their face and evoke hidden memories, cozy furnishings in soft focus, golden light creating gentle contrast, nostalgic and introspective mood, subtle film grain, historically believable details, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "late 20th century",
+            "required_terms": [
+              "sunlight beams",
+              "room corner"
+            ],
+            "avoid_terms": [
+              "people",
+              "bright daylight"
+            ],
+            "search_queries": []
+          }
+        },
+        {
+          "shot_number": 57,
+          "scene_shot_number": 3,
+          "filename": "057.png",
+          "start_seconds": 445.72,
+          "end_seconds": 452.645,
+          "estimated_seconds": 6.925,
+          "visual_intent": "Audience member at a concert experiencing both youthful joy and wise serenity",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic 16:9 documentary-style close-up of a generic audience member at a live concert with an expression blending rejuvenated joy and profound wisdom, warm ambient lighting on their face, other listeners softly blurred in background within a classic hall, uplifting yet reflective mood, subtle film grain, historically grounded concert setting, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel concert audience",
+          "historical_plan": {
+            "subject": "concert audience",
+            "subject_type": "group",
+            "era": "peak career",
+            "required_terms": [
+              "attentive listeners",
+              "Luis Miguel concert"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage closeup"
+            ],
+            "search_queries": [
+              "Luis Miguel concert crowd reaction",
+              "audience watching Luis Miguel live",
+              "fans at Luis Miguel performance"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 42,
+      "narration": "That’s the gift he’s been giving us since he was a boy standing on a wooden crate. Not perfection, though his technique is remarkable. Not just beautiful sound, though his voice remains one of the most exquisite instruments in popular music.",
+      "word_count": 41,
+      "start_seconds": 452.645,
+      "end_seconds": 469.025,
+      "estimated_seconds": 16.38,
+      "visual_intent": "That’s the gift he’s been giving us since he was a boy standing on a wooden crate.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 58,
+          "scene_shot_number": 1,
+          "filename": "058.png",
+          "start_seconds": 452.645,
+          "end_seconds": 460.835,
+          "estimated_seconds": 8.19,
+          "visual_intent": "Young Luis Miguel as a boy standing on a wooden crate to sing into a microphone",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary style 16:9 cinematic shot, medium wide framing of a young boy with dark hair standing on a wooden crate to reach a vintage microphone on a modest stage, singing with open expression and innocence, warm theatrical spotlights cutting through haze, faint silhouettes of early audience in background, nostalgic and tender mood, realistic historical recreation with subtle film grain",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel boy wooden crate",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "wooden crate",
+              "singing",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "adult",
+              "studio"
+            ],
+            "search_queries": [
+              "Luis Miguel boy on wooden crate",
+              "young Luis Miguel early performance crate",
+              "child Luis Miguel singing on stage"
+            ]
+          }
+        },
+        {
+          "shot_number": 59,
+          "scene_shot_number": 2,
+          "filename": "059.png",
+          "start_seconds": 460.835,
+          "end_seconds": 469.025,
+          "estimated_seconds": 8.19,
+          "visual_intent": "Close-up of adult Luis Miguel singing with exquisite vocal emotion and remarkable technique",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary style 16:9 cinematic shot, tight close-up on adult Luis Miguel's face as he sings with eyes gently closed and powerful expression, microphone positioned intimately, dramatic stage lighting sculpting his features with deep shadows and highlights, intense yet elegant mood conveying vocal mastery, realistic live performance aesthetic with subtle film grain",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel singing performance",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "adulthood",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "performance"
+            ],
+            "avoid_terms": [
+              "child",
+              "wooden crate",
+              "audience"
+            ],
+            "search_queries": [
+              "Luis Miguel close up singing",
+              "Luis Miguel vocal performance on stage",
+              "Luis Miguel live microphone singing"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 43,
+      "narration": "What Luis Miguel offers, what he has always offered, is the courage to feel everything fully. In a world that often asks us to stay guarded, his music gives us permission to open our hearts completely.",
+      "word_count": 36,
+      "start_seconds": 469.025,
+      "end_seconds": 483.407,
+      "estimated_seconds": 14.382,
+      "visual_intent": "What Luis Miguel offers, what he has always offered, is the courage to feel everything fully.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 60,
+          "scene_shot_number": 1,
+          "filename": "060.png",
+          "start_seconds": 469.025,
+          "end_seconds": 476.216,
+          "estimated_seconds": 7.191,
+          "visual_intent": "Luis Miguel performing with raw emotional intensity on stage",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic 16:9 documentary-style medium shot of Luis Miguel singing passionately on a classic concert stage, eyes closed in deep feeling, face and posture conveying complete emotional courage, warm dramatic stage lighting highlighting his figure against a dark background with subtle band silhouettes, elegant performance attire, powerful and authentic mood, realistic filmic color grading, natural textures, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Luis Miguel live performance singing",
+          "historical_plan": {
+            "subject": "Luis Miguel",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "emotional",
+              "singing"
+            ],
+            "avoid_terms": [
+              "audience",
+              "crowd"
+            ],
+            "search_queries": [
+              "Luis Miguel singing onstage emotional",
+              "Luis Miguel live concert close up",
+              "Luis Miguel passionate performance"
+            ]
+          }
+        },
+        {
+          "shot_number": 61,
+          "scene_shot_number": 2,
+          "filename": "061.png",
+          "start_seconds": 476.216,
+          "end_seconds": 483.407,
+          "estimated_seconds": 7.191,
+          "visual_intent": "Audience members opening their hearts with vulnerable emotion",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Cinematic 16:9 documentary-style close-up of concert audience faces in soft stage glow, expressions fully open with visible tears and released emotion as they connect to the music, dimly lit venue setting, inclusive group of listeners with unguarded vulnerable mood, realistic and heartfelt atmosphere, natural filmic tones, no text or logos",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "at a concert",
+            "required_terms": [
+              "emotional reaction",
+              "hand on heart"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "singing"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 44,
+      "narration": "And somehow, after all this time, we still accept that invitation every single time.",
+      "word_count": 14,
+      "start_seconds": 483.407,
+      "end_seconds": 489.0,
+      "estimated_seconds": 5.593,
+      "visual_intent": "And somehow, after all this time, we still accept that invitation every single time.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 62,
+          "scene_shot_number": 1,
+          "filename": "062.png",
+          "start_seconds": 483.407,
+          "end_seconds": 489.0,
+          "estimated_seconds": 5.593,
+          "visual_intent": "Inclusive audience in a concert hall looking forward with quiet acceptance and emotional connection",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 cinematic documentary-style photograph, medium-wide shot from within a crowded concert hall audience, viewers seen from behind and side with soft warm stage lighting gently illuminating their faces and shoulders as they face forward, elegant darkened auditorium with indistinct stage glow in distance, timeless live-performance setting with period-appropriate subtle formal attire, reflective and nostalgic mood, natural film grain, realistic live-action still, warm golden tones, no text, no logos, no watermarks",
+          "status": "prompt_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "performance years",
+            "required_terms": [
+              "concert audience",
+              "live event"
+            ],
+            "avoid_terms": [
+              "text",
+              "logos",
+              "stage performer"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    }
+  ],
+  "updated_at": "2026-07-14T04:26:00.476192+00:00",
+  "visual_plan_ready": true
+}

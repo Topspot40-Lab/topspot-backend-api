@@ -40,7 +40,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/001.png",
-          "generated_at": "2026-07-13T17:54:57.711607+00:00"
+          "generated_at": "2026-07-13T17:54:57.711607+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "golden age of television",
+            "required_terms": [
+              "family watching television",
+              "rabbit ear antennas",
+              "bulky console TV"
+            ],
+            "avoid_terms": [
+              "modern flat screen",
+              "smartphone",
+              "Dick Clark visible"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -63,14 +80,40 @@
           "end_seconds": 21.6,
           "estimated_seconds": 10.4,
           "visual_intent": "Dick Clark wearing his perfect genuine smile that shows deep love for his work",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "library_filename": "001-young-dick-clark-portrait-1961.jpg",
+            "library_id": "001",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style shot, medium close-up of Dick Clark in a classic mid-20th century television studio, he wears a neat dark suit and tie, his face lit with a warm authentic smile full of enthusiasm and joy, soft even studio lighting with gentle shadows, calm and positive mood, historically believable details, realistic filmic look with subtle grain, no text, no logos, no writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 001-young-dick-clark-portrait-1961.jpg assigned manually.",
           "image_path": "images/002.png",
-          "generated_at": "2026-07-13T17:55:03.523150+00:00"
+          "generated_at": "2026-07-13T17:55:03.523150+00:00",
+          "historical_search": "Dick Clark smiling",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "smiling",
+              "warm expression"
+            ],
+            "avoid_terms": [
+              "elderly",
+              "later years"
+            ],
+            "search_queries": [
+              "Dick Clark smiling",
+              "Dick Clark television host smile",
+              "Dick Clark genuine smile portrait",
+              "Dick Clark happy expression early career"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -100,7 +143,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/003.png",
-          "generated_at": "2026-07-13T17:55:09.655635+00:00"
+          "generated_at": "2026-07-13T17:55:09.655635+00:00",
+          "historical_search": "Dick Clark America's Oldest Teenager",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "youthful appearance",
+              "friendly smile"
+            ],
+            "avoid_terms": [
+              "elderly",
+              "gray hair"
+            ],
+            "search_queries": [
+              "Dick Clark America's Oldest Teenager",
+              "young Dick Clark smiling portrait",
+              "Dick Clark early television host",
+              "Dick Clark youthful expression"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -123,14 +186,40 @@
           "end_seconds": 39.6,
           "estimated_seconds": 11.2,
           "visual_intent": "Close-up of older silver-haired Dick Clark with a lively sparkle in his eyes as music plays",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
+            "library_filename": "002-dick-clark-portrait-1970s.jpg",
+            "library_id": "002",
+            "curated": true
+          },
           "prompt": "Photorealistic 16:9 documentary style close-up of mature Dick Clark with silver hair, warmly lit television studio setting in his later career, soft golden lighting catching the enthusiastic sparkle and joy in his eyes while he listens to music, subtle smile, nostalgic and enduring passion mood, historically accurate appearance and attire, cinematic composition, no text, logos, or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 002-dick-clark-portrait-1970s.jpg assigned manually.",
           "image_path": "images/004.png",
-          "generated_at": "2026-07-13T17:55:15.905116+00:00"
+          "generated_at": "2026-07-13T17:55:15.905116+00:00",
+          "historical_search": "Dick Clark silver hair later years",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "silver hair",
+              "sparkling eyes"
+            ],
+            "avoid_terms": [
+              "young",
+              "dark hair"
+            ],
+            "search_queries": [
+              "Dick Clark silver hair portrait",
+              "older Dick Clark smiling close-up",
+              "Dick Clark later years enthusiastic",
+              "Dick Clark white hair expression"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -160,7 +249,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/005.png",
-          "generated_at": "2026-07-13T17:55:23.930791+00:00"
+          "generated_at": "2026-07-13T17:55:23.930791+00:00",
+          "historical_search": "Philadelphia streets 1950s",
+          "historical_plan": {
+            "subject": "Philadelphia",
+            "subject_type": "place",
+            "era": "mid-1950s",
+            "required_terms": [
+              "Philadelphia",
+              "streets"
+            ],
+            "avoid_terms": [
+              "modern buildings",
+              "skyscrapers"
+            ],
+            "search_queries": [
+              "Philadelphia street scenes 1955",
+              "1950s Philadelphia downtown",
+              "mid-1950s Philadelphia urban view",
+              "Philadelphia row houses 1950s"
+            ]
+          }
         },
         {
           "shot_number": 6,
@@ -177,7 +286,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/006.png",
-          "generated_at": "2026-07-13T17:55:30.695626+00:00"
+          "generated_at": "2026-07-13T17:55:30.695626+00:00",
+          "historical_search": "Philadelphia streetcorner harmonies 1950s",
+          "historical_plan": {
+            "subject": "street corner harmony singers",
+            "subject_type": "group",
+            "era": "mid-1950s",
+            "required_terms": [
+              "street corner",
+              "harmonies"
+            ],
+            "avoid_terms": [
+              "instruments",
+              "stage",
+              "crowd"
+            ],
+            "search_queries": [
+              "Philadelphia streetcorner harmonies 1950s",
+              "1950s youth singing on street corner",
+              "street corner a cappella group 1955",
+              "Philadelphia street singers mid 1950s"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -200,14 +330,42 @@
           "end_seconds": 61.6,
           "estimated_seconds": 7.6,
           "visual_intent": "Young Dick Clark taking over the Bandstand dance show in a 1950s television studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "library_filename": "001-young-dick-clark-portrait-1961.jpg",
+            "library_id": "001",
+            "curated": true
+          },
           "prompt": "Medium wide cinematic documentary shot in 1956 of young Dick Clark respectfully depicted standing confidently in a modest Philadelphia television studio, wearing a neat suit beside a wooden dance floor as he assumes control of the afternoon show Bandstand, several teenagers in 1950s attire visible in the background, warm even studio lighting, mood of professional optimism and transition, historically accurate details with no visible text logos or writing, realistic live-action documentary style, 16:9 aspect ratio",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 001-young-dick-clark-portrait-1961.jpg assigned manually.",
           "image_path": "images/007.png",
-          "generated_at": "2026-07-13T17:55:37.074171+00:00"
+          "generated_at": "2026-07-13T17:55:37.074171+00:00",
+          "historical_search": "Dick Clark Bandstand 1956",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1956",
+            "required_terms": [
+              "Bandstand",
+              "host",
+              "studio"
+            ],
+            "avoid_terms": [
+              "American Bandstand",
+              "1970s",
+              "large crowd"
+            ],
+            "search_queries": [
+              "Dick Clark Bandstand 1956",
+              "young Dick Clark WFIL TV studio",
+              "Dick Clark early Bandstand Philadelphia",
+              "Dick Clark hosting local dance show 1956"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -237,7 +395,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/008.png",
-          "generated_at": "2026-07-13T17:55:43.930936+00:00"
+          "generated_at": "2026-07-13T17:55:43.930936+00:00",
+          "historical_search": "Dick Clark American Bandstand 1957",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1957",
+            "required_terms": [
+              "American Bandstand",
+              "studio floor",
+              "hosting"
+            ],
+            "avoid_terms": [
+              "logos",
+              "text",
+              "microphone flags"
+            ],
+            "search_queries": [
+              "Dick Clark American Bandstand 1957",
+              "Dick Clark hosting Bandstand studio 1957",
+              "black and white Dick Clark ABC Bandstand",
+              "Dick Clark Philadelphia TV studio 1957"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -267,7 +447,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/009.png",
-          "generated_at": "2026-07-13T17:55:50.830382+00:00"
+          "generated_at": "2026-07-13T17:55:50.830382+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "late 1950s",
+            "required_terms": [
+              "teenagers",
+              "living room",
+              "moving furniture"
+            ],
+            "avoid_terms": [
+              "studio",
+              "dancing",
+              "outdoors"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 10,
@@ -284,7 +481,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/010.png",
-          "generated_at": "2026-07-13T17:55:58.548954+00:00"
+          "generated_at": "2026-07-13T17:55:58.548954+00:00",
+          "historical_search": "American Bandstand dancers",
+          "historical_plan": {
+            "subject": "American Bandstand dancers",
+            "subject_type": "group",
+            "era": "late 1950s",
+            "required_terms": [
+              "dancing",
+              "studio floor",
+              "clean cut"
+            ],
+            "avoid_terms": [
+              "audience seating",
+              "orchestra",
+              "signs"
+            ],
+            "search_queries": [
+              "American Bandstand dance floor 1957",
+              "Dick Clark teenage dancers studio",
+              "1950s TV dance show floor",
+              "vintage American Bandstand dancers"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -307,14 +526,41 @@
           "end_seconds": 87.4,
           "estimated_seconds": 7.0,
           "visual_intent": "Dick Clark standing confidently on the Bandstand stage",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/004-dick-clark-with-oliver-1969.jpg",
+            "library_filename": "004-dick-clark-with-oliver-1969.jpg",
+            "library_id": "004",
+            "curated": true
+          },
           "prompt": "Cinematic 16:9 documentary style wide shot of Dick Clark standing center stage on the American Bandstand set, full body view in a crisp dark suit with narrow tie, poised and self-assured posture, bright even television studio lighting, simple stage background, warm approachable mood, historically accurate mid-century details, realistic live-action feel, no text logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 004-dick-clark-with-oliver-1969.jpg assigned manually.",
           "image_path": "images/011.png",
-          "generated_at": "2026-07-13T17:56:05.349380+00:00"
+          "generated_at": "2026-07-13T17:56:05.349380+00:00",
+          "historical_search": "Dick Clark American Bandstand stage 1957",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1957",
+            "required_terms": [
+              "Bandstand stage",
+              "suit and tie"
+            ],
+            "avoid_terms": [
+              "close-up",
+              "dancers",
+              "1970s"
+            ],
+            "search_queries": [
+              "Dick Clark hosting American Bandstand 1957",
+              "Dick Clark on Bandstand stage in suit",
+              "Dick Clark Philadelphia Bandstand early years",
+              "vintage Dick Clark standing on TV stage"
+            ]
+          }
         },
         {
           "shot_number": 12,
@@ -331,7 +577,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/012.png",
-          "generated_at": "2026-07-13T17:56:11.134660+00:00"
+          "generated_at": "2026-07-13T17:56:11.134660+00:00",
+          "historical_search": "Dick Clark smiling American Bandstand 1957",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1957",
+            "required_terms": [
+              "friendly expression",
+              "narrow tie"
+            ],
+            "avoid_terms": [
+              "full shot",
+              "stage only",
+              "dancing"
+            ],
+            "search_queries": [
+              "Dick Clark close up smiling American Bandstand",
+              "Dick Clark wholesome expression 1957",
+              "Dick Clark friendly portrait Bandstand host",
+              "vintage photo Dick Clark narrow tie smile"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -354,14 +621,40 @@
           "end_seconds": 103.0,
           "estimated_seconds": 8.6,
           "visual_intent": "Dick Clark speaking directly to the camera with calm confidence",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
+            "library_filename": "002-dick-clark-portrait-1970s.jpg",
+            "library_id": "002",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style shot, 1950s television studio, medium close-up of recognizable Dick Clark in a tailored suit and tie, looking straight into the lens with warm calm confidence and a slight welcoming smile as if addressing viewers at home, bright even studio lighting with soft shadows, simple Bandstand stage backdrop, sincere and inviting mood, historically accurate mid-century details, photorealistic, no text, logos, or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 002-dick-clark-portrait-1970s.jpg assigned manually.",
           "image_path": "images/013.png",
-          "generated_at": "2026-07-13T17:56:17.136918+00:00"
+          "generated_at": "2026-07-13T17:56:17.136918+00:00",
+          "historical_search": "Dick Clark American Bandstand host",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "Bandstand",
+              "on camera"
+            ],
+            "avoid_terms": [
+              "interview",
+              "later years"
+            ],
+            "search_queries": [
+              "Dick Clark American Bandstand speaking to camera",
+              "Dick Clark Bandstand TV host archival",
+              "Dick Clark introducing Bandstand on set",
+              "Dick Clark warm welcome Bandstand"
+            ]
+          }
         },
         {
           "shot_number": 14,
@@ -378,7 +671,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/014.png",
-          "generated_at": "2026-07-13T17:56:23.000539+00:00"
+          "generated_at": "2026-07-13T17:56:23.000539+00:00",
+          "historical_search": "American Bandstand dancers",
+          "historical_plan": {
+            "subject": "American Bandstand dancers",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "dancing",
+              "studio floor"
+            ],
+            "avoid_terms": [
+              "performing band",
+              "seated audience"
+            ],
+            "search_queries": [
+              "American Bandstand dance floor teens",
+              "young people dancing on American Bandstand",
+              "Bandstand audience having good time",
+              "teens enjoying music on Bandstand set"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -408,7 +721,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/015.png",
-          "generated_at": "2026-07-13T17:56:29.783642+00:00"
+          "generated_at": "2026-07-13T17:56:29.783642+00:00",
+          "historical_search": "American Bandstand dancers",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1950s",
+            "required_terms": [
+              "dancing",
+              "studio floor"
+            ],
+            "avoid_terms": [
+              "seated",
+              "microphone"
+            ],
+            "search_queries": [
+              "American Bandstand dance floor teens",
+              "Dick Clark show kids dancing",
+              "1950s television dance audience",
+              "Bandstand youthful dancers"
+            ]
+          }
         },
         {
           "shot_number": 16,
@@ -425,7 +758,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/016.png",
-          "generated_at": "2026-07-13T17:56:37.541768+00:00"
+          "generated_at": "2026-07-13T17:56:37.541768+00:00",
+          "historical_search": "Rate-a-Record American Bandstand",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1950s",
+            "required_terms": [
+              "Rate-a-Record",
+              "teen opinions"
+            ],
+            "avoid_terms": [
+              "dancing",
+              "performing"
+            ],
+            "search_queries": [
+              "American Bandstand Rate-a-Record teens",
+              "Dick Clark Rate a Record segment",
+              "1950s teenagers rating records",
+              "Bandstand honest opinions panel"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -448,14 +801,42 @@
           "end_seconds": 134.8,
           "estimated_seconds": 9.2,
           "visual_intent": "Dick Clark standing confidently in a rock and roll television studio, observing enthusiastic dancers with an insightful expression that conveys his belief in the music's lasting power",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "library_filename": "001-young-dick-clark-portrait-1961.jpg",
+            "library_id": "001",
+            "curated": true
+          },
           "prompt": "Cinematic documentary-style 16:9 image of recognizable host Dick Clark as a neat middle-aged man in a slim dark suit and tie, standing in the foreground of a bustling vintage television studio set with simple stage lighting and plain backdrop, looking slightly to the side with a knowing confident smile as if understanding a deeper truth, while a diverse group of energetic young people dance joyfully in the midground and background, bright even studio lighting with soft contrast, early rock and roll era details including period hairstyles and clothing, historical reenactment mood that feels authentic and insightful, filmic grain, no text, no logos, no writing, no album covers, shot on imaginary 16mm film stock",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 001-young-dick-clark-portrait-1961.jpg assigned manually.",
           "image_path": "images/017.png",
-          "generated_at": "2026-07-13T17:56:45.667570+00:00"
+          "generated_at": "2026-07-13T17:56:45.667570+00:00",
+          "historical_search": "Dick Clark American Bandstand 1950s",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1950s",
+            "required_terms": [
+              "podium",
+              "suit and tie",
+              "studio setting"
+            ],
+            "avoid_terms": [
+              "elderly",
+              "1970s",
+              "outdoors"
+            ],
+            "search_queries": [
+              "Dick Clark American Bandstand podium 1957",
+              "Dick Clark rating records on TV 1950s",
+              "vintage Dick Clark Bandstand host photo",
+              "Dick Clark early career television studio"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -485,7 +866,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/018.png",
-          "generated_at": "2026-07-13T17:56:51.798266+00:00"
+          "generated_at": "2026-07-13T17:56:51.798266+00:00",
+          "historical_search": "Dick Clark American Bandstand teens 1957",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1950s",
+            "required_terms": [
+              "American Bandstand",
+              "studio audience"
+            ],
+            "avoid_terms": [
+              "outdoor concert",
+              "radio studio"
+            ],
+            "search_queries": [
+              "Dick Clark American Bandstand set with teens 1957",
+              "Dick Clark hosting Bandstand studio audience",
+              "1950s Dick Clark on raised platform with teenagers",
+              "American Bandstand early years Dick Clark stage"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -515,7 +916,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/019.png",
-          "generated_at": "2026-07-13T17:57:00.099311+00:00"
+          "generated_at": "2026-07-13T17:57:00.099311+00:00",
+          "historical_search": "Chuck Berry American Bandstand 1950s",
+          "historical_plan": {
+            "subject": "Chuck Berry",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "guitar performance",
+              "stage",
+              "audience"
+            ],
+            "avoid_terms": [
+              "portrait",
+              "later decades",
+              "outdoors"
+            ],
+            "search_queries": [
+              "Chuck Berry performing American Bandstand",
+              "Chuck Berry Dick Clark show photo",
+              "Chuck Berry 1950s TV stage appearance",
+              "Chuck Berry Bandstand guitar archival"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -545,7 +968,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/020.png",
-          "generated_at": "2026-07-13T17:57:06.152529+00:00"
+          "generated_at": "2026-07-13T17:57:06.152529+00:00",
+          "historical_search": "American Bandstand dancers 1950s",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1950s",
+            "required_terms": [
+              "dancing",
+              "integrated group",
+              "youth"
+            ],
+            "avoid_terms": [
+              "1960s",
+              "concert",
+              "segregated"
+            ],
+            "search_queries": [
+              "American Bandstand dance floor 1950s",
+              "Dick Clark teenage dancers integrated",
+              "1950s kids dancing on TV"
+            ]
+          }
         },
         {
           "shot_number": 21,
@@ -555,14 +999,41 @@
           "end_seconds": 168.8,
           "estimated_seconds": 9.4,
           "visual_intent": "Dick Clark introducing the fresh-faced Beatles",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/004-dick-clark-with-oliver-1969.jpg",
+            "library_filename": "004-dick-clark-with-oliver-1969.jpg",
+            "library_id": "004",
+            "curated": true
+          },
           "prompt": "Medium shot in a mid-century television studio, warm and welcoming Dick Clark standing beside the four fresh-faced Beatles members who are smiling politely, wholesome safe atmosphere conveying family appeal, soft studio lighting, period accurate suits and clean hairstyles, soft focus audience behind them, documentary cinematic style, photorealistic with subtle film grain, 16:9",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 004-dick-clark-with-oliver-1969.jpg assigned manually.",
           "image_path": "images/021.png",
-          "generated_at": "2026-07-13T17:57:12.191511+00:00"
+          "generated_at": "2026-07-13T17:57:12.191511+00:00",
+          "historical_search": "Beatles Dick Clark American Bandstand 1964",
+          "historical_plan": {
+            "subject": "The Beatles",
+            "subject_type": "group",
+            "era": "early 1960s",
+            "required_terms": [
+              "fresh-faced",
+              "suits",
+              "television appearance"
+            ],
+            "avoid_terms": [
+              "1967",
+              "long hair",
+              "Ed Sullivan"
+            ],
+            "search_queries": [
+              "Beatles on American Bandstand with Dick Clark",
+              "young Beatles TV performance 1964",
+              "fresh faced Beatles Dick Clark show"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -592,7 +1063,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/022.png",
-          "generated_at": "2026-07-13T17:57:19.301260+00:00"
+          "generated_at": "2026-07-13T17:57:19.301260+00:00",
+          "historical_search": "Caravan of Stars tour buses 1960s",
+          "historical_plan": {
+            "subject": "Caravan of Stars buses",
+            "subject_type": "object",
+            "era": "early 1960s",
+            "required_terms": [
+              "tour buses",
+              "highway",
+              "convoy"
+            ],
+            "avoid_terms": [
+              "modern vehicles",
+              "city street"
+            ],
+            "search_queries": [
+              "Caravan of Stars tour buses on road",
+              "Dick Clark Caravan of Stars buses 1960s",
+              "1960s music tour bus convoy",
+              "early 60s Caravan of Stars highway"
+            ]
+          }
         },
         {
           "shot_number": 23,
@@ -609,7 +1101,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/023.png",
-          "generated_at": "2026-07-13T17:57:25.918690+00:00"
+          "generated_at": "2026-07-13T17:57:25.918690+00:00",
+          "historical_search": "Diana Ross and the Supremes early 1960s",
+          "historical_plan": {
+            "subject": "Diana Ross and the Supremes",
+            "subject_type": "group",
+            "era": "early 1960s",
+            "required_terms": [
+              "Caravan of Stars",
+              "tour"
+            ],
+            "avoid_terms": [
+              "solo Diana",
+              "1970s",
+              "stage performance"
+            ],
+            "search_queries": [
+              "Caravan of Stars Supremes",
+              "Diana Ross and the Supremes 1961",
+              "young Diana Ross with Supremes",
+              "early 1960s Supremes tour photos",
+              "Supremes Dick Clark tour"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -639,7 +1153,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/024.png",
-          "generated_at": "2026-07-13T17:57:31.643715+00:00"
+          "generated_at": "2026-07-13T17:57:31.643715+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1960s",
+            "required_terms": [
+              "packed audience",
+              "concert hall interior"
+            ],
+            "avoid_terms": [
+              "performer visible",
+              "outdoor venue",
+              "empty seats"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 25,
@@ -656,7 +1186,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/025.png",
-          "generated_at": "2026-07-13T17:57:38.120893+00:00"
+          "generated_at": "2026-07-13T17:57:38.120893+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1960s",
+            "required_terms": [
+              "excited audience reaction",
+              "live concert"
+            ],
+            "avoid_terms": [
+              "calm faces",
+              "wide empty hall",
+              "performer closeup"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -686,7 +1232,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/026.png",
-          "generated_at": "2026-07-13T17:57:46.527527+00:00"
+          "generated_at": "2026-07-13T17:57:46.527527+00:00",
+          "historical_search": "Dick Clark Caravan of Stars tour",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "late 1950s",
+            "required_terms": [
+              "tour bus",
+              "musicians"
+            ],
+            "avoid_terms": [
+              "studio",
+              "television",
+              "Bandstand"
+            ],
+            "search_queries": [
+              "Dick Clark Caravan of Stars bus photos",
+              "Dick Clark with musicians on tour 1950s",
+              "Dick Clark traveling music show",
+              "Caravan of Stars tour group"
+            ]
+          }
         },
         {
           "shot_number": 27,
@@ -703,7 +1270,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/027.png",
-          "generated_at": "2026-07-13T17:57:52.569441+00:00"
+          "generated_at": "2026-07-13T17:57:52.569441+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early 1960s",
+            "required_terms": [
+              "distraught man",
+              "office desk"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "performance",
+              "happy",
+              "stage"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -726,14 +1310,42 @@
           "end_seconds": 226.4,
           "estimated_seconds": 7.6,
           "visual_intent": "Dick Clark under harsh spotlight in congressional hearing room",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
+            "library_filename": "002-dick-clark-portrait-1970s.jpg",
+            "library_id": "002",
+            "curated": true
+          },
           "prompt": "Documentary cinematic wide shot of a mid-century congressional hearing room with wood paneling, Dick Clark seated at a long witness table in a dark suit, intense harsh spotlight beaming down from above creating strong contrast and deep shadows across the scene, faint silhouettes of committee members in background, tense serious atmosphere, historically accurate details and attire, realistic live-action feel, no visible text or writing, 16:9",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 002-dick-clark-portrait-1970s.jpg assigned manually.",
           "image_path": "images/028.png",
-          "generated_at": "2026-07-13T17:57:59.137298+00:00"
+          "generated_at": "2026-07-13T17:57:59.137298+00:00",
+          "historical_search": "Dick Clark congressional hearings 1960",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1960",
+            "required_terms": [
+              "hearing room",
+              "witness table",
+              "composed"
+            ],
+            "avoid_terms": [
+              "smiling",
+              "studio",
+              "audience"
+            ],
+            "search_queries": [
+              "Dick Clark testifying before Congress",
+              "Dick Clark 1960 House hearing",
+              "Dick Clark congressional testimony photo",
+              "Dick Clark subcommittee appearance"
+            ]
+          }
         },
         {
           "shot_number": 29,
@@ -750,7 +1362,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/029.png",
-          "generated_at": "2026-07-13T17:58:04.316780+00:00"
+          "generated_at": "2026-07-13T17:58:04.316780+00:00",
+          "historical_search": "Dick Clark television host 1960",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "early 1960s",
+            "required_terms": [
+              "television studio",
+              "hosting",
+              "composed"
+            ],
+            "avoid_terms": [
+              "hearing",
+              "witness table",
+              "committee"
+            ],
+            "search_queries": [
+              "Dick Clark hosting television show",
+              "Dick Clark on TV set 1960",
+              "Dick Clark television studio portrait",
+              "Dick Clark broadcast host photo"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -780,7 +1414,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/030.png",
-          "generated_at": "2026-07-13T17:58:10.542267+00:00"
+          "generated_at": "2026-07-13T17:58:10.542267+00:00",
+          "historical_search": "Dick Clark smiling American Bandstand",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "smile",
+              "direct gaze"
+            ],
+            "avoid_terms": [
+              "stage",
+              "dancing",
+              "crowd"
+            ],
+            "search_queries": [
+              "Dick Clark close-up smiling portrait",
+              "Dick Clark American Bandstand friendly host",
+              "young Dick Clark trustworthy expression",
+              "Dick Clark neat suit direct gaze"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -810,7 +1465,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/031.png",
-          "generated_at": "2026-07-13T17:58:17.311343+00:00"
+          "generated_at": "2026-07-13T17:58:17.311343+00:00",
+          "historical_search": "Dick Clark Rolling Stones American Bandstand 1964",
+          "historical_plan": {
+            "subject": "Dick Clark and the Rolling Stones",
+            "subject_type": "group",
+            "era": "1964",
+            "required_terms": [
+              "American Bandstand",
+              "studio set"
+            ],
+            "avoid_terms": [
+              "outdoor",
+              "concert hall",
+              "modern dress"
+            ],
+            "search_queries": [
+              "Dick Clark Rolling Stones American Bandstand 1964",
+              "Dick Clark introduces Rolling Stones Bandstand",
+              "Dick Clark with Mick Jagger 1964",
+              "Rolling Stones first American Bandstand appearance"
+            ]
+          }
         },
         {
           "shot_number": 32,
@@ -827,7 +1503,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/032.png",
-          "generated_at": "2026-07-13T17:58:23.759561+00:00"
+          "generated_at": "2026-07-13T17:58:23.759561+00:00",
+          "historical_search": "Dick Clark Dave Clark Five American Bandstand 1964",
+          "historical_plan": {
+            "subject": "Dick Clark and the Dave Clark Five",
+            "subject_type": "group",
+            "era": "1964",
+            "required_terms": [
+              "American Bandstand",
+              "performance"
+            ],
+            "avoid_terms": [
+              "interview desk",
+              "crowd shot",
+              "later decades"
+            ],
+            "search_queries": [
+              "Dick Clark Dave Clark Five American Bandstand 1964",
+              "Dave Clark Five perform on Bandstand with Dick Clark",
+              "Dick Clark watches Dave Clark Five 1960s",
+              "British Invasion Dave Clark Five Bandstand"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -857,7 +1554,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/033.png",
-          "generated_at": "2026-07-13T17:58:30.990471+00:00"
+          "generated_at": "2026-07-13T17:58:30.990471+00:00",
+          "historical_search": "James Brown American Bandstand",
+          "historical_plan": {
+            "subject": "James Brown",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "performing",
+              "Bandstand"
+            ],
+            "avoid_terms": [
+              "interview",
+              "later career"
+            ],
+            "search_queries": [
+              "James Brown American Bandstand performance",
+              "James Brown Dick Clark show",
+              "James Brown on Bandstand stage",
+              "vintage James Brown soul TV appearance"
+            ]
+          }
         },
         {
           "shot_number": 34,
@@ -874,7 +1591,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/034.png",
-          "generated_at": "2026-07-13T17:58:37.479565+00:00"
+          "generated_at": "2026-07-13T17:58:37.479565+00:00",
+          "historical_search": "Jackson 5 Bandstand as kids",
+          "historical_plan": {
+            "subject": "Jackson 5",
+            "subject_type": "group",
+            "era": "childhood",
+            "required_terms": [
+              "dancing",
+              "Bandstand stage"
+            ],
+            "avoid_terms": [
+              "adult lineup",
+              "studio recording"
+            ],
+            "search_queries": [
+              "young Jackson 5 dancing on American Bandstand",
+              "Jackson 5 childhood appearance Dick Clark",
+              "early Jackson 5 Bandstand performance",
+              "Michael Jackson brothers dancing on TV stage"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -904,7 +1641,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/035.png",
-          "generated_at": "2026-07-13T17:58:43.807783+00:00"
+          "generated_at": "2026-07-13T17:58:43.807783+00:00",
+          "historical_search": "Dick Clark introducing band TV show",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "American Bandstand era",
+            "required_terms": [
+              "introducing band",
+              "TV studio"
+            ],
+            "avoid_terms": [
+              "country",
+              "handshake"
+            ],
+            "search_queries": [
+              "Dick Clark American Bandstand rock musicians",
+              "Dick Clark microphone with band on stage",
+              "Dick Clark hosting heavy music group",
+              "Dick Clark TV introduction shot"
+            ]
+          }
         },
         {
           "shot_number": 36,
@@ -921,7 +1678,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/036.png",
-          "generated_at": "2026-07-13T17:58:51.087150+00:00"
+          "generated_at": "2026-07-13T17:58:51.087150+00:00",
+          "historical_search": "Dick Clark with country singer",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "American Bandstand era",
+            "required_terms": [
+              "country artist",
+              "respectful interaction"
+            ],
+            "avoid_terms": [
+              "rock band",
+              "microphone stage"
+            ],
+            "search_queries": [
+              "Dick Clark talking with country musician",
+              "Dick Clark smiling at country performer",
+              "Dick Clark genuine respect guest",
+              "Dick Clark television studio conversation"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -944,14 +1721,40 @@
           "end_seconds": 296.4,
           "estimated_seconds": 7.6,
           "visual_intent": "Dick Clark hosting the Pyramid game show with warm wit and engaging presence",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/006-dick-clark-10000-pyramid.jpg",
+            "library_filename": "006-dick-clark-10000-pyramid.jpg",
+            "library_id": "006",
+            "curated": true
+          },
           "prompt": "Cinematic 16:9 documentary-style shot, bright vintage television studio setting, medium shot of recognizable Dick Clark in a neat suit standing center frame with a warm friendly smile and clever expressive face as if hosting, soft even studio lighting, inviting and professional mood, historically accurate game show host appearance and 1970s-era details, clean composition with no visible text, logos, writing, or graphics, photorealistic, respectful representation",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 006-dick-clark-10000-pyramid.jpg assigned manually.",
           "image_path": "images/037.png",
-          "generated_at": "2026-07-13T17:58:57.925559+00:00"
+          "generated_at": "2026-07-13T17:58:57.925559+00:00",
+          "historical_search": "Dick Clark Pyramid host",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "Pyramid",
+              "game show host"
+            ],
+            "avoid_terms": [
+              "Bandstand",
+              "dancing"
+            ],
+            "search_queries": [
+              "Dick Clark Pyramid game show",
+              "Dick Clark hosting Pyramid",
+              "Dick Clark $10000 Pyramid set",
+              "Dick Clark game show podium"
+            ]
+          }
         },
         {
           "shot_number": 38,
@@ -968,7 +1771,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/038.png",
-          "generated_at": "2026-07-13T17:59:04.516186+00:00"
+          "generated_at": "2026-07-13T17:59:04.516186+00:00",
+          "historical_search": "Dick Clark New Year's Rockin' Eve",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "New Year's Rockin Eve",
+              "host"
+            ],
+            "avoid_terms": [
+              "game show",
+              "studio podium"
+            ],
+            "search_queries": [
+              "Dick Clark New Year's Rockin Eve",
+              "Dick Clark hosting NYE stage",
+              "Dick Clark New Years Eve broadcast",
+              "Dick Clark Rockin New Years"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -998,7 +1821,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/039.png",
-          "generated_at": "2026-07-13T17:59:10.343373+00:00"
+          "generated_at": "2026-07-13T17:59:10.343373+00:00",
+          "historical_search": "Dick Clark Times Square New Year's countdown",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "overcoat",
+              "Times Square"
+            ],
+            "avoid_terms": [
+              "indoor",
+              "studio",
+              "summer"
+            ],
+            "search_queries": [
+              "Dick Clark Times Square New Year's Eve",
+              "Dick Clark overcoat midnight countdown",
+              "Dick Clark New York New Year cold"
+            ]
+          }
         },
         {
           "shot_number": 40,
@@ -1015,7 +1858,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/040.png",
-          "generated_at": "2026-07-13T17:59:16.104270+00:00"
+          "generated_at": "2026-07-13T17:59:16.104270+00:00",
+          "historical_search": "Dick Clark visible breath cold Times Square",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "cold breath",
+              "overcoat",
+              "outdoor"
+            ],
+            "avoid_terms": [
+              "indoor",
+              "warm",
+              "smiling"
+            ],
+            "search_queries": [
+              "Dick Clark cold weather breath visible",
+              "Dick Clark New Year's Eve closeup winter",
+              "Dick Clark freezing night Times Square"
+            ]
+          }
         },
         {
           "shot_number": 41,
@@ -1032,7 +1896,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/041.png",
-          "generated_at": "2026-07-13T17:59:23.145714+00:00"
+          "generated_at": "2026-07-13T17:59:23.145714+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "group listening",
+              "New Year"
+            ],
+            "avoid_terms": [
+              "outdoor",
+              "crowd in square"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1062,7 +1941,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/042.png",
-          "generated_at": "2026-07-13T17:59:28.507637+00:00"
+          "generated_at": "2026-07-13T17:59:28.507637+00:00",
+          "historical_search": "Dick Clark 2004 stroke",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "2004",
+            "required_terms": [
+              "stroke",
+              "2004"
+            ],
+            "avoid_terms": [
+              "1950s",
+              "Bandstand",
+              "young"
+            ],
+            "search_queries": [
+              "Dick Clark after stroke 2004",
+              "Dick Clark 2004 portrait",
+              "Dick Clark late career photo",
+              "Dick Clark stroke recovery"
+            ]
+          }
         },
         {
           "shot_number": 43,
@@ -1079,7 +1979,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/043.png",
-          "generated_at": "2026-07-13T17:59:35.656429+00:00"
+          "generated_at": "2026-07-13T17:59:35.656429+00:00",
+          "historical_search": "Ryan Seacrest 2004",
+          "historical_plan": {
+            "subject": "Ryan Seacrest",
+            "subject_type": "person",
+            "era": "2004",
+            "required_terms": [
+              "hosting",
+              "2004"
+            ],
+            "avoid_terms": [
+              "2020s",
+              "today",
+              "co-host"
+            ],
+            "search_queries": [
+              "Ryan Seacrest hosting 2004",
+              "young Ryan Seacrest 2004",
+              "Ryan Seacrest early career photo",
+              "Ryan Seacrest New Years Eve 2004"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1102,14 +2023,40 @@
           "end_seconds": 345.2,
           "estimated_seconds": 6.4,
           "visual_intent": "Dick Clark affectionately examining a classic car",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/003-dick-clark-family-1960.jpg",
+            "library_filename": "003-dick-clark-family-1960.jpg",
+            "library_id": "003",
+            "curated": true
+          },
           "prompt": "Photorealistic cinematic documentary style 16:9 image, wide establishing shot of recognizable Dick Clark in mid-20th century casual attire standing outdoors beside a polished classic American convertible in a suburban driveway, natural daylight with warm golden hour lighting, relaxed human expression as he runs a hand along the fender, calm and approachable mood, historically accurate vintage car and clothing details, filmic color grading, no text, no logos, no writing visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 003-dick-clark-family-1960.jpg assigned manually.",
           "image_path": "images/044.png",
-          "generated_at": "2026-07-13T17:59:42.511536+00:00"
+          "generated_at": "2026-07-13T17:59:42.511536+00:00",
+          "historical_search": "Dick Clark with classic car",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1960s",
+            "required_terms": [
+              "car",
+              "casual"
+            ],
+            "avoid_terms": [
+              "studio",
+              "audience"
+            ],
+            "search_queries": [
+              "Dick Clark next to car",
+              "Dick Clark with vintage automobile",
+              "Dick Clark casual car photo",
+              "Dick Clark automobile enthusiast"
+            ]
+          }
         },
         {
           "shot_number": 45,
@@ -1126,7 +2073,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/045.png",
-          "generated_at": "2026-07-13T17:59:49.491411+00:00"
+          "generated_at": "2026-07-13T17:59:49.491411+00:00",
+          "historical_search": "Dick Clark laughing candid",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1960s",
+            "required_terms": [
+              "laughing",
+              "candid"
+            ],
+            "avoid_terms": [
+              "car",
+              "vehicle"
+            ],
+            "search_queries": [
+              "Dick Clark laughing",
+              "candid photo Dick Clark laugh",
+              "Dick Clark genuine smile",
+              "Dick Clark humorous moment"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1156,7 +2123,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/046.png",
-          "generated_at": "2026-07-13T17:59:56.641207+00:00"
+          "generated_at": "2026-07-13T17:59:56.641207+00:00",
+          "historical_search": "Dick Clark American Bandstand",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "studio stage",
+              "performers"
+            ],
+            "avoid_terms": [
+              "close-up",
+              "dancing"
+            ],
+            "search_queries": [
+              "Dick Clark American Bandstand hosting musicians",
+              "Dick Clark on stage with performing artists",
+              "vintage Dick Clark introducing band on TV",
+              "Dick Clark stepping aside for performers"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1186,7 +2173,25 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/047.png",
-          "generated_at": "2026-07-13T18:00:05.151194+00:00"
+          "generated_at": "2026-07-13T18:00:05.151194+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1950s",
+            "required_terms": [
+              "vinyl record",
+              "turntable",
+              "listening"
+            ],
+            "avoid_terms": [
+              "album cover",
+              "television",
+              "text",
+              "logo"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1216,7 +2221,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/048.png",
-          "generated_at": "2026-07-13T18:00:11.633251+00:00"
+          "generated_at": "2026-07-13T18:00:11.633251+00:00",
+          "historical_search": "Dick Clark 1950s",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1950s",
+            "required_terms": [
+              "suit and tie",
+              "friendly expression"
+            ],
+            "avoid_terms": [
+              "gray hair",
+              "older",
+              "with dancers"
+            ],
+            "search_queries": [
+              "Dick Clark 1950s portrait",
+              "young Dick Clark suit and tie",
+              "Dick Clark early career photo",
+              "Dick Clark black and white 1956"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1246,7 +2272,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/049.png",
-          "generated_at": "2026-07-13T18:00:17.225537+00:00"
+          "generated_at": "2026-07-13T18:00:17.225537+00:00",
+          "historical_search": "American Bandstand 1960s dancers",
+          "historical_plan": {
+            "subject": "teenage dancers",
+            "subject_type": "group",
+            "era": "1960s",
+            "required_terms": [
+              "dancing",
+              "studio",
+              "joyful"
+            ],
+            "avoid_terms": [
+              "protest",
+              "politics",
+              "signs"
+            ],
+            "search_queries": [
+              "American Bandstand 1960s dancers",
+              "Dick Clark show teens dancing 1960s",
+              "1960s teenagers dancing studio floor"
+            ]
+          }
         },
         {
           "shot_number": 50,
@@ -1256,14 +2303,42 @@
           "end_seconds": 401.2,
           "estimated_seconds": 8.8,
           "visual_intent": "Steady middle-aged Dick Clark presiding calmly over a transforming music era",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/008-american-bandstand-anniversary-event.jpg",
+            "library_filename": "008-american-bandstand-anniversary-event.jpg",
+            "library_id": "008",
+            "curated": true
+          },
           "prompt": "Cinematic documentary-style 16:9 color image of middle-aged Dick Clark standing confidently in a 1970s television studio control area, wearing a tailored suit with calm authoritative expression, soft professional lighting with subtle background disco lighting elements, steady reassuring presence amid implied change, realistic historical portrayal, medium-wide shot from slight low angle, serious yet approachable mood, no text logos or writing visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 008-american-bandstand-anniversary-event.jpg assigned manually.",
           "image_path": "images/050.png",
-          "generated_at": "2026-07-13T18:00:24.556560+00:00"
+          "generated_at": "2026-07-13T18:00:24.556560+00:00",
+          "historical_search": "Dick Clark 1970s",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "composed",
+              "professional",
+              "hosting"
+            ],
+            "avoid_terms": [
+              "dancing",
+              "teenagers",
+              "youthful"
+            ],
+            "search_queries": [
+              "Dick Clark 1970s portrait",
+              "Dick Clark hosting 1970s",
+              "Dick Clark steady expression 1970s",
+              "Dick Clark American Bandstand 1970s"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1293,7 +2368,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/051.png",
-          "generated_at": "2026-07-13T18:00:31.032182+00:00"
+          "generated_at": "2026-07-13T18:00:31.032182+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "mid-20th century",
+            "required_terms": [
+              "music fans dancing",
+              "multi generational"
+            ],
+            "avoid_terms": [
+              "signs",
+              "text",
+              "logos"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 52,
@@ -1310,7 +2401,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/052.png",
-          "generated_at": "2026-07-13T18:00:37.872935+00:00"
+          "generated_at": "2026-07-13T18:00:37.872935+00:00",
+          "historical_search": "Dick Clark 2012",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "2012",
+            "required_terms": [
+              "elderly",
+              "age 82"
+            ],
+            "avoid_terms": [
+              "young",
+              "1950s",
+              "studio audience"
+            ],
+            "search_queries": [
+              "Dick Clark late in life portrait",
+              "Dick Clark 2010-2012 photos",
+              "Dick Clark final years appearance",
+              "Dick Clark 82 years old"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1340,7 +2452,16 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/053.png",
-          "generated_at": "2026-07-13T18:00:44.325030+00:00"
+          "generated_at": "2026-07-13T18:00:44.325030+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "later life",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1370,7 +2491,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/054.png",
-          "generated_at": "2026-07-13T18:00:51.394121+00:00"
+          "generated_at": "2026-07-13T18:00:51.394121+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "group",
+            "era": "mid-20th century",
+            "required_terms": [
+              "living room",
+              "watching television"
+            ],
+            "avoid_terms": [
+              "studio audience",
+              "concert crowd",
+              "outdoor gathering"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 55,
@@ -1387,7 +2524,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/055.png",
-          "generated_at": "2026-07-13T18:00:58.625762+00:00"
+          "generated_at": "2026-07-13T18:00:58.625762+00:00",
+          "historical_search": "Dick Clark smiling television host",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "smile",
+              "friendly expression"
+            ],
+            "avoid_terms": [
+              "elderly",
+              "New Years Eve",
+              "serious pose"
+            ],
+            "search_queries": [
+              "Dick Clark smiling portrait",
+              "Dick Clark warm friendly smile",
+              "Dick Clark television host smiling",
+              "Dick Clark microphone smile photo",
+              "Dick Clark engaging host expression"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1417,7 +2576,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/056.png",
-          "generated_at": "2026-07-13T18:01:04.744748+00:00"
+          "generated_at": "2026-07-13T18:01:04.744748+00:00",
+          "historical_search": "Dick Clark later life",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "later life",
+            "required_terms": [
+              "elderly",
+              "smile"
+            ],
+            "avoid_terms": [
+              "young",
+              "1950s"
+            ],
+            "search_queries": [
+              "Dick Clark elderly portrait",
+              "Dick Clark later years warm expression",
+              "older Dick Clark kind smile",
+              "Dick Clark mature years photo"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1447,7 +2626,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/057.png",
-          "generated_at": "2026-07-13T18:01:10.972839+00:00"
+          "generated_at": "2026-07-13T18:01:10.972839+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "group",
+            "era": "teenage years",
+            "required_terms": [
+              "dancing",
+              "youth",
+              "energetic"
+            ],
+            "avoid_terms": [
+              "adults",
+              "seated audience"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 58,
@@ -1464,7 +2659,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/058.png",
-          "generated_at": "2026-07-13T18:01:17.475208+00:00"
+          "generated_at": "2026-07-13T18:01:17.475208+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "person",
+            "era": "teenage years",
+            "required_terms": [
+              "listening to music",
+              "reflective"
+            ],
+            "avoid_terms": [
+              "dancing",
+              "group of people"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1487,14 +2697,39 @@
           "end_seconds": 476.8,
           "estimated_seconds": 6.0,
           "visual_intent": "Reflective close-up of Dick Clark smiling warmly",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
+            "library_filename": "002-dick-clark-portrait-1970s.jpg",
+            "library_id": "002",
+            "curated": true
+          },
           "prompt": "Photorealistic 16:9 documentary style cinematic shot, intimate close-up of Dick Clark with a gentle sincere smile and kind eyes looking toward viewer, soft warm studio lighting with subtle shadows, nostalgic and heartfelt mood, set in a vintage broadcast studio with simple backdrop, historically accurate neat suit and appearance, respectful portrayal, subtle film grain, no text logos signs or writing of any kind",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 002-dick-clark-portrait-1970s.jpg assigned manually.",
           "image_path": "images/059.png",
-          "generated_at": "2026-07-13T18:01:23.642843+00:00"
+          "generated_at": "2026-07-13T18:01:23.642843+00:00",
+          "historical_search": "Dick Clark smiling American Bandstand",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1960s",
+            "required_terms": [
+              "smiling",
+              "host"
+            ],
+            "avoid_terms": [
+              "elderly",
+              "interview"
+            ],
+            "search_queries": [
+              "Dick Clark smiling American Bandstand",
+              "Dick Clark friendly TV host 1960",
+              "Dick Clark portrait smile"
+            ]
+          }
         },
         {
           "shot_number": 60,
@@ -1511,7 +2746,28 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/060.png",
-          "generated_at": "2026-07-13T18:01:31.302723+00:00"
+          "generated_at": "2026-07-13T18:01:31.302723+00:00",
+          "historical_search": "Dick Clark hosting American Bandstand",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "1960s",
+            "required_terms": [
+              "hosting",
+              "microphone",
+              "studio set"
+            ],
+            "avoid_terms": [
+              "close-up",
+              "static portrait"
+            ],
+            "search_queries": [
+              "Dick Clark American Bandstand microphone",
+              "Dick Clark hosting Bandstand set",
+              "Dick Clark introducing music 1960s",
+              "Dick Clark on Bandstand podium"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1534,14 +2790,42 @@
           "end_seconds": 489.2,
           "estimated_seconds": 6.4,
           "visual_intent": "Wide shot of young Dick Clark standing on the Bandstand stage in a nostalgic television studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "library_filename": "001-young-dick-clark-portrait-1961.jpg",
+            "library_id": "001",
+            "curated": true
+          },
           "prompt": "16:9 documentary style, wide cinematic shot of a late-1950s television studio that feels like a fading memory, young Dick Clark in a slim dark suit standing center stage on a simple raised Bandstand platform, holding a vintage handheld microphone, boyish expression, bright overhead studio lighting with soft edges and slight haze suggesting impermanence, audience bleachers visible in soft background, nostalgic and timeless mood, photorealistic, subtle film grain, no text logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 001-young-dick-clark-portrait-1961.jpg assigned manually.",
           "image_path": "images/061.png",
-          "generated_at": "2026-07-13T18:01:37.168048+00:00"
+          "generated_at": "2026-07-13T18:01:37.168048+00:00",
+          "historical_search": "Dick Clark American Bandstand microphone smile",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "late 1950s",
+            "required_terms": [
+              "microphone",
+              "smiling",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "older appearance",
+              "seated",
+              "1970s"
+            ],
+            "search_queries": [
+              "Dick Clark American Bandstand close-up with microphone",
+              "young Dick Clark boyish grin hosting",
+              "Dick Clark Bandstand stage microphone 1950s",
+              "vintage Dick Clark smiling on set"
+            ]
+          }
         },
         {
           "shot_number": 62,
@@ -1558,7 +2842,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/062.png",
-          "generated_at": "2026-07-13T18:01:44.096117+00:00"
+          "generated_at": "2026-07-13T18:01:44.096117+00:00",
+          "historical_search": "American Bandstand television studio set Dick Clark",
+          "historical_plan": {
+            "subject": "Dick Clark",
+            "subject_type": "person",
+            "era": "late 1950s",
+            "required_terms": [
+              "Bandstand stage",
+              "television studio",
+              "standing"
+            ],
+            "avoid_terms": [
+              "close-up",
+              "crowded dance floor",
+              "modern set"
+            ],
+            "search_queries": [
+              "wide shot Dick Clark on American Bandstand stage",
+              "1950s American Bandstand television studio set",
+              "Dick Clark full view hosting Bandstand",
+              "vintage Bandstand stage with host in studio"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1588,13 +2894,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/063.png",
-          "generated_at": "2026-07-13T18:01:52.254904+00:00"
+          "generated_at": "2026-07-13T18:01:52.254904+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1960s",
+            "required_terms": [
+              "teen dancers"
+            ],
+            "avoid_terms": [
+              "stage performers",
+              "seated crowd"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
     }
   ],
-  "updated_at": "2026-07-13T18:01:52.275276+00:00",
+  "updated_at": "2026-07-16T04:17:53.550920+00:00",
   "visual_plan_ready": true,
   "images_ready": true
 }

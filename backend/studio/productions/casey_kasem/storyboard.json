@@ -40,7 +40,16 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/001.png",
-          "generated_at": "2026-07-13T16:02:52.702254+00:00"
+          "generated_at": "2026-07-13T16:02:52.702254+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [],
+            "avoid_terms": [],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -70,7 +79,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/002.png",
-          "generated_at": "2026-07-13T16:09:00.047262+00:00"
+          "generated_at": "2026-07-13T16:09:00.047262+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "family",
+              "console radio",
+              "living room"
+            ],
+            "avoid_terms": [
+              "television",
+              "headphones",
+              "modern devices"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 3,
@@ -80,14 +106,41 @@
           "end_seconds": 25.66,
           "estimated_seconds": 7.217,
           "visual_intent": "Casey Kasem speaking into the microphone in the broadcast studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
+            "library_filename": "009-casey-kasem-american-top-40-studio.png",
+            "library_id": "009",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style photorealistic cinematic shot, medium close-up of Casey Kasem seated at a vintage radio studio console wearing headphones, speaking with warm charismatic expression into a classic microphone, focused yet friendly studio lighting with subtle warmth, 1970s broadcast environment, respectful recognizable portrayal, calm professional mood, no text logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 009-casey-kasem-american-top-40-studio.png assigned manually.",
           "image_path": "images/003.png",
-          "generated_at": "2026-07-13T16:09:05.767531+00:00"
+          "generated_at": "2026-07-13T16:09:05.767531+00:00",
+          "historical_search": "Casey Kasem radio studio 1970s",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "radio microphone",
+              "broadcast desk"
+            ],
+            "avoid_terms": [
+              "television studio",
+              "audience",
+              "stage"
+            ],
+            "search_queries": [
+              "Casey Kasem American Top 40 studio",
+              "Casey Kasem radio broadcast booth 1970s",
+              "Casey Kasem at microphone hosting countdown",
+              "vintage Casey Kasem in radio studio"
+            ]
+          }
         },
         {
           "shot_number": 4,
@@ -104,7 +157,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/004.png",
-          "generated_at": "2026-07-13T16:09:12.405147+00:00"
+          "generated_at": "2026-07-13T16:09:12.405147+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "portable radio",
+              "park picnic",
+              "weekend"
+            ],
+            "avoid_terms": [
+              "indoor setting",
+              "television",
+              "concert"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -134,7 +204,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/005.png",
-          "generated_at": "2026-07-13T16:09:18.709465+00:00"
+          "generated_at": "2026-07-13T16:09:18.709465+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Detroit neighborhood",
+            "subject_type": "place",
+            "era": "1932",
+            "required_terms": [
+              "Detroit",
+              "1930s",
+              "residential street"
+            ],
+            "avoid_terms": [
+              "modern vehicles",
+              "skyscrapers",
+              "postwar buildings"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 6,
@@ -151,7 +238,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/006.png",
-          "generated_at": "2026-07-13T16:09:26.552529+00:00"
+          "generated_at": "2026-07-13T16:09:26.552529+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Lebanese American family",
+            "subject_type": "group",
+            "era": "childhood",
+            "required_terms": [
+              "Lebanese immigrant family",
+              "1930s interior",
+              "storytelling"
+            ],
+            "avoid_terms": [
+              "television",
+              "modern clothing",
+              "post 1940s decor"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -181,7 +285,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/007.png",
-          "generated_at": "2026-07-13T16:09:32.415582+00:00"
+          "generated_at": "2026-07-13T16:09:32.415582+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Kemal Amin Kasem",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "grocery store",
+              "father"
+            ],
+            "avoid_terms": [
+              "radio",
+              "listening"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 8,
@@ -198,7 +317,21 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/008.png",
-          "generated_at": "2026-07-13T16:09:38.568831+00:00"
+          "generated_at": "2026-07-13T16:09:38.568831+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Kemal Amin Kasem",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "listening to radio"
+            ],
+            "avoid_terms": [
+              "grocery store",
+              "father"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -221,14 +354,40 @@
           "end_seconds": 70.163,
           "estimated_seconds": 8.019,
           "visual_intent": "Young Casey Kasem speaking into a vintage microphone with gentle worldly warmth and approachable authority",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/019-young-casey-kasem-wjbk-disc-jockey.png",
+            "library_filename": "019-young-casey-kasem-wjbk-disc-jockey.png",
+            "library_id": "019",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style photorealistic image, intimate close-up framing, mid-20th century radio studio setting with vintage broadcast equipment softly out of focus in background, subject is recognizably young Casey Kasem seated and speaking into large ribbon microphone with calm confident expression conveying gentle warmth, soft warm lighting from above gently illuminating his face, professional yet inviting mood, subtle film grain, historically believable details, no text logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 019-young-casey-kasem-wjbk-disc-jockey.png assigned manually.",
           "image_path": "images/009.png",
-          "generated_at": "2026-07-13T16:09:44.658897+00:00"
+          "generated_at": "2026-07-13T16:09:44.658897+00:00",
+          "historical_search": "Casey Kasem early radio career",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "radio microphone",
+              "broadcast studio"
+            ],
+            "avoid_terms": [
+              "Top 40",
+              "television",
+              "later years"
+            ],
+            "search_queries": [
+              "Casey Kasem young radio announcer",
+              "Casey Kasem at microphone early career",
+              "Casey Kasem broadcasting studio"
+            ]
+          }
         },
         {
           "shot_number": 10,
@@ -238,14 +397,36 @@
           "end_seconds": 78.181,
           "estimated_seconds": 8.019,
           "visual_intent": "Young Casey Kasem working the controls at a modest small-town radio station",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/016-casey-kasem-radio-studio-broadcast.png",
+            "library_filename": "016-casey-kasem-radio-studio-broadcast.png",
+            "library_id": "016",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style photorealistic image, medium side-angle framing showing workspace, setting is simple modest mid-20th century small radio station with basic furnishings and vintage audio equipment, subject is recognizably young Casey Kasem leaning forward to adjust dials and controls with focused expression, mixed natural window light and practical lamps, determined exploratory mood suggesting early career movement, subtle film grain, historically believable post-war era details, no text logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 016-casey-kasem-radio-studio-broadcast.png assigned manually.",
           "image_path": "images/010.png",
-          "generated_at": "2026-07-13T16:09:51.785905+00:00"
+          "generated_at": "2026-07-13T16:09:51.785905+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "vintage automobile",
+              "rural highway"
+            ],
+            "avoid_terms": [
+              "modern cars",
+              "urban freeway",
+              "signs"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -268,14 +449,41 @@
           "end_seconds": 89.808,
           "estimated_seconds": 11.627,
           "visual_intent": "Casey Kasem speaking sincerely into a vintage studio microphone with focused expression",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/015-casey-kasem-black-white-portrait.png",
+            "library_filename": "015-casey-kasem-black-white-portrait.png",
+            "library_id": "015",
+            "curated": true
+          },
           "prompt": "Documentary-style cinematic close-up of recognizable young Casey Kasem in a vintage radio broadcast booth, seated before a large classic microphone, wearing headphones, delivering his smooth baritone with a hint of Midwestern sincerity evident in his warm earnest expression, turntable and news copy visible on desk behind him, soft warm studio lighting with gentle shadows, professional and intimate mood, historically believable mid-20th century radio details, photorealistic, natural color grading, 16:9 aspect ratio",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 015-casey-kasem-black-white-portrait.png assigned manually.",
           "image_path": "images/011.png",
-          "generated_at": "2026-07-13T16:09:58.864222+00:00"
+          "generated_at": "2026-07-13T16:09:58.864222+00:00",
+          "historical_search": "Casey Kasem early radio career",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "radio studio",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "Top 40",
+              "older",
+              "television"
+            ],
+            "search_queries": [
+              "Casey Kasem radio announcer early days",
+              "young Casey Kasem at microphone",
+              "Casey Kasem disc jockey broadcast booth",
+              "Casey Kasem news reader radio station"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -298,14 +506,39 @@
           "end_seconds": 97.025,
           "estimated_seconds": 7.217,
           "visual_intent": "Casey Kasem performing cartoon voiceover work in a 1960s recording studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/013-casey-kasem-with-scooby-doo.png",
+            "library_filename": "013-casey-kasem-with-scooby-doo.png",
+            "library_id": "013",
+            "curated": true
+          },
           "prompt": "Photorealistic cinematic documentary style in 16:9, late 1960s sound recording booth with soundproof walls, medium close-up of recognizable Casey Kasem in his thirties with dark hair, standing at a vintage microphone delivering an animated performance with expressive face and gesture, warm overhead lighting, focused creative atmosphere, subtle film grain, historical accuracy --no text, no logos, no watermarks, no television screenshots",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 013-casey-kasem-with-scooby-doo.png assigned manually.",
           "image_path": "images/012.png",
-          "generated_at": "2026-07-13T16:10:04.499287+00:00"
+          "generated_at": "2026-07-13T16:10:04.499287+00:00",
+          "historical_search": "Casey Kasem voice recording studio 1960s",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "late 1960s",
+            "required_terms": [
+              "microphone",
+              "voice work"
+            ],
+            "avoid_terms": [
+              "radio host",
+              "on air"
+            ],
+            "search_queries": [
+              "Casey Kasem recording studio 1969",
+              "Casey Kasem voice actor session 1960s",
+              "Casey Kasem cartoon voice work photo"
+            ]
+          }
         },
         {
           "shot_number": 13,
@@ -315,14 +548,37 @@
           "end_seconds": 104.242,
           "estimated_seconds": 7.217,
           "visual_intent": "Casey Kasem in a radio broadcast studio representing the man about to change radio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
+            "library_filename": "008-casey-kasem-headphones-radio-studio.png",
+            "library_id": "008",
+            "curated": true
+          },
           "prompt": "Photorealistic cinematic documentary style in 16:9, late 1960s radio broadcast studio filled with vintage microphones, turntables and reel-to-reel machines, wide shot of recognizable Casey Kasem seated at the console with thoughtful pioneering expression, dramatic side lighting with deep shadows, mood of imminent transformation, subtle film grain, historical accuracy --no text, no logos, no watermarks, no television screenshots",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 008-casey-kasem-headphones-radio-studio.png assigned manually.",
           "image_path": "images/013.png",
-          "generated_at": "2026-07-13T16:10:10.865661+00:00"
+          "generated_at": "2026-07-13T16:10:10.865661+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "late 1960s",
+            "required_terms": [
+              "children",
+              "living room",
+              "television"
+            ],
+            "avoid_terms": [
+              "adults",
+              "radio",
+              "visible screen content"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -345,14 +601,40 @@
           "end_seconds": 113.864,
           "estimated_seconds": 9.622,
           "visual_intent": "Casey Kasem and Don Bustany with other creative partners brainstorming in a 1970 office",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/014-casey-kasem-with-radio-colleague.png",
+            "library_filename": "014-casey-kasem-with-radio-colleague.png",
+            "library_id": "014",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style wide shot in 16:9 aspect ratio, early 1970s Los Angeles office with wood paneling, bookshelves and large windows, four men including recognizable likenesses of Casey Kasem and Don Bustany in period button-down shirts and slacks seated around a large wooden table in animated discussion with thoughtful gestures and expressions, soft natural daylight lighting with gentle shadows, collaborative and inventive mood, historically accurate details, realistic live-action reenactment, no visible text, logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 014-casey-kasem-with-radio-colleague.png assigned manually.",
           "image_path": "images/014.png",
-          "generated_at": "2026-07-13T16:10:17.604206+00:00"
+          "generated_at": "2026-07-13T16:10:17.604206+00:00",
+          "historical_search": "Casey Kasem 1970",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970",
+            "required_terms": [
+              "radio office",
+              "thoughtful"
+            ],
+            "avoid_terms": [
+              "microphone",
+              "cartoon"
+            ],
+            "search_queries": [
+              "Casey Kasem 1970",
+              "Casey Kasem early career",
+              "Casey Kasem radio personality 1970",
+              "Casey Kasem American Top 40"
+            ]
+          }
         },
         {
           "shot_number": 15,
@@ -362,14 +644,40 @@
           "end_seconds": 123.487,
           "estimated_seconds": 9.622,
           "visual_intent": "The team envisioning the Billboard countdown format wrapped with stories, trivia and dedications",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/005-american-top-40-radio-promotional-item.png",
+            "library_filename": "005-american-top-40-radio-promotional-item.png",
+            "library_id": "005",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style medium close-up shot in 16:9 aspect ratio, early 1970s office interior, tight focus on Casey Kasem speaking with inspired expression and subtle hand gesture as Don Bustany and another colleague listen attentively in soft background, warm practical lamp and window lighting, mood of creative excitement and discovery, historically accurate 1970 appearance and attire, realistic reenactment, no visible text, logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 005-american-top-40-radio-promotional-item.png assigned manually.",
           "image_path": "images/015.png",
-          "generated_at": "2026-07-13T16:10:24.745772+00:00"
+          "generated_at": "2026-07-13T16:10:24.745772+00:00",
+          "historical_search": "Don Bustany 1970",
+          "historical_plan": {
+            "subject": "Don Bustany and creative team",
+            "subject_type": "group",
+            "era": "1970",
+            "required_terms": [
+              "brainstorming",
+              "radio"
+            ],
+            "avoid_terms": [
+              "performance",
+              "studio equipment"
+            ],
+            "search_queries": [
+              "Don Bustany 1970",
+              "Don Bustany Casey Kasem",
+              "Don Bustany American Top 40",
+              "1970s radio producers"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -392,14 +700,41 @@
           "end_seconds": 133.911,
           "estimated_seconds": 10.424,
           "visual_intent": "Casey Kasem broadcasting the first American Top 40 episode in a 1970 radio studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
+            "library_filename": "009-casey-kasem-american-top-40-studio.png",
+            "library_id": "009",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style image set in July 1970, medium shot of Casey Kasem seated at a vintage radio broadcast console speaking intently into a large classic microphone, warm tungsten lighting from desk lamps illuminating the cluttered control room with visible reel-to-reel tape machines and audio equipment in soft focus behind him, historically accurate 1970 details and clothing, focused pioneering mood of a groundbreaking broadcast moment, realistic live-action feel, no text, logos, writing or watermarks visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 009-casey-kasem-american-top-40-studio.png assigned manually.",
           "image_path": "images/016.png",
-          "generated_at": "2026-07-13T16:10:30.418365+00:00"
+          "generated_at": "2026-07-13T16:10:30.418365+00:00",
+          "historical_search": "Casey Kasem American Top 40 studio 1970",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970",
+            "required_terms": [
+              "radio studio",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "television",
+              "modern equipment",
+              "audience"
+            ],
+            "search_queries": [
+              "Casey Kasem radio studio 1970",
+              "Casey Kasem American Top 40 broadcast",
+              "Casey Kasem at microphone early 1970s",
+              "Casey Kasem first AT40 episode"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -429,7 +764,25 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/017.png",
-          "generated_at": "2026-07-13T16:10:37.390578+00:00"
+          "generated_at": "2026-07-13T16:10:37.390578+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "Vietnam War era",
+            "required_terms": [
+              "soldiers",
+              "military base",
+              "Vietnam",
+              "radio"
+            ],
+            "avoid_terms": [
+              "combat",
+              "battle",
+              "jungle"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 18,
@@ -439,14 +792,37 @@
           "end_seconds": 145.939,
           "estimated_seconds": 6.014,
           "visual_intent": "People listening to the radio in a living room in small-town Iowa",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/018-casey-kasem-shebang-dance-show.png",
+            "library_filename": "018-casey-kasem-shebang-dance-show.png",
+            "library_id": "018",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style medium shot of people seated in a modest 1970s living room of a small-town Iowa home, listening to a large vintage wooden console radio, warm afternoon light from lace-curtained windows, period furniture and domestic details, peaceful and attentive atmosphere, photorealistic, no text logos or writing, 16:9 aspect ratio",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 018-casey-kasem-shebang-dance-show.png assigned manually.",
           "image_path": "images/018.png",
-          "generated_at": "2026-07-13T16:10:43.369346+00:00"
+          "generated_at": "2026-07-13T16:10:43.369346+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early 1970s",
+            "required_terms": [
+              "living room",
+              "small town",
+              "radio listeners"
+            ],
+            "avoid_terms": [
+              "television",
+              "urban",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -469,14 +845,39 @@
           "end_seconds": 154.091,
           "estimated_seconds": 8.152,
           "visual_intent": "Casey Kasem calmly presenting a countdown in the radio studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
+            "library_filename": "008-casey-kasem-headphones-radio-studio.png",
+            "library_id": "008",
+            "curated": true
+          },
           "prompt": "16:9 cinematic documentary style close-up of recognizable radio personality Casey Kasem, middle-aged with dark hair, seated relaxed in a vintage radio broadcast booth filled with 1970s equipment, speaking unhurried into a large studio microphone with a warm magical expression, soft warm desk lamp lighting, intimate and peaceful mood, subtle film grain, historical accuracy, no text or logos",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 008-casey-kasem-headphones-radio-studio.png assigned manually.",
           "image_path": "images/019.png",
-          "generated_at": "2026-07-13T16:10:50.288515+00:00"
+          "generated_at": "2026-07-13T16:10:50.288515+00:00",
+          "historical_search": "Casey Kasem radio studio",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "radio studio",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "stage",
+              "audience"
+            ],
+            "search_queries": [
+              "Casey Kasem at radio microphone",
+              "Casey Kasem hosting countdown",
+              "Casey Kasem broadcast studio"
+            ]
+          }
         },
         {
           "shot_number": 20,
@@ -493,7 +894,26 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/020.png",
-          "generated_at": "2026-07-13T16:10:56.565951+00:00"
+          "generated_at": "2026-07-13T16:10:56.565951+00:00",
+          "historical_search": "young Madonna early career",
+          "historical_plan": {
+            "subject": "Madonna",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "young singer",
+              "performing"
+            ],
+            "avoid_terms": [
+              "later career",
+              "music video"
+            ],
+            "search_queries": [
+              "young Madonna singing early performance",
+              "Madonna first top ten hit",
+              "Madonna Michigan singer early days"
+            ]
+          }
         },
         {
           "shot_number": 21,
@@ -510,7 +930,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/021.png",
-          "generated_at": "2026-07-13T16:11:02.627889+00:00"
+          "generated_at": "2026-07-13T16:11:02.627889+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "listening to music",
+              "lonely",
+              "reflective"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "dancing",
+              "happy"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -533,14 +970,39 @@
           "end_seconds": 177.813,
           "estimated_seconds": 7.417,
           "visual_intent": "Casey Kasem narrating music stories with warm engagement in a 1970s radio studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
+            "library_filename": "007-casey-kasem-tuxedo-with-microphone.png",
+            "library_id": "007",
+            "curated": true
+          },
           "prompt": "Cinematic documentary-style shot in 16:9, late 1970s American radio studio with warm focused lighting and wood-paneled walls, middle-aged Casey Kasem with dark hair seated at a vintage broadcast desk leaning slightly forward into a large studio microphone, engaged and sincere expression as if sharing an intriguing tale, soft filmic color grading, subtle depth of field, calm thoughtful mood, no text or logos visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 007-casey-kasem-tuxedo-with-microphone.png assigned manually.",
           "image_path": "images/022.png",
-          "generated_at": "2026-07-13T16:11:09.017737+00:00"
+          "generated_at": "2026-07-13T16:11:09.017737+00:00",
+          "historical_search": "Casey Kasem radio studio",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "microphone",
+              "radio host"
+            ],
+            "avoid_terms": [
+              "animation",
+              "cartoon"
+            ],
+            "search_queries": [
+              "Casey Kasem American Top 40",
+              "Casey Kasem broadcasting studio 1970s",
+              "Casey Kasem at radio microphone"
+            ]
+          }
         },
         {
           "shot_number": 23,
@@ -550,14 +1012,35 @@
           "end_seconds": 185.23,
           "estimated_seconds": 7.417,
           "visual_intent": "Anonymous session musician playing saxophone in a modest 1970s recording studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/003-casey-kasem-interviewing-donovan.png",
+            "library_filename": "003-casey-kasem-interviewing-donovan.png",
+            "library_id": "003",
+            "curated": true
+          },
           "prompt": "Cinematic documentary-style close-up in 16:9, dimly lit 1970s recording studio with sound baffles and vintage equipment, anonymous male session musician in profile intently playing a saxophone during a solo take, focused expression under practical overhead lighting with gentle shadows, understated and atmospheric mood conveying behind-the-scenes studio work, realistic film grain and color palette of the era, no text or logos visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 003-casey-kasem-interviewing-donovan.png assigned manually.",
           "image_path": "images/023.png",
-          "generated_at": "2026-07-13T16:11:14.358096+00:00"
+          "generated_at": "2026-07-13T16:11:14.358096+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "saxophone",
+              "recording session"
+            ],
+            "avoid_terms": [
+              "famous artist",
+              "live concert"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -580,14 +1063,42 @@
           "end_seconds": 196.857,
           "estimated_seconds": 11.627,
           "visual_intent": "Casey Kasem reading a heartfelt soldier's letter during a Long Distance Dedication in his radio studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
+            "library_filename": "009-casey-kasem-american-top-40-studio.png",
+            "library_id": "009",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 image, middle-aged Casey Kasem seated at a vintage radio studio desk, holding a folded letter and speaking with sincere emotion into a large classic microphone, warm soft lighting focused on his face and hands, dark background with period broadcasting equipment, nostalgic and intimate mood, realistic film grain, natural color palette, no text visible anywhere, historically accurate 20th-century radio details",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 009-casey-kasem-american-top-40-studio.png assigned manually.",
           "image_path": "images/024.png",
-          "generated_at": "2026-07-13T16:11:20.848648+00:00"
+          "generated_at": "2026-07-13T16:11:20.848648+00:00",
+          "historical_search": "Casey Kasem Long Distance Dedication",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "radio studio",
+              "microphone",
+              "reading letter"
+            ],
+            "avoid_terms": [
+              "stage performance",
+              "television",
+              "crowd"
+            ],
+            "search_queries": [
+              "Casey Kasem radio studio microphone",
+              "Casey Kasem American Top 40 broadcast",
+              "Casey Kasem reading dedication",
+              "vintage Casey Kasem in booth"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -617,7 +1128,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/025.png",
-          "generated_at": "2026-07-13T16:11:26.667224+00:00"
+          "generated_at": "2026-07-13T16:11:26.667224+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "handwritten letters",
+              "fan mail"
+            ],
+            "avoid_terms": [
+              "radio studio",
+              "microphone",
+              "performer"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -640,14 +1167,39 @@
           "end_seconds": 214.498,
           "estimated_seconds": 7.618,
           "visual_intent": "Casey Kasem speaking reassuringly into a microphone in a 1970s radio studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
+            "library_filename": "007-casey-kasem-tuxedo-with-microphone.png",
+            "library_id": "007",
+            "curated": true
+          },
           "prompt": "Cinematic 16:9 documentary-style photorealistic image of Casey Kasem, a Lebanese-American man in his 40s with dark neatly combed hair and kind eyes, medium close-up in a vintage 1970s radio studio, leaning gently toward a large broadcast microphone with a warm reassuring fatherly expression, soft warm overhead lighting, out-of-focus wooden paneling and audio equipment in background, calm sincere mood with subtle film grain, historically accurate details, no text logos or writing visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 007-casey-kasem-tuxedo-with-microphone.png assigned manually.",
           "image_path": "images/026.png",
-          "generated_at": "2026-07-13T16:11:33.193321+00:00"
+          "generated_at": "2026-07-13T16:11:33.193321+00:00",
+          "historical_search": "Casey Kasem radio studio",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "microphone",
+              "broadcast studio"
+            ],
+            "avoid_terms": [
+              "audience",
+              "performance stage"
+            ],
+            "search_queries": [
+              "Casey Kasem at radio microphone",
+              "Casey Kasem in broadcast booth",
+              "Casey Kasem delivering sign-off"
+            ]
+          }
         },
         {
           "shot_number": 27,
@@ -664,7 +1216,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/027.png",
-          "generated_at": "2026-07-13T16:11:40.057788+00:00"
+          "generated_at": "2026-07-13T16:11:40.057788+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "radio listener",
+              "home interior"
+            ],
+            "avoid_terms": [
+              "studio",
+              "microphone",
+              "performer"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -694,7 +1262,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/028.png",
-          "generated_at": "2026-07-13T16:11:46.916155+00:00"
+          "generated_at": "2026-07-13T16:11:46.916155+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "listening to radio",
+              "living room"
+            ],
+            "avoid_terms": [
+              "television",
+              "modern devices"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 29,
@@ -704,14 +1287,40 @@
           "end_seconds": 236.148,
           "estimated_seconds": 7.016,
           "visual_intent": "Casey Kasem as the calm centered presence in his radio studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/011-casey-kasem-formal-portrait.png",
+            "library_filename": "011-casey-kasem-formal-portrait.png",
+            "library_id": "011",
+            "curated": true
+          },
           "prompt": "Cinematic documentary-style medium close-up of Casey Kasem seated at a radio broadcast console in a professional studio setting from the era of changing music trends, wearing headphones and speaking with graceful curious expression into a vintage microphone, focused key lighting on him with softer background equipment, serene guiding mood, photorealistic, subtle film grain, historically accurate respectful likeness, no text or logos, 16:9",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 011-casey-kasem-formal-portrait.png assigned manually.",
           "image_path": "images/029.png",
-          "generated_at": "2026-07-13T16:11:53.273867+00:00"
+          "generated_at": "2026-07-13T16:11:53.273867+00:00",
+          "historical_search": "Casey Kasem radio studio",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "microphone",
+              "radio host"
+            ],
+            "avoid_terms": [
+              "stage performance",
+              "crowd"
+            ],
+            "search_queries": [
+              "Casey Kasem at microphone",
+              "Casey Kasem American Top 40 studio",
+              "Casey Kasem broadcasting booth",
+              "vintage Casey Kasem radio host"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -741,7 +1350,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/030.png",
-          "generated_at": "2026-07-13T16:11:59.127433+00:00"
+          "generated_at": "2026-07-13T16:11:59.127433+00:00",
+          "historical_search": "Casey Kasem Shaggy voice recording",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "microphone",
+              "voice acting",
+              "studio"
+            ],
+            "avoid_terms": [
+              "animated character",
+              "television screen",
+              "Scooby Doo artwork"
+            ],
+            "search_queries": [
+              "Casey Kasem recording Shaggy",
+              "Casey Kasem voice actor microphone",
+              "Casey Kasem in recording studio",
+              "Casey Kasem Scooby Doo session"
+            ]
+          }
         },
         {
           "shot_number": 31,
@@ -758,7 +1389,30 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/031.png",
-          "generated_at": "2026-07-13T16:12:05.769616+00:00"
+          "generated_at": "2026-07-13T16:12:05.769616+00:00",
+          "historical_search": "Casey Kasem narrating commercials",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "microphone",
+              "recording studio",
+              "narration"
+            ],
+            "avoid_terms": [
+              "cartoon",
+              "Shaggy",
+              "countdown chart",
+              "radio host"
+            ],
+            "search_queries": [
+              "Casey Kasem commercial voiceover",
+              "Casey Kasem advertising narration studio",
+              "Casey Kasem microphone commercial session",
+              "vintage Casey Kasem recording"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -781,14 +1435,41 @@
           "end_seconds": 262.609,
           "estimated_seconds": 10.825,
           "visual_intent": "Casey Kasem speaking intimately into a studio microphone as if the listener were seated directly across the table from him",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
+            "library_filename": "008-casey-kasem-headphones-radio-studio.png",
+            "library_id": "008",
+            "curated": true
+          },
           "prompt": "Cinematic documentary-style 16:9 still of Casey Kasem in a 1970s radio broadcast booth, medium close-up framing, middle-aged man with dark hair seated at a simple wooden table speaking warmly into a large vintage microphone, gentle direct gaze toward viewer conveying personal conversation, soft warm tungsten lighting, intimate and sincere mood, realistic period studio details with acoustic panels and analog gear visible in soft background, subtle film grain, natural color grading, no text or logos",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 008-casey-kasem-headphones-radio-studio.png assigned manually.",
           "image_path": "images/032.png",
-          "generated_at": "2026-07-13T16:12:11.123080+00:00"
+          "generated_at": "2026-07-13T16:12:11.123080+00:00",
+          "historical_search": "Casey Kasem radio studio microphone",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "radio studio",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "stage",
+              "audience",
+              "television"
+            ],
+            "search_queries": [
+              "Casey Kasem at radio microphone",
+              "Casey Kasem broadcasting studio 1970",
+              "vintage Casey Kasem disc jockey",
+              "Casey Kasem in radio booth"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -818,7 +1499,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/033.png",
-          "generated_at": "2026-07-13T16:12:18.369844+00:00"
+          "generated_at": "2026-07-13T16:12:18.369844+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "family",
+              "listening to radio",
+              "living room"
+            ],
+            "avoid_terms": [
+              "television",
+              "headphones"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 34,
@@ -835,7 +1532,24 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/034.png",
-          "generated_at": "2026-07-13T16:12:24.854811+00:00"
+          "generated_at": "2026-07-13T16:12:24.854811+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1980s",
+            "required_terms": [
+              "group of friends",
+              "portable radio",
+              "outdoors"
+            ],
+            "avoid_terms": [
+              "boombox concert",
+              "television",
+              "modern devices"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -865,7 +1579,23 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/035.png",
-          "generated_at": "2026-07-13T16:12:31.739131+00:00"
+          "generated_at": "2026-07-13T16:12:31.739131+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "peak popularity",
+            "required_terms": [
+              "radio broadcast",
+              "global reach"
+            ],
+            "avoid_terms": [
+              "television",
+              "digital",
+              "studio interior"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -895,7 +1625,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/036.png",
-          "generated_at": "2026-07-13T16:12:37.497199+00:00"
+          "generated_at": "2026-07-13T16:12:37.497199+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "present day",
+            "required_terms": [
+              "assisted living",
+              "elderly listeners"
+            ],
+            "avoid_terms": [
+              "children",
+              "hospital beds"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 37,
@@ -912,7 +1657,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/037.png",
-          "generated_at": "2026-07-13T16:12:44.306660+00:00"
+          "generated_at": "2026-07-13T16:12:44.306660+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "childhood",
+            "required_terms": [
+              "family around radio",
+              "living room"
+            ],
+            "avoid_terms": [
+              "television",
+              "formal posing"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -935,14 +1695,35 @@
           "end_seconds": 315.532,
           "estimated_seconds": 11.226,
           "visual_intent": "Casey Kasem intently researching facts and rehearsing transitions at his broadcast desk, conveying perfectionism and relentless deadline pressure",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/016-casey-kasem-radio-studio-broadcast.png",
+            "library_filename": "016-casey-kasem-radio-studio-broadcast.png",
+            "library_id": "016",
+            "curated": true
+          },
           "prompt": "Photorealistic cinematic documentary still, 16:9 aspect ratio, middle-aged Casey Kasem with dark hair seated at a wooden broadcast desk in a vintage radio studio, leaning forward with concentrated expression as he reviews stacks of papers and references while practicing delivery into a large classic microphone positioned nearby, warm desk lamp lighting casting soft shadows across his face and workspace, analog reel-to-reel machines and broadcasting equipment visible in the dimly lit background, serious dedicated mood of a perfectionist under pressure, historically believable mid-century radio details, natural filmic color grading, no visible text logos or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 016-casey-kasem-radio-studio-broadcast.png assigned manually.",
           "image_path": "images/038.png",
-          "generated_at": "2026-07-13T16:12:49.910392+00:00"
+          "generated_at": "2026-07-13T16:12:49.910392+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "radio studio",
+              "desk work"
+            ],
+            "avoid_terms": [
+              "on air",
+              "live broadcast"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -965,14 +1746,42 @@
           "end_seconds": 322.348,
           "estimated_seconds": 6.816,
           "visual_intent": "Casey Kasem intently focused on perfecting his script in the studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/015-casey-kasem-black-white-portrait.png",
+            "library_filename": "015-casey-kasem-black-white-portrait.png",
+            "library_id": "015",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 color photograph, late 1980s radio broadcast studio with vintage microphones and analog equipment, close-up of Casey Kasem seated at a wooden desk wearing large headphones, warm desk lamp light on his face as he carefully studies papers with a serious dedicated expression, soft shadows and thoughtful mood, realistic historical details, no text logos or writing visible anywhere",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 015-casey-kasem-black-white-portrait.png assigned manually.",
           "image_path": "images/039.png",
-          "generated_at": "2026-07-13T16:12:55.377985+00:00"
+          "generated_at": "2026-07-13T16:12:55.377985+00:00",
+          "historical_search": "Casey Kasem American Top 40 1988",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1988",
+            "required_terms": [
+              "desk",
+              "notes",
+              "studio"
+            ],
+            "avoid_terms": [
+              "microphone",
+              "on air",
+              "smiling"
+            ],
+            "search_queries": [
+              "Casey Kasem working at desk 1988",
+              "Casey Kasem reviewing scripts radio studio",
+              "Casey Kasem American Top 40 preparation",
+              "Casey Kasem focused expression 1980s"
+            ]
+          }
         },
         {
           "shot_number": 40,
@@ -982,14 +1791,42 @@
           "end_seconds": 329.164,
           "estimated_seconds": 6.816,
           "visual_intent": "Casey Kasem stepping away from the microphone for the final time",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
+            "library_filename": "007-casey-kasem-tuxedo-with-microphone.png",
+            "library_id": "007",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 color photograph, late 1980s radio studio interior, medium-wide shot of Casey Kasem from side angle standing up and walking away from the broadcast microphone toward the door while holding a folder, empty chair left behind, subdued natural window light creating a somber reflective mood of finality, realistic historical details, no text logos or writing visible anywhere",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 007-casey-kasem-tuxedo-with-microphone.png assigned manually.",
           "image_path": "images/040.png",
-          "generated_at": "2026-07-13T16:13:01.587936+00:00"
+          "generated_at": "2026-07-13T16:13:01.587936+00:00",
+          "historical_search": "Casey Kasem 1988",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1988",
+            "required_terms": [
+              "standing",
+              "reflective",
+              "studio"
+            ],
+            "avoid_terms": [
+              "desk",
+              "notes",
+              "working"
+            ],
+            "search_queries": [
+              "Casey Kasem contemplative 1988",
+              "Casey Kasem American Top 40 studio late career",
+              "Casey Kasem thoughtful portrait 1988",
+              "Casey Kasem radio host final years"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1019,7 +1856,29 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/041.png",
-          "generated_at": "2026-07-13T16:13:08.154647+00:00"
+          "generated_at": "2026-07-13T16:13:08.154647+00:00",
+          "historical_search": "Casey Kasem voice recording studio",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "voice recording",
+              "studio microphone",
+              "headphones"
+            ],
+            "avoid_terms": [
+              "radio console",
+              "countdown",
+              "broadcast"
+            ],
+            "search_queries": [
+              "Casey Kasem voice over session",
+              "Casey Kasem recording booth microphone",
+              "Casey Kasem animation voice work",
+              "Casey Kasem studio headphones"
+            ]
+          }
         },
         {
           "shot_number": 42,
@@ -1029,14 +1888,42 @@
           "end_seconds": 341.192,
           "estimated_seconds": 6.014,
           "visual_intent": "Casey Kasem working in a 1990s radio studio after returning to countdown broadcasting",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/004-casey-kasem-red-carpet-event.png",
+            "library_filename": "004-casey-kasem-red-carpet-event.png",
+            "library_id": "004",
+            "curated": true
+          },
           "prompt": "16:9 documentary style cinematic shot, medium close-up of Casey Kasem seated in a professional 1990s radio broadcast studio speaking into a microphone while wearing headphones, focused and engaged expression, controlled warm studio lighting, realistic authentic equipment and respectful portrayal, calm professional atmosphere, no visible text, logos, or writing",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 004-casey-kasem-red-carpet-event.png assigned manually.",
           "image_path": "images/042.png",
-          "generated_at": "2026-07-13T16:13:13.835204+00:00"
+          "generated_at": "2026-07-13T16:13:13.835204+00:00",
+          "historical_search": "Casey Kasem Top 40 1990s",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "radio studio",
+              "broadcast microphone",
+              "on air"
+            ],
+            "avoid_terms": [
+              "animation",
+              "voice booth",
+              "cartoon script"
+            ],
+            "search_queries": [
+              "Casey Kasem Top 40 radio 1990s",
+              "Casey Kasem countdown broadcast studio",
+              "Casey Kasem hosting radio show 1990",
+              "Casey Kasem on air microphone 1990s"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1059,14 +1946,40 @@
           "end_seconds": 349.411,
           "estimated_seconds": 8.219,
           "visual_intent": "Casey Kasem in his radio studio speaking with sincere respect for every song",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/017-casey-kasem-radio-music-award.png",
+            "library_filename": "017-casey-kasem-radio-music-award.png",
+            "library_id": "017",
+            "curated": true
+          },
           "prompt": "16:9 documentary-style cinematic image of recognizable radio host Casey Kasem in a vintage analog broadcast booth, medium close-up framing as he leans toward a classic microphone with a thoughtful and respectful expression, soft warm desk lamp lighting, period radio equipment and wooden surfaces in the background with no visible text or labels, calm sincere mood, photorealistic with subtle film grain and natural color grading",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 017-casey-kasem-radio-music-award.png assigned manually.",
           "image_path": "images/043.png",
-          "generated_at": "2026-07-13T16:13:19.635488+00:00"
+          "generated_at": "2026-07-13T16:13:19.635488+00:00",
+          "historical_search": "Casey Kasem radio studio",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "broadcasting career",
+            "required_terms": [
+              "radio studio",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "stage performance",
+              "television set"
+            ],
+            "search_queries": [
+              "Casey Kasem at radio microphone",
+              "Casey Kasem in broadcasting booth",
+              "vintage Casey Kasem American Top 40 studio",
+              "Casey Kasem preparing broadcast"
+            ]
+          }
         },
         {
           "shot_number": 44,
@@ -1083,7 +1996,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/044.png",
-          "generated_at": "2026-07-13T16:13:25.959310+00:00"
+          "generated_at": "2026-07-13T16:13:25.959310+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1980s",
+            "required_terms": [
+              "group listening to radio"
+            ],
+            "avoid_terms": [
+              "concert",
+              "dancing",
+              "headphones"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1113,7 +2041,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/045.png",
-          "generated_at": "2026-07-13T16:13:31.858317+00:00"
+          "generated_at": "2026-07-13T16:13:31.858317+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "recording studio",
+              "vocal performance"
+            ],
+            "avoid_terms": [
+              "stage",
+              "audience"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 46,
@@ -1123,14 +2066,40 @@
           "end_seconds": 373.667,
           "estimated_seconds": 8.019,
           "visual_intent": "Casey Kasem delivering a broadcast with engaging presence in his radio booth",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/002-casey-kasem-red-carpet-portrait.png",
+            "library_filename": "002-casey-kasem-red-carpet-portrait.png",
+            "library_id": "002",
+            "curated": true
+          },
           "prompt": "16:9 photorealistic cinematic documentary shot of Casey Kasem seated at a classic radio console in a broadcast booth, wearing headphones and speaking into a professional microphone with warm engaging expression and precise posture, detailed control board with analog meters in front, even studio lighting with gentle fill, medium angled framing, professional and charismatic yet reflective mood, historically believable late 20th century details, no text or logos",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 002-casey-kasem-red-carpet-portrait.png assigned manually.",
           "image_path": "images/046.png",
-          "generated_at": "2026-07-13T16:13:38.421224+00:00"
+          "generated_at": "2026-07-13T16:13:38.421224+00:00",
+          "historical_search": "Casey Kasem radio studio",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "radio broadcast",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "television",
+              "performance stage"
+            ],
+            "search_queries": [
+              "Casey Kasem American Top 40 studio",
+              "Casey Kasem at radio microphone",
+              "Casey Kasem broadcasting booth photo",
+              "vintage Casey Kasem radio host"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1153,14 +2122,36 @@
           "end_seconds": 382.487,
           "estimated_seconds": 8.82,
           "visual_intent": "Casey Kasem warmly hosting his countdown show from the radio studio",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/006-casey-kasem-hollywood-walk-of-fame.png",
+            "library_filename": "006-casey-kasem-hollywood-walk-of-fame.png",
+            "library_id": "006",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 color photograph, medium shot of Casey Kasem seated at a vintage radio broadcast console in a 1970s studio, wearing headphones and speaking expressively into a classic microphone with a kind and engaging expression, warm focused lighting on him with dimmer equipment visible in background, nostalgic professional atmosphere, realistic details, no text, no logos, no watermarks",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 006-casey-kasem-hollywood-walk-of-fame.png assigned manually.",
           "image_path": "images/047.png",
-          "generated_at": "2026-07-13T16:13:44.664766+00:00"
+          "generated_at": "2026-07-13T16:13:44.664766+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "family",
+              "radio",
+              "living room"
+            ],
+            "avoid_terms": [
+              "television",
+              "modern devices"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 48,
@@ -1177,7 +2168,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/048.png",
-          "generated_at": "2026-07-13T16:13:51.253157+00:00"
+          "generated_at": "2026-07-13T16:13:51.253157+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "grandmother and grandson",
+              "listening to radio"
+            ],
+            "avoid_terms": [
+              "television",
+              "crowd"
+            ],
+            "search_queries": []
+          }
         },
         {
           "shot_number": 49,
@@ -1194,7 +2200,22 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/049.png",
-          "generated_at": "2026-07-13T16:13:58.036188+00:00"
+          "generated_at": "2026-07-13T16:13:58.036188+00:00",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "family humming",
+              "listening to radio"
+            ],
+            "avoid_terms": [
+              "talking",
+              "television"
+            ],
+            "search_queries": []
+          }
         }
       ],
       "review_notes": ""
@@ -1224,7 +2245,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/050.png",
-          "generated_at": "2026-07-13T16:14:05.359044+00:00"
+          "generated_at": "2026-07-13T16:14:05.359044+00:00",
+          "historical_search": "Casey Kasem radio studio 1970s",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "radio microphone",
+              "broadcast studio"
+            ],
+            "avoid_terms": [
+              "animation",
+              "television"
+            ],
+            "search_queries": [
+              "Casey Kasem American Top 40 studio",
+              "Casey Kasem at radio microphone 1970s",
+              "Casey Kasem broadcasting booth",
+              "Casey Kasem warm expression radio"
+            ]
+          }
         },
         {
           "shot_number": 51,
@@ -1234,14 +2275,40 @@
           "end_seconds": 414.027,
           "estimated_seconds": 6.949,
           "visual_intent": "Casey Kasem at the microphone conveying his signature warmth",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
+            "library_filename": "007-casey-kasem-tuxedo-with-microphone.png",
+            "library_id": "007",
+            "curated": true
+          },
           "prompt": "Cinematic documentary style 16:9 medium shot of Casey Kasem seated at a classic radio broadcast desk, speaking warmly into a vintage microphone with a gentle friendly expression, soft even studio lighting, period radio studio setting with believable 1970s-era details, calm positive mood, respectful recognizable likeness, no text, logos, or writing visible",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 007-casey-kasem-tuxedo-with-microphone.png assigned manually.",
           "image_path": "images/051.png",
-          "generated_at": "2026-07-13T16:14:11.335059+00:00"
+          "generated_at": "2026-07-13T16:14:11.335059+00:00",
+          "historical_search": "Casey Kasem voicing Shaggy recording studio",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "voice recording microphone",
+              "animation studio"
+            ],
+            "avoid_terms": [
+              "radio desk",
+              "broadcast console"
+            ],
+            "search_queries": [
+              "Casey Kasem Scooby Doo voice session",
+              "Casey Kasem Hanna Barbera recording booth",
+              "Casey Kasem Shaggy voice actor studio",
+              "Casey Kasem cartoon voiceover 1970s"
+            ]
+          }
         },
         {
           "shot_number": 52,
@@ -1258,7 +2325,27 @@
           "approved": false,
           "review_notes": "",
           "image_path": "images/052.png",
-          "generated_at": "2026-07-13T16:14:17.087941+00:00"
+          "generated_at": "2026-07-13T16:14:17.087941+00:00",
+          "historical_search": "Casey Kasem later years portrait",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "warm expression",
+              "thoughtful pose"
+            ],
+            "avoid_terms": [
+              "microphone",
+              "studio equipment"
+            ],
+            "search_queries": [
+              "Casey Kasem 1990s interview photo",
+              "Casey Kasem older warm smile",
+              "Casey Kasem reflective portrait",
+              "Casey Kasem later career appearance"
+            ]
+          }
         }
       ],
       "review_notes": ""
@@ -1281,20 +2368,47 @@
           "end_seconds": 431.0,
           "estimated_seconds": 10.023,
           "visual_intent": "Casey Kasem at a vintage radio studio desk speaking patiently and kindly into a microphone",
-          "source": "ai",
-          "historical_asset": null,
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/casey_kasem/photos/017-casey-kasem-radio-music-award.png",
+            "library_filename": "017-casey-kasem-radio-music-award.png",
+            "library_id": "017",
+            "curated": true
+          },
           "prompt": "Cinematic documentary-style 16:9 photorealistic image of Casey Kasem seated at a vintage radio broadcast desk, medium close-up framing, warm soft lighting from above gently illuminating his face as he leans forward with a patient and kind expression while speaking into a classic studio microphone, subtle period radio equipment visible in soft-focus background, nostalgic and respectful mood, historically believable mid-to-late 20th century radio booth details, no text, logos, or writing of any kind",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "",
+          "review_notes": "Curated historical photo 017-casey-kasem-radio-music-award.png assigned manually.",
           "image_path": "images/053.png",
-          "generated_at": "2026-07-13T16:14:23.150115+00:00"
+          "generated_at": "2026-07-13T16:14:23.150115+00:00",
+          "historical_search": "Casey Kasem radio microphone",
+          "historical_plan": {
+            "subject": "Casey Kasem",
+            "subject_type": "person",
+            "era": "broadcasting career",
+            "required_terms": [
+              "Casey Kasem",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "cartoon",
+              "television",
+              "stage performance"
+            ],
+            "search_queries": [
+              "Casey Kasem at radio microphone",
+              "Casey Kasem in broadcast studio",
+              "Casey Kasem speaking on air",
+              "vintage Casey Kasem radio host"
+            ]
+          }
         }
       ],
       "review_notes": ""
     }
   ],
-  "updated_at": "2026-07-13T20:42:35.518846+00:00",
+  "updated_at": "2026-07-16T15:47:31.997177+00:00",
   "visual_plan_ready": true,
   "images_ready": true
 }

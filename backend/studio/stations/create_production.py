@@ -89,7 +89,7 @@ def build_production_record(
 
         "output": {
             "video": f"output/{documentary.slug}.mp4",
-            "thumbnail": "output/thumbnail.png",
+            "thumbnail": "output/thumbnail.jpg",
         },
 
         "audio_mix": {

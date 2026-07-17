@@ -12,14 +12,14 @@
   },
   "docuseries_id": null,
   "status": {
-    "current_station": "visual_plan_ready",
+    "current_station": "cards_ready",
     "production_created": true,
     "story_ready": true,
     "audio_ready": true,
-    "cards_ready": false,
+    "cards_ready": true,
     "storyboard_ready": true,
     "visual_plan_ready": true,
-    "images_ready": false,
+    "images_ready": true,
     "image_review_complete": false,
     "preview_ready": false,
     "video_review_complete": false,
@@ -88,7 +88,14 @@
     "storyboard": "storyboard.json",
     "storyboard_scene_count": 44,
     "visual_plan": "storyboard.json",
-    "visual_shot_count": 62
+    "visual_shot_count": 62,
+    "images_directory": "images",
+    "image_count": 62,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
   },
-  "updated_at": "2026-07-14T04:24:37.693836+00:00"
+  "updated_at": "2026-07-16T19:49:33.359890+00:00"
 }

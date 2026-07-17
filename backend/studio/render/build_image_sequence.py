@@ -193,6 +193,37 @@ def load_storyboard(path: Path) -> dict[str, Any]:
         raise ValueError(f"Invalid storyboard JSON: {path}") from exc
 
 
+def resolve_curated_historical_image(
+    shot: dict[str, Any],
+) -> Path | None:
+    historical_asset = shot.get(
+        "historical_asset"
+    )
+
+    if not isinstance(historical_asset, dict):
+        return None
+
+    approved_image = str(
+        historical_asset.get(
+            "approved_image"
+        )
+        or ""
+    ).strip()
+
+    if not approved_image:
+        return None
+
+    candidate = Path(approved_image)
+
+    if not candidate.is_absolute():
+        candidate = (
+            ASSETS_DIR.parent
+            / candidate
+        )
+
+    return candidate
+
+
 def find_historical_image(
     *,
     historical_dir: Path,
@@ -243,10 +274,19 @@ def collect_image_entries(
             )
             duration = float(shot["estimated_seconds"])
 
-            historical_image = find_historical_image(
-                historical_dir=historical_dir,
-                shot_number=shot_number,
+            historical_image = (
+                resolve_curated_historical_image(
+                    shot
+                )
             )
+
+            if historical_image is None:
+                historical_image = (
+                    find_historical_image(
+                        historical_dir=historical_dir,
+                        shot_number=shot_number,
+                    )
+                )
 
             if historical_image is not None:
                 image_path = historical_image
