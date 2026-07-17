@@ -94,7 +94,8 @@ def build_youtube_master(
     filter_complex = (
         f"[1:v]"
         f"setpts=PTS*{visual_scale:.12f},"
-        f"setpts=PTS-STARTPTS"
+        f"setpts=PTS-STARTPTS,"
+        f"setsar=1"
         f"[story_video];"
 
         f"[2:v]"
@@ -103,6 +104,7 @@ def build_youtube_master(
         f"pad=1920:1080:"
         f"(ow-iw)/2:(oh-ih)/2:black,"
         f"format=yuv420p,"
+        f"setsar=1,"
         f"split=2"
         f"[intro_source][outro_source];"
 
@@ -117,7 +119,8 @@ def build_youtube_master(
         f"[outro_video];"
 
         f"[0:v]"
-        f"setpts=PTS-STARTPTS"
+        f"setpts=PTS-STARTPTS,"
+        f"setsar=1"
         f"[opening_video];"
 
         f"[opening_video]"
