@@ -14,6 +14,22 @@ from backend.state.narration import narration_done_event
 router = APIRouter(prefix="/playback", tags=["Playback Status"])
 logger = logging.getLogger(__name__)
 
+@router.post("/client-diagnostic")
+async def client_diagnostic(diagnostic: dict = Body(...)):
+    logger.info(
+        "Client diagnostic event=%s phase=%s mode=%s programType=%s "
+        "hasCurrentTrack=%s trackRank=%s decade=%s genre=%s",
+        diagnostic.get("event"),
+        diagnostic.get("phase"),
+        diagnostic.get("mode"),
+        diagnostic.get("programType"),
+        diagnostic.get("hasCurrentTrack"),
+        diagnostic.get("trackRank"),
+        diagnostic.get("decade"),
+        diagnostic.get("genre"),
+    )
+    return {"ok": True}
+
 
 def update_track_clock():
     if status.is_playing and status.phase == "track":
