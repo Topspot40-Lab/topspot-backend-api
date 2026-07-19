@@ -83,7 +83,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
             "library_filename": "001-young-dick-clark-portrait-1961.jpg",
             "library_id": "001",
             "curated": true

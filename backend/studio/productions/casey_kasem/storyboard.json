@@ -109,7 +109,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
             "library_filename": "009-casey-kasem-american-top-40-studio.png",
             "library_id": "009",
             "curated": true
@@ -357,7 +357,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/019-young-casey-kasem-wjbk-disc-jockey.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/019-young-casey-kasem-wjbk-disc-jockey.png",
             "library_filename": "019-young-casey-kasem-wjbk-disc-jockey.png",
             "library_id": "019",
             "curated": true
@@ -400,7 +400,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/016-casey-kasem-radio-studio-broadcast.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/016-casey-kasem-radio-studio-broadcast.png",
             "library_filename": "016-casey-kasem-radio-studio-broadcast.png",
             "library_id": "016",
             "curated": true
@@ -452,7 +452,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/015-casey-kasem-black-white-portrait.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/015-casey-kasem-black-white-portrait.png",
             "library_filename": "015-casey-kasem-black-white-portrait.png",
             "library_id": "015",
             "curated": true
@@ -509,7 +509,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/013-casey-kasem-with-scooby-doo.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/013-casey-kasem-with-scooby-doo.png",
             "library_filename": "013-casey-kasem-with-scooby-doo.png",
             "library_id": "013",
             "curated": true
@@ -551,7 +551,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
             "library_filename": "008-casey-kasem-headphones-radio-studio.png",
             "library_id": "008",
             "curated": true
@@ -604,7 +604,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/014-casey-kasem-with-radio-colleague.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/014-casey-kasem-with-radio-colleague.png",
             "library_filename": "014-casey-kasem-with-radio-colleague.png",
             "library_id": "014",
             "curated": true
@@ -647,7 +647,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/005-american-top-40-radio-promotional-item.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/005-american-top-40-radio-promotional-item.png",
             "library_filename": "005-american-top-40-radio-promotional-item.png",
             "library_id": "005",
             "curated": true
@@ -703,7 +703,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
             "library_filename": "009-casey-kasem-american-top-40-studio.png",
             "library_id": "009",
             "curated": true
@@ -795,7 +795,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/018-casey-kasem-shebang-dance-show.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/018-casey-kasem-shebang-dance-show.png",
             "library_filename": "018-casey-kasem-shebang-dance-show.png",
             "library_id": "018",
             "curated": true
@@ -848,7 +848,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
             "library_filename": "008-casey-kasem-headphones-radio-studio.png",
             "library_id": "008",
             "curated": true
@@ -973,7 +973,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
             "library_filename": "007-casey-kasem-tuxedo-with-microphone.png",
             "library_id": "007",
             "curated": true
@@ -1015,7 +1015,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/003-casey-kasem-interviewing-donovan.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/003-casey-kasem-interviewing-donovan.png",
             "library_filename": "003-casey-kasem-interviewing-donovan.png",
             "library_id": "003",
             "curated": true
@@ -1066,7 +1066,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
             "library_filename": "009-casey-kasem-american-top-40-studio.png",
             "library_id": "009",
             "curated": true
@@ -1170,7 +1170,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
             "library_filename": "007-casey-kasem-tuxedo-with-microphone.png",
             "library_id": "007",
             "curated": true
@@ -1290,7 +1290,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/011-casey-kasem-formal-portrait.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/011-casey-kasem-formal-portrait.png",
             "library_filename": "011-casey-kasem-formal-portrait.png",
             "library_id": "011",
             "curated": true
@@ -1438,7 +1438,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/008-casey-kasem-headphones-radio-studio.png",
             "library_filename": "008-casey-kasem-headphones-radio-studio.png",
             "library_id": "008",
             "curated": true
@@ -1698,7 +1698,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/016-casey-kasem-radio-studio-broadcast.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/016-casey-kasem-radio-studio-broadcast.png",
             "library_filename": "016-casey-kasem-radio-studio-broadcast.png",
             "library_id": "016",
             "curated": true
@@ -1749,7 +1749,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/015-casey-kasem-black-white-portrait.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/015-casey-kasem-black-white-portrait.png",
             "library_filename": "015-casey-kasem-black-white-portrait.png",
             "library_id": "015",
             "curated": true
@@ -1794,7 +1794,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
             "library_filename": "007-casey-kasem-tuxedo-with-microphone.png",
             "library_id": "007",
             "curated": true
@@ -1891,7 +1891,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/004-casey-kasem-red-carpet-event.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/004-casey-kasem-red-carpet-event.png",
             "library_filename": "004-casey-kasem-red-carpet-event.png",
             "library_id": "004",
             "curated": true
@@ -1949,7 +1949,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/017-casey-kasem-radio-music-award.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/017-casey-kasem-radio-music-award.png",
             "library_filename": "017-casey-kasem-radio-music-award.png",
             "library_id": "017",
             "curated": true
@@ -2069,7 +2069,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/002-casey-kasem-red-carpet-portrait.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/002-casey-kasem-red-carpet-portrait.png",
             "library_filename": "002-casey-kasem-red-carpet-portrait.png",
             "library_id": "002",
             "curated": true
@@ -2125,7 +2125,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/006-casey-kasem-hollywood-walk-of-fame.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/006-casey-kasem-hollywood-walk-of-fame.png",
             "library_filename": "006-casey-kasem-hollywood-walk-of-fame.png",
             "library_id": "006",
             "curated": true
@@ -2278,7 +2278,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/007-casey-kasem-tuxedo-with-microphone.png",
             "library_filename": "007-casey-kasem-tuxedo-with-microphone.png",
             "library_id": "007",
             "curated": true
@@ -2371,7 +2371,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/017-casey-kasem-radio-music-award.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/017-casey-kasem-radio-music-award.png",
             "library_filename": "017-casey-kasem-radio-music-award.png",
             "library_id": "017",
             "curated": true

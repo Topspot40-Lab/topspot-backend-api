@@ -8,8 +8,10 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from backend.studio.historical_assets import (
+    historical_directories_for_production,
+)
 from backend.studio.production import Production
-
 
 SUPPORTED_EXTENSIONS = {
     ".jpg",
@@ -30,8 +32,8 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def save_json_atomic(
-    path: Path,
-    payload: dict[str, Any],
+        path: Path,
+        payload: dict[str, Any],
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -63,8 +65,8 @@ def safe_filename_part(value: str) -> str:
 
 
 def find_candidate_image(
-    candidate_directory: Path,
-    metadata: dict[str, Any],
+        candidate_directory: Path,
+        metadata: dict[str, Any],
 ) -> Path:
     downloaded_file = str(
         metadata.get("downloaded_file") or ""
@@ -72,8 +74,8 @@ def find_candidate_image(
 
     if downloaded_file:
         candidate = (
-            candidate_directory
-            / downloaded_file
+                candidate_directory
+                / downloaded_file
         )
 
         if candidate.exists():
@@ -83,8 +85,8 @@ def find_candidate_image(
         path
         for path in candidate_directory.iterdir()
         if path.is_file()
-        and path.suffix.lower()
-        in SUPPORTED_EXTENSIONS
+           and path.suffix.lower()
+           in SUPPORTED_EXTENSIONS
     ]
 
     if len(matches) == 1:
@@ -104,16 +106,16 @@ def find_candidate_image(
 
 
 def find_shot(
-    storyboard: dict[str, Any],
-    shot_number: int,
+        storyboard: dict[str, Any],
+        shot_number: int,
 ) -> dict[str, Any]:
     for scene in storyboard.get("scenes", []):
         for shot in scene.get(
-            "visual_shots",
-            [],
+                "visual_shots",
+                [],
         ):
             if int(
-                shot["shot_number"]
+                    shot["shot_number"]
             ) == shot_number:
                 return shot
 
@@ -123,10 +125,10 @@ def find_shot(
 
 
 def remove_previous_approved_files(
-    *,
-    historical_directory: Path,
-    shot_number: int,
-    keep: Path | None = None,
+        *,
+        historical_directory: Path,
+        shot_number: int,
+        keep: Path | None = None,
 ) -> None:
     prefixes = (
         f"{shot_number:03d}_",
@@ -141,7 +143,7 @@ def remove_previous_approved_files(
             continue
 
         if path.suffix.lower() not in (
-            SUPPORTED_EXTENSIONS | {".json"}
+                SUPPORTED_EXTENSIONS | {".json"}
         ):
             continue
 
@@ -184,8 +186,8 @@ def main() -> None:
     production = Production(args.slug)
 
     storyboard_path = (
-        production.production_root
-        / "storyboard.json"
+            production.production_root
+            / "storyboard.json"
     )
     storyboard = load_json(storyboard_path)
 
@@ -195,14 +197,14 @@ def main() -> None:
     )
 
     candidate_directory = (
-        production.work_root
-        / "historical_candidates"
-        / f"{args.shot:03d}"
+            production.work_root
+            / "historical_candidates"
+            / f"{args.shot:03d}"
     )
 
     candidate_metadata_path = (
-        candidate_directory
-        / "candidate.json"
+            candidate_directory
+            / "candidate.json"
     )
 
     metadata = load_json(
@@ -214,14 +216,15 @@ def main() -> None:
         metadata,
     )
 
-    historical_directory = (
-        Path("backend/studio/assets/historical")
-        / args.slug
+    historical_directories = (
+        historical_directories_for_production(
+            production
+        )
     )
-    historical_directory.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
+    historical_directories.ensure()
+
+    photos_directory = historical_directories.photos
+    metadata_directory = historical_directories.metadata
 
     title = str(
         metadata.get("title")
@@ -235,25 +238,29 @@ def main() -> None:
         f"{candidate_image.suffix.lower()}"
     )
     approved_image_path = (
-        historical_directory
-        / approved_image_name
+            photos_directory
+            / approved_image_name
     )
 
     approved_metadata_path = (
-        historical_directory
-        / f"{args.shot:03d}_{safe_title}.json"
+            metadata_directory
+            / f"{args.shot:03d}_{safe_title}.json"
+    )
+
+    prefixes = (
+        f"{args.shot:03d}_",
+        f"{args.shot:02d}_",
     )
 
     existing_assets = [
         path
-        for path in historical_directory.iterdir()
-        if path.is_file()
-        and path.name.startswith(
-            (
-                f"{args.shot:03d}_",
-                f"{args.shot:02d}_",
-            )
+        for directory in (
+            photos_directory,
+            metadata_directory,
         )
+        for path in directory.iterdir()
+        if path.is_file()
+           and path.name.startswith(prefixes)
     ]
 
     if existing_assets and not args.force:
@@ -268,10 +275,14 @@ def main() -> None:
         )
 
     if args.force:
-        remove_previous_approved_files(
-            historical_directory=historical_directory,
-            shot_number=args.shot,
-        )
+        for directory in (
+            photos_directory,
+            metadata_directory,
+        ):
+            remove_previous_approved_files(
+                historical_directory=directory,
+                shot_number=args.shot,
+            )
 
     shutil.copy2(
         candidate_image,

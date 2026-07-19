@@ -36,7 +36,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/luis_miguel/photos/009-early-career-performance.png",
+            "approved_image": "assets/historical/artists/l/luis_miguel/photos/009-early-career-performance.png",
             "library_filename": "009-early-career-performance.png",
             "library_id": "009",
             "curated": true

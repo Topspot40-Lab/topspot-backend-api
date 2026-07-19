@@ -106,7 +106,7 @@
             "usage_terms": "Public domain",
             "page_url": "https://commons.wikimedia.org/wiki/File:The_Beatles,_The_Ed_Sullivan_Show_on_stage.jpg",
             "original_url": "https://upload.wikimedia.org/wikipedia/commons/c/c2/The_Beatles%2C_The_Ed_Sullivan_Show_on_stage.jpg",
-            "approved_image": "assets/historical/ed_sullivan/photos/004-beatles-on-ed-sullivan-stage.jpg",
+            "approved_image": "assets/historical/docuseries/ed_sullivan/photos/004-beatles-on-ed-sullivan-stage.jpg",
             "approved_at": "2026-07-14T12:07:12.673256+00:00",
             "library_filename": "004-beatles-on-ed-sullivan-stage.jpg",
             "curated": true
@@ -143,7 +143,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/ed_sullivan/photos/002-ed-sullivan-portrait-1955.jpg",
+            "approved_image": "assets/historical/docuseries/ed_sullivan/photos/002-ed-sullivan-portrait-1955.jpg",
             "library_filename": "002-ed-sullivan-portrait-1955.jpg",
             "library_id": "002",
             "curated": true
@@ -188,7 +188,7 @@
             "usage_terms": "Public domain",
             "page_url": "https://commons.wikimedia.org/wiki/File:Richard_Rodgers_Ed_Sullivan_1952.JPG",
             "original_url": "https://upload.wikimedia.org/wikipedia/commons/4/47/Richard_Rodgers_Ed_Sullivan_1952.JPG",
-            "approved_image": "assets/historical/ed_sullivan/photos/006-richard-rodgers-with-ed-sullivan-1952.jpg",
+            "approved_image": "assets/historical/docuseries/ed_sullivan/photos/006-richard-rodgers-with-ed-sullivan-1952.jpg",
             "approved_at": "2026-07-14T15:09:16.424710+00:00",
             "library_filename": "006-richard-rodgers-with-ed-sullivan-1952.jpg",
             "curated": true
@@ -233,7 +233,7 @@
             "usage_terms": "Public domain",
             "page_url": "https://commons.wikimedia.org/wiki/File:Ed_Sullivan_with_wife.jpg",
             "original_url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Ed_Sullivan_with_wife.jpg",
-            "approved_image": "assets/historical/ed_sullivan/photos/008-ed-sullivan-with-wife.jpg",
+            "approved_image": "assets/historical/docuseries/ed_sullivan/photos/008-ed-sullivan-with-wife.jpg",
             "approved_at": "2026-07-14T15:09:49.446726+00:00",
             "library_filename": "008-ed-sullivan-with-wife.jpg",
             "curated": true
@@ -1530,7 +1530,7 @@
             "usage_terms": "Public domain",
             "page_url": "https://commons.wikimedia.org/wiki/File:The_Beatles_performing_at_The_Ed_Sullivan_Show.jpg",
             "original_url": "https://upload.wikimedia.org/wikipedia/commons/f/f0/The_Beatles_performing_at_The_Ed_Sullivan_Show.jpg",
-            "approved_image": "assets/historical/ed_sullivan/photos/012-beatles-performing-on-ed-sullivan.jpg",
+            "approved_image": "assets/historical/docuseries/ed_sullivan/photos/012-beatles-performing-on-ed-sullivan.jpg",
             "approved_at": "2026-07-14T15:15:05.588323+00:00",
             "library_filename": "012-beatles-performing-on-ed-sullivan.jpg",
             "curated": true
@@ -1593,7 +1593,7 @@
             "usage_terms": "Public domain",
             "page_url": "https://commons.wikimedia.org/wiki/File:The_Dave_Clark_Five_with_Ed_Sullivan.JPG",
             "original_url": "https://upload.wikimedia.org/wikipedia/commons/6/63/The_Dave_Clark_Five_with_Ed_Sullivan.JPG",
-            "approved_image": "assets/historical/ed_sullivan/photos/013-dave-clark-five-with-ed-sullivan.jpg",
+            "approved_image": "assets/historical/docuseries/ed_sullivan/photos/013-dave-clark-five-with-ed-sullivan.jpg",
             "approved_at": "2026-07-14T15:15:40.287710+00:00",
             "library_filename": "013-dave-clark-five-with-ed-sullivan.jpg",
             "curated": true
@@ -1816,7 +1816,7 @@
             "usage_terms": "Public domain",
             "page_url": "https://commons.wikimedia.org/wiki/File:Beatles_with_Ed_Sullivan.jpg",
             "original_url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Beatles_with_Ed_Sullivan.jpg",
-            "approved_image": "assets/historical/ed_sullivan/photos/014-beatles-with-ed-sullivan-group.jpg",
+            "approved_image": "assets/historical/docuseries/ed_sullivan/photos/014-beatles-with-ed-sullivan-group.jpg",
             "approved_at": "2026-07-14T15:15:58.245537+00:00",
             "library_filename": "014-beatles-with-ed-sullivan-group.jpg",
             "curated": true

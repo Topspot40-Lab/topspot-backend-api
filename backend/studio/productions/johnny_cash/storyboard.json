@@ -85,7 +85,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/008-johnny-cash-portrait-1977.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/008-johnny-cash-portrait-1977.jpg",
             "library_filename": "008-johnny-cash-portrait-1977.jpg",
             "library_id": "008",
             "curated": true
@@ -246,7 +246,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/011-cash-box-magazine-1957.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/011-cash-box-magazine-1957.jpg",
             "library_filename": "011-cash-box-magazine-1957.jpg",
             "library_id": "011",
             "curated": true
@@ -474,7 +474,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/015-johnny-and-june-carter-1969.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/015-johnny-and-june-carter-1969.jpg",
             "library_filename": "015-johnny-and-june-carter-1969.jpg",
             "library_id": "015",
             "curated": true
@@ -511,7 +511,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/009-johnny-and-june-carter-performance.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/009-johnny-and-june-carter-performance.jpg",
             "library_filename": "009-johnny-and-june-carter-performance.jpg",
             "library_id": "009",
             "curated": true
@@ -610,7 +610,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/009-johnny-and-june-carter-performance.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/009-johnny-and-june-carter-performance.jpg",
             "library_filename": "009-johnny-and-june-carter-performance.jpg",
             "library_id": "009",
             "curated": true
@@ -696,7 +696,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/014-johnny-cash-at-home-1969.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/014-johnny-cash-at-home-1969.jpg",
             "library_filename": "014-johnny-cash-at-home-1969.jpg",
             "library_id": "014",
             "curated": true
@@ -764,7 +764,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/007-i-walk-the-line-billboard-ad-1956.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/007-i-walk-the-line-billboard-ad-1956.jpg",
             "library_filename": "007-i-walk-the-line-billboard-ad-1956.jpg",
             "library_id": "007",
             "curated": true
@@ -881,7 +881,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/008-johnny-cash-portrait-1977.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/008-johnny-cash-portrait-1977.jpg",
             "library_filename": "008-johnny-cash-portrait-1977.jpg",
             "library_id": "008",
             "curated": true
@@ -954,7 +954,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/010-johnny-cash-concert-limerick-1993.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/010-johnny-cash-concert-limerick-1993.jpg",
             "library_filename": "010-johnny-cash-concert-limerick-1993.jpg",
             "library_id": "010",
             "curated": true
@@ -1102,7 +1102,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/003-million-dollar-quartet-reunion-1977.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/003-million-dollar-quartet-reunion-1977.jpg",
             "library_filename": "003-million-dollar-quartet-reunion-1977.jpg",
             "library_id": "003",
             "curated": true
@@ -1219,7 +1219,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/013-johnny-cash-navy-duet.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/013-johnny-cash-navy-duet.jpg",
             "library_filename": "013-johnny-cash-navy-duet.jpg",
             "library_id": "013",
             "curated": true
@@ -1261,7 +1261,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/015-johnny-and-june-carter-1969.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/015-johnny-and-june-carter-1969.jpg",
             "library_filename": "015-johnny-and-june-carter-1969.jpg",
             "library_id": "015",
             "curated": true
@@ -1285,7 +1285,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/017-president-nixon-and-johnny-cash.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/017-president-nixon-and-johnny-cash.jpg",
             "library_filename": "017-president-nixon-and-johnny-cash.jpg",
             "library_id": "017",
             "curated": true
@@ -1322,7 +1322,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/016-national-medal-of-arts-2001.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/016-national-medal-of-arts-2001.jpg",
             "library_filename": "016-national-medal-of-arts-2001.jpg",
             "library_id": "016",
             "curated": true
@@ -1359,7 +1359,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/012-johnny-cash-receives-marine-award.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/012-johnny-cash-receives-marine-award.jpg",
             "library_filename": "012-johnny-cash-receives-marine-award.jpg",
             "library_id": "012",
             "curated": true
@@ -1383,7 +1383,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/johnny_cash/photos/006-the-highwaymen-supergroup.jpg",
+            "approved_image": "assets/historical/artists/j/johnny_cash/photos/006-the-highwaymen-supergroup.jpg",
             "library_filename": "006-the-highwaymen-supergroup.jpg",
             "library_id": "006",
             "curated": true

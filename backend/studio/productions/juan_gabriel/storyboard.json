@@ -418,7 +418,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/001-young-television-performance.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/001-young-television-performance.jpg",
             "library_filename": "001-young-television-performance.jpg",
             "library_id": "001",
             "curated": true
@@ -475,7 +475,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/007-black-suit-performance-closeup.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/007-black-suit-performance-closeup.jpg",
             "library_filename": "007-black-suit-performance-closeup.jpg",
             "library_id": "007",
             "curated": true
@@ -760,7 +760,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/003-pink-vest-stage-performance.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/003-pink-vest-stage-performance.jpg",
             "library_filename": "003-pink-vest-stage-performance.jpg",
             "library_id": "003",
             "curated": true
@@ -818,7 +818,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/010-black-suit-with-mariachi-band.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/010-black-suit-with-mariachi-band.jpg",
             "library_filename": "010-black-suit-with-mariachi-band.jpg",
             "library_id": "010",
             "curated": true
@@ -921,7 +921,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/001-young-television-performance.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/001-young-television-performance.jpg",
             "library_filename": "001-young-television-performance.jpg",
             "library_id": "001",
             "curated": true
@@ -979,7 +979,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/004-black-shirt-arms-raised.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/004-black-shirt-arms-raised.jpg",
             "library_filename": "004-black-shirt-arms-raised.jpg",
             "library_id": "004",
             "curated": true
@@ -1066,7 +1066,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/009-listening-to-audience.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/009-listening-to-audience.jpg",
             "library_filename": "009-listening-to-audience.jpg",
             "library_id": "009",
             "curated": true
@@ -1111,7 +1111,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/014-blowing-kiss-to-audience.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/014-blowing-kiss-to-audience.png",
             "library_filename": "014-blowing-kiss-to-audience.png",
             "library_id": "014",
             "curated": true
@@ -1394,7 +1394,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/018-white-suit-arms-open.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/018-white-suit-arms-open.png",
             "library_filename": "018-white-suit-arms-open.png",
             "library_id": "018",
             "curated": true
@@ -1496,7 +1496,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/002-white-mariachi-concert-stage.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/002-white-mariachi-concert-stage.jpg",
             "library_filename": "002-white-mariachi-concert-stage.jpg",
             "library_id": "002",
             "curated": true
@@ -1599,7 +1599,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/012-stage-toast-with-wine-glass.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/012-stage-toast-with-wine-glass.jpg",
             "library_filename": "012-stage-toast-with-wine-glass.jpg",
             "library_id": "012",
             "curated": true
@@ -1642,7 +1642,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/013-singing-with-mariachi-violinist.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/013-singing-with-mariachi-violinist.png",
             "library_filename": "013-singing-with-mariachi-violinist.png",
             "library_id": "013",
             "curated": true
@@ -1778,7 +1778,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/005-full-mariachi-orchestra.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/005-full-mariachi-orchestra.jpg",
             "library_filename": "005-full-mariachi-orchestra.jpg",
             "library_id": "005",
             "curated": true
@@ -1821,7 +1821,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/015-applauding-on-stage.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/015-applauding-on-stage.png",
             "library_filename": "015-applauding-on-stage.png",
             "library_id": "015",
             "curated": true
@@ -1915,7 +1915,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/006-white-embroidered-stage-costume.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/006-white-embroidered-stage-costume.jpg",
             "library_filename": "006-white-embroidered-stage-costume.jpg",
             "library_id": "006",
             "curated": true
@@ -1957,7 +1957,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/017-arms-wide-with-wine-glass.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/017-arms-wide-with-wine-glass.png",
             "library_filename": "017-arms-wide-with-wine-glass.png",
             "library_id": "017",
             "curated": true
@@ -2012,7 +2012,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/020-orange-suit-opening-jacket.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/020-orange-suit-opening-jacket.png",
             "library_filename": "020-orange-suit-opening-jacket.png",
             "library_id": "020",
             "curated": true
@@ -2257,7 +2257,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/011-opening-jacket-on-stage.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/011-opening-jacket-on-stage.jpg",
             "library_filename": "011-opening-jacket-on-stage.jpg",
             "library_id": "011",
             "curated": true
@@ -2289,7 +2289,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/019-pink-suit-emotional-performance.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/019-pink-suit-emotional-performance.png",
             "library_filename": "019-pink-suit-emotional-performance.png",
             "library_id": "019",
             "curated": true
@@ -2321,7 +2321,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/021-white-suit-with-stage-performers.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/021-white-suit-with-stage-performers.png",
             "library_filename": "021-white-suit-with-stage-performers.png",
             "library_id": "021",
             "curated": true
@@ -2366,7 +2366,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/008-floral-jacket-mariachi-performance.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/008-floral-jacket-mariachi-performance.jpg",
             "library_filename": "008-floral-jacket-mariachi-performance.jpg",
             "library_id": "008",
             "curated": true
@@ -2418,7 +2418,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/016-presenting-mariachi-trumpet-solo.png",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/016-presenting-mariachi-trumpet-solo.png",
             "library_filename": "016-presenting-mariachi-trumpet-solo.png",
             "library_id": "016",
             "curated": true

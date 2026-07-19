@@ -418,7 +418,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/juan_gabriel/photos/001-young-television-performance.jpg",
+            "approved_image": "assets/historical/artists/j/juan_gabriel/photos/001-young-television-performance.jpg",
             "library_filename": "001-young-television-performance.jpg",
             "library_id": "001",
             "curated": true

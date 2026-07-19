@@ -6,6 +6,9 @@ from pathlib import Path
 
 from PIL import Image, ImageFilter, ImageOps
 
+from backend.studio.historical_assets import (
+    historical_directories_for_production,
+)
 from backend.studio.production import Production
 from backend.studio.studio_config import (
     VIDEO_HEIGHT,
@@ -224,8 +227,8 @@ def main() -> None:
     parser.add_argument(
         "--image",
         help=(
-            "Filename from "
-            "backend/studio/assets/historical/<slug>/"
+            "Filename from the production's "
+            "historical photos directory."
         ),
     )
 
@@ -276,8 +279,9 @@ def main() -> None:
         )
 
     historical_dir = (
-        Path("backend/studio/assets/historical")
-        / args.slug
+        historical_directories_for_production(
+            production
+        ).photos
     )
 
     if not historical_dir.exists():

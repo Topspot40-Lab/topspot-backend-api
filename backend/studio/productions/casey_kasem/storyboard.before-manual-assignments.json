@@ -83,7 +83,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
+            "approved_image": "assets/historical/docuseries/casey_kasem/photos/009-casey-kasem-american-top-40-studio.png",
             "library_filename": "009-casey-kasem-american-top-40-studio.png",
             "library_id": "009",
             "curated": true

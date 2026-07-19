@@ -83,7 +83,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
             "library_filename": "001-young-dick-clark-portrait-1961.jpg",
             "library_id": "001",
             "curated": true
@@ -189,7 +189,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
             "library_filename": "002-dick-clark-portrait-1970s.jpg",
             "library_id": "002",
             "curated": true
@@ -333,7 +333,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
             "library_filename": "001-young-dick-clark-portrait-1961.jpg",
             "library_id": "001",
             "curated": true
@@ -529,7 +529,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/004-dick-clark-with-oliver-1969.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/004-dick-clark-with-oliver-1969.jpg",
             "library_filename": "004-dick-clark-with-oliver-1969.jpg",
             "library_id": "004",
             "curated": true
@@ -624,7 +624,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
             "library_filename": "002-dick-clark-portrait-1970s.jpg",
             "library_id": "002",
             "curated": true
@@ -804,7 +804,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
             "library_filename": "001-young-dick-clark-portrait-1961.jpg",
             "library_id": "001",
             "curated": true
@@ -1002,7 +1002,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/004-dick-clark-with-oliver-1969.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/004-dick-clark-with-oliver-1969.jpg",
             "library_filename": "004-dick-clark-with-oliver-1969.jpg",
             "library_id": "004",
             "curated": true
@@ -1313,7 +1313,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
             "library_filename": "002-dick-clark-portrait-1970s.jpg",
             "library_id": "002",
             "curated": true
@@ -1724,7 +1724,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/006-dick-clark-10000-pyramid.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/006-dick-clark-10000-pyramid.jpg",
             "library_filename": "006-dick-clark-10000-pyramid.jpg",
             "library_id": "006",
             "curated": true
@@ -2026,7 +2026,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/003-dick-clark-family-1960.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/003-dick-clark-family-1960.jpg",
             "library_filename": "003-dick-clark-family-1960.jpg",
             "library_id": "003",
             "curated": true
@@ -2306,7 +2306,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/008-american-bandstand-anniversary-event.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/008-american-bandstand-anniversary-event.jpg",
             "library_filename": "008-american-bandstand-anniversary-event.jpg",
             "library_id": "008",
             "curated": true
@@ -2700,7 +2700,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/002-dick-clark-portrait-1970s.jpg",
             "library_filename": "002-dick-clark-portrait-1970s.jpg",
             "library_id": "002",
             "curated": true
@@ -2793,7 +2793,7 @@
           "source": "historical",
           "historical_asset": {
             "provider": "curated_library",
-            "approved_image": "assets/historical/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
+            "approved_image": "assets/historical/docuseries/dick_clark/photos/001-young-dick-clark-portrait-1961.jpg",
             "library_filename": "001-young-dick-clark-portrait-1961.jpg",
             "library_id": "001",
             "curated": true

@@ -8,6 +8,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from backend.studio.historical_assets import (
+    historical_directories_for_production,
+)
+
 from backend.studio.production import Production
 from backend.studio.render.motion_controller import (
     MotionKind,
@@ -258,9 +262,9 @@ def collect_image_entries(
 
     images_dir = production.work_root / "images"
     historical_dir = (
-        ASSETS_DIR
-        / "historical"
-        / production.slug
+        historical_directories_for_production(
+            production
+        ).photos
     )
 
     entries: list[ImageEntry] = []
