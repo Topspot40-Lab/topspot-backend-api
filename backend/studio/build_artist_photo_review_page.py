@@ -286,6 +286,14 @@ def build_page(
       Open Wikimedia source
     </a>
   </p>
+  
+  <button
+    type="button"
+    class="copy-button"
+    data-command="{escape(command)}"
+    onclick="copyCommand(this)">
+    Copy approval command
+  </button>  
 
   <pre>{escape(command)}</pre>
 </section>
@@ -414,6 +422,20 @@ def build_page(
     color: #8cc8ff;
   }}
 
+  .copy-button {{
+    padding: 0.65rem 0.9rem;
+    border: 0;
+    border-radius: 7px;
+    background: #2d7d46;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }}
+
+  .copy-button:hover {{
+    background: #359653;
+  }}
+
   pre {{
     overflow-x: auto;
     white-space: pre-wrap;
@@ -442,6 +464,30 @@ def build_page(
 <div class="grid">
   {"".join(cards)}
 </div>
+
+<script>
+function copyCommand(button) {{
+  const command = button.dataset.command;
+  const textarea = document.createElement("textarea");
+
+  textarea.value = command;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  const originalText = button.textContent;
+  button.textContent = "Copied!";
+
+  setTimeout(() => {{
+    button.textContent = originalText;
+  }}, 1500);
+}}
+</script>
+
 </body>
 </html>
 """
