@@ -14,6 +14,7 @@ class HistoricalImageCandidate:
     width: int
     height: int
     mime_type: str
+    thumbnail_url: str = ""
 
     creator: str = ""
     credit: str = ""

@@ -115,6 +115,7 @@ class WikimediaCommonsProvider(HistoricalImageProvider):
                 "prop": "imageinfo",
                 "titles": "|".join(titles),
                 "iiprop": "url|size|mime|extmetadata",
+                "iiurlwidth": 640,
                 "iiextmetadatafilter": (
                     "Artist|Credit|LicenseShortName|"
                     "LicenseUrl|UsageTerms|"
@@ -227,6 +228,10 @@ class WikimediaCommonsProvider(HistoricalImageProvider):
                         parse_boolean(
                             attribution_value
                         )
+                    ),
+                    thumbnail_url=str(
+                        information.get("thumburl")
+                        or original_url
                     ),
                 )
             )
