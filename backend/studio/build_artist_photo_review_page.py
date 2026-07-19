@@ -286,7 +286,6 @@ def build_page(
       Open Wikimedia source
     </a>
   </p>
-  
   <button
     type="button"
     class="copy-button"
@@ -294,7 +293,6 @@ def build_page(
     onclick="copyCommand(this)">
     Copy approval command
   </button>  
-
   <pre>{escape(command)}</pre>
 </section>
 """
