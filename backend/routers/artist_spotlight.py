@@ -5,6 +5,9 @@ import asyncio
 
 from sqlmodel import Session, select
 from backend.models.dbmodels import Artist, ArtistStory
+from backend.models.studio_models import (
+    StudioProductionAsset,
+)
 
 router = APIRouter(
     prefix="/artist-spotlight",
@@ -505,18 +508,64 @@ def artist_story(
             },
         ).mappings().first()
 
+    with Session(engine) as session:
+        youtube_asset = session.exec(
+            select(StudioProductionAsset)
+            .where(
+                StudioProductionAsset.production_type
+                == "artist"
+            )
+            .where(
+                StudioProductionAsset.source_id
+                == artist_id
+            )
+            .where(
+                StudioProductionAsset.asset_type
+                == "localized_video"
+            )
+            .where(
+                StudioProductionAsset.language_code
+                == language
+            )
+            .where(
+                StudioProductionAsset.status
+                == "published"
+            )
+            .where(
+                StudioProductionAsset.is_current
+                == True
+            )
+        ).first()
+
+    youtube_url = (
+        youtube_asset.youtube_url
+        if youtube_asset
+        else None
+    )
+    youtube_fields = {
+        "has_youtube_video": bool(youtube_url),
+        "youtube_video_id": (
+            youtube_asset.youtube_video_id
+            if youtube_asset
+            else None
+        ),
+        "youtube_url": youtube_url,
+    }
+
     if not row:
         return {
-            "ok": False,
+            "ok": True,
             "has_story": False,
             "artist_id": artist_id,
             "language": language,
+            **youtube_fields,
         }
 
     return {
         "ok": True,
         "has_story": True,
         **dict(row),
+        **youtube_fields,
     }
 
 
