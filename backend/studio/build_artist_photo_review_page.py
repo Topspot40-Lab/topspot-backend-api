@@ -22,6 +22,8 @@ from backend.studio.historical.providers.wikimedia import (
 )
 from backend.studio.historical.ranking import (
     candidate_is_usable,
+    normalized_phrase,
+    score_candidate,
 )
 from backend.studio.historical_assets import (
     historical_directories,
@@ -57,11 +59,44 @@ def default_queries(artist_name: str) -> list[str]:
 
     return [
         quoted_name,
+        f"{quoted_name} singer musician",
         f"{quoted_name} portrait",
-        f"{quoted_name} live performance",
-        f"{quoted_name} early career",
-        f"{quoted_name} award",
+        f"{quoted_name} concert performance",
+        f"{quoted_name} publicity press photo",
+        f"{quoted_name} recording studio",
     ]
+
+
+NON_PORTRAIT_TITLE_TERMS = {
+    "album",
+    "awardees",
+    "building",
+    "hall",
+    "museum",
+    "plaque",
+    "poster",
+    "record",
+    "statue",
+    "theater",
+    "theatre",
+}
+
+
+def likely_artist_photo(
+    candidate,
+    artist_name: str,
+) -> bool:
+    title = normalized_phrase(candidate.title)
+    artist = normalized_phrase(artist_name)
+
+    if not artist or artist not in title:
+        return False
+
+    title_words = set(title.split())
+
+    return not bool(
+        title_words & NON_PORTRAIT_TITLE_TERMS
+    )
 
 
 def approved_page_urls(
@@ -203,14 +238,22 @@ def build_page(
         in approved_urls
     ]
 
+    for record in records:
+        score_candidate(
+            record["candidate"],
+            artist_name,
+        )
+
     records.sort(
         key=lambda record: (
-            not candidate_matches_artist(
+            likely_artist_photo(
                 record["candidate"],
                 artist_name,
             ),
-            record["candidate"].title.casefold(),
-        )
+            record["candidate"].score,
+            record["candidate"].megapixels,
+        ),
+        reverse=True,
     )
 
     cards: list[str] = []
@@ -218,7 +261,7 @@ def build_page(
     for record in records:
         candidate = record["candidate"]
         matched_queries = record["queries"]
-        identity_match = candidate_matches_artist(
+        identity_match = likely_artist_photo(
             candidate,
             artist_name,
         )

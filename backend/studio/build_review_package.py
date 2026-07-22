@@ -314,6 +314,15 @@ def historical_candidate_search_if_needed(
         production.slug,
     )
 
+def assign_approved_artist_photos_if_available(
+    production: Production,
+) -> None:
+    run_module(
+        "backend.studio.stations."
+        "assign_approved_artist_photos",
+        "--slug",
+        production.slug,
+    )
 
 def generate_images_if_needed(
     production: Production,
@@ -646,6 +655,12 @@ def main() -> None:
     production = Production(slug)
 
     generate_visual_plan_if_needed(production)
+
+    production = Production(slug)
+
+    assign_approved_artist_photos_if_available(
+        production
+    )
 
     production = Production(slug)
 
