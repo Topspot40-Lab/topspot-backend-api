@@ -114,13 +114,13 @@ def candidate_matches_artist(
     artist_phrase = normalized_phrase(
         artist_name
     )
-    title_phrase = normalized_phrase(
-        candidate.title
+    searchable_phrase = normalized_phrase(
+        candidate_searchable_text(candidate)
     )
 
     return bool(
         artist_phrase
-        and artist_phrase in title_phrase
+        and artist_phrase in searchable_phrase
     )
 
 def parse_args() -> argparse.Namespace:

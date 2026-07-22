@@ -306,6 +306,40 @@ def generate_images(
         )
         destination = images_root / filename
 
+        historical_asset = shot.get(
+            "historical_asset"
+        )
+
+        approved_historical_image = ""
+
+        if isinstance(
+            historical_asset,
+            dict,
+        ):
+            approved_historical_image = str(
+                historical_asset.get(
+                    "approved_image"
+                )
+                or ""
+            ).strip()
+
+        if approved_historical_image:
+            print(
+                f"↷ Shot {number:03d}: approved "
+                "historical image assigned"
+            )
+
+            shot["status"] = (
+                "historical_image_ready"
+            )
+            skipped_count += 1
+
+            save_json_atomic(
+                storyboard_path,
+                storyboard,
+            )
+            continue
+
         if image_is_valid(destination) and not force:
             print(
                 f"↷ Shot {number:03d}: existing image "
