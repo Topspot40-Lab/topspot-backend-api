@@ -18,8 +18,7 @@ COMMONS_API_URL = "https://commons.wikimedia.org/w/api.php"
 
 USER_AGENT = (
     "TopSpot40-Studio/1.0 "
-    "(historical documentary image research; "
-    "contact: gwsteele77@gmail.com)"
+    "(historical documentary image research)"
 )
 
 

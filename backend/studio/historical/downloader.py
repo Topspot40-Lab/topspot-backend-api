@@ -15,8 +15,7 @@ from backend.studio.historical.models import (
 
 USER_AGENT = (
     "TopSpot40-Studio/1.0 "
-    "(historical documentary image downloader; "
-    "contact: gwsteele77@gmail.com)"
+    "(historical documentary image downloader)"
 )
 
 
