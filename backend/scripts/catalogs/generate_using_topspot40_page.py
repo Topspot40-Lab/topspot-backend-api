@@ -33,39 +33,39 @@ def generate_using_topspot40_page() -> Path:
     <h1>Using TopSpot40</h1>
 
     <div class="subtitle">
-        Important information about Spotify integration, playback requirements, languages, and the TopSpot40 listening experience.
+        Important information about Spotify links, languages, and the TopSpot40 discovery experience.
     </div>
 
-    <h2>Spotify Integration</h2>
+    <h2>Listening on Spotify</h2>
     <p>
-        TopSpot40 is a music discovery and storytelling platform that integrates with Spotify for music playback.
-        TopSpot40 does not host, distribute, or provide music files.
+        TopSpot40 is a music discovery and storytelling platform. When a listener selects a song,
+        TopSpot40 opens the song's public Spotify page in the Spotify app or website.
+        TopSpot40 does not host, distribute, stream, or control music playback.
     </p>
 
     <p>
-        Spotify provides the licensed music streaming experience. TopSpot40 enhances that experience through
-        rankings, artist biographies, narrated stories, music history, curated collections, and music discovery.
+        Spotify provides the licensed music experience and determines playback availability,
+        advertisements, account requirements, and other service restrictions.
+        TopSpot40 provides rankings, artist biographies, narrated stories, music history,
+        curated collections, and discovery context.
     </p>
 
     <div class="note">
-        Spotify provides music playback. TopSpot40 provides the storytelling, rankings, artist information,
-        historical context, and discovery features that help listeners connect more deeply with the music.
+        TopSpot40 guides listeners to music on Spotify but does not require Spotify authorization,
+        store Spotify access tokens, or control a listener's Spotify account or playback device.
     </div>
 
-    <h2>Spotify Premium Required</h2>
+    <h2>Spotify Accounts and Availability</h2>
     <p>
-        To use Spotify playback features through TopSpot40, users need an active Spotify Premium account.
-        A Spotify Free account may not support the playback features required for the full TopSpot40 experience.
-    </p>
-
-    <p>
-        Users sign in with their own Spotify account and are responsible for maintaining that account in good standing.
+        TopSpot40 does not require a Spotify Premium subscription. A listener may use Spotify
+        according to the account options, availability, and restrictions offered by Spotify.
     </p>
 
     <h2>Spotify Terms of Service</h2>
     <p>
-        Users are responsible for complying with Spotify's Terms of Service and all applicable Spotify policies.
-        TopSpot40 is designed to work with Spotify's authorized playback services and does not replace or bypass Spotify.
+        Listeners use Spotify directly and remain responsible for complying with Spotify's
+        Terms of Service and applicable policies. TopSpot40 does not replace, bypass,
+        or modify Spotify's service.
     </p>
 
     <h2>Supported Languages</h2>
@@ -82,7 +82,7 @@ def generate_using_topspot40_page() -> Path:
 
     <h2>What TopSpot40 Adds</h2>
     <p>
-        TopSpot40 adds a storytelling layer around Spotify playback. Depending on the listening mode, users may hear
+        TopSpot40 adds a storytelling and discovery layer around ranked songs and curated collections. Listeners may hear
         narrated introductions, song details, artist biographies, historical background, collection introductions,
         and radio-style transitions.
     </p>
@@ -92,7 +92,7 @@ def generate_using_topspot40_page() -> Path:
         <li>Curated themed collections</li>
         <li>Featured artist biographies</li>
         <li>Artist Spotlight listening experiences</li>
-        <li>Radio-style continuous playback modes</li>
+        <li>Radio-inspired narration and guided discovery</li>
         <li>Music history and cultural context</li>
     </ul>
 
