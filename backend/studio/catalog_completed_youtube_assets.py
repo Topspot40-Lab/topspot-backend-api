@@ -67,6 +67,30 @@ PRODUCTIONS = (
         "luis_miguel",
         "Luis Miguel",
     ),
+    Production(
+        "artist",
+        416,
+        "adele",
+        "Adele",
+    ),
+    Production(
+        "artist",
+        238,
+        "aerosmith",
+        "Aerosmith",
+    ),
+    Production(
+        "artist",
+        945,
+        "al_jarreau",
+        "Al Jarreau",
+    ),
+    Production(
+        "artist",
+        731,
+        "ary_barroso",
+        "Ary Barroso",
+    ),
 )
 
 
@@ -81,7 +105,7 @@ class AssetSpec:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Catalog the six completed YouTube "
+            "Catalog completed YouTube "
             "production packages."
         )
     )
