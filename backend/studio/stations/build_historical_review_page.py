@@ -75,7 +75,7 @@ def build_page(slug: str) -> Path:
             approved = bool(shot.get("historical_asset"))
 
             approval_command = (
-                ".venv/Scripts/python -m "
+                "python -m "
                 "backend.studio.stations.approve_historical_image "
                 f"--slug {slug} --shot {shot_number}"
             )
