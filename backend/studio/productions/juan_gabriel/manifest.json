@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "juan_gabriel",
+  "title": "Juan Gabriel",
+  "subtitle": "The Story of Juan Gabriel",
+  "website": "TopSpot40.com",
+  "artwork_url": "https://i.scdn.co/image/ab6761610000e5eb26b71e79bead8d2481411ae6",
+  "source": {
+    "type": "artist_story",
+    "id": 1952
+  },
+  "docuseries_id": null,
+  "status": {
+    "current_station": "cards_ready",
+    "production_created": true,
+    "story_ready": true,
+    "audio_ready": true,
+    "cards_ready": true,
+    "storyboard_ready": true,
+    "visual_plan_ready": true,
+    "images_ready": true,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 646,
+      "duration_seconds": 435,
+      "bucket": "audio-en",
+      "source_key": "artist-story/646.mp3",
+      "youtube_key": "artist-story-youtube/646.mp3",
+      "local_audio": "audio/en_646.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 719,
+      "duration_seconds": 428,
+      "bucket": "audio-es",
+      "source_key": "artist-story/719.mp3",
+      "youtube_key": "artist-story-youtube/719.mp3",
+      "local_audio": "audio/es_719.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 796,
+      "duration_seconds": 410,
+      "bucket": "audio-ptbr",
+      "source_key": "artist-story/796.mp3",
+      "youtube_key": "artist-story-youtube/796.mp3",
+      "local_audio": "audio/pt-BR_796.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/juan_gabriel.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  },
+  "artifacts": {
+    "stories": [
+      "story/en.md",
+      "story/es.md",
+      "story/pt-BR.md"
+    ],
+    "audio": [
+      "audio/en_646.mp3",
+      "audio/es_719.mp3",
+      "audio/pt-BR_796.mp3"
+    ],
+    "storyboard": "storyboard.json",
+    "storyboard_scene_count": 35,
+    "visual_plan": "storyboard.json",
+    "visual_shot_count": 54,
+    "images_directory": "images",
+    "image_count": 54,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
+  },
+  "updated_at": "2026-07-16T20:40:40.851131+00:00"
+}
