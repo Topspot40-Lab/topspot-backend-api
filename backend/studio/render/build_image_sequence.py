@@ -8,6 +8,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from backend.studio.historical_assets import (
+    historical_directories_for_production,
+)
+
 from backend.studio.production import Production
 from backend.studio.render.motion_controller import (
     MotionKind,
@@ -193,6 +197,37 @@ def load_storyboard(path: Path) -> dict[str, Any]:
         raise ValueError(f"Invalid storyboard JSON: {path}") from exc
 
 
+def resolve_curated_historical_image(
+    shot: dict[str, Any],
+) -> Path | None:
+    historical_asset = shot.get(
+        "historical_asset"
+    )
+
+    if not isinstance(historical_asset, dict):
+        return None
+
+    approved_image = str(
+        historical_asset.get(
+            "approved_image"
+        )
+        or ""
+    ).strip()
+
+    if not approved_image:
+        return None
+
+    candidate = Path(approved_image)
+
+    if not candidate.is_absolute():
+        candidate = (
+            ASSETS_DIR.parent
+            / candidate
+        )
+
+    return candidate
+
+
 def find_historical_image(
     *,
     historical_dir: Path,
@@ -227,9 +262,9 @@ def collect_image_entries(
 
     images_dir = production.work_root / "images"
     historical_dir = (
-        ASSETS_DIR
-        / "historical"
-        / production.slug
+        historical_directories_for_production(
+            production
+        ).photos
     )
 
     entries: list[ImageEntry] = []
@@ -243,10 +278,19 @@ def collect_image_entries(
             )
             duration = float(shot["estimated_seconds"])
 
-            historical_image = find_historical_image(
-                historical_dir=historical_dir,
-                shot_number=shot_number,
+            historical_image = (
+                resolve_curated_historical_image(
+                    shot
+                )
             )
+
+            if historical_image is None:
+                historical_image = (
+                    find_historical_image(
+                        historical_dir=historical_dir,
+                        shot_number=shot_number,
+                    )
+                )
 
             if historical_image is not None:
                 image_path = historical_image
