@@ -141,6 +141,15 @@ Rules:
   aspect ratio, moods, or phrases such as "documentary image."
 - When the shot is generic and no specific historical photograph is
   likely to exist, return an empty string for historical_search.
+- historical_plan must describe what would make a real archival image appropriate for this exact shot.
+- historical_plan.subject is the named person, group, event, place, organization, or object shown. Use an empty string for a generic shot.
+- historical_plan.subject_type must be one of: person, group, event, place, organization, object, generic.
+- historical_plan.era should be a supported year, decade, event period, or life stage such as "childhood", "1968", or "early career".
+- historical_plan.required_terms should contain zero to four concrete clues that establish scene relevance.
+- historical_plan.avoid_terms should contain zero to four concrete clues that make an otherwise related image unsuitable.
+- historical_plan.search_queries should contain two to five concise archive queries a human picture researcher might try.
+- Do not include cinematic style, lighting, camera instructions, aspect ratio, or mood language in historical_plan.
+- When historical_search is empty, historical_plan.search_queries must also be empty.
 - image_prompt should be ready for a 16:9 documentary image generator.
 - Include camera framing, setting, era, subjects, lighting, and mood.
 - Return valid JSON only.
@@ -152,6 +161,17 @@ JSON format:
     "shot_number": 1,
     "visual_intent": "Brief description of what the viewer sees",
     "historical_search": "Concise archive search phrase or empty string",
+    "historical_plan": {{
+      "subject": "Named subject or empty string",
+      "subject_type": "person",
+      "era": "Supported year, decade, event period, or life stage",
+      "required_terms": ["concrete relevance clue"],
+      "avoid_terms": ["concrete mismatch clue"],
+      "search_queries": [
+        "concise archive query one",
+        "concise archive query two"
+      ]
+    }},
     "image_prompt": "Complete image-generation prompt"
   }}
 ]
@@ -204,6 +224,98 @@ def validate_scene_plan(
         historical_search = str(
             item.get("historical_search", "")
         ).strip()
+
+        historical_plan = item.get(
+            "historical_plan",
+            {},
+        )
+
+        if not isinstance(historical_plan, dict):
+            raise RuntimeError(
+                f"Shot {shot_number}: "
+                "historical_plan must be an object."
+            )
+
+        subject_type = str(
+            historical_plan.get(
+                "subject_type",
+                "generic",
+            )
+        ).strip()
+
+        allowed_subject_types = {
+            "person",
+            "group",
+            "event",
+            "place",
+            "organization",
+            "object",
+            "generic",
+        }
+
+        if subject_type not in allowed_subject_types:
+            raise RuntimeError(
+                f"Shot {shot_number}: invalid "
+                f"subject_type {subject_type!r}."
+            )
+
+        required_terms = historical_plan.get(
+            "required_terms",
+            [],
+        )
+        avoid_terms = historical_plan.get(
+            "avoid_terms",
+            [],
+        )
+        search_queries = historical_plan.get(
+            "search_queries",
+            [],
+        )
+
+        for field_name, values in (
+            ("required_terms", required_terms),
+            ("avoid_terms", avoid_terms),
+            ("search_queries", search_queries),
+        ):
+            if not isinstance(values, list):
+                raise RuntimeError(
+                    f"Shot {shot_number}: "
+                    f"{field_name} must be a list."
+                )
+
+            if not all(
+                isinstance(value, str)
+                for value in values
+            ):
+                raise RuntimeError(
+                    f"Shot {shot_number}: "
+                    f"{field_name} must contain strings."
+                )
+
+        if len(required_terms) > 4:
+            raise RuntimeError(
+                f"Shot {shot_number}: "
+                "too many required_terms."
+            )
+
+        if len(avoid_terms) > 4:
+            raise RuntimeError(
+                f"Shot {shot_number}: "
+                "too many avoid_terms."
+            )
+
+        if len(search_queries) > 5:
+            raise RuntimeError(
+                f"Shot {shot_number}: "
+                "too many search_queries."
+            )
+
+        if not historical_search and search_queries:
+            raise RuntimeError(
+                f"Shot {shot_number}: search_queries "
+                "must be empty when historical_search is empty."
+            )
+
         image_prompt = str(
             item.get("image_prompt", "")
         ).strip()
@@ -254,6 +366,53 @@ def apply_scene_plan(
         shot["historical_search"] = str(
             plan_item.get("historical_search", "")
         ).strip()
+
+        historical_plan = plan_item.get(
+            "historical_plan",
+            {},
+        )
+
+        if not isinstance(historical_plan, dict):
+            historical_plan = {}
+
+        shot["historical_plan"] = {
+            "subject": str(
+                historical_plan.get("subject", "")
+            ).strip(),
+            "subject_type": str(
+                historical_plan.get(
+                    "subject_type",
+                    "generic",
+                )
+            ).strip(),
+            "era": str(
+                historical_plan.get("era", "")
+            ).strip(),
+            "required_terms": [
+                str(value).strip()
+                for value in historical_plan.get(
+                    "required_terms",
+                    [],
+                )
+                if str(value).strip()
+            ],
+            "avoid_terms": [
+                str(value).strip()
+                for value in historical_plan.get(
+                    "avoid_terms",
+                    [],
+                )
+                if str(value).strip()
+            ],
+            "search_queries": [
+                str(value).strip()
+                for value in historical_plan.get(
+                    "search_queries",
+                    [],
+                )
+                if str(value).strip()
+            ],
+        }
 
         shot["prompt"] = str(
             plan_item["image_prompt"]
