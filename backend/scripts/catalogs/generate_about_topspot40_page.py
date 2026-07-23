@@ -119,9 +119,9 @@ def generate_about_topspot40_page() -> Path:
 
     <p>
         The word <strong>Spot</strong> is a nod to Spotify, the music streaming platform
-        that TopSpot40 integrates with for music playback. TopSpot40 focuses on music
+        that TopSpot40 links to for individual song playback. TopSpot40 focuses on music
         discovery, rankings, artist biographies, storytelling, and historical context,
-        while Spotify provides the licensed music streaming experience.
+        while Spotify provides the licensed music service in its own app or website.
     </p>
 
     <p>
@@ -132,7 +132,7 @@ def generate_about_topspot40_page() -> Path:
 
     <p>
         Put together, the name <strong>TopSpot40</strong> represents ranked music
-        discovery, Spotify-integrated listening, and the enduring influence of the Top 40
+        discovery, public Spotify song links, and the enduring influence of the Top 40
         radio tradition that inspired the project.
     </p>
 
@@ -249,11 +249,11 @@ Patty's Rule: If a feature is too complicated to enjoy, it probably needs to be 
         and another song waiting to become a favorite.
     </p>
 
-    <h2>Spotify Integration</h2>
+    <h2>Spotify Links</h2>
 
     <p>
-        TopSpot40 is a music discovery and storytelling platform that integrates with
-        Spotify for music playback. TopSpot40 does not host, distribute, or provide
+        TopSpot40 is a music discovery and storytelling platform that provides public links to
+        songs on Spotify. TopSpot40 does not host, distribute, control, or provide
         music files. Instead, it enhances the listening experience through rankings,
         artist biographies, narrated stories, music history, and curated listening
         programs.
@@ -261,7 +261,7 @@ Patty's Rule: If a feature is too complicated to enjoy, it probably needs to be 
 
 
     <div class="note">
-        Spotify provides the licensed music streaming experience. TopSpot40 provides
+        Spotify provides the licensed music service in its own app or website. TopSpot40 provides
         the stories, rankings, historical context, artist biographies, and discovery
         features that help listeners connect more deeply with the music.
     </div>

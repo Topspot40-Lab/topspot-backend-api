@@ -40,7 +40,7 @@ def generate_four_ways_to_listen_page() -> Path:
     <h2>1. Nostalgia Programs</h2>
     <p>
         Nostalgia Programs recreate the experience of classic countdown radio by organizing music by decade and genre.
-        Each program contains ranked songs, narrated introductions, artist information, historical context, and Spotify-integrated music playback.
+        Each program contains ranked songs, narrated introductions, artist information, historical context, and public Spotify song links.
     </p>
     <p>Examples include:</p>
     <ul>
@@ -85,10 +85,10 @@ def generate_four_ways_to_listen_page() -> Path:
         <li>Frank Sinatra</li>
     </ul>
 
-    <h2>4. Radio Modes</h2>
+    <h2>4. Radio-Inspired Discovery</h2>
     <p>
-        Radio Modes combine narration, artist information, storytelling, rankings, and Spotify playback into a continuous listening experience.
-        The goal is to recreate some of the magic of traditional radio while taking advantage of modern streaming technology.
+        Radio-Inspired Discovery combines narration, artist information, storytelling, rankings, and public Spotify song links into a guided discovery experience.
+        The goal is to recreate some of the magic of traditional radio while listeners choose when to continue to each song in Spotify.
     </p>
 
     <div class="quote">
@@ -97,7 +97,7 @@ def generate_four_ways_to_listen_page() -> Path:
     </div>
 
     <div class="note">
-        Spotify provides the licensed music streaming experience. TopSpot40 enhances the experience through rankings,
+        Spotify provides the licensed music service. TopSpot40 links listeners to songs and adds rankings,
         artist biographies, storytelling, music history, and music discovery.
     </div>
 

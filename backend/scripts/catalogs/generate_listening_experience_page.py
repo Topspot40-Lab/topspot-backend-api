@@ -97,7 +97,7 @@ def generate_listening_experience_page() -> Path:
             {make_box("Song Detail", detail)}
             {make_box("Artist Text", artist_description)}
 
-            <div class="play-box">Then Spotify track playback begins.</div>
+            <div class="play-box">Then follow the public Spotify link to play the track in Spotify.</div>
         </section>
         """
 
@@ -117,7 +117,7 @@ def generate_listening_experience_page() -> Path:
             {make_box("Song Detail", detail)}
             {make_box("Artist Text", artist_description)}
 
-            <div class="play-box">Then Spotify track playback begins.</div>
+            <div class="play-box">Then follow the public Spotify link to play the track in Spotify.</div>
         </section>
         """
 
@@ -139,7 +139,7 @@ def generate_listening_experience_page() -> Path:
             {make_box("Artist Bio Opening", story_preview)}
             {make_box("Short Song Detail", short_detail)}
 
-            <div class="play-box">Then Spotify track playback begins.</div>
+            <div class="play-box">Then follow the public Spotify link to play the track in Spotify.</div>
         </section>
         """
 
@@ -258,9 +258,9 @@ def generate_listening_experience_page() -> Path:
     <h1>TopSpot40 Listening Experience</h1>
 
     <div class="subtitle">
-        TopSpot40 combines Spotify playback with original narration, artist biographies,
-        music history, and storytelling. These examples show how TopSpot40 adds context
-        before the music begins.
+        TopSpot40 combines original narration, artist biographies, music history,
+        storytelling, and public Spotify song links. These examples show how TopSpot40
+        adds context before listeners continue to the track in Spotify.
     </div>
 
     {nostalgia_html}

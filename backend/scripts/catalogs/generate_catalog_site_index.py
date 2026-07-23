@@ -127,7 +127,7 @@ def generate_catalog_site_index() -> Path:
     </div>
 
     <p style="font-size:16px; color:#555; max-width:900px;">
-        Spotify provides licensed music playback. TopSpot40 enhances that experience through
+        Spotify provides the licensed music service. TopSpot40 links listeners to songs and adds
         rankings, artist biographies, narration, music history, curated collections, and
         guided music discovery.
     </p>
@@ -206,19 +206,19 @@ def generate_catalog_site_index() -> Path:
 
     <div class="card">
         <h2>Four Ways To Listen</h2>
-        <p>Explore the four main listening experiences: Nostalgia Programs, Collections, Artist Spotlight, and Radio Modes.</p>
+        <p>Explore four discovery experiences: Nostalgia Programs, Collections, Artist Spotlight, and Radio-Inspired Discovery.</p>
         <a class="button" href="four_ways_to_listen.html">Explore Listening Modes</a>
     </div>
 
     <div class="card">
         <h2>Using TopSpot40</h2>
-        <p>Understand Spotify integration, Spotify Premium requirements, supported languages, and what TopSpot40 adds around Spotify playback.</p>
+        <p>Understand Spotify links, account availability, supported languages, and the discovery context TopSpot40 provides.</p>
         <a class="button" href="using_topspot40.html">Using TopSpot40</a>
     </div>
 
     <div class="card">
         <h2>TopSpot40 Listening Experience</h2>
-        <p>See examples of how TopSpot40 combines narration, song details, artist stories, and Spotify-integrated playback into a richer listening experience.</p>
+        <p>See examples of how TopSpot40 combines narration, song details, artist stories, and public Spotify song links into a richer discovery experience.</p>
         <a class="button" href="listening_experience.html">View Listening Experience</a>
     </div>
 
