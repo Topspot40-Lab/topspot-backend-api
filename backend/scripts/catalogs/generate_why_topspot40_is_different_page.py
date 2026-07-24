@@ -1,0 +1,99 @@
+from __future__ import annotations
+
+from pathlib import Path
+
+OUTPUT_DIR = Path("backend/scripts/catalogs/output")
+
+
+def generate_why_topspot40_is_different_page() -> Path:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    page = """<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Why TopSpot40 Is Different</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 32px auto; max-width: 1000px; padding: 0 24px; }
+        .nav { margin-bottom: 24px; font-size: 15px; }
+        .nav a { color: #0645ad; text-decoration: none; margin-right: 14px; }
+        h1 { font-size: 46px; margin-bottom: 8px; text-transform: uppercase; }
+        .subtitle { font-size: 20px; line-height: 1.4; color: #555; margin-bottom: 30px; }
+        h2 { font-size: 28px; margin-top: 30px; border-top: 1px solid #ccc; padding-top: 18px; }
+        p { font-size: 17px; line-height: 1.5; }
+        .quote, .note { margin: 22px 0; padding: 14px 18px; background: #f4f4f4; border-left: 4px solid #777; font-size: 18px; line-height: 1.45; }
+        .quote { font-style: italic; }
+        .footer { margin-top: 40px; border-top: 1px solid #ccc; padding-top: 14px; color: #555; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">TopSpot40 Catalog</a>
+    </div>
+
+    <h1>Why TopSpot40 Is Different</h1>
+
+    <div class="subtitle">
+        TopSpot40 is not a streaming service. It is a music discovery and storytelling experience that integrates with Spotify playback.
+    </div>
+
+    <p>
+        Most music platforms focus on helping listeners find and play songs. TopSpot40 focuses on helping listeners connect with the stories, artists, history, memories, and emotions behind the music.
+    </p>
+
+    <p>
+        Streaming technology has made music more available than ever before. A listener can search for almost any song and hear it within seconds. But availability is not the same as connection. Sometimes the missing piece is context: who created the song, why it mattered, what was happening at the time, and how it fits into the larger story of music history.
+    </p>
+
+    <div class="quote">
+        Spotify helps provide the licensed music playback experience. TopSpot40 helps listeners connect more deeply with the music.
+    </div>
+
+    <h2>Storytelling Around the Music</h2>
+    <p>
+        TopSpot40 surrounds music playback with narrated introductions, artist biographies, historical background, rankings, cultural context, and curated listening programs. The goal is to make listening feel more like a guided journey than a simple playlist.
+    </p>
+
+    <h2>Discovery With Meaning</h2>
+    <p>
+        TopSpot40 is designed for both nostalgia and discovery. A listener may begin with a favorite song from the past and end up learning about an artist, a musical tradition, a cultural movement, or a forgotten piece of history.
+    </p>
+
+    <h2>Multilingual Music Stories</h2>
+    <p>
+        Artist stories and discovery content are available in English, Spanish, and Portuguese. This allows listeners to experience the same music history and storytelling across languages and cultures.
+    </p>
+
+    <h2>Connection, Not Consumption</h2>
+    <p>
+        TopSpot40 is not designed to encourage people to consume more music as quickly as possible. It is designed to slow the experience down enough to notice the stories, memories, and meaning behind the songs.
+    </p>
+
+    <div class="quote">
+        TopSpot40 is not designed to help people listen to more music.
+        It is designed to help people connect more deeply with the music they already love.
+    </div>
+
+    <div class="note">
+        TopSpot40 provides rankings, artist biographies, narration, music history, curated discovery programs, and storytelling. Spotify provides the licensed music streaming and playback experience.
+    </div>
+
+    <div class="footer">
+        TopSpot40.com — Music Discovery Through the Decades
+    </div>
+</body>
+</html>
+"""
+
+    output_path = OUTPUT_DIR / "why_topspot40_is_different.html"
+    output_path.write_text(page, encoding="utf-8")
+    return output_path
+
+
+def main() -> None:
+    output_path = generate_why_topspot40_is_different_page()
+    print(f"Created: {output_path}")
+
+
+if __name__ == "__main__":
+    main()

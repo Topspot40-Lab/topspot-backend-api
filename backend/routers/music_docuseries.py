@@ -7,6 +7,9 @@ from backend.models.dbmodels import (
     MusicDocuseriesCollection,
     MusicDocuseriesLocale,
 )
+from backend.models.studio_models import (
+    StudioProductionAsset,
+)
 
 router = APIRouter(
     prefix="/music-docuseries",
@@ -97,6 +100,40 @@ def play_docuseries(
 
         item, locale = result
 
+        youtube_asset = session.exec(
+            select(StudioProductionAsset)
+            .where(
+                StudioProductionAsset.production_type
+                == "documentary"
+            )
+            .where(
+                StudioProductionAsset.source_id
+                == item.id
+            )
+            .where(
+                StudioProductionAsset.asset_type
+                == "localized_video"
+            )
+            .where(
+                StudioProductionAsset.language_code
+                == language
+            )
+            .where(
+                StudioProductionAsset.status
+                == "published"
+            )
+            .where(
+                StudioProductionAsset.is_current
+                == True
+            )
+        ).first()
+
+        youtube_url = (
+            youtube_asset.youtube_url
+            if youtube_asset
+            else None
+        )
+
         return {
             "ok": True,
             "content_type": "music_docuseries",
@@ -109,6 +146,13 @@ def play_docuseries(
             "tts_key": locale.tts_key if locale else None,
             "artwork_url": item.artwork_url,
             "target_length": item.target_length,
+            "has_youtube_video": bool(youtube_url),
+            "youtube_video_id": (
+                youtube_asset.youtube_video_id
+                if youtube_asset
+                else None
+            ),
+            "youtube_url": youtube_url,
             "bed_bucket": "audio-en",
             "bed_key": "bed-tracks/docuseries/bed_01.mp3",
         }
