@@ -1,0 +1,108 @@
+from __future__ import annotations
+
+from pathlib import Path
+
+OUTPUT_DIR = Path("backend/scripts/catalogs/output")
+
+
+def generate_table_of_contents() -> Path:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    page = """<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>TopSpot40 Table of Contents</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 32px auto; max-width: 1000px; padding: 0 24px; }
+        .nav { margin-bottom: 24px; font-size: 15px; }
+        .nav a { color: #0645ad; text-decoration: none; margin-right: 14px; }
+        h1 { font-size: 46px; margin-bottom: 8px; text-transform: uppercase; }
+        .subtitle { font-size: 20px; line-height: 1.4; color: #555; margin-bottom: 30px; }
+        h2 { font-size: 26px; margin-top: 28px; border-top: 1px solid #ccc; padding-top: 16px; }
+        ul { margin-top: 8px; }
+        li { font-size: 17px; line-height: 1.6; }
+        a { color: #0645ad; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .note { margin: 22px 0; padding: 14px 18px; background: #f4f4f4; border-left: 4px solid #777; font-size: 17px; line-height: 1.45; }
+        .footer { margin-top: 40px; border-top: 1px solid #ccc; padding-top: 14px; color: #555; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html">TopSpot40 Catalog</a>
+</div>
+
+<h1>Table of Contents</h1>
+
+<div class="subtitle">
+    A guided path through the TopSpot40 Catalog, Version 1.
+</div>
+
+<h2>Start Here</h2>
+<ul>
+    <li><a href="cover.html">Cover</a></li>
+    <li><a href="welcome.html">Welcome</a></li>
+</ul>
+
+<h2>Introduction</h2>
+<ul>
+    <li><a href="about_topspot40.html">About TopSpot40</a></li>
+    <li><a href="at_a_glance.html">TopSpot40 At A Glance</a></li>
+    <li><a href="why_topspot40_is_different.html">Why TopSpot40 Is Different</a></li>
+    <li><a href="four_ways_to_listen.html">Four Ways To Listen</a></li>
+    <li><a href="using_topspot40.html">Using TopSpot40</a></li>
+    <li><a href="listening_experience.html">TopSpot40 Listening Experience</a></li>
+    <li><a href="vision_for_topspot40.html">A Vision For TopSpot40</a></li>
+</ul>
+
+<h2>Featured Artist Content</h2>
+<ul>
+    <li><a href="artists/index.html">Featured Artist Index</a></li>
+    <li><a href="bb_king_artist_story.html">Featured Artist Story Example: B.B. King</a></li>
+</ul>
+
+<h2>Music Discovery Libraries</h2>
+<ul>
+    <li><a href="nostalgia_index.html">Nostalgia Program Library</a></li>
+    <li><a href="collections_index.html">Collection Library</a></li>
+</ul>
+
+<h2>Catalog Sections</h2>
+<ul>
+    <li>64 Nostalgia Programs organized by decade and genre</li>
+    <li>52 Curated Collections organized by collection group</li>
+    <li>Featured Artists organized by genre</li>
+</ul>
+
+<h2>Closing</h2>
+<ul>
+    <li><a href="invitation_to_discover.html">An Invitation To Discover</a></li>
+</ul>
+
+<div class="note">
+    Spotify provides the licensed music streaming experience. TopSpot40 provides rankings,
+    artist stories, historical context, narration, and curated discovery experiences.
+</div>
+
+<div class="footer">
+TopSpot40.com — Music Discovery Through the Decades
+</div>
+
+</body>
+</html>
+"""
+
+    output_path = OUTPUT_DIR / "table_of_contents.html"
+    output_path.write_text(page, encoding="utf-8")
+    return output_path
+
+
+def main() -> None:
+    output_path = generate_table_of_contents()
+    print(f"Created: {output_path}")
+
+
+if __name__ == "__main__":
+    main()

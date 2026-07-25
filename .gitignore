@@ -25,3 +25,5 @@ venv/
 .cache-topspot/
 *.cache
 **/spotify_token.cache
+backend/studio/work/
+backend/scripts/catalogs/output/
