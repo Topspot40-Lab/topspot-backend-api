@@ -261,6 +261,94 @@ def has_life_stage_evidence(
     )
 
 
+def metadata_has_term_evidence(
+    searchable: str,
+    candidate_words: set[str],
+    term: str,
+) -> bool:
+    normalized_term = normalized_phrase(term)
+
+    if not normalized_term:
+        return False
+
+    if (
+        f" {normalized_term} "
+        in f" {searchable} "
+    ):
+        return True
+
+    term_words = normalized_words(term)
+
+    return bool(
+        term_words
+        and term_words <= candidate_words
+    )
+
+
+def candidate_meets_historical_plan(
+    candidate: HistoricalImageCandidate,
+    historical_plan: dict[str, Any] | None,
+) -> bool:
+    if historical_plan is None:
+        return True
+
+    searchable = normalized_phrase(
+        candidate_searchable_text(candidate)
+    )
+    candidate_words = normalized_words(searchable)
+
+    subject_type = normalized_phrase(
+        str(historical_plan.get("subject_type", ""))
+    )
+    subject = str(
+        historical_plan.get("subject", "")
+    ).strip()
+
+    if (
+        subject_type == "person"
+        and not metadata_has_term_evidence(
+            searchable,
+            candidate_words,
+            subject,
+        )
+    ):
+        return False
+
+    for value in historical_plan.get(
+        "required_terms",
+        [],
+    ):
+        required_term = str(value).strip()
+
+        if (
+            required_term
+            and not metadata_has_term_evidence(
+                searchable,
+                candidate_words,
+                required_term,
+            )
+        ):
+            return False
+
+    for value in historical_plan.get(
+        "avoid_terms",
+        [],
+    ):
+        avoid_term = str(value).strip()
+
+        if (
+            avoid_term
+            and metadata_has_term_evidence(
+                searchable,
+                candidate_words,
+                avoid_term,
+            )
+        ):
+            return False
+
+    return True
+
+
 def historical_plan_adjustment(
     candidate: HistoricalImageCandidate,
     historical_plan: dict[str, Any] | None,
@@ -529,6 +617,10 @@ def rank_candidates(
         candidate
         for candidate in candidates
         if candidate.score > -1_000.0
+        and candidate_meets_historical_plan(
+            candidate,
+            historical_plan,
+        )
     ]
 
     usable.sort(
