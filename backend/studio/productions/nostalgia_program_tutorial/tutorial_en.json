@@ -1,0 +1,95 @@
+{
+  "version": 2,
+  "production_type": "screenshot_tutorial",
+  "slug": "nostalgia_program_tutorial",
+  "language_code": "en",
+  "title": "How to Create a TopSpot40 Nostalgia Program",
+  "scenes": [
+    {
+      "image": "00-language-selection.png",
+      "audio_file": "tutorial_en_001.mp3",
+      "minimum_seconds": 6.0,
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "01-ai-language-journey.png",
+      "audio_file": "tutorial_en_002.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "02-control-center-choices.png",
+      "audio_file": "tutorial_en_003.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "03-ai-listening-library-road.png",
+      "audio_file": "tutorial_en_004.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "04-listening-library-open.png",
+      "audio_file": "tutorial_en_005.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "05-ai-nostalgia-road.png",
+      "audio_file": "tutorial_en_006.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "06-ai-decade-road.png",
+      "audio_file": "tutorial_en_007.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "07-1960s-selected.png",
+      "audio_file": "tutorial_en_008.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "08-ai-country-road.png",
+      "audio_file": "tutorial_en_009.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "09-1960s-country-highlighted.png",
+      "audio_file": "tutorial_en_010.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "10-ai-1960s-country-arrival-road.png",
+      "audio_file": "tutorial_en_011.mp3",
+      "hold_after_seconds": 1.2
+    },
+    {
+      "image": "11-ai-1960s-country-destination.png",
+      "audio_file": "tutorial_en_012.mp3",
+      "hold_after_seconds": 1.2
+    },
+    {
+      "image": "12-ai-patsy-cline-selection.png",
+      "audio_file": "tutorial_en_013.mp3",
+      "hold_after_seconds": 1.2
+    },
+    {
+      "image": "13-patsy-cline-idle.png",
+      "audio_file": "tutorial_en_014.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "14-patsy-cline-intro-playing.png",
+      "audio_file": "patsy-cline-crazy-intro-en.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "15-patsy-cline-story-playing.png",
+      "audio_file": "patsy-cline-crazy-detail-en.mp3",
+      "hold_after_seconds": 1.0
+    },
+    {
+      "image": "16-patsy-cline-artist-bio-playing.png",
+      "audio_file": "patsy-cline-artist-bio-en.mp3",
+      "hold_after_seconds": 1.5
+    }
+  ]
+}
