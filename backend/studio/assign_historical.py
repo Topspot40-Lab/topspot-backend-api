@@ -7,6 +7,9 @@ from typing import Any
 
 from backend.studio.production import Production
 from backend.studio.studio_config import ASSETS_DIR
+from backend.studio.historical_assets import (
+    historical_directories_for_production,
+)
 
 
 SUPPORTED_EXTENSIONS = {
@@ -47,7 +50,6 @@ def save_json(
         encoding="utf-8",
     )
 
-
 def find_shot(
     storyboard: dict[str, Any],
     shot_number: int,
@@ -69,14 +71,13 @@ def find_shot(
 
 def find_photo(
     *,
-    slug: str,
+    production: Production,
     photo_id: str,
 ) -> Path:
     photos_dir = (
-        ASSETS_DIR
-        / "historical"
-        / slug
-        / "photos"
+        historical_directories_for_production(
+            production
+        ).photos
     )
 
     if not photos_dir.exists():
@@ -149,7 +150,7 @@ def run(
     )
 
     photo_path = find_photo(
-        slug=slug,
+        production=production,
         photo_id=photo_id,
     )
 
