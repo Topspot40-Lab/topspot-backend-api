@@ -1,249 +1,324 @@
-# PROJECT_CONTEXT.md - TopSpot40 Backend
+# TopSpot40 Backend Project Context
 
-# Project Overview
+This file summarizes the currently verified backend implementation. Current code, configuration, tests, Git state, and command output remain the source of truth.
 
-TopSpot40 is a music discovery and playback platform centered around curated rankings of songs by genre and decade and collections and artist spotlight. This repository contains the backend API responsible for authentication, authorization, business logic, subscriptions, data access, playback, intro/detail/artist mp3, and integrations with external services.
+## Purpose and Responsibilities
 
-The backend is the source of truth for application logic.
+`topspot-backend-api` is the FastAPI backend for TopSpot40.
 
----
+Verified responsibilities include:
 
-# Technologies
+- Catalog APIs for TopSpot40 music and content data.
+- Active legacy Spotify OAuth, backend session, user-token, and playback-control routes that remain present in code.
+- Newer approved Spotify public-link companion material that sends listeners to public Spotify song pages without describing OAuth-controlled playback as the current product direction.
+- Stripe checkout, subscription status, and webhook handling.
+- Supabase/Postgres-backed data access.
+- Feedback intake.
+- Studio and operational tooling for content generation, rendering, imports, and storage workflows.
 
-* FastAPI
-* Python
-* SQLModel
-* Supabase (database and storage)
-* Stripe (subscriptions and billing)
-* Spotify Web API
-* OAuth 2.0 Authorization Code Flow
-* Pytest
+Evidence includes `backend/main.py::app`, routers under `backend/routers/`, authentication and billing code in `backend/isaiah/isaiah_router.py`, models in `backend/models/dbmodels.py`, and Studio tooling under `backend/studio/`.
 
----
+## Technology and Configuration
 
-# Architectural Principles
+Dependencies are declared in `requirements.txt`.
 
-* Business logic belongs in the backend.
-* Frontend clients should remain thin whenever practical.
-* Route design should follow REST principles.
-* Resource-oriented APIs are preferred over action-oriented APIs.
-* Code should be easy to evolve, debug, and test.
-* Favor explicitness over cleverness.
+Verified dependency areas include:
 
----
+- FastAPI, Starlette, and Uvicorn.
+- SQLModel, SQLAlchemy, and psycopg2.
+- Supabase client, storage, and realtime packages.
+- Spotipy, httpx, and requests.
+- Stripe.
+- PyJWT.
+- python-dotenv.
+- pytest, pytest-asyncio, and pytest-mock.
+- Pillow.
+- Script and Studio support for ffmpeg/ffprobe-driven media workflows and xAI-compatible HTTP helpers.
 
-# Authentication and Authorization
+Some scripts import `openai.OpenAI`, but `openai` is not declared in `requirements.txt`, so script dependencies are not fully represented by the current dependency file.
 
-IMPORTANT:
+Runtime configuration reads environment variables through:
 
-Spotify OAuth is handled entirely by the backend.
+- `backend/config/__init__.py`
+- `backend/database.py`
+- `backend/isaiah/isaiah_helper.py`
+- `backend/services/supabase_client.py`
 
-The frontend does NOT implement OAuth logic.
+Database configuration is in `backend/database.py`. `backend/database.py::engine` reads `DATABASE_URL`, `POSTGRES_URL`, or `SUPABASE_DB_URL`, creates a SQLModel engine with `NullPool`, `pool_pre_ping`, and `sslmode=require`, and exposes `backend/database.py::get_db` and `backend/database.py::get_db_session`.
 
-Current production Spotify/session flow:
+## Application Entrypoint and Active Router Registration
 
-* `backend/isaiah/isaiah_router.py` initiates Spotify OAuth, handles callbacks, creates or looks up TopSpot40 users, stores Spotify tokens in Supabase, and establishes the backend session cookie.
-* `backend/isaiah/isaiah_spotify.py` exchanges and refreshes Spotify tokens and reads/writes user token records in Supabase.
-* `backend/isaiah/jwt_session.py` creates and decodes the backend session JWT used to identify the authenticated TopSpot40 user.
+The FastAPI application entrypoint is `backend/main.py::app`.
 
-Backend responsibilities include:
+Active routers are registered in `backend/main.py`:
 
-* Initiating Spotify OAuth flow.
-* Handling OAuth callbacks.
-* Exchanging authorization codes for tokens.
-* Refreshing Spotify access tokens.
-* User creation and lookup.
-* Session establishment.
-* Authorization checks.
-* Admin authentication.
+- `backend.routers.health.router`
+- `backend.routers.catalog.router`
+- `backend.routers.artist_spotlight.router`
+- `backend.routers.playback_status.router`
+- `backend.routers.decade_genre_player.router`
+- `backend.routers.collections_player.router`
+- `backend.routers.decade_genre_pause.router`
+- `backend.routers.playback_control.router`
+- `backend.routers.feedback.feedback_router` under `/api`
+- `backend.isaiah.isaiah_router.spotify_user_auth_router` under `/api/auth`
+- `backend.isaiah.isaiah_router.stripe_router` under `/api`
+- `backend.routers.supabase_collections.router`
+- `backend.routers.music_docuseries.router`
+- `backend.routers.admin.router`
 
-Any modifications affecting authentication must preserve existing login behavior.
+## Major Backend Modules
 
-Known authentication context:
+`backend/routers/` contains the active HTTP surface for health, catalog, playback, collections, artist spotlight, feedback, admin, and music docuseries routes.
 
-* Spotify access and refresh tokens are owned by a TopSpot40 user and are stored in Supabase.
-* Playback code must use the authenticated user's Spotify token. It must not use a shared Spotipy client, shared OAuth manager, or shared token cache for playback ownership.
-* Legacy Spotify auth paths still exist in `backend/routers/spotify_auth.py` and `backend/services/spotify/spotify_auth_user.py`. These include cache/auth-manager code originally used for local or debug flows. They must not be assumed to be the production playback authentication architecture unless explicitly revalidated.
-* Token refresh currently reads an expired Supabase token record, refreshes it with Spotify, then updates the Supabase row. The codebase does not currently document or visibly enforce a per-user refresh lock or compare-and-swap style update, so concurrent refresh behavior should be treated as a known concurrency consideration.
+`backend/isaiah/` contains Spotify OAuth, JWT cookie session behavior, Spotify token persistence, Stripe subscription routes, and Stripe webhook handling.
 
----
+`backend/services/` contains playback sequencing, Spotify playback/client creation, Supabase helpers, audio URL/storage helpers, xAI/TTS helpers, and radio runtime support.
 
-# Playback Architecture and Migration State
+`backend/state/` contains in-process playback runtime state, per-user flags, status, skip/narration/track events, locks, and task ownership helpers.
 
-TopSpot40 playback is in an active migration from a single-user/shared-state model toward production multi-user playback isolation.
+`backend/models/` contains SQLModel entities for catalog, rankings, locales, collections, artist stories, music docuseries, music discovery, feedback, and related data.
 
-Current implementation:
+`backend/scripts/` and `backend/studio/` contain operational content generation, imports, TTS, storage upload/delete helpers, Studio production sessions, audio/video rendering, and station workflows.
 
-* Playback routes live primarily in:
-  * `backend/routers/playback_control.py`
-  * `backend/routers/playback_status.py`
-  * `backend/routers/decade_genre_player.py`
-  * `backend/routers/collections_player.py`
-  * `backend/routers/single_track_player.py`
-  * `backend/routers/artist_spotlight.py`
-* Playback sequences and helpers live primarily in:
-  * `backend/services/decade_genre_sequence.py`
-  * `backend/services/collection_sequence.py`
-  * `backend/services/collections_radio_sequence.py`
-  * `backend/services/all_radio_sequence.py`
-  * `backend/services/radio_runtime.py`
-  * `backend/services/playback_helpers.py`
-  * `backend/services/radio/narration.py`
-  * `backend/services/radio/heartbeat.py`
-* `backend/state/playback_runtime.py` defines a process-local `runtime_by_user` mapping and task-to-user binding helpers.
-* `PlaybackRuntime` contains per-user runtime fields for status, flags, current task, playback events, locks, and Spotify client references.
-* `backend/state/playback_state.py` currently stores `PlaybackStatus` objects in a process-local `statuses` dictionary keyed by `user_id`.
-* `backend/state/playback_flags.py` currently has both a process-local `flags_by_user` dictionary and a remaining module-level `flags = PlaybackFlags()` instance.
-* `backend/state/narration.py` currently stores narration and track completion events in process-local dictionaries keyed by `user_id`.
-* `backend/state/skip.py` exposes `skip_event` through the runtime proxy model.
+## Authentication and Session Flow
 
-Required invariants:
+Spotify login begins at `/api/auth/spotify/login` via `backend/isaiah/isaiah_router.py::spotify_login`.
 
-* Playback state must be scoped to the authenticated TopSpot40 user.
-* One user's request must not be able to start, pause, resume, stop, skip, advance, unblock, or otherwise mutate another user's playback.
-* Playback routes must derive user ownership from the authenticated backend session cookie/JWT. They must not trust `user_id` supplied by query parameters, request bodies, or frontend-controlled state when selecting runtime state, Spotify tokens, Spotify devices, or playback events.
-* `status`, `flags`, `current_task`, `sequence_lock`, `track_done_event`, `narration_done_event`, `skip_event`, and Spotify client/token access must resolve to the authenticated user's playback runtime.
-* Track and narration completion events must be routed to the correct user-specific event object.
-* `start_new_sequence` and sequence cancellation must only affect the authenticated user's active playback task.
-* Any `asyncio.create_task(...)` that directly or indirectly accesses playback state, playback events, Spotify playback, or runtime helpers must be associated with the owning user before that child task accesses runtime-backed state.
-* Spotify playback operations must use the authenticated user's Supabase-backed Spotify token record.
+Spotify callback is `/api/auth/spotify/callback` via `backend/isaiah/isaiah_router.py::spotify_callback`.
 
-Known incomplete migration areas:
+The callback flow:
 
-* Some playback code still imports or mutates shared/global state, especially the remaining module-level `flags` instance.
-* Some playback status/event routes currently accept `user_id` as an API parameter instead of deriving it from the authenticated session.
-* Some background tasks created inside playback helpers access runtime-backed state or playback events without a clearly visible task ownership binding at the task creation site.
-* Some active playback code still imports Spotify helpers from the legacy `spotify_auth_user.py` module, even though that helper currently delegates token lookup to Supabase.
-* Legacy Spotify auth routes are still registered in `backend/main.py`.
-* Some playback code appears to mix older call signatures with newer user-scoped helper signatures. Treat this subsystem as mid-migration rather than fully isolated.
+1. Exchanges the Spotify OAuth code.
+2. Fetches the Spotify profile.
+3. The active legacy callback implementation rejects Spotify accounts whose returned product value is not "premium".
+4. Creates or updates `topspot_users`.
+5. Upserts `spotify_tokens`.
+6. Creates a JWT with `backend/isaiah/jwt_session.py::create_jwt_token`.
+7. Sets an HTTP-only cookie named `access_token`.
 
-Known limitations:
+JWT decoding is handled by `backend/isaiah/jwt_session.py::decode_jwt_token`.
 
-* Playback runtime state is process memory. `runtime_by_user`, `_task_user`, `statuses`, `flags_by_user`, narration event dictionaries, track event dictionaries, and `asyncio.Event` / `asyncio.Lock` objects are not shared across backend processes.
-* Active playback tasks are in-process only. They are not durable across restarts and cannot move between backend instances.
-* If the backend runs multiple workers or multiple instances without sticky routing or a shared coordination layer, status polling, event callbacks, skip/pause/stop commands, and active sequence loops may land on different processes.
-* The current process-memory model is acceptable only as an interim single-instance migration step. It is not, by itself, horizontally scalable.
+Cookie and frontend/backend URL helpers are in `backend/isaiah/isaiah_helper.py`. The verified current cookie configuration includes domain `.topspot40.com` and secure cookies.
 
-Future architectural considerations:
+Generated Spotify public-link companion pages describe a newer approved model where TopSpot40 links listeners to Spotify song pages and does not require Spotify authorization or Spotify Premium because listeners use Spotify directly. That companion model should not be described as OAuth-controlled backend playback.
 
-* Horizontal scaling will require a deliberate strategy for runtime ownership, event delivery, active sequence coordination, and status visibility across backend instances.
-* Token refresh concurrency should be made explicit if multiple simultaneous requests can refresh the same user's Spotify token.
-* Legacy Spotify auth/cache routes should be clearly separated from, or removed from, production playback authentication once compatibility requirements are known.
+## Spotify Integration and Token Ownership
 
----
+Spotify token exchange, profile lookup, token refresh, and valid-token lookup are in `backend/isaiah/isaiah_spotify.py`.
 
-# Billing
+The active token ownership path is user-scoped:
 
-Stripe is used for subscription management.
+1. The backend session cookie is decoded.
+2. The TopSpot user id is extracted from the JWT payload.
+3. `backend/isaiah/isaiah_spotify.py::get_valid_access_token(user_id)` reads or writes `spotify_tokens` for that user.
+4. `backend/services/spotify/spotify_auth_user.py::get_spotify_user_client(user_id)` returns a Spotipy client for that user token.
+5. `backend/services/spotify/playback.py::play_spotify_track` performs playback operations with an authenticated `user_id`.
 
-Requirements:
+Active `/api/auth/spotify/token` and `/api/auth/spotify/sdk-token` endpoints decode the backend JWT cookie and pass `payload["user_id"]` to `get_valid_access_token`.
 
-* Paying users receive access according to subscription status.
-* Testers may bypass Stripe when explicitly authorized.
-* Stripe webhook events synchronize subscription state into Supabase.
-* Subscription synchronization must remain idempotent.
+This active token ownership path is legacy/current-code behavior, not evidence that OAuth-controlled playback is the intended current product direction.
 
-Billing-related changes require regression tests.
+Generated catalog/link-out companion material treats Spotify as an external public destination. It describes TopSpot40 as linking to public Spotify song pages without hosting music, requiring Spotify authorization, storing Spotify access tokens, or controlling playback devices.
 
----
+## Stripe and Subscription Flow
 
-# Database Philosophy
+Stripe routes are defined in `backend/isaiah/isaiah_router.py::stripe_router` and registered under `/api`.
 
-Supabase serves as the primary data store.
+Active routes include:
 
-Changes to database schemas must:
+- `POST /api/create-checkout-session`
+- `GET /api/verify-subscription`
+- `GET /api/subscription-status`
+- `POST /api/webhooks/stripe`
 
-* Preserve data integrity.
-* Include migration considerations.
-* Consider backwards compatibility.
-* Include tests for affected functionality.
+`backend/isaiah/isaiah_router.py::create_checkout_session` decodes the JWT cookie, uses the authenticated `user_id` as Stripe `client_reference_id`, sets `metadata.topspot_user_id`, and returns `{"url": session.url}`.
 
----
+`backend/isaiah/isaiah_router.py::verify_subscription` decodes the JWT cookie, allows `topspot_users.is_tester`, retrieves Stripe checkout/subscription details, and returns JSON subscription status fields.
 
-# Quality Standards
+`backend/isaiah/isaiah_router.py::get_subscription_status` decodes the JWT cookie, checks tester bypass, and looks for active rows in `subscriptions`.
 
-Software quality means:
+`backend/isaiah/isaiah_router.py::stripe_webhook` verifies the Stripe signature, inserts event id/type into `stripe_webhook_events` for duplicate detection, and syncs subscription records through `sync_subscription_to_supabase`.
 
-* Correctness.
-* Security.
-* Reliability.
-* Maintainability.
-* Evolvability.
-* Performance.
-* Fitness for use.
+## Database and Supabase Integration
 
-The goal is not merely to satisfy specifications, but to satisfy user needs.
+SQLModel models live in:
 
----
+- `backend/models/dbmodels.py`
+- `backend/models/collection_models.py`
 
-# Testing Philosophy
+Major modeled entities include artists, tracks, decades, genres, decade/genre rankings, track locales, artist locales, artist stories, collections, collection rankings, music docuseries, music discovery, and collection stories.
 
-Use Test-Driven Development whenever practical.
+Service-role Supabase clients exist in:
 
-Testing hierarchy:
+- `backend/isaiah/isaiah_router.py::supabase`
+- `backend/isaiah/isaiah_spotify.py::supabase`
+- `backend/services/supabase_client.py::supabase`
 
-1. Unit Tests
-2. Functional Tests
-3. Integration Tests
-4. System / Acceptance Tests
+Storage helpers live in `backend/services/supabase_storage.py`.
 
-Avoid redundant testing between levels.
+Audio URL resolution is handled by `backend/services/audio_urls.py` and is controlled by `AUDIO_MODE`.
 
-Regression tests should prevent previously working functionality from breaking.
+Verified directly referenced Supabase tables include:
 
-Coverage targets are indicators, not goals.
+- `topspot_users`
+- `spotify_tokens`
+- `subscriptions`
+- `stripe_webhook_events`
+- `feedback`
 
-Meaningful tests are preferred over artificial coverage increases.
+## Catalog and Content APIs
 
----
+Catalog routes are in `backend/routers/catalog.py` under `/api/catalog`.
 
-# REST Guidelines
+Verified backend catalog contracts include:
 
-Routes should represent resources.
+- `GET /api/catalog/summary`
+- `GET /api/catalog/get-json-catalog`
+- `GET /api/catalog/grouped`
 
-Preferred examples:
+Decade/genre sequence and playback routes are in `backend/routers/decade_genre_player.py` under `/supabase/decade-genre`.
 
-GET /tracks/{id}
+Collection sequence and playback routes are split between:
 
-POST /subscriptions
+- `backend/routers/supabase_collections.py`
+- `backend/routers/collections_player.py`
 
-PATCH /users/{id}
+Artist Spotlight routes are in `backend/routers/artist_spotlight.py`.
 
-DELETE /testers/{id}
+Music docuseries routes are in `backend/routers/music_docuseries.py`.
 
-Avoid action-oriented routes whenever reasonable.
+## Playback Architecture and User Ownership
 
----
+Playback runtime ownership is centered on `backend/state/playback_runtime.py`.
 
-# Code Review Checklist
+Protected playback routes use `backend/state/playback_runtime.py::bind_request_user`, which decodes the `access_token` cookie and binds the current asyncio task to the authenticated user id.
 
-Before approving changes ask:
+`backend/state/playback_runtime.py::get_runtime_for_user(user_id)` creates per-user `PlaybackRuntime` objects containing status, flags, current task, events, and locks.
 
-* Did we build the thing right?
-* Did we build the right thing?
-* Are edge cases covered?
-* Is authentication still secure?
-* Can this change allow one user to affect another user's playback?
-* Does playback state resolve from the authenticated user rather than client-supplied user identity?
-* Are background playback tasks bound to the correct user before touching runtime state?
-* Does Spotify playback use the authenticated user's token ownership?
-* Could this change impact Stripe synchronization?
-* Could this change affect existing users?
-* Are tests present and meaningful?
-* Is the implementation easy to understand?
+`backend/routers/playback_control.py::start_new_sequence` cancels only the current user runtime task, starts `start_playback_session(user_id)`, creates a background task, and binds that task to the user id.
 
----
+Public playback status is returned by `backend/routers/playback_status.py::get_status`. The response uses camelCase playback fields such as `isPlaying`, `isPaused`, `playbackSessionId`, `elapsedMs`, `durationMs`, and `context`.
 
-# AI Agent Instructions
+Verified ownership model:
 
-When working in this repository:
+- Protected playback routes bind request ownership from the authenticated backend session cookie.
+- Per-user runtime state is keyed by user id through `runtime_by_user[user_id]`.
+- Spotify playback calls include authenticated `user_id`.
+- Inspected playback status and event endpoints use current_user_id() and user-keyed events or status. Complete end-to-end isolation across every playback path has not been proven.
 
-* Understand the affected subsystem before editing code.
-* Do not rewrite large portions of the application without justification.
-* Prefer minimal, targeted changes.
-* Preserve existing functionality unless explicitly instructed otherwise.
-* Explain architectural tradeoffs before major refactors.
-* Generate tests alongside production code whenever practical.
-* If uncertain about intent, ask for clarification instead of guessing.
+## Studio and Operational Tooling
 
-The backend prioritizes correctness over speed of implementation.
+`backend/studio/` contains offline Studio production workflows.
+
+Verified Studio areas include:
+
+- `backend/studio/studio_config.py`
+- `backend/studio/production.py::Production`
+- `backend/studio/factory/production_session.py::ProductionSession`
+- `backend/studio/audio/build_youtube_audio.py`
+- `backend/studio/audio/build_language_masters.py`
+- `backend/studio/render/build_story_video.py`
+- `backend/studio/render/build_image_sequence.py`
+- `backend/studio/visuals/generate_images.py`
+- `backend/studio/visuals/image_quality.py`
+- `backend/studio/catalog_completed_youtube_assets.py`
+- `backend/models/studio_models.py::StudioProductionAsset`
+- `backend/studio/stations/*`
+
+Current Studio tooling includes YouTube/video asset cataloging and current-asset lookup through `StudioProductionAsset`, image QA/regeneration, approved historical-image handling, opening-card/image-sequence/story-video rendering, and language-master/YouTube audio assembly. Some tooling invokes ffmpeg/ffprobe, xAI image APIs, Supabase storage, or database writes depending on command options.
+
+The Studio artist-photo workflow builds Wikimedia/PICRYL-style review pages, ranks and filters candidate images, generates copyable approval commands, downloads approved Wikimedia candidates, uploads approved artist photos to Supabase Storage bucket `historical-images`, writes approved metadata under `backend/studio/assets/historical/artists/{letter}/{artist_slug}/metadata`, and can assign approved artist photos to safe storyboard shots for artist productions.
+
+Approved Al Jarreau artist-photo metadata currently includes eight records under `backend/studio/assets/historical/artists/a/al_jarreau/metadata/`, from `001-al-jarreau-molde.json` through `008-jarreaualduesseldorf1981.json`. These records identify `artist_id` 945, `artist_slug` `al_jarreau`, provider `wikimedia_commons`, `approved: true`, approved image filenames, and Supabase Storage keys under `historical-images/artists/a/al_jarreau/photos/`. All eight referenced Supabase Storage objects were previously verified to exist in a read-only point-in-time check; this does not imply permanent availability.
+
+`backend/scripts/` contains operational/content-generation scripts for imports, generated text, generated TTS, collection/docuseries/music-discovery data, cleanup workflows, database writes, and storage operations.
+
+Studio and script files may create local files, call external APIs, invoke ffmpeg, write Supabase/Postgres/storage data, or incur cost.
+
+## Current Testing and Quality-Tooling Status
+
+Current pytest files in `backend/tests/` are:
+
+- `test_artist_photo_workflow.py`
+- `test_artist_spotlight_youtube.py`
+- `test_auth_and_stripe.py`
+- `test_isaiah_spotify_auth.py`
+- `test_isaiah_spotify_router.py`
+
+Pytest config exists at `backend/pytest.ini` with `pythonpath = .` and `asyncio_mode = strict`.
+
+Artist-photo workflow tests cover storage-key layout, filename normalization, next photo numbering, artist matching, safe-shot filtering, approval command generation, and production-directory photo lookup.
+
+Artist Spotlight YouTube tests cover `artist_story` response fields and newest-version ordering.
+
+The test suite was not run or collected during the read-only audit.
+
+No verified lint, format, type-check, coverage, CI, build, or canonical local startup command was found.
+
+Do not describe backend tests as reliable, complete, collecting, or passing unless verified during the current task.
+
+## Runtime and Deployment Facts That Are Actually Verified
+
+`backend/main.py::root` returns HTML identifying the backend and saying `Environment: Render`.
+
+CORS in `backend/main.py` allows local Vite origins, `https://topspot40.com`, `https://www.topspot40.com`, `https://topspot40.netlify.app`, `https://sparkling-croissant-23bbac.netlify.app`, and `https://resplendent-gaufre-032b1a.netlify.app`, with credentials enabled.
+
+Production helper URLs in `backend/isaiah/isaiah_helper.py` currently point Spotify callback traffic to `https://api.topspot40.com/api/auth/spotify/callback` and frontend redirects to `https://topspot40.com`.
+
+`requirements.txt` includes `uvicorn`.
+
+No canonical backend startup command or deployment config was verified.
+
+## Cross-Repository Contracts
+
+The audit identified the following backend routes as current or expected frontend integration contracts:
+
+- Spotify OAuth: `/api/auth/spotify/login`
+- Current user/auth info: `/api/auth/me`
+- Subscription status: `/api/subscription-status`
+- Stripe checkout: `/api/create-checkout-session`
+- Stripe verification: `/api/verify-subscription`
+- Catalog: `/api/catalog/grouped`, `/api/catalog/summary`
+- Playback status/control: `/playback/status`, `/playback/devices`, `/playback/client-diagnostic`, `/playback/transfer/{device_id}`, `/playback/narration-finished`, `/playback/track-finished`, `/playback/play-spotify`, `/playback/play-track`, `/playback/flags-status`, `/playback/start`, `/playback/pause`, `/playback/resume`, `/playback/stop`, `/playback/skip`, `/playback/warmup`, `/playback/reset`
+- Supabase-backed sequences: `/supabase/decade-genre/*`, `/supabase/collections/*`
+- Artist spotlight: `/artist-spotlight/*`
+- Music docuseries: `/music-docuseries/*`
+
+Frontend response-shape compatibility was not exhaustively audited.
+
+## Legacy or Inactive Areas
+
+`backend/routers/spotify_auth.py` is unregistered in `backend/main.py` and includes a file-cache OAuth path through `.cache-topspot/spotify_token.cache`.
+
+`backend/routers/single_track_player.py` is unregistered in `backend/main.py`.
+
+`backend/isaiah/isaiah_router.py::spotify_refresh` has its decorator commented out.
+
+`backend/routers/playback_control.py::flags_status` is an active legacy/debug-looking route.
+
+## Known Inconsistencies Requiring Resolution
+
+`backend/main.py` includes duplicate active router registrations for `stripe_router` and `feedback_router`.
+
+Playback status has split storage. `PlaybackRuntime.status` is separate from `backend/state/playback_state.py::statuses[user_id]`. Functions such as `update_phase`, `mark_playing`, `begin_track`, and `/playback/status` use `playback_state.get_status(user_id)`, while some route/service code reads `current_runtime().status`.
+
+`backend/routers/artist_spotlight.py::play_artist_radio` creates and binds a background task but does not store it in `current_runtime().current_task`.
+
+Existing backend tests appear stale against active route prefixes/current behavior. Examples from the audit include tests calling `/spotify/login`, `/spotify/token`, and `/create-checkout-session`, while active registrations expose `/api/auth/spotify/login`, `/api/auth/spotify/token`, and `/api/create-checkout-session`. A subscription verification test expects a redirect, while current `verify_subscription` returns JSON.
+
+Backend and frontend production frontend URLs differ in verified code. Backend helper code uses `https://topspot40.com`, while frontend `src/lib/config.ts::FRONTEND_URL` uses `https://resplendent-gaufre-032b1a.netlify.app`.
+
+## Known Limitations and Unresolved Facts
+
+No live DB, Stripe, Spotify, Supabase, xAI, ElevenLabs, ffmpeg, service runtime, or external-service behavior was exercised during the read-only audit.
+
+The live production database schema was not verified. SQLModel models are evidence of application expectations, not proof of live schema.
+
+No backend tests were run or collected during the read-only audit.
+
+No deployment platform configuration file or canonical local startup command was verified.
+
+Admin tester route `backend/routers/admin.py::set_tester` uses an `ADMIN_SECRET` header check and service-role Supabase writes; no additional authorization model was verified in inspected code.
+
+Spotify is the currently implemented playback integration. This document does not establish Spotify as TopSpot40's approved long-term playback provider or confirm that the current integration can support production-scale usage.
