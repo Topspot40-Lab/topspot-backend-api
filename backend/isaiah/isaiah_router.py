@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import stripe
 from backend.isaiah.jwt_session import create_jwt_token, JWT_EXP_DELTA_SECONDS, decode_jwt_token
 from backend.isaiah.isaiah_spotify import get_valid_access_token
+from backend.isaiah.offer_access import OFFER_CODE, compute_offer_access
 from datetime import datetime, timedelta, timezone
 #from main import supabase  # import your Supabase client
 from supabase import create_client
@@ -516,7 +517,10 @@ async def get_subscription_status(access_token: str = Cookie(None)):
     if user.data and user.data.get("is_tester"):
         return {
             "is_subscribed": True,
-            "status": "tester"
+            "status": "tester",
+            "access_state": "tester",
+            "access_source": "tester",
+            "requires_checkout": False
         }
 
     res = supabase.table("subscriptions").select("*").eq("user_id", user_id).eq("status", "active").limit(1).execute()
@@ -538,12 +542,33 @@ async def get_subscription_status(access_token: str = Cookie(None)):
     #if not sub:
         #return {"is_subscribed": False}
     
-    valid = sub and sub.get("status") in ("active", "trialing", "past_due")
+    valid = bool(sub and sub.get("status") == "active")
 
-    return {
-        "is_subscribed": valid,
-        "status": sub.get("status") if sub else "inactive" 
-    }
+    if valid:
+        return {
+            "is_subscribed": True,
+            "status": "active",
+            "access_state": "paid",
+            "access_source": "stripe",
+            "requires_checkout": False,
+            "plan_kind": "standard"
+        }
+
+    try:
+        entitlement_res = supabase.table("topspot_offer_entitlements") \
+            .select("*") \
+            .eq("user_id", user_id) \
+            .eq("offer_code", OFFER_CODE) \
+            .limit(1) \
+            .execute()
+        entitlement = entitlement_res.data[0] if entitlement_res.data else None
+        return compute_offer_access(entitlement)
+    except Exception:
+        logger.exception("Failed to evaluate promotional entitlement for user %s", user_id)
+        raise HTTPException(
+            status_code=500,
+            detail="Could not determine subscription status"
+        )
 
 
 
