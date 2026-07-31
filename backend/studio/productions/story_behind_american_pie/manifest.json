@@ -1,96 +1,101 @@
 {
-    "version":  1,
-    "production_type":  "documentary",
-    "slug":  "story_behind_american_pie",
-    "title":  "The Story Behind American Pie",
-    "subtitle":  "",
-    "website":  "TopSpot40.com",
-    "artwork_url":  "/docuseries/topspot_docuseries_logo.png",
-    "source":  {
-                   "type":  "music_docuseries",
-                   "id":  24
-               },
-    "docuseries_id":  24,
-    "status":  {
-                   "current_station":  "visual_plan_ready",
-                   "production_created":  true,
-                   "story_ready":  true,
-                   "audio_ready":  true,
-                   "cards_ready":  false,
-                   "storyboard_ready":  true,
-                   "visual_plan_ready":  true,
-                   "images_ready":  false,
-                   "image_review_complete":  false,
-                   "preview_ready":  false,
-                   "video_review_complete":  false,
-                   "thumbnail_ready":  false,
-                   "youtube_package_ready":  false,
-                   "published":  false
-               },
-    "languages":  [
-                      {
-                          "language_code":  "en",
-                          "locale_id":  25,
-                          "duration_seconds":  454,
-                          "bucket":  "audio-en",
-                          "source_key":  "music-docuseries/25.mp3",
-                          "youtube_key":  "music-docuseries-youtube/25.mp3",
-                          "local_audio":  "audio/en_25.mp3"
-                      },
-                      {
-                          "language_code":  "es",
-                          "locale_id":  37,
-                          "duration_seconds":  496,
-                          "bucket":  "audio-es",
-                          "source_key":  "music-docuseries/37.mp3",
-                          "youtube_key":  "music-docuseries-youtube/37.mp3",
-                          "local_audio":  "audio/es_37.mp3"
-                      },
-                      {
-                          "language_code":  "pt-BR",
-                          "locale_id":  64,
-                          "duration_seconds":  482,
-                          "bucket":  "audio-ptbr",
-                          "source_key":  "music-docuseries/64.mp3",
-                          "youtube_key":  "music-docuseries-youtube/64.mp3",
-                          "local_audio":  "audio/pt-BR_64.mp3"
-                      }
-                  ],
-    "cards":  {
-                  "logo":  "cards/01_logo.png",
-                  "languages":  "cards/02_languages.png",
-                  "title":  "cards/03_title.png"
-              },
-    "images":  [
-
-               ],
-    "output":  {
-                   "video":  "output/story_behind_american_pie.mp4",
-                   "thumbnail":  "output/thumbnail.jpg"
-               },
-    "audio_mix":  {
-                      "bed_key":  "bed-tracks/docuseries/bed_01.mp3",
-                      "bed_volume_db":  -26.0,
-                      "duck_threshold":  0.03,
-                      "duck_ratio":  8.0,
-                      "duck_attack_ms":  25,
-                      "duck_release_ms":  500
-                  },
-    "artifacts":  {
-                      "stories":  [
-                                      "story/en.md",
-                                      "story/es.md",
-                                      "story/pt-BR.md"
-                                  ],
-                      "audio":  [
-                                    "audio/en_25.mp3",
-                                    "audio/es_37.mp3",
-                                    "audio/pt-BR_64.mp3"
-                                ],
-                      "storyboard":  "storyboard.json",
-                      "storyboard_scene_count":  35,
-                      "visual_plan":  "storyboard.json",
-                      "visual_shot_count":  58
-                  },
-    "updated_at":  "2026-07-25T01:57:36.223723+00:00"
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "story_behind_american_pie",
+  "title": "The Story Behind American Pie",
+  "subtitle": "",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/topspot_docuseries_logo.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 24
+  },
+  "docuseries_id": 24,
+  "status": {
+    "current_station": "cards_ready",
+    "production_created": true,
+    "story_ready": true,
+    "audio_ready": true,
+    "cards_ready": true,
+    "storyboard_ready": true,
+    "visual_plan_ready": true,
+    "images_ready": true,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 25,
+      "duration_seconds": 454,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/25.mp3",
+      "youtube_key": "music-docuseries-youtube/25.mp3",
+      "local_audio": "audio/en_25.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 37,
+      "duration_seconds": 496,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/37.mp3",
+      "youtube_key": "music-docuseries-youtube/37.mp3",
+      "local_audio": "audio/es_37.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 64,
+      "duration_seconds": 482,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/64.mp3",
+      "youtube_key": "music-docuseries-youtube/64.mp3",
+      "local_audio": "audio/pt-BR_64.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/story_behind_american_pie.mp4",
+    "thumbnail": "output/thumbnail.jpg"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  },
+  "artifacts": {
+    "stories": [
+      "story/en.md",
+      "story/es.md",
+      "story/pt-BR.md"
+    ],
+    "audio": [
+      "audio/en_25.mp3",
+      "audio/es_37.mp3",
+      "audio/pt-BR_64.mp3"
+    ],
+    "storyboard": "storyboard.json",
+    "storyboard_scene_count": 35,
+    "visual_plan": "storyboard.json",
+    "visual_shot_count": 58,
+    "images_directory": "images",
+    "image_count": 58,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
+  },
+  "updated_at": "2026-07-25T14:03:59.417584+00:00"
 }

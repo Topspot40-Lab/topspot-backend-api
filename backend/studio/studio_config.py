@@ -62,7 +62,7 @@ OPENING_VISUAL_SECONDS = (
 BED_TRACK_BUCKET = "audio-en"
 # ─────────────────────────────────────────────
 
-INTRO_PAUSE_SECONDS = 3.0
+INTRO_PAUSE_SECONDS = 0.5
 OUTRO_PAUSE_SECONDS = 3.0
 
 INTRO_KEY = "youtube/intro.mp3"
