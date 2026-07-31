@@ -1,0 +1,17 @@
+{
+  "uploads": [
+    {
+      "artist": "Definitely Fake Artist",
+      "slug": "definitely_fake_artist",
+      "language_code": "en",
+      "video_path": "../../../example_media/definitely_fake_artist_en.mp4",
+      "thumbnail_path": "../../../example_media/definitely_fake_artist_en.png",
+      "title": "FAKE EXAMPLE - Do Not Upload",
+      "description": "Placeholder metadata for documentation only.",
+      "tags": ["fake example", "topspot40"],
+      "category_id": "10",
+      "made_for_kids": false,
+      "privacy_status": "private"
+    }
+  ]
+}

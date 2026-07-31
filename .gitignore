@@ -27,6 +27,10 @@ venv/
 .cache-topspot/
 *.cache
 **/spotify_token.cache
+client_secret*.json
+credentials*.json
+token*.json
+backend/studio/youtube/upload_manifest.local.json
 
 # TopSpot40 Studio generated media
 backend/studio/work/
