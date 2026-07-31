@@ -1,0 +1,2451 @@
+{
+  "version": 1,
+  "production_slug": "roberto_carlos",
+  "source": {
+    "type": "artist_story",
+    "id": 778,
+    "language_code": "en",
+    "locale_id": 397
+  },
+  "title": "roberto carlos",
+  "subtitle": "The Story of Roberto Carlos",
+  "narration_duration_seconds": 396.0,
+  "target_image_seconds": 8.0,
+  "scene_count": 30,
+  "visual_shot_count": 48,
+  "created_at": "2026-07-31T04:09:52.126925+00:00",
+  "scenes": [
+    {
+      "scene_number": 1,
+      "narration": "Roberto Carlos carries his story in his voice, that warm, velvety tone that feels like a late-night conversation with an old friend who truly understands you.",
+      "word_count": 26,
+      "start_seconds": 0.0,
+      "end_seconds": 10.348,
+      "estimated_seconds": 10.348,
+      "visual_intent": "Roberto Carlos carries his story in his voice, that warm, velvety tone that feels like a late-night conversation with an old friend who truly understands you.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 1,
+          "scene_shot_number": 1,
+          "filename": "001.png",
+          "start_seconds": 0.0,
+          "end_seconds": 10.348,
+          "estimated_seconds": 10.348,
+          "visual_intent": "Intimate close-up of Roberto Carlos singing into a vintage microphone with warm empathetic expression",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/003-roberto-carlos-credicard-hall-42626066250.jpg",
+            "library_filename": "003-roberto-carlos-credicard-hall-42626066250.jpg",
+            "library_id": "003",
+            "curated": true
+          },
+          "prompt": "16:9 documentary close-up of Roberto Carlos in early career singing gently into a vintage studio microphone, warm soft side lighting, gentle empathetic smile and understanding eyes conveying late-night conversation with an old friend, intimate recording studio setting, velvety smooth atmosphere, natural skin tones and soft shadows, realistic archival style, no text",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 003-roberto-carlos-credicard-hall-42626066250.jpg assigned manually.",
+          "historical_search": "Roberto Carlos singing close-up",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "microphone",
+              "singing"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "stage lights",
+              "youth"
+            ],
+            "search_queries": [
+              "Roberto Carlos microphone close up",
+              "Roberto Carlos singing portrait",
+              "Roberto Carlos studio recording",
+              "vintage photograph Roberto Carlos warm expression",
+              "Roberto Carlos intimate performance"
+            ]
+          },
+          "image_path": "images/001.png",
+          "generated_at": "2026-07-31T11:16:20.588566+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/001.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 2,
+      "narration": "From the very beginning, life asked hard questions of him, and music became the way he answered.",
+      "word_count": 17,
+      "start_seconds": 10.348,
+      "end_seconds": 17.114,
+      "estimated_seconds": 6.766,
+      "visual_intent": "From the very beginning, life asked hard questions of him, and music became the way he answered.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 2,
+          "scene_shot_number": 1,
+          "filename": "002.png",
+          "start_seconds": 10.348,
+          "end_seconds": 17.114,
+          "estimated_seconds": 6.766,
+          "visual_intent": "Pensive young boy representing Roberto Carlos in childhood, sitting in a modest Brazilian home and holding an acoustic guitar as his means of answering life's hard questions",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary style image of a young Brazilian boy in childhood era, seated on a wooden chair in a simple modest rural home interior with plain walls and wooden floor, gently holding an acoustic guitar across his lap, looking pensively toward a window with thoughtful expression, natural daylight lighting casting soft shadows, mid-20th century period clothing, warm earthy color palette, intimate medium-wide framing, somber yet hopeful mood",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos childhood Brazil",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "young boy",
+              "guitar",
+              "modest interior"
+            ],
+            "avoid_terms": [
+              "adult",
+              "stage",
+              "performance",
+              "crowd"
+            ],
+            "search_queries": [
+              "Roberto Carlos childhood photos Brazil",
+              "young Roberto Carlos with guitar",
+              "early life Roberto Carlos archival",
+              "Roberto Carlos as boy in Cachoeiro"
+            ]
+          },
+          "image_path": "images/002.png",
+          "generated_at": "2026-07-31T11:16:27.193236+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/002.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 3,
+      "narration": "When he was just six years old in the quiet town of Cachoeiro de Itapemirim, he and his little brother were playing near the railroad tracks.",
+      "word_count": 26,
+      "start_seconds": 17.114,
+      "end_seconds": 27.461,
+      "estimated_seconds": 10.348,
+      "visual_intent": "When he was just six years old in the quiet town of Cachoeiro de Itapemirim, he and his little brother were playing near the railroad tracks.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 3,
+          "scene_shot_number": 1,
+          "filename": "003.png",
+          "start_seconds": 17.114,
+          "end_seconds": 27.461,
+          "estimated_seconds": 10.348,
+          "visual_intent": "Six-year-old Roberto Carlos and his little brother playing near the railroad tracks in Cachoeiro de Itapemirim",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Wide framing 16:9 shot of a six-year-old Brazilian boy resembling young Roberto Carlos and his smaller brother playing beside rural railroad tracks, dirt path and simple houses with tiled roofs in background, lush green vegetation, natural soft daylight with gentle shadows, innocent childhood moment in small Brazilian town, realistic historical details, period clothing, serene and quiet mood",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "railroad tracks",
+              "Cachoeiro de Itapemirim"
+            ],
+            "avoid_terms": [
+              "singer",
+              "performer",
+              "adult"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/003.png",
+          "generated_at": "2026-07-31T11:16:33.668311+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/003.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 4,
+      "narration": "His foot slipped and caught between the rails. The train couldn’t stop. The accident took his right leg below the knee, but it gave him something else in return: an unshakable sense of what really matters.",
+      "word_count": 36,
+      "start_seconds": 27.461,
+      "end_seconds": 41.789,
+      "estimated_seconds": 14.328,
+      "visual_intent": "His foot slipped and caught between the rails.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 4,
+          "scene_shot_number": 1,
+          "filename": "004.png",
+          "start_seconds": 27.461,
+          "end_seconds": 34.625,
+          "estimated_seconds": 7.164,
+          "visual_intent": "Foot caught between railroad rails with a steam train approaching",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Documentary style wide shot of a right foot caught between old metal rails and wooden ties on a rural track, vintage steam locomotive bearing down from the distance, natural daylight with long shadows across the gravel, tense atmosphere, historical mid-century Brazilian countryside setting, somber and dramatic mood",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "childhood",
+            "required_terms": [
+              "railroad tracks",
+              "train"
+            ],
+            "avoid_terms": [
+              "station",
+              "crowd",
+              "modern"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/004.png",
+          "generated_at": "2026-07-31T11:16:39.732704+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/004.json"
+          }
+        },
+        {
+          "shot_number": 5,
+          "scene_shot_number": 2,
+          "filename": "005.png",
+          "start_seconds": 34.625,
+          "end_seconds": 41.789,
+          "estimated_seconds": 7.164,
+          "visual_intent": "Young Roberto Carlos with a reflective expression of inner strength and clarity",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/006-roberto-carlos-1972.jpg",
+            "library_filename": "006-roberto-carlos-1972.jpg",
+            "library_id": "006",
+            "curated": true
+          },
+          "prompt": "Documentary style medium close-up portrait of a young Brazilian man resembling Roberto Carlos seated indoors near a simple window, soft natural side lighting illuminating his calm face as he gazes outward with a wise and resolute expression, plain mid-century room, thoughtful and hopeful mood",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 006-roberto-carlos-1972.jpg assigned manually.",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "youth",
+            "required_terms": [
+              "reflective",
+              "determined"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "microphone",
+              "guitar"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/005.png",
+          "generated_at": "2026-07-31T11:16:46.704391+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/005.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 5,
+      "narration": "While he recovered in the hospital, the radio became his constant companion. He listened to voices from far away and made himself a quiet promise that one day he would be the one singing into someone else’s lonely room.",
+      "word_count": 39,
+      "start_seconds": 41.789,
+      "end_seconds": 57.311,
+      "estimated_seconds": 15.522,
+      "visual_intent": "While he recovered in the hospital, the radio became his constant companion.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 6,
+          "scene_shot_number": 1,
+          "filename": "006.png",
+          "start_seconds": 41.789,
+          "end_seconds": 49.55,
+          "estimated_seconds": 7.761,
+          "visual_intent": "Young Roberto Carlos recovering in a hospital bed listening to a vintage radio",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of young Roberto Carlos in a sparse 1950s hospital room lying propped up in bed with a contemplative expression listening to a large vintage wooden radio on the bedside table, soft natural light from a nearby window, simple white walls and minimal furnishings, quiet and reflective mood, realistic photorealistic documentary style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "hospital bed",
+              "radio"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "microphone"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/006.png",
+          "generated_at": "2026-07-31T11:16:52.589576+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/006.json"
+          }
+        },
+        {
+          "shot_number": 7,
+          "scene_shot_number": 2,
+          "filename": "007.png",
+          "start_seconds": 49.55,
+          "end_seconds": 57.311,
+          "estimated_seconds": 7.761,
+          "visual_intent": "Solitary figure in a modest room listening attentively to a radio",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/006-roberto-carlos-1972.jpg",
+            "library_filename": "006-roberto-carlos-1972.jpg",
+            "library_id": "006",
+            "curated": true
+          },
+          "prompt": "Wide shot of a solitary figure seated alone beside a window in a simple modest 1950s room leaning toward a vintage radio on a wooden table, soft evening light and deep shadows emphasizing emptiness, quiet lonely atmosphere, realistic photorealistic documentary style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 006-roberto-carlos-1972.jpg assigned manually.",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1950s",
+            "required_terms": [
+              "lonely room",
+              "radio"
+            ],
+            "avoid_terms": [
+              "hospital",
+              "crowd",
+              "performer"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/007.png",
+          "generated_at": "2026-07-31T11:16:58.551920+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/007.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 6,
+      "narration": "His mother, Laura, sat beside his bed and told him he was going to be special.",
+      "word_count": 16,
+      "start_seconds": 57.311,
+      "end_seconds": 63.678,
+      "estimated_seconds": 6.368,
+      "visual_intent": "His mother, Laura, sat beside his bed and told him he was going to be special.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 8,
+          "scene_shot_number": 1,
+          "filename": "008.png",
+          "start_seconds": 57.311,
+          "end_seconds": 63.678,
+          "estimated_seconds": 6.368,
+          "visual_intent": "Laura sitting beside her young son's bed speaking tenderly to him",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium side-angle shot in modest mid-20th century Brazilian bedroom, kind-faced woman Laura with period hairstyle and simple dress seated on wooden chair beside small bed, leaning forward as she speaks gently to her young son lying against pillows who gazes up at her, soft natural window light casting gentle shadows, intimate and hopeful atmosphere, photorealistic historical domestic scene",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Laura and young Roberto Carlos",
+            "subject_type": "group",
+            "era": "childhood",
+            "required_terms": [
+              "bedside",
+              "mother and son"
+            ],
+            "avoid_terms": [
+              "adult",
+              "stage",
+              "performance"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/008.png",
+          "generated_at": "2026-07-31T11:17:05.386478+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/008.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 7,
+      "narration": "That belief, offered at the lowest moment of his young life, stayed with him forever.",
+      "word_count": 15,
+      "start_seconds": 63.678,
+      "end_seconds": 69.648,
+      "estimated_seconds": 5.97,
+      "visual_intent": "That belief, offered at the lowest moment of his young life, stayed with him forever.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 9,
+          "scene_shot_number": 1,
+          "filename": "009.png",
+          "start_seconds": 63.678,
+          "end_seconds": 69.648,
+          "estimated_seconds": 5.97,
+          "visual_intent": "Young Roberto Carlos sitting alone in quiet reflection, internalizing a sustaining belief during the lowest moment of his youth",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/006-roberto-carlos-1972.jpg",
+            "library_filename": "006-roberto-carlos-1972.jpg",
+            "library_id": "006",
+            "curated": true
+          },
+          "prompt": "16:9 documentary style black and white photograph of a young man resembling Roberto Carlos seated alone on a wooden chair in a modest sparsely furnished room, soft natural window light from the left gently illuminating his face and shoulders, serious and thoughtful expression as he gazes downward in deep reflection, subtle film grain and historical textures, somber yet resilient mood, natural setting from his youth",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 006-roberto-carlos-1972.jpg assigned manually.",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "youth",
+            "required_terms": [
+              "young man",
+              "introspective expression"
+            ],
+            "avoid_terms": [
+              "performance",
+              "guitar",
+              "audience"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/009.png",
+          "generated_at": "2026-07-31T11:17:10.891863+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/009.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 8,
+      "narration": "Years later that boy with the prosthetic leg taught himself guitar. He figured out how to stand on stage so the limp was barely noticeable, not because he was ashamed,",
+      "word_count": 30,
+      "start_seconds": 69.648,
+      "end_seconds": 81.588,
+      "estimated_seconds": 11.94,
+      "visual_intent": "Years later that boy with the prosthetic leg taught himself guitar.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 10,
+          "scene_shot_number": 1,
+          "filename": "010.png",
+          "start_seconds": 69.648,
+          "end_seconds": 81.588,
+          "estimated_seconds": 11.94,
+          "visual_intent": "Young Roberto Carlos standing on a simple stage playing acoustic guitar with balanced natural posture",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/009-roberto-carlos-programa-capitao-aza-tv-tupi.jpg",
+            "library_filename": "009-roberto-carlos-programa-capitao-aza-tv-tupi.jpg",
+            "library_id": "009",
+            "curated": true
+          },
+          "prompt": "16:9 documentary style photograph of young Roberto Carlos in early career, full body framing from slightly low angle, standing naturally on a modest wooden stage playing acoustic guitar, balanced confident posture that minimizes any limp, simple spotlight lighting from above, focused expression, realistic historical details, warm documentary tones, no text logos or writing visible",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 009-roberto-carlos-programa-capitao-aza-tv-tupi.jpg assigned manually.",
+          "historical_search": "Roberto Carlos early stage guitar performances",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "guitar",
+              "stage",
+              "standing"
+            ],
+            "avoid_terms": [
+              "seated",
+              "studio",
+              "modern"
+            ],
+            "search_queries": [
+              "Roberto Carlos young performing with guitar",
+              "early Roberto Carlos live stage photos",
+              "Roberto Carlos archival performance images",
+              "Brazilian singer Roberto Carlos guitar on stage"
+            ]
+          },
+          "image_path": "images/010.png",
+          "generated_at": "2026-07-31T11:17:17.569205+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/010.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 9,
+      "narration": "but because he wanted people to hear the song, not the struggle. In Rio he met another dreamer named Erasmo Carlos. The two young men bonded instantly over smuggled Elvis and Beatles records.",
+      "word_count": 33,
+      "start_seconds": 81.588,
+      "end_seconds": 94.722,
+      "estimated_seconds": 13.134,
+      "visual_intent": "but because he wanted people to hear the song, not the struggle.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 11,
+          "scene_shot_number": 1,
+          "filename": "011.png",
+          "start_seconds": 81.588,
+          "end_seconds": 88.155,
+          "estimated_seconds": 6.567,
+          "visual_intent": "Young Roberto Carlos meeting Erasmo Carlos in Rio",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Wide documentary framing of two young men recognizably resembling Roberto Carlos and Erasmo Carlos standing on a Rio de Janeiro street in early career period, facing each other in friendly first meeting with warm smiles and direct eye contact, natural daylight, simple 1960s Brazilian street clothing and modest buildings in background, hopeful and friendly mood, realistic archival photograph style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos Erasmo Carlos Rio",
+          "historical_plan": {
+            "subject": "Roberto Carlos and Erasmo Carlos",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "Rio",
+              "young men"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance"
+            ],
+            "search_queries": [
+              "Roberto Carlos Erasmo Carlos young Rio",
+              "early Roberto Carlos with Erasmo",
+              "Roberto Carlos Erasmo Carlos 1960s portrait"
+            ]
+          },
+          "image_path": "images/011.png",
+          "generated_at": "2026-07-31T11:17:23.664531+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/011.json"
+          }
+        },
+        {
+          "shot_number": 12,
+          "scene_shot_number": 2,
+          "filename": "012.png",
+          "start_seconds": 88.155,
+          "end_seconds": 94.722,
+          "estimated_seconds": 6.567,
+          "visual_intent": "The two young men bonding over smuggled Elvis and Beatles records",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium close documentary framing of two young men recognizably resembling Roberto Carlos and Erasmo Carlos sitting together indoors at a simple wooden table in a modest Rio room during early career period, leaning in while carefully examining plain-sleeved vinyl records with shared excitement, soft window light, no visible text logos or labels on any records, intimate and joyful mood, realistic archival photograph style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos and Erasmo Carlos",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "vinyl records"
+            ],
+            "avoid_terms": [
+              "outdoors",
+              "crowd"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/012.png",
+          "generated_at": "2026-07-31T11:17:28.788284+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/012.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 10,
+      "narration": "They would sit for hours translating those sounds into Portuguese, laughing when the words didn’t fit, arguing over a chord change until sunrise. Their friendship became one of the great creative partnerships in Brazilian music, two regular guys from modest backgrounds who accidentally started a revolution.",
+      "word_count": 46,
+      "start_seconds": 94.722,
+      "end_seconds": 113.029,
+      "estimated_seconds": 18.308,
+      "visual_intent": "They would sit for hours translating those sounds into Portuguese, laughing when the words didn’t fit, arguing over a chord change until sunrise.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 13,
+          "scene_shot_number": 1,
+          "filename": "013.png",
+          "start_seconds": 94.722,
+          "end_seconds": 103.875,
+          "estimated_seconds": 9.154,
+          "visual_intent": "Roberto Carlos and Erasmo Carlos seated at a wooden table translating sounds into Portuguese lyrics, laughing as they argue over a chord change late at night",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium close-up 16:9 documentary image of young Roberto Carlos and Erasmo Carlos sitting at a small wooden table inside a modest Brazilian home, Roberto Carlos holding an acoustic guitar while Erasmo Carlos holds pencil and notepad, both laughing during late night session with papers scattered, simple 1960s furnishings and warm lamplight, intimate creative atmosphere, photorealistic archival style",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos Erasmo Carlos songwriting",
+          "historical_plan": {
+            "subject": "Roberto Carlos and Erasmo Carlos",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "songwriting",
+              "together",
+              "guitar"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "audience"
+            ],
+            "search_queries": [
+              "Roberto Carlos Erasmo Carlos composing music",
+              "Roberto Carlos and Erasmo Carlos writing songs",
+              "early Roberto Carlos Erasmo Carlos partnership",
+              "Roberto Carlos Erasmo Carlos collaboration photos"
+            ]
+          },
+          "image_path": "images/013.png",
+          "generated_at": "2026-07-31T11:17:36.018924+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/013.json"
+          }
+        },
+        {
+          "shot_number": 14,
+          "scene_shot_number": 2,
+          "filename": "014.png",
+          "start_seconds": 103.875,
+          "end_seconds": 113.029,
+          "estimated_seconds": 9.154,
+          "visual_intent": "Two regular young men from modest backgrounds, Roberto Carlos and Erasmo Carlos, sharing a quiet moment of friendship that grew into a revolutionary creative partnership",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium wide 16:9 documentary image of young Roberto Carlos and Erasmo Carlos as two unassuming men sitting side by side on a simple sofa in a sparsely furnished modest Brazilian house, casually looking at each other with warm smiles, natural daylight from window, humble everyday clothing and setting from early career period, sincere and hopeful mood, photorealistic archival style",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos Erasmo Carlos early years",
+          "historical_plan": {
+            "subject": "Roberto Carlos and Erasmo Carlos",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "young friends",
+              "modest home",
+              "Brazil"
+            ],
+            "avoid_terms": [
+              "guitar",
+              "writing",
+              "night"
+            ],
+            "search_queries": [
+              "young Roberto Carlos and Erasmo Carlos",
+              "Roberto Carlos Erasmo Carlos humble beginnings",
+              "early Roberto Carlos friendship photos",
+              "Roberto Carlos Erasmo Carlos modest background"
+            ]
+          },
+          "image_path": "images/014.png",
+          "generated_at": "2026-07-31T11:17:41.220218+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/014.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 11,
+      "narration": "That revolution was called Jovem Guarda. Suddenly Brazilian teenagers had their own idols singing about their own lives in their own language. Roberto found himself at the center of a cultural earthquake.",
+      "word_count": 32,
+      "start_seconds": 113.029,
+      "end_seconds": 125.765,
+      "estimated_seconds": 12.736,
+      "visual_intent": "That revolution was called Jovem Guarda.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 15,
+          "scene_shot_number": 1,
+          "filename": "015.png",
+          "start_seconds": 113.029,
+          "end_seconds": 119.397,
+          "estimated_seconds": 6.368,
+          "visual_intent": "Group of Brazilian teenagers dancing joyfully together",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/001-roberto-carlos-calhambeque-2573117418.jpg",
+            "library_filename": "001-roberto-carlos-calhambeque-2573117418.jpg",
+            "library_id": "001",
+            "curated": true
+          },
+          "prompt": "Wide shot of a mixed group of Brazilian teenagers in 1960s casual clothing dancing energetically together inside a modest home, natural daylight from windows, expressions of excitement and freedom, realistic documentary style, historical accuracy to Brazilian youth of the Jovem Guarda period",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 001-roberto-carlos-calhambeque-2573117418.jpg assigned manually.",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "group",
+            "era": "Jovem Guarda",
+            "required_terms": [
+              "Brazilian teenagers",
+              "youth"
+            ],
+            "avoid_terms": [
+              "adults",
+              "formal setting"
+            ],
+            "search_queries": []
+          }
+        },
+        {
+          "shot_number": 16,
+          "scene_shot_number": 2,
+          "filename": "016.png",
+          "start_seconds": 119.397,
+          "end_seconds": 125.765,
+          "estimated_seconds": 6.368,
+          "visual_intent": "Roberto Carlos standing centrally while performing",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/008-roberto-carlos-em-sessao-de-autografos-1966.jpg",
+            "library_filename": "008-roberto-carlos-em-sessao-de-autografos-1966.jpg",
+            "library_id": "008",
+            "curated": true
+          },
+          "prompt": "Medium shot centered on Roberto Carlos singing passionately into a vintage microphone on a simple stage, 1960s Brazilian fashion and setting with faint crowd behind, dramatic stage lighting, intense and pivotal mood, realistic archival documentary photograph",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 008-roberto-carlos-em-sessao-de-autografos-1966.jpg assigned manually.",
+          "historical_search": "Roberto Carlos Jovem Guarda",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "Jovem Guarda",
+            "required_terms": [
+              "performing",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "later career",
+              "studio portrait"
+            ],
+            "search_queries": [
+              "Roberto Carlos Jovem Guarda stage",
+              "Roberto Carlos performing 1960s Brazil",
+              "Roberto Carlos young singer microphone",
+              "Roberto Carlos Jovem Guarda concert"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 12,
+      "narration": "The TV show they hosted was pure pandemonium—kids screaming, dancing in the aisles, fainting when he walked on stage. There’s a wonderful story from those early days about a power failure during an outdoor concert.",
+      "word_count": 36,
+      "start_seconds": 125.765,
+      "end_seconds": 140.092,
+      "estimated_seconds": 14.328,
+      "visual_intent": "The TV show they hosted was pure pandemonium—kids screaming, dancing in the aisles, fainting when he walked on stage.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 17,
+          "scene_shot_number": 1,
+          "filename": "017.png",
+          "start_seconds": 125.765,
+          "end_seconds": 132.929,
+          "estimated_seconds": 7.164,
+          "visual_intent": "Frantic teenage audience screaming, dancing in the aisles and fainting inside a television studio as Roberto Carlos walks onstage",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/009-roberto-carlos-programa-capitao-aza-tv-tupi.jpg",
+            "library_filename": "009-roberto-carlos-programa-capitao-aza-tv-tupi.jpg",
+            "library_id": "009",
+            "curated": true
+          },
+          "prompt": "16:9 documentary style black and white photograph of a packed television studio audience in early Roberto Carlos career, hysterical teenagers screaming with open mouths and dancing wildly in the aisles, several girls fainting and being supported by others, Roberto Carlos visible walking onto the stage in the background, high contrast lighting with strong shadows, wide framing from within the frantic crowd, energetic chaotic mood",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 009-roberto-carlos-programa-capitao-aza-tv-tupi.jpg assigned manually.",
+          "historical_search": "Roberto Carlos TV show audience",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "TV studio",
+              "audience reaction"
+            ],
+            "avoid_terms": [
+              "outdoor",
+              "dark stage"
+            ],
+            "search_queries": [
+              "Roberto Carlos TV show screaming fans",
+              "Roberto Carlos stage entrance audience",
+              "early Roberto Carlos television performance crowd"
+            ]
+          }
+        },
+        {
+          "shot_number": 18,
+          "scene_shot_number": 2,
+          "filename": "018.png",
+          "start_seconds": 132.929,
+          "end_seconds": 140.092,
+          "estimated_seconds": 7.164,
+          "visual_intent": "Outdoor concert stage and crowd suddenly plunged into darkness by a power failure",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary style black and white photograph of an outdoor night concert in early Roberto Carlos career, entire stage and lights abruptly dark from power failure, faint silhouettes of performers frozen on stage, confused audience standing in surrounding darkness under dim ambient light, wide shot from audience perspective, tense uncertain mood with deep shadows",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "outdoor concert",
+              "power failure"
+            ],
+            "avoid_terms": [
+              "TV studio",
+              "bright lights",
+              "indoor"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/018.png",
+          "generated_at": "2026-07-31T11:17:52.747160+00:00",
+          "image_qa": {
+            "score": 42,
+            "passed": false,
+            "attempts": 2,
+            "selected_attempt": 2,
+            "report": "image_qa/018.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 13,
+      "narration": "The amplifiers went dead, the lights vanished, and fifteen thousand people fell into sudden silence. Instead of canceling, Roberto asked for an acoustic guitar, sat on the edge of the stage in the dark, and sang by the light of hundreds of matches struck by the audience.",
+      "word_count": 47,
+      "start_seconds": 140.092,
+      "end_seconds": 158.798,
+      "estimated_seconds": 18.706,
+      "visual_intent": "The amplifiers went dead, the lights vanished, and fifteen thousand people fell into sudden silence.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 19,
+          "scene_shot_number": 1,
+          "filename": "019.png",
+          "start_seconds": 140.092,
+          "end_seconds": 149.445,
+          "estimated_seconds": 9.353,
+          "visual_intent": "Fifteen thousand concertgoers sitting in sudden darkness and silence after lights and amplifiers fail",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Wide angle view from rear of a vast 1960s concert venue showing fifteen thousand audience members sitting completely still in near total darkness, faint silhouettes against barely visible stage, quiet and expectant atmosphere, realistic archival photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1960s",
+            "required_terms": [
+              "large concert crowd",
+              "darkness"
+            ],
+            "avoid_terms": [
+              "performer",
+              "matches",
+              "guitar"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/019.png",
+          "generated_at": "2026-07-31T11:18:05.495521+00:00",
+          "image_qa": {
+            "score": 42,
+            "passed": false,
+            "attempts": 2,
+            "selected_attempt": 1,
+            "report": "image_qa/019.json"
+          }
+        },
+        {
+          "shot_number": 20,
+          "scene_shot_number": 2,
+          "filename": "020.png",
+          "start_seconds": 149.445,
+          "end_seconds": 158.798,
+          "estimated_seconds": 9.353,
+          "visual_intent": "Roberto Carlos singing with acoustic guitar on dark stage edge lit only by audience matches",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of young Roberto Carlos seated on the edge of a dark stage playing an acoustic guitar and singing, face and hands warmly lit by the glow of hundreds of lit matches held aloft by audience in foreground, intimate low-light concert setting 1960s, soft matchlight illumination only, realistic archival style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos acoustic guitar audience matches",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "1960s",
+            "required_terms": [
+              "acoustic guitar",
+              "stage edge"
+            ],
+            "avoid_terms": [
+              "electric guitar",
+              "bright lights",
+              "full band"
+            ],
+            "search_queries": [
+              "Roberto Carlos acoustic guitar dark stage",
+              "Roberto Carlos live concert matches audience",
+              "Roberto Carlos singing by matchlight",
+              "1960s Roberto Carlos acoustic performance"
+            ]
+          },
+          "image_path": "images/020.png",
+          "generated_at": "2026-07-31T11:18:16.369162+00:00",
+          "image_qa": {
+            "score": 50,
+            "passed": false,
+            "attempts": 2,
+            "selected_attempt": 1,
+            "report": "image_qa/020.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 14,
+      "narration": "That night taught him something he never forgot: the real connection happens when the machinery stops and only the voice and the heart remain.",
+      "word_count": 24,
+      "start_seconds": 158.798,
+      "end_seconds": 168.35,
+      "estimated_seconds": 9.552,
+      "visual_intent": "That night taught him something he never forgot: the real connection happens when the machinery stops and only the voice and the heart remain.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 21,
+          "scene_shot_number": 1,
+          "filename": "021.png",
+          "start_seconds": 158.798,
+          "end_seconds": 168.35,
+          "estimated_seconds": 9.552,
+          "visual_intent": "Roberto Carlos alone on stage singing with pure heartfelt emotion into a single microphone after all instruments and machinery have stopped",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/007-roberto-carlos-and-sergio-endrigo-1968.jpg",
+            "library_filename": "007-roberto-carlos-and-sergio-endrigo-1968.jpg",
+            "library_id": "007",
+            "curated": true
+          },
+          "prompt": "16:9 close-up framing of Roberto Carlos in early career on a sparse stage, singing with deep sincere emotion from the heart into one vintage microphone, eyes closed and face expressive, no band or equipment visible, warm soft stage lighting on his face against dark background, intimate and authentic mood, realistic archival appearance",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 007-roberto-carlos-and-sergio-endrigo-1968.jpg assigned manually.",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "band",
+              "instruments",
+              "crowd"
+            ],
+            "search_queries": []
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 15,
+      "narration": "As the sixties gave way to the seventies, he felt a deep pull to change direction. The frantic energy of rock and roll had been thrilling,",
+      "word_count": 26,
+      "start_seconds": 168.35,
+      "end_seconds": 178.697,
+      "estimated_seconds": 10.348,
+      "visual_intent": "As the sixties gave way to the seventies, he felt a deep pull to change direction.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 22,
+          "scene_shot_number": 1,
+          "filename": "022.png",
+          "start_seconds": 168.35,
+          "end_seconds": 178.697,
+          "estimated_seconds": 10.348,
+          "visual_intent": "Roberto Carlos seated alone with a contemplative expression",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/006-roberto-carlos-1972.jpg",
+            "library_filename": "006-roberto-carlos-1972.jpg",
+            "library_id": "006",
+            "curated": true
+          },
+          "prompt": "Medium close-up of Roberto Carlos seated indoors in early 1970s Brazil, looking pensively toward a window with soft natural side lighting, simple period clothing and modest room setting, calm reflective expression on his face, warm earthy tones, realistic archival documentary photographic style, natural textures and subtle film grain, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 006-roberto-carlos-1972.jpg assigned manually.",
+          "historical_search": "Roberto Carlos 1970",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early 1970s",
+            "required_terms": [
+              "solo",
+              "serious expression"
+            ],
+            "avoid_terms": [
+              "stage",
+              "microphone",
+              "audience"
+            ],
+            "search_queries": [
+              "Roberto Carlos portrait 1970",
+              "Roberto Carlos Brazil 1970 photo",
+              "Roberto Carlos early 1970s",
+              "Roberto Carlos reflective 1970"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 16,
+      "narration": "but his soul wanted to talk about quieter things—the way a woman looks when she’s thinking about you, the small details that make love last, the ache when someone leaves.",
+      "word_count": 31,
+      "start_seconds": 178.697,
+      "end_seconds": 191.035,
+      "estimated_seconds": 12.338,
+      "visual_intent": "but his soul wanted to talk about quieter things—the way a woman looks when she’s thinking about you, the small details that make love last, the ache when someone leaves.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 23,
+          "scene_shot_number": 1,
+          "filename": "023.png",
+          "start_seconds": 178.697,
+          "end_seconds": 184.866,
+          "estimated_seconds": 6.169,
+          "visual_intent": "Close-up of a woman with a soft, faraway expression as if thinking tenderly about her loved one",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 close-up of a young woman with dark 1960s hairstyle and simple blouse, seated indoors by a window with a gentle dreamy expression looking slightly off-camera as if thinking about her partner, soft natural side lighting, warm quiet tones, introspective mood, modest Brazilian interior, realistic documentary archival photograph with subtle film grain",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1960s",
+            "required_terms": [
+              "thoughtful woman"
+            ],
+            "avoid_terms": [
+              "smile",
+              "outdoors",
+              "modern"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/023.png",
+          "generated_at": "2026-07-31T11:18:21.795013+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/023.json"
+          }
+        },
+        {
+          "shot_number": 24,
+          "scene_shot_number": 2,
+          "filename": "024.png",
+          "start_seconds": 184.866,
+          "end_seconds": 191.035,
+          "estimated_seconds": 6.169,
+          "visual_intent": "Solitary man in a quiet room conveying the deep ache and emptiness after someone has left",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 medium shot of a man in early 1970s shirt and trousers sitting alone at a plain wooden table in a sparsely furnished room, head slightly bowed with sorrowful distant gaze, conveying heartache and absence, cool window light casting soft shadows, somber and reflective mood, modest period apartment, realistic documentary archival photograph with subtle film grain",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1960s",
+            "required_terms": [
+              "lonely figure"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "happy",
+              "outdoors"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/024.png",
+          "generated_at": "2026-07-31T11:18:27.391931+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/024.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 17,
+      "narration": "Many people in the business told him he was making a mistake, that his young fans would never follow him into ballads. He followed his heart anyway.",
+      "word_count": 27,
+      "start_seconds": 191.035,
+      "end_seconds": 201.781,
+      "estimated_seconds": 10.746,
+      "visual_intent": "Many people in the business told him he was making a mistake, that his young fans would never follow him into ballads.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 25,
+          "scene_shot_number": 1,
+          "filename": "025.png",
+          "start_seconds": 191.035,
+          "end_seconds": 201.781,
+          "estimated_seconds": 10.746,
+          "visual_intent": "Roberto Carlos singing with quiet determination into a microphone in a sparse recording studio",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/005-sanremo-1968-roberto-carlos-sergio-endrigo.jpg",
+            "library_filename": "005-sanremo-1968-roberto-carlos-sergio-endrigo.jpg",
+            "library_id": "005",
+            "curated": true
+          },
+          "prompt": "Medium close-up framing of Roberto Carlos in early career, standing in a modest 1960s recording studio with wooden panels and basic equipment visible behind him, singing with focused emotional expression into a vintage microphone, wearing a simple dark suit, soft diffused side lighting, warm earthy tones, determined and introspective mood, photorealistic archival documentary photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 005-sanremo-1968-roberto-carlos-sergio-endrigo.jpg assigned manually.",
+          "historical_search": "Roberto Carlos recording studio session",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "studio"
+            ],
+            "avoid_terms": [
+              "stage",
+              "audience",
+              "rock band"
+            ],
+            "search_queries": [
+              "Roberto Carlos recording studio",
+              "Roberto Carlos singing microphone session",
+              "Roberto Carlos early ballad recording",
+              "Roberto Carlos studio portrait"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 18,
+      "narration": "The gamble became one of the most successful artistic transformations in Latin music history. His voice, always expressive, now carried a new maturity. People across Brazil, then across every Spanish-speaking country, recognized their own lives in his songs.",
+      "word_count": 38,
+      "start_seconds": 201.781,
+      "end_seconds": 216.905,
+      "estimated_seconds": 15.124,
+      "visual_intent": "The gamble became one of the most successful artistic transformations in Latin music history.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 26,
+          "scene_shot_number": 1,
+          "filename": "026.png",
+          "start_seconds": 201.781,
+          "end_seconds": 209.343,
+          "estimated_seconds": 7.562,
+          "visual_intent": "Roberto Carlos singing with mature emotional expression",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Close-up framing of Roberto Carlos singing into a vintage microphone on stage, face conveying mature emotional depth and expressiveness, 1970s concert setting, soft warm lighting from above, intimate and reflective mood, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos singing performance",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "expressive singing",
+              "mature appearance"
+            ],
+            "avoid_terms": [
+              "young rocker",
+              "rock band"
+            ],
+            "search_queries": [
+              "Roberto Carlos live singing photo",
+              "Roberto Carlos emotional performance",
+              "Roberto Carlos mature stage appearance",
+              "Roberto Carlos ballad singer"
+            ]
+          },
+          "image_path": "images/026.png",
+          "generated_at": "2026-07-31T11:18:33.701605+00:00",
+          "image_qa": {
+            "score": 78,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/026.json"
+          }
+        },
+        {
+          "shot_number": 27,
+          "scene_shot_number": 2,
+          "filename": "027.png",
+          "start_seconds": 209.343,
+          "end_seconds": 216.905,
+          "estimated_seconds": 7.562,
+          "visual_intent": "Everyday people across Brazil and Latin America recognizing their lives in the songs",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of an inclusive group of everyday listeners seated together with thoughtful reflective expressions as if connecting to lyrics, modest 1970s Latin American interior setting, natural side window light, warm intimate mood, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "attentive listeners",
+              "emotional connection"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "dancing"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/027.png",
+          "generated_at": "2026-07-31T11:18:39.227435+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/027.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 19,
+      "narration": "He learned Spanish so well that many listeners in Mexico and Argentina still believe he was born in Latin America. One of the most touching moments in his long career came when he finally wrote the song he had been carrying in his chest since childhood. “Lady Laura” was his love letter to the mother who had dried his tears after the accident, who had sewn his first stage clothes, who had never stopped believing.",
+      "word_count": 75,
+      "start_seconds": 216.905,
+      "end_seconds": 246.754,
+      "estimated_seconds": 29.849,
+      "visual_intent": "He learned Spanish so well that many listeners in Mexico and Argentina still believe he was born in Latin America.",
+      "visual_shot_count": 4,
+      "visual_shots": [
+        {
+          "shot_number": 28,
+          "scene_shot_number": 1,
+          "filename": "028.png",
+          "start_seconds": 216.905,
+          "end_seconds": 224.367,
+          "estimated_seconds": 7.462,
+          "visual_intent": "Inclusive group of Latin American listeners absorbed in a song with expressions of familiarity",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 photorealistic documentary image, wide shot of an inclusive group of Latin American listeners in a modest period living room gathered around a radio, faces showing emotional connection and belief, warm natural window light, nostalgic atmosphere, vintage clothing and furniture",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos fans Mexico Argentina",
+          "historical_plan": {
+            "subject": "Latin American audience",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "listeners",
+              "Latin America"
+            ],
+            "avoid_terms": [
+              "Brazil",
+              "performer"
+            ],
+            "search_queries": [
+              "Roberto Carlos concert audience Mexico",
+              "Roberto Carlos fans Argentina",
+              "Latin American audience Roberto Carlos"
+            ]
+          },
+          "image_path": "images/028.png",
+          "generated_at": "2026-07-31T11:18:47.680205+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/028.json"
+          }
+        },
+        {
+          "shot_number": 29,
+          "scene_shot_number": 2,
+          "filename": "029.png",
+          "start_seconds": 224.367,
+          "end_seconds": 231.829,
+          "estimated_seconds": 7.462,
+          "visual_intent": "Roberto Carlos seated while writing the lyrics to Lady Laura",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 photorealistic documentary image, medium close-up of Roberto Carlos in a quiet room seated at a wooden desk with pen in hand writing lyrics, deeply reflective and emotional expression, soft side lighting, intimate personal mood, period interior and clothing",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos songwriting",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "mature career",
+            "required_terms": [
+              "songwriting",
+              "lyrics"
+            ],
+            "avoid_terms": [
+              "performing",
+              "microphone"
+            ],
+            "search_queries": [
+              "Roberto Carlos composing music",
+              "Roberto Carlos writing lyrics",
+              "Roberto Carlos at desk",
+              "Roberto Carlos thoughtful portrait"
+            ]
+          },
+          "image_path": "images/029.png",
+          "generated_at": "2026-07-31T11:18:55.029072+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/029.json"
+          }
+        },
+        {
+          "shot_number": 30,
+          "scene_shot_number": 3,
+          "filename": "030.png",
+          "start_seconds": 231.829,
+          "end_seconds": 239.291,
+          "estimated_seconds": 7.462,
+          "visual_intent": "His mother comforting young Roberto Carlos and drying his tears after the accident",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 photorealistic documentary image, intimate medium shot of a caring mother gently drying the tears of her young son with a cloth in a simple Brazilian home, tender compassionate expressions, soft diffused natural light, emotional touching atmosphere, period accurate simple furnishings and attire",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos and his mother",
+            "subject_type": "group",
+            "era": "childhood",
+            "required_terms": [
+              "drying tears",
+              "comforting"
+            ],
+            "avoid_terms": [
+              "adult",
+              "stage"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/030.png",
+          "generated_at": "2026-07-31T11:19:00.963781+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/030.json"
+          }
+        },
+        {
+          "shot_number": 31,
+          "scene_shot_number": 4,
+          "filename": "031.png",
+          "start_seconds": 239.291,
+          "end_seconds": 246.754,
+          "estimated_seconds": 7.462,
+          "visual_intent": "His mother sewing his first stage clothes with an expression of deep belief",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 photorealistic documentary image, medium shot of a dedicated mother carefully sewing small stage clothes by hand at a table in a humble Brazilian home, face filled with love and unwavering belief, warm indoor lighting, peaceful hopeful mood, period accurate simple furnishings and attire",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos mother",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "sewing clothes",
+              "mother"
+            ],
+            "avoid_terms": [
+              "performance",
+              "modern"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/031.png",
+          "generated_at": "2026-07-31T11:19:07.604728+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/031.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 20,
+      "narration": "When she first heard the finished recording, she couldn’t speak. She simply held her son and cried. Every time he performed it afterward, you could see him glance upward for a moment, checking to see if she was listening from wherever she had gone.",
+      "word_count": 44,
+      "start_seconds": 246.754,
+      "end_seconds": 264.265,
+      "estimated_seconds": 17.512,
+      "visual_intent": "When she first heard the finished recording, she couldn’t speak.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 32,
+          "scene_shot_number": 1,
+          "filename": "032.png",
+          "start_seconds": 246.754,
+          "end_seconds": 255.51,
+          "estimated_seconds": 8.756,
+          "visual_intent": "Roberto Carlos being held tightly by his crying mother",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Close-up intimate portrait in a modest 1970s Brazilian home interior, middle-aged mother embracing her adult son Roberto Carlos with eyes closed and tears on her face, soft natural window light, quiet tender moment, realistic documentary style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos and his mother",
+            "subject_type": "group",
+            "era": "1970s",
+            "required_terms": [
+              "mother",
+              "son",
+              "emotional"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "microphone"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/032.png",
+          "generated_at": "2026-07-31T11:19:13.697907+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/032.json"
+          }
+        },
+        {
+          "shot_number": 33,
+          "scene_shot_number": 2,
+          "filename": "033.png",
+          "start_seconds": 255.51,
+          "end_seconds": 264.265,
+          "estimated_seconds": 8.756,
+          "visual_intent": "Roberto Carlos glancing upward while performing live on stage",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of Roberto Carlos on a concert stage, microphone in hand, head tilted upward with reflective expression during performance, bright stage lighting against dark backdrop with faint audience, poignant atmosphere, realistic documentary style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "1980s",
+            "required_terms": [
+              "singer",
+              "live",
+              "looking up"
+            ],
+            "avoid_terms": [
+              "mother",
+              "crying",
+              "embrace"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/033.png",
+          "generated_at": "2026-07-31T11:19:25.967019+00:00",
+          "image_qa": {
+            "score": 65,
+            "passed": false,
+            "attempts": 2,
+            "selected_attempt": 1,
+            "report": "image_qa/033.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 21,
+      "narration": "There’s another story that reveals the kind of man he is. During a tour in the nineties he learned that a young fan with a similar disability would be in the audience.",
+      "word_count": 32,
+      "start_seconds": 264.265,
+      "end_seconds": 277.001,
+      "estimated_seconds": 12.736,
+      "visual_intent": "There’s another story that reveals the kind of man he is.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 34,
+          "scene_shot_number": 1,
+          "filename": "034.png",
+          "start_seconds": 264.265,
+          "end_seconds": 270.633,
+          "estimated_seconds": 6.368,
+          "visual_intent": "Roberto Carlos performing on stage during a 1990s tour",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium-wide shot of Roberto Carlos on a concert stage in the 1990s, singing into a microphone with expressive posture, wearing elegant dark suit and open collar shirt typical of the era, warm spotlights from above, faint outlines of musicians and audience behind him, soft stage haze, natural documentary color grading, photorealistic archival style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos 1990s concert",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "live performance",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "1980s",
+              "studio recording"
+            ],
+            "search_queries": [
+              "Roberto Carlos live concert 1990s",
+              "Roberto Carlos stage performance 90s",
+              "Roberto Carlos tour Brazil 1990s",
+              "Roberto Carlos singing live 1990"
+            ]
+          },
+          "image_path": "images/034.png",
+          "generated_at": "2026-07-31T11:19:32.332675+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/034.json"
+          }
+        },
+        {
+          "shot_number": 35,
+          "scene_shot_number": 2,
+          "filename": "035.png",
+          "start_seconds": 270.633,
+          "end_seconds": 277.001,
+          "estimated_seconds": 6.368,
+          "visual_intent": "Young fan with similar disability watching from the concert audience",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of a young audience member with a visible leg prosthesis seated in a 1990s concert venue, viewed from side angle looking toward the stage, surrounded by other fans in dim auditorium lighting, era-appropriate casual clothes, attentive posture, soft ambient light from distant stage, photorealistic documentary style, natural colors, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1990s",
+            "required_terms": [
+              "concert audience",
+              "young fan"
+            ],
+            "avoid_terms": [
+              "performer",
+              "on stage",
+              "modern phones"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/035.png",
+          "generated_at": "2026-07-31T11:19:39.749224+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/035.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 22,
+      "narration": "Instead of a quick meet-and-greet, Roberto sat with the boy for nearly an hour after the show, sharing the practical tricks he had learned about living with a prosthetic, talking about confidence, about standing tall even when the world sometimes stares.",
+      "word_count": 41,
+      "start_seconds": 277.001,
+      "end_seconds": 293.319,
+      "estimated_seconds": 16.318,
+      "visual_intent": "Instead of a quick meet-and-greet, Roberto sat with the boy for nearly an hour after the show, sharing the practical tricks he had learned about living with a prosthetic,...",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 36,
+          "scene_shot_number": 1,
+          "filename": "036.png",
+          "start_seconds": 277.001,
+          "end_seconds": 285.16,
+          "estimated_seconds": 8.159,
+          "visual_intent": "Roberto Carlos seated with a young boy in a quiet backstage room sharing practical advice on living with a prosthetic",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of Roberto Carlos in 1970s casual shirt sitting on a couch beside a young boy in a modest backstage room after a concert, Roberto leaning forward demonstrating a practical adjustment technique, boy listening attentively, soft window light from the side, warm intimate atmosphere, photorealistic, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "with boy",
+              "private talk"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "audience"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/036.png",
+          "generated_at": "2026-07-31T11:19:46.540934+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/036.json"
+          }
+        },
+        {
+          "shot_number": 37,
+          "scene_shot_number": 2,
+          "filename": "037.png",
+          "start_seconds": 285.16,
+          "end_seconds": 293.319,
+          "estimated_seconds": 8.159,
+          "visual_intent": "Roberto Carlos encouraging the boy while talking about confidence and standing tall despite the world staring",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Close-up shot of Roberto Carlos and a young boy sitting upright together in a quiet 1970s room, Roberto gesturing with kind expression as he speaks about confidence, boy sitting tall and focused, gentle frontal lighting, sincere and uplifting mood, photorealistic, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "encouraging conversation",
+              "with boy"
+            ],
+            "avoid_terms": [
+              "prosthetic",
+              "backstage clutter",
+              "performance"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/037.png",
+          "generated_at": "2026-07-31T11:19:52.913270+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/037.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 23,
+      "narration": "That conversation meant more to that young man than any autograph ever could. Through every decade he has kept one quality that feels increasingly rare: sincerity.",
+      "word_count": 26,
+      "start_seconds": 293.319,
+      "end_seconds": 303.666,
+      "estimated_seconds": 10.348,
+      "visual_intent": "That conversation meant more to that young man than any autograph ever could.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 38,
+          "scene_shot_number": 1,
+          "filename": "038.png",
+          "start_seconds": 293.319,
+          "end_seconds": 303.666,
+          "estimated_seconds": 10.348,
+          "visual_intent": "Close-up portrait of Roberto Carlos with a sincere warm expression conveying authenticity",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/002-roberto-carlos-and-emerson-fittipaldi.jpg",
+            "library_filename": "002-roberto-carlos-and-emerson-fittipaldi.jpg",
+            "library_id": "002",
+            "curated": true
+          },
+          "prompt": "16:9 close-up of Roberto Carlos looking slightly to the side with a sincere, warm, and authentic facial expression, soft natural side lighting creating gentle shadows, simple indoor setting with neutral background, natural skin tones and subtle eye contact, realistic archival photography from his era, calm and introspective mood, warm color palette",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 002-roberto-carlos-and-emerson-fittipaldi.jpg assigned manually.",
+          "historical_search": "Roberto Carlos sincere portrait",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "throughout career",
+            "required_terms": [
+              "sincere expression",
+              "genuine look"
+            ],
+            "avoid_terms": [
+              "autograph",
+              "stage",
+              "crowd"
+            ],
+            "search_queries": [
+              "Roberto Carlos candid close up sincere",
+              "Roberto Carlos genuine warm portrait",
+              "Roberto Carlos thoughtful honest photo",
+              "Roberto Carlos authentic expression still"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 24,
+      "narration": "When he sings about love, you believe him because he has lived its full spectrum—the early passion, the marriages, the heartbreaks, the long peaceful stretches, the loneliness that sometimes visits even the luckiest among us.",
+      "word_count": 36,
+      "start_seconds": 303.666,
+      "end_seconds": 317.994,
+      "estimated_seconds": 14.328,
+      "visual_intent": "When he sings about love, you believe him because he has lived its full spectrum—the early passion, the marriages, the heartbreaks, the long peaceful stretches, the loneliness...",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 39,
+          "scene_shot_number": 1,
+          "filename": "039.png",
+          "start_seconds": 303.666,
+          "end_seconds": 310.83,
+          "estimated_seconds": 7.164,
+          "visual_intent": "Young Roberto Carlos with passionate expression in early romance",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Close-up portrait of youthful Roberto Carlos in his early career, face filled with sincere passion and romantic intensity, soft natural light from side window gently illuminating his features, subtle domestic Brazilian interior in background, warm earthy tones, realistic archival documentary photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos young early career",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "youthful",
+              "expressive face"
+            ],
+            "avoid_terms": [
+              "stage",
+              "microphone",
+              "guitar"
+            ],
+            "search_queries": [
+              "Roberto Carlos young portrait early career",
+              "Roberto Carlos youthful close up photo",
+              "Roberto Carlos 1960s sincere expression",
+              "Roberto Carlos early romantic era"
+            ]
+          },
+          "image_path": "images/039.png",
+          "generated_at": "2026-07-31T11:19:59.811731+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/039.json"
+          }
+        },
+        {
+          "shot_number": 40,
+          "scene_shot_number": 2,
+          "filename": "040.png",
+          "start_seconds": 310.83,
+          "end_seconds": 317.994,
+          "estimated_seconds": 7.164,
+          "visual_intent": "Mature Roberto Carlos sitting alone with lonely reflective mood",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of mature Roberto Carlos in later life sitting alone by a window in a quiet room, distant lonely gaze outward conveying introspection, soft diffused afternoon light creating gentle shadows across the space, calm peaceful interior with muted colors, realistic archival documentary photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos later years pensive",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "later life",
+            "required_terms": [
+              "mature",
+              "solitary",
+              "contemplative"
+            ],
+            "avoid_terms": [
+              "performance",
+              "crowd",
+              "smile"
+            ],
+            "search_queries": [
+              "Roberto Carlos older reflective portrait",
+              "Roberto Carlos mature pensive photo",
+              "Roberto Carlos sitting alone later years",
+              "Roberto Carlos thoughtful expression later life"
+            ]
+          },
+          "image_path": "images/040.png",
+          "generated_at": "2026-07-31T11:20:06.515806+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/040.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 25,
+      "narration": "His annual television specials became something like a national hearth in Brazil, families gathering each year to hear him sing old favorites and new songs, knowing he would never phone it in, never give them anything less than his complete emotional presence.",
+      "word_count": 42,
+      "start_seconds": 317.994,
+      "end_seconds": 334.71,
+      "estimated_seconds": 16.716,
+      "visual_intent": "His annual television specials became something like a national hearth in Brazil, families gathering each year to hear him sing old favorites and new songs, knowing he would...",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 41,
+          "scene_shot_number": 1,
+          "filename": "041.png",
+          "start_seconds": 317.994,
+          "end_seconds": 326.352,
+          "estimated_seconds": 8.358,
+          "visual_intent": "Cozy Brazilian family gathered in living room around television",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Wide establishing shot of a multi-generational Brazilian family in the 1970s seated closely on sofas and chairs in a modest warmly lit living room, parents children and grandparents facing a vintage television in the corner, comfortable attentive expressions, soft ambient lamplight, intimate domestic setting, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1970s",
+            "required_terms": [
+              "Brazilian family",
+              "home television"
+            ],
+            "avoid_terms": [
+              "public space",
+              "modern devices"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/041.png",
+          "generated_at": "2026-07-31T11:20:13.269669+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/041.json"
+          }
+        },
+        {
+          "shot_number": 42,
+          "scene_shot_number": 2,
+          "filename": "042.png",
+          "start_seconds": 326.352,
+          "end_seconds": 334.71,
+          "estimated_seconds": 8.358,
+          "visual_intent": "Roberto Carlos singing with full emotional presence",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/003-roberto-carlos-credicard-hall-42626066250.jpg",
+            "library_filename": "003-roberto-carlos-credicard-hall-42626066250.jpg",
+            "library_id": "003",
+            "curated": true
+          },
+          "prompt": "Medium close-up of Roberto Carlos in the 1970s standing on a television studio stage singing passionately into a microphone, eyes closed with deeply expressive face conveying complete emotional commitment, warm stage lighting, elegant dark suit, sincere and focused atmosphere, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 003-roberto-carlos-credicard-hall-42626066250.jpg assigned manually.",
+          "historical_search": "Roberto Carlos television special performance",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "1970s",
+            "required_terms": [
+              "emotional singing",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "1960s",
+              "rock band",
+              "youthful"
+            ],
+            "search_queries": [
+              "Roberto Carlos singing TV special 1970s",
+              "Roberto Carlos emotional performance Brazil",
+              "Roberto Carlos annual television special",
+              "Roberto Carlos close up singing"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 26,
+      "narration": "Listen to him today and you still hear that hospital boy who found comfort in a radio. You hear the young revolutionary who changed Brazilian music with his best friend.",
+      "word_count": 30,
+      "start_seconds": 334.71,
+      "end_seconds": 346.649,
+      "estimated_seconds": 11.94,
+      "visual_intent": "Listen to him today and you still hear that hospital boy who found comfort in a radio.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 43,
+          "scene_shot_number": 1,
+          "filename": "043.png",
+          "start_seconds": 334.71,
+          "end_seconds": 346.649,
+          "estimated_seconds": 11.94,
+          "visual_intent": "Young Roberto Carlos as a hospital boy lying in bed listening to a vintage radio for comfort",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 archival documentary photograph of a young Brazilian boy representing Roberto Carlos in late 1940s hospital bed, thin frame propped against pillows in sparse ward, holding large vintage tube radio close to his ear with absorbed comforted expression, simple metal bed frame and plain walls, soft diffused daylight from side window, quiet reflective atmosphere, historically accurate details, realistic textures and grain",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos hospital boy radio",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "hospital",
+              "radio"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "adult"
+            ],
+            "search_queries": [
+              "Roberto Carlos childhood hospital",
+              "young Roberto Carlos with radio",
+              "Roberto Carlos early life Brazil hospital",
+              "Roberto Carlos boy listening to radio"
+            ]
+          },
+          "image_path": "images/043.png",
+          "generated_at": "2026-07-31T11:20:19.862647+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/043.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 27,
+      "narration": "You hear the grateful son who turned his mother’s love into melody. And you hear a man who understands that music’s highest purpose is to make people feel less alone.",
+      "word_count": 30,
+      "start_seconds": 346.649,
+      "end_seconds": 358.589,
+      "estimated_seconds": 11.94,
+      "visual_intent": "You hear the grateful son who turned his mother’s love into melody.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 44,
+          "scene_shot_number": 1,
+          "filename": "044.png",
+          "start_seconds": 346.649,
+          "end_seconds": 358.589,
+          "estimated_seconds": 11.94,
+          "visual_intent": "Close-up of Roberto Carlos singing with sincere emotion into a vintage microphone",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary archival photograph of Roberto Carlos in early career, medium close-up framing showing him singing with deep sincere emotion into a vintage microphone, eyes gently closed and face conveying gratitude, soft warm stage lighting from one side, dark understated background, natural skin tones and period clothing, intimate and reflective mood, realistic historical photo appearance",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos singing performance",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "expressive face"
+            ],
+            "avoid_terms": [
+              "audience",
+              "guitar",
+              "piano"
+            ],
+            "search_queries": [
+              "Roberto Carlos singing into microphone",
+              "Roberto Carlos emotional vocal performance",
+              "archive photo Roberto Carlos heartfelt singing",
+              "Roberto Carlos close-up microphone"
+            ]
+          },
+          "image_path": "images/044.png",
+          "generated_at": "2026-07-31T11:20:25.592761+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/044.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 28,
+      "narration": "That’s why Roberto Carlos still matters, long after most of his contemporaries have faded. In a world that grows louder and colder by the day, his voice remains an invitation to feel deeply, to remember the details that make a life worth living, to believe that tenderness is still revolutionary.",
+      "word_count": 50,
+      "start_seconds": 358.589,
+      "end_seconds": 378.488,
+      "estimated_seconds": 19.899,
+      "visual_intent": "That’s why Roberto Carlos still matters, long after most of his contemporaries have faded.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 45,
+          "scene_shot_number": 1,
+          "filename": "045.png",
+          "start_seconds": 358.589,
+          "end_seconds": 368.539,
+          "estimated_seconds": 9.95,
+          "visual_intent": "Close-up of Roberto Carlos singing tenderly into a microphone with eyes closed in deep emotion",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Close-up framing of Roberto Carlos in later career gently singing into a microphone with tender sincere expression and eyes closed in emotion, soft warm side lighting on his face, simple stage background, calm intimate mood, realistic archival photography, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos emotional singing later career",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "singing",
+              "tender expression"
+            ],
+            "avoid_terms": [
+              "youthful",
+              "1960s",
+              "crowd"
+            ],
+            "search_queries": [
+              "Roberto Carlos later career singing close-up",
+              "Roberto Carlos tender emotional performance",
+              "Roberto Carlos microphone intimate moment",
+              "Roberto Carlos heartfelt ballad live"
+            ]
+          },
+          "image_path": "images/045.png",
+          "generated_at": "2026-07-31T11:20:31.220766+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/045.json"
+          }
+        },
+        {
+          "shot_number": 46,
+          "scene_shot_number": 2,
+          "filename": "046.png",
+          "start_seconds": 368.539,
+          "end_seconds": 378.488,
+          "estimated_seconds": 9.95,
+          "visual_intent": "Solitary person sitting quietly by a window in thoughtful reflection",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of a solitary person seated near a window in a modest room gazing outward with gentle thoughtful expression, soft natural daylight, peaceful introspective mood, simple everyday setting, realistic archival photography, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "contemporary",
+            "required_terms": [
+              "quiet reflection",
+              "intimate interior"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "crowd"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/046.png",
+          "generated_at": "2026-07-31T11:20:37.499703+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/046.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 29,
+      "narration": "Put on one of his records and within the first few bars you’ll understand: some artists sing to an audience. Roberto Carlos has always sung to you.",
+      "word_count": 27,
+      "start_seconds": 378.488,
+      "end_seconds": 389.234,
+      "estimated_seconds": 10.746,
+      "visual_intent": "Put on one of his records and within the first few bars you’ll understand: some artists sing to an audience.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 47,
+          "scene_shot_number": 1,
+          "filename": "047.png",
+          "start_seconds": 378.488,
+          "end_seconds": 389.234,
+          "estimated_seconds": 10.746,
+          "visual_intent": "Intimate close-up of Roberto Carlos singing directly toward the viewer with personal eye contact",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Close-up framing of Roberto Carlos in early career, singing with gentle sincere expression directly into camera as if to the viewer personally, warm soft side lighting on his face, vintage microphone positioned close, subtle recording studio background, period-appropriate hairstyle and shirt, intimate and direct personal mood, realistic archival photograph style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "Roberto Carlos singing intimately",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "eye contact"
+            ],
+            "avoid_terms": [
+              "audience",
+              "crowd",
+              "stage"
+            ],
+            "search_queries": [
+              "Roberto Carlos close-up singing archival",
+              "Roberto Carlos direct to camera performance",
+              "vintage Roberto Carlos microphone intimate photo",
+              "Roberto Carlos personal singing portrait"
+            ]
+          },
+          "image_path": "images/047.png",
+          "generated_at": "2026-07-31T11:20:43.057094+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/047.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 30,
+      "narration": "And somehow, even after all these years, it still feels like he’s singing to you right now.",
+      "word_count": 17,
+      "start_seconds": 389.234,
+      "end_seconds": 396.0,
+      "estimated_seconds": 6.766,
+      "visual_intent": "And somehow, even after all these years, it still feels like he’s singing to you right now.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 48,
+          "scene_shot_number": 1,
+          "filename": "048.png",
+          "start_seconds": 389.234,
+          "end_seconds": 396.0,
+          "estimated_seconds": 6.766,
+          "visual_intent": "Close-up of Roberto Carlos singing while looking directly toward the viewer",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/artists/r/roberto_carlos/photos/004-roberto-carlos-credicard-hall-44435767951.jpg",
+            "library_filename": "004-roberto-carlos-credicard-hall-44435767951.jpg",
+            "library_id": "004",
+            "curated": true
+          },
+          "prompt": "16:9 close-up framing of Roberto Carlos in later career on a simple stage setting, singing into a microphone with direct eye contact toward the viewer, warm stage lighting on his face and shoulders, soft out-of-focus background, intimate personal mood, realistic archival documentary photograph appearance, natural colors and film grain",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 004-roberto-carlos-credicard-hall-44435767951.jpg assigned manually.",
+          "historical_search": "Roberto Carlos singing close-up performance",
+          "historical_plan": {
+            "subject": "Roberto Carlos",
+            "subject_type": "person",
+            "era": "later career",
+            "required_terms": [
+              "singing",
+              "microphone",
+              "direct gaze"
+            ],
+            "avoid_terms": [
+              "early career",
+              "young",
+              "crowd"
+            ],
+            "search_queries": [
+              "Roberto Carlos singing on stage close up",
+              "Roberto Carlos performance looking at camera",
+              "Roberto Carlos live microphone direct gaze",
+              "Roberto Carlos concert intimate archival"
+            ]
+          }
+        }
+      ],
+      "review_notes": ""
+    }
+  ],
+  "updated_at": "2026-07-31T12:47:32.080070+00:00",
+  "visual_plan_ready": true,
+  "images_ready": true
+}

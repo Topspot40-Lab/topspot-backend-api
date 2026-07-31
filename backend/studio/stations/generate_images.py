@@ -301,6 +301,25 @@ def generate_images(
 
     for shot in selected:
         number = int(shot["shot_number"])
+
+        if str(shot.get("source") or "").casefold() == "historical":
+            historical_asset = shot.get("historical_asset")
+            if not isinstance(historical_asset, dict) or not historical_asset.get(
+                "approved_image"
+            ):
+                raise RuntimeError(
+                    f"Shot {number:03d}: historical source has no approved image."
+                )
+
+            print(
+                f"↷ Shot {number:03d}: curated historical image "
+                f"({historical_asset['library_filename']})"
+            )
+            shot["status"] = "image_ready"
+            skipped_count += 1
+            save_json_atomic(storyboard_path, storyboard)
+            continue
+
         filename = str(
             shot.get("filename") or f"{number:03d}.png"
         )
@@ -454,7 +473,17 @@ def generate_images(
         )
         image_path = images_root / filename
 
-        if image_is_valid(image_path):
+        historical_asset = shot.get("historical_asset")
+        historical_ready = (
+            str(shot.get("source") or "").casefold() == "historical"
+            and isinstance(historical_asset, dict)
+            and bool(historical_asset.get("approved_image"))
+        )
+
+        if historical_ready:
+            ready_shots.append(shot)
+            shot["status"] = "image_ready"
+        elif image_is_valid(image_path):
             ready_shots.append(shot)
             shot["status"] = "image_ready"
             shot["image_path"] = f"images/{filename}"

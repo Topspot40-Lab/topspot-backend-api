@@ -72,17 +72,31 @@ def find_photo(
     slug: str,
     photo_id: str,
 ) -> Path:
-    photos_dir = (
+    current_photos_dir = (
+        ASSETS_DIR
+        / "historical"
+        / "artists"
+        / slug[0].casefold()
+        / slug
+        / "photos"
+    )
+    legacy_photos_dir = (
         ASSETS_DIR
         / "historical"
         / slug
         / "photos"
     )
 
+    photos_dir = (
+        current_photos_dir
+        if current_photos_dir.exists()
+        else legacy_photos_dir
+    )
+
     if not photos_dir.exists():
         raise FileNotFoundError(
-            f"Historical photo directory "
-            f"not found: {photos_dir}"
+            "Historical photo directory not found. "
+            f"Checked: {current_photos_dir} and {legacy_photos_dir}"
         )
 
     normalized_id = photo_id.zfill(3)
