@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "roberto_carlos",
+  "title": "roberto carlos",
+  "subtitle": "The Story of Roberto Carlos",
+  "website": "TopSpot40.com",
+  "artwork_url": "https://i.scdn.co/image/45e8967f18679d0a5791c7f647d9f7ab1bc20f3c",
+  "source": {
+    "type": "artist_story",
+    "id": 778
+  },
+  "docuseries_id": null,
+  "status": {
+    "current_station": "cards_ready",
+    "production_created": true,
+    "story_ready": true,
+    "audio_ready": true,
+    "cards_ready": true,
+    "storyboard_ready": true,
+    "visual_plan_ready": true,
+    "images_ready": true,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 397,
+      "duration_seconds": 396,
+      "bucket": "audio-en",
+      "source_key": "artist-story/397.mp3",
+      "youtube_key": "artist-story-youtube/397.mp3",
+      "local_audio": "audio/en_397.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 484,
+      "duration_seconds": 408,
+      "bucket": "audio-es",
+      "source_key": "artist-story/484.mp3",
+      "youtube_key": "artist-story-youtube/484.mp3",
+      "local_audio": "audio/es_484.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 584,
+      "duration_seconds": 379,
+      "bucket": "audio-ptbr",
+      "source_key": "artist-story/584.mp3",
+      "youtube_key": "artist-story-youtube/584.mp3",
+      "local_audio": "audio/pt-BR_584.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/roberto_carlos.mp4",
+    "thumbnail": "output/thumbnail.jpg"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  },
+  "artifacts": {
+    "stories": [
+      "story/en.md",
+      "story/es.md",
+      "story/pt-BR.md"
+    ],
+    "audio": [
+      "audio/en_397.mp3",
+      "audio/es_484.mp3",
+      "audio/pt-BR_584.mp3"
+    ],
+    "storyboard": "storyboard.json",
+    "storyboard_scene_count": 30,
+    "visual_plan": "storyboard.json",
+    "visual_shot_count": 48,
+    "images_directory": "images",
+    "image_count": 48,
+    "cards": [
+      "cards/01_logo.png",
+      "cards/02_languages.png",
+      "cards/03_title.png"
+    ]
+  },
+  "updated_at": "2026-07-31T12:47:43.148640+00:00"
+}

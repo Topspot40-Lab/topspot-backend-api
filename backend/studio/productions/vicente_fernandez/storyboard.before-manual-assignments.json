@@ -527,18 +527,12 @@
           "end_seconds": 153.678,
           "estimated_seconds": 10.325,
           "visual_intent": "Vicente Fernández performing to a massive crowd in a sold-out bullring, capturing his rise from humble beginnings to stardom",
-          "source": "historical",
-          "historical_asset": {
-            "provider": "curated_library",
-            "approved_image": "assets/historical/artists/v/vicente_fernandez/photos/003-vicente-fernandez-tunja.jpg",
-            "library_filename": "003-vicente-fernandez-tunja.jpg",
-            "library_id": "003",
-            "curated": true
-          },
+          "source": "ai",
+          "historical_asset": null,
           "prompt": "Documentary-style cinematic wide shot inside a vast traditional Mexican bullring arena filled with thousands of spectators in period-appropriate attire, Vicente Fernández center stage in ornate charro suit and sombrero singing with raw emotion into a microphone, dramatic stage spotlights cutting through the dusk air illuminating him against the crowded stands, atmosphere of collective longing and triumph, realistic historical recreation with natural film grain, earthy color palette, no text, logos, or writing, 16:9 aspect ratio",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "Curated historical photo 003-vicente-fernandez-tunja.jpg assigned manually.",
+          "review_notes": "",
           "image_path": "images/019.png",
           "generated_at": "2026-07-14T01:49:28.185461+00:00"
         }
@@ -923,18 +917,12 @@
           "end_seconds": 253.748,
           "estimated_seconds": 6.751,
           "visual_intent": "Wide establishing shot of a sprawling beautiful ranch with traditional hacienda house and open fields",
-          "source": "historical",
-          "historical_asset": {
-            "provider": "curated_library",
-            "approved_image": "assets/historical/artists/v/vicente_fernandez/photos/004-statue-of-vicente-fernandez-on-a-horseback.jpg",
-            "library_filename": "004-statue-of-vicente-fernandez-on-a-horseback.jpg",
-            "library_id": "004",
-            "curated": true
-          },
+          "source": "ai",
+          "historical_asset": null,
           "prompt": "Documentary style cinematic wide angle shot of a beautiful expansive ranch in the rural countryside outside Guadalajara, traditional Mexican hacienda with white stucco walls, arched entryways and red clay tile roofs centered in the frame, surrounded by vast rolling green pastures, wooden fences and horse corrals, a few horses visible in the distance, bright natural daylight with warm golden tones, serene and prosperous mood, historically believable mid-20th century Mexican ranch details, realistic textures, subtle film grain, 16:9 aspect ratio, no people, no text, no signs, no logos",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "Curated historical photo 004-statue-of-vicente-fernandez-on-a-horseback.jpg assigned manually.",
+          "review_notes": "",
           "image_path": "images/032.png",
           "generated_at": "2026-07-14T01:50:48.656963+00:00"
         }
@@ -1430,18 +1418,12 @@
           "end_seconds": 411.0,
           "estimated_seconds": 10.722,
           "visual_intent": "Elderly Vicente Fernández in charro suit smiling warmly while tipping his sombrero",
-          "source": "historical",
-          "historical_asset": {
-            "provider": "curated_library",
-            "approved_image": "assets/historical/artists/v/vicente_fernandez/photos/001-estrella-y-manos-de-vicente-fernandez-en-la-plaza-de-las-estrellas.jpg",
-            "library_filename": "001-estrella-y-manos-de-vicente-fernandez-en-la-plaza-de-las-estrellas.jpg",
-            "library_id": "001",
-            "curated": true
-          },
+          "source": "ai",
+          "historical_asset": null,
           "prompt": "16:9 cinematic documentary style shot of an elderly Vicente Fernández with signature mustache, wearing a traditional black embroidered charro suit and wide-brimmed sombrero, standing in warm golden hour light on a rustic Mexican hacienda veranda, gently tipping his sombrero with his right hand while offering a knowing, affectionate smile, soft natural lighting, shallow depth of field, nostalgic and respectful mood, realistic live-action portrayal, filmic color grading, no text or logos",
           "status": "image_ready",
           "approved": false,
-          "review_notes": "Curated historical photo 001-estrella-y-manos-de-vicente-fernandez-en-la-plaza-de-las-estrellas.jpg assigned manually.",
+          "review_notes": "",
           "image_path": "images/050.png",
           "generated_at": "2026-07-14T01:52:35.637230+00:00"
         }
