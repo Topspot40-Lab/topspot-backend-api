@@ -21,6 +21,7 @@ DEFAULT_DUCK_THRESHOLD = 0.03
 DEFAULT_DUCK_RATIO = 8.0
 DEFAULT_DUCK_ATTACK_MS = 25
 DEFAULT_DUCK_RELEASE_MS = 500
+OUTRO_TAIL_SECONDS = 2.0
 
 
 def media_duration(path: Path) -> float:
@@ -170,6 +171,7 @@ def build_story_video(
     outro_visual_seconds = (
         OUTRO_PAUSE_SECONDS
         + outro_seconds
+        + OUTRO_TAIL_SECONDS
     )
 
     total_seconds = (
@@ -179,6 +181,7 @@ def build_story_video(
         + story_seconds
         + OUTRO_PAUSE_SECONDS
         + outro_seconds
+        + OUTRO_TAIL_SECONDS
     )
 
     intro_fade_out_start = max(
@@ -281,6 +284,11 @@ def build_story_video(
         f"asetpts=PTS-STARTPTS"
         f"[outro];"
 
+        # Two seconds of silence prevent the outro from ending abruptly.
+        f"anullsrc=r=44100:cl=stereo,"
+        f"atrim=duration={OUTRO_TAIL_SECONDS:.6f}"
+        f"[outro_tail];"
+
         # Complete narration program.
         f"[opening_silence]"
         f"[intro]"
@@ -288,7 +296,8 @@ def build_story_video(
         f"[story]"
         f"[pause_before_outro]"
         f"[outro]"
-        f"concat=n=6:v=0:a=1,"
+        f"[outro_tail]"
+        f"concat=n=7:v=0:a=1,"
         f"asplit=2"
         f"[narration_duck][narration_mix];"
 
