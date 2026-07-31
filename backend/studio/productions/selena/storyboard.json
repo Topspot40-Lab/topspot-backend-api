@@ -1,0 +1,2790 @@
+{
+  "version": 1,
+  "production_slug": "selena",
+  "source": {
+    "type": "artist_story",
+    "id": 799,
+    "language_code": "en",
+    "locale_id": 76
+  },
+  "title": "Selena",
+  "subtitle": "The Story of Selena",
+  "narration_duration_seconds": 456.0,
+  "target_image_seconds": 8.0,
+  "scene_count": 42,
+  "visual_shot_count": 51,
+  "created_at": "2026-07-31T13:21:09.031591+00:00",
+  "scenes": [
+    {
+      "scene_number": 1,
+      "narration": "Selena had this magical way of making an entire arena feel like it was just her singing to you alone.",
+      "word_count": 20,
+      "start_seconds": 0.0,
+      "end_seconds": 7.986,
+      "estimated_seconds": 7.986,
+      "visual_intent": "Selena had this magical way of making an entire arena feel like it was just her singing to you alone.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 1,
+          "scene_shot_number": 1,
+          "filename": "001.png",
+          "start_seconds": 0.0,
+          "end_seconds": 7.986,
+          "estimated_seconds": 7.986,
+          "visual_intent": "Selena on stage singing with direct eye contact that creates an intimate one-on-one feeling inside a packed arena",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/selena/photos/003-selena-tejano-awards-1987.jpg",
+            "library_filename": "003-selena-tejano-awards-1987.jpg",
+            "library_id": "003",
+            "curated": true
+          },
+          "prompt": "Medium close-up of Selena in early 1990s on a concert stage singing into a microphone with warm direct gaze toward camera as if performing for one person, sparkling stage outfit, soft warm stage lighting on her face and shoulders, faint blurred lights of large arena audience in background, natural filmic colors, photorealistic archival photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 003-selena-tejano-awards-1987.jpg assigned manually.",
+          "historical_search": "Selena Quintanilla live concert performance",
+          "historical_plan": {
+            "subject": "Selena",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "live singing",
+              "stage performance",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "studio recording",
+              "posed portrait"
+            ],
+            "search_queries": [
+              "Selena Quintanilla concert stage",
+              "Selena live singing performance photos",
+              "Selena Quintanilla on stage archival",
+              "Selena arena concert images"
+            ]
+          },
+          "image_path": "images/001.png",
+          "generated_at": "2026-07-31T13:57:30.094992+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/001.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 2,
+      "narration": "You'd see her up there in one of those dazzling outfits she designed herself, sparkling under the lights, hips swaying, that unstoppable smile spreading across her face, and suddenly the music wasn't just something you heard.",
+      "word_count": 36,
+      "start_seconds": 7.986,
+      "end_seconds": 22.361,
+      "estimated_seconds": 14.375,
+      "visual_intent": "You'd see her up there in one of those dazzling outfits she designed herself, sparkling under the lights, hips swaying, that unstoppable smile spreading across her face, and...",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 2,
+          "scene_shot_number": 1,
+          "filename": "002.png",
+          "start_seconds": 7.986,
+          "end_seconds": 15.173,
+          "estimated_seconds": 7.187,
+          "visual_intent": "Selena on stage in a dazzling self-designed outfit sparkling under lights with hips swaying",
+          "source": "ai",
+          "prompt": "Wide documentary shot of Selena Quintanilla on a concert stage in the early 1990s wearing a dazzling sparkling outfit she designed herself with sequins catching bright stage lights, hips captured mid-sway in energetic motion, vibrant live setting, natural stage illumination, archival photorealistic style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla stage performance 1990s",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "sparkling outfit",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "casual wear",
+              "studio portrait"
+            ],
+            "search_queries": [
+              "Selena Quintanilla live concert 1990s",
+              "Selena stage performance sparkling outfit",
+              "Selena Quintanilla dancing Tejano show",
+              "Selena live performance photos early 90s"
+            ]
+          },
+          "image_path": "images/002.png",
+          "generated_at": "2026-07-31T13:57:36.616046+00:00",
+          "image_qa": {
+            "score": 90,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/002.json"
+          }
+        },
+        {
+          "shot_number": 3,
+          "scene_shot_number": 2,
+          "filename": "003.png",
+          "start_seconds": 15.173,
+          "end_seconds": 22.361,
+          "estimated_seconds": 7.187,
+          "visual_intent": "Close-up of Selena's face with her unstoppable smile spreading as she performs",
+          "source": "ai",
+          "prompt": "Close-up documentary shot of Selena Quintanilla in the early 1990s during a live performance, her face showing an unstoppable radiant smile spreading across it, bright stage lights creating gentle sparkle reflections in her eyes, warm theatrical lighting, charismatic and joyful expression, archival photorealistic style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla smiling onstage 1990s",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "smiling face",
+              "performance"
+            ],
+            "avoid_terms": [
+              "serious expression",
+              "off stage"
+            ],
+            "search_queries": [
+              "Selena Quintanilla close up smile concert",
+              "Selena happy performing face 1990s",
+              "Selena Quintanilla stage smile photograph",
+              "Selena live show smiling close-up"
+            ]
+          },
+          "image_path": "images/003.png",
+          "generated_at": "2026-07-31T13:57:41.647171+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/003.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 3,
+      "narration": "It was something you felt in your bones. She grew up in a house filled with music but not much else.",
+      "word_count": 21,
+      "start_seconds": 22.361,
+      "end_seconds": 30.746,
+      "estimated_seconds": 8.385,
+      "visual_intent": "It was something you felt in your bones.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 4,
+          "scene_shot_number": 1,
+          "filename": "004.png",
+          "start_seconds": 22.361,
+          "end_seconds": 30.746,
+          "estimated_seconds": 8.385,
+          "visual_intent": "Young Selena standing in a sparsely furnished house interior with musical instruments but little else",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary style wide shot of a young girl who resembles child Selena Quintanilla standing pensively inside a modest simple house living room, bare walls, one worn sofa, acoustic guitar and keyboard visible but otherwise almost empty of possessions, natural daylight from a side window, warm earthy tones, realistic historical details, quiet and reflective mood",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "young Selena",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "modest house",
+              "musical instruments"
+            ],
+            "avoid_terms": [
+              "luxury items",
+              "stage performance"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/004.png",
+          "generated_at": "2026-07-31T13:57:48.438566+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/004.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 4,
+      "narration": "After the family restaurant in Lake Jackson closed during the oil bust, her father Abraham dusted off his old guitar and decided his kids were going to be the band.",
+      "word_count": 30,
+      "start_seconds": 30.746,
+      "end_seconds": 42.725,
+      "estimated_seconds": 11.979,
+      "visual_intent": "After the family restaurant in Lake Jackson closed during the oil bust, her father Abraham dusted off his old guitar and decided his kids were going to be the band.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 5,
+          "scene_shot_number": 1,
+          "filename": "005.png",
+          "start_seconds": 30.746,
+          "end_seconds": 42.725,
+          "estimated_seconds": 11.979,
+          "visual_intent": "Abraham Quintanilla dusting off his old guitar after the restaurant closed and deciding his kids would form the band",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of Abraham Quintanilla seated in a modest Lake Jackson family living room during the oil bust period, carefully dusting an old wooden acoustic guitar with a cloth, thoughtful and determined expression, young children visible in soft focus behind him, simple early 1980s Texas home details with plain furniture and natural window light, warm tones and hopeful mood, photorealistic documentary style, historically accurate, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Abraham Quintanilla",
+            "subject_type": "person",
+            "era": "Selena's childhood",
+            "required_terms": [
+              "guitar"
+            ],
+            "avoid_terms": [
+              "stage",
+              "concert"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/005.png",
+          "generated_at": "2026-07-31T13:57:55.514038+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/005.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 5,
+      "narration": "Selena was barely ten when she started fronting Selena y Los Dinos. The early years were pure hustle.",
+      "word_count": 18,
+      "start_seconds": 42.725,
+      "end_seconds": 49.912,
+      "estimated_seconds": 7.187,
+      "visual_intent": "Selena was barely ten when she started fronting Selena y Los Dinos.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 6,
+          "scene_shot_number": 1,
+          "filename": "006.png",
+          "start_seconds": 42.725,
+          "end_seconds": 49.912,
+          "estimated_seconds": 7.187,
+          "visual_intent": "Ten-year-old Selena singing passionately into a microphone while fronting Selena y Los Dinos on a modest stage",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/selena/photos/001-selena-los-dinos-1986.png",
+            "library_filename": "001-selena-los-dinos-1986.png",
+            "library_id": "001",
+            "curated": true
+          },
+          "prompt": "Medium wide shot of ten-year-old Selena Quintanilla with long dark hair singing with energy and focus into a vintage microphone, fronting Selena y Los Dinos with her father and band members playing instruments behind her on a simple low wooden stage with basic equipment, early career humble setting, natural window light mixed with basic stage lights, determined hustle mood, realistic photorealistic archival style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 001-selena-los-dinos-1986.png assigned manually.",
+          "historical_search": "young Selena y Los Dinos performances",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "age 10",
+              "fronting band",
+              "live stage"
+            ],
+            "avoid_terms": [
+              "adult Selena",
+              "stadium concert",
+              "1990s"
+            ],
+            "search_queries": [
+              "young Selena Quintanilla with Los Dinos",
+              "Selena childhood stage performances",
+              "early Selena y Los Dinos live",
+              "Selena age 10 family band"
+            ]
+          },
+          "image_path": "images/006.png",
+          "generated_at": "2026-07-31T13:58:02.621634+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/006.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 6,
+      "narration": "They'd cram into a battered van with their instruments, drive across Texas playing anything from quinceañeras to dusty county fairs where the crowd sometimes numbered more cows than people.",
+      "word_count": 29,
+      "start_seconds": 49.912,
+      "end_seconds": 61.492,
+      "estimated_seconds": 11.58,
+      "visual_intent": "They'd cram into a battered van with their instruments, drive across Texas playing anything from quinceañeras to dusty county fairs where the crowd sometimes numbered more cows...",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 7,
+          "scene_shot_number": 1,
+          "filename": "007.png",
+          "start_seconds": 49.912,
+          "end_seconds": 61.492,
+          "estimated_seconds": 11.58,
+          "visual_intent": "Battered van crammed with band members and instruments driving a dusty rural Texas road past fields dotted with cows",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 photorealistic documentary image, wide tracking shot of a weathered battered van from the early career era driving along a dusty two-lane Texas highway, vehicle interior visibly crammed with several band members and musical instruments, expansive dry fields and scattered cows visible in background suggesting sparse crowds, warm natural daylight with dust in the air, humble and hardworking mood, period-appropriate details, realistic archival photograph style with subtle film grain",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "battered van",
+              "musical instruments",
+              "Texas road",
+              "rural fields"
+            ],
+            "avoid_terms": [
+              "crowded venue",
+              "stage performance",
+              "modern vehicle",
+              "urban highway"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/007.png",
+          "generated_at": "2026-07-31T13:58:10.495496+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/007.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 7,
+      "narration": "One story her brother A.B. loved to tell was about the time young Selena had to learn Spanish on the fly.",
+      "word_count": 22,
+      "start_seconds": 61.492,
+      "end_seconds": 70.277,
+      "estimated_seconds": 8.785,
+      "visual_intent": "One story her brother A.B. loved to tell was about the time young Selena had to learn Spanish on the fly.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 8,
+          "scene_shot_number": 1,
+          "filename": "008.png",
+          "start_seconds": 61.492,
+          "end_seconds": 70.277,
+          "estimated_seconds": 8.785,
+          "visual_intent": "Young Selena concentrating as she learns Spanish on the fly",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium close-up of young Selena Quintanilla as a child with dark hair in a simple ponytail, seated in a modest Texas family room, looking up with a focused and determined expression while quickly learning Spanish, soft natural window light illuminating her face, warm earthy tones, realistic documentary photography, highly detailed, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "young Selena"
+            ],
+            "avoid_terms": [
+              "adult Selena",
+              "stage performance",
+              "concert"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/008.png",
+          "generated_at": "2026-07-31T13:58:16.380686+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/008.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 8,
+      "narration": "She had grown up speaking English at home, so her father would play Spanish records over and over in the car.",
+      "word_count": 21,
+      "start_seconds": 70.277,
+      "end_seconds": 78.662,
+      "estimated_seconds": 8.385,
+      "visual_intent": "She had grown up speaking English at home, so her father would play Spanish records over and over in the car.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 9,
+          "scene_shot_number": 1,
+          "filename": "009.png",
+          "start_seconds": 70.277,
+          "end_seconds": 78.662,
+          "estimated_seconds": 8.385,
+          "visual_intent": "Father playing Spanish vinyl records on repeat inside the family car as young Selena listens from the backseat",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary style photograph of a vintage car interior, Hispanic father in driver's seat holding and playing a vinyl record on portable player, young Latina girl with long dark hair seated behind him listening attentively, soft natural daylight from side windows, warm tones, realistic details, intimate family setting, nostalgic mood, natural lighting, cinematic framing",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Abraham Quintanilla and young Selena",
+            "subject_type": "group",
+            "era": "childhood",
+            "required_terms": [
+              "car interior",
+              "vinyl record",
+              "father and daughter"
+            ],
+            "avoid_terms": [
+              "adult Selena",
+              "stage performance",
+              "concert"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/009.png",
+          "generated_at": "2026-07-31T13:58:21.669481+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/009.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 9,
+      "narration": "She'd memorize the sounds first, the way the words rolled, before she understood what they meant.",
+      "word_count": 16,
+      "start_seconds": 78.662,
+      "end_seconds": 85.051,
+      "estimated_seconds": 6.389,
+      "visual_intent": "She'd memorize the sounds first, the way the words rolled, before she understood what they meant.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 10,
+          "scene_shot_number": 1,
+          "filename": "010.png",
+          "start_seconds": 78.662,
+          "end_seconds": 85.051,
+          "estimated_seconds": 6.389,
+          "visual_intent": "Young Selena with concentrated expression internalizing the sounds and roll of Spanish lyrics before grasping their meaning",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary style close-up of young Selena Quintanilla as a child in a modest interior setting, soft natural side lighting, deeply focused and attentive expression as she memorizes phonetic sounds and flow of lyrics, period-appropriate childhood clothing and hairstyle, warm nostalgic tones, realistic details, introspective mood, no text or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "childhood",
+            "required_terms": [
+              "young Selena",
+              "focused expression"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "adult"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/010.png",
+          "generated_at": "2026-07-31T13:58:27.138688+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/010.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 10,
+      "narration": "During rehearsals she'd sometimes twist a phrase in the funniest way, and the whole family would collapse laughing.",
+      "word_count": 18,
+      "start_seconds": 85.051,
+      "end_seconds": 92.238,
+      "estimated_seconds": 7.187,
+      "visual_intent": "During rehearsals she'd sometimes twist a phrase in the funniest way, and the whole family would collapse laughing.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 11,
+          "scene_shot_number": 1,
+          "filename": "011.png",
+          "start_seconds": 85.051,
+          "end_seconds": 92.238,
+          "estimated_seconds": 7.187,
+          "visual_intent": "Selena playfully twisting a lyric with a silly expression while her family collapses in laughter around her during rehearsal",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of young Selena Quintanilla standing in a modest home rehearsal room with music stands and instruments, making a humorous exaggerated face while twisting a phrase, her parents and siblings visibly collapsing in laughter around her, warm natural daylight from side windows, joyful candid moment, photorealistic 1980s photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "rehearsal",
+              "family"
+            ],
+            "avoid_terms": [
+              "stage",
+              "concert"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/011.png",
+          "generated_at": "2026-07-31T13:58:35.636827+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/011.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 11,
+      "narration": "But she worked at it with that same determination she brought to everything. Before long she wasn't just singing the words, she was living them, pouring so much heart into every note that audiences forgot she was this American kid from Texas.",
+      "word_count": 42,
+      "start_seconds": 92.238,
+      "end_seconds": 109.009,
+      "estimated_seconds": 16.771,
+      "visual_intent": "But she worked at it with that same determination she brought to everything.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 12,
+          "scene_shot_number": 1,
+          "filename": "012.png",
+          "start_seconds": 92.238,
+          "end_seconds": 100.623,
+          "estimated_seconds": 8.385,
+          "visual_intent": "Young Selena singing with fierce determination and emotional intensity into a microphone",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/selena/photos/002-selena-portrait-1987.png",
+            "library_filename": "002-selena-portrait-1987.png",
+            "library_id": "002",
+            "curated": true
+          },
+          "prompt": "Close-up documentary photograph of young Selena Quintanilla in early career, framed from shoulders up as she sings with deep determination and heart into a microphone, eyes closed pouring emotion into every note, modest indoor Texas setting, soft natural side lighting, focused and passionate mood, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 002-selena-portrait-1987.png assigned manually.",
+          "historical_search": "Selena Quintanilla early singing Texas",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "emotional expression",
+              "singing",
+              "determination"
+            ],
+            "avoid_terms": [
+              "audience",
+              "stage performance"
+            ],
+            "search_queries": [
+              "young Selena Quintanilla singing microphone",
+              "Selena early career emotional performance",
+              "Selena Quintanilla Texas rehearsals",
+              "early Selena heartfelt vocals"
+            ]
+          },
+          "image_path": "images/012.png",
+          "generated_at": "2026-07-31T13:58:47.503429+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/012.json"
+          }
+        },
+        {
+          "shot_number": 13,
+          "scene_shot_number": 2,
+          "filename": "013.png",
+          "start_seconds": 100.623,
+          "end_seconds": 109.009,
+          "estimated_seconds": 8.385,
+          "visual_intent": "Captivated audience members fully absorbed in an emotional live performance",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium wide documentary photograph of an inclusive group of audience members in a Texas music venue during early career era, faces engaged and moved while listening intently to a heartfelt performance, warm dim concert lighting, immersive and captivated mood, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early career",
+            "required_terms": [
+              "attentive audience",
+              "live music",
+              "Texas"
+            ],
+            "avoid_terms": [
+              "performer visible",
+              "indifferent expressions",
+              "modern elements"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/013.png",
+          "generated_at": "2026-07-31T13:58:53.821403+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/013.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 12,
+      "narration": "What always comes through in the stories people tell about her is how completely down-to-earth she remained even as the crowds got bigger.",
+      "word_count": 23,
+      "start_seconds": 109.009,
+      "end_seconds": 118.193,
+      "estimated_seconds": 9.184,
+      "visual_intent": "What always comes through in the stories people tell about her is how completely down-to-earth she remained even as the crowds got bigger.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 14,
+          "scene_shot_number": 1,
+          "filename": "014.png",
+          "start_seconds": 109.009,
+          "end_seconds": 118.193,
+          "estimated_seconds": 9.184,
+          "visual_intent": "Candid moment of Selena Quintanilla warmly greeting fans in a casual manner with a large crowd gathered nearby",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/selena/photos/004-selena-portrait-1988.jpg",
+            "library_filename": "004-selena-portrait-1988.jpg",
+            "library_id": "004",
+            "curated": true
+          },
+          "prompt": "Eye-level medium shot in early 1990s of Selena Quintanilla in casual t-shirt and jeans, smiling warmly while chatting closely with several fans in a simple outdoor patio setting, large crowd of people visible waiting in the background, soft natural daylight, genuine humble mood, photorealistic documentary photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 004-selena-portrait-1988.jpg assigned manually.",
+          "historical_search": "Selena Quintanilla with fans 1990s",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "casual",
+              "fans",
+              "crowd"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "microphone"
+            ],
+            "search_queries": [
+              "Selena Quintanilla casual with fans",
+              "Selena Quintanilla meeting admirers 1990s",
+              "candid Selena Quintanilla humble offstage",
+              "Selena Quintanilla approachable with crowd"
+            ]
+          },
+          "image_path": "images/014.png",
+          "generated_at": "2026-07-31T13:58:59.499289+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/014.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 13,
+      "narration": "After blistering two-hour sets that left her drenched in sweat, she'd head straight for the meet-and-greet table and stay there for hours.",
+      "word_count": 22,
+      "start_seconds": 118.193,
+      "end_seconds": 126.977,
+      "estimated_seconds": 8.785,
+      "visual_intent": "After blistering two-hour sets that left her drenched in sweat, she'd head straight for the meet-and-greet table and stay there for hours.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 15,
+          "scene_shot_number": 1,
+          "filename": "015.png",
+          "start_seconds": 118.193,
+          "end_seconds": 126.977,
+          "estimated_seconds": 8.785,
+          "visual_intent": "Sweaty Selena seated at meet-and-greet table greeting fans after performance",
+          "source": "ai",
+          "prompt": "Medium shot of Selena Quintanilla seated at a long cloth-covered table in early 1990s indoor hall, face and neck glistening with sweat from recent performance, wearing sparkly stage outfit and smiling tiredly while reaching toward line of fans, natural overhead lighting, warm dedicated mood, early 90s accurate clothing and hair, photorealistic 16:9 documentary still, no text visible",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla meet and greet 1990s",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "meet and greet",
+              "with fans",
+              "autograph table"
+            ],
+            "avoid_terms": [
+              "performing",
+              "on stage",
+              "microphone"
+            ],
+            "search_queries": [
+              "Selena Quintanilla at autograph table with fans",
+              "Selena meet and greet after concert 1990s",
+              "Selena Quintanilla post performance fan interaction",
+              "Tejano singer Selena signing for admirers"
+            ]
+          },
+          "image_path": "images/015.png",
+          "generated_at": "2026-07-31T13:59:06.396634+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/015.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 14,
+      "narration": "Not the polite fifteen minutes some artists give. Hours. She'd ask fans about their children, their jobs, their dreams.",
+      "word_count": 19,
+      "start_seconds": 126.977,
+      "end_seconds": 134.564,
+      "estimated_seconds": 7.587,
+      "visual_intent": "Not the polite fifteen minutes some artists give.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 16,
+          "scene_shot_number": 1,
+          "filename": "016.png",
+          "start_seconds": 126.977,
+          "end_seconds": 134.564,
+          "estimated_seconds": 7.587,
+          "visual_intent": "Selena attentively listening to fans during extended personal conversation",
+          "source": "ai",
+          "prompt": "Medium shot early 1990s Selena Quintanilla seated and leaning forward with genuine interest while listening to a small group of fans in a backstage room, warm natural window light, caring and intimate atmosphere, historically accurate colorful outfit long dark hair and appearance, realistic documentary style photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla with fans 1990s",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "with fans",
+              "personal interaction"
+            ],
+            "avoid_terms": [
+              "on stage",
+              "performing"
+            ],
+            "search_queries": [
+              "Selena Quintanilla meeting fans 1990s",
+              "Selena with admirers archival photos",
+              "Selena Quintanilla fan dedication",
+              "Selena listening to fans images"
+            ]
+          },
+          "image_path": "images/016.png",
+          "generated_at": "2026-07-31T13:59:13.363145+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/016.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 15,
+      "narration": "One promoter remembered her spotting a little girl in the crowd wearing a homemade version of one of her stage outfits.",
+      "word_count": 21,
+      "start_seconds": 134.564,
+      "end_seconds": 142.949,
+      "estimated_seconds": 8.385,
+      "visual_intent": "One promoter remembered her spotting a little girl in the crowd wearing a homemade version of one of her stage outfits.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 17,
+          "scene_shot_number": 1,
+          "filename": "017.png",
+          "start_seconds": 134.564,
+          "end_seconds": 142.949,
+          "estimated_seconds": 8.385,
+          "visual_intent": "Selena spotting a little girl in the crowd wearing a homemade version of her stage outfit",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 photorealistic image, medium wide shot from stage level of Selena Quintanilla in early 1990s sparkling purple stage outfit looking toward a little girl standing in front row of concert crowd, the girl wearing a colorful homemade fringed version of the same costume, warm concert stage lighting on Selena with softer light on audience, heartwarming live performance setting, realistic archival documentary style",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Selena",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "Selena",
+              "little girl",
+              "homemade outfit"
+            ],
+            "avoid_terms": [
+              "interview",
+              "posed portrait",
+              "studio"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/017.png",
+          "generated_at": "2026-07-31T13:59:20.161043+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/017.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 16,
+      "narration": "Selena pulled the child up on stage, hugged her tight, and told the audience, \"This is what it's all about.\" That generosity wasn't an act.",
+      "word_count": 25,
+      "start_seconds": 142.949,
+      "end_seconds": 152.932,
+      "estimated_seconds": 9.982,
+      "visual_intent": "Selena pulled the child up on stage, hugged her tight, and told the audience, \"This is what it's all about.\" That generosity wasn't an act.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 18,
+          "scene_shot_number": 1,
+          "filename": "018.png",
+          "start_seconds": 142.949,
+          "end_seconds": 152.932,
+          "estimated_seconds": 9.982,
+          "visual_intent": "Selena hugging a young girl tightly on stage after lifting her up in front of the audience",
+          "source": "ai",
+          "prompt": "Medium wide shot of Selena Quintanilla in sparkling stage outfit from the early 1990s lifting a young girl onto a concert stage and hugging her tightly with genuine affection while facing the audience, bright stage lighting with spotlights, blurred crowd visible in background, warm sincere mood, realistic archival documentary photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena hugging child on stage",
+          "historical_plan": {
+            "subject": "Selena",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "on stage",
+              "hugging child",
+              "live performance"
+            ],
+            "avoid_terms": [
+              "studio",
+              "posed portrait"
+            ],
+            "search_queries": [
+              "Selena Quintanilla stage with young fan hug",
+              "Selena concert pulling child on stage",
+              "Selena audience interaction with child photo",
+              "historical photos Selena hugging little girl concert",
+              "Selena live show with fan on stage"
+            ]
+          },
+          "image_path": "images/018.png",
+          "generated_at": "2026-07-31T13:59:26.470619+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/018.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 17,
+      "narration": "She once made her tour bus pull over at a McDonald's at two in the morning after a concert because she was craving french fries.",
+      "word_count": 25,
+      "start_seconds": 152.932,
+      "end_seconds": 162.914,
+      "estimated_seconds": 9.982,
+      "visual_intent": "She once made her tour bus pull over at a McDonald's at two in the morning after a concert because she was craving french fries.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 19,
+          "scene_shot_number": 1,
+          "filename": "019.png",
+          "start_seconds": 152.932,
+          "end_seconds": 162.914,
+          "estimated_seconds": 9.982,
+          "visual_intent": "Tour bus parked at a fast food restaurant late at night",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 wide framing of a 1990s black tour bus with softly lit windows parked in an empty lot beside a brightly lit fast food restaurant building at two in the morning, dark night sky and distant street lights, warm yellow glow from the restaurant contrasting cool blue shadows, no visible logos signs or text anywhere, realistic documentary photography, natural nighttime lighting, quiet and weary post-concert mood",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "early 1990s",
+            "required_terms": [
+              "tour bus",
+              "nighttime",
+              "parking lot"
+            ],
+            "avoid_terms": [
+              "logos",
+              "signs",
+              "text",
+              "daytime"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/019.png",
+          "generated_at": "2026-07-31T13:59:32.461360+00:00",
+          "image_qa": {
+            "score": 75,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/019.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 18,
+      "narration": "The band sat in the parking lot in their stage clothes, laughing and eating burgers while truckers did double-takes at the superstar in their midst.",
+      "word_count": 25,
+      "start_seconds": 162.914,
+      "end_seconds": 172.897,
+      "estimated_seconds": 9.982,
+      "visual_intent": "The band sat in the parking lot in their stage clothes, laughing and eating burgers while truckers did double-takes at the superstar in their midst.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 20,
+          "scene_shot_number": 1,
+          "filename": "020.png",
+          "start_seconds": 162.914,
+          "end_seconds": 172.897,
+          "estimated_seconds": 9.982,
+          "visual_intent": "Selena and her band in glittering stage clothes sitting casually in a truck-stop parking lot, laughing together while eating burgers as nearby truckers turn to stare at the superstar",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Eye-level medium-wide shot of Selena Quintanilla centered among her band members seated on a curb and tailgate in a sunny early-1990s truck stop parking lot, all wearing vibrant Tejano stage outfits, group laughing and holding burgers, several truckers visible in background doing double-takes with surprised expressions, natural daylight, warm realistic tones, candid relaxed atmosphere, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "group",
+            "era": "early 1990s",
+            "required_terms": [
+              "band",
+              "parking lot",
+              "stage clothes"
+            ],
+            "avoid_terms": [
+              "performing",
+              "concert stage",
+              "crowd"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/020.png",
+          "generated_at": "2026-07-31T13:59:40.631086+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/020.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 19,
+      "narration": "Her romance with Chris Perez is the kind of story that belongs in a movie, except it was real and it was hers.",
+      "word_count": 23,
+      "start_seconds": 172.897,
+      "end_seconds": 182.081,
+      "estimated_seconds": 9.184,
+      "visual_intent": "Her romance with Chris Perez is the kind of story that belongs in a movie, except it was real and it was hers.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 21,
+          "scene_shot_number": 1,
+          "filename": "021.png",
+          "start_seconds": 172.897,
+          "end_seconds": 182.081,
+          "estimated_seconds": 9.184,
+          "visual_intent": "Selena and Chris Perez sharing an intimate affectionate gaze during their real-life romance",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/selena/photos/006-chris-perez-2012.jpg",
+            "library_filename": "006-chris-perez-2012.jpg",
+            "library_id": "006",
+            "curated": true
+          },
+          "prompt": "16:9 photorealistic image of Selena Quintanilla and Chris Perez in early 1990s setting, medium close-up framing on the couple standing close together indoors with soft natural light from a window, Selena with long dark hair in elegant 90s blouse looking at him with love, Chris with long hair in casual shirt returning her gaze tenderly, warm authentic mood, realistic period clothing and hairstyles, soft background, historically accurate live-action documentary photograph",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 006-chris-perez-2012.jpg assigned manually.",
+          "historical_search": "Selena Chris Perez romance",
+          "historical_plan": {
+            "subject": "Selena and Chris Perez",
+            "subject_type": "group",
+            "era": "early 1990s",
+            "required_terms": [
+              "couple",
+              "together"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "concert"
+            ],
+            "search_queries": [
+              "Selena and Chris Perez together",
+              "Selena Quintanilla Chris Perez personal photos",
+              "Selena romance with Chris Perez images",
+              "1990s Selena and Chris Perez"
+            ]
+          },
+          "image_path": "images/021.png",
+          "generated_at": "2026-07-31T13:59:47.298196+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/021.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 20,
+      "narration": "When Chris joined the band as guitarist, the chemistry was immediate. Abraham, protective as they come, forbid it.",
+      "word_count": 18,
+      "start_seconds": 182.081,
+      "end_seconds": 189.268,
+      "estimated_seconds": 7.187,
+      "visual_intent": "When Chris joined the band as guitarist, the chemistry was immediate.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 22,
+          "scene_shot_number": 1,
+          "filename": "022.png",
+          "start_seconds": 182.081,
+          "end_seconds": 189.268,
+          "estimated_seconds": 7.187,
+          "visual_intent": "Stern protective Abraham Quintanilla with forbidding expression",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium close-up of middle-aged Abraham Quintanilla with dark hair and mustache, wearing late 1980s button-up shirt, standing with arms crossed and a stern protective forbidding expression on his face, simple indoor setting with neutral background, soft side window lighting creating subtle shadows, serious and tense mood, photorealistic documentary style, 16:9 aspect ratio",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Abraham Quintanilla",
+            "subject_type": "person",
+            "era": "late 1980s",
+            "required_terms": [
+              "stern expression",
+              "protective father"
+            ],
+            "avoid_terms": [
+              "smiling",
+              "performing"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/022.png",
+          "generated_at": "2026-07-31T13:59:53.493682+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/022.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 21,
+      "narration": "He even fired Chris when he found out they were seeing each other. But love doesn't listen to bandleaders.",
+      "word_count": 19,
+      "start_seconds": 189.268,
+      "end_seconds": 196.855,
+      "estimated_seconds": 7.587,
+      "visual_intent": "He even fired Chris when he found out they were seeing each other.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 23,
+          "scene_shot_number": 1,
+          "filename": "023.png",
+          "start_seconds": 189.268,
+          "end_seconds": 196.855,
+          "estimated_seconds": 7.587,
+          "visual_intent": "Selena and Chris Perez sharing a private affectionate moment that continues despite the bandleader firing him",
+          "source": "ai",
+          "prompt": "16:9 documentary-style photorealistic image, early 1990s indoor setting, medium shot of Selena Quintanilla and Chris Perez sitting closely together sharing a tender affectionate gaze, Selena with signature voluminous dark hair, bold makeup and stylish top, Chris with rock-influenced hairstyle and leather jacket, soft window light casting gentle shadows, warm color tones, hopeful and determined mood, realistic live-action photograph, highly detailed, natural textures",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla Chris Perez 1991",
+          "historical_plan": {
+            "subject": "Selena and Chris Perez",
+            "subject_type": "group",
+            "era": "early 1990s",
+            "required_terms": [
+              "couple",
+              "together"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance",
+              "Abraham"
+            ],
+            "search_queries": [
+              "Selena Quintanilla and Chris Perez photos 1990-1992",
+              "Selena Chris Perez early relationship images",
+              "Selena y Los Dinos guitarist Chris Perez with Selena",
+              "archival photos Selena and Chris 1991"
+            ]
+          },
+          "image_path": "images/023.png",
+          "generated_at": "2026-07-31T14:00:00.642922+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/023.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 22,
+      "narration": "They eloped in a quiet ceremony, then had to face the music with her family. The tension was thick for a while.",
+      "word_count": 22,
+      "start_seconds": 196.855,
+      "end_seconds": 205.639,
+      "estimated_seconds": 8.785,
+      "visual_intent": "They eloped in a quiet ceremony, then had to face the music with her family.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 24,
+          "scene_shot_number": 1,
+          "filename": "024.png",
+          "start_seconds": 196.855,
+          "end_seconds": 205.639,
+          "estimated_seconds": 8.785,
+          "visual_intent": "Selena and Chris Perez standing anxiously before her seated parents in a tense family living room confrontation",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Eye-level medium-wide shot of a modest early 1990s living room, Selena Quintanilla and Chris Perez standing side by side with nervous expressions facing her seated parents Abraham and Marcella Quintanilla whose faces show disapproval, soft natural window light casting subtle shadows across the room, heavy somber mood of thick family tension, photorealistic documentary style with accurate period furnishings, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Selena Quintanilla and family",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "family tension",
+              "home interior"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performance"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/024.png",
+          "generated_at": "2026-07-31T14:00:07.720508+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/024.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 23,
+      "narration": "Yet music has a way of healing things. Eventually Abraham came around, and you can hear the triumph in the songs they made together after that.",
+      "word_count": 26,
+      "start_seconds": 205.639,
+      "end_seconds": 216.021,
+      "estimated_seconds": 10.382,
+      "visual_intent": "Yet music has a way of healing things.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 25,
+          "scene_shot_number": 1,
+          "filename": "025.png",
+          "start_seconds": 205.639,
+          "end_seconds": 216.021,
+          "estimated_seconds": 10.382,
+          "visual_intent": "Abraham Quintanilla standing supportively beside Selena as she sings with triumphant emotion",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot in 16:9 of Abraham Quintanilla and Selena Quintanilla in a modest 1980s recording studio, Abraham standing close beside her with an approving expression while Selena sings passionately into a vintage microphone conveying triumph and healing, warm soft lighting, simple wooden paneling and analog equipment in background, early career era, realistic historical photograph style, no text or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "Abraham Quintanilla and Selena Quintanilla",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "Abraham Quintanilla",
+              "Selena",
+              "music making"
+            ],
+            "avoid_terms": [
+              "1990s",
+              "tragedy",
+              "solo performance"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/025.png",
+          "generated_at": "2026-07-31T14:00:13.865397+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/025.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 24,
+      "narration": "\"Amor Prohibido\" wasn't just another hit for them. It was their story set to music, that sweet ache of young love fighting against the world and winning.",
+      "word_count": 27,
+      "start_seconds": 216.021,
+      "end_seconds": 226.802,
+      "estimated_seconds": 10.781,
+      "visual_intent": "\"Amor Prohibido\" wasn't just another hit for them.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 26,
+          "scene_shot_number": 1,
+          "filename": "026.png",
+          "start_seconds": 216.021,
+          "end_seconds": 226.802,
+          "estimated_seconds": 10.781,
+          "visual_intent": "Selena Quintanilla and Chris Perez sharing an intimate, hopeful gaze that embodies their real-life young love against all odds",
+          "source": "ai",
+          "prompt": "16:9 documentary archival photograph of Selena Quintanilla and Chris Perez as a young couple in the early 1990s, medium close-up framing with them standing close together gazing at one another with tender determination, soft natural window light, era-appropriate casual clothing and hairstyles, plain indoor setting, warm color palette with subtle film grain, intimate and resilient mood, realistic historically accurate details with no text or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla Chris Perez 1990s",
+          "historical_plan": {
+            "subject": "Selena Quintanilla and Chris Perez",
+            "subject_type": "group",
+            "era": "early 1990s",
+            "required_terms": [
+              "couple",
+              "together"
+            ],
+            "avoid_terms": [
+              "performance",
+              "stage",
+              "concert"
+            ],
+            "search_queries": [
+              "Selena Quintanilla and Chris Perez photos 1990s",
+              "Selena Chris Perez early relationship images",
+              "Selena Quintanilla husband couple archival",
+              "Selena and Chris Perez 1992-1995"
+            ]
+          },
+          "image_path": "images/026.png",
+          "generated_at": "2026-07-31T14:00:20.450877+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/026.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 25,
+      "narration": "By the early nineties she had become the undisputed queen of Tejano music, a genre that had mostly been dominated by men with accordion-heavy traditional sounds.",
+      "word_count": 26,
+      "start_seconds": 226.802,
+      "end_seconds": 237.184,
+      "estimated_seconds": 10.382,
+      "visual_intent": "By the early nineties she had become the undisputed queen of Tejano music, a genre that had mostly been dominated by men with accordion-heavy traditional sounds.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 27,
+          "scene_shot_number": 1,
+          "filename": "027.png",
+          "start_seconds": 226.802,
+          "end_seconds": 237.184,
+          "estimated_seconds": 10.382,
+          "visual_intent": "Selena performing energetically on a concert stage in the early nineties",
+          "source": "ai",
+          "prompt": "16:9 archival documentary photograph of Selena Quintanilla in the early 1990s performing live on stage, medium wide shot framing her confidently singing into a handheld microphone with expressive face, wearing a vibrant sequined jumpsuit, Tejano band members with accordion and guitars behind her, bright colorful stage lighting with spotlights, crowded venue atmosphere, energetic and triumphant mood, realistic 1990s film photo with natural grain",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla early 1990s live performance",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "live performance",
+              "on stage"
+            ],
+            "avoid_terms": [
+              "studio portrait",
+              "1995"
+            ],
+            "search_queries": [
+              "Selena Quintanilla performing on stage 1990-1993",
+              "Selena Tejano concert early nineties",
+              "Selena live show microphone 1992",
+              "archive photos of Selena in concert"
+            ]
+          },
+          "image_path": "images/027.png",
+          "generated_at": "2026-07-31T14:00:27.043500+00:00",
+          "image_qa": {
+            "score": 90,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/027.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 26,
+      "narration": "Selena brought something fresh, bright, and completely joyful to it. She mixed in cumbia rhythms, pop sensibility, even touches of the disco records she loved as a kid.",
+      "word_count": 28,
+      "start_seconds": 237.184,
+      "end_seconds": 248.364,
+      "estimated_seconds": 11.18,
+      "visual_intent": "Selena brought something fresh, bright, and completely joyful to it.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 28,
+          "scene_shot_number": 1,
+          "filename": "028.png",
+          "start_seconds": 237.184,
+          "end_seconds": 248.364,
+          "estimated_seconds": 11.18,
+          "visual_intent": "Selena performing with bright joyful energy on stage while dancing",
+          "source": "ai",
+          "prompt": "16:9 documentary style image of Selena Quintanilla in the early 1990s captured in a medium-wide shot on a concert stage, mid-dance in a bright colorful outfit with a completely joyful smile and energetic expression, dynamic pose reflecting cumbia rhythms, warm bright stage lighting, band faintly visible in background, fresh and happy atmosphere, realistic archival photograph appearance, no text logos or writing",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla live performance 1990s",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "stage performance",
+              "joyful expression"
+            ],
+            "avoid_terms": [
+              "studio portrait",
+              "album cover"
+            ],
+            "search_queries": [
+              "Selena Quintanilla live concert 1990s",
+              "Selena Quintanilla stage performance smiling",
+              "Selena dancing on stage early career",
+              "Selena Quintanilla Tejano concert photos"
+            ]
+          },
+          "image_path": "images/028.png",
+          "generated_at": "2026-07-31T14:00:33.407114+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/028.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 27,
+      "narration": "But she was never satisfied with just ruling one kingdom. She wanted to cross over. Really cross over.",
+      "word_count": 18,
+      "start_seconds": 248.364,
+      "end_seconds": 255.552,
+      "estimated_seconds": 7.187,
+      "visual_intent": "But she was never satisfied with just ruling one kingdom.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 29,
+          "scene_shot_number": 1,
+          "filename": "029.png",
+          "start_seconds": 248.364,
+          "end_seconds": 255.552,
+          "estimated_seconds": 7.187,
+          "visual_intent": "Selena performing with passionate ambition on a concert stage",
+          "source": "ai",
+          "prompt": "Medium-wide eye-level shot of Selena Quintanilla in early 1990s performing live on a concert stage, singing passionately into a microphone with determined ambitious expression, sparkling stage outfit, bright concert lighting with dramatic side light, 1990s concert setting with subtle audience in soft background, energetic and aspirational mood, photorealistic archival documentary style, natural film grain, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla live performance 1994",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "live performance",
+              "on stage",
+              "singing"
+            ],
+            "avoid_terms": [
+              "family photos",
+              "childhood",
+              "posthumous tributes"
+            ],
+            "search_queries": [
+              "Selena Quintanilla live concert 1994",
+              "Selena Perez stage performance 90s",
+              "Selena singing microphone concert",
+              "Selena Quintanilla Tejano show 1994"
+            ]
+          },
+          "image_path": "images/029.png",
+          "generated_at": "2026-07-31T14:00:39.366795+00:00",
+          "image_qa": {
+            "score": 78,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/029.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 28,
+      "narration": "She started recording English-language songs in secret, working with top producers, dreaming of the day she could stand on stages beside her heroes like Paula Abdul and Whitney Houston.",
+      "word_count": 29,
+      "start_seconds": 255.552,
+      "end_seconds": 267.131,
+      "estimated_seconds": 11.58,
+      "visual_intent": "She started recording English-language songs in secret, working with top producers, dreaming of the day she could stand on stages beside her heroes like Paula Abdul and Whitney...",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 30,
+          "scene_shot_number": 1,
+          "filename": "030.png",
+          "start_seconds": 255.552,
+          "end_seconds": 267.131,
+          "estimated_seconds": 11.58,
+          "visual_intent": "Selena singing passionately into a studio microphone while working with top producers during a secret English-language recording session",
+          "source": "ai",
+          "prompt": "16:9 medium shot of Selena Quintanilla standing in a modest 1990s recording studio, wearing headphones and singing with focused ambition into a large studio microphone, two producers visible working at the mixing console behind glass in soft warm lighting, natural documentary style, realistic archival appearance with subtle film grain, hopeful and determined mood, early 1990s details",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla recording studio session",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "recording studio",
+              "microphone"
+            ],
+            "avoid_terms": [
+              "live stage",
+              "audience",
+              "concert"
+            ],
+            "search_queries": [
+              "Selena Quintanilla in recording studio",
+              "Selena Perez microphone headphones 1990s",
+              "Selena working with producers",
+              "Selena Quintanilla studio session"
+            ]
+          },
+          "image_path": "images/030.png",
+          "generated_at": "2026-07-31T14:00:46.437714+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/030.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 29,
+      "narration": "You could feel the excitement building. She was in the middle of recording her first mainstream English album when everything changed in the cruelest way.",
+      "word_count": 25,
+      "start_seconds": 267.131,
+      "end_seconds": 277.114,
+      "estimated_seconds": 9.982,
+      "visual_intent": "You could feel the excitement building.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 31,
+          "scene_shot_number": 1,
+          "filename": "031.png",
+          "start_seconds": 267.131,
+          "end_seconds": 277.114,
+          "estimated_seconds": 9.982,
+          "visual_intent": "Selena singing with focused excitement into a studio microphone during her first mainstream English album sessions",
+          "source": "ai",
+          "prompt": "Medium shot of Selena standing in a mid-1990s professional recording studio, wearing large headphones and singing with building excitement into a large-diaphragm microphone, warm soft lighting from above illuminating her face and 90s studio equipment, control room glass visible behind her, natural skin tones and era-appropriate clothing, realistic photorealistic documentary photograph, 16:9 aspect ratio",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena recording studio 1995",
+          "historical_plan": {
+            "subject": "Selena",
+            "subject_type": "person",
+            "era": "1995",
+            "required_terms": [
+              "recording studio",
+              "microphone",
+              "headphones"
+            ],
+            "avoid_terms": [
+              "stage",
+              "concert",
+              "audience"
+            ],
+            "search_queries": [
+              "Selena Quintanilla recording studio",
+              "Selena vocal booth session",
+              "Selena Perez English album recording",
+              "archival Selena in studio 1995"
+            ]
+          },
+          "image_path": "images/031.png",
+          "generated_at": "2026-07-31T14:00:54.496585+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/031.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 30,
+      "narration": "The news hit like a sudden storm. At just twenty-three years old, she was gone. The entire country mourned in a way few artists ever experience.",
+      "word_count": 26,
+      "start_seconds": 277.114,
+      "end_seconds": 287.496,
+      "estimated_seconds": 10.382,
+      "visual_intent": "The news hit like a sudden storm.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 32,
+          "scene_shot_number": 1,
+          "filename": "032.png",
+          "start_seconds": 277.114,
+          "end_seconds": 287.496,
+          "estimated_seconds": 10.382,
+          "visual_intent": "Large crowd of mourners gathered outdoors with bowed heads and floral tributes",
+          "source": "ai",
+          "prompt": "Wide establishing shot of a large inclusive crowd of men and women standing outdoors in a public space in 1995, many with heads bowed and sorrowful expressions, some placing flowers on the ground, natural overcast daylight, somber and reflective mood, realistic documentary photograph, 16:9 aspect ratio, no visible text signs or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena national mourning 1995",
+          "historical_plan": {
+            "subject": "Mourning crowd for Selena",
+            "subject_type": "group",
+            "era": "1995",
+            "required_terms": [
+              "public mourning",
+              "crowd",
+              "grief"
+            ],
+            "avoid_terms": [
+              "performance",
+              "concert",
+              "stage"
+            ],
+            "search_queries": [
+              "Selena Quintanilla public mourning 1995",
+              "crowds grieving Selena death",
+              "1995 Selena memorial gatherings",
+              "national reaction to Selena passing"
+            ]
+          },
+          "image_path": "images/032.png",
+          "generated_at": "2026-07-31T14:01:01.046142+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/032.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 31,
+      "narration": "People left flowers and candles along highways. Radio stations played her music around the clock. Then something miraculous happened. The English album, Dreaming of You, was released, and it entered the charts at number one.",
+      "word_count": 35,
+      "start_seconds": 287.496,
+      "end_seconds": 301.471,
+      "estimated_seconds": 13.975,
+      "visual_intent": "People left flowers and candles along highways.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 33,
+          "scene_shot_number": 1,
+          "filename": "033.png",
+          "start_seconds": 287.496,
+          "end_seconds": 294.483,
+          "estimated_seconds": 6.988,
+          "visual_intent": "Roadside tributes of flowers and candles along a highway",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/selena/photos/005-selena-monument-corpus-christi.jpg",
+            "library_filename": "005-selena-monument-corpus-christi.jpg",
+            "library_id": "005",
+            "curated": true
+          },
+          "prompt": "Wide angle shot of a 1995 highway shoulder covered with dozens of colorful flower bouquets and lit candles in glass votives arranged as tributes on the ground, natural daylight with soft shadows, somber respectful atmosphere, realistic color photography 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 005-selena-monument-corpus-christi.jpg assigned manually.",
+          "historical_search": "Selena memorial flowers candles highway 1995",
+          "historical_plan": {
+            "subject": "roadside memorial",
+            "subject_type": "place",
+            "era": "1995",
+            "required_terms": [
+              "flowers",
+              "candles",
+              "highway"
+            ],
+            "avoid_terms": [
+              "crowds",
+              "concert",
+              "stage"
+            ],
+            "search_queries": [
+              "Selena memorial flowers candles highway 1995",
+              "roadside tributes Selena death Texas",
+              "1995 floral highway memorial Selena"
+            ]
+          },
+          "image_path": "images/033.png",
+          "generated_at": "2026-07-31T14:01:07.676291+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/033.json"
+          }
+        },
+        {
+          "shot_number": 34,
+          "scene_shot_number": 2,
+          "filename": "034.png",
+          "start_seconds": 294.483,
+          "end_seconds": 301.471,
+          "estimated_seconds": 6.988,
+          "visual_intent": "Music store customers buying albums after a number one chart debut",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium interior shot of a busy 1995 record store with customers standing at counters and browsing CD bins under bright retail lighting, atmosphere of strong public demand, realistic color photography 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1995",
+            "required_terms": [
+              "record store",
+              "CD buyers"
+            ],
+            "avoid_terms": [
+              "flowers",
+              "candles",
+              "highway",
+              "memorial"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/034.png",
+          "generated_at": "2026-07-31T14:01:14.355663+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/034.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 32,
+      "narration": "Not just the Latin charts. The Billboard 200. America was finally ready to hear what she had been trying to say all along. When you listen to her now, decades later, that voice still jumps out of the speakers with the same vibrant energy.",
+      "word_count": 44,
+      "start_seconds": 301.471,
+      "end_seconds": 319.04,
+      "estimated_seconds": 17.569,
+      "visual_intent": "Not just the Latin charts.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 35,
+          "scene_shot_number": 1,
+          "filename": "035.png",
+          "start_seconds": 301.471,
+          "end_seconds": 310.256,
+          "estimated_seconds": 8.785,
+          "visual_intent": "Selena singing with passionate vibrant energy into a microphone during a live concert",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/selena/photos/003-selena-tejano-awards-1987.jpg",
+            "library_filename": "003-selena-tejano-awards-1987.jpg",
+            "library_id": "003",
+            "curated": true
+          },
+          "prompt": "16:9 documentary image of Selena Quintanilla captured in medium close-up singing with passionate vibrant energy into a microphone on a concert stage, mid-1990s era outfit and hairstyle, warm stage lighting with spotlights from below, expressive face conveying power, subtle crowd blur in background, natural archival film look, realistic colors and texture",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 003-selena-tejano-awards-1987.jpg assigned manually.",
+          "historical_search": "Selena Quintanilla live performance 1995",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "mid-1990s",
+            "required_terms": [
+              "live performance",
+              "singing",
+              "stage"
+            ],
+            "avoid_terms": [
+              "studio recording",
+              "posed portrait"
+            ],
+            "search_queries": [
+              "Selena Quintanilla live concert stage",
+              "Selena performing microphone 1995",
+              "Selena vibrant live singing archival",
+              "Selena Quintanilla energetic performance"
+            ]
+          },
+          "image_path": "images/035.png",
+          "generated_at": "2026-07-31T14:01:20.217033+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/035.json"
+          }
+        },
+        {
+          "shot_number": 36,
+          "scene_shot_number": 2,
+          "filename": "036.png",
+          "start_seconds": 310.256,
+          "end_seconds": 319.04,
+          "estimated_seconds": 8.785,
+          "visual_intent": "Inclusive listener absorbed in music with joyful expression and emotional connection",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary image of a generic inclusive listener seated comfortably in a sunlit living room with eyes closed and gentle smile experiencing music from nearby speakers, natural window light creating soft warmth, relaxed posture showing connection to vibrant energy, contemporary casual setting, realistic relatable atmosphere with shallow depth of field",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "present day",
+            "required_terms": [
+              "person listening",
+              "positive reaction"
+            ],
+            "avoid_terms": [
+              "performer",
+              "crowd",
+              "concert stage"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/036.png",
+          "generated_at": "2026-07-31T14:01:27.563266+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/036.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 33,
+      "narration": "Tracks like \"Bidi Bidi Bom Bom\" capture her playful side so perfectly you can almost see her laughing as she sings. \"Como la Flor\" carries this beautiful melancholy that sneaks up on you, the way real life does.",
+      "word_count": 38,
+      "start_seconds": 319.04,
+      "end_seconds": 334.214,
+      "estimated_seconds": 15.173,
+      "visual_intent": "Tracks like \"Bidi Bidi Bom Bom\" capture her playful side so perfectly you can almost see her laughing as she sings.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 37,
+          "scene_shot_number": 1,
+          "filename": "037.png",
+          "start_seconds": 319.04,
+          "end_seconds": 326.627,
+          "estimated_seconds": 7.587,
+          "visual_intent": "Selena laughing playfully while singing",
+          "source": "ai",
+          "prompt": "16:9 archival documentary image of Selena Quintanilla in early 1990s on a concert stage, close-up framing capturing her face mid-laugh with bright joyful expression as she sings into a microphone, vibrant colorful stage outfit, energetic bright stage lighting, playful carefree mood, slight film grain and natural color tones of the period",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Bidi Bidi Bom Bom performance",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "smiling",
+              "performing",
+              "stage"
+            ],
+            "avoid_terms": [
+              "solemn",
+              "crying",
+              "studio"
+            ],
+            "search_queries": [
+              "Selena Quintanilla live stage smiling 1990s",
+              "Selena Bidi Bidi Bom Bom concert photos",
+              "Selena laughing while singing onstage",
+              "Selena Quintanilla energetic performance"
+            ]
+          },
+          "image_path": "images/037.png",
+          "generated_at": "2026-07-31T14:01:33.240567+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/037.json"
+          }
+        },
+        {
+          "shot_number": 38,
+          "scene_shot_number": 2,
+          "filename": "038.png",
+          "start_seconds": 326.627,
+          "end_seconds": 334.214,
+          "estimated_seconds": 7.587,
+          "visual_intent": "Selena conveying beautiful melancholy while singing",
+          "source": "ai",
+          "prompt": "16:9 archival documentary image of Selena Quintanilla in early 1990s on a concert stage, medium side-angle framing showing her reflective expression with subtle sorrow as she sings, elegant stage setting with softer dramatic lighting, beautiful melancholy mood, slight film grain and natural color tones of the period",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Como la Flor performance",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "early 1990s",
+            "required_terms": [
+              "emotional",
+              "performing",
+              "stage"
+            ],
+            "avoid_terms": [
+              "smiling",
+              "laughing",
+              "upbeat"
+            ],
+            "search_queries": [
+              "Selena Quintanilla Como la Flor live performance",
+              "Selena emotional singing onstage 1990s",
+              "Selena Quintanilla heartfelt concert photos",
+              "Selena melancholic stage expression"
+            ]
+          },
+          "image_path": "images/038.png",
+          "generated_at": "2026-07-31T14:01:39.197703+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/038.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 34,
+      "narration": "And those English recordings reveal what might have been, that stunning range and star power that was just beginning to unfold. The movie that came after, the one with Jennifer Lopez, introduced her to a whole new generation who weren't even born when she was performing.",
+      "word_count": 46,
+      "start_seconds": 334.214,
+      "end_seconds": 352.581,
+      "estimated_seconds": 18.368,
+      "visual_intent": "And those English recordings reveal what might have been, that stunning range and star power that was just beginning to unfold.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 39,
+          "scene_shot_number": 1,
+          "filename": "039.png",
+          "start_seconds": 334.214,
+          "end_seconds": 343.398,
+          "estimated_seconds": 9.184,
+          "visual_intent": "Selena singing with emotional intensity and emerging star power in a recording studio",
+          "source": "ai",
+          "prompt": "Close-up framing of Selena Quintanilla standing in a mid-1990s professional recording studio, wearing headphones and singing with powerful emotion and wide vocal range into a large studio microphone, eyes closed in concentration, warm overhead lighting, sound mixing board and acoustic panels in soft background, conveying unfolding star power, realistic archival documentary photograph, 16:9 aspect ratio",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla recording studio",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "mid-1990s",
+            "required_terms": [
+              "recording studio",
+              "microphone",
+              "headphones"
+            ],
+            "avoid_terms": [
+              "stage",
+              "concert",
+              "audience"
+            ],
+            "search_queries": [
+              "Selena Quintanilla in recording studio",
+              "Selena vocal session microphone",
+              "Selena English recordings studio",
+              "Selena Quintanilla singing in booth"
+            ]
+          },
+          "image_path": "images/039.png",
+          "generated_at": "2026-07-31T14:01:46.108730+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/039.json"
+          }
+        },
+        {
+          "shot_number": 40,
+          "scene_shot_number": 2,
+          "filename": "040.png",
+          "start_seconds": 343.398,
+          "end_seconds": 352.581,
+          "estimated_seconds": 9.184,
+          "visual_intent": "Jennifer Lopez portraying Selena in the biographical movie that reached a new generation",
+          "source": "ai",
+          "prompt": "Medium wide shot of Jennifer Lopez in character as Selena Quintanilla during filming of the biographical movie, standing on a recreated performance set in 1990s attire with microphone in hand, natural on-set lighting with slight film crew elements visible at edges, conveying the story reaching audiences born after her time, realistic archival documentary photograph, 16:9 aspect ratio",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Jennifer Lopez Selena movie",
+          "historical_plan": {
+            "subject": "Jennifer Lopez",
+            "subject_type": "person",
+            "era": "late 1990s",
+            "required_terms": [
+              "as Selena",
+              "biographical film",
+              "in character"
+            ],
+            "avoid_terms": [
+              "modern clothing",
+              "red carpet",
+              "post-2000"
+            ],
+            "search_queries": [
+              "Jennifer Lopez as Selena Quintanilla",
+              "Jennifer Lopez Selena biopic filming",
+              "Jennifer Lopez in Selena movie scene",
+              "Jennifer Lopez Selena film set"
+            ]
+          },
+          "image_path": "images/040.png",
+          "generated_at": "2026-07-31T14:01:51.555851+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/040.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 35,
+      "narration": "But the real gift is simpler than that. When those familiar opening notes of any Selena song come on, people of a certain age stop what they're doing.",
+      "word_count": 28,
+      "start_seconds": 352.581,
+      "end_seconds": 363.762,
+      "estimated_seconds": 11.18,
+      "visual_intent": "But the real gift is simpler than that.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 41,
+          "scene_shot_number": 1,
+          "filename": "041.png",
+          "start_seconds": 352.581,
+          "end_seconds": 363.762,
+          "estimated_seconds": 11.18,
+          "visual_intent": "Everyday people pausing their activities and turning attentive to listen as a familiar song begins",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Eye-level wide shot of several people in a 1990s living room abruptly stopping daily tasks one setting down a cup mid-drink another pausing while dusting all becoming still with heads slightly tilted and reflective expressions as if hearing the opening notes of a song natural window light warm tones period accurate furniture and clothing photorealistic 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1990s",
+            "required_terms": [
+              "pausing activities",
+              "attentive listening"
+            ],
+            "avoid_terms": [
+              "text",
+              "logos",
+              "performer",
+              "stage"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/041.png",
+          "generated_at": "2026-07-31T14:01:59.799350+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/041.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 36,
+      "narration": "They smile without meaning to. They remember where they were when they first heard her, who they were dancing with, how the music made them feel young and hopeful.",
+      "word_count": 29,
+      "start_seconds": 363.762,
+      "end_seconds": 375.342,
+      "estimated_seconds": 11.58,
+      "visual_intent": "They smile without meaning to.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 42,
+          "scene_shot_number": 1,
+          "filename": "042.png",
+          "start_seconds": 363.762,
+          "end_seconds": 375.342,
+          "estimated_seconds": 11.58,
+          "visual_intent": "Group of young adults smiling spontaneously while dancing together at a casual 1990s gathering radiating youth and hope",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Eye-level medium wide shot of a group of young adults in casual 1990s clothing smiling involuntarily while dancing together in a modest house party living room, warm indoor lighting from windows and lamps, expressions of youth and hope, nostalgic realistic style, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1990s",
+            "required_terms": [
+              "spontaneous smiles",
+              "dancing",
+              "youthful energy"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "concert",
+              "Selena"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/042.png",
+          "generated_at": "2026-07-31T14:02:07.604568+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/042.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 37,
+      "narration": "That's her real legacy. Not the awards or the sales figures, but this living, breathing connection she still maintains with anyone who's ever felt like an outsider with big dreams.",
+      "word_count": 30,
+      "start_seconds": 375.342,
+      "end_seconds": 387.32,
+      "estimated_seconds": 11.979,
+      "visual_intent": "That's her real legacy.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 43,
+          "scene_shot_number": 1,
+          "filename": "043.png",
+          "start_seconds": 375.342,
+          "end_seconds": 387.32,
+          "estimated_seconds": 11.979,
+          "visual_intent": "Group of people listening with hopeful and inspired expressions representing outsiders with big dreams",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium shot of a small group of people in casual 1990s clothing standing together indoors, soft natural window light from the side illuminating their faces, expressions of deep personal connection hope and determination, simple modest setting, warm color tones, contemplative uplifting mood",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1990s",
+            "required_terms": [
+              "audience",
+              "inspired faces"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "concert"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/043.png",
+          "generated_at": "2026-07-31T14:02:14.637062+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/043.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 38,
+      "narration": "She showed us that you could honor where you came from while reaching for everything the world had to offer. That joy could be a form of revolution.",
+      "word_count": 28,
+      "start_seconds": 387.32,
+      "end_seconds": 398.501,
+      "estimated_seconds": 11.18,
+      "visual_intent": "She showed us that you could honor where you came from while reaching for everything the world had to offer.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 44,
+          "scene_shot_number": 1,
+          "filename": "044.png",
+          "start_seconds": 387.32,
+          "end_seconds": 398.501,
+          "estimated_seconds": 11.18,
+          "visual_intent": "Selena beaming with joy while performing on stage",
+          "source": "ai",
+          "prompt": "Wide shot of Selena Quintanilla-Pérez on a concert stage during her peak career, captured mid-performance with a radiant joyful smile and bright eyes, singing into a microphone while moving dynamically, wearing a sparkling stage outfit, warm theatrical spotlights illuminating her figure against a dark backdrop with soft audience silhouettes, vibrant uplifting atmosphere, realistic photorealistic documentary photograph, 16:9",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena Quintanilla joyful stage performance",
+          "historical_plan": {
+            "subject": "Selena Quintanilla-Pérez",
+            "subject_type": "person",
+            "era": "peak career",
+            "required_terms": [
+              "joyful smile",
+              "live performance"
+            ],
+            "avoid_terms": [
+              "studio portrait",
+              "solemn expression"
+            ],
+            "search_queries": [
+              "Selena Quintanilla smiling on stage",
+              "Selena live concert joyful performance",
+              "Selena Quintanilla Perez microphone smile archival",
+              "Selena Tejano singer energetic stage"
+            ]
+          },
+          "image_path": "images/044.png",
+          "generated_at": "2026-07-31T14:02:26.923282+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 2,
+            "selected_attempt": 2,
+            "report": "image_qa/044.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 39,
+      "narration": "That one young woman from Corpus Christi with a big voice and an even bigger heart could unite families, bridge cultures, and leave behind music that still feels like sunshine even on the cloudiest days.",
+      "word_count": 35,
+      "start_seconds": 398.501,
+      "end_seconds": 412.476,
+      "estimated_seconds": 13.975,
+      "visual_intent": "That one young woman from Corpus Christi with a big voice and an even bigger heart could unite families, bridge cultures, and leave behind music that still feels like sunshine...",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 45,
+          "scene_shot_number": 1,
+          "filename": "045.png",
+          "start_seconds": 398.501,
+          "end_seconds": 405.489,
+          "estimated_seconds": 6.988,
+          "visual_intent": "Young Selena singing with powerful voice and heartfelt emotion",
+          "source": "ai",
+          "prompt": "16:9 documentary archival photograph of young Selena singing passionately into a microphone, medium close-up framing on a simple concert stage, early 1990s Texas setting, warm stage lighting highlighting her expressive face and big hair, sparkly stage outfit, powerful heartfelt mood, realistic historical image",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena live performance Corpus Christi",
+          "historical_plan": {
+            "subject": "Selena",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "singing",
+              "stage"
+            ],
+            "avoid_terms": [
+              "crowd",
+              "studio"
+            ],
+            "search_queries": [
+              "Selena Quintanilla singing live",
+              "Selena Corpus Christi performance",
+              "Selena microphone early 90s",
+              "Selena stage photo"
+            ]
+          },
+          "image_path": "images/045.png",
+          "generated_at": "2026-07-31T14:02:33.159902+00:00",
+          "image_qa": {
+            "score": 88,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/045.json"
+          }
+        },
+        {
+          "shot_number": 46,
+          "scene_shot_number": 2,
+          "filename": "046.png",
+          "start_seconds": 405.489,
+          "end_seconds": 412.476,
+          "estimated_seconds": 6.988,
+          "visual_intent": "Families united across cultures enjoying warm sunshine breaking through clouds",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "16:9 documentary archival photograph of inclusive multi-generational families gathered outdoors in a park, wide shot framing, warm golden sunlight rays breaking through cloudy sky, early 1990s casual clothing, people smiling and connecting peacefully, uplifting joyful mood, realistic historical image",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "group",
+            "era": "early career",
+            "required_terms": [
+              "families",
+              "outdoor",
+              "sunlight"
+            ],
+            "avoid_terms": [
+              "performer",
+              "stage",
+              "concert"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/046.png",
+          "generated_at": "2026-07-31T14:02:39.348172+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/046.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 40,
+      "narration": "So go ahead. Put on \"Fotos y Recuerdos\" or \"No Me Queda Más\" or any of those songs that made her who she was. Close your eyes for a moment.",
+      "word_count": 30,
+      "start_seconds": 412.476,
+      "end_seconds": 424.455,
+      "estimated_seconds": 11.979,
+      "visual_intent": "So go ahead.",
+      "visual_shot_count": 1,
+      "visual_shots": [
+        {
+          "shot_number": 47,
+          "scene_shot_number": 1,
+          "filename": "047.png",
+          "start_seconds": 412.476,
+          "end_seconds": 424.455,
+          "estimated_seconds": 11.979,
+          "visual_intent": "Person sitting quietly with eyes closed in peaceful reflection while listening to music",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Medium close-up of a person seated comfortably in a chair with eyes closed and calm expression, head slightly tilted in reflection, soft side window light casting gentle shadows across the face, simple 1990s domestic interior with neutral furnishings, peaceful and nostalgic mood, realistic documentary details, inclusive generic figure, natural skin tones, no text or logos",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1990s",
+            "required_terms": [
+              "eyes closed",
+              "listening"
+            ],
+            "avoid_terms": [
+              "performing",
+              "stage",
+              "Selena"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/047.png",
+          "generated_at": "2026-07-31T14:02:45.271388+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/047.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 41,
+      "narration": "You'll hear more than music. You'll hear a young woman who lived every single day like it was the biggest stage in the world, smiling that unstoppable smile, inviting all of us to dance right alongside her.",
+      "word_count": 37,
+      "start_seconds": 424.455,
+      "end_seconds": 439.229,
+      "estimated_seconds": 14.774,
+      "visual_intent": "You'll hear more than music.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 48,
+          "scene_shot_number": 1,
+          "filename": "048.png",
+          "start_seconds": 424.455,
+          "end_seconds": 431.842,
+          "estimated_seconds": 7.387,
+          "visual_intent": "Selena beaming with her unstoppable smile during a live performance",
+          "source": "ai",
+          "prompt": "16:9 documentary archival photograph of Selena, young woman with long dark wavy hair in sparkling stage attire, medium close-up on a concert stage, captured mid-performance with radiant unstoppable smile and direct gaze, warm spotlights on her face, 1990s Tejano setting, joyful uplifting mood, realistic film grain and natural color tones",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena smiling on stage 1990s",
+          "historical_plan": {
+            "subject": "Selena",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "smiling",
+              "performance"
+            ],
+            "avoid_terms": [
+              "dancing",
+              "audience"
+            ],
+            "search_queries": [
+              "Selena Quintanilla smiling performance",
+              "Selena live stage smile",
+              "Selena bright smile concert"
+            ]
+          },
+          "image_path": "images/048.png",
+          "generated_at": "2026-07-31T14:02:51.197785+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/048.json"
+          }
+        },
+        {
+          "shot_number": 49,
+          "scene_shot_number": 2,
+          "filename": "049.png",
+          "start_seconds": 431.842,
+          "end_seconds": 439.229,
+          "estimated_seconds": 7.387,
+          "visual_intent": "Selena inviting audience to dance through energetic gestures on stage",
+          "source": "ai",
+          "prompt": "16:9 documentary archival photograph of Selena, young woman with long dark hair in vibrant stage outfit, medium wide shot on a concert stage, energetically dancing with open arms and inviting hand gesture toward viewer, subtle blurred audience forms in background, warm dynamic stage lighting, 1990s setting, joyful inclusive mood, realistic film grain and natural color tones",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "AI image used to reduce repeated historical photographs.",
+          "historical_search": "Selena dancing inviting audience 1990s",
+          "historical_plan": {
+            "subject": "Selena",
+            "subject_type": "person",
+            "era": "early career",
+            "required_terms": [
+              "dancing",
+              "inviting gesture"
+            ],
+            "avoid_terms": [
+              "close-up",
+              "static smile"
+            ],
+            "search_queries": [
+              "Selena Quintanilla dancing on stage",
+              "Selena Tejano concert inviting fans",
+              "Selena live performance open gesture"
+            ]
+          },
+          "image_path": "images/049.png",
+          "generated_at": "2026-07-31T14:02:58.056481+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/049.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    },
+    {
+      "scene_number": 42,
+      "narration": "Some lights burn out too soon, but theirs is the glow we keep carrying with us. Selena's light is still shining, still making us want to move, still reminding us that the best songs are the ones that feel like coming home.",
+      "word_count": 42,
+      "start_seconds": 439.229,
+      "end_seconds": 456.0,
+      "estimated_seconds": 16.771,
+      "visual_intent": "Some lights burn out too soon, but theirs is the glow we keep carrying with us.",
+      "visual_shot_count": 2,
+      "visual_shots": [
+        {
+          "shot_number": 50,
+          "scene_shot_number": 1,
+          "filename": "050.png",
+          "start_seconds": 439.229,
+          "end_seconds": 447.615,
+          "estimated_seconds": 8.385,
+          "visual_intent": "Selena singing passionately on stage under radiant spotlights",
+          "source": "historical",
+          "historical_asset": {
+            "provider": "curated_library",
+            "approved_image": "assets/historical/selena/photos/003-selena-tejano-awards-1987.jpg",
+            "library_filename": "003-selena-tejano-awards-1987.jpg",
+            "library_id": "003",
+            "curated": true
+          },
+          "prompt": "Eye-level medium shot of Selena in the 1990s standing center stage singing into a microphone, bright spotlights creating a glowing halo effect around her, vibrant stage costume, joyful expression as she performs, warm vibrant lighting, energetic yet graceful atmosphere, 16:9 documentary style with subtle film grain",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "Curated historical photo 003-selena-tejano-awards-1987.jpg assigned manually.",
+          "historical_search": "Selena Quintanilla live stage performance 1990s",
+          "historical_plan": {
+            "subject": "Selena Quintanilla",
+            "subject_type": "person",
+            "era": "1990s",
+            "required_terms": [
+              "live performance",
+              "singing",
+              "stage"
+            ],
+            "avoid_terms": [
+              "studio",
+              "portrait",
+              "memorial"
+            ],
+            "search_queries": [
+              "Selena Quintanilla concert photo 1994",
+              "Selena live performance stage 1990s",
+              "Selena Tejano show microphone",
+              "Selena Quintanilla Perez performing"
+            ]
+          },
+          "image_path": "images/050.png",
+          "generated_at": "2026-07-31T14:03:04.228465+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/050.json"
+          }
+        },
+        {
+          "shot_number": 51,
+          "scene_shot_number": 2,
+          "filename": "051.png",
+          "start_seconds": 447.615,
+          "end_seconds": 456.0,
+          "estimated_seconds": 8.385,
+          "visual_intent": "Group of people dancing together in a warm home-like setting",
+          "source": "ai",
+          "historical_asset": null,
+          "prompt": "Soft medium-wide shot of an inclusive group of people dancing freely in a warmly lit living room during the 1990s, casual clothes, expressions of happiness and connection as they move to music, gentle natural window light mixed with warm interior lamps suggesting comfort and home, inviting nostalgic feeling, 16:9 documentary style with subtle film grain",
+          "status": "image_ready",
+          "approved": false,
+          "review_notes": "",
+          "historical_search": "",
+          "historical_plan": {
+            "subject": "",
+            "subject_type": "generic",
+            "era": "1990s",
+            "required_terms": [
+              "dancing",
+              "joyful movement"
+            ],
+            "avoid_terms": [
+              "stage",
+              "performer",
+              "Selena",
+              "crowd"
+            ],
+            "search_queries": []
+          },
+          "image_path": "images/051.png",
+          "generated_at": "2026-07-31T14:03:11.703219+00:00",
+          "image_qa": {
+            "score": 100,
+            "passed": true,
+            "attempts": 1,
+            "selected_attempt": 1,
+            "report": "image_qa/051.json"
+          }
+        }
+      ],
+      "review_notes": ""
+    }
+  ],
+  "updated_at": "2026-07-31T14:03:11.722224+00:00",
+  "visual_plan_ready": true,
+  "images_ready": true
+}
