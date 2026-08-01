@@ -8,7 +8,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
 
-YOUTUBE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/youtube.upload"
+YOUTUBE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/youtube.force-ssl"
 TOKEN_DIR = Path(".cache-topspot/youtube")
 TOKEN_PATH = TOKEN_DIR / "credentials.json"
 

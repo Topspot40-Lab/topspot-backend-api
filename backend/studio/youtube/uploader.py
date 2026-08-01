@@ -128,6 +128,47 @@ def set_thumbnail(
     _execute_with_retry(request, max_retries=max_retries)
 
 
+def update_video_metadata(
+    youtube: Any,
+    video_id: str,
+    entry: UploadManifestEntry,
+    *,
+    max_retries: int = 5,
+) -> None:
+    """Update metadata for an existing video without changing its media/status."""
+    response = _execute_with_retry(
+        youtube.videos().list(part="snippet", id=video_id),
+        max_retries=max_retries,
+    )
+    items = response.get("items", [])
+    if not items:
+        raise ValueError(f"YouTube video not found or not owned: {video_id}")
+
+    current = items[0].get("snippet", {})
+    snippet = {
+        "title": entry.title,
+        "description": entry.description,
+        "tags": list(entry.tags),
+        "categoryId": entry.category_id,
+        "defaultLanguage": entry.language_code,
+        "defaultAudioLanguage": entry.language_code,
+    }
+
+    # Preserve fields that YouTube allows on update but that this manifest
+    # does not manage.
+    for field in ("recordingDate",):
+        if field in current:
+            snippet[field] = current[field]
+
+    _execute_with_retry(
+        youtube.videos().update(
+            part="snippet",
+            body={"id": video_id, "snippet": snippet},
+        ),
+        max_retries=max_retries,
+    )
+
+
 def _resumable_execute(request: Any, *, max_retries: int) -> dict[str, Any]:
     retry_count = 0
     while True:
