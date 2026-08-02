@@ -124,6 +124,25 @@ CATALOG = [
             ("brazilian_hip_hop_and_rap_nacional", "Brazilian Hip-Hop and Rap Nacional", "standard"),
         ],
     },
+    {
+        "slug": "beyond_the_music",
+        "name": "Beyond the Music",
+        "description": "Docuseries exploring how music, sound, silence, the brain, and the body shape human experience.",
+        "items": [
+            ("music_and_memory", "Music and Memory", "standard"),
+            ("science_of_earworms", "The Science of Earworms", "standard"),
+            ("why_music_gives_us_chills", "Why Music Gives Us Chills", "standard"),
+            ("music_and_dementia", "Music and Dementia", "standard"),
+            ("psychology_of_musical_nostalgia", "The Psychology of Musical Nostalgia", "standard"),
+            ("music_and_athletic_performance", "Music and Athletic Performance", "standard"),
+            ("why_stadium_crowds_sing", "Why Stadium Crowds Sing", "standard"),
+            ("architecture_of_sound", "The Architecture of Sound", "standard"),
+            ("sound_of_fear", "The Sound of Fear", "standard"),
+            ("music_in_medicine", "Music in Medicine", "standard"),
+            ("why_humans_dance", "Why Humans Dance", "standard"),
+            ("silence_the_sound_we_rarely_hear", "Silence: The Sound We Rarely Hear", "standard"),
+        ],
+    },
 ]
 
 
