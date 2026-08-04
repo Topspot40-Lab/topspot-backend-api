@@ -73,6 +73,7 @@ def entitlement(**overrides):
         "offer_code": OFFER_CODE,
         "free_access_expires_at": (now + timedelta(days=1)).isoformat(),
         "grace_access_expires_at": (now + timedelta(days=31)).isoformat(),
+        "standard_transition_at": (now + timedelta(days=366)).isoformat(),
         "discount_consumed_at": None,
     }
     base.update(overrides)

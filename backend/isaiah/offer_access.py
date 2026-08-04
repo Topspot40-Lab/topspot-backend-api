@@ -60,16 +60,21 @@ def compute_offer_access(
         raise ValueError("Entitlement must contain free_access_expires_at")
     if entitlement.get("grace_access_expires_at") is None:
         raise ValueError("Entitlement must contain grace_access_expires_at")
+    if entitlement.get("standard_transition_at") is None:
+        raise ValueError("Entitlement must contain standard_transition_at")
 
     free_access_expires_at = parse_supabase_timestamptz(entitlement.get("free_access_expires_at"))
     grace_access_expires_at = parse_supabase_timestamptz(entitlement.get("grace_access_expires_at"))
+    standard_transition_at = parse_supabase_timestamptz(entitlement.get("standard_transition_at"))
 
     if free_access_expires_at > grace_access_expires_at:
         raise ValueError("free_access_expires_at must not be later than grace_access_expires_at")
+    if grace_access_expires_at > standard_transition_at:
+        raise ValueError("grace_access_expires_at must not be later than standard_transition_at")
 
     discount_consumed_at = parse_supabase_timestamptz(entitlement.get("discount_consumed_at"))
     discount_used = discount_consumed_at is not None
-    discount_available = not discount_used
+    discount_available = not discount_used and current_time < standard_transition_at
 
     base_response = {
         "offer_code": offer_code,
