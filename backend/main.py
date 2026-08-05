@@ -12,6 +12,7 @@ from backend.routers.decade_genre_player import router as decade_genre_player_ro
 from backend.routers.collections_player import router as collections_player_router
 from backend.routers.decade_genre_pause import router as decade_genre_pause_router
 from backend.routers.music_docuseries import router as music_docuseries_router
+from backend.routers.supabase_auth import router as supabase_auth_router
 
 from backend.routers.feedback import feedback_router
 from backend.routers.artist_spotlight import router as artist_spotlight_router
@@ -99,6 +100,7 @@ app.include_router(feedback_router, prefix="/api")
 
 # Spotify Auth endpoints 
 app.include_router(spotify_user_auth_router, prefix="/api/auth")
+app.include_router(supabase_auth_router, prefix="/api/auth")
 # Stripe endpoints
 app.include_router(stripe_router, prefix="/api")
 app.include_router(stripe_router, prefix="/api") # stripe webhook
