@@ -35,6 +35,22 @@ YOUTUBE_VIDEOS = {
     ("luis_miguel", "en"): "kfy9oGvZhes",
     ("luis_miguel", "es"): "aaJ2204NqUo",
     ("luis_miguel", "pt-BR"): "HIX_Eo3iEa4",
+
+    ("adele", "en"): "khdr3ZoFtCY",
+    ("adele", "es"): "mejgs2cpLXk",
+    ("adele", "pt-BR"): "E3yo4l5HKwU",
+
+    ("aerosmith", "en"): "gXRC6sJ0p0o",
+    ("aerosmith", "es"): "dkiGB8oYv3s",
+    ("aerosmith", "pt-BR"): "hFfqw0IGu_0",
+
+    ("al_jarreau", "en"): "h3m7p6VseRs",
+    ("al_jarreau", "es"): "8IT530NrP8w",
+    ("al_jarreau", "pt-BR"): "rxmr5RsXEXM",
+
+    ("ary_barroso", "en"): "1i9raHz1sb8",
+    ("ary_barroso", "es"): "IFY3V-gn_GE",
+    ("ary_barroso", "pt-BR"): "NLF0wecxscA",
 }
 
 
