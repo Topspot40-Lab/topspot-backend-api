@@ -301,3 +301,61 @@ class DocumentaryProductionContract:
             assets.provenance_report,
             assets.quality_report,
         )
+
+
+def create_documentary_production_contract(
+    production_slug: str,
+) -> DocumentaryProductionContract:
+    """Create the canonical artifact contract for a factory session.
+
+    Every path is relative to ``work/<slug>/factory``. The function is
+    intentionally independent of legacy production manifests so adoption
+    cannot migrate or rewrite them as a side effect.
+    """
+    shared_assets = SharedProductionAssets(
+        storyboard_and_scene_plan="shared/visual_plan.json",
+        approved_visuals="shared/visual_research.json",
+        visual_master="shared/visual_master.mp4",
+        provenance_report="shared/historical_photo_provenance.json",
+        quality_report="shared/visual_qc.json",
+    )
+
+    editions = tuple(
+        LanguageEdition(
+            language_code=language_code,
+            delivery=DeliveryFiles(
+                video_mp4=f"delivery/{language_code}/documentary.mp4",
+                narration=NarrationFiles(
+                    intro=(
+                        f"delivery/{language_code}/narration/intro.mp3"
+                    ),
+                    story=(
+                        f"delivery/{language_code}/narration/story.mp3"
+                    ),
+                    outro=(
+                        f"delivery/{language_code}/narration/outro.mp3"
+                    ),
+                ),
+            ),
+            publishing=PublishingAssets(
+                complete_audio_master=(
+                    f"publishing/{language_code}/complete_audio.mp3"
+                ),
+                captions=f"publishing/{language_code}/captions.vtt",
+                thumbnail=f"publishing/{language_code}/thumbnail.png",
+                youtube_metadata=(
+                    f"publishing/{language_code}/youtube.json"
+                ),
+                youtube_chapters=(
+                    f"publishing/{language_code}/chapters.txt"
+                ),
+            ),
+        )
+        for language_code in SUPPORTED_LANGUAGE_CODES
+    )
+
+    return DocumentaryProductionContract(
+        slug=production_slug,
+        shared_assets=shared_assets,
+        editions=editions,
+    )

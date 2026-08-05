@@ -6,6 +6,11 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from backend.studio.factory.production_contract import (
+    DocumentaryProductionContract,
+    create_documentary_production_contract,
+)
+
 
 class ProductionSession:
     """
@@ -26,6 +31,9 @@ class ProductionSession:
         self.production_slug = production_slug
         self.factory_root = work_root / "factory"
         self.session_path = self.factory_root / "session.json"
+        self._documentary_production_contract: (
+            DocumentaryProductionContract | None
+        ) = None
 
         self.factory_root.mkdir(
             parents=True,
@@ -34,6 +42,24 @@ class ProductionSession:
 
         self._station_started_monotonic: dict[str, float] = {}
         self.payload = self._load_or_create()
+
+    def adopt_documentary_production_contract(
+        self,
+    ) -> DocumentaryProductionContract:
+        """Explicitly opt this legacy-compatible session into the contract.
+
+        Adoption is in-memory and does not alter the version-1 session payload
+        or the production manifest. Repeated calls return the same immutable
+        contract instance for the life of this session.
+        """
+        if self._documentary_production_contract is None:
+            self._documentary_production_contract = (
+                create_documentary_production_contract(
+                    self.production_slug
+                )
+            )
+
+        return self._documentary_production_contract
 
     def _now(self) -> str:
         return datetime.now(UTC).isoformat()
