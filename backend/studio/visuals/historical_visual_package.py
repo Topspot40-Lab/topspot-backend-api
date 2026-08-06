@@ -241,8 +241,10 @@ class HistoricalVisualPackageBuilder:
             records.append(record)
         hook = int(scene.get("scene_number") or 0) == 1 or float(shot.get("start_seconds") or 0) < self.settings.hook_window_seconds
         decision, reasons, selected_id, score_value, margin = "generated_fallback_eligible", [], None, None, None
-        if failures or any(record["disposition"] == "review" for record in records):
-            decision, reasons = "needs_review", ["provider_failure" if failures else "candidate_requires_review"]
+        if any(record["disposition"] == "review" for record in records):
+            decision, reasons = "needs_review", ["candidate_requires_review"]
+        elif failures:
+            decision, reasons = "generated_fallback_eligible", ["provider_failure"]
         elif downloaded:
             record, candidate, score, sha256 = downloaded[0]
             score_value = round(score, 3)
