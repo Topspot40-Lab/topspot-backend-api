@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import replace
 from pathlib import Path
@@ -127,7 +127,7 @@ def test_youtube_artifacts_are_preparation_only(tmp_path: Path) -> None:
 
 @pytest.mark.parametrize(
     "target",
-    ["factory/execution.json", "factory/session.json", "factory/execution.lock"],
+    ["factory/execution.json", "factory/session.json", "factory/execution.lock", "factory/workflow.lock"],
 )
 def test_compatibility_mapping_rejects_factory_control_files(
     tmp_path: Path,
@@ -229,7 +229,7 @@ def _custom_contract_with_shared_path(path: str):
 
 @pytest.mark.parametrize(
     "path",
-    ["execution.json", "session.json", "execution.lock", "ExEcUtIoN.JsOn"],
+    ["execution.json", "session.json", "execution.lock", "workflow.lock", "ExEcUtIoN.JsOn"],
 )
 def test_custom_contract_default_output_rejects_factory_control_paths(
     tmp_path: Path,

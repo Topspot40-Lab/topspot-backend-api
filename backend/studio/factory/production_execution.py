@@ -1,4 +1,4 @@
-"""Mutable local execution state for a canonical documentary contract."""
+﻿"""Mutable local execution state for a canonical documentary contract."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ _VALID_STATUSES: Final[frozenset[str]] = frozenset(
     {"pending", "running", "completed", "failed", "skipped"}
 )
 _FACTORY_CONTROL_FILE_NAMES: Final[frozenset[str]] = frozenset(
-    {"execution.json", "session.json", "execution.lock"}
+    {"execution.json", "session.json", "execution.lock", "workflow.lock"}
 )
 
 
@@ -35,6 +35,66 @@ class ArtifactAssignment:
     artifact_id: str
     contract_path: str
     station: str
+
+
+class ProductionWorkflowLock:
+    """Fail-fast lock for one factory orchestration at a time."""
+
+    _held_paths: set[str] = set()
+
+    def __init__(self, work_root: Path) -> None:
+        self.path = Path(work_root) / "factory" / "workflow.lock"
+        self._file: Any | None = None
+        self._identity = os.path.normcase(os.path.abspath(self.path))
+
+    def __enter__(self) -> "ProductionWorkflowLock":
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        if self._identity in self._held_paths:
+            raise RuntimeError("Create Documentary production already running")
+        lock_file = self.path.open("a+b")
+        try:
+            if os.name == "nt":
+                import msvcrt
+
+                if self.path.stat().st_size == 0:
+                    lock_file.write(b"0")
+                    lock_file.flush()
+                lock_file.seek(0)
+                try:
+                    msvcrt.locking(lock_file.fileno(), msvcrt.LK_NBLCK, 1)
+                except OSError as exc:
+                    raise RuntimeError("Create Documentary production already running") from exc
+            else:
+                import fcntl
+
+                try:
+                    fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError as exc:
+                    raise RuntimeError("Create Documentary production already running") from exc
+            self._held_paths.add(self._identity)
+            self._file = lock_file
+            return self
+        except Exception:
+            lock_file.close()
+            raise
+
+    def __exit__(self, *_: object) -> None:
+        if self._file is None:
+            return
+        try:
+            if os.name == "nt":
+                import msvcrt
+
+                self._file.seek(0)
+                msvcrt.locking(self._file.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+
+                fcntl.flock(self._file.fileno(), fcntl.LOCK_UN)
+        finally:
+            self._file.close()
+            self._file = None
+            self._held_paths.discard(self._identity)
 
 
 def is_reserved_factory_control_path(path: str) -> bool:
@@ -281,15 +341,52 @@ class ProductionExecution:
         verification.update({"sha256": digest.hexdigest(), "valid": True})
         return verification
 
+    @staticmethod
+    def _matches_recorded_verification(recorded: Any, current: dict[str, Any]) -> bool:
+        """Require a completed output to remain the output that was verified."""
+        return (
+            current["valid"] is True
+            and isinstance(recorded, dict)
+            and recorded.get("valid") is True
+            and recorded.get("size_bytes") == current["size_bytes"]
+            and recorded.get("sha256") == current["sha256"]
+        )
+
+    def require_verified_completed(self, *, station: str, artifact_id: str) -> None:
+        """Fail unless an artifact is completed and its recorded output remains valid."""
+        self._assignment_for(artifact_id, station)
+        with self._locked():
+            self._reload_locked()
+            record = self._record(artifact_id)
+            current = self._verify(artifact_id)
+            if record["status"] == "completed" and self._matches_recorded_verification(
+                record.get("verification"), current
+            ):
+                record["verification"] = current
+                record["updated_at"] = self._now()
+                self._write_locked()
+                return
+            record["verification"] = current
+            if record["status"] == "completed":
+                record.update({
+                    "status": "pending",
+                    "finished_at": None,
+                    "updated_at": self._now(),
+                    "error_summary": "Output verification failed during required-output check",
+                })
+                self._write_locked()
+            raise RuntimeError(f"Required artifact is not verified and completed: {artifact_id}")
+
     def start_artifact(self, *, station: str, artifact_id: str) -> Path:
         self._assignment_for(artifact_id, station)
         with self._locked():
             self._reload_locked()
             record = self._record(artifact_id)
             if record["status"] == "completed":
+                recorded_verification = record.get("verification")
                 verification = self._verify(artifact_id)
                 record["verification"] = verification
-                if verification["valid"]:
+                if self._matches_recorded_verification(recorded_verification, verification):
                     self._write_locked()
                     raise RuntimeError(f"Artifact is already completed: {artifact_id}")
                 record["status"] = "pending"
@@ -356,9 +453,10 @@ class ProductionExecution:
                     pending.append(artifact_id)
                     changed = True
                 elif record["status"] == "completed":
+                    recorded_verification = record.get("verification")
                     verification = self._verify(artifact_id)
                     record["verification"] = verification
-                    if verification["valid"]:
+                    if self._matches_recorded_verification(recorded_verification, verification):
                         changed = True
                         continue
                     record.update({"status": "pending", "finished_at": None, "updated_at": self._now(), "error_summary": "Output verification failed during resume"})
