@@ -102,12 +102,26 @@ def license_status(candidate: HistoricalImageCandidate) -> tuple[str, str]:
     text = " ".join((candidate.license_name, candidate.license_url, candidate.usage_terms)).casefold()
     if any(value in text for value in ("noncommercial", "cc by-nc", "cc-by-nc", "no derivatives", "no-derivatives", "cc by-nd", "cc-by-nd", "all rights reserved", "editorial only")):
         return "reject", "commercial_license_rejected"
-    source_complete = bool(candidate.page_url and candidate.original_url and candidate.license_name)
+    provenance_complete = bool(
+        candidate.page_url
+        and candidate.original_url
+        and candidate.license_name
+        and candidate.license_url
+        and candidate.creator
+        and candidate.credit
+    )
     if "public domain" in text or "cc0" in text:
-        return ("eligible", "public_domain_or_cc0") if source_complete else ("review", "license_provenance_incomplete")
+        return (
+            ("eligible", "public_domain_or_cc0")
+            if provenance_complete
+            else ("review", "license_provenance_incomplete")
+        )
     if "cc by" in text or "cc-by" in text:
-        complete = bool(source_complete and candidate.creator and candidate.credit and candidate.license_url)
-        return ("eligible", "attribution_license_complete") if complete else ("review", "attribution_incomplete")
+        return (
+            ("eligible", "attribution_license_complete")
+            if provenance_complete
+            else ("review", "attribution_incomplete")
+        )
     return "review", "license_uncertain"
 
 
