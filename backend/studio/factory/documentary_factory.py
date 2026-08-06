@@ -25,6 +25,12 @@ from backend.studio.stations.select_historical_visuals import (
     VISUAL_RESEARCH_STATION,
     run_visual_research,
 )
+from backend.studio.stations.verify_historical_visuals import (
+    PROVENANCE_ARTIFACT,
+    QUALITY_ARTIFACT,
+    VISUAL_QUALITY_STATION,
+    run_visual_quality,
+)
 
 
 VISUAL_PLANNING_STATION = "visual_planning"
@@ -128,6 +134,12 @@ def create_documentary(
                 station=VISUAL_RESEARCH_STATION,
                 artifact_id=VISUAL_RESEARCH_ARTIFACT,
             )
+            run_visual_quality(production, execution)
+            for artifact_id in (PROVENANCE_ARTIFACT, QUALITY_ARTIFACT):
+                execution.require_verified_completed(
+                    station=VISUAL_QUALITY_STATION,
+                    artifact_id=artifact_id,
+                )
         except Exception as exc:
             production.session.error(concise_error_summary(exc))
             production.session.finish_production(success=False)

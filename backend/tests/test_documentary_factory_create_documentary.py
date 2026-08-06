@@ -19,6 +19,11 @@ from backend.studio.factory.documentary_factory import (
     VISUAL_RESEARCH_STATION,
     create_documentary,
 )
+from backend.studio.stations.verify_historical_visuals import (
+    PROVENANCE_ARTIFACT,
+    QUALITY_ARTIFACT,
+    VISUAL_QUALITY_STATION,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -99,8 +104,15 @@ def test_create_documentary_builds_only_canonical_storyboard(tmp_path: Path) -> 
     assert (production.work_root / "factory" / "shared" / "visual_research.json").exists()
     assert execution.record(VISUAL_RESEARCH_ARTIFACT)["status"] == "completed"
     assert execution.record(VISUAL_RESEARCH_ARTIFACT)["station"] == VISUAL_RESEARCH_STATION
-    assert execution.record("shared.provenance_report")["status"] == "pending"
-    assert execution.record("shared.quality_report")["status"] == "pending"
+    provenance = production.work_root / "factory" / "shared" / "historical_photo_provenance.json"
+    quality = production.work_root / "factory" / "shared" / "visual_qc.json"
+    assert provenance.exists()
+    assert quality.exists()
+    assert execution.record(PROVENANCE_ARTIFACT)["status"] == "completed"
+    assert execution.record(QUALITY_ARTIFACT)["status"] == "completed"
+    assert execution.record(PROVENANCE_ARTIFACT)["station"] == VISUAL_QUALITY_STATION
+    assert json.loads(provenance.read_text(encoding="utf-8"))["entries"] == []
+    assert json.loads(quality.read_text(encoding="utf-8"))["summary"]["passed"] is True
 
 
 def test_create_documentary_resume_skips_verified_storyboard(tmp_path: Path) -> None:
