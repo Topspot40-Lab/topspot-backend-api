@@ -15,6 +15,9 @@ from backend.studio.factory.production_execution import (
     ProductionExecution,
     ProductionWorkflowLock,
 )
+from backend.studio.factory.delivery_package_verification import (
+    verify_final_delivery_packages,
+)
 from backend.studio.factory.input_preflight import validate_factory_inputs
 from backend.studio.production import Production
 from backend.studio.stations.build_storyboard import (
@@ -174,6 +177,7 @@ def create_documentary(
             if delivery_media_validator is not None:
                 delivery_kwargs["media_validator"] = delivery_media_validator
             run_localized_deliveries(production, execution, **delivery_kwargs)
+            verify_final_delivery_packages(execution)
         except Exception as exc:
             production.session.error(concise_error_summary(exc))
             production.session.finish_production(success=False)

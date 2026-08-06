@@ -1,4 +1,8 @@
-﻿from backend.studio.factory.production_contract import (
+from backend.studio.factory.delivery_package_verification import (
+    VerifiedDeliveryPackage,
+    verify_final_delivery_packages,
+)
+from backend.studio.factory.production_contract import (
     DocumentaryProductionContract,
     create_documentary_production_contract,
 )
@@ -8,9 +12,7 @@ from backend.studio.factory.production_execution import (
     ProductionWorkflowLock,
     documentary_artifact_assignments,
 )
-from backend.studio.factory.production_session import (
-    ProductionSession,
-)
+from backend.studio.factory.production_session import ProductionSession
 
 __all__ = [
     "ArtifactAssignment",
@@ -18,6 +20,8 @@ __all__ = [
     "ProductionExecution",
     "ProductionWorkflowLock",
     "ProductionSession",
+    "VerifiedDeliveryPackage",
     "create_documentary_production_contract",
     "documentary_artifact_assignments",
+    "verify_final_delivery_packages",
 ]
