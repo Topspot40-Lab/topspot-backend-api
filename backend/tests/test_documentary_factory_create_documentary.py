@@ -279,6 +279,7 @@ def test_storyboard_failure_is_concisely_recorded(tmp_path: Path) -> None:
     assert production.session.payload["status"] == "failed"
 
 
+
 def test_skipped_storyboard_cannot_complete_production(tmp_path: Path) -> None:
     production = FakeProduction(tmp_path)
     contract = production.session.adopt_documentary_production_contract()
@@ -618,3 +619,29 @@ def test_verified_narration_change_rebuilds_only_its_language_delivery(tmp_path:
     assert execution.record("delivery.en.video")["attempts"] == 2
     assert execution.record("delivery.es.video")["attempts"] == 1
     assert execution.record("delivery.pt-BR.video")["attempts"] == 1
+
+def test_create_documentary_cannot_finish_after_final_delivery_verification_failure(
+    tmp_path: Path,
+) -> None:
+    production, execution = _create(tmp_path)
+    output = execution.output_path(
+        station="localized_delivery_en",
+        artifact_id="delivery.en.video",
+    )
+    output.write_bytes(b"tampered")
+
+    with patch(
+        "backend.studio.factory.documentary_factory.run_localized_deliveries",
+    ), pytest.raises(RuntimeError, match=r"en.*delivery\.en\.video"):
+        create_documentary(
+            production.slug,
+            production_factory=lambda _: production,
+            historical_providers=[],
+            visual_image_generator=_fake_image,
+            visual_renderer=_fake_renderer,
+            narration_retriever=_fake_narration,
+            delivery_builder=_fake_delivery,
+            delivery_media_validator=_fake_media,
+        )
+
+    assert production.session.payload["status"] == "failed"
