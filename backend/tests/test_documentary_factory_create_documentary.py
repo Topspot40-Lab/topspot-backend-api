@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import json
 import os
@@ -15,6 +15,8 @@ from backend.studio.factory import ProductionExecution, ProductionSession
 from backend.studio.factory.documentary_factory import (
     STORYBOARD_ARTIFACT,
     VISUAL_PLANNING_STATION,
+    VISUAL_RESEARCH_ARTIFACT,
+    VISUAL_RESEARCH_STATION,
     create_documentary,
 )
 
@@ -77,6 +79,7 @@ def _create(tmp_path: Path) -> tuple[FakeProduction, ProductionExecution]:
     execution = create_documentary(
         production.slug,
         production_factory=lambda _: production,
+        historical_providers=[],
     )
     return production, execution
 
@@ -93,7 +96,11 @@ def test_create_documentary_builds_only_canonical_storyboard(tmp_path: Path) -> 
     station = production.session.payload["stations"][VISUAL_PLANNING_STATION]
     assert station["status"] == "complete"
     assert production.session.payload["status"] == "complete"
-    assert not (production.work_root / "factory" / "shared" / "visual_research.json").exists()
+    assert (production.work_root / "factory" / "shared" / "visual_research.json").exists()
+    assert execution.record(VISUAL_RESEARCH_ARTIFACT)["status"] == "completed"
+    assert execution.record(VISUAL_RESEARCH_ARTIFACT)["station"] == VISUAL_RESEARCH_STATION
+    assert execution.record("shared.provenance_report")["status"] == "pending"
+    assert execution.record("shared.quality_report")["status"] == "pending"
 
 
 def test_create_documentary_resume_skips_verified_storyboard(tmp_path: Path) -> None:
@@ -111,6 +118,7 @@ def test_create_documentary_resume_skips_verified_storyboard(tmp_path: Path) -> 
         resumed = create_documentary(
             production.slug,
             production_factory=lambda _: production,
+        historical_providers=[],
         )
 
     assert output.read_bytes() == before
@@ -130,6 +138,7 @@ def test_interrupted_storyboard_is_requeued_and_rebuilt(tmp_path: Path) -> None:
     execution = create_documentary(
         production.slug,
         production_factory=lambda _: production,
+        historical_providers=[],
     )
 
     assert execution.record(STORYBOARD_ARTIFACT)["status"] == "completed"
@@ -146,6 +155,7 @@ def test_storyboard_failure_is_concisely_recorded(tmp_path: Path) -> None:
         create_documentary(
             production.slug,
             production_factory=lambda _: production,
+        historical_providers=[],
         )
 
     execution = ProductionExecution(
@@ -172,7 +182,7 @@ def test_skipped_storyboard_cannot_complete_production(tmp_path: Path) -> None:
     )
 
     with pytest.raises(RuntimeError, match="not verified and completed"):
-        create_documentary(production.slug, production_factory=lambda _: production)
+        create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[])
 
     assert execution.record(STORYBOARD_ARTIFACT)["status"] == "skipped"
     assert not execution.output_path(
@@ -194,13 +204,38 @@ def test_tampered_completed_storyboard_is_rebuilt(tmp_path: Path, tamper: str) -
     else:
         output.write_text('{"tampered": true}', encoding="utf-8")
 
-    resumed = create_documentary(production.slug, production_factory=lambda _: production)
+    resumed = create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[])
 
     assert resumed.record(STORYBOARD_ARTIFACT)["status"] == "completed"
     assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 2
     assert json.loads(output.read_text(encoding="utf-8"))["production_slug"] == production.slug
     assert production.session.payload["status"] == "complete"
 
+
+def test_rebuilt_storyboard_requeues_visual_research(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    storyboard_path = execution.output_path(
+        station=VISUAL_PLANNING_STATION,
+        artifact_id=STORYBOARD_ARTIFACT,
+    )
+    research_path = execution.output_path(
+        station=VISUAL_RESEARCH_STATION,
+        artifact_id=VISUAL_RESEARCH_ARTIFACT,
+    )
+    first_digest = json.loads(research_path.read_text(encoding="utf-8"))["storyboard_sha256"]
+    storyboard_path.write_text('{"tampered": true}', encoding="utf-8")
+
+    resumed = create_documentary(
+        production.slug,
+        production_factory=lambda _: production,
+        historical_providers=[],
+    )
+
+    package = json.loads(research_path.read_text(encoding="utf-8"))
+    assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 2
+    assert resumed.record(VISUAL_RESEARCH_ARTIFACT)["attempts"] == 2
+    assert package["storyboard_sha256"] != first_digest
+    assert package["storyboard_sha256"] == resumed.record(STORYBOARD_ARTIFACT)["verification"]["sha256"]
 
 def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -> None:
     first = FakeProduction(tmp_path)
@@ -220,7 +255,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
     def run_first() -> None:
         try:
             first_result.append(
-                create_documentary(first.slug, production_factory=lambda _: first)
+                create_documentary(first.slug, production_factory=lambda _: first, historical_providers=[])
             )
         except BaseException as exc:  # surfaced below with the original traceback context
             first_error.append(exc)

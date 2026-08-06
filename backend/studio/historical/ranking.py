@@ -26,6 +26,12 @@ ALLOWED_LICENSE_MARKERS = {
 
 MIN_WIDTH = 800
 MIN_HEIGHT = 500
+HARD_REJECTION_SCORE = -1_000_000.0
+
+
+def is_hard_rejection_score(score: float) -> bool:
+    """Return whether a ranking score represents a policy hard exclusion."""
+    return score <= HARD_REJECTION_SCORE
 
 
 def normalized_words(value: str) -> set[str]:
@@ -314,7 +320,7 @@ def historical_plan_adjustment(
             era,
         )
     ):
-        return -1_000_000.0
+        return HARD_REJECTION_SCORE
 
     for avoid_term in avoid_terms:
         normalized_avoid = normalized_phrase(
@@ -322,7 +328,7 @@ def historical_plan_adjustment(
         )
 
         if normalized_avoid and normalized_avoid in searchable:
-            return -1_000_000.0
+            return HARD_REJECTION_SCORE
 
     adjustment = 0.0
 
@@ -380,7 +386,7 @@ def score_candidate(
     historical_plan: dict[str, Any] | None = None,
 ) -> float:
     if not candidate_is_usable(candidate):
-        candidate.score = -1_000_000.0
+        candidate.score = HARD_REJECTION_SCORE
         candidate.identity_confidence = 0.0
         return candidate.score
 
@@ -392,7 +398,16 @@ def score_candidate(
             identity,
         )
     ):
-        candidate.score = -1_000_000.0
+        candidate.score = HARD_REJECTION_SCORE
+        candidate.identity_confidence = 0.0
+        return candidate.score
+
+    historical_adjustment = historical_plan_adjustment(
+        candidate,
+        historical_plan,
+    )
+    if is_hard_rejection_score(historical_adjustment):
+        candidate.score = HARD_REJECTION_SCORE
         candidate.identity_confidence = 0.0
         return candidate.score
 
@@ -496,10 +511,7 @@ def score_candidate(
             candidate,
             identity,
         )
-        + historical_plan_adjustment(
-            candidate,
-            historical_plan,
-        ),
+        + historical_adjustment,
         3,
     )
 
@@ -528,7 +540,10 @@ def rank_candidates(
     usable = [
         candidate
         for candidate in candidates
-        if candidate.score > -1_000.0
+        if (
+            candidate.score > -1_000.0
+            and not is_hard_rejection_score(candidate.score)
+        )
     ]
 
     usable.sort(

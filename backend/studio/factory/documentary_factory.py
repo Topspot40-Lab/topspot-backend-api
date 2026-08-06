@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Callable
+from typing import Any
 
 from backend.studio.factory.production_execution import (
     ProductionExecution,
@@ -18,6 +19,11 @@ from backend.studio.production import Production
 from backend.studio.stations.build_storyboard import (
     build_storyboard_payload,
     save_json_atomic,
+)
+from backend.studio.stations.select_historical_visuals import (
+    VISUAL_RESEARCH_ARTIFACT,
+    VISUAL_RESEARCH_STATION,
+    run_visual_research,
 )
 
 
@@ -99,6 +105,8 @@ def create_documentary(
     slug: str,
     *,
     production_factory: Callable[[str], Production] = Production,
+    historical_providers: list[Any] | None = None,
+    historical_retriever: Callable[[Any], bytes] | None = None,
 ) -> ProductionExecution:
     """Run the normal one-action canonical factory workflow for a production."""
     production = production_factory(slug)
@@ -111,6 +119,14 @@ def create_documentary(
             execution.require_verified_completed(
                 station=VISUAL_PLANNING_STATION,
                 artifact_id=STORYBOARD_ARTIFACT,
+            )
+            research_kwargs: dict[str, Any] = {"providers": historical_providers}
+            if historical_retriever is not None:
+                research_kwargs["retriever"] = historical_retriever
+            run_visual_research(production, execution, **research_kwargs)
+            execution.require_verified_completed(
+                station=VISUAL_RESEARCH_STATION,
+                artifact_id=VISUAL_RESEARCH_ARTIFACT,
             )
         except Exception as exc:
             production.session.error(concise_error_summary(exc))

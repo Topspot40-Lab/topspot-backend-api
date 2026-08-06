@@ -428,6 +428,28 @@ class ProductionExecution:
             record.update({"status": "failed", "finished_at": self._now(), "updated_at": self._now(), "error_summary": error_summary.strip()})
             self._write_locked()
 
+    def requeue_artifact(self, *, station: str, artifact_id: str, reason: str) -> None:
+        """Return completed work to pending when its verified input changed."""
+        self._assignment_for(artifact_id, station)
+        if not reason.strip():
+            raise ValueError("requeue reason must not be empty")
+        with self._locked():
+            self._reload_locked()
+            record = self._record(artifact_id)
+            if record["status"] == "running":
+                raise RuntimeError(f"Cannot requeue a running artifact: {artifact_id}")
+            if record["status"] == "skipped":
+                raise RuntimeError(f"Cannot requeue a skipped artifact: {artifact_id}")
+            record.update({
+                "status": "pending",
+                "finished_at": None,
+                "updated_at": self._now(),
+                "error_summary": reason.strip(),
+                "skip_reason": None,
+                "verification": None,
+            })
+            self._write_locked()
+
     def skip_artifact(self, *, station: str, artifact_id: str, reason: str) -> None:
         self._assignment_for(artifact_id, station)
         if not reason.strip():
