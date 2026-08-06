@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from typing import Any
@@ -21,10 +21,18 @@ class HistoricalImageCandidate:
     description: str = ""
     date: str = ""
 
+    categories: tuple[str, ...] = ()
     license_name: str = ""
     license_url: str = ""
     usage_terms: str = ""
     attribution_required: bool = False
+
+    # An automatic approval requires a prior human overlay review tied to this
+    # exact immutable file; live-source metadata alone cannot establish this.
+    overlay_reviewed: bool = False
+    overlay_reviewed_at: str = ""
+    overlay_reviewer: str = ""
+    overlay_reviewed_sha256: str = ""
 
     score: float = 0.0
     identity_confidence: float = 0.0
