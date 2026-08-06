@@ -1,4 +1,4 @@
-﻿"""Bounded, deterministic historical visual-package selection."""
+"""Bounded, deterministic historical visual-package selection."""
 
 from __future__ import annotations
 
@@ -254,7 +254,13 @@ class HistoricalVisualPackageBuilder:
                 self.selected.append((sha256, str(record["fingerprints"]["perceptual_hash"])))
                 self.counts["auto_approved"] += 1
             else:
-                decision, reasons, record["disposition"] = "needs_review", ["overlay_unverified" if not trusted else "confidence_below_auto_approval_threshold"], "review"
+                decision = "generated_fallback_eligible"
+                reasons = [
+                    "overlay_unverified"
+                    if not trusted
+                    else "confidence_below_auto_approval_threshold"
+                ]
+                record["disposition"] = "generated_fallback"
         if decision == "needs_review": self.counts["review_queued"] += 1
         if decision == "generated_fallback_eligible": self.counts["generated_fallback_eligible"] += 1
         return {"scene_number": int(scene["scene_number"]), "shot_number": int(shot["shot_number"]), "is_hook": hook, "queries": queries, "provider_failures": failures, "candidates": records, "decision": {"state": decision, "selected_candidate_id": selected_id, "deterministic_score": score_value, "score_margin": margin, "reason_codes": reasons, "reuse_scope": "shared_all_languages"}}
