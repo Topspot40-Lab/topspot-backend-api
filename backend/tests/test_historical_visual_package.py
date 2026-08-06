@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import struct
 import sys
 import types
@@ -66,15 +65,14 @@ def test_license_policy_rejects_nc_nd_and_requires_complete_attribution() -> Non
     assert license_status(candidate(1, license_name="Public domain", usage_terms="Public domain"))[0] == "eligible"
 
 
-def test_unreviewed_live_source_uses_generated_fallback(tmp_path: Path) -> None:
+def test_unreviewed_live_source_is_automatically_approved(tmp_path: Path) -> None:
     package = HistoricalVisualPackageBuilder(providers=[FakeProvider([candidate(1)])], retriever=lambda _: image_bytes(), cache=HistoricalCache(tmp_path / "cache")).build(storyboard())
-    assert package["shots"][0]["decision"]["state"] == "generated_fallback_eligible"
-    assert package["shots"][0]["decision"]["reason_codes"] == ["overlay_unverified"]
-    assert package["shots"][0]["candidates"][0]["disposition"] == "generated_fallback"
-    assert package["summary"]["generated_fallback_eligible"] == 1
+    assert package["shots"][0]["decision"]["state"] == "approved_historical"
+    assert package["shots"][0]["decision"]["reason_codes"] == ["deterministic_safety_gates", "high_confidence"]
+    assert package["shots"][0]["candidates"][0]["disposition"] == "approved"
+    assert package["summary"]["auto_approved"] == 1
     assert package["summary"]["review_queued"] == 0
     assert package["shared_for_languages"] == ["en", "es", "pt-BR"]
-
 
 def test_provider_failure_uses_generated_fallback(tmp_path: Path) -> None:
     class FailingProvider:
@@ -95,11 +93,10 @@ def test_provider_failure_uses_generated_fallback(tmp_path: Path) -> None:
     assert package["summary"]["review_queued"] == 0
 
 
-def test_exact_hash_review_can_auto_approve_non_hook_candidate(tmp_path: Path) -> None:
-    content = image_bytes(); reviewed = candidate(1, overlay_reviewed=True, overlay_reviewed_at="2026-08-05T00:00:00+00:00", overlay_reviewer="Paty", overlay_reviewed_sha256=hashlib.sha256(content).hexdigest())
-    package = HistoricalVisualPackageBuilder(providers=[FakeProvider([reviewed])], retriever=lambda _: content, cache=HistoricalCache(tmp_path / "cache")).build(storyboard())
+def test_high_confidence_non_hook_candidate_is_auto_approved(tmp_path: Path) -> None:
+    content = image_bytes()
+    package = HistoricalVisualPackageBuilder(providers=[FakeProvider([candidate(1)])], retriever=lambda _: content, cache=HistoricalCache(tmp_path / "cache")).build(storyboard())
     assert package["shots"][0]["decision"]["state"] == "approved_historical"
-
 
 def test_first_scene_is_hook_and_metadata_overlay_rejects_before_download(tmp_path: Path) -> None:
     calls = 0
@@ -119,52 +116,45 @@ def jpeg_bytes() -> bytes:
     Image.new("RGB", (8, 8), (80, 120, 180)).save(output, format="JPEG")
     return output.getvalue()
 
-def test_exact_hash_review_can_auto_approve_valid_jpeg(tmp_path: Path) -> None:
+def test_valid_jpeg_is_automatically_approved(tmp_path: Path) -> None:
     content = jpeg_bytes()
-    reviewed = candidate(
+    jpeg = candidate(
         1,
         mime_type="image/jpeg",
         original_url="https://upload.wikimedia.org/test-1.jpg",
         page_url="https://commons.wikimedia.org/wiki/File:test-1.jpg",
-        overlay_reviewed=True,
-        overlay_reviewed_at="2026-08-05T00:00:00+00:00",
-        overlay_reviewer="Paty",
-        overlay_reviewed_sha256=hashlib.sha256(content).hexdigest(),
     )
 
     package = HistoricalVisualPackageBuilder(
-        providers=[FakeProvider([reviewed])],
+        providers=[FakeProvider([jpeg])],
         retriever=lambda _: content,
         cache=HistoricalCache(tmp_path / "cache"),
     ).build(storyboard())
 
     assert package["shots"][0]["decision"]["state"] == "approved_historical"
+    assert package["summary"]["auto_approved"] == 1
     assert package["shots"][0]["candidates"][0]["fingerprints"]["perceptual_hash"]
 
-
-def test_mislabeled_jpeg_is_queued_and_never_auto_approved(tmp_path: Path) -> None:
+def test_mislabeled_jpeg_uses_generated_fallback(tmp_path: Path) -> None:
     content = image_bytes()
-    reviewed = candidate(
+    mislabeled = candidate(
         1,
         mime_type="image/jpeg",
         original_url="https://upload.wikimedia.org/test-1.jpg",
         page_url="https://commons.wikimedia.org/wiki/File:test-1.jpg",
-        overlay_reviewed=True,
-        overlay_reviewed_at="2026-08-05T00:00:00+00:00",
-        overlay_reviewer="Paty",
-        overlay_reviewed_sha256=hashlib.sha256(content).hexdigest(),
     )
 
     package = HistoricalVisualPackageBuilder(
-        providers=[FakeProvider([reviewed])],
+        providers=[FakeProvider([mislabeled])],
         retriever=lambda _: content,
         cache=HistoricalCache(tmp_path / "cache"),
     ).build(storyboard())
 
     record = package["shots"][0]["candidates"][0]
-    assert package["shots"][0]["decision"]["state"] == "needs_review"
-    assert record["disposition"] == "review"
+    assert package["shots"][0]["decision"]["state"] == "generated_fallback_eligible"
+    assert record["disposition"] == "generated_fallback"
     assert record["fingerprints"] is None
+    assert package["summary"]["review_queued"] == 0
 
 def storyboard_with_plan(plan: dict[str, object]) -> dict[str, object]:
     return storyboard() | {"scenes": [{"scene_number": 2, "visual_shots": [{"shot_number": 1, "start_seconds": 20.0, "visual_intent": "Test Artist concert", "historical_search": "Test Artist concert 1970", "historical_plan": plan}]}]}
@@ -298,7 +288,7 @@ def test_oversized_live_finalist_is_not_cached_or_decoded_and_next_finalist_is_t
     ).build(storyboard_with_plan({"search_queries": ["one"]}))
 
     records = package["shots"][0]["candidates"]
-    assert [record["disposition"] for record in records] == ["review", "downloaded_finalist"]
+    assert [record["disposition"] for record in records] == ["generated_fallback", "approved"]
     assert oversized.yielded == [b"x" * maximum]
     assert decoded == [normal]
     assert usable.closed is True and oversized.closed is True
