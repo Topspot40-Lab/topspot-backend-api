@@ -15,6 +15,7 @@ from backend.studio.factory.production_execution import (
     ProductionExecution,
     ProductionWorkflowLock,
 )
+from backend.studio.factory.input_preflight import validate_factory_inputs
 from backend.studio.production import Production
 from backend.studio.stations.build_storyboard import (
     build_storyboard_payload,
@@ -128,6 +129,7 @@ def create_documentary(
 ) -> ProductionExecution:
     """Run the normal one-action canonical factory workflow for a production."""
     production = production_factory(slug)
+    validate_factory_inputs(production.documentary)
     with ProductionWorkflowLock(production.work_root):
         production.session.start_production()
         try:

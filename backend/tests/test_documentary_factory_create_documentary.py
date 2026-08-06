@@ -74,14 +74,24 @@ class FakeDocumentary:
     source_type = "music_docuseries"
     source_id = 1
 
-    def language(self, language_code: str) -> SimpleNamespace:
-        assert language_code == "en"
-        return SimpleNamespace(
+    languages = tuple(
+        SimpleNamespace(
+            language_code=language_code,
             story_text="First sentence. Second sentence.",
             duration_seconds=16,
-            locale_id=1,
+            tts_bucket=f"audio-{language_code}",
+            tts_key=f"stories/{language_code}.mp3",
+            locale_id=index,
         )
+        for index, language_code in enumerate(SUPPORTED_LANGUAGE_CODES, start=1)
+    )
 
+    def language(self, language_code: str) -> SimpleNamespace:
+        return next(
+            language
+            for language in self.languages
+            if language.language_code == language_code
+        )
 
 class FakeProduction:
     def __init__(self, tmp_path: Path, slug: str = "local_documentary") -> None:
