@@ -271,6 +271,12 @@ class ArtistStory(SQLModel, table=True):
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
 
+    localized_publishing_content_json: Optional[str] = None
+    localized_publishing_content_sha256: Optional[str] = None
+    localized_publishing_content_source_sha256: Optional[str] = None
+    localized_publishing_content_reviewed_at: Optional[datetime] = None
+    localized_publishing_content_reviewed_by: Optional[str] = None
+
     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
 
@@ -324,6 +330,12 @@ class MusicDocuseriesLocale(SQLModel, table=True):
 
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
+
+    localized_publishing_content_json: Optional[str] = None
+    localized_publishing_content_sha256: Optional[str] = None
+    localized_publishing_content_source_sha256: Optional[str] = None
+    localized_publishing_content_reviewed_at: Optional[datetime] = None
+    localized_publishing_content_reviewed_by: Optional[str] = None
 
     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
