@@ -36,6 +36,7 @@ from backend.studio.stations.render_visual_master import (
     VISUAL_RENDER_STATION,
     run_visual_render,
 )
+from backend.studio.stations.prepare_localized_narration import run_localized_narration
 
 
 VISUAL_PLANNING_STATION = "visual_planning"
@@ -120,6 +121,7 @@ def create_documentary(
     historical_retriever: Callable[[Any], bytes] | None = None,
     visual_image_generator: Callable[[str], bytes] | None = None,
     visual_renderer: Callable[[Any, Any], None] | None = None,
+    narration_retriever: Callable[[Any, str, str], bytes] | None = None,
 ) -> ProductionExecution:
     """Run the normal one-action canonical factory workflow for a production."""
     production = production_factory(slug)
@@ -157,6 +159,10 @@ def create_documentary(
                 station=VISUAL_RENDER_STATION,
                 artifact_id=VISUAL_MASTER_ARTIFACT,
             )
+            narration_kwargs: dict[str, Any] = {}
+            if narration_retriever is not None:
+                narration_kwargs["retriever"] = narration_retriever
+            run_localized_narration(production, execution, **narration_kwargs)
         except Exception as exc:
             production.session.error(concise_error_summary(exc))
             production.session.finish_production(success=False)

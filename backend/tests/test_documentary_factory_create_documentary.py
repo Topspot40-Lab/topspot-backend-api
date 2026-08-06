@@ -87,6 +87,9 @@ class FakeProduction:
 def _fake_image(_: str) -> bytes:
     return b"test image"
 
+def _fake_narration(_: object, language: str, segment: str) -> bytes:
+    return f"{language}:{segment}".encode()
+
 def _fake_renderer(_: object, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(b"test visual master")
@@ -99,6 +102,7 @@ def _create(tmp_path: Path) -> tuple[FakeProduction, ProductionExecution]:
         historical_providers=[],
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        narration_retriever=_fake_narration,
     )
     return production, execution
 
@@ -148,7 +152,8 @@ def test_create_documentary_resume_skips_verified_storyboard(tmp_path: Path) -> 
         resumed = create_documentary(
             production.slug,
             production_factory=lambda _: production,
-        historical_providers=[],
+            historical_providers=[],
+            narration_retriever=_fake_narration,
         )
 
     assert output.read_bytes() == before
@@ -171,6 +176,7 @@ def test_interrupted_storyboard_is_requeued_and_rebuilt(tmp_path: Path) -> None:
         historical_providers=[],
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        narration_retriever=_fake_narration,
     )
 
     assert execution.record(STORYBOARD_ARTIFACT)["status"] == "completed"
@@ -187,7 +193,8 @@ def test_storyboard_failure_is_concisely_recorded(tmp_path: Path) -> None:
         create_documentary(
             production.slug,
             production_factory=lambda _: production,
-        historical_providers=[],
+            historical_providers=[],
+            narration_retriever=_fake_narration,
         )
 
     execution = ProductionExecution(
@@ -214,7 +221,7 @@ def test_skipped_storyboard_cannot_complete_production(tmp_path: Path) -> None:
     )
 
     with pytest.raises(RuntimeError, match="not verified and completed"):
-        create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer)
+        create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration)
 
     assert execution.record(STORYBOARD_ARTIFACT)["status"] == "skipped"
     assert not execution.output_path(
@@ -236,7 +243,7 @@ def test_tampered_completed_storyboard_is_rebuilt(tmp_path: Path, tamper: str) -
     else:
         output.write_text('{"tampered": true}', encoding="utf-8")
 
-    resumed = create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer)
+    resumed = create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration)
 
     assert resumed.record(STORYBOARD_ARTIFACT)["status"] == "completed"
     assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 2
@@ -263,6 +270,7 @@ def test_rebuilt_storyboard_requeues_visual_research(tmp_path: Path) -> None:
         historical_providers=[],
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        narration_retriever=_fake_narration,
     )
 
     package = json.loads(research_path.read_text(encoding="utf-8"))
@@ -289,7 +297,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
     def run_first() -> None:
         try:
             first_result.append(
-                create_documentary(first.slug, production_factory=lambda _: first, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer)
+                create_documentary(first.slug, production_factory=lambda _: first, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration)
             )
         except BaseException as exc:  # surfaced below with the original traceback context
             first_error.append(exc)
@@ -310,7 +318,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
         assert running["status"] == "running"
         assert running["attempts"] == 1
         with pytest.raises(RuntimeError, match="production already running"):
-            create_documentary(second.slug, production_factory=lambda _: second, visual_image_generator=_fake_image, visual_renderer=_fake_renderer)
+            create_documentary(second.slug, production_factory=lambda _: second, visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration)
         assert locked_execution.record(STORYBOARD_ARTIFACT)["status"] == "running"
         assert locked_execution.record(STORYBOARD_ARTIFACT)["attempts"] == 1
 
@@ -328,6 +336,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
         resumed = create_documentary(
             first.slug,
             production_factory=lambda _: FakeProduction(tmp_path),
+            narration_retriever=_fake_narration,
         )
     assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 1
 
@@ -346,6 +355,7 @@ def test_tampered_visual_master_is_rebuilt(tmp_path: Path) -> None:
         historical_providers=[],
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        narration_retriever=_fake_narration,
     )
 
     assert resumed.record(VISUAL_MASTER_ARTIFACT)["attempts"] == 2
@@ -376,3 +386,36 @@ def test_visual_render_is_blocked_by_verified_failed_qc(tmp_path: Path) -> None:
             image_generator=_fake_image,
             renderer=_fake_renderer,
         )
+
+def test_tampered_narration_track_rebuilds_only_its_language_track(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    intro = execution.output_path(
+        station="narration_en",
+        artifact_id="delivery.en.narration.intro",
+    )
+    story = execution.output_path(
+        station="narration_en",
+        artifact_id="delivery.en.narration.story",
+    )
+    outro = execution.output_path(
+        station="narration_en",
+        artifact_id="delivery.en.narration.outro",
+    )
+    story_before = story.read_bytes()
+    outro_before = outro.read_bytes()
+    intro.write_bytes(b"tampered")
+
+    resumed = create_documentary(
+        production.slug,
+        production_factory=lambda _: production,
+        historical_providers=[],
+        visual_image_generator=_fake_image,
+        visual_renderer=_fake_renderer,
+        narration_retriever=_fake_narration,
+    )
+
+    assert resumed.record("delivery.en.narration.intro")["attempts"] == 2
+    assert resumed.record("delivery.en.narration.story")["attempts"] == 1
+    assert resumed.record("delivery.en.narration.outro")["attempts"] == 1
+    assert story.read_bytes() == story_before
+    assert outro.read_bytes() == outro_before
