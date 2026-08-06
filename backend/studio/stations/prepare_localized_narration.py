@@ -63,15 +63,28 @@ def run_localized_narration(production: Any, execution: ProductionExecution, *, 
     changed = False
     for language in SUPPORTED_LANGUAGE_CODES:
         station = narration_station(language)
-        sources = {segment: retriever(production, language, segment) for segment in SEGMENTS}
+        pending_artifacts = set(
+            execution.pending_artifacts(station=station)
+        )
+
+        if not pending_artifacts:
+            for segment in SEGMENTS:
+                execution.require_verified_completed(
+                    station=station,
+                    artifact_id=narration_artifact(language, segment),
+                )
+            continue
+
+        sources = {
+            segment: retriever(production, language, segment)
+            for segment in SEGMENTS
+        }
         if any(not value for value in sources.values()):
             raise RuntimeError(f"Empty narration source for {language}")
+
         hashes = _hashes(sources)
-        pending_artifacts = set(execution.pending_artifacts(station=station))
         recorded_hashes = _stored_hashes(_sidecar(execution, language))
-        if not pending_artifacts and recorded_hashes == hashes:
-            continue
-        if not pending_artifacts or recorded_hashes != hashes:
+        if recorded_hashes != hashes:
             for segment in SEGMENTS:
                 artifact = narration_artifact(language, segment)
                 if artifact not in pending_artifacts:
