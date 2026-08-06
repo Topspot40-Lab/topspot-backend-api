@@ -8,6 +8,12 @@ import sys
 import threading
 from types import SimpleNamespace
 from unittest.mock import patch
+from backend.studio.factory.production_contract import SUPPORTED_LANGUAGE_CODES
+from backend.studio.stations.prepare_localized_narration import (
+    SEGMENTS,
+    narration_artifact,
+    narration_station,
+)
 
 import pytest
 
@@ -94,6 +100,16 @@ def _fake_image(_: str) -> bytes:
 def _fake_narration(_: object, language: str, segment: str) -> bytes:
     return f"{language}:{segment}".encode()
 
+def _unexpected_narration(
+    _: object,
+    language: str,
+    segment: str,
+) -> bytes:
+    raise AssertionError(
+        f"Completed local narration should be reused: {language}:{segment}"
+    )
+
+
 def _fake_delivery(_: Path, __: object, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(b"test delivery")
@@ -172,6 +188,34 @@ def test_create_documentary_resume_skips_verified_storyboard(tmp_path: Path) -> 
     assert output.read_bytes() == before
     assert resumed.record(STORYBOARD_ARTIFACT)["status"] == "completed"
     assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 1
+
+def test_create_documentary_resume_uses_completed_local_narration(
+    tmp_path: Path,
+) -> None:
+    production, _ = _create(tmp_path)
+
+    resumed = create_documentary(
+        production.slug,
+        production_factory=lambda _: production,
+        historical_providers=[],
+        narration_retriever=_unexpected_narration,
+        delivery_builder=_fake_delivery,
+        delivery_media_validator=_fake_media,
+    )
+
+    for language in SUPPORTED_LANGUAGE_CODES:
+        station = narration_station(language)
+
+        for segment in SEGMENTS:
+            artifact = narration_artifact(language, segment)
+            record = resumed.record(artifact)
+
+            assert record["status"] == "completed"
+            assert record["attempts"] == 1
+            assert resumed.output_path(
+                station=station,
+                artifact_id=artifact,
+            ).is_file()
 
 
 def test_interrupted_storyboard_is_requeued_and_rebuilt(tmp_path: Path) -> None:
