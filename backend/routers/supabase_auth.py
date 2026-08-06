@@ -40,6 +40,25 @@ class SupabaseSessionRequest(BaseModel):
     access_token: str
 
 
+@router.post("/logout")
+def logout():
+    response = JSONResponse(
+        status_code=200,
+        content={"logged_out": True},
+    )
+
+    response.delete_cookie(
+        key="access_token",
+        path="/",
+        domain=cookie_config["COOKIE_DOMAIN"],
+        secure=cookie_config["SECURE_COOKIE"],
+        httponly=True,
+        samesite="none",
+    )
+
+    return response
+
+
 @router.post("/supabase/session")
 def create_supabase_session(payload: SupabaseSessionRequest):
     token = payload.access_token.strip()
