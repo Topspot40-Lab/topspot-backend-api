@@ -24,6 +24,11 @@ from backend.studio.stations.verify_historical_visuals import (
     QUALITY_ARTIFACT,
     VISUAL_QUALITY_STATION,
 )
+from backend.studio.stations.render_visual_master import (
+    VISUAL_MASTER_ARTIFACT,
+    VISUAL_RENDER_STATION,
+    run_visual_render,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -79,12 +84,21 @@ class FakeProduction:
         )
 
 
+def _fake_image(_: str) -> bytes:
+    return b"test image"
+
+def _fake_renderer(_: object, output: Path) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_bytes(b"test visual master")
+
 def _create(tmp_path: Path) -> tuple[FakeProduction, ProductionExecution]:
     production = FakeProduction(tmp_path)
     execution = create_documentary(
         production.slug,
         production_factory=lambda _: production,
         historical_providers=[],
+        visual_image_generator=_fake_image,
+        visual_renderer=_fake_renderer,
     )
     return production, execution
 
@@ -113,6 +127,10 @@ def test_create_documentary_builds_only_canonical_storyboard(tmp_path: Path) -> 
     assert execution.record(PROVENANCE_ARTIFACT)["station"] == VISUAL_QUALITY_STATION
     assert json.loads(provenance.read_text(encoding="utf-8"))["entries"] == []
     assert json.loads(quality.read_text(encoding="utf-8"))["summary"]["passed"] is True
+    master = production.work_root / "factory" / "shared" / "visual_master.mp4"
+    assert master.exists()
+    assert execution.record(VISUAL_MASTER_ARTIFACT)["status"] == "completed"
+    assert execution.record(VISUAL_MASTER_ARTIFACT)["station"] == VISUAL_RENDER_STATION
 
 
 def test_create_documentary_resume_skips_verified_storyboard(tmp_path: Path) -> None:
@@ -151,6 +169,8 @@ def test_interrupted_storyboard_is_requeued_and_rebuilt(tmp_path: Path) -> None:
         production.slug,
         production_factory=lambda _: production,
         historical_providers=[],
+        visual_image_generator=_fake_image,
+        visual_renderer=_fake_renderer,
     )
 
     assert execution.record(STORYBOARD_ARTIFACT)["status"] == "completed"
@@ -194,7 +214,7 @@ def test_skipped_storyboard_cannot_complete_production(tmp_path: Path) -> None:
     )
 
     with pytest.raises(RuntimeError, match="not verified and completed"):
-        create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[])
+        create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer)
 
     assert execution.record(STORYBOARD_ARTIFACT)["status"] == "skipped"
     assert not execution.output_path(
@@ -216,7 +236,7 @@ def test_tampered_completed_storyboard_is_rebuilt(tmp_path: Path, tamper: str) -
     else:
         output.write_text('{"tampered": true}', encoding="utf-8")
 
-    resumed = create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[])
+    resumed = create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer)
 
     assert resumed.record(STORYBOARD_ARTIFACT)["status"] == "completed"
     assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 2
@@ -241,6 +261,8 @@ def test_rebuilt_storyboard_requeues_visual_research(tmp_path: Path) -> None:
         production.slug,
         production_factory=lambda _: production,
         historical_providers=[],
+        visual_image_generator=_fake_image,
+        visual_renderer=_fake_renderer,
     )
 
     package = json.loads(research_path.read_text(encoding="utf-8"))
@@ -267,7 +289,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
     def run_first() -> None:
         try:
             first_result.append(
-                create_documentary(first.slug, production_factory=lambda _: first, historical_providers=[])
+                create_documentary(first.slug, production_factory=lambda _: first, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer)
             )
         except BaseException as exc:  # surfaced below with the original traceback context
             first_error.append(exc)
@@ -288,7 +310,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
         assert running["status"] == "running"
         assert running["attempts"] == 1
         with pytest.raises(RuntimeError, match="production already running"):
-            create_documentary(second.slug, production_factory=lambda _: second)
+            create_documentary(second.slug, production_factory=lambda _: second, visual_image_generator=_fake_image, visual_renderer=_fake_renderer)
         assert locked_execution.record(STORYBOARD_ARTIFACT)["status"] == "running"
         assert locked_execution.record(STORYBOARD_ARTIFACT)["attempts"] == 1
 
@@ -308,3 +330,49 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
             production_factory=lambda _: FakeProduction(tmp_path),
         )
     assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 1
+
+
+def test_tampered_visual_master_is_rebuilt(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    master = execution.output_path(
+        station=VISUAL_RENDER_STATION,
+        artifact_id=VISUAL_MASTER_ARTIFACT,
+    )
+    master.write_bytes(b"tampered")
+
+    resumed = create_documentary(
+        production.slug,
+        production_factory=lambda _: production,
+        historical_providers=[],
+        visual_image_generator=_fake_image,
+        visual_renderer=_fake_renderer,
+    )
+
+    assert resumed.record(VISUAL_MASTER_ARTIFACT)["attempts"] == 2
+    assert master.read_bytes() == b"test visual master"
+
+
+def test_visual_render_is_blocked_by_verified_failed_qc(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    execution.requeue_artifact(
+        station=VISUAL_QUALITY_STATION,
+        artifact_id=QUALITY_ARTIFACT,
+        reason="test failing QC",
+    )
+    quality = execution.start_artifact(
+        station=VISUAL_QUALITY_STATION,
+        artifact_id=QUALITY_ARTIFACT,
+    )
+    quality.write_text('{"summary": {"passed": false}}', encoding="utf-8")
+    execution.complete_artifact(
+        station=VISUAL_QUALITY_STATION,
+        artifact_id=QUALITY_ARTIFACT,
+    )
+
+    with pytest.raises(RuntimeError, match="visual QC passes"):
+        run_visual_render(
+            production,
+            execution,
+            image_generator=_fake_image,
+            renderer=_fake_renderer,
+        )

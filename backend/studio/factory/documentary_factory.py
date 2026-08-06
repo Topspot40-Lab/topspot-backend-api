@@ -31,6 +31,11 @@ from backend.studio.stations.verify_historical_visuals import (
     VISUAL_QUALITY_STATION,
     run_visual_quality,
 )
+from backend.studio.stations.render_visual_master import (
+    VISUAL_MASTER_ARTIFACT,
+    VISUAL_RENDER_STATION,
+    run_visual_render,
+)
 
 
 VISUAL_PLANNING_STATION = "visual_planning"
@@ -113,6 +118,8 @@ def create_documentary(
     production_factory: Callable[[str], Production] = Production,
     historical_providers: list[Any] | None = None,
     historical_retriever: Callable[[Any], bytes] | None = None,
+    visual_image_generator: Callable[[str], bytes] | None = None,
+    visual_renderer: Callable[[Any, Any], None] | None = None,
 ) -> ProductionExecution:
     """Run the normal one-action canonical factory workflow for a production."""
     production = production_factory(slug)
@@ -140,6 +147,16 @@ def create_documentary(
                     station=VISUAL_QUALITY_STATION,
                     artifact_id=artifact_id,
                 )
+            render_kwargs: dict[str, Any] = {}
+            if visual_image_generator is not None:
+                render_kwargs["image_generator"] = visual_image_generator
+            if visual_renderer is not None:
+                render_kwargs["renderer"] = visual_renderer
+            run_visual_render(production, execution, **render_kwargs)
+            execution.require_verified_completed(
+                station=VISUAL_RENDER_STATION,
+                artifact_id=VISUAL_MASTER_ARTIFACT,
+            )
         except Exception as exc:
             production.session.error(concise_error_summary(exc))
             production.session.finish_production(success=False)
