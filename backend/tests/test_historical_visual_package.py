@@ -65,6 +65,33 @@ def test_license_policy_rejects_nc_nd_and_requires_complete_attribution() -> Non
     assert license_status(candidate(1, license_name="Public domain", usage_terms="Public domain"))[0] == "eligible"
 
 
+def test_public_domain_without_license_url_uses_generated_fallback(
+    tmp_path: Path,
+) -> None:
+    incomplete = candidate(
+        1,
+        license_name="Public domain",
+        usage_terms="Public domain",
+        license_url="",
+    )
+
+    assert license_status(incomplete) == (
+        "review",
+        "license_provenance_incomplete",
+    )
+
+    package = HistoricalVisualPackageBuilder(
+        providers=[FakeProvider([incomplete])],
+        retriever=lambda _: image_bytes(),
+        cache=HistoricalCache(tmp_path / "cache"),
+    ).build(storyboard())
+
+    assert package["shots"][0]["decision"]["state"] == (
+        "generated_fallback_eligible"
+    )
+    assert package["summary"]["auto_approved"] == 0
+
+
 def test_unreviewed_live_source_is_automatically_approved(tmp_path: Path) -> None:
     package = HistoricalVisualPackageBuilder(providers=[FakeProvider([candidate(1)])], retriever=lambda _: image_bytes(), cache=HistoricalCache(tmp_path / "cache")).build(storyboard())
     assert package["shots"][0]["decision"]["state"] == "approved_historical"
