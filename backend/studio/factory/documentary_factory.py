@@ -8,6 +8,7 @@ commands continue to use their existing outputs and manifests unchanged.
 from __future__ import annotations
 
 import argparse
+import json
 from collections.abc import Callable
 from typing import Any
 
@@ -23,6 +24,11 @@ from backend.studio.production import Production
 from backend.studio.stations.build_storyboard import (
     build_storyboard_payload,
     save_json_atomic,
+)
+from backend.studio.stations.generate_visual_plan import (
+    apply_scene_plan,
+    request_visual_plan,
+    validate_scene_plan,
 )
 from backend.studio.stations.select_historical_visuals import (
     VISUAL_RESEARCH_ARTIFACT,
@@ -55,16 +61,43 @@ def concise_error_summary(error: Exception) -> str:
     return f"{type(error).__name__}: {message}"[:_MAX_ERROR_SUMMARY_LENGTH]
 
 
+def _scene_is_prompt_ready(scene: dict[str, Any]) -> bool:
+    shots = scene.get("visual_shots", [])
+    return bool(shots) and all(
+        shot.get("status") == "prompt_ready"
+        and bool(str(shot.get("prompt") or "").strip())
+        and bool(str(shot.get("visual_intent") or "").strip())
+        and "historical_search" in shot
+        and isinstance(shot.get("historical_plan"), dict)
+        for shot in shots
+    )
+
+
+def _resume_or_build_storyboard(
+    production: Production,
+    output_path: Any,
+) -> dict[str, Any]:
+    if output_path.is_file():
+        try:
+            payload = json.loads(output_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            payload = None
+        if (
+            isinstance(payload, dict)
+            and payload.get("production_slug") == production.slug
+            and isinstance(payload.get("scenes"), list)
+        ):
+            return payload
+    return build_storyboard_payload(production)
+
+
 def run_visual_planning(
     production: Production,
     execution: ProductionExecution,
+    *,
+    visual_planner: Callable[..., list[dict[str, Any]]] | None = None,
 ) -> bool:
-    """Build the shared canonical storyboard if its verified output is absent.
-
-    The existing storyboard payload builder remains the source of the actual
-    construction logic. This adapter only binds it to canonical ownership,
-    output paths, persistence, and session reporting.
-    """
+    """Build and persist the canonical storyboard with prompt-ready shots."""
     execution.resume()
     if STORYBOARD_ARTIFACT not in execution.pending_artifacts(
         station=VISUAL_PLANNING_STATION,
@@ -84,8 +117,19 @@ def run_visual_planning(
             artifact_id=STORYBOARD_ARTIFACT,
         )
         claimed = True
-        payload = build_storyboard_payload(production)
         output_path.parent.mkdir(parents=True, exist_ok=True)
+        payload = _resume_or_build_storyboard(production, output_path)
+        planner = visual_planner or request_visual_plan
+        for scene in payload["scenes"]:
+            if _scene_is_prompt_ready(scene):
+                continue
+            plan = planner(
+                documentary_title=production.documentary.title,
+                scene=scene,
+            )
+            validate_scene_plan(scene=scene, plan=plan)
+            apply_scene_plan(scene=scene, plan=plan)
+            save_json_atomic(output_path, payload)
         save_json_atomic(output_path, payload)
         execution.complete_artifact(
             station=VISUAL_PLANNING_STATION,
@@ -101,7 +145,6 @@ def run_visual_planning(
                     error_summary=summary,
                 )
             except RuntimeError:
-                # Completion verification may already have recorded failure.
                 pass
         session.error(summary, station=VISUAL_PLANNING_STATION)
         session.finish_station(VISUAL_PLANNING_STATION, success=False)
@@ -116,14 +159,13 @@ def run_visual_planning(
         artifact_id=STORYBOARD_ARTIFACT,
     )
     return True
-
-
 def create_documentary(
     slug: str,
     *,
     production_factory: Callable[[str], Production] = Production,
     historical_providers: list[Any] | None = None,
     historical_retriever: Callable[[Any], bytes] | None = None,
+    visual_planner: Callable[..., list[dict[str, Any]]] | None = None,
     visual_image_generator: Callable[[str], bytes] | None = None,
     visual_renderer: Callable[[Any, Any], None] | None = None,
     narration_retriever: Callable[[Any, str, str], bytes] | None = None,
@@ -138,7 +180,7 @@ def create_documentary(
         try:
             contract = production.session.adopt_documentary_production_contract()
             execution = ProductionExecution(contract=contract, work_root=production.work_root)
-            run_visual_planning(production, execution)
+            run_visual_planning(production, execution, visual_planner=visual_planner)
             execution.require_verified_completed(
                 station=VISUAL_PLANNING_STATION,
                 artifact_id=STORYBOARD_ARTIFACT,

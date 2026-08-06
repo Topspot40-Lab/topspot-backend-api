@@ -24,6 +24,7 @@ from backend.studio.factory.documentary_factory import (
     VISUAL_RESEARCH_ARTIFACT,
     VISUAL_RESEARCH_STATION,
     create_documentary,
+    run_visual_planning,
 )
 from backend.studio.stations.verify_historical_visuals import (
     PROVENANCE_ARTIFACT,
@@ -104,6 +105,53 @@ class FakeProduction:
         )
 
 
+def _fake_visual_planner(
+    *,
+    documentary_title: str,
+    scene: dict[str, object],
+) -> list[dict[str, object]]:
+    return [
+        {
+            "shot_number": shot["shot_number"],
+            "visual_intent": f"{documentary_title} scene {scene['scene_number']} visual",
+            "historical_search": f"{documentary_title} scene {scene['scene_number']}",
+            "historical_plan": {
+                "subject": documentary_title,
+                "subject_type": "group",
+                "era": "documentary era",
+                "required_terms": [documentary_title],
+                "avoid_terms": [],
+                "search_queries": [f"{documentary_title} archive", f"{documentary_title} scene"],
+            },
+            "image_prompt": f"16:9 documentary image for {documentary_title} scene {scene['scene_number']}",
+        }
+        for shot in scene["visual_shots"]
+    ]
+
+
+@pytest.fixture(autouse=True)
+def _use_fake_visual_planner(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        "backend.studio.factory.documentary_factory.request_visual_plan",
+        _fake_visual_planner,
+    )
+
+def _multi_scene_production(tmp_path: Path) -> FakeProduction:
+    production = FakeProduction(tmp_path)
+    production.documentary.languages = tuple(
+        SimpleNamespace(
+            **{
+                **vars(language),
+                "story_text": "One. Two. Three. Four.",
+                "duration_seconds": 32,
+            }
+        )
+        if language.language_code == "en"
+        else language
+        for language in production.documentary.languages
+    )
+    return production
+
 def _fake_image(_: str) -> bytes:
     return b"test image"
 
@@ -137,6 +185,7 @@ def _create(tmp_path: Path) -> tuple[FakeProduction, ProductionExecution]:
         production.slug,
         production_factory=lambda _: production,
         historical_providers=[],
+        visual_planner=_fake_visual_planner,
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
         narration_retriever=_fake_narration,
@@ -645,3 +694,99 @@ def test_create_documentary_cannot_finish_after_final_delivery_verification_fail
         )
 
     assert production.session.payload["status"] == "failed"
+def test_factory_visual_planning_populates_every_shot(tmp_path: Path) -> None:
+    production, _ = _create(tmp_path)
+    payload = json.loads(
+        (production.work_root / "factory" / "shared" / "visual_plan.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    for scene in payload["scenes"]:
+        for shot in scene["visual_shots"]:
+            assert shot["status"] == "prompt_ready"
+            assert shot["visual_intent"].strip()
+            assert "historical_search" in shot
+            assert isinstance(shot["historical_plan"], dict)
+            assert shot["prompt"].strip()
+
+
+def test_visual_planner_is_called_once_per_incomplete_scene(tmp_path: Path) -> None:
+    production = _multi_scene_production(tmp_path)
+    execution = ProductionExecution(
+        contract=production.session.adopt_documentary_production_contract(),
+        work_root=production.work_root,
+    )
+    planned: list[int] = []
+
+    def planner(**kwargs: object) -> list[dict[str, object]]:
+        scene = kwargs["scene"]
+        assert isinstance(scene, dict)
+        planned.append(int(scene["scene_number"]))
+        return _fake_visual_planner(**kwargs)  # type: ignore[arg-type]
+
+    run_visual_planning(production, execution, visual_planner=planner)
+    assert planned == [1, 2]
+
+
+def test_partial_visual_plan_resumes_without_replanning_completed_scenes(tmp_path: Path) -> None:
+    production = _multi_scene_production(tmp_path)
+    execution = ProductionExecution(
+        contract=production.session.adopt_documentary_production_contract(),
+        work_root=production.work_root,
+    )
+    first_calls: list[int] = []
+
+    def interrupted_planner(**kwargs: object) -> list[dict[str, object]]:
+        scene = kwargs["scene"]
+        assert isinstance(scene, dict)
+        scene_number = int(scene["scene_number"])
+        first_calls.append(scene_number)
+        if scene_number == 2:
+            raise RuntimeError("planner interrupted")
+        return _fake_visual_planner(**kwargs)  # type: ignore[arg-type]
+
+    with pytest.raises(RuntimeError, match="planner interrupted"):
+        run_visual_planning(production, execution, visual_planner=interrupted_planner)
+
+    output = execution.output_path(
+        station=VISUAL_PLANNING_STATION,
+        artifact_id=STORYBOARD_ARTIFACT,
+    )
+    partial = json.loads(output.read_text(encoding="utf-8"))
+    assert first_calls == [1, 2]
+    assert all(
+        shot["status"] == "prompt_ready"
+        for shot in partial["scenes"][0]["visual_shots"]
+    )
+
+    resumed_calls: list[int] = []
+
+    def resumed_planner(**kwargs: object) -> list[dict[str, object]]:
+        scene = kwargs["scene"]
+        assert isinstance(scene, dict)
+        resumed_calls.append(int(scene["scene_number"]))
+        return _fake_visual_planner(**kwargs)  # type: ignore[arg-type]
+
+    run_visual_planning(production, execution, visual_planner=resumed_planner)
+    assert resumed_calls == [2]
+    assert execution.record(STORYBOARD_ARTIFACT)["status"] == "completed"
+
+
+def test_invalid_visual_planner_output_fails_canonical_artifact_concisely(tmp_path: Path) -> None:
+    production = FakeProduction(tmp_path)
+    execution = ProductionExecution(
+        contract=production.session.adopt_documentary_production_contract(),
+        work_root=production.work_root,
+    )
+
+    with pytest.raises(RuntimeError, match="expected shot numbers"):
+        run_visual_planning(
+            production,
+            execution,
+            visual_planner=lambda **_: [],
+        )
+
+    record = execution.record(STORYBOARD_ARTIFACT)
+    assert record["status"] == "failed"
+    assert record["error_summary"] == "RuntimeError: Scene 1: expected shot numbers [1, 2], received []."
