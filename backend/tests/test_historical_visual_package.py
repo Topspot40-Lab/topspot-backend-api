@@ -66,10 +66,13 @@ def test_license_policy_rejects_nc_nd_and_requires_complete_attribution() -> Non
     assert license_status(candidate(1, license_name="Public domain", usage_terms="Public domain"))[0] == "eligible"
 
 
-def test_raw_live_source_is_queued_for_overlay_review(tmp_path: Path) -> None:
+def test_unreviewed_live_source_uses_generated_fallback(tmp_path: Path) -> None:
     package = HistoricalVisualPackageBuilder(providers=[FakeProvider([candidate(1)])], retriever=lambda _: image_bytes(), cache=HistoricalCache(tmp_path / "cache")).build(storyboard())
-    assert package["shots"][0]["decision"]["state"] == "needs_review"
+    assert package["shots"][0]["decision"]["state"] == "generated_fallback_eligible"
     assert package["shots"][0]["decision"]["reason_codes"] == ["overlay_unverified"]
+    assert package["shots"][0]["candidates"][0]["disposition"] == "generated_fallback"
+    assert package["summary"]["generated_fallback_eligible"] == 1
+    assert package["summary"]["review_queued"] == 0
     assert package["shared_for_languages"] == ["en", "es", "pt-BR"]
 
 
