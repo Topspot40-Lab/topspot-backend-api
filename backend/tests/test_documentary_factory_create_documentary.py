@@ -29,6 +29,10 @@ from backend.studio.stations.render_visual_master import (
     VISUAL_RENDER_STATION,
     run_visual_render,
 )
+from backend.studio.stations.build_localized_delivery import (
+    run_localized_deliveries,
+    validate_delivery_media,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -90,6 +94,13 @@ def _fake_image(_: str) -> bytes:
 def _fake_narration(_: object, language: str, segment: str) -> bytes:
     return f"{language}:{segment}".encode()
 
+def _fake_delivery(_: Path, __: object, output: Path) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_bytes(b"test delivery")
+
+def _fake_media(_: Path, __: object) -> dict[str, float]:
+    return {"duration_seconds": 3.0, "fps": 30.0}
+
 def _fake_renderer(_: object, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(b"test visual master")
@@ -103,6 +114,7 @@ def _create(tmp_path: Path) -> tuple[FakeProduction, ProductionExecution]:
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
         narration_retriever=_fake_narration,
+        delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
     return production, execution
 
@@ -154,6 +166,7 @@ def test_create_documentary_resume_skips_verified_storyboard(tmp_path: Path) -> 
             production_factory=lambda _: production,
             historical_providers=[],
             narration_retriever=_fake_narration,
+        delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
         )
 
     assert output.read_bytes() == before
@@ -177,6 +190,7 @@ def test_interrupted_storyboard_is_requeued_and_rebuilt(tmp_path: Path) -> None:
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
         narration_retriever=_fake_narration,
+        delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
 
     assert execution.record(STORYBOARD_ARTIFACT)["status"] == "completed"
@@ -195,6 +209,7 @@ def test_storyboard_failure_is_concisely_recorded(tmp_path: Path) -> None:
             production_factory=lambda _: production,
             historical_providers=[],
             narration_retriever=_fake_narration,
+        delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
         )
 
     execution = ProductionExecution(
@@ -221,7 +236,7 @@ def test_skipped_storyboard_cannot_complete_production(tmp_path: Path) -> None:
     )
 
     with pytest.raises(RuntimeError, match="not verified and completed"):
-        create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration)
+        create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration, delivery_builder=_fake_delivery, delivery_media_validator=_fake_media)
 
     assert execution.record(STORYBOARD_ARTIFACT)["status"] == "skipped"
     assert not execution.output_path(
@@ -243,7 +258,7 @@ def test_tampered_completed_storyboard_is_rebuilt(tmp_path: Path, tamper: str) -
     else:
         output.write_text('{"tampered": true}', encoding="utf-8")
 
-    resumed = create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration)
+    resumed = create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration, delivery_builder=_fake_delivery, delivery_media_validator=_fake_media)
 
     assert resumed.record(STORYBOARD_ARTIFACT)["status"] == "completed"
     assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 2
@@ -271,6 +286,7 @@ def test_rebuilt_storyboard_requeues_visual_research(tmp_path: Path) -> None:
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
         narration_retriever=_fake_narration,
+        delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
 
     package = json.loads(research_path.read_text(encoding="utf-8"))
@@ -297,7 +313,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
     def run_first() -> None:
         try:
             first_result.append(
-                create_documentary(first.slug, production_factory=lambda _: first, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration)
+                create_documentary(first.slug, production_factory=lambda _: first, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration, delivery_builder=_fake_delivery, delivery_media_validator=_fake_media)
             )
         except BaseException as exc:  # surfaced below with the original traceback context
             first_error.append(exc)
@@ -318,7 +334,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
         assert running["status"] == "running"
         assert running["attempts"] == 1
         with pytest.raises(RuntimeError, match="production already running"):
-            create_documentary(second.slug, production_factory=lambda _: second, visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration)
+            create_documentary(second.slug, production_factory=lambda _: second, visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration, delivery_builder=_fake_delivery, delivery_media_validator=_fake_media)
         assert locked_execution.record(STORYBOARD_ARTIFACT)["status"] == "running"
         assert locked_execution.record(STORYBOARD_ARTIFACT)["attempts"] == 1
 
@@ -337,6 +353,7 @@ def test_workflow_lock_prevents_overlapping_factory_invocation(tmp_path: Path) -
             first.slug,
             production_factory=lambda _: FakeProduction(tmp_path),
             narration_retriever=_fake_narration,
+        delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
         )
     assert resumed.record(STORYBOARD_ARTIFACT)["attempts"] == 1
 
@@ -356,6 +373,7 @@ def test_tampered_visual_master_is_rebuilt(tmp_path: Path) -> None:
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
         narration_retriever=_fake_narration,
+        delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
 
     assert resumed.record(VISUAL_MASTER_ARTIFACT)["attempts"] == 2
@@ -412,6 +430,7 @@ def test_tampered_narration_track_rebuilds_only_its_language_track(tmp_path: Pat
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
         narration_retriever=_fake_narration,
+        delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
 
     assert resumed.record("delivery.en.narration.intro")["attempts"] == 2
@@ -419,3 +438,129 @@ def test_tampered_narration_track_rebuilds_only_its_language_track(tmp_path: Pat
     assert resumed.record("delivery.en.narration.outro")["attempts"] == 1
     assert story.read_bytes() == story_before
     assert outro.read_bytes() == outro_before
+
+def test_all_contract_delivery_artifacts_are_completed(tmp_path: Path) -> None:
+    _, execution = _create(tmp_path)
+    for language in ("en", "es", "pt-BR"):
+        record = execution.record(f"delivery.{language}.video")
+        assert record["station"] == f"localized_delivery_{language}"
+        assert record["status"] == "completed"
+        assert execution.output_path(
+            station=f"localized_delivery_{language}",
+            artifact_id=f"delivery.{language}.video",
+        ).read_bytes() == b"test delivery"
+
+def test_delivery_failure_isolated_and_later_languages_complete(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    for language in ("en", "es", "pt-BR"):
+        execution.requeue_artifact(
+            station=f"localized_delivery_{language}",
+            artifact_id=f"delivery.{language}.video",
+            reason="exercise isolated delivery failure",
+        )
+
+    attempted: list[str] = []
+
+    def failing_en_builder(_: Path, tracks: tuple[Path, Path, Path], output: Path) -> None:
+        language = tracks[0].read_text(encoding="utf-8").split(":", maxsplit=1)[0]
+        attempted.append(language)
+        if language == "en":
+            raise RuntimeError("en delivery failure")
+        _fake_delivery(_, tracks, output)
+
+    with pytest.raises(RuntimeError, match="en: RuntimeError: en delivery failure"):
+        run_localized_deliveries(production, execution, builder=failing_en_builder, media_validator=_fake_media)
+
+    assert attempted == ["en", "es", "pt-BR"]
+    assert execution.record("delivery.en.video")["status"] == "failed"
+    assert execution.record("delivery.es.video")["status"] == "completed"
+    assert execution.record("delivery.pt-BR.video")["status"] == "completed"
+
+def _media_metadata(*, duration: float = 3.0, video: bool = True, audio: bool = True, width: int = 1920, height: int = 1080, fps: str = "30/1") -> dict[str, object]:
+    streams: list[dict[str, object]] = []
+    if video:
+        streams.append({"codec_type": "video", "width": width, "height": height, "avg_frame_rate": fps})
+    if audio:
+        streams.append({"codec_type": "audio"})
+    return {"streams": streams, "format": {"duration": str(duration)}}
+
+
+def test_localized_delivery_media_acceptance_and_rejections(tmp_path: Path) -> None:
+    output = tmp_path / "documentary.mp4"
+    output.write_bytes(b"not empty")
+    tracks = tuple(tmp_path / f"{part}.mp3" for part in ("intro", "story", "outro"))
+    for track in tracks:
+        track.write_bytes(b"audio")
+
+    def valid_probe(path: Path) -> dict[str, object]:
+        return _media_metadata(duration=3.0) if path == output else _media_metadata(duration=1.0, video=False)
+
+    assert validate_delivery_media(output, tracks, probe=valid_probe) == {"duration_seconds": 3.0, "fps": 30.0}
+    cases = (
+        ("no video", _media_metadata(duration=3.0, video=False)),
+        ("no audio", _media_metadata(duration=3.0, audio=False)),
+        ("bad resolution", _media_metadata(duration=3.0, width=1280)),
+        ("bad fps", _media_metadata(duration=3.0, fps="24/1")),
+        ("bad duration", _media_metadata(duration=0.0)),
+        ("unsynchronized", _media_metadata(duration=4.0)),
+    )
+    for _, delivery in cases:
+        def rejecting_probe(path: Path, metadata: dict[str, object] = delivery) -> dict[str, object]:
+            return metadata if path == output else _media_metadata(duration=1.0, video=False)
+        with pytest.raises(RuntimeError):
+            validate_delivery_media(output, tracks, probe=rejecting_probe)
+
+
+def test_delivery_resume_skips_valid_per_language_outputs(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    assert run_localized_deliveries(production, execution, builder=_fake_delivery, media_validator=_fake_media) is False
+    for language in ("en", "es", "pt-BR"):
+        assert execution.record(f"delivery.{language}.video")["attempts"] == 1
+
+
+@pytest.mark.parametrize("tamper", ("missing", "changed"))
+def test_delivery_tamper_or_missing_rebuilds_only_affected_language(tmp_path: Path, tamper: str) -> None:
+    production, execution = _create(tmp_path)
+    output = execution.output_path(station="localized_delivery_en", artifact_id="delivery.en.video")
+    if tamper == "missing":
+        output.unlink()
+    else:
+        output.write_bytes(b"tampered")
+    create_documentary(production.slug, production_factory=lambda _: production, historical_providers=[], visual_image_generator=_fake_image, visual_renderer=_fake_renderer, narration_retriever=_fake_narration, delivery_builder=_fake_delivery, delivery_media_validator=_fake_media)
+    assert execution.record("delivery.en.video")["attempts"] == 2
+    assert execution.record("delivery.es.video")["attempts"] == 1
+    assert execution.record("delivery.pt-BR.video")["attempts"] == 1
+
+
+def test_delivery_requires_verified_stage_8_tracks(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    execution.requeue_artifact(station="narration_en", artifact_id="delivery.en.narration.intro", reason="test Stage 8 gate")
+    with pytest.raises(RuntimeError, match="Localized delivery failures"):
+        run_localized_deliveries(production, execution, builder=_fake_delivery, media_validator=_fake_media)
+    assert execution.record("delivery.en.video")["status"] == "completed"
+
+def test_verified_visual_master_change_rebuilds_all_deliveries(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    master = execution.output_path(station=VISUAL_RENDER_STATION, artifact_id=VISUAL_MASTER_ARTIFACT)
+    execution.requeue_artifact(station=VISUAL_RENDER_STATION, artifact_id=VISUAL_MASTER_ARTIFACT, reason="test visual input change")
+    rebuilt = execution.start_artifact(station=VISUAL_RENDER_STATION, artifact_id=VISUAL_MASTER_ARTIFACT)
+    rebuilt.write_bytes(b"changed visual master")
+    execution.complete_artifact(station=VISUAL_RENDER_STATION, artifact_id=VISUAL_MASTER_ARTIFACT)
+    assert rebuilt == master
+
+    assert run_localized_deliveries(production, execution, builder=_fake_delivery, media_validator=_fake_media) is True
+    for language in ("en", "es", "pt-BR"):
+        assert execution.record(f"delivery.{language}.video")["attempts"] == 2
+
+def test_verified_narration_change_rebuilds_only_its_language_delivery(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    artifact = "delivery.en.narration.intro"
+    execution.requeue_artifact(station="narration_en", artifact_id=artifact, reason="test narration source change")
+    changed = execution.start_artifact(station="narration_en", artifact_id=artifact)
+    changed.write_bytes(b"en:intro:changed")
+    execution.complete_artifact(station="narration_en", artifact_id=artifact)
+
+    assert run_localized_deliveries(production, execution, builder=_fake_delivery, media_validator=_fake_media) is True
+    assert execution.record("delivery.en.video")["attempts"] == 2
+    assert execution.record("delivery.es.video")["attempts"] == 1
+    assert execution.record("delivery.pt-BR.video")["attempts"] == 1

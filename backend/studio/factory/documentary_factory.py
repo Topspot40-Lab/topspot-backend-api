@@ -1,4 +1,4 @@
-﻿"""The first canonical, local-only documentary factory slice.
+"""The first canonical, local-only documentary factory slice.
 
 This entry point deliberately adopts the Stage 3 contract only when the
 caller explicitly requests canonical factory execution. Legacy station
@@ -37,6 +37,7 @@ from backend.studio.stations.render_visual_master import (
     run_visual_render,
 )
 from backend.studio.stations.prepare_localized_narration import run_localized_narration
+from backend.studio.stations.build_localized_delivery import run_localized_deliveries
 
 
 VISUAL_PLANNING_STATION = "visual_planning"
@@ -122,6 +123,8 @@ def create_documentary(
     visual_image_generator: Callable[[str], bytes] | None = None,
     visual_renderer: Callable[[Any, Any], None] | None = None,
     narration_retriever: Callable[[Any, str, str], bytes] | None = None,
+    delivery_builder: Callable[[Any, Any, Any], None] | None = None,
+    delivery_media_validator: Callable[[Any, Any], dict[str, float]] | None = None,
 ) -> ProductionExecution:
     """Run the normal one-action canonical factory workflow for a production."""
     production = production_factory(slug)
@@ -163,6 +166,12 @@ def create_documentary(
             if narration_retriever is not None:
                 narration_kwargs["retriever"] = narration_retriever
             run_localized_narration(production, execution, **narration_kwargs)
+            delivery_kwargs: dict[str, Any] = {}
+            if delivery_builder is not None:
+                delivery_kwargs["builder"] = delivery_builder
+            if delivery_media_validator is not None:
+                delivery_kwargs["media_validator"] = delivery_media_validator
+            run_localized_deliveries(production, execution, **delivery_kwargs)
         except Exception as exc:
             production.session.error(concise_error_summary(exc))
             production.session.finish_production(success=False)
