@@ -10,8 +10,18 @@ from pathlib import Path
 from sqlmodel import Session, select
 
 from backend.database import engine
-from backend.models.dbmodels import Artist, ArtistStory, MusicDocuseries
-from backend.studio.documentary import Documentary, slugify
+from backend.models.dbmodels import (
+    Artist,
+    ArtistStory,
+    MusicDocuseries,
+    MusicDocuseriesLocale,
+)
+from backend.studio.documentary import (
+    LANGUAGE_ORDER,
+    Documentary,
+    DocumentaryLanguage,
+    slugify,
+)
 from backend.studio.factory.batch_state import (
     BatchItem,
     BatchLedger,
@@ -64,8 +74,7 @@ def _production_root(slug: str) -> Path:
 
 
 def discover_documentary_sources() -> tuple[DocumentarySource, ...]:
-    """Read candidate source records without changing the configured database."""
-    sources: list[DocumentarySource] = []
+    """Load all candidate documentaries using a fixed number of queries."""
     with Session(engine) as database:
         docuseries = list(
             database.exec(
@@ -82,14 +91,136 @@ def discover_documentary_sources() -> tuple[DocumentarySource, ...]:
                 .order_by(Artist.id)
             ).all()
         )
-    for item in docuseries:
-        if item.id is not None:
-            sources.append(_load_source("music_docuseries", int(item.id), item.slug))
-    for artist in artists:
-        if artist.id is not None:
-            sources.append(
-                _load_source("artist_story", int(artist.id), slugify(artist.artist_name))
+
+        docuseries_ids = [
+            int(item.id)
+            for item in docuseries
+            if item.id is not None
+        ]
+        artist_ids = [
+            int(artist.id)
+            for artist in artists
+            if artist.id is not None
+        ]
+
+        locale_rows = (
+            list(
+                database.exec(
+                    select(MusicDocuseriesLocale).where(
+                        MusicDocuseriesLocale.docuseries_id.in_(docuseries_ids)
+                    )
+                ).all()
             )
+            if docuseries_ids
+            else []
+        )
+        story_rows = (
+            list(
+                database.exec(
+                    select(ArtistStory).where(
+                        ArtistStory.artist_id.in_(artist_ids)
+                    )
+                ).all()
+            )
+            if artist_ids
+            else []
+        )
+
+    locales_by_docuseries: dict[int, list[MusicDocuseriesLocale]] = {}
+    for row in locale_rows:
+        locales_by_docuseries.setdefault(int(row.docuseries_id), []).append(row)
+
+    stories_by_artist: dict[int, list[ArtistStory]] = {}
+    for row in story_rows:
+        stories_by_artist.setdefault(int(row.artist_id), []).append(row)
+
+    sources: list[DocumentarySource] = []
+
+    for item in docuseries:
+        if item.id is None:
+            continue
+
+        rows = sorted(
+            locales_by_docuseries.get(int(item.id), []),
+            key=lambda row: LANGUAGE_ORDER.get(row.language_code, 99),
+        )
+        title, subtitle_from_title = Documentary._split_title(item.title)
+        documentary = Documentary(
+            source_type="music_docuseries",
+            source_id=int(item.id),
+            slug=item.slug,
+            title=title,
+            subtitle=item.short_description or subtitle_from_title or "",
+            artwork_url=item.artwork_url,
+            languages=tuple(
+                DocumentaryLanguage(
+                    language_code=row.language_code,
+                    locale_id=int(row.id),
+                    story_text=row.story_text,
+                    duration_seconds=row.duration_seconds,
+                    tts_bucket=row.tts_bucket,
+                    tts_key=row.tts_key,
+                )
+                for row in rows
+                if row.id is not None
+            ),
+        )
+        sources.append(
+            DocumentarySource(
+                "music_docuseries",
+                int(item.id),
+                item.slug,
+                documentary,
+            )
+        )
+
+    for artist in artists:
+        if artist.id is None:
+            continue
+
+        rows = sorted(
+            stories_by_artist.get(int(artist.id), []),
+            key=lambda row: LANGUAGE_ORDER.get(row.language_code, 99),
+        )
+        artist_name = artist.artist_name.strip()
+        english_story = next(
+            (row for row in rows if row.language_code == "en"),
+            rows[0] if rows else None,
+        )
+        subtitle = (
+            english_story.title.strip()
+            if english_story is not None and english_story.title
+            else f"The Story of {artist_name}"
+        )
+        documentary = Documentary(
+            source_type="artist_story",
+            source_id=int(artist.id),
+            slug=slugify(artist_name),
+            title=artist_name,
+            subtitle=subtitle,
+            artwork_url=artist.artist_artwork,
+            languages=tuple(
+                DocumentaryLanguage(
+                    language_code=row.language_code,
+                    locale_id=int(row.id),
+                    story_text=row.story_text,
+                    duration_seconds=row.duration_seconds,
+                    tts_bucket=row.tts_bucket,
+                    tts_key=row.tts_key,
+                )
+                for row in rows
+                if row.id is not None
+            ),
+        )
+        sources.append(
+            DocumentarySource(
+                "artist_story",
+                int(artist.id),
+                documentary.slug,
+                documentary,
+            )
+        )
+
     return tuple(sources)
 
 
