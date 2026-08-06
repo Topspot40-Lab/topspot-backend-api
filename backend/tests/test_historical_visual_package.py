@@ -76,6 +76,25 @@ def test_unreviewed_live_source_uses_generated_fallback(tmp_path: Path) -> None:
     assert package["shared_for_languages"] == ["en", "es", "pt-BR"]
 
 
+def test_provider_failure_uses_generated_fallback(tmp_path: Path) -> None:
+    class FailingProvider:
+        provider_name = "wikimedia_commons"
+
+        def search(self, query: str, *, limit: int = 10):
+            raise RuntimeError("provider unavailable")
+
+    package = HistoricalVisualPackageBuilder(
+        providers=[FailingProvider()],
+        retriever=lambda _: image_bytes(),
+        cache=HistoricalCache(tmp_path / "cache"),
+    ).build(storyboard())
+
+    assert package["shots"][0]["decision"]["state"] == "generated_fallback_eligible"
+    assert package["shots"][0]["decision"]["reason_codes"] == ["provider_failure"]
+    assert package["summary"]["generated_fallback_eligible"] == 1
+    assert package["summary"]["review_queued"] == 0
+
+
 def test_exact_hash_review_can_auto_approve_non_hook_candidate(tmp_path: Path) -> None:
     content = image_bytes(); reviewed = candidate(1, overlay_reviewed=True, overlay_reviewed_at="2026-08-05T00:00:00+00:00", overlay_reviewer="Paty", overlay_reviewed_sha256=hashlib.sha256(content).hexdigest())
     package = HistoricalVisualPackageBuilder(providers=[FakeProvider([reviewed])], retriever=lambda _: content, cache=HistoricalCache(tmp_path / "cache")).build(storyboard())
