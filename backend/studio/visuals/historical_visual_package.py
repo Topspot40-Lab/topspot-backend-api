@@ -189,11 +189,13 @@ class HistoricalVisualPackageBuilder:
         self.counts["metadata_candidates"] += len(merged)
         records: list[dict[str, Any]] = []
         finalists: list[tuple[HistoricalImageCandidate, str, dict[str, Any], float]] = []
+        candidates_requiring_review = False
         plan = shot.get("historical_plan") if isinstance(shot.get("historical_plan"), dict) else None
         for candidate, query in merged.values():
             state, gates = metadata_gates(candidate)
             if state != "eligible":
-                records.append(self._record(candidate, query, state, gates))
+                candidates_requiring_review |= state == "review"
+                records.append(self._record(candidate, query, "generated_fallback" if state == "review" else state, gates))
                 self.counts["metadata_rejected"] += state == "rejected"
                 continue
             relevance_query = str(shot.get("historical_search") or shot.get("visual_intent") or title)
@@ -221,6 +223,7 @@ class HistoricalVisualPackageBuilder:
             finalists.append((candidate, query, self._record(candidate, query, "metadata_eligible", gates, score), score))
         finalists.sort(key=lambda item: item[3], reverse=True)
         downloaded: list[tuple[dict[str, Any], HistoricalImageCandidate, float, str]] = []
+        retrieval_or_decode_failed = False
         for candidate, query, record, score in finalists[:self.settings.max_downloaded_finalists_per_shot]:
             try:
                 content, sha256, hit = self.cache.retrieve(candidate, self.retriever)
@@ -236,34 +239,30 @@ class HistoricalVisualPackageBuilder:
                     record["disposition"] = "downloaded_finalist"
                     downloaded.append((record, candidate, score, sha256))
             except Exception as exc:
-                record["disposition"] = "review"
+                retrieval_or_decode_failed = True
+                record["disposition"] = "generated_fallback"
                 record["gates"].append({"name": "retrieval_and_decode", "passed": False, "reason": type(exc).__name__})
             records.append(record)
         hook = int(scene.get("scene_number") or 0) == 1 or float(shot.get("start_seconds") or 0) < self.settings.hook_window_seconds
         decision, reasons, selected_id, score_value, margin = "generated_fallback_eligible", [], None, None, None
-        if any(record["disposition"] == "review" for record in records):
-            decision, reasons = "needs_review", ["candidate_requires_review"]
-        elif failures:
-            decision, reasons = "generated_fallback_eligible", ["provider_failure"]
-        elif downloaded:
+        if downloaded:
             record, candidate, score, sha256 = downloaded[0]
             score_value = round(score, 3)
             margin = round(score - downloaded[1][2], 3) if len(downloaded) > 1 else 100.0
-            trusted = bool(candidate.overlay_reviewed and candidate.overlay_reviewed_at and candidate.overlay_reviewer and candidate.overlay_reviewed_sha256 == sha256)
             threshold, required_margin = (93.0, 15.0) if hook else (88.0, 10.0)
-            if trusted and score >= threshold and margin >= required_margin:
-                decision, selected_id, reasons, record["disposition"] = "approved_historical", record["candidate_id"], ["trusted_hash_review", "high_confidence"], "approved"
+            if score >= threshold and margin >= required_margin:
+                decision, selected_id, reasons, record["disposition"] = "approved_historical", record["candidate_id"], ["deterministic_safety_gates", "high_confidence"], "approved"
                 self.selected.append((sha256, str(record["fingerprints"]["perceptual_hash"])))
                 self.counts["auto_approved"] += 1
             else:
-                decision = "generated_fallback_eligible"
-                reasons = [
-                    "overlay_unverified"
-                    if not trusted
-                    else "confidence_below_auto_approval_threshold"
-                ]
+                reasons = ["confidence_below_auto_approval_threshold"]
                 record["disposition"] = "generated_fallback"
-        if decision == "needs_review": self.counts["review_queued"] += 1
+        elif failures:
+            reasons = ["provider_failure"]
+        elif retrieval_or_decode_failed:
+            reasons = ["retrieval_or_decode_failure"]
+        elif candidates_requiring_review:
+            reasons = ["candidate_requires_review"]
         if decision == "generated_fallback_eligible": self.counts["generated_fallback_eligible"] += 1
         return {"scene_number": int(scene["scene_number"]), "shot_number": int(shot["shot_number"]), "is_hook": hook, "queries": queries, "provider_failures": failures, "candidates": records, "decision": {"state": decision, "selected_candidate_id": selected_id, "deterministic_score": score_value, "score_margin": margin, "reason_codes": reasons, "reuse_scope": "shared_all_languages"}}
 
