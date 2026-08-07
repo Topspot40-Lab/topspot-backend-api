@@ -176,6 +176,7 @@ def create_documentary(
     narration_retriever: Callable[[Any, str, str], bytes] | None = None,
     delivery_builder: Callable[[Any, Any, Any], None] | None = None,
     delivery_media_validator: Callable[[Any, Any], dict[str, float]] | None = None,
+    delivery_bed_ensurer: Callable[..., None] | None = None,
 ) -> ProductionExecution:
     """Run the normal one-action canonical factory workflow for a production."""
     production = production_factory(slug)
@@ -237,6 +238,8 @@ def create_documentary(
                 delivery_kwargs["builder"] = delivery_builder
             if delivery_media_validator is not None:
                 delivery_kwargs["media_validator"] = delivery_media_validator
+            if delivery_bed_ensurer is not None:
+                delivery_kwargs["bed_ensurer"] = delivery_bed_ensurer
             run_localized_deliveries(production, execution, **delivery_kwargs)
             verify_final_delivery_packages(execution)
         except Exception as exc:
