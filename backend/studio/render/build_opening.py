@@ -138,15 +138,12 @@ def main() -> None:
 
     logo = production.card("logo")
     languages = production.card("languages")
-    title = production.card("title")
 
     timeline = build_opening_timeline(
         logo=logo,
         languages=languages,
-        title=title,
         logo_seconds=LOGO_SECONDS,
         language_seconds=LANGUAGE_SECONDS,
-        title_seconds=TITLE_SECONDS,
         black_seconds=BLACK_SECONDS,
     )
 

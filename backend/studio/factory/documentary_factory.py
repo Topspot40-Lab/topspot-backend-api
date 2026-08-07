@@ -50,6 +50,8 @@ from backend.studio.stations.render_opening_video import (
     OPENING_VIDEO_ARTIFACT,
     run_opening_render,
 )
+from backend.studio.stations.prepare_documentary_hook import prepare_documentary_hooks
+from backend.studio.stations.render_hook_visual import run_hook_visual
 from backend.studio.stations.prepare_localized_narration import run_localized_narration
 from backend.studio.stations.build_localized_delivery import run_localized_deliveries
 
@@ -174,6 +176,11 @@ def create_documentary(
     visual_renderer: Callable[[Any, Any], None] | None = None,
     opening_renderer: Callable[[Any, Any], None] | None = None,
     narration_retriever: Callable[[Any, str, str], bytes] | None = None,
+    hook_preparer: Callable[[Any], Any] | None = None,
+    hook_writer: Callable[[str, str], str] | None = None,
+    hook_synthesizer: Callable[[str, dict[str, Any]], bytes] | None = None,
+    hook_uploader: Callable[[str, str, bytes], None] | None = None,
+    hook_image_generator: Callable[[str], bytes] | None = None,
     delivery_builder: Callable[[Any, Any, Any], None] | None = None,
     delivery_media_validator: Callable[[Any, Any], dict[str, float]] | None = None,
     delivery_bed_ensurer: Callable[..., None] | None = None,
@@ -184,6 +191,26 @@ def create_documentary(
     with ProductionWorkflowLock(production.work_root):
         production.session.start_production()
         try:
+            if hook_preparer is not None:
+                prepared = hook_preparer(production.documentary)
+                if prepared is not None:
+                    production.documentary = prepared
+            else:
+                hook_kwargs: dict[str, Any] = {}
+                if hook_writer is not None:
+                    hook_kwargs["writer"] = hook_writer
+                if hook_synthesizer is not None:
+                    hook_kwargs["synthesizer"] = hook_synthesizer
+                if hook_uploader is not None:
+                    hook_kwargs["uploader"] = hook_uploader
+                changed_hooks = prepare_documentary_hooks(production.documentary, **hook_kwargs)
+                # Reload only after actual persistence; injected test/no-op preparers remain local.
+                if changed_hooks:
+                    from backend.studio.documentary import Documentary
+                    production.documentary = Documentary.load(
+                        source_type=production.documentary.source_type,
+                        source_id=production.documentary.source_id,
+                    )
             contract = production.session.adopt_documentary_production_contract()
             execution = ProductionExecution(contract=contract, work_root=production.work_root)
             run_visual_planning(production, execution, visual_planner=visual_planner)
@@ -221,6 +248,12 @@ def create_documentary(
                 station=VISUAL_RENDER_STATION,
                 artifact_id=VISUAL_MASTER_ARTIFACT,
             )
+            hook_visual_kwargs: dict[str, Any] = {}
+            if hook_image_generator is not None:
+                hook_visual_kwargs["image_generator"] = hook_image_generator
+            elif visual_image_generator is not None:
+                hook_visual_kwargs["image_generator"] = visual_image_generator
+            run_hook_visual(production, execution, **hook_visual_kwargs)
             opening_kwargs: dict[str, Any] = {}
             if opening_renderer is not None:
                 opening_kwargs["renderer"] = opening_renderer

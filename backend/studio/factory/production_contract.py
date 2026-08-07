@@ -83,6 +83,7 @@ class SharedProductionAssets:
     opening_video: str
     provenance_report: str
     quality_report: str
+    hook_visual: str
 
     def __post_init__(self) -> None:
         paths = (
@@ -92,6 +93,7 @@ class SharedProductionAssets:
             self.opening_video,
             self.provenance_report,
             self.quality_report,
+            self.hook_visual,
         )
         for field, path in zip(
             (
@@ -101,6 +103,7 @@ class SharedProductionAssets:
                 "opening_video",
                 "provenance_report",
                 "quality_report",
+                "hook_visual",
             ),
             paths,
             strict=True,
@@ -118,37 +121,23 @@ class SharedProductionAssets:
 
 @dataclass(frozen=True, slots=True)
 class NarrationFiles:
-    """The three delivered narration tracks; the hook belongs in ``intro``."""
+    """The four localized narration deliveries."""
 
     intro: str
     story: str
     outro: str
-    hook_in_intro: Literal[True] = True
+    hook: str
 
     def __post_init__(self) -> None:
-        if self.hook_in_intro is not True:
-            raise ValueError("The hook must be included in intro narration")
-
-        for field, path in zip(
-            ("intro", "story", "outro"),
-            self.paths,
-            strict=True,
-        ):
+        for field, path in zip(("hook", "intro", "story", "outro"), (self.hook, self.intro, self.story, self.outro), strict=True):
             require_safe_relative_path(path, field=field)
-            object.__setattr__(
-                self,
-                field,
-                canonical_artifact_path(path),
-            )
-
+            object.__setattr__(self, field, canonical_artifact_path(path))
         if len({artifact_identity(path) for path in self.paths}) != len(self.paths):
             raise ValueError("Narration paths must be unique")
 
     @property
-    def paths(self) -> tuple[str, str, str]:
-        """Exactly the three required narration deliveries; no hook file."""
-        return (self.intro, self.story, self.outro)
-
+    def paths(self) -> tuple[str, str, str, str]:
+        return (self.hook, self.intro, self.story, self.outro)
 
 @dataclass(frozen=True, slots=True)
 class DeliveryFiles:
@@ -173,8 +162,8 @@ class DeliveryFiles:
             raise ValueError("Video and narration paths must be unique")
 
     @property
-    def paths(self) -> tuple[str, str, str, str]:
-        """The required four-file delivery set for an edition."""
+    def paths(self) -> tuple[str, str, str, str, str]:
+        """The required five-file delivery set for an edition."""
         return (self.video_mp4, *self.narration.paths)
 
 
@@ -301,6 +290,7 @@ class DocumentaryProductionContract:
             assets.storyboard_and_scene_plan,
             assets.approved_visuals,
             assets.visual_master,
+            assets.hook_visual,
             assets.provenance_report,
             assets.quality_report,
         )
@@ -320,6 +310,7 @@ def create_documentary_production_contract(
         approved_visuals="shared/visual_research.json",
         visual_master="shared/visual_master.mp4",
         opening_video="shared/opening.mp4",
+        hook_visual="shared/hook_visual.png",
         provenance_report="shared/historical_photo_provenance.json",
         quality_report="shared/visual_qc.json",
     )
@@ -339,6 +330,7 @@ def create_documentary_production_contract(
                     outro=(
                         f"delivery/{language_code}/narration/outro.mp3"
                     ),
+                    hook=f"delivery/{language_code}/narration/hook.mp3",
                 ),
             ),
             publishing=PublishingAssets(

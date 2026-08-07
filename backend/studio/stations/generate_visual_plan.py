@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import json
@@ -73,6 +73,7 @@ def build_scene_request(
             for shot in shots
         ],
         "documentary_title": documentary_title,
+        "visual_identity": "coherent period-documentary identity with varied art direction",
     }
 
 
@@ -152,6 +153,7 @@ Rules:
 - When historical_search is empty, historical_plan.search_queries must also be empty.
 - image_prompt should be ready for a 16:9 documentary image generator.
 - Include camera framing, setting, era, subjects, lighting, and mood.
+- Include art_direction with visual_style (realistic_period, expressive_editorial, symbolic, hero), composition (wide, medium, close), lighting, color_treatment, and energy_mood. Avoid adjacent repeated styles and more than two repeated compositions.
 - Return valid JSON only.
 - No markdown and no commentary.
 
@@ -172,7 +174,8 @@ JSON format:
         "concise archive query two"
       ]
     }},
-    "image_prompt": "Complete image-generation prompt"
+    "image_prompt": "Complete image-generation prompt",
+    "art_direction": {"visual_style": "realistic_period", "composition": "wide", "lighting": "soft natural", "color_treatment": "period natural", "energy_mood": "observant"}
   }}
 ]
 """.strip()
@@ -417,6 +420,17 @@ def apply_scene_plan(
         shot["prompt"] = str(
             plan_item["image_prompt"]
         ).strip()
+
+        art = plan_item.get("art_direction") or {}
+        styles = ("realistic_period", "expressive_editorial", "symbolic", "hero")
+        compositions = ("wide", "medium", "close")
+        shot["art_direction"] = {
+            "visual_style": str(art.get("visual_style", styles[(shot_number - 1) % len(styles)])),
+            "composition": str(art.get("composition", compositions[(shot_number - 1) % len(compositions)])),
+            "lighting": str(art.get("lighting", "period natural light")),
+            "color_treatment": str(art.get("color_treatment", "period natural color")),
+            "energy_mood": str(art.get("energy_mood", "observant momentum")),
+        }
 
         shot["status"] = "prompt_ready"
         shot["approved"] = False

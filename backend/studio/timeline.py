@@ -69,36 +69,13 @@ def build_opening_timeline(
     *,
     logo: Path,
     languages: Path,
-    title: Path,
     logo_seconds: float,
     language_seconds: float,
-    title_seconds: float,
     black_seconds: float,
 ) -> Timeline:
-    return Timeline(
-        items=[
-            TimelineItem(
-                kind="card",
-                name="TopSpot40 logo",
-                duration_seconds=logo_seconds,
-                source=logo,
-            ),
-            TimelineItem(
-                kind="card",
-                name="Language selection",
-                duration_seconds=language_seconds,
-                source=languages,
-            ),
-            TimelineItem(
-                kind="card",
-                name="Documentary title",
-                duration_seconds=title_seconds,
-                source=title,
-            ),
-            TimelineItem(
-                kind="black",
-                name="Black transition",
-                duration_seconds=black_seconds,
-            ),
-        ]
-    )
+    """Canonical opening: logo, language/disclosure card, then black."""
+    return Timeline(items=[
+        TimelineItem(kind="card", name="TopSpot40 logo", duration_seconds=logo_seconds, source=logo),
+        TimelineItem(kind="card", name="Language selection and disclosure", duration_seconds=language_seconds, source=languages),
+        TimelineItem(kind="black", name="Black transition", duration_seconds=black_seconds),
+    ])

@@ -122,6 +122,7 @@ def documentary_artifact_assignments(
         ArtifactAssignment("shared.approved_visuals", shared.approved_visuals, "visual_research"),
         ArtifactAssignment("shared.visual_master", shared.visual_master, "visual_render"),
         ArtifactAssignment("shared.opening_video", shared.opening_video, "visual_render"),
+        ArtifactAssignment("shared.hook_visual", shared.hook_visual, "visual_render"),
         ArtifactAssignment("shared.provenance_report", shared.provenance_report, "visual_quality"),
         ArtifactAssignment("shared.quality_report", shared.quality_report, "visual_quality"),
     ]
@@ -130,6 +131,7 @@ def documentary_artifact_assignments(
         narration = edition.delivery.narration
         assignments.extend((
             ArtifactAssignment(f"delivery.{code}.video", edition.delivery.video_mp4, f"localized_delivery_{code}"),
+            ArtifactAssignment(f"delivery.{code}.narration.hook", narration.hook, f"narration_{code}"),
             ArtifactAssignment(f"delivery.{code}.narration.intro", narration.intro, f"narration_{code}"),
             ArtifactAssignment(f"delivery.{code}.narration.story", narration.story, f"narration_{code}"),
             ArtifactAssignment(f"delivery.{code}.narration.outro", narration.outro, f"narration_{code}"),

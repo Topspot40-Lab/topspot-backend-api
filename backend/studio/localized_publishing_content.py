@@ -5,7 +5,11 @@ from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-SUPPORTED=("en","es","pt-BR"); PARTS=("intro","story","outro")
+SUPPORTED=("en","es","pt-BR"); PARTS=("hook","intro","story","outro")
+DISCLOSURES={"en":"Documentary imagery consists of AI-generated recreations and TopSpot-owned or properly licensed assets. No third-party photographs are intentionally reproduced without authorization.","es":"Las im?genes del documental consisten en recreaciones generadas por IA y activos propiedad de TopSpot o debidamente licenciados. No se reproducen intencionalmente fotograf?as de terceros sin autorizaci?n.","pt-BR":"As imagens do document?rio consistem em recria??es geradas por IA e ativos de propriedade da TopSpot ou devidamente licenciados. Nenhuma fotografia de terceiros ? reproduzida intencionalmente sem autoriza??o."}
+def disclosure(language:str)->str:return DISCLOSURES[language]
+def with_disclosure(description:str,language:str)->str:
+ text=description.strip(); line=disclosure(language); return text if line in text else f"{text}\n\n{line}"
 DraftAdapter=Callable[[dict[str,Any]],dict[str,Any]]
 def canonical_json(value:dict[str,Any])->str:return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(",",":"))
 def sha256(value:dict[str,Any])->str:return hashlib.sha256(canonical_json(value).encode()).hexdigest()
@@ -26,6 +30,7 @@ def validate_package(value:dict[str,Any],*,language:str,story_text:str,durations
   if _norm(" ".join(reconstructed))!=_norm(segment["text"]):raise ValueError(f"{part} captions do not reconstruct transcript")
  if _norm(narration["story"]["text"])!=_norm(story_text):raise ValueError("Story transcript does not match canonical story_text")
  if not all(isinstance(youtube.get(k),str) and youtube[k].strip() for k in ("title","description")):raise ValueError("Missing localized YouTube metadata")
+ if disclosure(language) not in youtube["description"]:raise ValueError("Localized YouTube description is missing the visual disclosure")
  keywords=youtube.get("keywords")
  if not isinstance(keywords,list) or not keywords or len({_norm(k).casefold() for k in keywords if isinstance(k,str)})!=len(keywords) or any(not isinstance(k,str) or not k.strip() for k in keywords):raise ValueError("Invalid keywords")
  chapters=youtube.get("chapters"); previous=-1; seen=set()
@@ -36,7 +41,7 @@ def validate_package(value:dict[str,Any],*,language:str,story_text:str,durations
   order=PARTS.index(chapter["segment"])*10**12+chapter["offset_ms"]
   if order<=previous:raise ValueError("Chapters are not ordered")
   previous=order;seen.add(chapter["id"])
- if chapters[0]["segment"]!="intro" or chapters[0]["offset_ms"]!=0:raise ValueError("First chapter must begin at intro zero")
+ if chapters[0]["segment"]!="hook" or chapters[0]["offset_ms"]!=0:raise ValueError("First chapter must begin at hook zero")
 def approve(record:Any,package:dict[str,Any],*,language:str,story_text:str,reviewer:str,reviewed_at:datetime,audio_identity:dict[str,str],durations:dict[str,int]|None=None)->None:
  if not reviewer.strip():raise ValueError("Reviewer is required")
  validate_package(package,language=language,story_text=story_text,durations=durations);record.localized_publishing_content_json=canonical_json(package);record.localized_publishing_content_sha256=sha256(package);record.localized_publishing_content_source_sha256=source_sha256(package,audio_identity);record.localized_publishing_content_reviewed_by=reviewer.strip();record.localized_publishing_content_reviewed_at=reviewed_at

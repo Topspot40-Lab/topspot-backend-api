@@ -45,6 +45,9 @@ class DocumentaryLanguage:
     duration_seconds: int | None
     tts_bucket: str | None
     tts_key: str | None
+    hook_text: str | None = None
+    hook_tts_bucket: str | None = None
+    hook_tts_key: str | None = None
 
     @property
     def youtube_key(self) -> str | None:
@@ -163,6 +166,9 @@ class Documentary:
                 duration_seconds=row.duration_seconds,
                 tts_bucket=row.tts_bucket,
                 tts_key=row.tts_key,
+                hook_text=row.hook_text,
+                hook_tts_bucket=row.hook_tts_bucket,
+                hook_tts_key=row.hook_tts_key,
             )
             for row in locale_rows
             if row.id is not None
@@ -232,6 +238,9 @@ class Documentary:
                 duration_seconds=row.duration_seconds,
                 tts_bucket=row.tts_bucket,
                 tts_key=row.tts_key,
+                hook_text=row.hook_text,
+                hook_tts_bucket=row.hook_tts_bucket,
+                hook_tts_key=row.hook_tts_key,
             )
             for row in story_rows
             if row.id is not None

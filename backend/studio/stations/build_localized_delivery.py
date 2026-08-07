@@ -20,10 +20,10 @@ VISUAL_MASTER = "shared.visual_master"
 OPENING_VIDEO = "shared.opening_video"
 VISUAL_RENDER = "visual_render"
 DELIVERY_DURATION_TOLERANCE_SECONDS = 0.25
-Builder = Callable[[Path, Path, Path, Path, tuple[Path, Path, Path], Path], None]
+Builder = Callable[[Path, Path, Path, Path, Path, tuple[Path, Path, Path, Path], Path], None]
 BedEnsurer = Callable[..., None]
 MediaProbe = Callable[[Path], dict[str, Any]]
-MediaValidator = Callable[[Path, tuple[Path, Path, Path]], dict[str, float]]
+MediaValidator = Callable[[Path, tuple[Path, Path, Path, Path]], dict[str, float]]
 
 
 def station(language: str) -> str:
@@ -85,7 +85,7 @@ def _stream_duration(stream: dict[str, Any]) -> float:
 
 
 def _fps(stream: dict[str, Any]) -> float:
-    raw = stream.get("avg_frame_rate") or stream.get("r_frame_rate")
+    raw = stream.get("r_frame_rate") or stream.get("avg_frame_rate")
     try:
         numerator, denominator = str(raw).split("/", maxsplit=1)
         value = float(numerator) / float(denominator)
@@ -96,7 +96,7 @@ def _fps(stream: dict[str, Any]) -> float:
 
 def validate_delivery_media(
     output: Path,
-    narration: tuple[Path, Path, Path],
+    narration: tuple[Path, Path, Path, Path],
     *,
     probe: MediaProbe = ffprobe_media,
 ) -> dict[str, float]:
@@ -120,31 +120,30 @@ def validate_delivery_media(
         raise RuntimeError("Localized delivery must be 30 fps")
     duration = _duration(delivery)
     audio_duration = _stream_duration(audio)
-    narration_duration = sum(
-        _duration(probe(track))
-        for track in narration
-    )
+    video_duration = _stream_duration(video)
     if (
-        abs(audio_duration - narration_duration)
+        abs(audio_duration - video_duration)
         > DELIVERY_DURATION_TOLERANCE_SECONDS
     ):
         raise RuntimeError(
-            "Localized delivery duration is not synchronized with narration"
+            "Localized delivery video and audio streams are not synchronized"
         )
     return {"duration_seconds": duration, "fps": fps}
 
 
-def ffmpeg_delivery(opening: Path, master: Path, brand: Path, bed: Path, narration: tuple[Path, Path, Path], output: Path) -> None:
+def ffmpeg_delivery(opening: Path, master: Path, hook_visual: Path, brand: Path, bed: Path, narration: tuple[Path, Path, Path, Path], output: Path) -> None:
     """Delegate canonical delivery assembly to the established full-program renderer."""
     from backend.studio.render.build_story_video import build_story_video
 
     build_story_video(
         opening=opening,
         image_sequence=master,
+        hook_image=hook_visual,
         brand_image=brand,
-        intro_audio=narration[0],
-        story_audio=narration[1],
-        outro_audio=narration[2],
+        hook_audio=narration[0],
+        intro_audio=narration[1],
+        story_audio=narration[2],
+        outro_audio=narration[3],
         bed_audio=bed,
         output=output,
         bed_volume_db=-26.0,
@@ -163,19 +162,21 @@ def resolve_bed_track(production: Any, execution: ProductionExecution, *, ensure
         raise RuntimeError("Configured bed track is missing or empty after retrieval")
     return destination
 
-def _inputs(execution: ProductionExecution, language: str, bed: Path) -> tuple[Path, Path, Path, Path, tuple[Path, Path, Path], dict[str, str]]:
+def _inputs(execution: ProductionExecution, language: str, bed: Path) -> tuple[Path, Path, Path, Path, Path, tuple[Path, Path, Path, Path], dict[str, str]]:
     execution.require_verified_completed(station=VISUAL_RENDER, artifact_id=VISUAL_MASTER)
     execution.require_verified_completed(station=VISUAL_RENDER, artifact_id=OPENING_VIDEO)
+    execution.require_verified_completed(station=VISUAL_RENDER, artifact_id="shared.hook_visual")
     master = execution.output_path(station=VISUAL_RENDER, artifact_id=VISUAL_MASTER)
     opening = execution.output_path(station=VISUAL_RENDER, artifact_id=OPENING_VIDEO)
+    hook_visual = execution.output_path(station=VISUAL_RENDER, artifact_id="shared.hook_visual")
     brand = ASSETS_DIR / "old_dog_new_tracks.png"
     if not brand.is_file():
         raise FileNotFoundError(f"Brand image is missing: {brand}")
-    tracks = tuple(execution.output_path(station=f"narration_{language}", artifact_id=narration_artifact(language, part)) for part in ("intro", "story", "outro"))
-    for part in ("intro", "story", "outro"):
+    tracks = tuple(execution.output_path(station=f"narration_{language}", artifact_id=narration_artifact(language, part)) for part in ("hook", "intro", "story", "outro"))
+    for part in ("hook", "intro", "story", "outro"):
         execution.require_verified_completed(station=f"narration_{language}", artifact_id=narration_artifact(language, part))
-    inputs = {"opening_video": digest(opening), "visual_master": digest(master), "old_dog_new_tracks": digest(brand), "bed_track": digest(bed), **{part: digest(path) for part, path in zip(("intro", "story", "outro"), tracks, strict=True)}}
-    return opening, master, brand, bed, tracks, inputs
+    inputs = {"opening_video": digest(opening), "visual_master": digest(master), "hook_visual": digest(hook_visual), "old_dog_new_tracks": digest(brand), "bed_track": digest(bed), **{part: digest(path) for part, path in zip(("hook", "intro", "story", "outro"), tracks, strict=True)}}
+    return opening, master, hook_visual, brand, bed, tracks, inputs
 def _recorded(path: Path) -> dict[str, str] | None:
     try:
         value = json.loads(path.read_text(encoding="utf-8")).get("input_sha256")
@@ -204,7 +205,7 @@ def run_localized_deliveries(
         session.start_station(delivery_station)
         claimed = False
         try:
-            opening, master, brand, bed, tracks, inputs = _inputs(execution, language, bed)
+            opening, master, hook_visual, brand, bed, tracks, inputs = _inputs(execution, language, bed)
             pending = artifact in execution.pending_artifacts(station=delivery_station)
             if not pending and _recorded(sidecar(execution, language)) == inputs:
                 media_validator(execution.output_path(station=delivery_station, artifact_id=artifact), tracks)
@@ -214,10 +215,10 @@ def run_localized_deliveries(
                 execution.requeue_artifact(station=delivery_station, artifact_id=artifact, reason="Localized delivery input digest changed or is missing")
             output = execution.start_artifact(station=delivery_station, artifact_id=artifact)
             claimed = True
-            builder(opening, master, brand, bed, tracks, output)
+            builder(opening, master, hook_visual, brand, bed, tracks, output)
             media = media_validator(output, tracks)
             execution.complete_artifact(station=delivery_station, artifact_id=artifact)
-            save_json_atomic(sidecar(execution, language), {"version": 1, "input_sha256": inputs})
+            save_json_atomic(sidecar(execution, language), {"version": 2, "input_sha256": inputs})
         except Exception as exc:
             if claimed:
                 try:
