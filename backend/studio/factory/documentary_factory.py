@@ -185,7 +185,13 @@ def create_documentary(
                 station=VISUAL_PLANNING_STATION,
                 artifact_id=STORYBOARD_ARTIFACT,
             )
-            research_kwargs: dict[str, Any] = {"providers": historical_providers}
+            research_kwargs: dict[str, Any] = {
+                "providers": (
+                    historical_providers
+                    if historical_providers is not None
+                    else []
+                )
+            }
             if historical_retriever is not None:
                 research_kwargs["retriever"] = historical_retriever
             run_visual_research(production, execution, **research_kwargs)

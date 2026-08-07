@@ -184,7 +184,6 @@ def _create(tmp_path: Path) -> tuple[FakeProduction, ProductionExecution]:
     execution = create_documentary(
         production.slug,
         production_factory=lambda _: production,
-        historical_providers=[],
         visual_planner=_fake_visual_planner,
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
@@ -206,7 +205,15 @@ def test_create_documentary_builds_only_canonical_storyboard(tmp_path: Path) -> 
     station = production.session.payload["stations"][VISUAL_PLANNING_STATION]
     assert station["status"] == "complete"
     assert production.session.payload["status"] == "complete"
-    assert (production.work_root / "factory" / "shared" / "visual_research.json").exists()
+    research = (
+        production.work_root
+        / "factory"
+        / "shared"
+        / "visual_research.json"
+    )
+    assert research.exists()
+    research_payload = json.loads(research.read_text(encoding="utf-8"))
+    assert research_payload["summary"]["provider_searches"] == 0
     assert execution.record(VISUAL_RESEARCH_ARTIFACT)["status"] == "completed"
     assert execution.record(VISUAL_RESEARCH_ARTIFACT)["station"] == VISUAL_RESEARCH_STATION
     provenance = production.work_root / "factory" / "shared" / "historical_photo_provenance.json"
