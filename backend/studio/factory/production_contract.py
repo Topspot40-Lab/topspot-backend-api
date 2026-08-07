@@ -80,6 +80,7 @@ class SharedProductionAssets:
     storyboard_and_scene_plan: str
     approved_visuals: str
     visual_master: str
+    opening_video: str
     provenance_report: str
     quality_report: str
 
@@ -88,6 +89,7 @@ class SharedProductionAssets:
             self.storyboard_and_scene_plan,
             self.approved_visuals,
             self.visual_master,
+            self.opening_video,
             self.provenance_report,
             self.quality_report,
         )
@@ -96,6 +98,7 @@ class SharedProductionAssets:
                 "storyboard_and_scene_plan",
                 "approved_visuals",
                 "visual_master",
+                "opening_video",
                 "provenance_report",
                 "quality_report",
             ),
@@ -316,6 +319,7 @@ def create_documentary_production_contract(
         storyboard_and_scene_plan="shared/visual_plan.json",
         approved_visuals="shared/visual_research.json",
         visual_master="shared/visual_master.mp4",
+        opening_video="shared/opening.mp4",
         provenance_report="shared/historical_photo_provenance.json",
         quality_report="shared/visual_qc.json",
     )

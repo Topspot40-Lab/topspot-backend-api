@@ -46,6 +46,7 @@ def _contract(*, editions: tuple[LanguageEdition, ...] | None = None) -> Documen
             storyboard_and_scene_plan="shared/storyboard.json",
             approved_visuals="shared/approved_visuals.json",
             visual_master="shared/visual_master.mp4",
+            opening_video="shared/opening.mp4",
             provenance_report="shared/provenance.json",
             quality_report="shared/quality.json",
         ),

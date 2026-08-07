@@ -1,4 +1,4 @@
-﻿"""Mutable local execution state for a canonical documentary contract."""
+"""Mutable local execution state for a canonical documentary contract."""
 
 from __future__ import annotations
 
@@ -121,6 +121,7 @@ def documentary_artifact_assignments(
         ArtifactAssignment("shared.storyboard_and_scene_plan", shared.storyboard_and_scene_plan, "visual_planning"),
         ArtifactAssignment("shared.approved_visuals", shared.approved_visuals, "visual_research"),
         ArtifactAssignment("shared.visual_master", shared.visual_master, "visual_render"),
+        ArtifactAssignment("shared.opening_video", shared.opening_video, "visual_render"),
         ArtifactAssignment("shared.provenance_report", shared.provenance_report, "visual_quality"),
         ArtifactAssignment("shared.quality_report", shared.quality_report, "visual_quality"),
     ]
@@ -263,6 +264,11 @@ class ProductionExecution:
             except json.JSONDecodeError as exc:
                 raise ValueError(f"Invalid execution JSON: {self.execution_path}") from exc
             self._validate_payload(payload)
+            missing = [item for item in self.assignments if item.artifact_id not in payload["artifacts"]]
+            if missing:
+                for assignment in missing:
+                    payload["artifacts"][assignment.artifact_id] = self._record_template(assignment)
+                self._write_locked(payload)
             return payload
         payload: dict[str, Any] = {
             "version": 1, "production": self.contract.slug,
@@ -280,10 +286,13 @@ class ProductionExecution:
         if payload.get("production") != self.contract.slug:
             raise ValueError("Execution ledger production does not match contract")
         records = payload.get("artifacts")
-        if not isinstance(records, dict) or set(records) != set(self._assignments):
+        if not isinstance(records, dict):
             raise ValueError("Execution ledger artifacts do not match contract")
-        for artifact_id, assignment in self._assignments.items():
-            record = records[artifact_id]
+        unknown = set(records) - set(self._assignments)
+        if unknown:
+            raise ValueError("Execution ledger artifacts do not match contract")
+        for artifact_id, record in records.items():
+            assignment = self._assignments[artifact_id]
             expected = self._output_paths[artifact_id].relative_to(self.work_root).as_posix()
             if not isinstance(record, dict):
                 raise ValueError(f"Invalid execution record: {artifact_id}")
