@@ -26,6 +26,10 @@ from backend.studio.factory.documentary_factory import (
     create_documentary,
     run_visual_planning,
 )
+from backend.studio.stations.render_opening_video import (
+    OPENING_VIDEO_ARTIFACT,
+    run_opening_render,
+)
 from backend.studio.stations.verify_historical_visuals import (
     PROVENANCE_ARTIFACT,
     QUALITY_ARTIFACT,
@@ -135,6 +139,10 @@ def _use_fake_visual_planner(monkeypatch: pytest.MonkeyPatch) -> None:
         "backend.studio.factory.documentary_factory.request_visual_plan",
         _fake_visual_planner,
     )
+    monkeypatch.setattr(
+        "backend.studio.stations.render_opening_video.render_opening",
+        _fake_opening,
+    )
 
 def _multi_scene_production(tmp_path: Path) -> FakeProduction:
     production = FakeProduction(tmp_path)
@@ -168,12 +176,16 @@ def _unexpected_narration(
     )
 
 
-def _fake_delivery(_: Path, __: object, output: Path) -> None:
+def _fake_delivery(_: Path, __: Path, ___: Path, ____: object, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(b"test delivery")
 
 def _fake_media(_: Path, __: object) -> dict[str, float]:
     return {"duration_seconds": 3.0, "fps": 30.0}
+
+def _fake_opening(_: object, output: Path) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_bytes(b"test opening")
 
 def _fake_renderer(_: object, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -187,6 +199,7 @@ def _create(tmp_path: Path) -> tuple[FakeProduction, ProductionExecution]:
         visual_planner=_fake_visual_planner,
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        opening_renderer=_fake_opening,
         narration_retriever=_fake_narration,
         delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
@@ -299,6 +312,7 @@ def test_interrupted_storyboard_is_requeued_and_rebuilt(tmp_path: Path) -> None:
         historical_providers=[],
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        opening_renderer=_fake_opening,
         narration_retriever=_fake_narration,
         delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
@@ -396,6 +410,7 @@ def test_rebuilt_storyboard_requeues_visual_research(tmp_path: Path) -> None:
         historical_providers=[],
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        opening_renderer=_fake_opening,
         narration_retriever=_fake_narration,
         delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
@@ -483,6 +498,7 @@ def test_tampered_visual_master_is_rebuilt(tmp_path: Path) -> None:
         historical_providers=[],
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        opening_renderer=_fake_opening,
         narration_retriever=_fake_narration,
         delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
@@ -540,6 +556,7 @@ def test_tampered_narration_track_rebuilds_only_its_language_track(tmp_path: Pat
         historical_providers=[],
         visual_image_generator=_fake_image,
         visual_renderer=_fake_renderer,
+        opening_renderer=_fake_opening,
         narration_retriever=_fake_narration,
         delivery_builder=_fake_delivery, delivery_media_validator=_fake_media,
     )
@@ -572,12 +589,12 @@ def test_delivery_failure_isolated_and_later_languages_complete(tmp_path: Path) 
 
     attempted: list[str] = []
 
-    def failing_en_builder(_: Path, tracks: tuple[Path, Path, Path], output: Path) -> None:
+    def failing_en_builder(_: Path, __: Path, ___: Path, tracks: tuple[Path, Path, Path], output: Path) -> None:
         language = tracks[0].read_text(encoding="utf-8").split(":", maxsplit=1)[0]
         attempted.append(language)
         if language == "en":
             raise RuntimeError("en delivery failure")
-        _fake_delivery(_, tracks, output)
+        _fake_delivery(_, _, _, tracks, output)
 
     with pytest.raises(RuntimeError, match="en: RuntimeError: en delivery failure"):
         run_localized_deliveries(production, execution, builder=failing_en_builder, media_validator=_fake_media)
@@ -811,3 +828,52 @@ def test_invalid_visual_planner_output_fails_canonical_artifact_concisely(tmp_pa
     record = execution.record(STORYBOARD_ARTIFACT)
     assert record["status"] == "failed"
     assert record["error_summary"] == "RuntimeError: Scene 1: expected shot numbers [1, 2], received []."
+
+def test_opening_video_is_verified_and_resume_skips_generation(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    opening = execution.output_path(station=VISUAL_RENDER_STATION, artifact_id=OPENING_VIDEO_ARTIFACT)
+    assert execution.record(OPENING_VIDEO_ARTIFACT)["status"] == "completed"
+    assert opening.read_bytes() == b"test opening"
+    assert run_opening_render(production, execution, renderer=lambda *_: (_ for _ in ()).throw(AssertionError("must resume"))) is False
+
+
+def test_localized_delivery_receives_full_legacy_visual_sequence_inputs(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    for language in SUPPORTED_LANGUAGE_CODES:
+        execution.requeue_artifact(station=f"localized_delivery_{language}", artifact_id=f"delivery.{language}.video", reason="inspect inputs")
+    calls: list[tuple[Path, Path, Path, tuple[Path, Path, Path]]] = []
+
+    def builder(opening: Path, master: Path, brand: Path, tracks: tuple[Path, Path, Path], output: Path) -> None:
+        calls.append((opening, master, brand, tracks))
+        _fake_delivery(opening, master, brand, tracks, output)
+
+    run_localized_deliveries(production, execution, builder=builder, media_validator=_fake_media)
+    assert len(calls) == 3
+    for opening, master, brand, tracks in calls:
+        assert opening.name == "opening.mp4"
+        assert master.name == "visual_master.mp4"
+        assert brand.name == "old_dog_new_tracks.png"
+        assert len(tracks) == 3
+
+
+def test_opening_digest_change_rebuilds_all_localized_deliveries(tmp_path: Path) -> None:
+    production, execution = _create(tmp_path)
+    execution.requeue_artifact(station=VISUAL_RENDER_STATION, artifact_id=OPENING_VIDEO_ARTIFACT, reason="opening changed")
+    run_opening_render(production, execution, renderer=lambda _, output: output.write_bytes(b"changed opening"))
+    run_localized_deliveries(production, execution, builder=_fake_delivery, media_validator=_fake_media)
+    for language in SUPPORTED_LANGUAGE_CODES:
+        assert execution.record(f"delivery.{language}.video")["attempts"] == 2
+def test_brand_digest_change_rebuilds_all_localized_deliveries(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    production, execution = _create(tmp_path)
+    from backend.studio.stations import build_localized_delivery
+
+    original_digest = build_localized_delivery.digest
+
+    def changed_brand_digest(path: Path) -> str:
+        value = original_digest(path)
+        return "changed-" + value if path.name == "old_dog_new_tracks.png" else value
+
+    monkeypatch.setattr(build_localized_delivery, "digest", changed_brand_digest)
+    run_localized_deliveries(production, execution, builder=_fake_delivery, media_validator=_fake_media)
+    for language in SUPPORTED_LANGUAGE_CODES:
+        assert execution.record(f"delivery.{language}.video")["attempts"] == 2

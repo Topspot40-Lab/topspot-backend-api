@@ -46,6 +46,10 @@ from backend.studio.stations.render_visual_master import (
     VISUAL_RENDER_STATION,
     run_visual_render,
 )
+from backend.studio.stations.render_opening_video import (
+    OPENING_VIDEO_ARTIFACT,
+    run_opening_render,
+)
 from backend.studio.stations.prepare_localized_narration import run_localized_narration
 from backend.studio.stations.build_localized_delivery import run_localized_deliveries
 
@@ -168,6 +172,7 @@ def create_documentary(
     visual_planner: Callable[..., list[dict[str, Any]]] | None = None,
     visual_image_generator: Callable[[str], bytes] | None = None,
     visual_renderer: Callable[[Any, Any], None] | None = None,
+    opening_renderer: Callable[[Any, Any], None] | None = None,
     narration_retriever: Callable[[Any, str, str], bytes] | None = None,
     delivery_builder: Callable[[Any, Any, Any], None] | None = None,
     delivery_media_validator: Callable[[Any, Any], dict[str, float]] | None = None,
@@ -214,6 +219,14 @@ def create_documentary(
             execution.require_verified_completed(
                 station=VISUAL_RENDER_STATION,
                 artifact_id=VISUAL_MASTER_ARTIFACT,
+            )
+            opening_kwargs: dict[str, Any] = {}
+            if opening_renderer is not None:
+                opening_kwargs["renderer"] = opening_renderer
+            run_opening_render(production, execution, **opening_kwargs)
+            execution.require_verified_completed(
+                station=VISUAL_RENDER_STATION,
+                artifact_id=OPENING_VIDEO_ARTIFACT,
             )
             narration_kwargs: dict[str, Any] = {}
             if narration_retriever is not None:

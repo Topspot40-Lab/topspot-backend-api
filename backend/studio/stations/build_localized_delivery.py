@@ -11,11 +11,13 @@ from typing import Any
 from backend.studio.factory.production_contract import SUPPORTED_LANGUAGE_CODES
 from backend.studio.factory.production_execution import ProductionExecution
 from backend.studio.stations.build_storyboard import save_json_atomic
+from backend.studio.studio_config import ASSETS_DIR
 
 VISUAL_MASTER = "shared.visual_master"
+OPENING_VIDEO = "shared.opening_video"
 VISUAL_RENDER = "visual_render"
 DELIVERY_DURATION_TOLERANCE_SECONDS = 0.25
-Builder = Callable[[Path, tuple[Path, Path, Path], Path], None]
+Builder = Callable[[Path, Path, Path, tuple[Path, Path, Path], Path], None]
 MediaProbe = Callable[[Path], dict[str, Any]]
 MediaValidator = Callable[[Path, tuple[Path, Path, Path]], dict[str, float]]
 
@@ -128,24 +130,43 @@ def validate_delivery_media(
     return {"duration_seconds": duration, "fps": fps}
 
 
-def ffmpeg_delivery(master: Path, narration: tuple[Path, Path, Path], output: Path) -> None:
-    """Narrow canonical FFmpeg adapter; legacy story-video CLI is untouched."""
-    output.parent.mkdir(parents=True, exist_ok=True)
-    command = ["ffmpeg", "-y", "-stream_loop", "-1", "-i", str(master), *sum((['-i', str(path)] for path in narration), []), "-filter_complex", "[1:a][2:a][3:a]concat=n=3:v=0:a=1[a]", "-map", "0:v:0", "-map", "[a]", "-c:v", "libx264", "-r", "30", "-pix_fmt", "yuv420p", "-vf", "scale=1920:1080", "-c:a", "aac", "-shortest", "-movflags", "+faststart", str(output)]
-    result = subprocess.run(command, capture_output=True, text=True)
-    if result.returncode:
-        raise RuntimeError(f"FFmpeg localized delivery failed: {result.stderr[-400:]}")
+def ffmpeg_delivery(opening: Path, master: Path, brand: Path, narration: tuple[Path, Path, Path], output: Path) -> None:
+    """Delegate canonical delivery assembly to the established full-program renderer."""
+    from backend.studio.render.build_story_video import build_story_video
 
-
-def _inputs(execution: ProductionExecution, language: str) -> tuple[Path, tuple[Path, Path, Path], dict[str, str]]:
+    bed = ASSETS_DIR / "bed_01.mp3"
+    if not bed.is_file():
+        raise FileNotFoundError(
+            "Canonical delivery requires a local bed_01.mp3; inject a delivery builder when it is unavailable."
+        )
+    build_story_video(
+        opening=opening,
+        image_sequence=master,
+        brand_image=brand,
+        intro_audio=narration[0],
+        story_audio=narration[1],
+        outro_audio=narration[2],
+        bed_audio=bed,
+        output=output,
+        bed_volume_db=-26.0,
+        duck_threshold=0.03,
+        duck_ratio=8.0,
+        duck_attack_ms=25,
+        duck_release_ms=500,
+    )
+def _inputs(execution: ProductionExecution, language: str) -> tuple[Path, Path, Path, tuple[Path, Path, Path], dict[str, str]]:
     execution.require_verified_completed(station=VISUAL_RENDER, artifact_id=VISUAL_MASTER)
+    execution.require_verified_completed(station=VISUAL_RENDER, artifact_id=OPENING_VIDEO)
     master = execution.output_path(station=VISUAL_RENDER, artifact_id=VISUAL_MASTER)
+    opening = execution.output_path(station=VISUAL_RENDER, artifact_id=OPENING_VIDEO)
+    brand = ASSETS_DIR / "old_dog_new_tracks.png"
+    if not brand.is_file():
+        raise FileNotFoundError(f"Brand image is missing: {brand}")
     tracks = tuple(execution.output_path(station=f"narration_{language}", artifact_id=narration_artifact(language, part)) for part in ("intro", "story", "outro"))
     for part in ("intro", "story", "outro"):
         execution.require_verified_completed(station=f"narration_{language}", artifact_id=narration_artifact(language, part))
-    return master, tracks, {"visual_master": digest(master), **{part: digest(path) for part, path in zip(("intro", "story", "outro"), tracks, strict=True)}}
-
-
+    inputs = {"opening_video": digest(opening), "visual_master": digest(master), "old_dog_new_tracks": digest(brand), **{part: digest(path) for part, path in zip(("intro", "story", "outro"), tracks, strict=True)}}
+    return opening, master, brand, tracks, inputs
 def _recorded(path: Path) -> dict[str, str] | None:
     try:
         value = json.loads(path.read_text(encoding="utf-8")).get("input_sha256")
@@ -172,7 +193,7 @@ def run_localized_deliveries(
         session.start_station(delivery_station)
         claimed = False
         try:
-            master, tracks, inputs = _inputs(execution, language)
+            opening, master, brand, tracks, inputs = _inputs(execution, language)
             pending = artifact in execution.pending_artifacts(station=delivery_station)
             if not pending and _recorded(sidecar(execution, language)) == inputs:
                 media_validator(execution.output_path(station=delivery_station, artifact_id=artifact), tracks)
@@ -182,7 +203,7 @@ def run_localized_deliveries(
                 execution.requeue_artifact(station=delivery_station, artifact_id=artifact, reason="Localized delivery input digest changed or is missing")
             output = execution.start_artifact(station=delivery_station, artifact_id=artifact)
             claimed = True
-            builder(master, tracks, output)
+            builder(opening, master, brand, tracks, output)
             media = media_validator(output, tracks)
             execution.complete_artifact(station=delivery_station, artifact_id=artifact)
             save_json_atomic(sidecar(execution, language), {"version": 1, "input_sha256": inputs})

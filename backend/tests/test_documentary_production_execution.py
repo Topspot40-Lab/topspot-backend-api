@@ -1,6 +1,7 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import replace
+import json
 from pathlib import Path
 
 import pytest
@@ -24,10 +25,11 @@ def test_assignments_cover_shared_and_three_language_artifacts(tmp_path: Path) -
     execution = _execution(tmp_path)
     assignments = documentary_artifact_assignments(execution.contract)
 
-    assert len(assignments) == 32
-    assert len({item.artifact_id for item in assignments}) == 32
-    assert len({item.contract_path for item in assignments}) == 32
-    assert len([item for item in assignments if item.artifact_id.startswith("shared.")]) == 5
+    assert len(assignments) == 33
+    assert len({item.artifact_id for item in assignments}) == 33
+    assert len({item.contract_path for item in assignments}) == 33
+    assert len([item for item in assignments if item.artifact_id.startswith("shared.")]) == 6
+    assert any(item.artifact_id == "shared.opening_video" and item.station == "visual_render" for item in assignments)
     for code in ("en", "es", "pt-BR"):
         assert len([item for item in assignments if f".{code}." in item.artifact_id]) == 9
         assert any(item.station == f"youtube_prepare_{code}" for item in assignments)
@@ -249,3 +251,16 @@ def test_ordinary_canonical_contract_still_creates_execution_ledger(
 
     assert execution.execution_path.exists()
     assert execution.record("shared.storyboard_and_scene_plan")["status"] == "pending"
+def test_execution_ledger_additively_adopts_opening_video(tmp_path: Path) -> None:
+    execution = _execution(tmp_path)
+    ledger = execution.execution_path
+    payload = json.loads(ledger.read_text(encoding="utf-8"))
+    original = payload["artifacts"].pop("shared.opening_video")
+    payload["artifacts"]["shared.visual_master"]["status"] = "failed"
+    payload["artifacts"]["shared.visual_master"]["error_summary"] = "retained"
+    ledger.write_text(json.dumps(payload), encoding="utf-8")
+
+    adopted = _execution(tmp_path)
+    assert adopted.record("shared.opening_video")["status"] == "pending"
+    assert adopted.record("shared.visual_master")["error_summary"] == "retained"
+    assert original["station"] == "visual_render"
