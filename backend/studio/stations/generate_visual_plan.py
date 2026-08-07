@@ -157,27 +157,10 @@ Rules:
 - Return valid JSON only.
 - No markdown and no commentary.
 
-JSON format:
-[
-  {{
-    "shot_number": 1,
-    "visual_intent": "Brief description of what the viewer sees",
-    "historical_search": "Concise archive search phrase or empty string",
-    "historical_plan": {{
-      "subject": "Named subject or empty string",
-      "subject_type": "person",
-      "era": "Supported year, decade, event period, or life stage",
-      "required_terms": ["concrete relevance clue"],
-      "avoid_terms": ["concrete mismatch clue"],
-      "search_queries": [
-        "concise archive query one",
-        "concise archive query two"
-      ]
-    }},
-    "image_prompt": "Complete image-generation prompt",
-    "art_direction": {"visual_style": "realistic_period", "composition": "wide", "lighting": "soft natural", "color_treatment": "period natural", "energy_mood": "observant"}
-  }}
-]
+JSON format (example):
+{json.dumps([{"shot_number": 1, "visual_intent": "Brief description", "historical_search": "concise archive phrase", "historical_plan": {"subject": "Named subject", "subject_type": "person", "era": "1968", "required_terms": ["clue"], "avoid_terms": [], "search_queries": ["archive query"]}, "image_prompt": "Complete image-generation prompt", "art_direction": {"visual_style": "realistic_period", "composition": "wide", "lighting": "soft natural", "color_treatment": "period natural", "energy_mood": "observant"}}], ensure_ascii=False)}
+
+
 """.strip()
 
     raw = ask_xai(

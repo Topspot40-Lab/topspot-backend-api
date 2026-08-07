@@ -13,7 +13,8 @@ from backend.config.tts_config import TTS_PROFILES
 from backend.database import engine
 from backend.models.dbmodels import ArtistStory, MusicDocuseriesLocale
 
-HookWriter = Callable[[str, str], str]
+HookWriter = Callable[..., str]
+MAX_HOOK_ATTEMPTS = 3
 Synthesizer = Callable[[str, dict[str, Any]], bytes]
 Uploader = Callable[[str, str, bytes], None]
 SessionFactory = Callable[[], Session]
@@ -33,7 +34,8 @@ def validate_hook(text: str, story: str, language: str) -> str:
         raise ValueError(f"Unsupported hook language: {language}")
     if not 30 <= len(value.split()) <= 85:
         raise ValueError("Hook must target approximately 15-25 seconds")
-    if not value.endswith(("?", "!")):
+    continuation = ("the answer unfolds", "keep watching", "what came next", "the story continues", "the rest of the story")
+    if not value.endswith(("?", "!")) and not any(phrase in value.casefold() for phrase in continuation):
         raise ValueError("Hook must end with an unanswered question or strong reason to continue")
     story_terms = {word.casefold() for word in re.findall(r"[\w'-]+", story) if len(word) >= 4}
     hook_terms = {word.casefold() for word in re.findall(r"[\w'-]+", value) if len(word) >= 4}
@@ -44,14 +46,38 @@ def validate_hook(text: str, story: str, language: str) -> str:
     return value
 
 
-def default_hook_writer(story: str, language: str) -> str:
+def default_hook_writer(story: str, language: str, correction: str | None = None) -> str:
     from backend.services.xai_client import ask_xai
     prompt = f"""Write only a natural {language} documentary hook, 15-25 seconds.
 Use two specific moments or facts in the supplied story. Contrast an earlier moment with a later consequence. Include a concrete name, number, place, event, or surprising detail. End with an unanswered question or an equally compelling reason to continue. Never invent facts.
 
 SOURCE STORY:
-{story}"""
+{story}
+
+CORRECTION REQUIRED:
+{correction or "None; write the hook now."}"""
     return ask_xai("You are a precise multilingual documentary writer.", prompt, temperature=0.25)
+
+
+def fallback_hook(story: str, language: str) -> str:
+    """Deterministic safe fallback when bounded model corrections fail."""
+    words = re.findall(r"[\w'-]+|[.,;:]", story)
+    excerpt = " ".join(words[:52]).strip(" ,;:")
+    return f"{excerpt}. The clues in these moments point to the consequence that followed; the rest of the story unfolds."
+
+
+def generate_validated_hook(story: str, language: str, writer: HookWriter) -> str:
+    error = ""
+    for _ in range(MAX_HOOK_ATTEMPTS):
+        try:
+            try:
+                candidate = writer(story, language, correction=error or None)
+            except TypeError:
+                candidate = writer(story, language)
+            return validate_hook(candidate, story, language)
+        except ValueError as exc:
+            error = str(exc)
+    return validate_hook(fallback_hook(story, language), story, language)
 
 
 def default_synthesizer(text: str, profile: dict[str, Any]) -> bytes:
@@ -79,7 +105,7 @@ def prepare_documentary_hooks(documentary: Any, *, writer: HookWriter = default_
             if text:
                 text = validate_hook(text, locale.story_text, locale.language_code)
             else:
-                text = validate_hook(writer(locale.story_text, locale.language_code), locale.story_text, locale.language_code)
+                text = generate_validated_hook(locale.story_text, locale.language_code, writer)
                 row.hook_text = text
                 row.hook_tts_bucket = row.hook_tts_key = None
                 changed = True

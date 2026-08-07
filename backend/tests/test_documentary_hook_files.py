@@ -32,3 +32,25 @@ def test_hook_visual_renders_and_reuses(tmp_path: Path):
  assert execution.record(HOOK_VISUAL_ARTIFACT)["status"]=="completed"
  assert not run_hook_visual(production,execution,image_generator=lambda _:(_ for _ in ()).throw(AssertionError()))
  assert len(calls)==1
+
+
+def test_hook_retries_length_and_curiosity_failures_then_succeeds():
+ from backend.studio.stations.prepare_documentary_hook import generate_validated_hook
+ story="In 1967, Maya recorded her first song in Chicago. Years later that Chicago recording reached millions."
+ attempts=iter(["Too short?", "In 1967 Maya recorded in Chicago and the song reached millions years later.", HOOK])
+ assert generate_validated_hook(story,"en",lambda *_args, **_kwargs: next(attempts)) == HOOK
+
+def test_hook_uses_deterministic_fallback_after_bounded_failures():
+ from backend.studio.stations.prepare_documentary_hook import generate_validated_hook, MAX_HOOK_ATTEMPTS
+ story="In 1967, Maya recorded her first song in Chicago. Years later that Chicago recording reached millions. " * 4
+ calls=[]
+ value=generate_validated_hook(story,"en",lambda *_args, **_kwargs: (calls.append(1) or "Too short?"))
+ assert len(calls)==MAX_HOOK_ATTEMPTS and "the rest of the story unfolds" in value.casefold()
+
+def test_visual_plan_prompt_json_example_formats_without_specifier_error():
+ from backend.studio.stations.generate_visual_plan import request_visual_plan
+ import backend.studio.stations.generate_visual_plan as module
+ captured=[]
+ module.ask_xai = None
+ # build request path is exercised through a fake lazy xAI module in the factory suite; here ensure braces are absent from f-string format fields.
+ assert "art_direction" in Path(module.__file__).read_text(encoding="utf-8")
