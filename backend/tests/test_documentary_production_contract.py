@@ -22,6 +22,7 @@ def _edition(code: str) -> LanguageEdition:
         delivery=DeliveryFiles(
             video_mp4=f"delivery/{safe_code}/documentary.mp4",
             narration=NarrationFiles(
+                hook=f"delivery/{safe_code}/hook.mp3",
                 intro=f"delivery/{safe_code}/intro.mp3",
                 story=f"delivery/{safe_code}/story.mp3",
                 outro=f"delivery/{safe_code}/outro.mp3",
@@ -47,6 +48,7 @@ def _contract(*, editions: tuple[LanguageEdition, ...] | None = None) -> Documen
             approved_visuals="shared/approved_visuals.json",
             visual_master="shared/visual_master.mp4",
             opening_video="shared/opening.mp4",
+            hook_visual="shared/hook.png",
             provenance_report="shared/provenance.json",
             quality_report="shared/quality.json",
         ),
@@ -83,13 +85,13 @@ def test_contract_freezes_caller_supplied_editions_list() -> None:
             for edition in contract.editions
             for path in edition.delivery.paths
         }
-    ) == 12
+    ) == 15
 
-def test_each_edition_has_exactly_four_delivery_files() -> None:
+def test_each_edition_has_exactly_five_delivery_files() -> None:
     contract = _contract()
 
     for edition in contract.editions:
-        assert len(edition.delivery.paths) == 4
+        assert len(edition.delivery.paths) == 5
         assert edition.delivery.paths[0].endswith(".mp4")
         assert edition.delivery.paths[1:] == edition.delivery.narration.paths
 
@@ -97,8 +99,8 @@ def test_each_edition_has_exactly_four_delivery_files() -> None:
 def test_shared_assets_are_singleton_and_not_repeated_per_language() -> None:
     contract = _contract()
 
-    assert len(contract.shared_paths) == 5
-    assert len(set(contract.shared_paths)) == 5
+    assert len(contract.shared_paths) == 6
+    assert len(set(contract.shared_paths)) == 6
     assert not set(contract.shared_paths).intersection(
         path
         for edition in contract.editions
@@ -125,6 +127,7 @@ def test_contract_rejects_missing_duplicate_or_unexpected_languages(
 def test_missing_story_audio_path_is_rejected() -> None:
     with pytest.raises(ValueError, match="story must be a safe relative path"):
         NarrationFiles(
+            hook="delivery/en/hook.mp3",
             intro="delivery/en/intro.mp3",
             story="",
             outro="delivery/en/outro.mp3",
@@ -135,6 +138,7 @@ def test_missing_story_audio_path_is_rejected() -> None:
 def test_unsafe_artifact_paths_are_rejected(path: str) -> None:
     with pytest.raises(ValueError, match="safe relative path"):
         NarrationFiles(
+            hook="delivery/en/hook.mp3",
             intro="delivery/en/intro.mp3",
             story=path,
             outro="delivery/en/outro.mp3",
@@ -145,6 +149,7 @@ def test_unsafe_artifact_paths_are_rejected(path: str) -> None:
 def test_mixed_path_separators_cannot_bypass_narration_uniqueness() -> None:
     with pytest.raises(ValueError, match="Narration paths must be unique"):
         NarrationFiles(
+            hook="delivery/en/hook.mp3",
             intro="delivery\\en\\intro.mp3",
             story="delivery/en/intro.mp3",
             outro="delivery/en/outro.mp3",
@@ -153,6 +158,7 @@ def test_mixed_path_separators_cannot_bypass_narration_uniqueness() -> None:
 
 def test_public_artifact_paths_use_posix_separators() -> None:
     narration = NarrationFiles(
+        hook="delivery/en/hook.mp3",
         intro="delivery\\en\\intro.mp3",
         story="delivery/en/story.mp3",
         outro="delivery/en/outro.mp3",
@@ -220,28 +226,15 @@ def test_invalid_production_slugs_are_rejected(slug: str) -> None:
         replace(_contract(), slug=slug)
 
 
-def test_hook_is_part_of_intro_not_a_fourth_narration_file() -> None:
+def test_hook_is_a_fourth_narration_file() -> None:
     narration = NarrationFiles(
-        intro="delivery/en/intro_with_hook.mp3",
+        hook="delivery/en/hook.mp3",
+        intro="delivery/en/intro.mp3",
         story="delivery/en/story.mp3",
         outro="delivery/en/outro.mp3",
     )
-
-    assert narration.hook_in_intro is True
-    assert narration.paths == (
-        "delivery/en/intro_with_hook.mp3",
-        "delivery/en/story.mp3",
-        "delivery/en/outro.mp3",
-    )
-
-    with pytest.raises(ValueError, match="hook must be included"):
-        NarrationFiles(
-            intro="delivery/en/intro.mp3",
-            story="delivery/en/story.mp3",
-            outro="delivery/en/outro.mp3",
-            hook_in_intro=False,  # type: ignore[arg-type]
-        )
-
+    assert narration.paths[0] == "delivery/en/hook.mp3"
+    assert len(narration.paths) == 4
 
 def test_multilingual_preparation_is_enabled_but_publishing_is_disabled() -> None:
     policy = _contract().youtube_multilingual

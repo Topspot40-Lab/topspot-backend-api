@@ -38,7 +38,7 @@ def _complete_delivery_packages(tmp_path: Path) -> ProductionExecution:
     execution = _execution(tmp_path)
     for language_code in SUPPORTED_LANGUAGE_CODES:
         _complete(execution, station=f"localized_delivery_{language_code}", artifact_id=f"delivery.{language_code}.video")
-        for segment in ("intro", "story", "outro"):
+        for segment in ("hook", "intro", "story", "outro"):
             _complete(execution, station=f"narration_{language_code}", artifact_id=f"delivery.{language_code}.narration.{segment}")
     return execution
 
@@ -51,15 +51,16 @@ def test_final_delivery_verification_accepts_all_three_packages(tmp_path: Path) 
     assert tuple(package.language_code for package in packages) == SUPPORTED_LANGUAGE_CODES
 
 
-def test_final_delivery_verification_returns_exactly_four_paths_per_language(tmp_path: Path) -> None:
+def test_final_delivery_verification_returns_exactly_five_paths_per_language(tmp_path: Path) -> None:
     execution = _complete_delivery_packages(tmp_path)
 
     packages = verify_final_delivery_packages(execution)
 
     for package in packages:
-        assert len(package.paths) == 4
+        assert len(package.paths) == 5
         assert package.paths == (
             execution.output_path(station=f"localized_delivery_{package.language_code}", artifact_id=f"delivery.{package.language_code}.video"),
+            execution.output_path(station=f"narration_{package.language_code}", artifact_id=f"delivery.{package.language_code}.narration.hook"),
             execution.output_path(station=f"narration_{package.language_code}", artifact_id=f"delivery.{package.language_code}.narration.intro"),
             execution.output_path(station=f"narration_{package.language_code}", artifact_id=f"delivery.{package.language_code}.narration.story"),
             execution.output_path(station=f"narration_{package.language_code}", artifact_id=f"delivery.{package.language_code}.narration.outro"),
@@ -79,7 +80,7 @@ def test_final_delivery_verification_rejects_missing_or_tampered_mp4(tmp_path: P
         verify_final_delivery_packages(execution)
 
 
-@pytest.mark.parametrize("segment", ("intro", "story", "outro"))
+@pytest.mark.parametrize("segment", ("hook", "intro", "story", "outro"))
 @pytest.mark.parametrize("tamper", ("missing", "changed"))
 def test_final_delivery_verification_rejects_missing_or_tampered_narration(tmp_path: Path, segment: str, tamper: str) -> None:
     execution = _complete_delivery_packages(tmp_path)

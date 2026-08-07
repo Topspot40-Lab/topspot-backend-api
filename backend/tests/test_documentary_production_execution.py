@@ -21,17 +21,17 @@ def _execution(tmp_path: Path, **kwargs: object) -> ProductionExecution:
     )
 
 
-def test_assignments_cover_shared_and_three_language_artifacts(tmp_path: Path) -> None:
+def test_assignments_cover_shared_hook_and_three_language_artifacts(tmp_path: Path) -> None:
     execution = _execution(tmp_path)
     assignments = documentary_artifact_assignments(execution.contract)
 
-    assert len(assignments) == 33
-    assert len({item.artifact_id for item in assignments}) == 33
-    assert len({item.contract_path for item in assignments}) == 33
-    assert len([item for item in assignments if item.artifact_id.startswith("shared.")]) == 6
+    assert len(assignments) == 37
+    assert len({item.artifact_id for item in assignments}) == 37
+    assert len({item.contract_path for item in assignments}) == 37
+    assert len([item for item in assignments if item.artifact_id.startswith("shared.")]) == 7
     assert any(item.artifact_id == "shared.opening_video" and item.station == "visual_render" for item in assignments)
     for code in ("en", "es", "pt-BR"):
-        assert len([item for item in assignments if f".{code}." in item.artifact_id]) == 9
+        assert len([item for item in assignments if f".{code}." in item.artifact_id]) == 10
         assert any(item.station == f"youtube_prepare_{code}" for item in assignments)
 
 

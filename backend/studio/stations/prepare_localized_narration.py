@@ -14,7 +14,7 @@ from backend.studio.stations.build_storyboard import save_json_atomic
 
 VISUAL_MASTER_ARTIFACT = "shared.visual_master"
 VISUAL_RENDER_STATION = "visual_render"
-SEGMENTS = ("intro", "story", "outro")
+SEGMENTS = ("hook", "intro", "story", "outro")
 Retriever = Callable[[Any, str, str], bytes]
 
 
@@ -30,7 +30,9 @@ def default_retriever(production: Any, language: str, segment: str) -> bytes:
     """Retrieve existing TTS assets without rewriting legacy source files."""
     locale = production.documentary.language(language)
     bucket = str(getattr(locale, "tts_bucket", "") or "")
-    key = str(getattr(locale, "tts_key", "") or "") if segment == "story" else f"youtube/{segment}.mp3"
+    key = (str(getattr(locale, "hook_tts_key", "") or "") if segment == "hook" else str(getattr(locale, "tts_key", "") or "") if segment == "story" else f"youtube/{segment}.mp3")
+    if segment == "hook":
+        bucket = str(getattr(locale, "hook_tts_bucket", "") or "")
     if not bucket or not key:
         raise RuntimeError(f"Missing {segment} narration source for {language}")
     from backend.services.supabase_client import supabase
@@ -112,7 +114,7 @@ def run_localized_narration(production: Any, execution: ProductionExecution, *, 
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(sources[segment])
                 execution.complete_artifact(station=station, artifact_id=artifact)
-            save_json_atomic(_sidecar(execution, language), {"version": 1, "source_sha256": hashes})
+            save_json_atomic(_sidecar(execution, language), {"version": 2, "source_sha256": hashes})
         except Exception as exc:
             for artifact in claimed:
                 try:

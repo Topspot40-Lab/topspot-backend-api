@@ -140,7 +140,9 @@ def build_story_video(
     *,
     opening: Path,
     image_sequence: Path,
+    hook_image: Path,
     brand_image: Path,
+    hook_audio: Path,
     intro_audio: Path,
     story_audio: Path,
     outro_audio: Path,
@@ -154,6 +156,7 @@ def build_story_video(
 ) -> None:
     opening_seconds = media_duration(opening)
     sequence_seconds = media_duration(image_sequence)
+    hook_seconds = media_duration(hook_audio)
     intro_seconds = media_duration(intro_audio)
     story_seconds = media_duration(story_audio)
     outro_seconds = media_duration(outro_audio)
@@ -162,6 +165,8 @@ def build_story_video(
         raise RuntimeError("Image sequence has no duration.")
 
     visual_scale = story_seconds / sequence_seconds
+
+    hook_visual_seconds = hook_seconds
 
     intro_visual_seconds = (
         intro_seconds
@@ -176,6 +181,7 @@ def build_story_video(
 
     total_seconds = (
         opening_seconds
+        + hook_seconds
         + intro_seconds
         + INTRO_PAUSE_SECONDS
         + story_seconds
@@ -205,8 +211,11 @@ def build_story_video(
         f"setpts=PTS-STARTPTS"
         f"[story_video];"
 
+        # Shared language-neutral hook visual.
+        f"[2:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,trim=duration={hook_visual_seconds:.6f},setpts=PTS-STARTPTS[hook_video];"
+
         # Old Dog artwork used for both branded sections.
-        f"[2:v]"
+        f"[3:v]"
         f"scale=1920:1080:"
         f"force_original_aspect_ratio=decrease,"
         f"pad=1920:1080:"
@@ -237,10 +246,11 @@ def build_story_video(
 
         # Complete visual program.
         f"[opening_video]"
+        f"[hook_video]"
         f"[intro_video]"
         f"[story_video]"
         f"[outro_video]"
-        f"concat=n=4:v=1:a=0"
+        f"concat=n=5:v=1:a=0"
         f"[video];"
 
         # Opening silence exists only in the final timeline.
@@ -248,7 +258,11 @@ def build_story_video(
         f"atrim=duration={opening_seconds:.6f}"
         f"[opening_silence];"
 
-        f"[3:a]"
+        f"[4:a]"
+        f"aresample=44100,aformat=sample_fmts=fltp:sample_rates=44100:channel_layouts=stereo,asetpts=PTS-STARTPTS"
+        f"[hook];"
+
+        f"[5:a]"
         f"aresample=44100,"
         f"aformat=sample_fmts=fltp:"
         f"sample_rates=44100:"
@@ -260,7 +274,7 @@ def build_story_video(
         f"atrim=duration={INTRO_PAUSE_SECONDS:.6f}"
         f"[pause_after_intro];"
 
-        f"[4:a]"
+        f"[6:a]"
         f"aresample=44100,"
         f"aformat=sample_fmts=fltp:"
         f"sample_rates=44100:"
@@ -272,7 +286,7 @@ def build_story_video(
         f"atrim=duration={OUTRO_PAUSE_SECONDS:.6f}"
         f"[pause_before_outro];"
 
-        f"[5:a]"
+        f"[7:a]"
         f"aresample=44100,"
         f"aformat=sample_fmts=fltp:"
         f"sample_rates=44100:"
@@ -287,18 +301,19 @@ def build_story_video(
 
         # Complete narration program.
         f"[opening_silence]"
+        f"[hook]"
         f"[intro]"
         f"[pause_after_intro]"
         f"[story]"
         f"[pause_before_outro]"
         f"[outro]"
         f"[outro_tail]"
-        f"concat=n=7:v=0:a=1,"
+        f"concat=n=8:v=0:a=1,"
         f"asplit=2"
         f"[narration_duck][narration_mix];"
 
         # Looping bed track, softly mixed across the whole video.
-        f"[6:a]"
+        f"[8:a]"
         f"aresample=44100,"
         f"aformat=sample_fmts=fltp:"
         f"sample_rates=44100:"
@@ -343,7 +358,15 @@ def build_story_video(
         "-framerate",
         "30",
         "-i",
+        str(hook_image),
+        "-loop",
+        "1",
+        "-framerate",
+        "30",
+        "-i",
         str(brand_image),
+        "-i",
+        str(hook_audio),
         "-i",
         str(intro_audio),
         "-i",
@@ -381,6 +404,7 @@ def build_story_video(
     print("🎬 TopSpot40 Story Video")
     print()
     print(f"Opening:          {opening_seconds:8.3f} sec")
+    print(f"Hook:             {hook_seconds:8.3f} sec")
     print(f"Intro:            {intro_seconds:8.3f} sec")
     print(f"Intro pause:      {INTRO_PAUSE_SECONDS:8.3f} sec")
     print(f"Story:            {story_seconds:8.3f} sec")
@@ -416,8 +440,10 @@ def main() -> None:
 
     opening = output_dir / "opening.mp4"
     image_sequence = output_dir / "image_sequence.mp4"
+    hook_image = output_dir / "hook_visual.png"
     brand_image = ASSETS_DIR / "old_dog_new_tracks.png"
 
+    hook_audio = audio_dir / f"hook_{safe_language}.mp3"
     intro_audio = audio_dir / f"intro_{safe_language}.mp3"
     story_audio = production.audio(args.language)
     outro_audio = audio_dir / f"outro_{safe_language}.mp3"
@@ -438,7 +464,9 @@ def main() -> None:
     build_story_video(
         opening=opening,
         image_sequence=image_sequence,
+        hook_image=hook_image,
         brand_image=brand_image,
+        hook_audio=hook_audio,
         intro_audio=intro_audio,
         story_audio=story_audio,
         outro_audio=outro_audio,

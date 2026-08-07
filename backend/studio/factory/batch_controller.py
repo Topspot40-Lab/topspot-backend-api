@@ -160,6 +160,9 @@ def discover_documentary_sources() -> tuple[DocumentarySource, ...]:
                     duration_seconds=row.duration_seconds,
                     tts_bucket=row.tts_bucket,
                     tts_key=row.tts_key,
+                    hook_text=row.hook_text,
+                    hook_tts_bucket=row.hook_tts_bucket,
+                    hook_tts_key=row.hook_tts_key,
                 )
                 for row in rows
                 if row.id is not None
@@ -207,6 +210,9 @@ def discover_documentary_sources() -> tuple[DocumentarySource, ...]:
                     duration_seconds=row.duration_seconds,
                     tts_bucket=row.tts_bucket,
                     tts_key=row.tts_key,
+                    hook_text=row.hook_text,
+                    hook_tts_bucket=row.hook_tts_bucket,
+                    hook_tts_key=row.hook_tts_key,
                 )
                 for row in rows
                 if row.id is not None

@@ -270,6 +270,9 @@ class ArtistStory(SQLModel, table=True):
 
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
+    hook_text: Optional[str] = None
+    hook_tts_bucket: Optional[str] = None
+    hook_tts_key: Optional[str] = None
 
     localized_publishing_content_json: Optional[str] = None
     localized_publishing_content_sha256: Optional[str] = None
@@ -330,6 +333,9 @@ class MusicDocuseriesLocale(SQLModel, table=True):
 
     tts_bucket: Optional[str] = None
     tts_key: Optional[str] = None
+    hook_text: Optional[str] = None
+    hook_tts_bucket: Optional[str] = None
+    hook_tts_key: Optional[str] = None
 
     localized_publishing_content_json: Optional[str] = None
     localized_publishing_content_sha256: Optional[str] = None

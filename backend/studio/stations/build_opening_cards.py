@@ -20,6 +20,7 @@ BACKGROUND = (12, 14, 18)
 PRIMARY_TEXT = (245, 245, 245)
 SECONDARY_TEXT = (190, 194, 202)
 ACCENT_TEXT = (225, 185, 70)
+DISCLOSURES = {"en": "AI-generated visual recreations • No third-party photographs intentionally used without permission", "es": "Recreaciones visuales generadas por IA • No se utilizan intencionalmente fotografías de terceros sin permiso", "pt-BR": "Recriações visuais geradas por IA • Nenhuma fotografia de terceiros é usada intencionalmente sem permissão"}
 
 
 def font_candidates(*names: str) -> list[Path]:
@@ -261,14 +262,13 @@ def build_languages_card(
         )
         y += 52
 
-    add_footer(
-        draw,
-        production.manifest.get(
-            "website",
-            "TopSpot40.com",
-        ),
-    )
-
+    disclosure_font = load_font(26)
+    for code in production.documentary.language_codes():
+        for line in wrap_subtitle(draw, subtitle=DISCLOSURES.get(code, DISCLOSURES["en"]), font=disclosure_font, maximum_width=1550):
+            y = draw_centered_text(draw, text=line, y=y, font=disclosure_font, fill=SECONDARY_TEXT) + 8
+    if y > VIDEO_HEIGHT - 150:
+        raise ValueError("Language disclosure does not fit safe canvas")
+    add_footer(draw, production.manifest.get("website", "TopSpot40.com"))
     save_card(canvas, destination)
 
 

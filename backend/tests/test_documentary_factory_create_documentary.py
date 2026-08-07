@@ -147,6 +147,10 @@ def _use_fake_visual_planner(monkeypatch: pytest.MonkeyPatch) -> None:
         "backend.studio.stations.build_localized_delivery.ensure_bed_track",
         _fake_bed_ensurer,
     )
+    monkeypatch.setattr(
+        "backend.studio.factory.documentary_factory.prepare_documentary_hooks",
+        lambda documentary, **_: False,
+    )
 
 def _multi_scene_production(tmp_path: Path) -> FakeProduction:
     production = FakeProduction(tmp_path)
@@ -180,7 +184,7 @@ def _unexpected_narration(
     )
 
 
-def _fake_delivery(_: Path, __: Path, ___: Path, ____: Path, _____: object, output: Path) -> None:
+def _fake_delivery(_: Path, __: Path, ___: Path, ____: Path, _____: Path, ______: object, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(b"test delivery")
 
@@ -598,12 +602,12 @@ def test_delivery_failure_isolated_and_later_languages_complete(tmp_path: Path) 
 
     attempted: list[str] = []
 
-    def failing_en_builder(_: Path, __: Path, ___: Path, ____: Path, tracks: tuple[Path, Path, Path], output: Path) -> None:
+    def failing_en_builder(_: Path, __: Path, ___: Path, ____: Path, _____: Path, tracks: tuple[Path, Path, Path, Path], output: Path) -> None:
         language = tracks[0].read_text(encoding="utf-8").split(":", maxsplit=1)[0]
         attempted.append(language)
         if language == "en":
             raise RuntimeError("en delivery failure")
-        _fake_delivery(_, _, _, _, tracks, output)
+        _fake_delivery(_, _, _, _, _____, tracks, output)
 
     with pytest.raises(RuntimeError, match="en: RuntimeError: en delivery failure"):
         run_localized_deliveries(production, execution, builder=failing_en_builder, media_validator=_fake_media)
@@ -616,7 +620,7 @@ def test_delivery_failure_isolated_and_later_languages_complete(tmp_path: Path) 
 def _media_metadata(*, duration: float = 3.0, video: bool = True, audio: bool = True, width: int = 1920, height: int = 1080, fps: str = "30/1", audio_duration: float | None = None) -> dict[str, object]:
     streams: list[dict[str, object]] = []
     if video:
-        streams.append({"codec_type": "video", "width": width, "height": height, "avg_frame_rate": fps, "duration": str(duration)})
+        streams.append({"codec_type": "video", "width": width, "height": height, "r_frame_rate": fps, "avg_frame_rate": fps, "duration": str(duration)})
     if audio:
         streams.append({"codec_type": "audio", "duration": str(duration if audio_duration is None else audio_duration)})
     return {"streams": streams, "format": {"duration": str(duration)}}
@@ -625,7 +629,7 @@ def _media_metadata(*, duration: float = 3.0, video: bool = True, audio: bool = 
 def test_localized_delivery_media_acceptance_and_rejections(tmp_path: Path) -> None:
     output = tmp_path / "documentary.mp4"
     output.write_bytes(b"not empty")
-    tracks = tuple(tmp_path / f"{part}.mp3" for part in ("intro", "story", "outro"))
+    tracks = tuple(tmp_path / f"{part}.mp3" for part in ("hook", "intro", "story", "outro"))
     for track in tracks:
         track.write_bytes(b"audio")
 
@@ -641,11 +645,12 @@ def test_localized_delivery_media_acceptance_and_rejections(tmp_path: Path) -> N
             else _media_metadata(duration=1.0, video=False)
         )
 
-    assert validate_delivery_media(
-        output,
-        tracks,
-        probe=padded_video_probe,
-    ) == {"duration_seconds": 5.0, "fps": 30.0}
+    with pytest.raises(RuntimeError, match="video and audio streams"):
+        validate_delivery_media(output, tracks, probe=padded_video_probe)
+
+    misleading_average = _media_metadata(duration=3.0)
+    misleading_average["streams"][0]["avg_frame_rate"] = "24000/1001"  # type: ignore[index]
+    assert validate_delivery_media(output, tracks, probe=lambda path: misleading_average if path == output else _media_metadata(duration=1.0, video=False))["fps"] == 30.0
 
     cases = (
         ("no video", _media_metadata(duration=3.0, video=False)),
@@ -653,7 +658,7 @@ def test_localized_delivery_media_acceptance_and_rejections(tmp_path: Path) -> N
         ("bad resolution", _media_metadata(duration=3.0, width=1280)),
         ("bad fps", _media_metadata(duration=3.0, fps="24/1")),
         ("bad duration", _media_metadata(duration=0.0)),
-        ("unsynchronized", _media_metadata(duration=4.0)),
+        ("unsynchronized", _media_metadata(duration=4.0, audio_duration=3.0)),
     )
     for _, delivery in cases:
         def rejecting_probe(path: Path, metadata: dict[str, object] = delivery) -> dict[str, object]:
@@ -850,20 +855,21 @@ def test_localized_delivery_receives_full_legacy_visual_sequence_inputs(tmp_path
     production, execution = _create(tmp_path)
     for language in SUPPORTED_LANGUAGE_CODES:
         execution.requeue_artifact(station=f"localized_delivery_{language}", artifact_id=f"delivery.{language}.video", reason="inspect inputs")
-    calls: list[tuple[Path, Path, Path, Path, tuple[Path, Path, Path]]] = []
+    calls: list[tuple[Path, Path, Path, Path, Path, tuple[Path, Path, Path, Path]]] = []
 
-    def builder(opening: Path, master: Path, brand: Path, bed: Path, tracks: tuple[Path, Path, Path], output: Path) -> None:
-        calls.append((opening, master, brand, bed, tracks))
-        _fake_delivery(opening, master, brand, bed, tracks, output)
+    def builder(opening: Path, master: Path, hook_visual: Path, brand: Path, bed: Path, tracks: tuple[Path, Path, Path, Path], output: Path) -> None:
+        calls.append((opening, master, hook_visual, brand, bed, tracks))
+        _fake_delivery(opening, master, hook_visual, brand, bed, tracks, output)
 
     run_localized_deliveries(production, execution, builder=builder, media_validator=_fake_media)
     assert len(calls) == 3
-    for opening, master, brand, bed, tracks in calls:
+    for opening, master, hook_visual, brand, bed, tracks in calls:
         assert opening.name == "opening.mp4"
         assert master.name == "visual_master.mp4"
+        assert hook_visual.name == "hook_visual.png"
         assert brand.name == "old_dog_new_tracks.png"
         assert bed.name == "bed_01.mp3"
-        assert len(tracks) == 3
+        assert len(tracks) == 4
 
 
 def test_opening_digest_change_rebuilds_all_localized_deliveries(tmp_path: Path) -> None:
