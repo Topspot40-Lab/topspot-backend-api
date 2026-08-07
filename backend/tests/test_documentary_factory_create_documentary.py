@@ -587,12 +587,12 @@ def test_delivery_failure_isolated_and_later_languages_complete(tmp_path: Path) 
     assert execution.record("delivery.es.video")["status"] == "completed"
     assert execution.record("delivery.pt-BR.video")["status"] == "completed"
 
-def _media_metadata(*, duration: float = 3.0, video: bool = True, audio: bool = True, width: int = 1920, height: int = 1080, fps: str = "30/1") -> dict[str, object]:
+def _media_metadata(*, duration: float = 3.0, video: bool = True, audio: bool = True, width: int = 1920, height: int = 1080, fps: str = "30/1", audio_duration: float | None = None) -> dict[str, object]:
     streams: list[dict[str, object]] = []
     if video:
-        streams.append({"codec_type": "video", "width": width, "height": height, "avg_frame_rate": fps})
+        streams.append({"codec_type": "video", "width": width, "height": height, "avg_frame_rate": fps, "duration": str(duration)})
     if audio:
-        streams.append({"codec_type": "audio"})
+        streams.append({"codec_type": "audio", "duration": str(duration if audio_duration is None else audio_duration)})
     return {"streams": streams, "format": {"duration": str(duration)}}
 
 
@@ -607,6 +607,20 @@ def test_localized_delivery_media_acceptance_and_rejections(tmp_path: Path) -> N
         return _media_metadata(duration=3.0) if path == output else _media_metadata(duration=1.0, video=False)
 
     assert validate_delivery_media(output, tracks, probe=valid_probe) == {"duration_seconds": 3.0, "fps": 30.0}
+
+    def padded_video_probe(path: Path) -> dict[str, object]:
+        return (
+            _media_metadata(duration=5.0, audio_duration=3.0)
+            if path == output
+            else _media_metadata(duration=1.0, video=False)
+        )
+
+    assert validate_delivery_media(
+        output,
+        tracks,
+        probe=padded_video_probe,
+    ) == {"duration_seconds": 5.0, "fps": 30.0}
+
     cases = (
         ("no video", _media_metadata(duration=3.0, video=False)),
         ("no audio", _media_metadata(duration=3.0, audio=False)),

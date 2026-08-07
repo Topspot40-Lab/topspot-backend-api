@@ -65,6 +65,19 @@ def _duration(metadata: dict[str, Any]) -> float:
     return value
 
 
+def _stream_duration(stream: dict[str, Any]) -> float:
+    raw = stream.get("duration")
+    try:
+        value = float(raw)
+    except (TypeError, ValueError) as exc:
+        raise RuntimeError(
+            "Media stream duration is missing or invalid"
+        ) from exc
+    if value <= 0:
+        raise RuntimeError("Media stream duration must be non-zero")
+    return value
+
+
 def _fps(stream: dict[str, Any]) -> float:
     raw = stream.get("avg_frame_rate") or stream.get("r_frame_rate")
     try:
@@ -100,9 +113,18 @@ def validate_delivery_media(
     if abs(fps - 30.0) > 0.01:
         raise RuntimeError("Localized delivery must be 30 fps")
     duration = _duration(delivery)
-    narration_duration = sum(_duration(probe(track)) for track in narration)
-    if abs(duration - narration_duration) > DELIVERY_DURATION_TOLERANCE_SECONDS:
-        raise RuntimeError("Localized delivery duration is not synchronized with narration")
+    audio_duration = _stream_duration(audio)
+    narration_duration = sum(
+        _duration(probe(track))
+        for track in narration
+    )
+    if (
+        abs(audio_duration - narration_duration)
+        > DELIVERY_DURATION_TOLERANCE_SECONDS
+    ):
+        raise RuntimeError(
+            "Localized delivery duration is not synchronized with narration"
+        )
     return {"duration_seconds": duration, "fps": fps}
 
 
