@@ -11,7 +11,10 @@ from typing import Any
 from backend.studio.factory.production_contract import SUPPORTED_LANGUAGE_CODES
 from backend.studio.factory.production_execution import ProductionExecution
 from backend.studio.stations.build_storyboard import save_json_atomic
-from backend.studio.studio_config import ASSETS_DIR
+from backend.studio.studio_config import (
+    ASSETS_DIR,
+    HOOK_PAUSE_SECONDS,
+)
 from backend.studio.render.build_story_video import (
     BED_TRACK_BUCKET, DEFAULT_BED_KEY, audio_mix_settings, ensure_bed_track,
 )
@@ -176,6 +179,7 @@ def _inputs(execution: ProductionExecution, language: str, bed: Path) -> tuple[P
     for part in ("hook", "intro", "story", "outro"):
         execution.require_verified_completed(station=f"narration_{language}", artifact_id=narration_artifact(language, part))
     inputs = {"opening_video": digest(opening), "visual_master": digest(master), "hook_visual": digest(hook_visual), "old_dog_new_tracks": digest(brand), "bed_track": digest(bed), **{part: digest(path) for part, path in zip(("hook", "intro", "story", "outro"), tracks, strict=True)}}
+    inputs["hook_pause_seconds"] = f"{HOOK_PAUSE_SECONDS:.6f}"
     return opening, master, hook_visual, brand, bed, tracks, inputs
 def _recorded(path: Path) -> dict[str, str] | None:
     try:

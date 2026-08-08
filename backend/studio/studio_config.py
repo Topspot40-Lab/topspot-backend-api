@@ -62,6 +62,7 @@ OPENING_VISUAL_SECONDS = (
 BED_TRACK_BUCKET = "audio-en"
 # ─────────────────────────────────────────────
 
+HOOK_PAUSE_SECONDS = 1.25
 INTRO_PAUSE_SECONDS = 0.75
 OUTRO_PAUSE_SECONDS = 3.0
 
