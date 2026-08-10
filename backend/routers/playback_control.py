@@ -82,52 +82,6 @@ router = APIRouter(
 )
 
 
-class PlaySpotifyRequest(BaseModel):
-    spotify_track_id: str
-    device_id: Optional[str] = None
-
-
-@router.post("/play-spotify", summary="Start Spotify playback for a spotify_track_id")
-async def play_spotify(req: PlaySpotifyRequest):
-    user_id = current_user_id()
-    status = current_runtime().status
-    logger.debug("🎵 /playback/play-spotify HIT: %s", req.spotify_track_id)
-
-    # Start Spotify playback
-    ok = await play_spotify_track(req.spotify_track_id, user_id, req.device_id)
-
-    if not ok:
-        logger.error("❌ Spotify playback failed for %s", req.spotify_track_id)
-        return {
-            "ok": False,
-            "error": "Spotify playback failed",
-            "spotify_track_id": req.spotify_track_id,
-        }
-
-    # Optional: reinforce phase for UI sync
-    existing_context = getattr(status, "context", {}) or {}
-
-    merged_context = {
-        **existing_context,
-        "spotify_track_id": req.spotify_track_id,
-        "started_by": "frontend",
-    }
-
-    update_phase(
-        user_id,
-        "track",
-        track_name=getattr(status, "track_name", None),
-        artist_name=getattr(status, "artist_name", None),
-        current_rank=getattr(status, "current_rank", None),
-        context=merged_context,
-    )
-
-    return {
-        "ok": True,
-        "spotify_track_id": req.spotify_track_id,
-    }
-
-
 # ─────────────────────────────────────────────
 # GLOBAL ASYNC TASK REFERENCE
 # ─────────────────────────────────────────────

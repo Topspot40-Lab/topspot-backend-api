@@ -6,17 +6,11 @@ import time
 import logging
 from typing import Any, Optional
 
-import httpx
 
-from backend.isaiah.isaiah_spotify import get_valid_access_token
 from backend.state.playback_state import get_status as get_playback_status
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from backend.services.spotify.spotify_auth_user import get_spotify_user_client
-from backend.services.spotify.playback import (
-    stop_spotify_playback
-)
 
 from backend.state.narration import narration_done_event, track_done_event
 from backend.state.playback_runtime import bind_request_user, current_user_id
@@ -93,86 +87,6 @@ def update_track_clock(user_id: str):
             s.track_elapsed_seconds = 0
         else:
             s.track_elapsed_seconds = time.time() - s.track_start_ts
-
-
-@router.get("/devices")
-async def get_devices():
-    """
-    List available Spotify playback devices for the user.
-    """
-    logger.warning("Spotify devices diagnostic route entered version=e017aaa")
-    user_id = current_user_id()
-    sp = await get_spotify_user_client(user_id)
-    data = sp.devices()
-    devices = data.get("devices", [])
-    logger.warning(
-        "Spotify devices diagnostic sp.devices returned device_count=%s",
-        len(devices),
-    )
-
-    direct_devices_status = None
-    direct_devices_count = None
-    spotipy_equals_direct = None
-    try:
-        access_token = await get_valid_access_token(user_id)
-        async with httpx.AsyncClient(timeout=5) as client:
-            direct_response = await client.get(
-                "https://api.spotify.com/v1/me/player/devices",
-                headers={"Authorization": f"Bearer {access_token}"},
-            )
-        direct_devices_status = direct_response.status_code
-        if direct_response.status_code == 200:
-            direct_data = direct_response.json()
-            direct_devices = direct_data.get("devices", [])
-            direct_devices_count = len(direct_devices)
-            spotipy_equals_direct = direct_devices == devices
-    except Exception:
-        pass
-
-    current_playback_present = None
-    current_playback_is_playing = None
-    current_playback_has_device = None
-    current_playback_device_type = None
-    current_playback_device_is_active = None
-    current_playback_device_is_restricted = None
-    try:
-        current_playback = sp.current_playback()
-        current_playback_present = current_playback is not None
-        current_playback_is_playing = (
-            current_playback.get("is_playing")
-            if current_playback
-            else None
-        )
-        current_device = (
-            current_playback.get("device")
-            if current_playback
-            else None
-        )
-        current_playback_has_device = current_device is not None
-        if current_device:
-            current_playback_device_type = current_device.get("type")
-            current_playback_device_is_active = current_device.get("is_active")
-            current_playback_device_is_restricted = current_device.get("is_restricted")
-    except Exception:
-        pass
-
-    logger.info(
-        "Spotify devices diagnostic spotipy_devices_count=%s direct_devices_status=%s direct_devices_count=%s spotipy_equals_direct=%s current_playback_present=%s current_playback_is_playing=%s current_playback_has_device=%s current_playback_device_type=%s current_playback_device_is_active=%s current_playback_device_is_restricted=%s",
-        len(devices),
-        direct_devices_status,
-        direct_devices_count,
-        spotipy_equals_direct,
-        current_playback_present,
-        current_playback_is_playing,
-        current_playback_has_device,
-        current_playback_device_type,
-        current_playback_device_is_active,
-        current_playback_device_is_restricted,
-    )
-    return {
-        "devices": devices,
-        "diagnostic_version": "e017aaa",
-    }
 
 
 @router.get("/status")
@@ -267,17 +181,6 @@ async def client_diagnostic(diagnostic: ClientDiagnosticRequest):
         _sanitize_diagnostic_state(diagnostic.narrationAudioState),
     )
     return {"ok": True}
-
-
-@router.post("/transfer/{device_id}")
-async def transfer_playback(device_id: str):
-    """
-    Force Spotify playback onto a specific device.
-    """
-    user_id = current_user_id()
-    sp = await get_spotify_user_client(user_id)
-    sp.transfer_playback(device_id=device_id, force_play=True)
-    return {"ok": True, "device_id": device_id}
 
 
 @router.post("/narration-finished")
