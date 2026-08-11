@@ -87,7 +87,7 @@ def main(argv: list[str] | None = None) -> int:
 
 def _dry_run(manifest: Any) -> None:
     print(f"DRY RUN: {len(manifest.uploads)} private scheduled uploads")
-    print(f"Playlists: {len(manifest.playlists)} (9 new + 1 existing English)")
+    print(f"Playlists: {len(manifest.playlists)} (9 new + 3 existing language masters)")
     for spec in manifest.uploads:
         print(
             f"READY {spec.scheduled_publish_at.isoformat()} "
