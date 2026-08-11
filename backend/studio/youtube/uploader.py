@@ -97,7 +97,7 @@ def set_thumbnail(youtube: Any, video_id: str, path: Path) -> None:
 def upload_captions(youtube: Any, video_id: str, language: str, path: Path) -> None:
     from googleapiclient.http import MediaFileUpload
 
-    mime = "text/vtt" if path.suffix.lower() == ".vtt" else "application/x-subrip"
+    mime = "application/octet-stream"
     existing = _execute(youtube.captions().list(part="snippet", videoId=video_id))
     matching = next(
         (
