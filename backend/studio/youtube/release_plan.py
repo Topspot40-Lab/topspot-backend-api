@@ -13,6 +13,11 @@ from zoneinfo import ZoneInfo
 CENTRAL = ZoneInfo("America/Chicago")
 LANGUAGE_TIMES = {"en": time(11), "es": time(15), "pt-BR": time(19)}
 LANGUAGE_LABELS = {"en": "English", "es": "Español", "pt-BR": "Português"}
+MASTER_PLAYLISTS = {
+    "en": ("english_docuseries", "TopSpot40 Documentaries (English)"),
+    "es": ("spanish_docuseries", "Documentales TopSpot40 (Español)"),
+    "pt-BR": ("portuguese_docuseries", "Documentários TopSpot40 (Português)"),
+}
 COLLECTIONS = {
     "history_eras": {
         "en": "History & Eras — English",
@@ -76,18 +81,27 @@ def build_manifest_document(
     productions_root: Path,
     *,
     english_docuseries_playlist_id: str,
+    spanish_docuseries_playlist_id: str,
+    portuguese_docuseries_playlist_id: str,
     start: date = date(2026, 8, 12),
 ) -> dict[str, object]:
     """Build a fail-closed 48-upload manifest from verified factory outputs."""
-    playlists: list[dict[str, object]] = [
-        {
-            "key": "english_docuseries",
-            "title": "TopSpot40 Documentaries (English)",
-            "description": "TopSpot40 music documentaries in English.",
-            "privacy_status": "public",
-            "existing_playlist_id": english_docuseries_playlist_id,
-        }
-    ]
+    existing_playlist_ids = {
+        "en": english_docuseries_playlist_id,
+        "es": spanish_docuseries_playlist_id,
+        "pt-BR": portuguese_docuseries_playlist_id,
+    }
+    playlists: list[dict[str, object]] = []
+    for language, (key, title) in MASTER_PLAYLISTS.items():
+        playlists.append(
+            {
+                "key": key,
+                "title": title,
+                "description": f"TopSpot40 music documentaries in {LANGUAGE_LABELS[language]}.",
+                "privacy_status": "public",
+                "existing_playlist_id": existing_playlist_ids[language],
+            }
+        )
     for collection_key, names in COLLECTIONS.items():
         for language, title in names.items():
             playlists.append(
@@ -115,9 +129,8 @@ def build_manifest_document(
             tags = metadata.get("keywords", metadata.get("tags"))
             if not isinstance(tags, list):
                 raise ValueError(f"YouTube metadata requires keywords: {metadata_path}")
-            playlist_keys = [f"{topic.collection_key}_{language}"]
-            if language == "en":
-                playlist_keys.insert(0, "english_docuseries")
+            master_playlist_key = MASTER_PLAYLISTS[language][0]
+            playlist_keys = [master_playlist_key, f"{topic.collection_key}_{language}"]
             uploads.append(
                 {
                     "slug": topic.slug,

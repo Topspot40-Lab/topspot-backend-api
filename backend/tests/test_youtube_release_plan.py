@@ -44,19 +44,25 @@ def test_release_sequence_runs_wednesdays_and_saturdays_through_october() -> Non
 
 def test_manifest_builds_48_localized_private_scheduled_uploads(tmp_path: Path) -> None:
     _factory_assets(tmp_path)
-    document = build_manifest_document(tmp_path, english_docuseries_playlist_id="PL-English")
+    document = _build_manifest(tmp_path)
     output = tmp_path / "manifest.json"
     write_manifest(document, output)
     manifest = load_manifest(output)
 
     assert len(manifest.uploads) == 48
-    assert len(manifest.playlists) == 10
+    assert len(manifest.playlists) == 12
     assert sum(item.language_code == "en" for item in manifest.uploads) == 16
     assert all(item.notify_subscribers for item in manifest.uploads)
     assert all(item.contains_synthetic_media for item in manifest.uploads)
     assert all(not item.made_for_kids for item in manifest.uploads)
     assert all(item.end_screen_required for item in manifest.uploads)
-    assert all(len(item.playlist_keys) == (2 if item.language_code == "en" else 1) for item in manifest.uploads)
+    assert all(len(item.playlist_keys) == 2 for item in manifest.uploads)
+    expected_master_keys = {
+        "en": "english_docuseries",
+        "es": "spanish_docuseries",
+        "pt-BR": "portuguese_docuseries",
+    }
+    assert all(expected_master_keys[item.language_code] in item.playlist_keys for item in manifest.uploads)
     assert {item.scheduled_publish_at.hour for item in manifest.uploads if item.language_code == "en"} == {11}
     assert {item.scheduled_publish_at.hour for item in manifest.uploads if item.language_code == "es"} == {15}
     assert {item.scheduled_publish_at.hour for item in manifest.uploads if item.language_code == "pt-BR"} == {19}
@@ -65,7 +71,7 @@ def test_manifest_builds_48_localized_private_scheduled_uploads(tmp_path: Path) 
 def test_manifest_fails_closed_when_approved_asset_is_missing(tmp_path: Path) -> None:
     _factory_assets(tmp_path)
     (tmp_path / TOPICS[0].slug / "factory" / "publishing" / "es" / "captions.vtt").unlink()
-    document = build_manifest_document(tmp_path, english_docuseries_playlist_id="PL-English")
+    document = _build_manifest(tmp_path)
     output = tmp_path / "manifest.json"
     write_manifest(document, output)
     with pytest.raises(ManifestError, match="missing or empty"):
@@ -74,7 +80,7 @@ def test_manifest_fails_closed_when_approved_asset_is_missing(tmp_path: Path) ->
 
 def test_manifest_rejects_video_changed_after_visual_approval(tmp_path: Path) -> None:
     _factory_assets(tmp_path)
-    document = build_manifest_document(tmp_path, english_docuseries_playlist_id="PL-English")
+    document = _build_manifest(tmp_path)
     output = tmp_path / "manifest.json"
     write_manifest(document, output)
     video = tmp_path / TOPICS[0].slug / "factory" / "delivery" / "en" / "documentary.mp4"
@@ -86,3 +92,12 @@ def test_manifest_rejects_video_changed_after_visual_approval(tmp_path: Path) ->
 def test_release_start_must_be_wednesday() -> None:
     with pytest.raises(ValueError, match="Wednesday"):
         release_dates(date(2026, 8, 13))
+
+
+def _build_manifest(root: Path) -> dict[str, object]:
+    return build_manifest_document(
+        root,
+        english_docuseries_playlist_id="PLII-SQFCqs7o",
+        spanish_docuseries_playlist_id="PLPOixzTGhR1s",
+        portuguese_docuseries_playlist_id="PLCKwRppGaVAs",
+    )
