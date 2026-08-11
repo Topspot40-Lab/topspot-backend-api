@@ -23,7 +23,6 @@ from backend.services.playback_helpers import (
 from backend.services.radio_render import render_header, box, clean_text, BOX_WIDTH
 from backend.state.skip import skip_event
 from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
-from backend.services.radio.narration import play_narrations
 
 
 def start_playback_sequence(coro) -> None:
