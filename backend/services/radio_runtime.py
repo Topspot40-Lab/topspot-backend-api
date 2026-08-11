@@ -2,10 +2,8 @@
 from __future__ import annotations
 
 import asyncio
-import contextlib
 import logging
 from typing import List, Tuple, Optional
-import time
 
 logger = logging.getLogger(__name__)   # ✅ DEFINE LOGGER FIRST
 
@@ -22,20 +20,9 @@ from backend.services.playback_helpers import (
     build_artist_filename,
 )
 
-from backend.services.spotify.playback import (
-    play_spotify_track,
-    stop_spotify_playback,
-    set_device_volume,
-)
-from backend.services.play_policy import compute_play_seconds, sleep_with_skip
 from backend.services.radio_render import render_header, box, clean_text, BOX_WIDTH
 from backend.state.skip import skip_event
-from backend.state.playback_state import (
-    update_phase,
-    mark_playing,
-)
 from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
-from backend.services.radio.heartbeat import track_heartbeat
 from backend.services.radio.narration import play_narrations
 
 
@@ -53,17 +40,6 @@ def start_playback_sequence(coro) -> None:
     runtime.current_task = asyncio.create_task(coro)
     bind_task(runtime.current_task, current_user_id())
     logger.info("▶️ Playback sequence started")
-
-# ─────────────────────────────────────────────
-# Safety guard: ensure Spotify volume is sane
-# ─────────────────────────────────────────────
-async def _ensure_volume_ok() -> None:
-    """Safety guard so Spotify is never left muted."""
-    user_id = current_user_id()
-    with contextlib.suppress(Exception):
-        await set_device_volume(100, user_id)
-
-
 from backend.state.playback_flags import flags
 
 
@@ -248,126 +224,6 @@ def narration_keys_for(*, lang: str, track, artist):
     artist_bucket = bucket_for(lang, "artist") if artist_key else None
 
     return detail_bucket, detail_key, artist_bucket, artist_key
-
-
-# ─────────────────────────────────────────────
-# Track playback with skip / pause / stop
-# ─────────────────────────────────────────────
-async def play_track_with_skip(
-    track,
-    *,
-    lang: str = "en",
-    mode: str = "decade_genre",
-    rank: Optional[int] = None,
-    track_name: Optional[str] = None,
-    artist_name: Optional[str] = None,
-    full_flag: bool = True,
-    already_playing: bool = False,
-) -> bool:
-    heartbeat_task: Optional[asyncio.Task] = None
-    user_id = current_user_id()
-    status = current_runtime().status
-
-    try:
-        rank_val = rank if rank is not None else getattr(track, "ranking", None)
-        track_label = track_name or getattr(track, "track_name", None)
-        artist_label = artist_name or getattr(track, "artist_name", None)
-        spotify_id = getattr(track, "spotify_track_id", None)
-
-        if not spotify_id:
-            logger.warning("⚠️ No spotify_track_id — skipping track playback.")
-            return True
-
-        mark_playing(user_id=user_id, mode=mode, language=lang)
-
-        play_secs = compute_play_seconds(track)
-
-        status.elapsed_seconds = 0.0
-        status.duration_seconds = float(play_secs)
-        status.percent_complete = 0.0
-
-        update_phase(
-            user_id,
-            "track",
-            current_rank=rank_val,
-            track_name=track_label,
-            artist_name=artist_label,
-            context=_phase_context(
-                lang=lang,
-                mode=mode,
-                rank=rank_val,
-                track_name=track_label,
-                artist_name=artist_label,
-                elapsed_seconds=0.0,
-                duration_seconds=play_secs,
-            ),
-        )
-
-        await _respect_user_controls()
-
-        logger.info(
-            "🎵 Now playing track: %s (%s) for %ss (full=%s, already_playing=%s)",
-            track_label or "Unknown Track",
-            spotify_id,
-            play_secs,
-            full_flag,
-            already_playing,
-        )
-
-        if not already_playing:
-            await _ensure_volume_ok()
-            await play_spotify_track(spotify_id, user_id)
-
-        start_ts = time.time()
-        heartbeat_task = asyncio.create_task(
-            track_heartbeat(
-                start_ts=start_ts,
-                total_secs=play_secs,
-                lang=lang,
-                mode=mode,
-                rank=rank_val,
-                track_name=track_label,
-                artist_name=artist_label,
-            )
-        )
-        bind_task(heartbeat_task, user_id)
-
-        skipped = await sleep_with_skip(skip_event, play_secs)
-
-        if skipped:
-            logger.info("⏭️ Track skipped → fading out Spotify.")
-            with contextlib.suppress(Exception):
-                await stop_spotify_playback(user_id, fade_out_seconds=1.5)
-            return True
-
-        if already_playing:
-            logger.info("🔇 Track finished (over-style) — stopping Spotify cleanly.")
-            with contextlib.suppress(Exception):
-                await stop_spotify_playback(user_id, fade_out_seconds=1.0)
-
-        logger.info("✅ Track finished normally.")
-
-        # Do NOT mark_stopped() here.
-        # The sequence runner (the thing looping ranks) should decide when playback is finished.
-        return False
-
-
-    except asyncio.CancelledError:
-        logger.info("🛑 Track playback cancelled.")
-        with contextlib.suppress(Exception):
-            await stop_spotify_playback(user_id, fade_out_seconds=1.5)
-        return True
-    except Exception as e:
-        logger.warning("⚠️ play_track_with_skip error: %s", e)
-        with contextlib.suppress(Exception):
-            await stop_spotify_playback(user_id, fade_out_seconds=1.5)
-        return True
-    finally:
-        if heartbeat_task is not None:
-            heartbeat_task.cancel()
-            with contextlib.suppress(asyncio.CancelledError, Exception):
-                await heartbeat_task
-
 
 def skip_to_next() -> None:
     """
