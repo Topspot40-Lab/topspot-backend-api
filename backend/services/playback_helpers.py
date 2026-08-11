@@ -17,8 +17,6 @@ from backend.config import (
     BUCKETS,
 )
 from backend.services.supabase_playback import play_mp3
-from backend.services.spotify.playback import play_spotify_track, stop_spotify_playback
-from backend.services.play_policy import compute_play_seconds, sleep_with_skip
 from backend.state.playback_state import update_phase
 from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
 from backend.state.skip import skip_event
@@ -465,62 +463,3 @@ async def safe_play(kind: str, bucket: str, key: str, voice_style: str | None = 
         phase, _SUPA_FETCH_RETRIES, bucket, key, last_err
     )
     return False
-
-
-
-# ─────────────────────────────────────────────
-# 🎵 Spotify Track Playback
-# ─────────────────────────────────────────────
-
-async def play_track_with_skip(
-    track,
-    *,
-    lang: str,
-    mode: str,
-    rank: int,
-    track_name: str,
-    artist_name: str,
-) -> bool:
-    user_id = current_user_id()
-    spotify_id = getattr(track, "spotify_track_id", None)
-    if not spotify_id:
-        logger.warning("🚫 No spotify_track_id for %s — skipping.", track_name)
-        return False
-
-    try:
-        await stop_spotify_playback(user_id, fade_out_seconds=0.8)
-    except Exception:
-        pass
-
-    update_phase(
-        user_id,
-        "track",
-        is_playing=True,
-        language=lang,
-        mode=mode,
-        context={
-            "spotify_track_id": spotify_id,
-            "rank": rank,
-            "track_name": track_name,
-            "artist_name": artist_name,
-        },
-    )
-
-    await _respect_user_controls()
-
-    logger.info("🎵 Playing Spotify track: %s — rank %s", track_name, rank)
-
-    ok = await play_spotify_track(spotify_id, user_id)
-    if not ok:
-        logger.warning("❌ Spotify refused playback.")
-        return False
-
-    play_secs = compute_play_seconds(track)
-    skipped = await sleep_with_skip(skip_event, play_secs)
-
-    try:
-        await stop_spotify_playback(user_id, fade_out_seconds=1.0)
-    except Exception:
-        pass
-
-    return skipped
