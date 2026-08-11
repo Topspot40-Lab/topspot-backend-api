@@ -6,7 +6,11 @@ from pathlib import Path
 from typing import Any
 
 
-SCOPES = ("https://www.googleapis.com/auth/youtube", "https://www.googleapis.com/auth/youtube.upload")
+SCOPES = (
+    "https://www.googleapis.com/auth/youtube",
+    "https://www.googleapis.com/auth/youtube.upload",
+    "https://www.googleapis.com/auth/youtube.force-ssl",
+)
 TOKEN_PATH = Path("backend/studio/work/youtube_oauth_token.json")
 
 

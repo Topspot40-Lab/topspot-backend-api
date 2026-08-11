@@ -9,6 +9,7 @@ from backend.scripts.upload_youtube_release import (
     _positive_int,
     _select_batch,
 )
+from backend.studio.youtube.auth import SCOPES
 
 
 def _spec(slug: str, language: str) -> SimpleNamespace:
@@ -38,3 +39,7 @@ def test_non_quota_error_is_not_misclassified() -> None:
     error = RuntimeError("forbidden")
     error.resp = SimpleNamespace(status=403)  # type: ignore[attr-defined]
     assert _is_quota_error(error) is False
+
+
+def test_caption_scope_is_requested() -> None:
+    assert "https://www.googleapis.com/auth/youtube.force-ssl" in SCOPES
