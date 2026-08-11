@@ -2,7 +2,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from PIL import Image
-from backend.studio.youtube.publishing_package import approve_review_package,prepare_review_package
+from backend.studio.youtube.publishing_package import LOCALIZED_TITLES,approve_review_package,prepare_review_package
+
+def test_all_release_topics_have_three_localized_titles()->None:
+ assert len(LOCALIZED_TITLES)==16
+ assert all(set(titles)=={"en","es","pt-BR"} for titles in LOCALIZED_TITLES.values())
 
 def _assets(factory:Path)->None:
  (factory/"shared").mkdir(parents=True);(factory/"shared"/"opening.mp4").write_bytes(b"opening");Image.new("RGB",(1920,1080),"navy").save(factory/"shared"/"hook_visual.png")

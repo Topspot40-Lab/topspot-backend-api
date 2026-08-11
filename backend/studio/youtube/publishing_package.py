@@ -7,7 +7,24 @@ from typing import Any
 
 LANGUAGE_NAMES={"en":"English","es":"Español","pt-BR":"Português (Brasil)"}
 DOCUMENTARY_LABELS={"en":"Music Documentary","es":"Documental Musical","pt-BR":"Documentário Musical"}
-LOCALIZED_TITLES={"fabulous_fifties":{"en":"The Fabulous Fifties","es":"Los fabulosos años cincuenta","pt-BR":"Os fabulosos anos cinquenta"}}
+LOCALIZED_TITLES={
+ "fabulous_fifties":{"en":"The Fabulous Fifties","es":"Los fabulosos años cincuenta","pt-BR":"Os fabulosos anos cinquenta"},
+ "swinging_sixties":{"en":"The Swinging Sixties","es":"Los vibrantes años sesenta","pt-BR":"Os vibrantes anos sessenta"},
+ "seventies_decade_of_change":{"en":"The Seventies: A Decade of Change","es":"Los años setenta: una década de cambio","pt-BR":"Os anos setenta: uma década de mudanças"},
+ "mtv_and_the_eighties":{"en":"MTV and the Eighties","es":"MTV y los años ochenta","pt-BR":"MTV e os anos oitenta"},
+ "alternative_nation_nineties":{"en":"Alternative Nation: The Nineties","es":"Nación alternativa: los años noventa","pt-BR":"Nação alternativa: os anos noventa"},
+ "music_in_the_new_millennium":{"en":"Music in the New Millennium","es":"La música en el nuevo milenio","pt-BR":"A música no novo milênio"},
+ "story_behind_american_pie":{"en":"The Story Behind American Pie","es":"La historia detrás de American Pie","pt-BR":"A história por trás de American Pie"},
+ "one_hit_wonders":{"en":"One-Hit Wonders","es":"Artistas de un solo éxito","pt-BR":"Artistas de um só sucesso"},
+ "songs_banned_from_radio":{"en":"Songs Banned from Radio","es":"Canciones prohibidas en la radio","pt-BR":"Canções proibidas no rádio"},
+ "woodstock":{"en":"Woodstock","es":"Woodstock","pt-BR":"Woodstock"},
+ "beatles_vs_stones":{"en":"Beatles vs. Stones","es":"Beatles vs. Stones","pt-BR":"Beatles vs. Stones"},
+ "elvis_vs_sinatra":{"en":"Elvis vs. Sinatra","es":"Elvis vs. Sinatra","pt-BR":"Elvis vs. Sinatra"},
+ "country_traditionalists_vs_country_pop":{"en":"Country Traditionalists vs. Country Pop","es":"Tradicionalistas del country vs. country pop","pt-BR":"Tradicionalistas do country vs. country pop"},
+ "ranchera_vs_norteno":{"en":"Ranchera vs. Norteño","es":"Ranchera vs. Norteño","pt-BR":"Ranchera vs. Norteño"},
+ "vicente_fernandez_vs_antonio_aguilar":{"en":"Vicente Fernández vs. Antonio Aguilar","es":"Vicente Fernández vs. Antonio Aguilar","pt-BR":"Vicente Fernández vs. Antonio Aguilar"},
+ "bossa_nova_vs_samba":{"en":"Bossa Nova vs. Samba","es":"Bossa Nova vs. Samba","pt-BR":"Bossa Nova vs. Samba"},
+}
 DESCRIPTIONS={
  "en":"Explore {title}, a TopSpot40 music documentary about the artists, songs, sounds, and cultural changes that defined this unforgettable era.",
  "es":"Descubre {title}, un documental musical de TopSpot40 sobre los artistas, las canciones, los sonidos y los cambios culturales que definieron esta época inolvidable.",
@@ -37,7 +54,7 @@ def prepare_review_package(factory:Path,*,slug:str,language:str,story_text:str,h
  labels=CHAPTER_LABELS[language];chapters=((0.0,labels[0]),(story_start,labels[1]),(outro_start,labels[2]));chapter_text="\n".join(f"{_chapter_time(seconds)} {label}" for seconds,label in chapters)+"\n"
  (output/"chapters.txt").write_text(chapter_text,encoding="utf-8")
  description=DESCRIPTIONS[language].format(title=title)+"\n\n"+chapter_text.rstrip()
- metadata={"title":f"{title} | {DOCUMENTARY_LABELS[language]}","description":description,"keywords":_keywords(title,language),"language_code":language}
+ metadata={"title":f"{title} | {DOCUMENTARY_LABELS[language]}","description":description,"keywords":_keywords(title,language,slug),"language_code":language}
  (output/"youtube.json").write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  _thumbnail(hook_visual,output/"thumbnail.png",title,language)
  runner(["ffmpeg","-y","-i",str(documentary),"-vn","-codec:a","libmp3lame","-q:a","2",str(output/"complete_audio.mp3")])
@@ -83,9 +100,17 @@ def _font(size:int)->Any:
  for path in (Path("C:/Windows/Fonts/arialbd.ttf"),Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")):
   if path.is_file():return ImageFont.truetype(str(path),size=size)
  return ImageFont.load_default()
-def _keywords(title:str,language:str)->list[str]:
- common={"en":["music documentary","music history","1950s music","rock and roll history"],"es":["documental musical","historia de la música","música de los años 50","historia del rock and roll"],"pt-BR":["documentário musical","história da música","música dos anos 50","história do rock and roll"]}
- return [title,"TopSpot40",*common[language]]
+def _keywords(title:str,language:str,slug:str)->list[str]:
+ common={"en":["music documentary","music history"],"es":["documental musical","historia de la música"],"pt-BR":["documentário musical","história da música"]}
+ history={"fabulous_fifties","swinging_sixties","seventies_decade_of_change","mtv_and_the_eighties","alternative_nation_nineties","music_in_the_new_millennium"}
+ stories={"story_behind_american_pie","one_hit_wonders","songs_banned_from_radio","woodstock"}
+ group={
+  "en":("music eras","song stories","music legends and rivalries"),
+  "es":("épocas musicales","historias de canciones","leyendas y rivalidades musicales"),
+  "pt-BR":("épocas musicais","histórias de canções","lendas e rivalidades musicais"),
+ }[language]
+ topic_group=group[0] if slug in history else group[1] if slug in stories else group[2]
+ return [title,"TopSpot40",*common[language],topic_group]
 def _vtt_time(seconds:float)->str:
  milliseconds=max(0,round(seconds*1000));hours,remainder=divmod(milliseconds,3600000);minutes,remainder=divmod(remainder,60000);secs,millis=divmod(remainder,1000);return f"{hours:02d}:{minutes:02d}:{secs:02d}.{millis:03d}"
 def _chapter_time(seconds:float)->str:
