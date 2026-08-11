@@ -9,8 +9,6 @@ from backend.state.playback_state import (
     update_phase,
 )
 from pydantic import BaseModel
-from backend.services.spotify.playback import play_spotify_track
-from backend.services.spotify.playback import stop_spotify_playback
 from backend.state.narration import track_done_event, narration_done_event
 from sqlmodel import Session, select
 from backend.database import engine
@@ -27,8 +25,6 @@ import contextlib
 from fastapi import APIRouter, Depends
 from fastapi import HTTPException
 
-from backend.services.spotify.playback import set_device_volume
-from backend.services.spotify.spotify_auth_user import get_spotify_user_client
 
 # ✅ KEEP data models, but not the pipeline
 from backend.services.playback_engine import (
@@ -136,25 +132,6 @@ async def cancel_current_sequence():
     flags.is_playing = False
     flags.stopped = True
     flags.is_paused = False
-
-    # 🔥 STOP SPOTIFY IMMEDIATELY WHEN CANCELING
-    try:
-        await stop_spotify_playback(user_id, fade_out_seconds=0.2)
-        logger.debug("🛑 Spotify stopped during sequence cancel")
-    except Exception as exc:
-        logger.warning("⚠️ Failed to stop Spotify during cancel: %s", exc)
-
-    await asyncio.sleep(0.15)
-
-    # ─────────────────────────────────────────────
-    # Restore Spotify volume after cancellation
-    # ─────────────────────────────────────────────
-    try:
-        from backend.services.spotify.playback import set_device_volume
-        await set_device_volume(100, user_id)
-        logger.debug("🔊 Restored Spotify volume to 100% after cancel")
-    except Exception as exc:
-        logger.warning(f"⚠️ Failed to restore volume after cancel: {exc}")
 
     flags.cancel_requested = False
 
@@ -294,9 +271,7 @@ async def play_track(payload: dict):
             raise HTTPException(status_code=400, detail="Missing spotify_track_id for favorites playback")
 
         async def _play_favorites_one():
-            # Minimal v1: just start the Spotify track (keeps pipeline separate)
-            await play_spotify_track(spotify_id, user_id)
-
+            # Publish the selected track for frontend guided playback.
             existing_context = getattr(status, "context", {}) or {}
             merged_context = {
                 **existing_context,
@@ -408,9 +383,6 @@ async def play_track(payload: dict):
             f"{base_url}/detail/{track.spotify_track_id}.mp3",
         )
 
-        logger.info("🎵 Artist Spotlight about to start Spotify | track=%s", track.spotify_track_id)
-
-        await play_spotify_track(track.spotify_track_id, user_id)
         update_phase(
             user_id,
             "track",
@@ -432,7 +404,6 @@ async def play_track(payload: dict):
             if not track.spotify_track_id:
                 return {"ok": False, "error": "Missing spotify_track_id for ALL decade playback"}
 
-            await play_spotify_track(track.spotify_track_id, user_id)
 
             update_phase(
                 user_id,
@@ -577,35 +548,15 @@ async def start(
 @router.post("/pause", summary="Pause playback")
 async def pause():
     user_id = current_user_id()
-    status = current_runtime().status
-    logger.info("⏸️ Pause requested")
+    logger.info("Pause requested")
 
     mark_paused(user_id)
 
-    # 🔊 Capture current volume BEFORE fade
-    try:
-        sp = await get_spotify_user_client(user_id)
-        pb = sp.current_playback()
-        if pb and pb.get("device"):
-            status.volume = pb["device"]["volume_percent"]
-            status.context["device_id"] = pb["device"]["id"]
-            logger.info(f"💾 Saved volume: {status.volume}")
-    except Exception as exc:
-        logger.warning("⚠️ Failed to capture volume: %s", exc)
-
-    # 1️⃣ Stop narration
     if skip_event is not None:
         try:
             skip_event.set()
         except Exception:
             pass
-
-    # 2️⃣ Fade out Spotify
-    try:
-        from backend.services.spotify.playback import stop_spotify_playback
-        await stop_spotify_playback(user_id, fade_out_seconds=0.3)
-    except Exception as exc:
-        logger.warning("⚠️ Pause Spotify stop failed: %s", exc)
 
     touch()
     return {"ok": True, "status": snapshot_dataclass(flags)}
@@ -616,7 +567,7 @@ async def resume():
     user_id = current_user_id()
     status = current_runtime().status
     phase = status.phase
-    logger.info(f"▶️ Resume requested from phase: {phase}")
+    logger.info("Resume requested from phase: %s", phase)
 
     mark_playing(
         user_id=user_id,
@@ -625,46 +576,20 @@ async def resume():
         context=status.context
     )
 
-    try:
-        # 🎯 CASE 1 — TRACK (existing logic)
-        if phase == "track":
-            sp = await get_spotify_user_client(user_id)
+    if phase == "track":
+        return {
+            "ok": True,
+            "restart_track": True,
+            "status": snapshot_dataclass(flags)
+        }
 
-            sp.start_playback()
-
-            import time
-
-            for _ in range(10):
-                time.sleep(0.1)
-                try:
-                    pb = sp.current_playback()
-                    if pb and pb.get("is_playing"):
-                        break
-                except Exception:
-                    pass
-
-            time.sleep(0.2)
-
-            device_id = status.context.get("device_id") if status.context else None
-
-            if device_id and hasattr(status, "volume") and status.volume is not None:
-                logger.info(f"🔊 Restoring volume to {status.volume}")
-                sp.volume(status.volume, device_id=device_id)
-
-            return {"ok": True, "status": snapshot_dataclass(flags)}
-
-        # 🎯 CASE 2 — NARRATION PHASES
-        elif phase in ["set_intro", "liner", "intro", "detail", "artist"]:
-            logger.info(f"🔁 Restarting narration phase: {phase}")
-
-            return {
-                "ok": True,
-                "restart_track": True,
-                "status": snapshot_dataclass(flags)
-            }
-
-    except Exception as exc:
-        logger.warning("⚠️ Resume failed: %s", exc)
+    if phase in ["set_intro", "liner", "intro", "detail", "artist"]:
+        logger.info("Restarting narration phase: %s", phase)
+        return {
+            "ok": True,
+            "restart_track": True,
+            "status": snapshot_dataclass(flags)
+        }
 
     touch()
     return {"ok": True, "status": snapshot_dataclass(flags)}
@@ -674,11 +599,6 @@ async def resume():
 async def stop():
     user_id = current_user_id()
     await cancel_current_sequence()
-
-    try:
-        await stop_spotify_playback(user_id, fade_out_seconds=0.3)
-    except Exception as exc:
-        logger.warning("⚠️ Spotify stop failed: %s", exc)
 
     clear_public_playback_status(user_id)
     touch()
@@ -700,77 +620,6 @@ async def skip():
         "status": snapshot_dataclass(flags),
     }
 
-
-@router.post("/warmup", summary="Prepare Spotify playback environment")
-async def warmup_playback():
-    """
-    Prepare Spotify for playback:
-    - Ensure OAuth is valid
-    - Ensure at least one active device exists
-    - Set baseline volume
-
-    This endpoint NEVER starts playback.
-    It is safe and idempotent.
-    """
-
-    logger.info("🎛️ /playback/warmup requested")
-
-    user_id = current_user_id()
-
-    try:
-        # 1️⃣ Ensure Spotify client (OAuth)
-        sp = await get_spotify_user_client(user_id)
-        logger.info("🎧 Spotify client ready")
-
-        # 2️⃣ Discover devices
-        devices = sp.devices().get("devices", [])
-        logger.info("📱 Spotify devices found: %d", len(devices))
-
-        if not devices:
-            logger.warning("❌ No Spotify devices found")
-            return {
-                "ready": False,
-                "reason": "no_devices",
-                "message": "No Spotify devices found. Open Spotify on a device."
-            }
-
-        # 3️⃣ Require an active device
-        active_device = next((d for d in devices if d.get("is_active")), None)
-
-        if not active_device:
-            logger.warning("⚠️ No active Spotify device")
-            return {
-                "ready": False,
-                "reason": "no_active_device",
-                "message": "Open Spotify on a device to continue."
-            }
-
-        device_id = active_device["id"]
-        device_name = active_device.get("name", "Unknown device")
-
-        logger.info("▶️ Active device: %s (%s)", device_name, device_id)
-
-        # 4️⃣ Set baseline volume
-        # NOTE: set_device_volume may be async in some versions; yours supports await
-        try:
-            await set_device_volume(100, user_id, device_id=device_id)
-            logger.debug("🔊 Spotify volume set to 100%%")
-        except Exception as exc:
-            logger.warning("⚠️ Failed to set volume during warmup: %s", exc)
-
-        return {
-            "ready": True,
-            "device_id": device_id,
-            "device_name": device_name,
-            "volume": 100
-        }
-
-    except Exception as exc:
-        logger.exception("🔥 Playback warmup failed")
-        raise HTTPException(status_code=500, detail=str(exc))
-
-
-# backend/routers/playback_control.py (or playback_status.py)
 
 @router.post("/reset")
 async def reset_playback_state():
