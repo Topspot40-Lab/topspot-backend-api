@@ -271,33 +271,6 @@ async def spotify_callback(request: Request):
     
 
 
-# Endpoint for frontend to get valid Spotify token
-@spotify_user_auth_router.get("/spotify/sdk-token")
-async def spotify_sdk_token(access_token: str = Cookie(None)): # should not fetch spotify user from frontend, SECURITY RISK
-    """
-    Returns a token specifically for the Web Playback SDK.
-    """
-    payload = decode_jwt_token(access_token)
-    if not payload:
-        raise HTTPException(status_code=401)
-    user_id = payload["user_id"]
-    token = await get_valid_access_token(user_id)
-    return {"access_token": token}
-
-
-
-
-
-
-#@spotify_user_auth_router.get("/spotify/refresh")
-async def spotify_refresh(user_id: str):
-    """
-    Manually trigger a refresh for a given user_id.
-    Frontend can call this before playback if the token is expired.
-    """
-    #new_token = await refresh_access_token(user_id)
-    new_token = await get_valid_access_token(user_id)
-    return {"access_token": new_token, "message": "Token refreshed"}
 
 
 
@@ -305,21 +278,11 @@ async def spotify_refresh(user_id: str):
 
 
 
-@spotify_user_auth_router.get("/spotify/token")
-async def spotify_token(access_token: str = Cookie(None)):
-    """
-    Return a valid Spotify access token (auto-refresh if expired).
-    Called by the frontend Spotify SDK.
-    """
 
-    payload = decode_jwt_token(access_token)
-    if not payload:
-        raise HTTPException(status_code=401)
 
-    user_id = payload["user_id"]
 
-    token = await get_valid_access_token(user_id)
-    return {"access_token": token}
+
+
 
 
 
