@@ -40,6 +40,11 @@ class SupabaseSessionRequest(BaseModel):
     access_token: str
 
 
+class SupabaseSignupRequest(BaseModel):
+    access_token: str
+    marketing_opt_in: bool = False
+
+
 @router.post("/logout")
 def logout():
     response = JSONResponse(
@@ -60,7 +65,7 @@ def logout():
 
 
 @router.post("/supabase/signup")
-def create_supabase_signup(payload: SupabaseSessionRequest):
+def create_supabase_signup(payload: SupabaseSignupRequest):
     token = payload.access_token.strip()
 
     if not token:
@@ -161,6 +166,31 @@ def create_supabase_signup(payload: SupabaseSessionRequest):
         )
 
     topspot_user_id = str(insert_result.data[0]["id"])
+
+    preference_payload = {
+        "user_id": topspot_user_id,
+        "marketing_opt_in": payload.marketing_opt_in,
+        "marketing_opt_in_at": (
+            datetime.now(timezone.utc).isoformat()
+            if payload.marketing_opt_in
+            else None
+        ),
+        "marketing_unsubscribed_at": None,
+        "consent_source": "signup",
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+    try:
+        supabase.table("marketing_email_preferences").insert(
+            preference_payload
+        ).execute()
+    except Exception:
+        logger.exception(
+            "Marketing preference creation failed for user_id=%s; "
+            "treating user as not subscribed",
+            topspot_user_id,
+        )
+
     topspot_jwt = create_jwt_token(topspot_user_id)
 
     response = JSONResponse(
