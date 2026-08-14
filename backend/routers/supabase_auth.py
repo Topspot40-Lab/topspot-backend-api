@@ -13,6 +13,7 @@ from backend.isaiah.jwt_session import (
     JWT_EXP_DELTA_SECONDS,
     create_jwt_token,
 )
+from backend.services.resend_marketing import create_marketing_contact
 
 
 logger = logging.getLogger(__name__)
@@ -180,16 +181,28 @@ def create_supabase_signup(payload: SupabaseSignupRequest):
         "updated_at": datetime.now(timezone.utc).isoformat(),
     }
 
+    preference_saved = False
+
     try:
         supabase.table("marketing_email_preferences").insert(
             preference_payload
         ).execute()
+        preference_saved = True
     except Exception:
         logger.exception(
             "Marketing preference creation failed for user_id=%s; "
             "treating user as not subscribed",
             topspot_user_id,
         )
+
+    if payload.marketing_opt_in and preference_saved:
+        try:
+            create_marketing_contact(verified_email)
+        except Exception:
+            logger.exception(
+                "Resend marketing contact sync failed for user_id=%s",
+                topspot_user_id,
+            )
 
     topspot_jwt = create_jwt_token(topspot_user_id)
 
