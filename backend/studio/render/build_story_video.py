@@ -113,7 +113,7 @@ def ensure_bed_track(
         destination: Path,
 ) -> None:
     if destination.exists() and destination.stat().st_size > 0:
-        print(f"✓ Using local bed track: {destination}")
+        print(f"[ok] Using local bed track: {destination}")
         return
 
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -131,7 +131,7 @@ def ensure_bed_track(
     destination.write_bytes(data)
 
     print(
-        f"✓ Downloaded bed track: {destination} "
+        f"[ok] Downloaded bed track: {destination} "
         f"({destination.stat().st_size:,} bytes)"
     )
 
