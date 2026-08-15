@@ -24,6 +24,17 @@ LOCALIZED_TITLES={
  "ranchera_vs_norteno":{"en":"Ranchera vs. Norteño","es":"Ranchera vs. Norteño","pt-BR":"Ranchera vs. Norteño"},
  "vicente_fernandez_vs_antonio_aguilar":{"en":"Vicente Fernández vs. Antonio Aguilar","es":"Vicente Fernández vs. Antonio Aguilar","pt-BR":"Vicente Fernández vs. Antonio Aguilar"},
  "bossa_nova_vs_samba":{"en":"Bossa Nova vs. Samba","es":"Bossa Nova vs. Samba","pt-BR":"Bossa Nova vs. Samba"},
+ "birth_of_rock_and_roll":{"en":"The Birth of Rock & Roll","es":"El nacimiento del rock and roll","pt-BR":"O nascimento do rock and roll"},
+ "british_invasion":{"en":"The British Invasion","es":"La invasión británica","pt-BR":"A invasão britânica"},
+ "rise_of_motown":{"en":"The Rise of Motown","es":"El auge de Motown","pt-BR":"A ascensão da Motown"},
+ "birth_of_hip_hop":{"en":"The Birth of Hip-Hop","es":"El nacimiento del hip-hop","pt-BR":"O nascimento do hip-hop"},
+ "napster_changes_music_forever":{"en":"Napster Changes Music Forever","es":"Napster cambia la música para siempre","pt-BR":"Napster muda a música para sempre"},
+ "mtv_revolution":{"en":"The MTV Revolution","es":"La revolución de MTV","pt-BR":"A revolução da MTV"},
+ "story_of_mariachi":{"en":"The Story of Mariachi","es":"La historia del mariachi","pt-BR":"A história do mariachi"},
+ "birth_of_bossa_nova":{"en":"The Birth of Bossa Nova","es":"El nacimiento de la bossa nova","pt-BR":"O nascimento da bossa nova"},
+ "story_of_samba":{"en":"The Story of Samba","es":"La historia de la samba","pt-BR":"A história do samba"},
+ "story_of_tango":{"en":"The Story of Tango","es":"La historia del tango","pt-BR":"A história do tango"},
+ "story_of_flamenco":{"en":"The Story of Flamenco","es":"La historia del flamenco","pt-BR":"A história do flamenco"},
 }
 DESCRIPTIONS={
  "en":"Explore {title}, a TopSpot40 music documentary about the artists, songs, sounds, and cultural changes that defined this unforgettable era.",
@@ -104,12 +115,13 @@ def _keywords(title:str,language:str,slug:str)->list[str]:
  common={"en":["music documentary","music history"],"es":["documental musical","historia de la música"],"pt-BR":["documentário musical","história da música"]}
  history={"fabulous_fifties","swinging_sixties","seventies_decade_of_change","mtv_and_the_eighties","alternative_nation_nineties","music_in_the_new_millennium"}
  stories={"story_behind_american_pie","one_hit_wonders","songs_banned_from_radio","woodstock"}
+ movements={"birth_of_rock_and_roll","british_invasion","rise_of_motown","birth_of_hip_hop","napster_changes_music_forever","mtv_revolution","story_of_mariachi","birth_of_bossa_nova","story_of_samba","story_of_tango","story_of_flamenco"}
  group={
-  "en":("music eras","song stories","music legends and rivalries"),
-  "es":("épocas musicales","historias de canciones","leyendas y rivalidades musicales"),
-  "pt-BR":("épocas musicais","histórias de canções","lendas e rivalidades musicais"),
+  "en":("music eras","song stories","music legends and rivalries","music movements and revolutions"),
+  "es":("épocas musicales","historias de canciones","leyendas y rivalidades musicales","movimientos y revoluciones musicales"),
+  "pt-BR":("épocas musicais","histórias de canções","lendas e rivalidades musicais","movimentos e revoluções musicais"),
  }[language]
- topic_group=group[0] if slug in history else group[1] if slug in stories else group[2]
+ topic_group=group[0] if slug in history else group[1] if slug in stories else group[3] if slug in movements else group[2]
  return [title,"TopSpot40",*common[language],topic_group]
 def _vtt_time(seconds:float)->str:
  milliseconds=max(0,round(seconds*1000));hours,remainder=divmod(milliseconds,3600000);minutes,remainder=divmod(remainder,60000);secs,millis=divmod(remainder,1000);return f"{hours:02d}:{minutes:02d}:{secs:02d}.{millis:03d}"

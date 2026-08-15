@@ -5,7 +5,7 @@ from PIL import Image
 from backend.studio.youtube.publishing_package import LOCALIZED_TITLES,approve_review_package,prepare_review_package
 
 def test_all_release_topics_have_three_localized_titles()->None:
- assert len(LOCALIZED_TITLES)==16
+ assert len(LOCALIZED_TITLES)==27
  assert all(set(titles)=={"en","es","pt-BR"} for titles in LOCALIZED_TITLES.values())
 
 def _assets(factory:Path)->None:
