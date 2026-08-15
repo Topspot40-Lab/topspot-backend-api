@@ -90,8 +90,8 @@ def _thumbnail(source:Path,destination:Path,title:str,language:str)->None:
  from PIL import Image,ImageDraw,ImageEnhance,ImageOps
  with Image.open(source) as original:image=ImageOps.fit(original.convert("RGB"),(1280,720),method=Image.Resampling.LANCZOS)
  image=ImageEnhance.Contrast(image).enhance(1.08);overlay=Image.new("RGBA",image.size,(0,0,0,0));draw=ImageDraw.Draw(overlay)
- draw.rectangle((0,360,1280,720),fill=(0,0,0,190));draw.rounded_rectangle((960,32,1240,88),radius=18,fill=(175,24,24,235))
- small=_font(28);brand=_font(38);title_font=_font(66);draw.text((42,28),"TopSpot40.com",font=brand,fill=(255,205,48,255),stroke_width=2,stroke_fill="black")
+ draw.rectangle((0,360,1280,720),fill=(0,0,0,0));draw.rounded_rectangle((960,32,1240,88),radius=18,fill=(175,24,24,235))
+ small=_font(28);brand=_font(38);title_font=_font(84);draw.text((42,28),"TopSpot40.com",font=brand,fill=(255,205,48,255),stroke_width=2,stroke_fill="black")
  badge=LANGUAGE_NAMES[language];bbox=draw.textbbox((0,0),badge,font=small);draw.text((1100-(bbox[2]-bbox[0])/2,44),badge,font=small,fill="white")
  wrapped="\n".join(textwrap.wrap(title,width=25,break_long_words=False));draw.multiline_text((54,410),wrapped,font=title_font,fill="white",spacing=8,stroke_width=4,stroke_fill="black")
  Image.alpha_composite(image.convert("RGBA"),overlay).convert("RGB").quantize(colors=256).save(destination,optimize=True)

@@ -10,7 +10,6 @@ from typing import Any
 
 from backend.studio.youtube.manifest import THUMBNAIL_LIMIT, PlaylistSpec, UploadSpec
 
-
 RETRIABLE = frozenset({500, 502, 503, 504})
 
 
@@ -45,10 +44,10 @@ def ensure_playlist(youtube: Any, spec: PlaylistSpec) -> str:
 
 
 def upload_video(
-    youtube: Any,
-    spec: UploadSpec,
-    *,
-    on_uploaded: Callable[[str], None] | None = None,
+        youtube: Any,
+        spec: UploadSpec,
+        *,
+        on_uploaded: Callable[[str], None] | None = None,
 ) -> str:
     from googleapiclient.http import MediaFileUpload
 
@@ -103,7 +102,10 @@ def upload_captions(youtube: Any, video_id: str, language: str, path: Path) -> N
         (
             item
             for item in existing.get("items", [])
-            if item.get("snippet", {}).get("language") == language
+            if (
+                item.get("snippet", {}).get("language") == language
+                and item.get("snippet", {}).get("trackKind") != "asr"
+        )
         ),
         None,
     )
@@ -179,4 +181,4 @@ def _retryable(exc: Exception, attempt: int, retries: int) -> bool:
 
 
 def _pause(attempt: int) -> None:
-    time.sleep((2**attempt) + random.random())
+    time.sleep((2 ** attempt) + random.random())
