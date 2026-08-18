@@ -13,6 +13,7 @@ from backend.routers.collections_player import router as collections_player_rout
 from backend.routers.decade_genre_pause import router as decade_genre_pause_router
 from backend.routers.music_docuseries import router as music_docuseries_router
 from backend.routers.supabase_auth import router as supabase_auth_router
+from backend.routers.resend_webhook import router as resend_webhook_router
 
 from backend.routers.feedback import feedback_router
 from backend.routers.artist_spotlight import router as artist_spotlight_router
@@ -104,6 +105,8 @@ app.include_router(supabase_auth_router, prefix="/api/auth")
 # Stripe endpoints
 app.include_router(stripe_router, prefix="/api")
 app.include_router(stripe_router, prefix="/api") # stripe webhook
+# Resend marketing webhook
+app.include_router(resend_webhook_router, prefix="/api")
 # Feedback/bug report logic endpoint
 app.include_router(feedback_router, prefix="/api")
 app.include_router(supabase_collections.router)
