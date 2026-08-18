@@ -2,7 +2,7 @@ import logging
 import os
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Cookie, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from supabase import create_client
@@ -12,8 +12,12 @@ from backend.isaiah.isaiah_helper import get_env_config
 from backend.isaiah.jwt_session import (
     JWT_EXP_DELTA_SECONDS,
     create_jwt_token,
+    decode_jwt_token,
 )
-from backend.services.resend_marketing import create_marketing_contact
+from backend.services.resend_marketing import (
+    create_marketing_contact,
+    set_contact_unsubscribed,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -44,6 +48,10 @@ class SupabaseSessionRequest(BaseModel):
 class SupabaseSignupRequest(BaseModel):
     access_token: str
     marketing_opt_in: bool = False
+
+
+class MarketingPreferenceRequest(BaseModel):
+    marketing_opt_in: bool
 
 
 @router.post("/logout")
@@ -227,6 +235,183 @@ def create_supabase_signup(payload: SupabaseSignupRequest):
     )
 
     return response
+
+
+@router.get("/marketing-preference")
+def get_marketing_preference(access_token: str = Cookie(None)):
+    jwt_payload = decode_jwt_token(access_token)
+
+    if not jwt_payload:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired JWT Session",
+        )
+
+    topspot_user_id = str(jwt_payload["user_id"])
+
+    try:
+        pref_result = (
+            supabase.table("marketing_email_preferences")
+            .select("marketing_opt_in,marketing_opt_in_at,marketing_unsubscribed_at")
+            .eq("user_id", topspot_user_id)
+            .limit(1)
+            .execute()
+        )
+    except Exception:
+        logger.exception(
+            "Marketing preference lookup failed for user_id=%s",
+            topspot_user_id,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to load marketing preference",
+        )
+
+    row = pref_result.data[0] if pref_result.data else None
+
+    if not row:
+        return {
+            "marketing_opt_in": False,
+            "marketing_opt_in_at": None,
+            "marketing_unsubscribed_at": None,
+        }
+
+    return {
+        "marketing_opt_in": row["marketing_opt_in"],
+        "marketing_opt_in_at": row["marketing_opt_in_at"],
+        "marketing_unsubscribed_at": row["marketing_unsubscribed_at"],
+    }
+
+
+@router.post("/marketing-preference")
+def set_marketing_preference(
+    payload: MarketingPreferenceRequest,
+    access_token: str = Cookie(None),
+):
+    jwt_payload = decode_jwt_token(access_token)
+
+    if not jwt_payload:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired JWT Session",
+        )
+
+    topspot_user_id = str(jwt_payload["user_id"])
+
+    try:
+        user_result = (
+            supabase.table("topspot_users")
+            .select("id,email")
+            .eq("id", topspot_user_id)
+            .single()
+            .execute()
+        )
+    except Exception:
+        logger.exception(
+            "TopSpot user lookup failed for user_id=%s",
+            topspot_user_id,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to update marketing preference",
+        )
+
+    if not user_result.data or not user_result.data.get("email"):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired JWT Session",
+        )
+
+    email = user_result.data["email"]
+
+    try:
+        existing_result = (
+            supabase.table("marketing_email_preferences")
+            .select("marketing_opt_in_at")
+            .eq("user_id", topspot_user_id)
+            .limit(1)
+            .execute()
+        )
+    except Exception:
+        logger.exception(
+            "Marketing preference lookup failed for user_id=%s",
+            topspot_user_id,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to update marketing preference",
+        )
+
+    existing_row = existing_result.data[0] if existing_result.data else None
+    now_iso = datetime.now(timezone.utc).isoformat()
+
+    if payload.marketing_opt_in:
+        marketing_opt_in_at = (
+            existing_row["marketing_opt_in_at"]
+            if existing_row and existing_row["marketing_opt_in_at"]
+            else now_iso
+        )
+        marketing_unsubscribed_at = None
+    else:
+        marketing_opt_in_at = (
+            existing_row["marketing_opt_in_at"] if existing_row else None
+        )
+        marketing_unsubscribed_at = now_iso
+
+    preference_payload = {
+        "marketing_opt_in": payload.marketing_opt_in,
+        "marketing_opt_in_at": marketing_opt_in_at,
+        "marketing_unsubscribed_at": marketing_unsubscribed_at,
+        "consent_source": "account_settings",
+        "updated_at": now_iso,
+    }
+
+    try:
+        if existing_row:
+            save_result = (
+                supabase.table("marketing_email_preferences")
+                .update(preference_payload)
+                .eq("user_id", topspot_user_id)
+                .execute()
+            )
+        else:
+            preference_payload["user_id"] = topspot_user_id
+            save_result = (
+                supabase.table("marketing_email_preferences")
+                .insert(preference_payload)
+                .execute()
+            )
+    except Exception:
+        logger.exception(
+            "Marketing preference save failed for user_id=%s",
+            topspot_user_id,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to update marketing preference",
+        )
+
+    if not save_result.data:
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to update marketing preference",
+        )
+
+    try:
+        set_contact_unsubscribed(email, not payload.marketing_opt_in)
+    except Exception:
+        logger.exception(
+            "Resend marketing contact sync failed for user_id=%s",
+            topspot_user_id,
+        )
+
+    saved_row = save_result.data[0]
+
+    return {
+        "marketing_opt_in": saved_row["marketing_opt_in"],
+        "marketing_opt_in_at": saved_row["marketing_opt_in_at"],
+        "marketing_unsubscribed_at": saved_row["marketing_unsubscribed_at"],
+    }
 
 
 @router.post("/supabase/session")
