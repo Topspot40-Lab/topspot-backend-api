@@ -110,7 +110,12 @@ def test_tester_bypass_returns_tester_fields_and_does_not_need_entitlement_acces
 def test_active_stripe_returns_paid_fields_and_does_not_need_entitlement_access():
     fake_supabase = FakeSupabase(
         user={"id": "topspot-user-123", "is_tester": False},
-        subscription_rows=[{"status": "active"}],
+        subscription_rows=[{
+            "status": "active",
+            "current_period_start": "2026-08-01T00:00:00+00:00",
+            "current_period_end": "2026-09-01T00:00:00+00:00",
+            "cancel_at_period_end": False,
+        }],
     )
 
     response = get_status(fake_supabase)
@@ -123,6 +128,9 @@ def test_active_stripe_returns_paid_fields_and_does_not_need_entitlement_access(
         "access_source": "stripe",
         "requires_checkout": False,
         "plan_kind": "standard",
+        "current_period_start": "2026-08-01T00:00:00+00:00",
+        "current_period_end": "2026-09-01T00:00:00+00:00",
+        "cancel_at_period_end": False,
     }
     assert fake_supabase.calls_for("topspot_offer_entitlements") == []
 

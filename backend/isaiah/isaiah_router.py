@@ -514,7 +514,10 @@ async def get_subscription_status(access_token: str = Cookie(None)):
             "access_state": "paid",
             "access_source": "stripe",
             "requires_checkout": False,
-            "plan_kind": "standard"
+            "plan_kind": "standard",
+            "current_period_start": sub.get("current_period_start"),
+            "current_period_end": sub.get("current_period_end"),
+            "cancel_at_period_end": sub.get("cancel_at_period_end", False),
         }
 
     try:
