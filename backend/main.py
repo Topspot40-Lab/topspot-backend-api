@@ -104,7 +104,6 @@ app.include_router(spotify_user_auth_router, prefix="/api/auth")
 app.include_router(supabase_auth_router, prefix="/api/auth")
 # Stripe endpoints
 app.include_router(stripe_router, prefix="/api")
-app.include_router(stripe_router, prefix="/api") # stripe webhook
 # Resend marketing webhook
 app.include_router(resend_webhook_router, prefix="/api")
 # Feedback/bug report logic endpoint
