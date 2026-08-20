@@ -95,7 +95,6 @@ app.include_router(decade_genre_player_router)
 app.include_router(collections_player_router)
 app.include_router(decade_genre_pause_router)
 app.include_router(playback_control_router)
-app.include_router(feedback_router, prefix="/api")
 
 
 
