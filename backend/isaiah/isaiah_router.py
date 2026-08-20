@@ -344,6 +344,44 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 
 
 
+@stripe_router.post("/create-billing-portal-session")
+async def create_billing_portal_session(access_token: str = Cookie(None)):
+    payload = decode_jwt_token(access_token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
+
+    user_id = payload["user_id"]
+
+    user = supabase.table("topspot_users") \
+        .select("stripe_customer_id") \
+        .eq("id", user_id) \
+        .single() \
+        .execute()
+
+    if not user.data:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    stripe_customer_id = user.data.get("stripe_customer_id")
+    if not stripe_customer_id:
+        raise HTTPException(
+            status_code=400,
+            detail="No Stripe customer found for this account",
+        )
+
+    try:
+        session = stripe.billing_portal.Session.create(
+            customer=stripe_customer_id,
+            return_url=f"{get_frontend_url(local=IS_LOCAL)}/dashboard",
+        )
+        return {"url": session.url}
+    except Exception:
+        logger.exception("Stripe Billing Portal session creation failed")
+        raise HTTPException(
+            status_code=500,
+            detail="Could not create billing portal session",
+        )
+
+
 # verify if user has already subscribed to topspot40 app
 @stripe_router.get("/verify-subscription")
 async def verify_subscription(session_id: str, access_token: str = Cookie(None)):
