@@ -35,6 +35,56 @@ LOCALIZED_TITLES={
  "story_of_samba":{"en":"The Story of Samba","es":"La historia de la samba","pt-BR":"A história do samba"},
  "story_of_tango":{"en":"The Story of Tango","es":"La historia del tango","pt-BR":"A história do tango"},
  "story_of_flamenco":{"en":"The Story of Flamenco","es":"La historia del flamenco","pt-BR":"A história do flamenco"},
+    "don_cornelius": {
+        "en": "Don Cornelius: The Soul Train Revolution",
+        "es": "Don Cornelius: La revolución de Soul Train",
+        "pt-BR": "Don Cornelius: A revolução do Soul Train",
+    },
+    "alan_freed": {
+        "en": "Alan Freed: The DJ Who Named Rock & Roll",
+        "es": "Alan Freed: El DJ que dio nombre al Rock & Roll",
+        "pt-BR": "Alan Freed: O DJ que deu nome ao Rock & Roll",
+    },
+    "sam_phillips": {
+        "en": "Sam Phillips: The Man Who Discovered Elvis",
+        "es": "Sam Phillips: El hombre que descubrió a Elvis",
+        "pt-BR": "Sam Phillips: O homem que descobriu Elvis",
+    },
+    "berry_gordy": {
+        "en": "Berry Gordy: Building the Motown Sound",
+        "es": "Berry Gordy: Construyendo el sonido Motown",
+        "pt-BR": "Berry Gordy: Construindo o som da Motown",
+    },
+    "george_martin": {
+        "en": "George Martin: The Fifth Beatle",
+        "es": "George Martin: El quinto Beatle",
+        "pt-BR": "George Martin: O quinto Beatle",
+    },
+    "quincy_jones": {
+        "en": "Quincy Jones: The Producer Who Changed Pop Music",
+        "es": "Quincy Jones: El productor que cambió la música pop",
+        "pt-BR": "Quincy Jones: O produtor que mudou a música pop",
+    },
+    "phil_spector": {
+        "en": "Phil Spector: The Wall of Sound",
+        "es": "Phil Spector: El muro de sonido",
+        "pt-BR": "Phil Spector: A parede de som",
+    },
+    "tom_dowd": {
+        "en": "Tom Dowd: The Engineer Who Changed Recording Forever",
+        "es": "Tom Dowd: El ingeniero que cambió la grabación para siempre",
+        "pt-BR": "Tom Dowd: O engenheiro que mudou a gravação para sempre",
+    },
+    "ahmet_ertegun": {
+        "en": "Ahmet Ertegun: The Atlantic Records Story",
+        "es": "Ahmet Ertegun: La historia de Atlantic Records",
+        "pt-BR": "Ahmet Ertegun: A história da Atlantic Records",
+    },
+    "clive_davis": {
+        "en": "Clive Davis: The Executive with the Golden Ear",
+        "es": "Clive Davis: El ejecutivo con oído de oro",
+        "pt-BR": "Clive Davis: O executivo com ouvido de ouro",
+    },
 }
 DESCRIPTIONS={
  "en":"Explore {title}, a TopSpot40 music documentary about the artists, songs, sounds, and cultural changes that defined this unforgettable era.",
@@ -53,12 +103,22 @@ def prepare_review_package(factory:Path,*,slug:str,language:str,story_text:str,h
  if language not in LANGUAGE_NAMES:raise ValueError(f"Unsupported language: {language}")
  try:title=LOCALIZED_TITLES[slug][language]
  except KeyError as exc:raise ValueError(f"Missing approved localized title for {slug}/{language}") from exc
- delivery=factory/"delivery"/language;narration=delivery/"narration";documentary=delivery/"documentary.mp4";hook_visual=factory/"shared"/"hook_visual.png"
- required=(documentary,hook_visual,narration/"hook.mp3",narration/"intro.mp3",narration/"story.mp3",narration/"outro.mp3",factory/"shared"/"opening.mp4")
+ delivery = factory / "delivery" / language
+ narration = delivery / "narration"
+ documentary = delivery / "documentary.mp4"
+
+ required = (
+     documentary,
+     narration / "hook.mp3",
+     narration / "intro.mp3",
+     narration / "story.mp3",
+     narration / "outro.mp3",
+ )
  missing=[str(path) for path in required if not path.is_file() or path.stat().st_size==0]
  if missing:raise FileNotFoundError("Missing publishing inputs: "+", ".join(missing))
  durations={part:probe(narration/f"{part}.mp3") for part in ("hook","intro","story","outro")}
- opening_seconds=probe(factory/"shared"/"opening.mp4");hook_start=opening_seconds
+ opening_seconds = 6.5
+ hook_start = opening_seconds
  story_start=hook_start+durations["hook"]+1.25+durations["intro"]+1.0;outro_start=story_start+durations["story"]+1.0
  output=factory/"publishing_review"/language;output.mkdir(parents=True,exist_ok=True)
  (output/"captions.vtt").write_text(_captions(hook_text=hook_text,story_text=story_text,hook_start=hook_start,hook_duration=durations["hook"],story_start=story_start,story_duration=durations["story"]),encoding="utf-8")
@@ -67,7 +127,28 @@ def prepare_review_package(factory:Path,*,slug:str,language:str,story_text:str,h
  description=DESCRIPTIONS[language].format(title=title)+"\n\n"+chapter_text.rstrip()
  metadata={"title":f"{title} | {DOCUMENTARY_LABELS[language]}","description":description,"keywords":_keywords(title,language,slug),"language_code":language}
  (output/"youtube.json").write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- _thumbnail(hook_visual,output/"thumbnail.png",title,language)
+ thumbnail_source = output / "thumbnail_source.png"
+
+ runner([
+     "ffmpeg",
+     "-y",
+     "-ss",
+     "8",
+     "-i",
+     str(documentary),
+     "-frames:v",
+     "1",
+     str(thumbnail_source),
+ ])
+
+ _thumbnail(
+     thumbnail_source,
+     output / "thumbnail.png",
+     title,
+     language,
+ )
+
+ thumbnail_source.unlink(missing_ok=True)
  runner(["ffmpeg","-y","-i",str(documentary),"-vn","-codec:a","libmp3lame","-q:a","2",str(output/"complete_audio.mp3")])
  return output
 
@@ -111,18 +192,89 @@ def _font(size:int)->Any:
  for path in (Path("C:/Windows/Fonts/arialbd.ttf"),Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")):
   if path.is_file():return ImageFont.truetype(str(path),size=size)
  return ImageFont.load_default()
-def _keywords(title:str,language:str,slug:str)->list[str]:
- common={"en":["music documentary","music history"],"es":["documental musical","historia de la música"],"pt-BR":["documentário musical","história da música"]}
- history={"fabulous_fifties","swinging_sixties","seventies_decade_of_change","mtv_and_the_eighties","alternative_nation_nineties","music_in_the_new_millennium"}
- stories={"story_behind_american_pie","one_hit_wonders","songs_banned_from_radio","woodstock"}
- movements={"birth_of_rock_and_roll","british_invasion","rise_of_motown","birth_of_hip_hop","napster_changes_music_forever","mtv_revolution","story_of_mariachi","birth_of_bossa_nova","story_of_samba","story_of_tango","story_of_flamenco"}
- group={
-  "en":("music eras","song stories","music legends and rivalries","music movements and revolutions"),
-  "es":("épocas musicales","historias de canciones","leyendas y rivalidades musicales","movimientos y revoluciones musicales"),
-  "pt-BR":("épocas musicais","histórias de canções","lendas e rivalidades musicais","movimentos e revoluções musicais"),
- }[language]
- topic_group=group[0] if slug in history else group[1] if slug in stories else group[3] if slug in movements else group[2]
- return [title,"TopSpot40",*common[language],topic_group]
+def _keywords(title: str, language: str, slug: str) -> list[str]:
+    common = {
+        "en": ["music documentary", "music history"],
+        "es": ["documental musical", "historia de la música"],
+        "pt-BR": ["documentário musical", "história da música"],
+    }
+
+    history = {
+        "fabulous_fifties",
+        "swinging_sixties",
+        "seventies_decade_of_change",
+        "mtv_and_the_eighties",
+        "alternative_nation_nineties",
+        "music_in_the_new_millennium",
+    }
+
+    stories = {
+        "story_behind_american_pie",
+        "one_hit_wonders",
+        "songs_banned_from_radio",
+        "woodstock",
+    }
+
+    movements = {
+        "birth_of_rock_and_roll",
+        "british_invasion",
+        "rise_of_motown",
+        "birth_of_hip_hop",
+        "napster_changes_music_forever",
+        "mtv_revolution",
+        "story_of_mariachi",
+        "birth_of_bossa_nova",
+        "story_of_samba",
+        "story_of_tango",
+        "story_of_flamenco",
+    }
+
+    people = {
+        "don_cornelius",
+        "alan_freed",
+        "sam_phillips",
+        "berry_gordy",
+        "george_martin",
+    }
+
+    groups = {
+        "en": (
+            "music eras",
+            "song stories",
+            "music legends and rivalries",
+            "music movements and revolutions",
+            "people behind the music",
+        ),
+        "es": (
+            "épocas musicales",
+            "historias de canciones",
+            "leyendas y rivalidades musicales",
+            "movimientos y revoluciones musicales",
+            "personas detrás de la música",
+        ),
+        "pt-BR": (
+            "épocas musicais",
+            "histórias de canções",
+            "lendas e rivalidades musicais",
+            "movimentos e revoluções musicais",
+            "pessoas por trás da música",
+        ),
+    }
+
+    group = groups[language]
+
+    if slug in history:
+        topic_group = group[0]
+    elif slug in stories:
+        topic_group = group[1]
+    elif slug in movements:
+        topic_group = group[3]
+    elif slug in people:
+        topic_group = group[4]
+    else:
+        topic_group = group[2]
+
+    return [title, "TopSpot40", *common[language], topic_group]
 def _vtt_time(seconds:float)->str:
  milliseconds=max(0,round(seconds*1000));hours,remainder=divmod(milliseconds,3600000);minutes,remainder=divmod(remainder,60000);secs,millis=divmod(remainder,1000);return f"{hours:02d}:{minutes:02d}:{secs:02d}.{millis:03d}"
 def _chapter_time(seconds:float)->str:
