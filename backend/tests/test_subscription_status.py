@@ -292,3 +292,38 @@ def test_past_due_stripe_keeps_paid_access_during_retry_period():
         "cancel_at_period_end": False,
     }
     assert fake_supabase.calls_for("topspot_offer_entitlements") == []
+
+def test_unpaid_stripe_does_not_keep_paid_access():
+    fake_supabase = FakeSupabase(
+        user={"id": "topspot-user-123", "is_tester": False},
+        subscription_rows=[{
+            "status": "unpaid",
+            "current_period_start": "2026-08-01T00:00:00+00:00",
+            "current_period_end": "2026-09-01T00:00:00+00:00",
+            "cancel_at_period_end": False,
+        }],
+    )
+
+    response = get_status(fake_supabase)
+
+    assert response.status_code == 200
+    assert response.json()["access_state"] != "paid"
+    assert response.json()["is_subscribed"] is False
+
+
+def test_canceled_stripe_does_not_keep_paid_access():
+    fake_supabase = FakeSupabase(
+        user={"id": "topspot-user-123", "is_tester": False},
+        subscription_rows=[{
+            "status": "canceled",
+            "current_period_start": "2026-08-01T00:00:00+00:00",
+            "current_period_end": "2026-09-01T00:00:00+00:00",
+            "cancel_at_period_end": False,
+        }],
+    )
+
+    response = get_status(fake_supabase)
+
+    assert response.status_code == 200
+    assert response.json()["access_state"] != "paid"
+    assert response.json()["is_subscribed"] is False
