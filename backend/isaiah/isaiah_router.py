@@ -866,10 +866,9 @@ async def stripe_webhook(request: Request):
                 return JSONResponse({"status": "ignored_missing_subscription"})
 
             cancel_at_period_end = data.get("cancel_at_period_end", False)
-            status = "canceled" if not cancel_at_period_end else "active"
 
             supabase.table("subscriptions").update({
-                "status": status,
+                "status": "canceled",
                 "cancel_at_period_end": cancel_at_period_end,
                 "updated_at": datetime.now(timezone.utc).isoformat()
             }).eq("stripe_subscription_id", subscription_id).execute()
