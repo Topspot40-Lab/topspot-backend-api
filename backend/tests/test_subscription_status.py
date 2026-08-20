@@ -55,6 +55,10 @@ class FakeQuery:
         self.call["filters"].append((column, value))
         return self
 
+    def in_(self, column, values):
+        self.call["filters"].append((column, list(values)))
+        return self
+
     def single(self):
         self.call["single"] = True
         return self
@@ -261,3 +265,30 @@ def test_existing_is_subscribed_compatibility_remains_intact():
 
         assert response.status_code == 200
         assert response.json()["is_subscribed"] is expected
+
+def test_past_due_stripe_keeps_paid_access_during_retry_period():
+    fake_supabase = FakeSupabase(
+        user={"id": "topspot-user-123", "is_tester": False},
+        subscription_rows=[{
+            "status": "past_due",
+            "current_period_start": "2026-08-01T00:00:00+00:00",
+            "current_period_end": "2026-09-01T00:00:00+00:00",
+            "cancel_at_period_end": False,
+        }],
+    )
+
+    response = get_status(fake_supabase)
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "is_subscribed": True,
+        "status": "past_due",
+        "access_state": "paid",
+        "access_source": "stripe",
+        "requires_checkout": False,
+        "plan_kind": "standard",
+        "current_period_start": "2026-08-01T00:00:00+00:00",
+        "current_period_end": "2026-09-01T00:00:00+00:00",
+        "cancel_at_period_end": False,
+    }
+    assert fake_supabase.calls_for("topspot_offer_entitlements") == []

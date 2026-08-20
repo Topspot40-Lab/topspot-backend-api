@@ -524,7 +524,7 @@ async def get_subscription_status(access_token: str = Cookie(None)):
             "requires_checkout": False
         }
 
-    res = supabase.table("subscriptions").select("*").eq("user_id", user_id).eq("status", "active").limit(1).execute()
+    res = supabase.table("subscriptions").select("*").eq("user_id", user_id).in_("status", ["active", "past_due"]).limit(1).execute()
     
     logger.critical("SUBSCRIPTION ROW FOUND=%s", bool(res.data))
     
@@ -543,12 +543,12 @@ async def get_subscription_status(access_token: str = Cookie(None)):
     #if not sub:
         #return {"is_subscribed": False}
     
-    valid = bool(sub and sub.get("status") == "active")
+    valid = bool(sub and sub.get("status") in ("active", "past_due"))
 
     if valid:
         return {
             "is_subscribed": True,
-            "status": "active",
+            "status": sub.get("status"),
             "access_state": "paid",
             "access_source": "stripe",
             "requires_checkout": False,
