@@ -327,6 +327,11 @@ async def create_checkout_session(access_token: str = Cookie(None)):
             mode="subscription",
             client_reference_id=user_id, # stripe will know who made the subscription, saves us later pains of subscription recoveries
             metadata={ "topspot_user_id": user_id }, # extra key-value data from stripe
+            subscription_data={
+                "metadata": {
+                    "topspot_user_id": user_id
+                }
+            },
             #success_url="https://topspot40.com/app/success?session_id={CHECKOUT_SESSION_ID}", # This is for production!!!
             success_url=f"{get_frontend_url(local=IS_LOCAL)}/success?session_id={{CHECKOUT_SESSION_ID}}",
             #cancel_url="https://topspot40.com/app/create-account",
