@@ -168,3 +168,51 @@ def test_subscription_updated_with_cancel_at_period_end_stays_active_until_perio
 
     assert payload["status"] == "active"
     assert payload["cancel_at_period_end"] is True
+
+def test_invoice_payment_failed_uses_basil_parent_subscription():
+    fake_supabase = FakeSupabase()
+
+    event = {
+        "id": "evt_payment_failed_123",
+        "type": "invoice.payment_failed",
+        "data": {
+            "object": {
+                "id": "in_123",
+                "parent": {
+                    "type": "subscription_details",
+                    "subscription_details": {
+                        "subscription": "sub_123"
+                    }
+                }
+            }
+        },
+    }
+
+    with patch(
+        "backend.isaiah.isaiah_router.stripe.Webhook.construct_event",
+        return_value=event,
+    ), patch(
+        "backend.isaiah.isaiah_router.supabase",
+        fake_supabase,
+    ):
+        response = client.post(
+            "/api/webhooks/stripe",
+            content=b"{}",
+            headers={"stripe-signature": "fake-signature"},
+        )
+
+    assert response.status_code == 200
+
+    subscription_updates = [
+        call
+        for call in fake_supabase.calls
+        if call[0] == "update" and call[1] == "subscriptions"
+    ]
+
+    assert len(subscription_updates) == 1
+
+    _, _, payload, filters = subscription_updates[0]
+
+    assert payload["status"] == "past_due"
+    assert ("stripe_subscription_id", "sub_123") in filters
+
