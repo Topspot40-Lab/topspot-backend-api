@@ -216,3 +216,74 @@ def test_invoice_payment_failed_uses_basil_parent_subscription():
     assert payload["status"] == "past_due"
     assert ("stripe_subscription_id", "sub_123") in filters
 
+def test_invoice_payment_succeeded_uses_basil_parent_subscription():
+    fake_supabase = FakeSupabase()
+
+    subscription = {
+        "id": "sub_123",
+        "customer": "cus_123",
+        "status": "active",
+        "cancel_at_period_end": False,
+        "items": {
+            "data": [
+                {
+                    "price": {
+                        "id": "price_123"
+                    }
+                }
+            ]
+        },
+        "current_period_start": None,
+        "current_period_end": None,
+        "metadata": {
+            "topspot_user_id": "topspot-user-123"
+        },
+    }
+
+    event = {
+        "id": "evt_payment_succeeded_123",
+        "type": "invoice.payment_succeeded",
+        "data": {
+            "object": {
+                "id": "in_123",
+                "parent": {
+                    "type": "subscription_details",
+                    "subscription_details": {
+                        "subscription": "sub_123"
+                    }
+                }
+            }
+        },
+    }
+
+    with patch(
+        "backend.isaiah.isaiah_router.stripe.Webhook.construct_event",
+        return_value=event,
+    ), patch(
+        "backend.isaiah.isaiah_router.stripe.Subscription.retrieve",
+        return_value=subscription,
+    ), patch(
+        "backend.isaiah.isaiah_router.supabase",
+        fake_supabase,
+    ):
+        response = client.post(
+            "/api/webhooks/stripe",
+            content=b"{}",
+            headers={"stripe-signature": "fake-signature"},
+        )
+
+    assert response.status_code == 200
+
+    subscription_upserts = [
+        call
+        for call in fake_supabase.calls
+        if call[0] == "upsert" and call[1] == "subscriptions"
+    ]
+
+    assert len(subscription_upserts) == 1
+
+    _, _, payload, _ = subscription_upserts[0]
+
+    assert payload["stripe_subscription_id"] == "sub_123"
+    assert payload["status"] == "active"
+

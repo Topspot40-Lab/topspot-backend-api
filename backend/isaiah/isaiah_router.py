@@ -737,7 +737,13 @@ async def stripe_webhook(request: Request):
         # 💰 Payment success OR Renewal payments
         elif event_type == "invoice.payment_succeeded":
             #invoice = data
-            subscription_id = data["subscription"] if "subscription" in data else None
+            subscription_id = data.get("subscription")
+
+            if not subscription_id:
+                parent = data.get("parent") or {}
+                if parent.get("type") == "subscription_details":
+                    subscription_details = parent.get("subscription_details") or {}
+                    subscription_id = subscription_details.get("subscription")
             
 
             # IMPORTANT: renew = overwrite latest period dates
