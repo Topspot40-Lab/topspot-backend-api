@@ -32,7 +32,21 @@ class FakeSupabase:
         if table == "topspot_users":
             return FakeResult(self.user)
         if table == "subscriptions":
-            return FakeResult(self.subscription_rows)
+            rows = list(self.subscription_rows)
+            for column, value in call["filters"]:
+                if isinstance(value, list):
+                    rows = [
+                        row for row in rows
+                        if column not in row or row.get(column) in value
+                    ]
+                else:
+                    rows = [
+                        row for row in rows
+                        if column not in row or row.get(column) == value
+                    ]
+            if call["limit"] is not None:
+                rows = rows[:call["limit"]]
+            return FakeResult(rows)
         if table == "topspot_offer_entitlements":
             if self.fail_entitlement:
                 raise RuntimeError("entitlement query failed")
@@ -327,3 +341,35 @@ def test_canceled_stripe_does_not_keep_paid_access():
     assert response.status_code == 200
     assert response.json()["access_state"] != "paid"
     assert response.json()["is_subscribed"] is False
+
+def test_subscription_query_does_not_exclude_past_due_paid_access():
+    fake_supabase = FakeSupabase(
+        user={"id": "topspot-user-123", "is_tester": False},
+        subscription_rows=[{
+            "status": "past_due",
+            "current_period_start": "2026-08-01T00:00:00+00:00",
+            "current_period_end": "2026-09-01T00:00:00+00:00",
+            "cancel_at_period_end": False,
+        }],
+    )
+
+    response = get_status(fake_supabase)
+
+    assert response.status_code == 200
+
+    subscription_calls = fake_supabase.calls_for("subscriptions")
+    assert len(subscription_calls) == 1
+    assert ("status", "active") not in subscription_calls[0]["filters"]
+
+    assert response.json() == {
+        "is_subscribed": True,
+        "status": "past_due",
+        "access_state": "paid",
+        "access_source": "stripe",
+        "requires_checkout": False,
+        "plan_kind": "standard",
+        "current_period_start": "2026-08-01T00:00:00+00:00",
+        "current_period_end": "2026-09-01T00:00:00+00:00",
+        "cancel_at_period_end": False,
+    }
+
