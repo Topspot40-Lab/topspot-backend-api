@@ -742,7 +742,7 @@ async def stripe_webhook(request: Request):
                 """
 
         # 💰 Payment success OR Renewal payments
-        elif event_type == "invoice.payment_succeeded":
+        elif event_type in ("invoice.paid", "invoice.payment_succeeded"):
             #invoice = data
             subscription_id = data.get("subscription")
 
