@@ -324,6 +324,22 @@ async def create_checkout_session(access_token: str = Cookie(None)):
         else None
     )
 
+    entitlement_res = supabase.table("topspot_offer_entitlements") \
+        .select("*") \
+        .eq("user_id", user_id) \
+        .eq("offer_code", OFFER_CODE) \
+        .limit(1) \
+        .execute()
+
+    entitlement = entitlement_res.data[0] if entitlement_res.data else None
+    offer_access = compute_offer_access(entitlement)
+
+    if offer_access.get("access_state") in ("free_2026", "grace_2027"):
+        raise HTTPException(
+            status_code=403,
+            detail="Standard checkout is unavailable during promotional access",
+        )
+
     
     try:
         logger.critical(f"IS_LOCAL={IS_LOCAL}")

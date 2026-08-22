@@ -12,6 +12,19 @@ def test_create_checkout_session_copies_user_id_to_subscription_metadata():
     fake_session = MagicMock()
     fake_session.url = "https://checkout.stripe.com/test"
 
+    user_result = MagicMock()
+    user_result.data = {
+        "stripe_customer_id": None
+    }
+
+    entitlement_result = MagicMock()
+    entitlement_result.data = []
+
+    fake_supabase = _checkout_supabase(
+        user_result,
+        entitlement_result,
+    )
+
     with patch(
         "backend.isaiah.isaiah_router.decode_jwt_token",
         return_value={"user_id": "topspot-user-123"},
@@ -21,6 +34,9 @@ def test_create_checkout_session_copies_user_id_to_subscription_metadata():
     ), patch(
         "backend.isaiah.isaiah_router.stripe_config",
         {"secret_key": "sk_test_fake"},
+    ), patch(
+        "backend.isaiah.isaiah_router.supabase",
+        fake_supabase,
     ), patch(
         "backend.isaiah.isaiah_router.stripe.checkout.Session.create",
         return_value=fake_session,
@@ -57,12 +73,13 @@ def test_create_checkout_session_reuses_existing_stripe_customer():
         "stripe_customer_id": "cus_topspot_123"
     }
 
-    fake_supabase = MagicMock()
-    fake_supabase.table.return_value \
-        .select.return_value \
-        .eq.return_value \
-        .single.return_value \
-        .execute.return_value = fake_user_result
+    entitlement_result = MagicMock()
+    entitlement_result.data = []
+
+    fake_supabase = _checkout_supabase(
+        fake_user_result,
+        entitlement_result,
+    )
 
     with patch(
         "backend.isaiah.isaiah_router.decode_jwt_token",
@@ -90,3 +107,113 @@ def test_create_checkout_session_reuses_existing_stripe_customer():
     kwargs = mock_create.call_args.kwargs
 
     assert kwargs["customer"] == "cus_topspot_123"
+
+
+
+def _checkout_supabase(user_result, entitlement_result):
+    query = MagicMock()
+    query.select.return_value = query
+    query.eq.return_value = query
+    query.single.return_value = query
+    query.limit.return_value = query
+    query.execute.side_effect = [user_result, entitlement_result]
+
+    fake_supabase = MagicMock()
+    fake_supabase.table.return_value = query
+    return fake_supabase
+
+
+def test_create_checkout_session_blocks_free_2026_standard_checkout():
+    user_result = MagicMock()
+    user_result.data = {
+        "stripe_customer_id": None
+    }
+
+    entitlement_result = MagicMock()
+    entitlement_result.data = [
+        {
+            "offer_code": "topspot_2026_free_2027_discount"
+        }
+    ]
+
+    fake_supabase = _checkout_supabase(
+        user_result,
+        entitlement_result,
+    )
+
+    with patch(
+        "backend.isaiah.isaiah_router.decode_jwt_token",
+        return_value={"user_id": "topspot-user-123"},
+    ), patch(
+        "backend.isaiah.isaiah_router.STRIPE_PRICE_ID",
+        "price_test_123",
+    ), patch(
+        "backend.isaiah.isaiah_router.stripe_config",
+        {"secret_key": "sk_test_fake"},
+    ), patch(
+        "backend.isaiah.isaiah_router.supabase",
+        fake_supabase,
+    ), patch(
+        "backend.isaiah.isaiah_router.compute_offer_access",
+        return_value={
+            "access_state": "free_2026",
+            "requires_checkout": False,
+        },
+    ), patch(
+        "backend.isaiah.isaiah_router.stripe.checkout.Session.create",
+    ) as mock_create:
+        response = client.post(
+            "/api/create-checkout-session",
+            cookies={"access_token": "fake_jwt"},
+        )
+
+    assert response.status_code == 403
+    mock_create.assert_not_called()
+
+
+def test_create_checkout_session_blocks_grace_2027_standard_checkout():
+    user_result = MagicMock()
+    user_result.data = {
+        "stripe_customer_id": "cus_topspot_123"
+    }
+
+    entitlement_result = MagicMock()
+    entitlement_result.data = [
+        {
+            "offer_code": "topspot_2026_free_2027_discount"
+        }
+    ]
+
+    fake_supabase = _checkout_supabase(
+        user_result,
+        entitlement_result,
+    )
+
+    with patch(
+        "backend.isaiah.isaiah_router.decode_jwt_token",
+        return_value={"user_id": "topspot-user-123"},
+    ), patch(
+        "backend.isaiah.isaiah_router.STRIPE_PRICE_ID",
+        "price_test_123",
+    ), patch(
+        "backend.isaiah.isaiah_router.stripe_config",
+        {"secret_key": "sk_test_fake"},
+    ), patch(
+        "backend.isaiah.isaiah_router.supabase",
+        fake_supabase,
+    ), patch(
+        "backend.isaiah.isaiah_router.compute_offer_access",
+        return_value={
+            "access_state": "grace_2027",
+            "requires_checkout": True,
+        },
+    ), patch(
+        "backend.isaiah.isaiah_router.stripe.checkout.Session.create",
+    ) as mock_create:
+        response = client.post(
+            "/api/create-checkout-session",
+            cookies={"access_token": "fake_jwt"},
+        )
+
+    assert response.status_code == 403
+    mock_create.assert_not_called()
