@@ -287,3 +287,70 @@ def test_invoice_payment_succeeded_uses_basil_parent_subscription():
     assert payload["stripe_subscription_id"] == "sub_123"
     assert payload["status"] == "active"
 
+
+
+def test_subscription_updated_uses_basil_item_period_dates():
+    fake_supabase = FakeSupabase()
+
+    subscription = {
+        "id": "sub_123",
+        "customer": "cus_123",
+        "status": "active",
+        "cancel_at_period_end": False,
+        "items": {
+            "data": [
+                {
+                    "price": {
+                        "id": "price_123"
+                    },
+                    "current_period_start": 1767225600,
+                    "current_period_end": 1769904000,
+                }
+            ]
+        },
+        "metadata": {
+            "topspot_user_id": "topspot-user-123"
+        },
+    }
+
+    event = {
+        "id": "evt_updated_period_123",
+        "type": "customer.subscription.updated",
+        "data": {
+            "object": {
+                "id": "sub_123",
+                "customer": "cus_123",
+            }
+        },
+    }
+
+    with patch(
+        "backend.isaiah.isaiah_router.stripe.Webhook.construct_event",
+        return_value=event,
+    ), patch(
+        "backend.isaiah.isaiah_router.stripe.Subscription.retrieve",
+        return_value=subscription,
+    ), patch(
+        "backend.isaiah.isaiah_router.supabase",
+        fake_supabase,
+    ):
+        response = client.post(
+            "/api/webhooks/stripe",
+            content=b"{}",
+            headers={"stripe-signature": "fake-signature"},
+        )
+
+    assert response.status_code == 200
+
+    subscription_upserts = [
+        call
+        for call in fake_supabase.calls
+        if call[0] == "upsert" and call[1] == "subscriptions"
+    ]
+
+    assert len(subscription_upserts) == 1
+
+    _, _, payload, _ = subscription_upserts[0]
+
+    assert payload["current_period_start"] == "2026-01-01T00:00:00+00:00"
+    assert payload["current_period_end"] == "2026-02-01T00:00:00+00:00"

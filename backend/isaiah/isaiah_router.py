@@ -592,12 +592,14 @@ def safe_ts(value):
 # Canonical write function — ALWAYS use this for subscription state.
 def sync_subscription_to_supabase(subscription, customer_id: str, user_id: str):
 
+    subscription_item = subscription["items"]["data"][0]
+
     current_period_start = safe_ts(
-        getattr(subscription, "current_period_start", None) #subscription["current_period_start"]
+        subscription_item.get("current_period_start")
     )
 
     current_period_end = safe_ts(
-        getattr(subscription, "current_period_end", None)
+        subscription_item.get("current_period_end")
     )
 
     supabase.table("subscriptions").upsert({
