@@ -312,6 +312,18 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 
     user_id = payload["user_id"]
 
+    user = supabase.table("topspot_users") \
+        .select("stripe_customer_id") \
+        .eq("id", user_id) \
+        .single() \
+        .execute()
+
+    stripe_customer_id = (
+        user.data.get("stripe_customer_id")
+        if user.data
+        else None
+    )
+
     
     try:
         logger.critical(f"IS_LOCAL={IS_LOCAL}")
@@ -325,6 +337,7 @@ async def create_checkout_session(access_token: str = Cookie(None)):
                 "quantity": 1,
             }],
             mode="subscription",
+            **({"customer": stripe_customer_id} if stripe_customer_id else {}),
             client_reference_id=user_id, # stripe will know who made the subscription, saves us later pains of subscription recoveries
             metadata={ "topspot_user_id": user_id }, # extra key-value data from stripe
             subscription_data={
