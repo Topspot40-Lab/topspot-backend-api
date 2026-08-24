@@ -34,12 +34,20 @@ def get_stripe_config(local: bool):
         return {
             "secret_key": os.getenv("STRIPE_TEST_SECRET_KEY"),
             "price_id": os.getenv("STRIPE_TEST_PRICE_ID"),
+            "standard_monthly_price_id": os.getenv("STRIPE_TEST_STANDARD_MONTHLY_PRICE_ID"),
+            "standard_annual_price_id": os.getenv("STRIPE_TEST_STANDARD_ANNUAL_PRICE_ID"),
+            "promo_2027_monthly_price_id": os.getenv("STRIPE_TEST_2027_PROMO_MONTHLY_PRICE_ID"),
+            "promo_2027_annual_price_id": os.getenv("STRIPE_TEST_2027_PROMO_ANNUAL_PRICE_ID"),
             "webhook_secret": os.getenv("STRIPE_WEBHOOK_TEST_SECRET"),
         }
     else:
         return {
             "secret_key": os.getenv("STRIPE_SECRET_KEY"),
             "price_id": os.getenv("STRIPE_PRICE_ID"),
+            "standard_monthly_price_id": os.getenv("STRIPE_STANDARD_MONTHLY_PRICE_ID"),
+            "standard_annual_price_id": os.getenv("STRIPE_STANDARD_ANNUAL_PRICE_ID"),
+            "promo_2027_monthly_price_id": os.getenv("STRIPE_2027_PROMO_MONTHLY_PRICE_ID"),
+            "promo_2027_annual_price_id": os.getenv("STRIPE_2027_PROMO_ANNUAL_PRICE_ID"),
             "webhook_secret": os.getenv("STRIPE_WEBHOOK_SECRET"),
         }
     

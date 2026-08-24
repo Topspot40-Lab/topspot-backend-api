@@ -35,6 +35,10 @@ stripe_config = get_stripe_config(IS_LOCAL)
 
 stripe.api_key = stripe_config["secret_key"]
 STRIPE_PRICE_ID = stripe_config["price_id"]
+STRIPE_STANDARD_MONTHLY_PRICE_ID = stripe_config["standard_monthly_price_id"]
+STRIPE_STANDARD_ANNUAL_PRICE_ID = stripe_config["standard_annual_price_id"]
+STRIPE_2027_PROMO_MONTHLY_PRICE_ID = stripe_config["promo_2027_monthly_price_id"]
+STRIPE_2027_PROMO_ANNUAL_PRICE_ID = stripe_config["promo_2027_annual_price_id"]
 STRIPE_WEBHOOK_SECRET = stripe_config["webhook_secret"]
 
 
