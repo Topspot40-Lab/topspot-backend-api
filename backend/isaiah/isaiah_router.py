@@ -745,6 +745,34 @@ def sync_subscription_to_supabase(subscription, customer_id: str, user_id: str):
     logger.info(f"✅ Webhook updated topspot_users.stripe_customer_id for user {user_id}")
 
 
+def consume_2027_promo_discount_if_applicable(subscription, customer_id: str, user_id: str):
+    metadata = subscription.get("metadata", {}) or {}
+    plan_kind = metadata.get("topspot_plan_kind")
+
+    if plan_kind not in ("promo_2027_monthly", "promo_2027_annual"):
+        return
+
+    subscription_id = subscription.get("id")
+    if not subscription_id or not customer_id:
+        logger.warning(
+            "Cannot consume 2027 promotional discount without Stripe subscription/customer IDs"
+        )
+        return
+
+    consumed_at = datetime.now(timezone.utc).isoformat()
+
+    supabase.table("topspot_offer_entitlements").update({
+        "discount_redeemed_at": consumed_at,
+        "discount_consumed_at": consumed_at,
+        "discount_stripe_subscription_id": subscription_id,
+        "discount_stripe_customer_id": customer_id,
+    }) \
+        .eq("user_id", user_id) \
+        .eq("offer_code", OFFER_CODE) \
+        .is_("discount_consumed_at", None) \
+        .execute()
+
+
 
 
 """
@@ -908,6 +936,7 @@ async def stripe_webhook(request: Request):
                     )
 
                     sync_subscription_to_supabase(subscription, customer_id, user_id)
+                    consume_2027_promo_discount_if_applicable(subscription, customer_id, user_id)
                     return JSONResponse({"status": "recovered_via_metadata"})
                 return JSONResponse({"status": "no_user_found"})
             
@@ -917,6 +946,7 @@ async def stripe_webhook(request: Request):
             user_id = user_row[0]["id"]
 
             sync_subscription_to_supabase(subscription, customer_id, user_id)
+            consume_2027_promo_discount_if_applicable(subscription, customer_id, user_id)
             logger.critical("💰 Subscription RENEWED + period extended")
 
 

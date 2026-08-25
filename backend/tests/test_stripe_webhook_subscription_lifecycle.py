@@ -41,6 +41,10 @@ class FakeQuery:
         self.filters.append((column, value))
         return self
 
+    def is_(self, column, value):
+        self.filters.append((column, value))
+        return self
+
     def execute(self):
         if self.updated is not None:
             self.supabase.calls.append(
@@ -426,3 +430,83 @@ def test_invoice_paid_uses_basil_parent_subscription():
 
     assert payload["stripe_subscription_id"] == "sub_123"
     assert payload["status"] == "active"
+
+
+def test_invoice_paid_consumes_2027_promotional_discount():
+    fake_supabase = FakeSupabase()
+
+    subscription = {
+        "id": "sub_promo_123",
+        "customer": "cus_promo_123",
+        "status": "active",
+        "cancel_at_period_end": False,
+        "items": {
+            "data": [
+                {
+                    "price": {
+                        "id": "price_promo_monthly"
+                    },
+                    "current_period_start": 1767225600,
+                    "current_period_end": 1769904000,
+                }
+            ]
+        },
+        "metadata": {
+            "topspot_user_id": "topspot-user-123",
+            "topspot_plan_kind": "promo_2027_monthly",
+        },
+    }
+
+    event = {
+        "id": "evt_invoice_paid_promo_123",
+        "type": "invoice.paid",
+        "data": {
+            "object": {
+                "id": "in_promo_123",
+                "parent": {
+                    "type": "subscription_details",
+                    "subscription_details": {
+                        "subscription": "sub_promo_123"
+                    }
+                },
+            }
+        },
+    }
+
+    with patch(
+        "backend.isaiah.isaiah_router.stripe.Webhook.construct_event",
+        return_value=event,
+    ), patch(
+        "backend.isaiah.isaiah_router.stripe.Subscription.retrieve",
+        return_value=subscription,
+    ), patch(
+        "backend.isaiah.isaiah_router.supabase",
+        fake_supabase,
+    ):
+        response = client.post(
+            "/api/webhooks/stripe",
+            content=b"{}",
+            headers={"stripe-signature": "fake-signature"},
+        )
+
+    assert response.status_code == 200
+
+    entitlement_updates = [
+        call
+        for call in fake_supabase.calls
+        if call[0] == "update" and call[1] == "topspot_offer_entitlements"
+    ]
+
+    assert len(entitlement_updates) == 1
+
+    _, _, payload, filters = entitlement_updates[0]
+
+    assert payload["discount_redeemed_at"]
+    assert payload["discount_consumed_at"]
+    assert payload["discount_redeemed_at"] == payload["discount_consumed_at"]
+    assert payload["discount_stripe_subscription_id"] == "sub_promo_123"
+    assert payload["discount_stripe_customer_id"] == "cus_promo_123"
+
+    assert ("user_id", "topspot-user-123") in filters
+    assert ("offer_code", "topspot_2026_free_2027_discount") in filters
+    assert ("discount_consumed_at", None) in filters
