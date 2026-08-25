@@ -382,6 +382,95 @@ async def create_checkout_session(access_token: str = Cookie(None)):
 
 
 
+@stripe_router.post("/create-2027-promo-checkout-session")
+async def create_2027_promo_checkout_session(
+    plan: str = Query(..., pattern="^(monthly|annual)$"),
+    access_token: str = Cookie(None),
+):
+    stripe.api_key = stripe_config["secret_key"]
+
+    if not stripe.api_key:
+        return {"error": "Stripe environment variables not set."}
+
+    payload = decode_jwt_token(access_token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Invalid session")
+
+    user_id = payload["user_id"]
+
+    user = supabase.table("topspot_users") \
+        .select("stripe_customer_id") \
+        .eq("id", user_id) \
+        .single() \
+        .execute()
+
+    if not user.data:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    stripe_customer_id = user.data.get("stripe_customer_id")
+
+    entitlement_res = supabase.table("topspot_offer_entitlements") \
+        .select("*") \
+        .eq("user_id", user_id) \
+        .eq("offer_code", OFFER_CODE) \
+        .limit(1) \
+        .execute()
+
+    entitlement = entitlement_res.data[0] if entitlement_res.data else None
+    offer_access = compute_offer_access(entitlement)
+
+    if offer_access.get("access_state") != "grace_2027":
+        raise HTTPException(
+            status_code=403,
+            detail="2027 promotional checkout is only available during the promotional grace period",
+        )
+
+    if not offer_access.get("discount_available"):
+        raise HTTPException(
+            status_code=403,
+            detail="2027 promotional pricing is no longer available for this account",
+        )
+
+    stripe_price_id = (
+        STRIPE_2027_PROMO_MONTHLY_PRICE_ID
+        if plan == "monthly"
+        else STRIPE_2027_PROMO_ANNUAL_PRICE_ID
+    )
+
+    if not stripe_price_id:
+        return {"error": "Promotional Stripe price is not configured."}
+
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price": stripe_price_id,
+                "quantity": 1,
+            }],
+            mode="subscription",
+            **({"customer": stripe_customer_id} if stripe_customer_id else {}),
+            client_reference_id=user_id,
+            metadata={
+                "topspot_user_id": user_id,
+                "topspot_plan_kind": f"promo_2027_{plan}",
+            },
+            subscription_data={
+                "metadata": {
+                    "topspot_user_id": user_id,
+                    "topspot_plan_kind": f"promo_2027_{plan}",
+                }
+            },
+            success_url=f"{get_frontend_url(local=IS_LOCAL)}/success?session_id={{CHECKOUT_SESSION_ID}}",
+            cancel_url=f"{get_frontend_url(local=IS_LOCAL)}/dashboard",
+        )
+
+        return {"url": session.url}
+
+    except Exception as e:
+        logger.exception("2027 promotional Stripe Checkout creation failed")
+        return {"error": str(e)}
+
+
 @stripe_router.post("/create-billing-portal-session")
 async def create_billing_portal_session(access_token: str = Cookie(None)):
     payload = decode_jwt_token(access_token)
