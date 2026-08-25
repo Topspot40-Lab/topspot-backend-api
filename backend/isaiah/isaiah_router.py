@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import stripe
 from backend.isaiah.jwt_session import create_jwt_token, JWT_EXP_DELTA_SECONDS, decode_jwt_token
 from backend.isaiah.isaiah_spotify import get_valid_access_token
-from backend.isaiah.offer_access import OFFER_CODE, compute_offer_access
+from backend.isaiah.offer_access import OFFER_CODE, compute_offer_access, parse_supabase_timestamptz
 from datetime import datetime, timedelta, timezone
 #from main import supabase  # import your Supabase client
 from supabase import create_client
@@ -773,6 +773,125 @@ def consume_2027_promo_discount_if_applicable(subscription, customer_id: str, us
         .execute()
 
 
+def create_2027_promo_subscription_schedule_if_applicable(subscription, user_id: str):
+    metadata = subscription.get("metadata", {}) or {}
+    plan_kind = metadata.get("topspot_plan_kind")
+
+    if plan_kind not in ("promo_2027_monthly", "promo_2027_annual"):
+        return
+
+    subscription_id = subscription.get("id")
+    if not subscription_id:
+        logger.warning("Cannot create 2027 promotional schedule without subscription ID")
+        return
+
+    existing_schedule = subscription.get("schedule")
+    if isinstance(existing_schedule, dict):
+        existing_schedule_id = existing_schedule.get("id")
+    else:
+        existing_schedule_id = existing_schedule
+
+    entitlement_res = supabase.table("topspot_offer_entitlements") \
+        .select("standard_transition_at") \
+        .eq("user_id", user_id) \
+        .eq("offer_code", OFFER_CODE) \
+        .limit(1) \
+        .execute()
+
+    entitlement = entitlement_res.data[0] if entitlement_res.data else None
+    if not entitlement:
+        logger.warning(
+            "Cannot create 2027 promotional schedule without entitlement | user_id=%s",
+            user_id,
+        )
+        return
+
+    transition_at = parse_supabase_timestamptz(
+        entitlement.get("standard_transition_at")
+    )
+    if transition_at is None:
+        logger.warning(
+            "Cannot create 2027 promotional schedule without standard transition timestamp"
+        )
+        return
+
+    transition_timestamp = int(transition_at.timestamp())
+
+    subscription_items = subscription.get("items", {}).get("data", [])
+    if not subscription_items:
+        logger.warning("Cannot create 2027 promotional schedule without subscription item")
+        return
+
+    current_price_id = subscription_items[0].get("price", {}).get("id")
+    if not current_price_id:
+        logger.warning("Cannot create 2027 promotional schedule without current price ID")
+        return
+
+    standard_price_id = (
+        STRIPE_STANDARD_MONTHLY_PRICE_ID
+        if plan_kind == "promo_2027_monthly"
+        else STRIPE_STANDARD_ANNUAL_PRICE_ID
+    )
+
+    if not standard_price_id:
+        logger.warning("Cannot create 2027 promotional schedule without standard price ID")
+        return
+
+    if existing_schedule_id:
+        schedule = stripe.SubscriptionSchedule.retrieve(existing_schedule_id)
+    else:
+        schedule = stripe.SubscriptionSchedule.create(
+            from_subscription=subscription_id,
+            metadata={
+                "topspot_user_id": user_id,
+                "topspot_plan_kind": plan_kind,
+            },
+        )
+
+    current_phase = schedule.get("current_phase") or {}
+    current_phase_start = current_phase.get("start_date")
+
+    if not current_phase_start:
+        logger.warning(
+            "Cannot configure 2027 promotional schedule without current phase start"
+        )
+        return
+
+    future_phase = {
+        "start_date": transition_timestamp,
+        "duration": {
+            "interval": "year",
+            "interval_count": 1,
+        },
+        "items": [{
+            "price": standard_price_id,
+            "quantity": 1,
+        }],
+        "proration_behavior": "none",
+    }
+
+    if plan_kind == "promo_2027_annual":
+        future_phase["billing_cycle_anchor"] = "phase_start"
+
+    stripe.SubscriptionSchedule.modify(
+        schedule["id"],
+        end_behavior="release",
+        proration_behavior="none",
+        phases=[
+            {
+                "start_date": current_phase_start,
+                "end_date": transition_timestamp,
+                "items": [{
+                    "price": current_price_id,
+                    "quantity": 1,
+                }],
+                "proration_behavior": "none",
+            },
+            future_phase,
+        ],
+    )
+
+
 
 
 """
@@ -937,6 +1056,7 @@ async def stripe_webhook(request: Request):
 
                     sync_subscription_to_supabase(subscription, customer_id, user_id)
                     consume_2027_promo_discount_if_applicable(subscription, customer_id, user_id)
+                    create_2027_promo_subscription_schedule_if_applicable(subscription, user_id)
                     return JSONResponse({"status": "recovered_via_metadata"})
                 return JSONResponse({"status": "no_user_found"})
             
@@ -947,6 +1067,7 @@ async def stripe_webhook(request: Request):
 
             sync_subscription_to_supabase(subscription, customer_id, user_id)
             consume_2027_promo_discount_if_applicable(subscription, customer_id, user_id)
+            create_2027_promo_subscription_schedule_if_applicable(subscription, user_id)
             logger.critical("💰 Subscription RENEWED + period extended")
 
 
@@ -1077,6 +1198,26 @@ async def stripe_webhook(request: Request):
 
     except Exception as e:
         logger.exception("Error processing webhook event, or failed")
+
+        try:
+            supabase.table("stripe_webhook_events") \
+                .delete() \
+                .eq("id", event_id) \
+                .execute()
+            logger.warning(
+                "Removed failed Stripe webhook event marker so Stripe can retry | "
+                "event_type=%s | event_id=%s",
+                event_type,
+                event_id,
+            )
+        except Exception:
+            logger.exception(
+                "Failed to remove Stripe webhook event marker after processing failure | "
+                "event_type=%s | event_id=%s",
+                event_type,
+                event_id,
+            )
+
         return JSONResponse(status_code=500, content={"error": str(e)})
 
     
