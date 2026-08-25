@@ -85,6 +85,36 @@ LOCALIZED_TITLES={
         "es": "Clive Davis: El ejecutivo con oído de oro",
         "pt-BR": "Clive Davis: O executivo com ouvido de ouro",
     },
+    "brian_epstein": {
+        "en": "Brian Epstein: The Man Who Managed the Beatles",
+        "es": "Brian Epstein: El hombre que dirigió a los Beatles",
+        "pt-BR": "Brian Epstein: O homem que empresariou os Beatles",
+    },
+    "colonel_tom_parker": {
+        "en": "Colonel Tom Parker: The Business of Elvis Presley",
+        "es": "Coronel Tom Parker: El negocio de Elvis Presley",
+        "pt-BR": "Coronel Tom Parker: O negócio de Elvis Presley",
+    },
+    "les_paul": {
+        "en": "Les Paul: The Inventor Who Changed Recording Forever",
+        "es": "Les Paul: El inventor que cambió la grabación para siempre",
+        "pt-BR": "Les Paul: O inventor que mudou a gravação para sempre",
+    },
+    "sonidero_culture": {
+        "en": "Sonidero Culture and Mexico's Love Affair with Cumbia",
+        "es": "La cultura sonidera y el romance de México con la cumbia",
+        "pt-BR": "A cultura sonidera e a paixão do México pela cúmbia",
+    },
+    "tejano_border_music": {
+        "en": "Tejano Music: Born on Both Sides of the Border",
+        "es": "Música tejana: nacida a ambos lados de la frontera",
+        "pt-BR": "Música tejana: nascida dos dois lados da fronteira",
+    },
+    "border_blasters": {
+        "en": "Border Blasters: The Powerful Radio Stations Broadcasting from Mexico",
+        "es": "Border Blasters: Las poderosas emisoras de radio que transmiten desde México",
+        "pt-BR": "Border Blasters: As poderosas emissoras de rádio que transmitem do México",
+    },
 }
 DESCRIPTIONS={
  "en":"Explore {title}, a TopSpot40 music documentary about the artists, songs, sounds, and cultural changes that defined this unforgettable era.",
