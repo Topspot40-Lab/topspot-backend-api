@@ -13,6 +13,15 @@ from backend.config.playback_block_config import (
 logger = logging.getLogger(__name__)
 
 
+def _safe_track_log_id(track_obj):
+    try:
+        track_id = getattr(track_obj, "id", None)
+    except Exception:
+        return None
+
+    return track_id if type(track_id) is int else None
+
+
 def build_track_block(candidate_tracks, set_number: int = 1):
 
     if not candidate_tracks:
@@ -35,7 +44,19 @@ def build_track_block(candidate_tracks, set_number: int = 1):
         duration_ms = getattr(track_obj, "duration_ms", None)
 
         if duration_ms is None or duration_ms <= 0:
-            logger.warning("⚠️ Skipping track with bad duration: %s", track_obj)
+            track_id = _safe_track_log_id(track_obj)
+            logged_duration_ms = (
+                duration_ms
+                if type(duration_ms) in (int, float)
+                else None
+            )
+            reason = "missing" if duration_ms is None else "non_positive"
+            logger.warning(
+                "Skipping track with invalid duration track_id=%s duration_ms=%s reason=%s",
+                track_id,
+                logged_duration_ms,
+                reason,
+            )
             continue
 
         # ALWAYS add track first

@@ -130,8 +130,22 @@ async def run_artist_radio_sequence(
         locale_code,
     )
 
-    if not radio_set.get("ok"):
-        logger.warning("Artist Radio failed: %s", radio_set)
+    if not isinstance(radio_set, dict) or dict.get(radio_set, "ok") is not True:
+        error_reason = dict.get(radio_set, "error") if isinstance(radio_set, dict) else None
+        error_code = (
+            "no_eligible_artist_set"
+            if type(error_reason) is str and error_reason == "No eligible artist set found."
+            else "unspecified"
+        )
+        track_count = dict.get(radio_set, "track_count") if isinstance(radio_set, dict) else None
+        if type(track_count) is not int:
+            track_count = None
+        logger.warning(
+            "Artist Radio failed ok=%s error_code=%s track_count=%s",
+            False,
+            error_code,
+            track_count,
+        )
         return radio_set
 
     artist_name = radio_set["artist_name"]
