@@ -1,13 +1,12 @@
 from datetime import UTC,datetime
 from types import SimpleNamespace
 import pytest
-from backend.studio.localized_publishing_content import approve,approved_package,prepare_draft,validate_package
-PARTS=("intro","story","outro")
+from backend.studio.localized_publishing_content import PARTS,SUPPORTED,approve,approved_package,prepare_draft,validate_package,with_disclosure
 def pack(lang="en",story="Story text."):
- text={"intro":"Intro text.","story":story,"outro":"Outro text."};return {"schema_version":1,"language_code":lang,"narration":{p:{"text":text[p],"caption_cues":[{"start_ms":0,"end_ms":1,"text":text[p]}]} for p in PARTS},"youtube":{"title":"Title","description":"Description","keywords":["music"],"chapters":[{"id":"intro","label":"Intro","segment":"intro","offset_ms":0}]}}
+ text={"hook":"Hook text.","intro":"Intro text.","story":story,"outro":"Outro text."};return {"schema_version":1,"language_code":lang,"narration":{p:{"text":text[p],"caption_cues":[{"start_ms":0,"end_ms":1,"text":text[p]}]} for p in PARTS},"youtube":{"title":"Title","description":with_disclosure("Description",lang),"keywords":["music"],"chapters":[{"id":p,"label":p.title(),"segment":p,"offset_ms":0} for p in PARTS]}}
 def rec():return SimpleNamespace(localized_publishing_content_json=None,localized_publishing_content_sha256=None,localized_publishing_content_source_sha256=None,localized_publishing_content_reviewed_at=None,localized_publishing_content_reviewed_by=None)
 def identity():return {p:f"{p}-audio" for p in PARTS}
-@pytest.mark.parametrize("lang",["en","es","pt-BR"])
+@pytest.mark.parametrize("lang",SUPPORTED)
 def test_approval_all_locales(lang):
  r=rec();v=pack(lang);approve(r,v,language=lang,story_text="Story text.",reviewer="gary",reviewed_at=datetime.now(UTC),audio_identity=identity(),durations={p:1 for p in PARTS});assert approved_package(r,language=lang,story_text="Story text.",audio_identity=identity(),durations={p:1 for p in PARTS})==v
 @pytest.mark.parametrize("field",["localized_publishing_content_json","localized_publishing_content_sha256","localized_publishing_content_source_sha256","localized_publishing_content_reviewed_at","localized_publishing_content_reviewed_by"])

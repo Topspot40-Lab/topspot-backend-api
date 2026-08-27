@@ -2,11 +2,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from PIL import Image
-from backend.studio.youtube.publishing_package import LOCALIZED_TITLES,approve_review_package,prepare_review_package
+from backend.studio.youtube.publishing_package import LANGUAGE_NAMES,LOCALIZED_TITLES,approve_review_package,prepare_review_package
+from backend.studio.youtube.release_plan import TOPICS
 
 def test_all_release_topics_have_three_localized_titles()->None:
- assert len(LOCALIZED_TITLES)==27
- assert all(set(titles)=={"en","es","pt-BR"} for titles in LOCALIZED_TITLES.values())
+ assert all(set(titles)==set(LANGUAGE_NAMES) for titles in LOCALIZED_TITLES.values())
+ scheduled_slugs={topic.slug for topic in TOPICS}
+ assert scheduled_slugs<=set(LOCALIZED_TITLES)
 
 def _assets(factory:Path)->None:
  (factory/"shared").mkdir(parents=True);(factory/"shared"/"opening.mp4").write_bytes(b"opening");Image.new("RGB",(1920,1080),"navy").save(factory/"shared"/"hook_visual.png")
@@ -16,7 +18,10 @@ def _assets(factory:Path)->None:
 
 def test_review_package_contains_valid_scheduler_assets(tmp_path:Path)->None:
  factory=tmp_path/"factory";_assets(factory);commands=[]
- def runner(command:list[str])->None:commands.append(command);Path(command[-1]).write_bytes(b"complete audio")
+ def runner(command:list[str])->None:
+  commands.append(command);output=Path(command[-1])
+  if output.suffix==".png":Image.new("RGB",(2,2),"navy").save(output,format="PNG")
+  else:output.write_bytes(b"complete audio")
  output=prepare_review_package(factory,slug="fabulous_fifties",language="es",story_text="Primera oración. Segunda oración.",hook_text="**Hook (18 segundos):** Este es *el gancho*.",probe=lambda _:10.0,runner=runner)
  assert commands and commands[0][0]=="ffmpeg";captions=(output/"captions.vtt").read_text(encoding="utf-8");assert captions.startswith("WEBVTT");assert "Hook (18 segundos)" not in captions;assert "*" not in captions
  metadata=json.loads((output/"youtube.json").read_text(encoding="utf-8"));assert "años cincuenta" in metadata["title"];assert metadata["language_code"]=="es";assert (output/"thumbnail.png").stat().st_size<2097152
