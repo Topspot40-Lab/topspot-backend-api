@@ -21,6 +21,8 @@ router = APIRouter(
 
 logger = logging.getLogger(__name__)
 
+COLLECTION_START_FAILED_DETAIL = "Unable to start collection playback."
+
 
 # ─────────────────────────────────────────────
 # PUBLIC — START COLLECTION PLAYBACK
@@ -42,21 +44,7 @@ async def play_collection_sequence(
         text_artist_description: bool = Query(False),
         voice_style: Literal["before", "over"] = Query("before"),
 ):
-    logger.info(
-        "▶ COLLECTION REQUEST: slug=%s %s-%s mode=%s continuous=%s lang=%s "
-        "intro=%s detail=%s artist=%s track=%s voice=%s",
-        collection_slug,
-        start_rank,
-        end_rank,
-        mode,
-        continuous,
-        tts_language,
-        play_intro,
-        play_detail,
-        play_artist_description,
-        play_track,
-        voice_style,
-    )
+    logger.info("endpoint=collections.play_collection_sequence event=request_received continuous=%s", continuous)
 
     try:
         if continuous:
@@ -90,13 +78,15 @@ async def play_collection_sequence(
             )
 
         await start_new_sequence(coro)
-    except Exception as exc:
-        logger.exception("❌ Failed to start collection sequence")
+    except Exception:
+        logger.error(
+            "endpoint=collections.play_collection_sequence error_category=sequence_start_failure"
+        )
         return JSONResponse(
             status_code=500,
             content={
                 "error": "collection_start_failed",
-                "detail": str(exc),
+                "detail": COLLECTION_START_FAILED_DETAIL,
             },
         )
 

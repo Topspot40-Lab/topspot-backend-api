@@ -1,4 +1,4 @@
-# backend/routers/router_feedback.py
+import logging
 from fastapi import APIRouter, HTTPException
 from datetime import datetime, timezone
 from uuid import uuid4
@@ -8,6 +8,9 @@ from backend.models.feedback import FeedbackCreate
 from backend.services.feedback_notifications import send_feedback_notification
 
 feedback_router = APIRouter(prefix="/feedback", tags=["feedback"])
+logger = logging.getLogger(__name__)
+
+FEEDBACK_SUBMISSION_FAILED_DETAIL = "Unable to submit feedback."
 
 
 @feedback_router.post("/")
@@ -29,17 +32,15 @@ async def create_feedback(feedback: FeedbackCreate):
 
     try:
         supabase.table("feedback").insert(payload).execute()
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+    except Exception:
+        logger.error("endpoint=feedback.create_feedback error_category=feedback_persistence_failure")
+        raise HTTPException(status_code=500, detail=FEEDBACK_SUBMISSION_FAILED_DETAIL)
 
     try:
         await send_feedback_notification(payload)
     except Exception:
-        import logging
-
-        logging.getLogger(__name__).exception(
-            "Failed to send feedback notification for feedback_id=%s",
-            payload["id"],
+        logger.error(
+            "endpoint=feedback.create_feedback error_category=feedback_notification_failure"
         )
 
     return {
