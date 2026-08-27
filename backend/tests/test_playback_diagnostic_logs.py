@@ -1,9 +1,10 @@
 import logging
 import time
+from types import SimpleNamespace
 
 import pytest
 
-from backend.routers import playback_status
+from backend.routers import playback_control, playback_status
 from backend.state import playback_state
 
 
@@ -14,6 +15,44 @@ class _UnsafeDict(dict):
 
 class _IntSubclass(int):
     pass
+
+
+@pytest.mark.asyncio
+async def test_play_track_language_diagnostic_never_logs_client_values(monkeypatch, caplog):
+    sentinel_url = "https://private.example/tts?token=language-secret"
+    sentinel_token = "language-token-sentinel"
+    payload = {
+        "track": {
+            "track_id": "track-id",
+            "spotify_track_id": "spotify-id",
+            "track_name": "Track",
+            "artist_name": "Artist",
+        },
+        "selection": {
+            "language": "en",
+            "languages": [sentinel_url, sentinel_token],
+            "voices": [],
+            "voicePlayMode": "standard",
+            "pauseMode": "none",
+        },
+        "context": {"type": "decade_genre", "decade": "all", "genre": "pop"},
+    }
+    phase_updates = []
+
+    monkeypatch.setattr(playback_control, "current_user_id", lambda: "diagnostic-user")
+    monkeypatch.setattr(playback_control, "current_runtime", lambda: SimpleNamespace(status=object()))
+    monkeypatch.setattr(playback_control, "reset_for_single_track", lambda: None)
+    monkeypatch.setattr(playback_control, "update_phase", lambda *args, **kwargs: phase_updates.append((args, kwargs)))
+
+    with caplog.at_level(logging.INFO, logger=playback_control.__name__):
+        response = await playback_control.play_track(payload)
+
+    message = "\n".join(record.getMessage() for record in caplog.records)
+    assert response == {"ok": True, "message": "ALL decade direct playback"}
+    assert len(phase_updates) == 1
+    assert "languages_is_builtin_list=True languages_item_count=2" in message
+    assert sentinel_url not in message
+    assert sentinel_token not in message
 
 
 def test_diagnostic_state_summary_rejects_dict_subclasses_without_coercion():
