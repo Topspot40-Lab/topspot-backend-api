@@ -51,6 +51,10 @@ def _exact_process_return_code(value: object) -> int:
     return value if type(value) is int else 0
 
 
+def _exact_byte_count(value: object) -> int:
+    return value if type(value) is int else 0
+
+
 def run_ffmpeg(command: list[str]) -> None:
     result = subprocess.run(
         command,
@@ -117,12 +121,12 @@ def ensure_bed_track(
         destination: Path,
 ) -> None:
     if destination.exists() and destination.stat().st_size > 0:
-        print(f"[ok] Using local bed track: {destination}")
+        print("[ok] Bed track ready: source=cache")
         return
 
     destination.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"Downloading bed track: {bucket}/{bed_key}")
+    print("Bed track download started")
 
     data = supabase.storage.from_(bucket).download(bed_key)
 
@@ -134,10 +138,7 @@ def ensure_bed_track(
 
     destination.write_bytes(data)
 
-    print(
-        f"[ok] Downloaded bed track: {destination} "
-        f"({destination.stat().st_size:,} bytes)"
-    )
+    print("[ok] Downloaded bed track: bytes=", _exact_byte_count(destination.stat().st_size))
 
 
 def build_story_video(
@@ -431,7 +432,7 @@ def build_story_video(
     run_ffmpeg(command)
 
     print()
-    print(f"✅ Story video rendered: {output}")
+    print("✅ Story video rendered")
 
 
 def main() -> None:
