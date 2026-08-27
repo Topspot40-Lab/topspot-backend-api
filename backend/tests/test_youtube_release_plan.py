@@ -8,6 +8,8 @@ import pytest
 
 from backend.studio.youtube.manifest import ManifestError, load_manifest
 from backend.studio.youtube.release_plan import (
+    LANGUAGE_TIMES,
+    MASTER_PLAYLISTS,
     TOPICS,
     build_manifest_document,
     release_dates,
@@ -50,7 +52,34 @@ def test_manifest_builds_48_localized_private_scheduled_uploads(tmp_path: Path) 
     manifest = load_manifest(output)
 
     assert len(manifest.uploads) == 48
-    assert len(manifest.playlists) == 12
+    expected_collection_keys = {
+        topic.collection_key for topic in TOPICS
+    }
+    expected_master_playlist_keys = {
+        key for key, _ in MASTER_PLAYLISTS.values()
+    }
+    expected_collection_playlist_keys = {
+        f"{collection_key}_{language}"
+        for collection_key in expected_collection_keys
+        for language in LANGUAGE_TIMES
+    }
+    expected_playlist_keys = (
+        expected_master_playlist_keys
+        | expected_collection_playlist_keys
+    )
+    actual_playlist_keys = {
+        playlist.key for playlist in manifest.playlists
+    }
+
+    assert actual_playlist_keys == expected_playlist_keys
+    assert len(actual_playlist_keys) == len(manifest.playlists)
+    assert all(
+        any(
+            playlist_key in upload.playlist_keys
+            for upload in manifest.uploads
+        )
+        for playlist_key in expected_collection_playlist_keys
+    )
     assert sum(item.language_code == "en" for item in manifest.uploads) == 16
     assert all(item.notify_subscribers for item in manifest.uploads)
     assert all(item.contains_synthetic_media for item in manifest.uploads)

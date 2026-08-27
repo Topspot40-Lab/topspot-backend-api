@@ -224,7 +224,12 @@ def build_manifest_document(
 
     playlists = _build_master_playlists(existing_playlist_ids)
 
-    for collection_key, names in COLLECTIONS.items():
+    required_collection_keys = sorted(
+        {topic.collection_key for topic in TOPICS}
+    )
+
+    for collection_key in required_collection_keys:
+        names = COLLECTIONS[collection_key]
         for language, title in names.items():
             playlists.append(
                 {
