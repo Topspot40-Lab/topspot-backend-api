@@ -24,6 +24,10 @@ MODERATION_SAFE_PROMPT = (
 )
 
 
+def _exact_http_status(value: object) -> int:
+    return value if type(value) is int else 0
+
+
 def load_storyboard(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise FileNotFoundError(f"Storyboard not found: {path}")
@@ -108,8 +112,7 @@ def generate_image(prompt: str) -> bytes:
         response = _request_image(MODERATION_SAFE_PROMPT)
 
     if not response.ok:
-        print("XAI IMAGE ERROR STATUS:", response.status_code)
-        print("XAI IMAGE ERROR BODY:", response.text)
+        print("xAI image request failed: status_code=", _exact_http_status(response.status_code))
         response.raise_for_status()
 
     data = response.json()

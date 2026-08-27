@@ -41,6 +41,10 @@ class ImageEntry:
     scene_text: str
 
 
+def _exact_process_return_code(value: object) -> int:
+    return value if type(value) is int else 0
+
+
 def run_ffmpeg(command: list[str]) -> None:
     result = subprocess.run(
         command,
@@ -49,7 +53,7 @@ def run_ffmpeg(command: list[str]) -> None:
     )
 
     if result.returncode != 0:
-        print(result.stderr)
+        print("FFmpeg image-sequence render failed: return_code=", _exact_process_return_code(result.returncode))
         raise RuntimeError("FFmpeg failed.")
 
 
