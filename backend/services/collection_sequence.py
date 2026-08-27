@@ -34,6 +34,16 @@ from backend.services.decade_genre_sequence import (
 logger = logging.getLogger(__name__)
 
 
+def _narration_phase_label(phase: object) -> str:
+    if type(phase) is str and phase in {"set_intro", "liner", "intro", "detail", "artist", "collection_intro"}:
+        return phase
+    return "other"
+
+
+def _has_audio_ref(audio_ref: object) -> bool:
+    return type(audio_ref) is str and bool(audio_ref)
+
+
 def _extract_bucket_key(job):
     """
     Supports:
@@ -69,6 +79,7 @@ async def publish_narration_phase(
         extra_context: dict | None = None,
 ):
     audio_url = resolve_audio_ref(bucket, key)
+    source = "remote" if is_remote_audio() else "local"
 
     update_phase(
         user_id,
@@ -82,13 +93,18 @@ async def publish_narration_phase(
             "bucket": bucket,
             "key": key,
             "audio_url": audio_url,
-            "source": "remote" if is_remote_audio() else "local",
+            "source": source,
             "voice_style": voice_style,
             **(extra_context or {}),
         },
     )
 
-    logger.info("🎙 Published %s frame: %s", phase.upper(), audio_url)
+    logger.info(
+        "narration_frame_published phase=%s source=%s has_audio_ref=%s",
+        _narration_phase_label(phase),
+        source,
+        _has_audio_ref(audio_url),
+    )
 
     if voice_style == "before":
         narration_done_event(user_id).clear()
@@ -809,7 +825,7 @@ async def run_collection_continuous_sequence(
         logger.info("⛔ Collection continuous sequence cancelled")
         raise
     except Exception:
-        logger.exception("⚠️ Collection continuous sequence error")
+        logger.error("collection_continuous_sequence_failed")
     finally:
         flags.is_playing = False
         flags.stopped = True
