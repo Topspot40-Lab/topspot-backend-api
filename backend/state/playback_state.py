@@ -182,10 +182,10 @@ def update_phase(user_id: str, phase: Phase, **kwargs) -> None:
     if playback_session_id is not None:
         if playback_session_id != s.playback_session_id:
             logger.info(
-                "Ignoring stale phase publish phase=%s playback_session_id=%s current=%s",
-                phase,
-                playback_session_id,
-                s.playback_session_id,
+                "Ignoring stale phase publish operation=phase_update "
+                "incoming_session_present=%s current_session_present=%s",
+                playback_session_id is not None,
+                s.playback_session_id is not None,
             )
             return
 

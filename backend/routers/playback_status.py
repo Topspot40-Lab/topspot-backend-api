@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+import math
 import time
 import logging
 from typing import Any, Optional
@@ -23,6 +24,67 @@ router = APIRouter(
 logger = logging.getLogger(__name__)
 
 
+_PLAYBACK_PHASE_LABELS = frozenset({
+    "idle", "loading", "prelude", "set_intro", "liner", "intro", "detail",
+    "artist", "track", "ended", "music",
+})
+_PLAYBACK_MODE_LABELS = frozenset({"decade_genre", "collection"})
+_PROGRAM_TYPE_LABELS = frozenset({"RADIO_ARTIST"})
+_CLIENT_DIAGNOSTIC_EVENT_LABELS = frozenset()
+_VOICE_STYLE_LABELS = frozenset({"before", "after"})
+_DIAGNOSTIC_AUDIO_STATE_KEYS = frozenset({
+    "state", "errorCode", "paused", "ended", "muted", "seeking",
+    "currentTime", "duration", "readyState", "networkState",
+})
+_DIAGNOSTIC_AUDIO_STATE_LABELS = frozenset({"idle", "loading", "playing", "paused", "ended"})
+_DIAGNOSTIC_AUDIO_ERROR_LABELS = frozenset({
+    "MEDIA_ERR_ABORTED", "MEDIA_ERR_NETWORK", "MEDIA_ERR_DECODE", "MEDIA_ERR_SRC_NOT_SUPPORTED",
+})
+
+
+def _allowed_log_label(value: Any, allowed: frozenset[str]) -> str:
+    """Return a fixed diagnostic label without coercing client-provided values."""
+    if type(value) is not str:
+        return "unknown"
+    return value if value in allowed else "other"
+
+
+def _string_presence_label(value: Any) -> str:
+    if type(value) is not str:
+        return "unknown"
+    return "provided" if value else "missing"
+
+
+def _exact_bool(value: Any) -> bool:
+    return value if type(value) is bool else False
+
+
+def _exact_int_or_zero(value: Any) -> int:
+    return value if type(value) is int else 0
+
+
+def _elapsed_seconds_for_log(value: Any) -> int:
+    if type(value) is int:
+        return value
+    if type(value) is float and math.isfinite(value):
+        return int(value)
+    return 0
+
+
+def _sanitize_diagnostic_state_field(key: str, value: Any) -> Any:
+    if key == "state":
+        return _allowed_log_label(value, _DIAGNOSTIC_AUDIO_STATE_LABELS)
+    if key == "errorCode":
+        return _allowed_log_label(value, _DIAGNOSTIC_AUDIO_ERROR_LABELS)
+    if key in {"paused", "ended", "muted", "seeking"}:
+        return _exact_bool(value)
+    if key in {"currentTime", "duration"}:
+        return _elapsed_seconds_for_log(value)
+    if key in {"readyState", "networkState"}:
+        return _exact_int_or_zero(value)
+    return "[unsupported]"
+
+
 class ClientDiagnosticRequest(BaseModel):
     event: Optional[str] = None
     phase: Optional[str] = None
@@ -42,42 +104,28 @@ class NarrationFinishedRequest(BaseModel):
 
 
 def _sanitize_diagnostic_state(value: Any) -> Any:
-    sensitive_key_parts = (
-        "authorization",
-        "cookie",
-        "error",
-        "header",
-        "jwt",
-        "secret",
-        "token",
-        "url",
-    )
-
-    if isinstance(value, dict):
+    if type(value) is dict:
         sanitized = {}
+        other_field_count = 0
         for key, item in value.items():
-            key_text = str(key)
-            key_lower = key_text.lower()
-            if key_lower == "errorcode":
-                sanitized[key_text] = _sanitize_diagnostic_state(item)
+            if type(key) is not str or key not in _DIAGNOSTIC_AUDIO_STATE_KEYS:
+                other_field_count += 1
                 continue
-            if any(part in key_lower for part in sensitive_key_parts):
-                continue
-            sanitized[key_text] = _sanitize_diagnostic_state(item)
+            sanitized[key] = _sanitize_diagnostic_state_field(key, item)
+        if other_field_count:
+            sanitized["other_field_count"] = other_field_count
         return sanitized
 
-    if isinstance(value, list):
+    if type(value) is list:
         return [_sanitize_diagnostic_state(item) for item in value[:10]]
 
-    if isinstance(value, str):
-        if "://" in value:
-            return "[redacted]"
-        return value[:200]
+    if type(value) is str:
+        return "[string]"
 
-    if isinstance(value, (bool, int, float)) or value is None:
+    if type(value) in (bool, int, float) or value is None:
         return value
 
-    return type(value).__name__
+    return "[unsupported]"
 
 
 def update_track_clock(user_id: str):
@@ -169,14 +217,14 @@ async def client_diagnostic(diagnostic: ClientDiagnosticRequest):
         "Client diagnostic event=%s phase=%s mode=%s programType=%s "
         "hasCurrentTrack=%s trackRank=%s decade=%s genre=%s "
         "bedAudioState=%s narrationAudioState=%s",
-        diagnostic.event,
-        diagnostic.phase,
-        diagnostic.mode,
-        diagnostic.programType,
-        diagnostic.hasCurrentTrack,
-        diagnostic.trackRank,
-        diagnostic.decade,
-        diagnostic.genre,
+        _allowed_log_label(diagnostic.event, _CLIENT_DIAGNOSTIC_EVENT_LABELS),
+        _allowed_log_label(diagnostic.phase, _PLAYBACK_PHASE_LABELS),
+        _allowed_log_label(diagnostic.mode, _PLAYBACK_MODE_LABELS),
+        _allowed_log_label(diagnostic.programType, _PROGRAM_TYPE_LABELS),
+        _exact_bool(diagnostic.hasCurrentTrack),
+        _exact_int_or_zero(diagnostic.trackRank),
+        _string_presence_label(diagnostic.decade),
+        _string_presence_label(diagnostic.genre),
         _sanitize_diagnostic_state(diagnostic.bedAudioState),
         _sanitize_diagnostic_state(diagnostic.narrationAudioState),
     )
@@ -195,8 +243,8 @@ async def narration_finished(payload: Optional[NarrationFinishedRequest] = None)
 
     logger.info(
         "🔔 Narration finished signal received (phase=%s, voice_style=%s)",
-        s.phase,
-        voice_style
+        _allowed_log_label(s.phase, _PLAYBACK_PHASE_LABELS),
+        _allowed_log_label(voice_style, _VOICE_STYLE_LABELS),
     )
 
     # 🛑 NEW: ignore if paused
@@ -214,14 +262,17 @@ async def narration_finished(payload: Optional[NarrationFinishedRequest] = None)
 
     narration_phases = {"set_intro", "liner", "intro", "detail", "artist"}
     if s.phase not in narration_phases:
-        logger.info("Ignoring narration-finished because phase=%s is not narration", s.phase)
+        logger.info(
+            "Ignoring narration-finished because phase=%s is not narration",
+            _allowed_log_label(s.phase, _PLAYBACK_PHASE_LABELS),
+        )
         return {"ok": True, "ignored": True, "reason": "not_narration_phase"}
 
     if received_phase != s.phase:
         logger.info(
             "Ignoring narration-finished because received phase=%s current phase=%s",
-            received_phase,
-            s.phase,
+            _allowed_log_label(received_phase, _PLAYBACK_PHASE_LABELS),
+            _allowed_log_label(s.phase, _PLAYBACK_PHASE_LABELS),
         )
         return {"ok": True, "ignored": True, "reason": "phase_mismatch"}
 
@@ -242,9 +293,9 @@ async def narration_finished(payload: Optional[NarrationFinishedRequest] = None)
     else:
         logger.debug(
             "🔁 Keeping narration bed running | phase=%s last=%s bed_playing=%s",
-            s.phase,
-            last_narration_phase,
-            getattr(s, "bed_playing", False),
+            _allowed_log_label(s.phase, _PLAYBACK_PHASE_LABELS),
+            _allowed_log_label(last_narration_phase, _PLAYBACK_PHASE_LABELS),
+            _exact_bool(getattr(s, "bed_playing", False)),
         )
 
     # ✅ ONLY fire event if NOT paused
@@ -261,7 +312,6 @@ async def track_finished():
     user_id = current_user_id()
     logger.info("🎵 Track finished signal received")
     event = track_done_event(user_id)
-    logger.info(f"TRACK DONE EVENT ID (router): {id(event)}")
 
     s = get_playback_status(user_id)
 
@@ -276,15 +326,19 @@ async def track_finished():
         track_age = time.time() - track_start_ts
 
     logger.info(
-        "🎵 track-finished check: phase=%s ranking_id=%s spotify=%s track_age=%s",
-        current_phase,
-        current_ranking_id,
-        current_spotify_id,
-        round(track_age, 2) if track_age is not None else None,
+        "🎵 track-finished check: phase=%s has_ranking_id=%s has_spotify_track=%s "
+        "track_age_seconds=%s",
+        _allowed_log_label(current_phase, _PLAYBACK_PHASE_LABELS),
+        current_ranking_id is not None,
+        current_spotify_id is not None,
+        _elapsed_seconds_for_log(track_age),
     )
 
     if current_phase != "track":
-        logger.info("🚫 Ignoring track-finished because phase=%s", current_phase)
+        logger.info(
+            "🚫 Ignoring track-finished because phase=%s",
+            _allowed_log_label(current_phase, _PLAYBACK_PHASE_LABELS),
+        )
         return {"ok": True, "ignored": True, "reason": "not_in_track_phase"}
 
     if track_start_ts is None:
@@ -292,7 +346,10 @@ async def track_finished():
         return {"ok": True, "ignored": True, "reason": "track_clock_not_started"}
 
     if track_age < 10:
-        logger.info("🚫 Ignoring track-finished because track_age=%.2fs is too young", track_age)
+        logger.info(
+            "🚫 Ignoring track-finished because track_age_seconds=%s is too young",
+            _elapsed_seconds_for_log(track_age),
+        )
         return {"ok": True, "ignored": True, "reason": "track_too_young"}
 
     # Signal backend sequence loop that Spotify track is done
