@@ -43,7 +43,6 @@ def generate_tts_mp3(
     - `language` is enforced ONLY for Turbo/Flash v2.5 models (es/pt require ISO codes).
     """
     if out_path.exists() and not overwrite:
-        logger.debug("⚠️ Skipping TTS (exists): %s", out_path)
         return str(out_path)
 
     if not ELEVENLABS_API_KEY:
@@ -81,27 +80,25 @@ def generate_tts_mp3(
 
     url = ELEVEN_TTS_URL.format(voice_id=voice_id)
 
-    logger.debug(
-        "🎤 ElevenLabs request | voice_id=%s | model_id=%s | lang=%s | settings=%s | out=%s",
-        voice_id, effective_model, api_lang, voice_settings, out_path
-    )
+    try:
+        r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=timeout)
+    except requests.RequestException:
+        raise RuntimeError("ElevenLabs TTS request failed") from None
 
-    r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=timeout)
     if r.status_code != 200:
-        # include a short snippet of the error body for logs
-        snippet = r.text[:500]
-        raise RuntimeError(f"❌ ElevenLabs error {r.status_code}: {snippet}")
+        status_code = r.status_code
+        if type(status_code) is int:
+            raise RuntimeError(f"ElevenLabs TTS request failed (HTTP {status_code})")
+        raise RuntimeError("ElevenLabs TTS request failed")
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_bytes(r.content)
-
-    logger.info("✅ TTS generated: %s", out_path)
 
     if play:
         try:
             from playsound import playsound
             playsound(str(out_path), block=False)
-        except Exception as e:
-            logger.warning("⚠️ Could not play sound: %s", e)
+        except Exception:
+            logger.warning("ElevenLabs TTS playback failed")
 
     return str(out_path)
