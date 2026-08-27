@@ -40,6 +40,20 @@ from backend.state.narration import narration_done_event
 logger = logging.getLogger(__name__)
 
 
+def _narration_phase_label(phase: object) -> str:
+    if type(phase) is str and phase in {"set_intro", "liner", "intro", "detail", "artist"}:
+        return phase
+    return "other"
+
+
+def _has_audio_ref(audio_ref: object) -> bool:
+    return type(audio_ref) is str and bool(audio_ref)
+
+
+def _audio_queue_item_count(audio_queue: object) -> int:
+    return len(audio_queue) if type(audio_queue) is list else 0
+
+
 def _extract_bucket_key(job):
     """
     Supports:
@@ -78,9 +92,13 @@ async def publish_narration_phase(
     audio_url = resolve_audio_ref(bucket, key)
     status = current_runtime().status
 
-    logger.info("🎙 publish_narration_phase phase=%s decade=%s genre=%s bucket=%s key=%s",
-                phase, decade, genre, bucket, key)
+    logger.info(
+        "narration_phase_publish_started phase=%s has_audio_ref=%s",
+        _narration_phase_label(phase),
+        _has_audio_ref(audio_url),
+    )
 
+    source = "remote" if is_remote_audio() else "local"
     base_context = {
         "lang": getattr(status, "language", None),
         "mode": "decade_genre",
@@ -92,7 +110,7 @@ async def publish_narration_phase(
         "bucket": bucket,
         "key": key,
         "audio_url": audio_url,
-        "source": "remote" if is_remote_audio() else "local",
+        "source": source,
         "voice_style": voice_style,
 
         # artwork + ids for UI continuity
@@ -115,7 +133,12 @@ async def publish_narration_phase(
         context=base_context,
     )
 
-    logger.info("🎙 Published %s frame: %s", phase.upper(), audio_url)
+    logger.info(
+        "narration_frame_published phase=%s source=%s has_audio_ref=%s",
+        _narration_phase_label(phase),
+        source,
+        _has_audio_ref(audio_url),
+    )
 
     # Same behavior as collections:
     # - "before": backend waits until frontend signals narration finished
@@ -163,13 +186,13 @@ async def publish_narration_queue_phase(
     status = current_runtime().status
 
     logger.info(
-        "🎙 publish_narration_queue_phase phase=%s decade=%s genre=%s items=%d",
-        phase,
-        decade,
-        genre,
-        len(audio_queue),
+        "narration_queue_publish_started phase=%s audio_items=%d",
+        _narration_phase_label(phase),
+        _audio_queue_item_count(audio_queue),
     )
 
+    first_audio_ref = audio_queue[0].get("url") if audio_queue else None
+    source = "remote" if is_remote_audio() else "local"
     base_context = {
         "lang": audio_queue[0].get("language") if audio_queue else getattr(status, "language", None),
         "languages": [item.get("language") for item in audio_queue],
@@ -181,14 +204,14 @@ async def publish_narration_queue_phase(
         "artist_name": artist.artist_name,
 
         # backward compatibility: first audio URL
-        "audio_url": audio_queue[0].get("url") if audio_queue else None,
+        "audio_url": first_audio_ref,
 
         # new multi-language payload
         "audio_queue": audio_queue,
         "texts": texts or {},
         "textsByLanguage": texts or {},
 
-        "source": "remote" if is_remote_audio() else "local",
+        "source": source,
         "voice_style": voice_style,
 
         "spotify_track_id": getattr(track, "spotify_track_id", None),
@@ -210,7 +233,12 @@ async def publish_narration_queue_phase(
         context=base_context,
     )
 
-    logger.info("🎙 Published %s queue frame: %d item(s)", phase.upper(), len(audio_queue))
+    logger.info(
+        "narration_queue_frame_published phase=%s audio_items=%d has_audio_ref=%s",
+        _narration_phase_label(phase),
+        _audio_queue_item_count(audio_queue),
+        _has_audio_ref(first_audio_ref),
+    )
 
     if voice_style == "before":
         narration_done_event(user_id).clear()
@@ -700,7 +728,7 @@ async def run_decade_genre_sequence(
         logger.info("⛔ Sequence task cancelled")
         raise
     except Exception:
-        logger.exception("⚠️ Sequence error for %s/%s", decade, genre)
+        logger.error("decade_genre_sequence_failed")
     finally:
         # reset legacy flags (keep your existing behavior)
         flags.is_playing = False
@@ -1065,7 +1093,7 @@ async def run_decade_genre_continuous_sequence(
         logger.info("⛔ Continuous sequence task cancelled")
         raise
     except Exception:
-        logger.exception("⚠️ Continuous sequence error for %s/%s", decade, genre)
+        logger.error("decade_genre_continuous_sequence_failed")
     finally:
         flags.is_playing = False
         flags.stopped = True

@@ -20,7 +20,7 @@ from backend.services.playback_helpers import (
     build_artist_filename,
 )
 
-from backend.services.radio_render import render_header, box, clean_text, BOX_WIDTH
+from backend.services.radio_render import clean_text
 from backend.state.skip import skip_event
 from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
 
@@ -88,6 +88,30 @@ def _phase_context(
 # ─────────────────────────────────────────────
 # Collection logging helpers
 # ─────────────────────────────────────────────
+def _narration_text_diagnostic(value: object) -> tuple[bool, int]:
+    """Return logging-safe narration metadata without coercing arbitrary values."""
+    if type(value) is str:
+        return bool(value), len(value)
+    return False, 0
+
+
+def _log_narration_text_diagnostics(*, phase: str, intro: object, detail: object, artist: object) -> None:
+    """Log bounded narration diagnostics only; narration bodies stay out of logs."""
+    has_intro, intro_chars = _narration_text_diagnostic(intro)
+    has_detail, detail_chars = _narration_text_diagnostic(detail)
+    has_artist, artist_chars = _narration_text_diagnostic(artist)
+    logger.info(
+        "narration_texts phase=%s has_intro=%s intro_chars=%d has_detail=%s detail_chars=%d has_artist=%s artist_chars=%d",
+        phase,
+        has_intro,
+        intro_chars,
+        has_detail,
+        detail_chars,
+        has_artist,
+        artist_chars,
+    )
+
+
 def log_collection_header_and_texts(
     *,
     collection,
@@ -97,29 +121,15 @@ def log_collection_header_and_texts(
     intro: str | None = None,
     detail_text: str | None = None,
 ) -> tuple[Optional[str], Optional[str], Optional[str]]:
-    header_lines = [
-        "┌" + "─" * (BOX_WIDTH - 2),
-        "│ TopSpot — Collection",
-        f"│  Name : {getattr(collection, 'name', collection.slug)}",
-        f"│  Slug : {collection.slug}",
-        f"│  Rank : #{ctr.ranking:02d}",
-        f"│  Track: {track.track_name} — {getattr(artist, 'artist_name', '')}",
-        f"│  Spotify Track ID: {getattr(track, 'spotify_track_id', '') or '—'}",
-        "└" + "─" * (BOX_WIDTH - 2),
-    ]
-    logger.info("\n%s", "\n".join(header_lines))
-
     intro_text = clean_text(intro or getattr(ctr, "intro", None))
-    if intro_text:
-        logger.info(box("INTRO", intro_text, width=BOX_WIDTH))
-
     detail_text2 = clean_text(detail_text or getattr(track, "detail", None))
-    if detail_text2:
-        logger.info(box("DETAIL", detail_text2, width=BOX_WIDTH))
-
     artist_text = clean_text(getattr(artist, "artist_description", None))
-    if artist_text:
-        logger.info(box("ARTIST", artist_text, width=BOX_WIDTH))
+    _log_narration_text_diagnostics(
+        phase="collection",
+        intro=intro_text,
+        detail=detail_text2,
+        artist=artist_text,
+    )
 
     return intro_text, detail_text2, artist_text
 
@@ -148,16 +158,6 @@ def log_header_and_texts(
     artist,
     tr_rows,
 ) -> tuple[Optional[str], Optional[str], Optional[str]]:
-    header_text = render_header(
-        track_name=track.track_name,
-        artist_name=getattr(artist, "artist_name", None)
-        or getattr(artist, "artist_name", "Unknown Artist"),
-        track_id=track.spotify_track_id,
-        lang=lang,
-        tr_rows=tr_rows or [],
-    )
-    logger.debug("\n%s", header_text)
-
     intro_text_loc: str | None = None
     detail_text_loc: str | None = None
 
@@ -168,28 +168,18 @@ def log_header_and_texts(
                 s_loc, lang, first_rk, track
             )
 
-    logger.debug(
-        "[intro:%s %s] [detail:%s %s]",
-        lang,
-        "OK" if intro_text_loc else "FALLBACK",
-        lang,
-        "OK" if detail_text_loc else "FALLBACK/EN",
-    )
-
-    if intro_text_loc:
-        logger.debug(box("INTRO", clean_text(intro_text_loc), width=BOX_WIDTH))
-
     detail_text = (
         clean_text(detail_text_loc)
         if detail_text_loc
         else clean_text(getattr(track, "detail", None))
     )
-    if detail_text:
-        logger.debug(box("DETAIL", detail_text, width=BOX_WIDTH))
-
     artist_text = clean_text(getattr(artist, "artist_description", None))
-    if artist_text:
-        logger.debug(box("ARTIST", artist_text, width=BOX_WIDTH))
+    _log_narration_text_diagnostics(
+        phase="decade_genre",
+        intro=intro_text_loc,
+        detail=detail_text,
+        artist=artist_text,
+    )
 
     return intro_text_loc, detail_text, artist_text
 
