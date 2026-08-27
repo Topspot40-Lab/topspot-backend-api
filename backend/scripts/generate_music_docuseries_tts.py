@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import math
 import tempfile
 from datetime import datetime, UTC
+from io import BytesIO
 from pathlib import Path
 
+from mutagen.mp3 import MP3
 from sqlmodel import Session, select
 
 from backend.database import engine
@@ -21,9 +24,11 @@ BUCKET_BY_LANG = {
 }
 
 
-def estimate_duration_seconds(text_value: str) -> int:
-    words = len(text_value.split())
-    return max(1, int(words / 2.5))
+def measure_mp3_duration_seconds(data: bytes) -> float:
+    duration_seconds = float(MP3(BytesIO(data)).info.length)
+    if not math.isfinite(duration_seconds) or duration_seconds <= 0:
+        raise RuntimeError("Generated MP3 has no valid duration")
+    return duration_seconds
 
 
 def normalize_language(value: str) -> str:
@@ -82,11 +87,13 @@ def generate_one(
         )
 
         data = out_path.read_bytes()
+        actual_duration_seconds = measure_mp3_duration_seconds(data)
+        stored_duration_seconds = max(1, math.ceil(actual_duration_seconds))
         upload_bytes(bucket=bucket, key=key, data=data, content_type="audio/mpeg")
 
     locale.tts_bucket = bucket
     locale.tts_key = key
-    locale.duration_seconds = estimate_duration_seconds(locale.story_text)
+    locale.duration_seconds = stored_duration_seconds
     locale.updated_at = datetime.now(UTC)
 
     session.add(locale)
@@ -95,7 +102,8 @@ def generate_one(
     print("Saved Music Docuseries MP3.")
     print(f"Bucket: {bucket}")
     print(f"Key:    {key}")
-    print(f"Estimated duration: {locale.duration_seconds} seconds")
+    print(f"Measured duration: {actual_duration_seconds:.3f} seconds")
+    print(f"Stored duration:   {locale.duration_seconds} seconds")
     print()
 
     return True
