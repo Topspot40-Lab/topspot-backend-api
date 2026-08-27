@@ -39,9 +39,16 @@ def ask_xai(system_prompt: str, user_prompt: str, temperature: float = 0.7) -> s
     )
 
     if not response.ok:
-        print("XAI ERROR STATUS:", response.status_code)
-        print("XAI ERROR BODY:", response.text)
-        response.raise_for_status()
+        status_code = getattr(response, "status_code", None)
+        safe_status_code = status_code if type(status_code) is int else None
+        error_label = "xAI request failed"
+        if safe_status_code is not None:
+            error_label = f"{error_label} (HTTP {safe_status_code})"
+        print(error_label)
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as exc:
+            raise requests.HTTPError(error_label, response=exc.response) from None
 
     data = response.json()
 
