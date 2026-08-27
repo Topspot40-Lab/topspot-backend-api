@@ -14,6 +14,9 @@ router = APIRouter(prefix="/api/catalog", tags=["Catalog"])
 
 logger = logging.getLogger(__name__)
 
+CATALOG_UNAVAILABLE_DETAIL = "Catalog is temporarily unavailable."
+DATABASE_ERROR_CATEGORY = "database_error"
+
 
 @router.get("/summary")
 def get_catalog_summary(db: Session = Depends(get_db)):  # ✅ use get_db
@@ -31,9 +34,9 @@ def get_catalog_summary(db: Session = Depends(get_db)):  # ✅ use get_db
             "collections": collections
         }
 
-    except Exception as e:
-        logger.exception("❌ Failed to load catalog summary: %s", e)
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        logger.error("catalog_summary failed: %s", DATABASE_ERROR_CATEGORY)
+        raise HTTPException(status_code=500, detail=CATALOG_UNAVAILABLE_DETAIL)
 
 
 @router.get("/get-json-catalog")
@@ -61,9 +64,9 @@ def get_json_catalog(db: Session = Depends(get_db)):  # ✅ also use get_db here
 
         return data
 
-    except Exception as e:
-        logger.exception("❌ Failed to load grouped catalog: %s", e)
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        logger.error("catalog_json failed: %s", DATABASE_ERROR_CATEGORY)
+        raise HTTPException(status_code=500, detail=CATALOG_UNAVAILABLE_DETAIL)
 
 
 @router.get("/grouped")
@@ -162,6 +165,6 @@ def get_grouped_catalog(db: Session = Depends(get_db)):
             ]
         }
 
-    except Exception as e:
-        logger.exception("❌ Failed to load grouped catalog: %s", e)
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        logger.error("catalog_grouped failed: %s", DATABASE_ERROR_CATEGORY)
+        raise HTTPException(status_code=500, detail=CATALOG_UNAVAILABLE_DETAIL)
