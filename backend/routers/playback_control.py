@@ -181,8 +181,9 @@ async def play_track(payload: dict):
         artist_name=payload["track"]["artist_name"],
     )
 
+    requested_tts_languages = payload["selection"].get("languages")
     tts_languages = (
-            payload["selection"].get("languages")
+            requested_tts_languages
             or [payload["selection"]["language"]]
     )
 
@@ -194,7 +195,13 @@ async def play_track(payload: dict):
         languages=tts_languages,
     )
 
-    logger.info("🌎 Playback languages requested: %s", tts_languages)
+    languages_is_builtin_list = type(requested_tts_languages) is list
+    languages_item_count = len(requested_tts_languages) if languages_is_builtin_list else 0
+    logger.info(
+        "playback_language_selection languages_is_builtin_list=%s languages_item_count=%d",
+        languages_is_builtin_list,
+        languages_item_count,
+    )
 
     context = payload.get("context")
     if not context:
