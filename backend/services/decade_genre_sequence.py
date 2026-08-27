@@ -575,7 +575,7 @@ async def run_decade_genre_sequence(
         bed_key = get_genre_bed_key(genre)
         bed_audio_url = resolve_audio_ref(BED_BUCKET, bed_key)
 
-        logger.info("🎧 Selected bed track: %s/%s", BED_BUCKET, bed_key)
+        logger.info("bed_track_selected source=decade_genre_single")
 
         logger.debug("🎯 Last narration phase set to: %s", status.last_narration_phase)
 
@@ -937,7 +937,7 @@ async def run_decade_genre_continuous_sequence(
             bed_key = get_genre_bed_key(genre)
             bed_audio_url = resolve_audio_ref(BED_BUCKET, bed_key)
 
-            logger.info("🎧 Selected bed track: %s/%s", BED_BUCKET, bed_key)
+            logger.info("bed_track_selected source=decade_genre_continuous")
 
             logger.debug("🎯 Last narration phase set to: %s", status.last_narration_phase)
 

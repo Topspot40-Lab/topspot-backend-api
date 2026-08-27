@@ -270,7 +270,7 @@ async def run_collection_sequence(
     bed_key = get_collection_group_bed_key("soft_rock_70s_90s")
     status.bed_key = bed_key
 
-    logger.info("🎧 COLLECTION bed track: %s/%s", BED_BUCKET, bed_key)
+    logger.info("bed_track_selected source=collection_sequence")
 
     logger.info("──────────────────────────────────────────────")
     logger.info("▶ Rank #%02d: %s — %s", rank, track.track_name, artist.artist_name)

@@ -90,7 +90,7 @@ async def _run_sequence_guarded(coro):
         logger.info("🛑 Sequence CANCELLED")
         raise
     except Exception:
-        logger.exception("🔥 Playback sequence crashed")
+        logger.error("playback_sequence_failed operation=sequence_runner")
 
 
 def cancel_for_skip() -> None:
@@ -335,11 +335,7 @@ async def play_track(payload: dict):
 
             narration_done_event(user_id).clear()
 
-            logger.info(
-                "🎙️ Artist Spotlight phase publish | phase=%s url=%s",
-                phase,
-                audio_url,
-            )
+            logger.info("artist_spotlight_narration_phase_publish has_audio_ref=True")
 
             update_phase(
                 user_id,

@@ -271,11 +271,7 @@ async def run_collections_radio_sequence(
                                 set_intro_bucket = getattr(ctr_locale, "set_intro_tts_bucket", None)
                                 set_intro_key = getattr(ctr_locale, "set_intro_tts_key", None)
 
-                            logger.info(
-                                "🧪 set intro mp3 | %s/%s",
-                                set_intro_bucket,
-                                set_intro_key,
-                            )
+                            logger.info("set_intro_audio_prepared source=collections_radio")
 
                             if set_intro_bucket and set_intro_key:
                                 await publish_narration_phase(
