@@ -16,6 +16,7 @@ from langdetect import DetectorFactory, LangDetectException, detect
 
 HookWriter = Callable[..., str]
 MAX_HOOK_ATTEMPTS = 3
+_HOOK_LANGUAGE_LABELS = frozenset({"en", "es", "pt-BR"})
 DetectorFactory.seed = 0
 
 LANGUAGE_NAMES = {
@@ -153,6 +154,12 @@ def default_synthesizer(text: str, profile: dict[str, Any]) -> bytes:
         return output.read_bytes()
 
 
+def _hook_language_label(value: object) -> str:
+    if type(value) is str and value in _HOOK_LANGUAGE_LABELS:
+        return value
+    return "unknown"
+
+
 def default_uploader(bucket: str, key: str, data: bytes) -> None:
     from backend.services.supabase_client import supabase
     supabase.storage.from_(bucket).upload(key, data, {"content-type": "audio/mpeg", "upsert": "true"})
@@ -176,9 +183,9 @@ def prepare_documentary_hooks(documentary: Any, *, writer: HookWriter = default_
                         locale.story_text,
                         locale.language_code,
                     )
-                except ValueError as exc:
+                except ValueError:
                     print(
-                        f"Replacing invalid {locale.language_code} hook: {exc}"
+                        f"Replacing invalid {_hook_language_label(locale.language_code)} hook: validation failed"
                     )
 
             if text is None:

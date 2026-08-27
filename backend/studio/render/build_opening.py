@@ -17,6 +17,10 @@ from backend.studio.studio_config import (
 )
 
 
+def _exact_process_return_code(value: object) -> int:
+    return value if type(value) is int else 0
+
+
 def run_ffmpeg(command: list[str]) -> None:
     result = subprocess.run(
         command,
@@ -25,7 +29,7 @@ def run_ffmpeg(command: list[str]) -> None:
     )
 
     if result.returncode != 0:
-        print(result.stderr)
+        print("FFmpeg opening render failed: return_code=", _exact_process_return_code(result.returncode))
         raise RuntimeError("FFmpeg failed.")
 
 

@@ -22,6 +22,10 @@ IMAGE_MODEL = "grok-imagine-image"
 IMAGE_ASPECT_RATIO = "16:9"
 
 
+def _exact_http_status(value: object) -> int:
+    return value if type(value) is int else 0
+
+
 def load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise FileNotFoundError(f"JSON file not found: {path}")
@@ -94,8 +98,7 @@ def generate_image_once(prompt: str) -> bytes:
     )
 
     if not response.ok:
-        print("xAI image error status:", response.status_code)
-        print("xAI image error body:", response.text)
+        print("xAI image request failed: status_code=", _exact_http_status(response.status_code))
         response.raise_for_status()
 
     payload = response.json()
