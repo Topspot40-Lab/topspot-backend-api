@@ -46,11 +46,14 @@ def test_adopted_contract_has_canonical_multilingual_deliveries(
     for edition in contract.editions:
         assert edition.delivery.paths == (
             f"delivery/{edition.language_code}/documentary.mp4",
+            f"delivery/{edition.language_code}/narration/hook.mp3",
             f"delivery/{edition.language_code}/narration/intro.mp3",
             f"delivery/{edition.language_code}/narration/story.mp3",
             f"delivery/{edition.language_code}/narration/outro.mp3",
         )
-        assert edition.delivery.narration.hook_in_intro is True
+        assert edition.delivery.narration.hook == (
+            f"delivery/{edition.language_code}/narration/hook.mp3"
+        )
 
 
 def test_adopted_contract_reuses_one_shared_visual_program(
@@ -67,6 +70,7 @@ def test_adopted_contract_reuses_one_shared_visual_program(
         "shared/visual_plan.json",
         "shared/visual_research.json",
         "shared/visual_master.mp4",
+        "shared/hook_visual.png",
         "shared/historical_photo_provenance.json",
         "shared/visual_qc.json",
     )
