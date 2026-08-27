@@ -130,14 +130,7 @@ async def publish_set_intro_phase(
             normalized_lang,
         )
 
-        logger.info(
-            "🎙 SET INTRO | lang=%s decade=%s genre=%s bucket=%s key=%s",
-            normalized_lang,
-            decade_slug,
-            genre_slug,
-            bucket,
-            key,
-        )
+        logger.info("set_intro_audio_prepared source=all_radio")
 
         set_intro_audio_queue.append({
             "language": normalized_lang,
@@ -401,7 +394,7 @@ async def run_all_radio_sequence(
             set_bed_key = get_genre_bed_key(genre)
             set_bed_audio_url = resolve_audio_ref(BED_BUCKET, set_bed_key)
 
-            logger.info("🎧 RADIO set bed track: %s/%s", BED_BUCKET, set_bed_key)
+            logger.info("bed_track_selected source=all_radio")
             for idx, (track, artist, tr_rank, decade_obj, genre_obj) in enumerate(block_rows, start=1):
 
                 if status.stopped:
@@ -597,7 +590,7 @@ async def run_all_radio_sequence(
                     if set_number > 1 and random.random() < get_liner_probability():
                         liner_bucket, liner_key = get_random_station_liner(lang)
 
-                        logger.info("📢 STATION LINER (before set intro) | %s", liner_key)
+                        logger.info("station_liner_selected source=all_radio")
 
                         await publish_narration_phase(
                             "liner",
