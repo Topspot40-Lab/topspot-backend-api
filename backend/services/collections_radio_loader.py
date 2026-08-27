@@ -25,8 +25,6 @@ def get_valid_collections(session, collection_group_slug: str | None = None) -> 
             if group_slug != collection_group_slug:
                 continue
 
-        logger.info("🧪 COLLECTION ROW: %s", c)
-
         items.append(
             {
                 "collection_slug": getattr(c, "collection_slug", None) or getattr(c, "slug", None),
@@ -35,6 +33,13 @@ def get_valid_collections(session, collection_group_slug: str | None = None) -> 
                 "collection_group_name": group_name,
             }
         )
+
+    logger.info(
+        "Collections loaded total=%d selected=%d filter_applied=%s",
+        len(rows),
+        len(items),
+        type(collection_group_slug) is str and collection_group_slug not in ("", "ALL"),
+    )
 
     return items
 
