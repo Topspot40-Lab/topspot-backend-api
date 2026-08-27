@@ -352,13 +352,6 @@ async def play_next_decade_genre():
     if decade == "ALL":
         logger.info("⏭ NEXT (RADIO MODE) → skipping to next track")
 
-        try:
-            from backend.services.spotify.playback import stop_spotify_playback
-            await stop_spotify_playback(user_id, fade_out_seconds=0.2)
-            logger.info("🛑 Spotify stopped before radio next")
-        except Exception as exc:
-            logger.warning("⚠️ Spotify stop failed before radio next: %s", exc)
-
         status.cancel_requested = True
         track_done_event(user_id).set()
 

@@ -43,8 +43,8 @@ IMAGE_SECONDS = 8.0
 # ─────────────────────────────────────────────
 
 LOGO_SECONDS = 2.0
-LANGUAGE_SECONDS = 1.5
-TITLE_SECONDS = 4.0
+LANGUAGE_SECONDS = 3.5
+TITLE_SECONDS = 0.0
 BLACK_SECONDS = 1.0
 FADE_SECONDS = 0.5
 
@@ -62,7 +62,8 @@ OPENING_VISUAL_SECONDS = (
 BED_TRACK_BUCKET = "audio-en"
 # ─────────────────────────────────────────────
 
-INTRO_PAUSE_SECONDS = 3.0
+HOOK_PAUSE_SECONDS = 1.25
+INTRO_PAUSE_SECONDS = 0.75
 OUTRO_PAUSE_SECONDS = 3.0
 
 INTRO_KEY = "youtube/intro.mp3"

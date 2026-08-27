@@ -35,7 +35,7 @@ def ask_xai(system_prompt: str, user_prompt: str, temperature: float = 0.7) -> s
         XAI_API_URL,
         headers=headers,
         json=payload,
-        timeout=60,
+        timeout=(10, 180),
     )
 
     if not response.ok:

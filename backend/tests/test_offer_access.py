@@ -12,6 +12,7 @@ from backend.isaiah.offer_access import (
 
 FREE_EXPIRES = "2027-01-01T06:00:00+00:00"
 GRACE_EXPIRES = "2027-01-31T06:00:00+00:00"
+STANDARD_TRANSITION = "2028-01-01T06:00:00+00:00"
 
 
 def entitlement(**overrides):
@@ -19,6 +20,7 @@ def entitlement(**overrides):
         "offer_code": OFFER_CODE,
         "free_access_expires_at": FREE_EXPIRES,
         "grace_access_expires_at": GRACE_EXPIRES,
+        "standard_transition_at": STANDARD_TRANSITION,
         "discount_consumed_at": None,
     }
     base.update(overrides)
@@ -127,6 +129,26 @@ def test_discount_consumed_at_set_means_unavailable_and_used():
     )
 
     assert result["discount_used"] is True
+    assert result["discount_available"] is False
+
+
+def test_unused_discount_available_immediately_before_standard_transition():
+    result = compute_offer_access(
+        entitlement(discount_consumed_at=None),
+        now=dt("2028-01-01T05:59:59.999999+00:00"),
+    )
+
+    assert result["discount_used"] is False
+    assert result["discount_available"] is True
+
+
+def test_unused_discount_unavailable_exactly_at_standard_transition():
+    result = compute_offer_access(
+        entitlement(discount_consumed_at=None),
+        now=dt(STANDARD_TRANSITION),
+    )
+
+    assert result["discount_used"] is False
     assert result["discount_available"] is False
 
 

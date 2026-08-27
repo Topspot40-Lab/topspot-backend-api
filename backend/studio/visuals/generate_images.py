@@ -15,6 +15,14 @@ from backend.studio.production import Production
 IMAGE_MODEL = "grok-imagine-image"
 IMAGE_ASPECT_RATIO = "16:9"
 
+MODERATION_SAFE_PROMPT = (
+    "Create a tasteful, historically appropriate documentary still "
+    "showing music, culture, community, and everyday life. "
+    "Period-authentic clothing, architecture, furnishings, and lighting. "
+    "Warm cinematic composition, realistic photography, no text, "
+    "no logos, no watermarks, 16:9 widescreen."
+)
+
 
 def load_storyboard(path: Path) -> dict[str, Any]:
     if not path.exists():
@@ -56,13 +64,8 @@ def build_prompt(
     )
 
 
-def generate_image(prompt: str) -> bytes:
-    if not XAI_API_KEY:
-        raise RuntimeError(
-            "XAI_API_KEY is missing. Check your .env file."
-        )
-
-    response = requests.post(
+def _request_image(prompt: str) -> requests.Response:
+    return requests.post(
         f"{XAI_API_BASE}/images/generations",
         headers={
             "Authorization": f"Bearer {XAI_API_KEY}",
@@ -77,6 +80,32 @@ def generate_image(prompt: str) -> bytes:
         },
         timeout=(10, 300),
     )
+
+
+def _is_content_moderated(response: requests.Response) -> bool:
+    if response.status_code != 400:
+        return False
+    try:
+        payload = response.json()
+    except requests.exceptions.JSONDecodeError:
+        return False
+    return (
+        isinstance(payload, dict)
+        and payload.get("code") == "imagine:content-moderated"
+    )
+
+
+def generate_image(prompt: str) -> bytes:
+    if not XAI_API_KEY:
+        raise RuntimeError(
+            "XAI_API_KEY is missing. Check your .env file."
+        )
+
+    response = _request_image(prompt)
+
+    if _is_content_moderated(response):
+        print("xAI moderated the original image prompt; using safe fallback.")
+        response = _request_image(MODERATION_SAFE_PROMPT)
 
     if not response.ok:
         print("XAI IMAGE ERROR STATUS:", response.status_code)

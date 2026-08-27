@@ -7,8 +7,7 @@ from sqlalchemy import text
 from backend.database import engine
 from backend.state.narration import track_done_event
 from backend.state.playback_runtime import current_user_id
-from backend.services.spotify.playback import play_spotify_track
-from backend.state.playback_state import update_phase, begin_track
+from backend.state.playback_state import update_phase
 
 logger = logging.getLogger(__name__)
 
@@ -236,12 +235,7 @@ async def run_artist_radio_sequence(
                 },
             )
 
-            await play_spotify_track(track["spotify_track_id"], user_id)
-
-            duration_seconds = (track.get("duration_ms") or 0) / 1000
-            begin_track(user_id, duration_seconds)
-
-            logger.info("🎵 Artist Radio playing: %s - %s", track["artist_name"], track["track_name"])
+            logger.info("🎵 Artist Radio ready for guided handoff: %s - %s", track["artist_name"], track["track_name"])
 
             await track_done_event(user_id).wait()
 

@@ -5,6 +5,7 @@ from uuid import uuid4
 
 from backend.services.supabase_client import supabase
 from backend.models.feedback import FeedbackCreate
+from backend.services.feedback_notifications import send_feedback_notification
 
 feedback_router = APIRouter(prefix="/feedback", tags=["feedback"])
 
@@ -30,6 +31,16 @@ async def create_feedback(feedback: FeedbackCreate):
         supabase.table("feedback").insert(payload).execute()
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
+
+    try:
+        await send_feedback_notification(payload)
+    except Exception:
+        import logging
+
+        logging.getLogger(__name__).exception(
+            "Failed to send feedback notification for feedback_id=%s",
+            payload["id"],
+        )
 
     return {
         "message": "Feedback submitted successfully",
