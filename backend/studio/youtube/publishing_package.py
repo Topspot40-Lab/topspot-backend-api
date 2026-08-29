@@ -1,9 +1,12 @@
 """Review-first localized YouTube package generation; never uploads."""
 from __future__ import annotations
-import json,re,shutil,subprocess,textwrap
+import hashlib,json,math,shutil,subprocess,textwrap
+from dataclasses import dataclass
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+from backend.studio.studio_config import HOOK_PAUSE_SECONDS, INTRO_PAUSE_SECONDS, OUTRO_PAUSE_SECONDS
+from backend.studio.youtube.caption_alignment import aligned_words, clean_transcript, format_vtt, vtt_cues
 
 LANGUAGE_NAMES={"en":"English","es":"Español","pt-BR":"Português (Brasil)"}
 DOCUMENTARY_LABELS={"en":"Music Documentary","es":"Documental Musical","pt-BR":"Documentário Musical"}
@@ -124,12 +127,106 @@ DESCRIPTIONS={
 CHAPTER_LABELS={"en":("Opening","The story","Closing"),"es":("Apertura","La historia","Cierre"),"pt-BR":("Abertura","A história","Encerramento")}
 Probe=Callable[[Path],float];CommandRunner=Callable[[list[str]],None]
 
+# Confirmed from the v2 assembly path (commit e44d841): the fixed six-and-a-
+# half-second opening, hook/intro and intro/story pauses, outro lead-in, and
+# final silence were concatenated with the four narration tracks.  With the
+# supplied production durations, this makes story_start 41.472335; 42.472335
+# would add an undocumented second and no longer match the reconstructed total.
+LEGACY_V2_OPENING_SECONDS = 6.5
+LEGACY_V2_HOOK_TRANSITION_SECONDS = 1.25
+LEGACY_V2_INTRO_TRANSITION_SECONDS = 0.75
+LEGACY_V2_OUTRO_TRANSITION_SECONDS = 3.0
+LEGACY_V2_FINAL_TAIL_SECONDS = 2.0
+LEGACY_V2_DURATION_TOLERANCE_SECONDS = 0.05
+_NARRATION_PARTS = ("hook", "intro", "story", "outro")
+
+
+@dataclass(frozen=True)
+class DocumentaryTiming:
+ hook_start: float
+ story_start: float
+ outro_start: float
+ expected_duration: float
+ documentary_duration: float
+ durations: dict[str, float]
+ legacy_reconstructed: bool = False
+
+ @property
+ def duration_delta(self) -> float:
+  return self.documentary_duration - self.expected_duration
+
 def media_duration(path:Path)->float:
  result=subprocess.run(["ffprobe","-v","error","-show_entries","format=duration","-of","default=noprint_wrappers=1:nokey=1",str(path)],check=True,capture_output=True,text=True)
  return float(result.stdout.strip())
 def run_command(command:list[str])->None:subprocess.run(command,check=True)
 
-def prepare_review_package(factory:Path,*,slug:str,language:str,story_text:str,hook_text:str,probe:Probe=media_duration,runner:CommandRunner=run_command)->Path:
+
+def documentary_timing(factory: Path, *, language: str, probe: Probe = media_duration) -> DocumentaryTiming:
+ """Measure the final timeline, reconstructing only locally verified v2 inputs."""
+ delivery = factory / "delivery" / language
+ narration = delivery / "narration"
+ documentary = delivery / "documentary.mp4"
+ required = (documentary, *(narration / f"{part}.mp3" for part in _NARRATION_PARTS))
+ missing = [str(path) for path in required if not path.is_file() or path.stat().st_size == 0]
+ if missing:
+  raise FileNotFoundError("Missing publishing inputs: " + ", ".join(missing))
+
+ # Deliberately probe every required input even if a later validation fails.
+ durations = {part: probe(narration / f"{part}.mp3") for part in _NARRATION_PARTS}
+ documentary_duration = probe(documentary)
+ if any(not math.isfinite(duration) or duration <= 0 for duration in (*durations.values(), documentary_duration)):
+  raise RuntimeError("Narration or final documentary has an invalid measured duration")
+ opening = factory / "shared" / "opening.mp4"
+ if opening.is_file() and opening.stat().st_size > 0:
+  hook_start = probe(opening)
+  story_start = hook_start + durations["hook"] + HOOK_PAUSE_SECONDS + durations["intro"] + INTRO_PAUSE_SECONDS
+  outro_start = story_start + durations["story"] + OUTRO_PAUSE_SECONDS
+  expected_duration = outro_start + durations["outro"] + LEGACY_V2_FINAL_TAIL_SECONDS
+  if abs(documentary_duration - expected_duration) > 0.25:
+   raise RuntimeError("Final documentary duration does not match the assembled narration timeline")
+  return DocumentaryTiming(hook_start, story_start, outro_start, expected_duration, documentary_duration, durations)
+
+ if not _is_verified_legacy_v2(narration, delivery / "narration.inputs.json"):
+  raise FileNotFoundError(f"Missing opening media: {opening}")
+ hook_start = LEGACY_V2_OPENING_SECONDS
+ story_start = hook_start + durations["hook"] + LEGACY_V2_HOOK_TRANSITION_SECONDS + durations["intro"] + LEGACY_V2_INTRO_TRANSITION_SECONDS
+ outro_start = story_start + durations["story"] + LEGACY_V2_OUTRO_TRANSITION_SECONDS
+ expected_duration = outro_start + durations["outro"] + LEGACY_V2_FINAL_TAIL_SECONDS
+ timing = DocumentaryTiming(hook_start, story_start, outro_start, expected_duration, documentary_duration, durations, True)
+ if abs(timing.duration_delta) > LEGACY_V2_DURATION_TOLERANCE_SECONDS:
+  raise RuntimeError(
+   "Legacy-v2 reconstructed duration does not match the final documentary "
+   f"within {LEGACY_V2_DURATION_TOLERANCE_SECONDS:.2f} seconds (delta {timing.duration_delta:+.6f}s)"
+  )
+ print(f"Legacy reconstructed timing was used; verified duration delta: {timing.duration_delta:+.6f}s")
+ return timing
+
+
+def _is_verified_legacy_v2(narration: Path, sidecar: Path) -> bool:
+ """v2 is eligible only when its exact raw-MP3 source binding still verifies."""
+ try:
+  payload = json.loads(sidecar.read_text(encoding="utf-8"))
+ except (OSError, json.JSONDecodeError):
+  return False
+ hashes = payload.get("source_sha256") if isinstance(payload, dict) else None
+ if not isinstance(payload, dict) or payload.get("version") != 2 or not isinstance(hashes, dict) or set(hashes) != set(_NARRATION_PARTS):
+  return False
+ for part in _NARRATION_PARTS:
+  audio = narration / f"{part}.mp3"
+  expected = hashes.get(part)
+  if not isinstance(expected, str) or len(expected) != 64 or _sha256(audio) != expected:
+   return False
+ return True
+
+
+def _sha256(path: Path) -> str:
+ digest = hashlib.sha256()
+ with path.open("rb") as source:
+  for chunk in iter(lambda: source.read(1024 * 1024), b""):
+   digest.update(chunk)
+ return digest.hexdigest()
+
+def prepare_review_package(factory:Path,*,slug:str,language:str,story_text:str,hook_text:str,probe:Probe=media_duration,runner:CommandRunner=run_command,alignment_requester:Callable[..., Any]|None=None)->Path:
  if language not in LANGUAGE_NAMES:raise ValueError(f"Unsupported language: {language}")
  try:title=LOCALIZED_TITLES[slug][language]
  except KeyError as exc:raise ValueError(f"Missing approved localized title for {slug}/{language}") from exc
@@ -137,21 +234,13 @@ def prepare_review_package(factory:Path,*,slug:str,language:str,story_text:str,h
  narration = delivery / "narration"
  documentary = delivery / "documentary.mp4"
 
- required = (
-     documentary,
-     narration / "hook.mp3",
-     narration / "intro.mp3",
-     narration / "story.mp3",
-     narration / "outro.mp3",
- )
- missing=[str(path) for path in required if not path.is_file() or path.stat().st_size==0]
- if missing:raise FileNotFoundError("Missing publishing inputs: "+", ".join(missing))
- durations={part:probe(narration/f"{part}.mp3") for part in ("hook","intro","story","outro")}
- opening_seconds = 6.5
- hook_start = opening_seconds
- story_start=hook_start+durations["hook"]+1.25+durations["intro"]+1.0;outro_start=story_start+durations["story"]+1.0
+ timing = documentary_timing(factory, language=language, probe=probe)
+ durations = timing.durations
+ hook_start = timing.hook_start
+ story_start = timing.story_start
+ outro_start = timing.outro_start
  output=factory/"publishing_review"/language;output.mkdir(parents=True,exist_ok=True)
- (output/"captions.vtt").write_text(_captions(hook_text=hook_text,story_text=story_text,hook_start=hook_start,hook_duration=durations["hook"],story_start=story_start,story_duration=durations["story"]),encoding="utf-8")
+ (output/"captions.vtt").write_text(build_aligned_captions(factory=factory,hook_audio=narration/"hook.mp3",hook_text=hook_text,hook_start=hook_start,hook_duration=durations["hook"],story_audio=narration/"story.mp3",story_text=story_text,story_start=story_start,story_duration=durations["story"],requester=alignment_requester),encoding="utf-8")
  labels=CHAPTER_LABELS[language];chapters=((0.0,labels[0]),(story_start,labels[1]),(outro_start,labels[2]));chapter_text="\n".join(f"{_chapter_time(seconds)} {label}" for seconds,label in chapters)+"\n"
  (output/"chapters.txt").write_text(chapter_text,encoding="utf-8")
  description=DESCRIPTIONS[language].format(title=title)+"\n\n"+chapter_text.rstrip()
@@ -190,24 +279,12 @@ def approve_review_package(factory:Path,*,language:str)->Path:
  for name in required:shutil.copy2(source/name,destination/name)
  return destination
 
-def _captions(*,hook_text:str,story_text:str,hook_start:float,hook_duration:float,story_start:float,story_duration:float)->str:
- cues=_timed_cues(hook_text,hook_start,hook_duration)+_timed_cues(story_text,story_start,story_duration);lines=["WEBVTT",""]
- for start,end,text in cues:lines.extend((f"{_vtt_time(start)} --> {_vtt_time(end)}",text,""))
- return "\n".join(lines)
-def _timed_cues(text:str,start:float,duration:float)->list[tuple[float,float,str]]:
- text=_clean_transcript(text);chunks=[]
- for sentence in re.split(r"(?<=[.!?])\s+",text):
-  words=sentence.split();group_count=max(1,(len(words)+11)//12);group_size=max(1,(len(words)+group_count-1)//group_count)
-  chunks.extend(" ".join(words[index:index+group_size]) for index in range(0,len(words),group_size))
- chunks=[chunk.strip() for chunk in chunks if chunk.strip()]
- if not chunks:raise ValueError("Caption transcript is empty")
- weights=[max(1,len(chunk.split())) for chunk in chunks];total=sum(weights);cursor=start;result=[]
- for index,(chunk,weight) in enumerate(zip(chunks,weights,strict=True)):
-  end=start+duration if index==len(chunks)-1 else cursor+duration*weight/total;result.append((cursor,end,chunk));cursor=end
- return result
-def _clean_transcript(text:str)->str:
- value=" ".join(text.split());value=re.sub(r"^(?:\*\*)?Hook\s*\([^)]*\)\s*:\s*(?:\*\*)?","",value,flags=re.IGNORECASE)
- return re.sub(r"(?<!\w)[*_]{1,2}|[*_]{1,2}(?!\w)","",value).strip()
+def build_aligned_captions(*,factory:Path,hook_audio:Path,hook_text:str,hook_start:float,hook_duration:float,story_audio:Path,story_text:str,story_start:float,story_duration:float,requester:Callable[..., Any]|None=None)->str:
+ cache=factory/"cache"/"caption_alignment"
+ kwargs={} if requester is None else {"requester":requester}
+ hook=aligned_words(audio=hook_audio,transcript=clean_transcript(hook_text),cache_dir=cache,audio_duration=hook_duration,**kwargs)
+ story=aligned_words(audio=story_audio,transcript=clean_transcript(story_text),cache_dir=cache,audio_duration=story_duration,**kwargs)
+ return format_vtt(vtt_cues(hook,offset=hook_start)+vtt_cues(story,offset=story_start))
 def _thumbnail(source:Path,destination:Path,title:str,language:str)->None:
  from PIL import Image,ImageDraw,ImageEnhance,ImageOps
  with Image.open(source) as original:image=ImageOps.fit(original.convert("RGB"),(1280,720),method=Image.Resampling.LANCZOS)
@@ -305,7 +382,5 @@ def _keywords(title: str, language: str, slug: str) -> list[str]:
         topic_group = group[2]
 
     return [title, "TopSpot40", *common[language], topic_group]
-def _vtt_time(seconds:float)->str:
- milliseconds=max(0,round(seconds*1000));hours,remainder=divmod(milliseconds,3600000);minutes,remainder=divmod(remainder,60000);secs,millis=divmod(remainder,1000);return f"{hours:02d}:{minutes:02d}:{secs:02d}.{millis:03d}"
 def _chapter_time(seconds:float)->str:
  value=max(0,int(seconds));hours,remainder=divmod(value,3600);minutes,secs=divmod(remainder,60);return f"{hours}:{minutes:02d}:{secs:02d}" if hours else f"{minutes}:{secs:02d}"

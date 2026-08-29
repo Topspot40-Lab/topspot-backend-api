@@ -83,6 +83,7 @@ class FakeDocumentary:
         SimpleNamespace(
             language_code=language_code,
             story_text="First sentence. Second sentence.",
+            hook_text="Listen to this first.",
             duration_seconds=16,
             tts_bucket=f"audio-{language_code}",
             tts_key=f"stories/{language_code}.mp3",
@@ -255,6 +256,26 @@ def test_create_documentary_builds_only_canonical_storyboard(tmp_path: Path) -> 
     assert master.exists()
     assert execution.record(VISUAL_MASTER_ARTIFACT)["status"] == "completed"
     assert execution.record(VISUAL_MASTER_ARTIFACT)["station"] == VISUAL_RENDER_STATION
+
+
+def test_factory_binds_localized_transcripts_to_narration_audio(tmp_path: Path) -> None:
+    production, _ = _create(tmp_path)
+
+    sidecar = (
+        production.work_root
+        / "factory"
+        / "delivery"
+        / "en"
+        / "narration.inputs.json"
+    )
+    payload = json.loads(sidecar.read_text(encoding="utf-8"))
+
+    assert payload["version"] == 3
+    assert payload["transcripts"] == {
+        "hook": "Listen to this first.",
+        "story": "First sentence. Second sentence.",
+    }
+    assert set(payload["source_sha256"]) == set(SEGMENTS)
 
 
 def test_create_documentary_resume_skips_verified_storyboard(tmp_path: Path) -> None:

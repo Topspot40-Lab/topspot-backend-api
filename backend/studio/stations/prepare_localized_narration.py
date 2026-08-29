@@ -50,6 +50,40 @@ def _hashes(sources: dict[str, bytes]) -> dict[str, str]:
     return {segment: hashlib.sha256(value).hexdigest() for segment, value in sources.items()}
 
 
+def _transcripts(production: Any, language: str) -> dict[str, str]:
+    """Return the exact localized text bound to this factory narration."""
+    locale = production.documentary.language(language)
+    values = {
+        "hook": getattr(locale, "hook_text", None),
+        "story": getattr(locale, "story_text", None),
+    }
+    invalid = [segment for segment, value in values.items() if not isinstance(value, str) or not value.strip()]
+    if invalid:
+        raise RuntimeError(
+            f"Missing authoritative localized narration text for {language}: "
+            + ", ".join(invalid)
+        )
+    return {segment: str(value) for segment, value in values.items()}
+
+
+def _write_sidecar(
+    execution: ProductionExecution,
+    language: str,
+    *,
+    hashes: dict[str, str],
+    transcripts: dict[str, str],
+) -> None:
+    """Persist the local text/audio binding used by downstream caption work."""
+    save_json_atomic(
+        _sidecar(execution, language),
+        {
+            "version": 3,
+            "source_sha256": hashes,
+            "transcripts": transcripts,
+        },
+    )
+
+
 def _stored_hashes(path: Path) -> dict[str, str] | None:
     try:
         value = json.loads(path.read_text(encoding="utf-8")).get("source_sha256")
@@ -65,6 +99,7 @@ def run_localized_narration(production: Any, execution: ProductionExecution, *, 
     changed = False
     for language in SUPPORTED_LANGUAGE_CODES:
         station = narration_station(language)
+        transcripts = _transcripts(production, language)
         pending_artifacts = set(
             execution.pending_artifacts(station=station)
         )
@@ -114,7 +149,15 @@ def run_localized_narration(production: Any, execution: ProductionExecution, *, 
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(sources[segment])
                 execution.complete_artifact(station=station, artifact_id=artifact)
-            save_json_atomic(_sidecar(execution, language), {"version": 2, "source_sha256": hashes})
+            # Preserve an existing text binding when the narration bytes did
+            # not change. A later catalog edit must never relabel old MP3s.
+            if recorded_hashes != hashes:
+                _write_sidecar(
+                    execution,
+                    language,
+                    hashes=hashes,
+                    transcripts=transcripts,
+                )
         except Exception as exc:
             for artifact in claimed:
                 try:
