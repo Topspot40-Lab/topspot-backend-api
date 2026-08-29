@@ -27,6 +27,10 @@ class AlignmentError(RuntimeError):
     """An alignment cannot safely be used for publishing captions."""
 
 
+class AlignmentCacheMissing(AlignmentError):
+    """A cache-only alignment request found no valid local cache entry."""
+
+
 @dataclass(frozen=True)
 class AlignedWord:
     text: str
@@ -89,6 +93,11 @@ def aligned_words(
         words = _parse_and_validate(payload, transcript=transcript, audio_duration=audio_duration)
         _write_cache(path, payload)
         return words
+
+    if getattr(requester, "_alignment_cache_only", False):
+        raise AlignmentCacheMissing(
+            "A validated alignment cache is required for caption repair; ElevenLabs is not called."
+        )
 
     api_key = os.environ.get("ELEVENLABS_API_KEY")
     if not api_key:

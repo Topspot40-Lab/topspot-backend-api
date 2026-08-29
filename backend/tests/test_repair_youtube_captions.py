@@ -14,7 +14,7 @@ from backend.studio.studio_config import (
     INTRO_PAUSE_SECONDS,
     OUTRO_PAUSE_SECONDS,
 )
-from backend.studio.youtube.caption_alignment import AlignmentError
+from backend.studio.youtube.caption_alignment import AlignmentCacheMissing, AlignmentError
 from backend.studio.youtube.publishing_package import build_aligned_captions
 
 
@@ -89,7 +89,7 @@ def test_dry_run_uses_valid_external_factory_root_without_importing_database(
     def captions(**kwargs: object) -> str:
         captured["hook"] = str(kwargs["hook_text"])
         captured["story"] = str(kwargs["story_text"])
-        with pytest.raises(RuntimeError, match="ElevenLabs is not called"):
+        with pytest.raises(AlignmentCacheMissing, match="ElevenLabs is not called"):
             kwargs["requester"]()  # type: ignore[index, operator]
         return "WEBVTT\n"
 

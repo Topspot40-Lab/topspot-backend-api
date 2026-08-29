@@ -133,9 +133,16 @@ def _factory_root(factory_root: Path | None, *, work_root: Path, slug: str) -> P
 
 def _cached_alignment_only(*_: object, **__: object) -> object:
     """Repairs must never create alignments by contacting ElevenLabs."""
-    raise RuntimeError(
+    from backend.studio.youtube.caption_alignment import AlignmentCacheMissing
+
+    raise AlignmentCacheMissing(
         "A validated alignment cache is required for caption repair; ElevenLabs is not called."
     )
+
+
+# The alignment layer recognizes this explicit capability marker before it
+# checks credentials, ensuring cache-only audits never depend on an API key.
+_cached_alignment_only._alignment_cache_only = True  # type: ignore[attr-defined]
 
 
 def _alignment_cache_paths(
