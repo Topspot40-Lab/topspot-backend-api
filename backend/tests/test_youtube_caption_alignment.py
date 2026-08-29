@@ -197,12 +197,78 @@ def test_alignment_checks_transcript_coverage_after_separator_removal(tmp_path: 
     assert " ".join(word.text for word in words) == "Hello world"
 
 
-def test_alignment_rejects_exact_normalized_transcript_mismatch(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_alignment_rejects_lexical_transcript_mismatch(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
     audio = tmp_path / "narration.mp3"; audio.write_bytes(b"audio")
     response = payload("Hello world")
     with pytest.raises(AlignmentError, match="do not exactly cover"):
-        aligned_words(audio=audio, transcript="Hello, world", cache_dir=tmp_path / "cache", audio_duration=5, requester=lambda *_, **__: Response(response))
+        aligned_words(audio=audio, transcript="Hello, there", cache_dir=tmp_path / "cache", audio_duration=5, requester=lambda *_, **__: Response(response))
+
+
+@pytest.mark.parametrize(
+    ("transcript", "alignment_text"),
+    [
+        ("Caf\u00e9\tROCK", "cafe rock"),  # case, whitespace, and diacritic
+        ("can\u2019t", "cant"),  # apostrophe variant
+        ("rock\u2011and\u2011roll", "rock-and-roll"),  # hyphen variant
+        ("1,000", "1000"),  # numeric formatting
+    ],
+)
+def test_alignment_accepts_harmless_typographic_coverage_variants(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, transcript: str, alignment_text: str,
+) -> None:
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
+    audio = tmp_path / "narration.mp3"; audio.write_bytes(b"audio")
+    words = aligned_words(
+        audio=audio, transcript=transcript, cache_dir=tmp_path / "cache", audio_duration=5,
+        requester=lambda *_, **__: Response(payload(alignment_text)),
+    )
+    assert " ".join(word.text for word in words) == " ".join(transcript.split())
+
+
+@pytest.mark.parametrize(
+    ("language", "transcript", "alignment_text"),
+    [
+        ("en", "alpha / beta / gamma", "alpha/beta /gamma"),
+        ("es", "alfa / beta / gamma", "alfa/beta /gamma"),
+        ("pt-BR", "alfa / beta / gama", "alfa/beta /gama"),
+    ],
+)
+def test_catalog_punctuation_regrouping_preserves_supplied_transcript_in_vtt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, language: str, transcript: str, alignment_text: str,
+) -> None:
+    """Regression shape from the three Ahmet Ertegun story quarantines: 5 source tokens, 2 aligned entries."""
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
+    audio = tmp_path / f"{language}.mp3"; audio.write_bytes(language.encode())
+    words = aligned_words(
+        audio=audio, transcript=transcript, cache_dir=tmp_path / "cache", audio_duration=5,
+        requester=lambda *_, **__: Response(payload(alignment_text)),
+    )
+    assert len(transcript.split()) == 5
+    assert len(alignment_text.split()) == 2
+    assert " ".join(word.text for word in words) == transcript
+    assert transcript in format_vtt(vtt_cues(words, offset=0))
+
+
+@pytest.mark.parametrize(
+    ("transcript", "alignment_text"),
+    [
+        ("one two three", "one three"),  # missing
+        ("one two", "one two three"),  # extra
+        ("one two three", "two one three"),  # reordered
+        ("one two three", "one four three"),  # substituted
+    ],
+)
+def test_alignment_rejects_genuine_lexical_coverage_changes(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, transcript: str, alignment_text: str,
+) -> None:
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
+    audio = tmp_path / "narration.mp3"; audio.write_bytes(b"audio")
+    with pytest.raises(AlignmentError, match="do not exactly cover"):
+        aligned_words(
+            audio=audio, transcript=transcript, cache_dir=tmp_path / "cache", audio_duration=5,
+            requester=lambda *_, **__: Response(payload(alignment_text)),
+        )
 
 
 def _alignment_with_losses(losses: list[float], *, overall_loss: float = .01) -> tuple[str, dict]:

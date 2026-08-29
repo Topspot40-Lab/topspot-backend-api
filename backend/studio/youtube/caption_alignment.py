@@ -21,6 +21,8 @@ HIGH_WORD_LOSS = 0.5
 MAX_CUE_SECONDS = 4.5
 MAX_CUE_WORDS = 7
 MAX_LINE_CHARS = 42
+_LEXICAL_UNIT = re.compile(r"\d[\d,._\u00a0\u202f]*\d|\d+|[^\W\d_]+", flags=re.UNICODE)
+_APOSTROPHE_VARIANT = re.compile(r"['\u2018\u2019\u201a\u201b]")
 
 
 class AlignmentError(RuntimeError):
@@ -218,7 +220,8 @@ def _parse_and_validate(payload: Any, *, transcript: str, audio_duration: float)
         previous_start = start
     if not words:
         raise AlignmentError("Alignment response has no spoken words after separator filtering")
-    if _normalized_coverage(" ".join(word.text for word in words)) != _normalized_coverage(transcript):
+    words = _with_supplied_transcript_text(words, transcript)
+    if words is None:
         raise AlignmentError("Alignment words do not exactly cover the supplied transcript")
     _log_quality_diagnostics(payload.get("loss"), words)
     return words
@@ -270,9 +273,60 @@ def _numeric_diagnostic(value: Any) -> float:
     return -1.0 if number is None else number
 
 
-def _normalized_coverage(text: str) -> str:
-    """Compare exact spoken text while normalizing only Unicode and spacing."""
-    return " ".join(unicodedata.normalize("NFC", text).split()).casefold()
+def _with_supplied_transcript_text(
+    words: list[AlignedWord], transcript: str
+) -> list[AlignedWord] | None:
+    """Verify spoken lexical coverage and retain the supplied caption spelling.
+
+    Forced-alignment responses sometimes regroup typographic punctuation into a
+    different number of whitespace-delimited entries.  Compare only ordered
+    lexical units after harmless Unicode, case, diacritic, and punctuation
+    normalization.  The source transcript remains authoritative for caption
+    text; timing always comes from the already structurally validated response.
+    """
+    supplied = transcript.split()
+    supplied_units = [_lexical_units(token) for token in supplied]
+    aligned_units = [_lexical_units(word.text) for word in words]
+    expected = [unit for units in supplied_units for unit in units]
+    actual = [unit for units in aligned_units for unit in units]
+    if expected != actual:
+        return None
+
+    # Associate every source token with the response word(s) that timed its
+    # lexical units. This also preserves punctuation-only source tokens in VTT.
+    unit_to_word = [index for index, units in enumerate(aligned_units) for _ in units]
+    cursor = 0
+    remapped: list[AlignedWord] = []
+    previous: AlignedWord | None = None
+    for token, units in zip(supplied, supplied_units, strict=True):
+        if units:
+            word_indexes = unit_to_word[cursor : cursor + len(units)]
+            cursor += len(units)
+            first = words[word_indexes[0]]
+            last = words[word_indexes[-1]]
+            mapped = AlignedWord(token, first.start, last.end, first.loss)
+        elif previous is not None:
+            mapped = AlignedWord(token, previous.start, previous.end, previous.loss)
+        elif words:
+            mapped = AlignedWord(token, words[0].start, words[0].end, words[0].loss)
+        else:  # Kept for completeness; the caller rejects an empty response.
+            return None
+        remapped.append(mapped)
+        previous = mapped
+    return remapped
+
+
+def _lexical_units(text: str) -> list[str]:
+    """Return order-sensitive spoken units, discarding only typography."""
+    normalized = unicodedata.normalize("NFKD", text).casefold()
+    normalized = "".join(char for char in normalized if not unicodedata.combining(char))
+    # Apostrophes are intra-word typography (including quote variants), while
+    # other punctuation remains a boundary between spoken units.
+    normalized = _APOSTROPHE_VARIANT.sub("", normalized)
+    return [
+        re.sub(r"[^\d]", "", unit) if unit[0].isdigit() else unit
+        for unit in _LEXICAL_UNIT.findall(normalized)
+    ]
 
 
 def _cue(words: list[AlignedWord], offset: float) -> tuple[float, float, str]:
