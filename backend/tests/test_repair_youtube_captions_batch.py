@@ -3,10 +3,23 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
 from backend.scripts import repair_youtube_captions_batch as batch
+
+
+class HttpError(Exception):
+    """Mock shaped like googleapiclient.errors.HttpError; it never makes a call."""
+
+    def __init__(self, status: int, content: bytes) -> None:
+        super().__init__("unsafe request URL and response body must not be reported")
+        self.resp = SimpleNamespace(status=status)
+        self.content = content
+
+
+HttpError.__module__ = "googleapiclient.errors"
 
 
 def _state(path: Path, uploads: dict[str, object]) -> Path:
@@ -241,6 +254,55 @@ def test_report_is_atomic_redacted_and_reruns_are_idempotent(tmp_path: Path) -> 
         assert "transcript only here" not in json.dumps(report)
         assert not (tmp_path / "report.json.tmp").exists()
         assert report["items"][0]["status"] == "failed"
+
+
+@pytest.mark.parametrize(
+    ("status", "reason", "category"),
+    [
+        (403, "quotaExceeded", "youtube_quota_exceeded"),
+        (429, "rateLimitExceeded", "youtube_rate_limit_exceeded"),
+        (401, "authError", "youtube_auth_error"),
+        (403, "forbidden", "youtube_permission_denied"),
+        (400, "invalidValue", "youtube_invalid_request"),
+        (500, "backendError", "youtube_http_failure"),
+    ],
+)
+def test_google_http_failures_are_classified_safely_and_batch_continues(
+    tmp_path: Path, status: int, reason: str, category: str
+) -> None:
+    """Use a mock HttpError only; no YouTube, ElevenLabs, or database call occurs."""
+    unsafe = "https://youtube.example/private?access_token=secret caption text transcript text"
+    content = json.dumps(
+        {"error": {"errors": [{"reason": reason, "message": unsafe}], "message": unsafe}}
+    ).encode()
+    seen: list[list[str]] = []
+
+    def engine(argv: list[str] | None) -> int:
+        seen.append(list(argv or []))
+        if "--slug=broken" in (argv or []):
+            try:
+                raise HttpError(status, content)
+            except HttpError as exc:
+                # This mirrors a future one-video wrapper while retaining its cause.
+                raise RuntimeError("local wrapper") from exc
+        return 0
+
+    code, _, report = _run(
+        tmp_path,
+        {"broken|en": _uploaded(), "good|es": _uploaded()},
+        ["--apply", "--client-secrets", "client.json", "--confirm-apply-existing-captions"],
+        engine,
+    )
+    assert code == 1
+    assert [call[0] for call in seen] == ["--slug=broken", "--slug=good"]
+    failed = report["items"][0]
+    assert failed["error_category"] == category
+    assert failed["error_message"] == f"YouTube captions API request failed with HTTP {status}" + (
+        f" ({reason})." if reason != "backendError" else "."
+    )
+    serialized = json.dumps(report)
+    assert unsafe not in serialized
+    assert "secret" not in serialized
 
 
 def test_audit_never_authorizes_elevenlabs_or_youtube_calls(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

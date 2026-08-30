@@ -24,6 +24,21 @@ LANGUAGES = ("en", "es", "pt-BR")
 DEFAULT_STATE = Path("backend/studio/work/youtube_release_state.json")
 DEFAULT_REPORT = Path("backend/studio/work/youtube_caption_repair_report.json")
 RepairMain = Callable[[list[str] | None], int]
+_HTTP_ERROR_CATEGORIES = {
+    "quotaExceeded": "youtube_quota_exceeded",
+    "rateLimitExceeded": "youtube_rate_limit_exceeded",
+    "userRateLimitExceeded": "youtube_rate_limit_exceeded",
+    "authError": "youtube_auth_error",
+    "invalidCredentials": "youtube_auth_error",
+    "forbidden": "youtube_permission_denied",
+    "insufficientPermissions": "youtube_permission_denied",
+    "invalidValue": "youtube_invalid_request",
+    "invalidParameter": "youtube_invalid_request",
+    "required": "youtube_invalid_request",
+}
+_SAFE_HTTP_REASONS = frozenset(_HTTP_ERROR_CATEGORIES)
+
+
 @dataclass(frozen=True)
 class UploadedItem:
     slug: str
@@ -233,6 +248,8 @@ def _mode(args: argparse.Namespace) -> str:
 
 def _safe_error(exc: Exception) -> tuple[str, str]:
     """Keep operational diagnostics useful without exposing sensitive inputs."""
+    if diagnostic := _google_http_diagnostic(exc):
+        return diagnostic
     category = type(exc).__name__
     message = str(exc) or "Repair engine failed without a diagnostic"
     message = re.sub(r"\b(?:postgres(?:ql)?|mysql|https?)://\S+", "[redacted-url]", message, flags=re.IGNORECASE)
@@ -263,6 +280,64 @@ def _safe_error(exc: Exception) -> tuple[str, str]:
     if not message.startswith(safe_prefixes):
         message = "Repair engine failed; inspect local command diagnostics."
     return category, message[:500]
+
+
+def _google_http_diagnostic(exc: Exception) -> tuple[str, str] | None:
+    """Return an allowlisted Google HTTP diagnostic without exposing API data.
+
+    ``HttpError`` may contain the request URL, response headers, and a response
+    body with user-supplied data.  This helper reads only its numeric status and
+    the documented JSON ``reason`` field, then formats a fixed message.
+    """
+    current: BaseException | None = exc
+    seen: set[int] = set()
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        if _is_google_http_error(current):
+            status = _http_status(current)
+            reason = _google_error_reason(getattr(current, "content", None))
+            category = _HTTP_ERROR_CATEGORIES.get(reason or "", "youtube_http_failure")
+            detail = f"HTTP {status}" if status is not None else "an HTTP error"
+            if reason is not None:
+                detail += f" ({reason})"
+            return category, f"YouTube captions API request failed with {detail}."
+        current = current.__cause__ or current.__context__
+    return None
+
+
+def _is_google_http_error(exc: BaseException) -> bool:
+    """Recognize googleapiclient's exception without importing it at runtime."""
+    return type(exc).__name__ == "HttpError" and type(exc).__module__.startswith("googleapiclient")
+
+
+def _http_status(exc: BaseException) -> int | None:
+    status = getattr(getattr(exc, "resp", None), "status", None)
+    # Never stringify an arbitrary response object: it can expose headers or a URL.
+    return status if isinstance(status, int) and 100 <= status <= 599 else None
+
+
+def _google_error_reason(content: object) -> str | None:
+    """Extract only an explicitly allowlisted Google error reason from JSON."""
+    if not isinstance(content, (bytes, bytearray, str)):
+        return None
+    try:
+        raw = content[:65536]
+        payload = json.loads(raw)
+    except (TypeError, UnicodeDecodeError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, dict):
+        return None
+    error = payload.get("error")
+    if not isinstance(error, dict):
+        return None
+    errors = error.get("errors")
+    if not isinstance(errors, list):
+        return None
+    for entry in errors:
+        reason = entry.get("reason") if isinstance(entry, dict) else None
+        if isinstance(reason, str) and reason in _SAFE_HTTP_REASONS:
+            return reason
+    return None
 
 
 def _summary(items: Iterable[dict[str, str]]) -> dict[str, int]:
