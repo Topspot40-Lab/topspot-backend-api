@@ -93,6 +93,62 @@ def test_structural_and_timing_validation_is_fail_closed_but_loss_is_not(
             aligned_words(audio=audio, transcript="Hello world", cache_dir=tmp_path / "cache", audio_duration=5, requester=requester)
 
 
+@pytest.mark.parametrize("overlap", [.001, .0010000000000000009])
+def test_one_millisecond_word_boundary_quantization_is_normalized(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, overlap: float,
+) -> None:
+    """A one-ms encoder boundary discrepancy is snapped without changing words."""
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
+    audio = tmp_path / "narration.mp3"; audio.write_bytes(b"audio")
+    response = {
+        "words": [
+            {"text": "first", "start": 0, "end": .002, "loss": .01},
+            {"text": "second", "start": .002 - overlap, "end": .004, "loss": .01},
+        ]
+    }
+    words = aligned_words(
+        audio=audio, transcript="first second", cache_dir=tmp_path / "cache",
+        audio_duration=5, requester=lambda *_, **__: Response(response),
+    )
+    assert [word.text for word in words] == ["first", "second"]
+    assert words[1].start == .002 - overlap
+    assert "00:00:00.000 --> 00:00:00.004" in format_vtt(vtt_cues(words, offset=0))
+
+
+def test_word_overlap_larger_than_one_millisecond_fails_closed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
+    audio = tmp_path / "narration.mp3"; audio.write_bytes(b"audio")
+    response = {
+        "words": [
+            {"text": "first", "start": 0, "end": .003, "loss": .01},
+            {"text": "second", "start": .001999, "end": .005, "loss": .01},
+        ]
+    }
+    with pytest.raises(AlignmentError, match="overlaps the previous word by 0.001 seconds"):
+        aligned_words(
+            audio=audio, transcript="first second", cache_dir=tmp_path / "cache",
+            audio_duration=5, requester=lambda *_, **__: Response(response),
+        )
+
+
+def test_one_millisecond_cue_quantization_emits_strictly_ordered_vtt() -> None:
+    cues = [
+        (10.019, 11.360, "first"),
+        (11.359, 11.360, "second"),
+        (11.359, 11.360, "third"),
+        (11.359, 11.940, "fourth"),
+    ]
+    assert format_vtt(cues) == (
+        "WEBVTT\n\n"
+        "00:00:10.019 --> 00:00:11.360\nfirst\n\n"
+        "00:00:11.360 --> 00:00:11.361\nsecond\n\n"
+        "00:00:11.361 --> 00:00:11.362\nthird\n\n"
+        "00:00:11.362 --> 00:00:11.940\nfourth\n"
+    )
+
+
 def test_rejected_valid_json_is_quarantined_and_rerun_does_not_call_network(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
     audio = tmp_path / "narration.mp3"; audio.write_bytes(b"audio")
@@ -248,6 +304,33 @@ def test_catalog_punctuation_regrouping_preserves_supplied_transcript_in_vtt(
     assert len(alignment_text.split()) == 2
     assert " ".join(word.text for word in words) == transcript
     assert transcript in format_vtt(vtt_cues(words, offset=0))
+
+
+def test_remapped_fragments_sharing_an_aligned_interval_remain_atomic_for_vtt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Punctuation cannot split supplied fragments that share one spoken span."""
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
+    audio = tmp_path / "narration.mp3"; audio.write_bytes(b"audio")
+    transcript = "First. Alpha . beta. Last."
+    response = {
+        "words": [
+            {"text": "First.", "start": 0, "end": .2},
+            {"text": "Alpha.beta", "start": .3, "end": .7},
+            {"text": "Last.", "start": .8, "end": 1.0},
+        ]
+    }
+    words = aligned_words(
+        audio=audio, transcript=transcript, cache_dir=tmp_path / "cache", audio_duration=5,
+        requester=lambda *_, **__: Response(response),
+    )
+    assert [word.text for word in words] == ["First.", "Alpha . beta.", "Last."]
+    assert " ".join(text for _, _, text in vtt_cues(words, offset=0)) == transcript
+
+
+def test_cue_overlap_larger_than_one_millisecond_remains_rejected() -> None:
+    with pytest.raises(AlignmentError, match="Caption cues are empty, invalid, or out of order"):
+        format_vtt([(0, 1, "first"), (.998999, 2, "second")])
 
 
 @pytest.mark.parametrize(

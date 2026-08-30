@@ -21,6 +21,11 @@ HIGH_WORD_LOSS = 0.5
 MAX_CUE_SECONDS = 4.5
 MAX_CUE_WORDS = 7
 MAX_LINE_CHARS = 42
+# Forced-alignment services can emit adjacent word boundaries on opposite sides
+# of the same millisecond.  Permit only that quantization-sized discrepancy;
+# WebVTT cue validation below still requires strictly valid rounded timestamps.
+MAX_BOUNDARY_QUANTIZATION_SECONDS = 0.001
+_BOUNDARY_QUANTIZATION_FLOAT_EPSILON = 1e-12
 _LEXICAL_UNIT = re.compile(r"\d[\d,._\u00a0\u202f]*\d|\d+|[^\W\d_]+", flags=re.UNICODE)
 _APOSTROPHE_VARIANT = re.compile(r"['\u2018\u2019\u201a\u201b]")
 
@@ -159,15 +164,19 @@ def vtt_cues(words: list[AlignedWord], *, offset: float) -> list[tuple[float, fl
 
 
 def format_vtt(cues: list[tuple[float, float, str]]) -> str:
-    _validate_cue_order(cues)
+    rounded_cues = _normalized_vtt_cue_milliseconds(cues)
     lines = ["WEBVTT", ""]
-    for start, end, text in cues:
-        lines.extend((f"{vtt_time(start)} --> {vtt_time(end)}", text, ""))
+    for start_ms, end_ms, text in rounded_cues:
+        lines.extend((f"{_vtt_time_milliseconds(start_ms)} --> {_vtt_time_milliseconds(end_ms)}", text, ""))
     return "\n".join(lines)
 
 
 def vtt_time(seconds: float) -> str:
     milliseconds = max(0, round(seconds * 1000))
+    return _vtt_time_milliseconds(milliseconds)
+
+
+def _vtt_time_milliseconds(milliseconds: int) -> str:
     hours, remainder = divmod(milliseconds, 3_600_000)
     minutes, remainder = divmod(remainder, 60_000)
     secs, millis = divmod(remainder, 1000)
@@ -207,12 +216,14 @@ def _parse_and_validate(payload: Any, *, transcript: str, audio_duration: float)
             raise AlignmentError(f"Alignment word {index} has a negative start")
         if end <= start:
             raise AlignmentError(f"Alignment word {index} has end <= start")
+        if start < previous_end:
+            overlap = previous_end - start
+            if overlap > MAX_BOUNDARY_QUANTIZATION_SECONDS + _BOUNDARY_QUANTIZATION_FLOAT_EPSILON:
+                raise AlignmentError(
+                    f"Alignment word {index} overlaps the previous word by {overlap:.3f} seconds"
+                )
         if start < previous_start:
             raise AlignmentError(f"Alignment word {index} is non-monotonic")
-        if start < previous_end:
-            raise AlignmentError(
-                f"Alignment word {index} overlaps the previous word by {previous_end - start:.3f} seconds"
-            )
         if end > audio_duration:
             raise AlignmentError("Alignment timing exceeds narration audio duration")
         words.append(AlignedWord(text, start, end, loss))
@@ -294,26 +305,49 @@ def _with_supplied_transcript_text(
 
     # Associate every source token with the response word(s) that timed its
     # lexical units. This also preserves punctuation-only source tokens in VTT.
+    # An API entry can contain several lexical units, so several supplied
+    # fragments can share one indivisible spoken timing interval.  Coalesce
+    # contiguous fragments with the same aligned-word span before cue grouping:
+    # a punctuation fragment must never split that atomic interval into
+    # overlapping caption cues.
     unit_to_word = [index for index, units in enumerate(aligned_units) for _ in units]
     cursor = 0
-    remapped: list[AlignedWord] = []
-    previous: AlignedWord | None = None
+    remapped: list[tuple[str, tuple[int, ...], AlignedWord]] = []
+    previous: tuple[tuple[int, ...], AlignedWord] | None = None
     for token, units in zip(supplied, supplied_units, strict=True):
         if units:
-            word_indexes = unit_to_word[cursor : cursor + len(units)]
+            word_indexes = tuple(unit_to_word[cursor : cursor + len(units)])
             cursor += len(units)
             first = words[word_indexes[0]]
             last = words[word_indexes[-1]]
             mapped = AlignedWord(token, first.start, last.end, first.loss)
+            timing_span = word_indexes
         elif previous is not None:
-            mapped = AlignedWord(token, previous.start, previous.end, previous.loss)
+            timing_span, previous_word = previous
+            mapped = AlignedWord(token, previous_word.start, previous_word.end, previous_word.loss)
         elif words:
             mapped = AlignedWord(token, words[0].start, words[0].end, words[0].loss)
+            timing_span = (0,)
         else:  # Kept for completeness; the caller rejects an empty response.
             return None
-        remapped.append(mapped)
-        previous = mapped
-    return remapped
+        remapped.append((token, timing_span, mapped))
+        previous = (timing_span, mapped)
+
+    atomic: list[AlignedWord] = []
+    previous_span: tuple[int, ...] | None = None
+    for token, timing_span, mapped in remapped:
+        if atomic and timing_span == previous_span:
+            previous_word = atomic[-1]
+            atomic[-1] = AlignedWord(
+                f"{previous_word.text} {token}",
+                previous_word.start,
+                previous_word.end,
+                previous_word.loss,
+            )
+        else:
+            atomic.append(mapped)
+        previous_span = timing_span
+    return atomic
 
 
 def _lexical_units(text: str) -> list[str]:
@@ -350,7 +384,23 @@ def _wrap_words(words: list[str]) -> str:
 
 
 def _validate_cue_order(cues: list[tuple[float, float, str]]) -> None:
+    _normalized_vtt_cue_milliseconds(cues)
+
+
+def _normalized_vtt_cue_milliseconds(
+    cues: list[tuple[float, float, str]],
+) -> list[tuple[int, int, str]]:
+    """Round cues to a strictly valid WebVTT timeline without masking timing faults.
+
+    A one-millisecond word-boundary quantization discrepancy can create a
+    backward cue boundary after rounding.  We serialize that boundary by at
+    most one millisecond and extend a positive one-millisecond cue when needed.
+    Larger overlaps, reversed timings, and unrepresentable sub-millisecond
+    cues still fail closed.
+    """
     previous_end_ms = -1
+    previous_raw_end = -1.0
+    normalized: list[tuple[int, int, str]] = []
     for start, end, text in cues:
         if (
             not isinstance(text, str)
@@ -367,6 +417,18 @@ def _validate_cue_order(cues: list[tuple[float, float, str]]) -> None:
             raise AlignmentError("Caption cues are empty, invalid, or out of order")
         start_ms = round(start * 1000)
         end_ms = round(end * 1000)
-        if end_ms <= start_ms or start_ms < previous_end_ms:
+        if start_ms < previous_end_ms:
+            if previous_raw_end - start > MAX_BOUNDARY_QUANTIZATION_SECONDS + _BOUNDARY_QUANTIZATION_FLOAT_EPSILON:
+                raise AlignmentError("Caption cues are empty, invalid, or out of order")
+            start_ms = previous_end_ms
+        if end_ms <= start_ms:
+            if end_ms > round(start * 1000) and end - start >= MAX_BOUNDARY_QUANTIZATION_SECONDS - _BOUNDARY_QUANTIZATION_FLOAT_EPSILON:
+                end_ms = start_ms + 1
+            else:
+                raise AlignmentError("Caption cues are empty, invalid, or out of order")
+        if start_ms < previous_end_ms:
             raise AlignmentError("Caption cues are empty, invalid, or out of order")
         previous_end_ms = end_ms
+        previous_raw_end = end
+        normalized.append((start_ms, end_ms, text))
+    return normalized
