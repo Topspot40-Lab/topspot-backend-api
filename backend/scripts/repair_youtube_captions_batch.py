@@ -84,7 +84,7 @@ def main(
         items = items[: args.max_items]
 
     if args.bootstrap_applied:
-        return _bootstrap(items, args, binding_for_item or _offline_binding_for_item)
+        return _bootstrap(items, args, binding_for_item or _bootstrap_binding_for_item)
 
     ledger = _load_ledger(args.ledger)
     results: list[dict[str, str]] = []
@@ -97,7 +97,7 @@ def main(
             # any remote service.  If local validation cannot prove it, retain
             # the normal repair CLI diagnostic path below.
             try:
-                fingerprint = (binding_for_item or _offline_binding_for_item)(item, args)
+                fingerprint = (binding_for_item or _audit_binding_for_item)(item, args)
             except Exception:
                 fingerprint = None
             if fingerprint is not None and _ledger_matches(ledger, item, fingerprint):
@@ -148,7 +148,15 @@ def main(
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--factory-work-root", required=True, type=Path)
+    factory = parser.add_mutually_exclusive_group(required=True)
+    factory.add_argument(
+        "--factory-work-root", type=Path,
+        help="root containing <slug>/factory directories",
+    )
+    factory.add_argument(
+        "--factory-root", type=Path,
+        help="exact external <slug>/factory directory (single selected slug)",
+    )
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER)
@@ -237,9 +245,9 @@ def _run_item(item: UploadedItem, args: argparse.Namespace, repair_main: RepairM
         f"--slug={item.slug}",
         f"--language={item.language}",
         f"--video-id={item.video_id}",
-        f"--factory-root={args.factory_work_root / item.slug / 'factory'}",
+        f"--factory-root={_factory_for_item(item, args)}",
     ]
-    uses_v2 = _uses_v2_sidecar(args.factory_work_root, item)
+    uses_v2 = _uses_v2_sidecar(item, args)
     if uses_v2 and not args.legacy_env_file:
         return _failed_item(
             item,
@@ -276,7 +284,7 @@ def _result(item: UploadedItem, status: str) -> dict[str, str]:
 
 def _binding_for_item(item: UploadedItem, args: argparse.Namespace) -> str:
     """Validate the local VTT/cache/audio/transcript binding without YouTube."""
-    factory = args.factory_work_root / item.slug / "factory"
+    factory = _factory_for_item(item, args)
     return repair.validated_repair_fingerprint(
         factory=factory, slug=item.slug, language=item.language,
         legacy_env_file=args.legacy_env_file,
@@ -285,8 +293,23 @@ def _binding_for_item(item: UploadedItem, args: argparse.Namespace) -> str:
 
 def _offline_binding_for_item(item: UploadedItem, args: argparse.Namespace) -> str:
     return repair.offline_validated_repair_fingerprint(
-        factory=args.factory_work_root / item.slug / "factory", language=item.language
+        factory=_factory_for_item(item, args), language=item.language
     )
+
+
+def _bootstrap_binding_for_item(item: UploadedItem, args: argparse.Namespace) -> str:
+    """Use recovered v2 source text when the operator authorized it.
+
+    A v2 VTT is a rendering, not the original alignment input: rebuilding text
+    from its cue wrapping can change the cache key.  The database-backed
+    binding is therefore required whenever it is explicitly available.
+    """
+    return _binding_for_item(item, args) if _uses_v2_sidecar(item, args) else _offline_binding_for_item(item, args)
+
+
+def _audit_binding_for_item(item: UploadedItem, args: argparse.Namespace) -> str:
+    """Match a v2 bootstrap with the same authorized source recovery."""
+    return _bootstrap_binding_for_item(item, args)
 
 
 def _load_ledger(path: Path) -> dict[str, Any]:
@@ -385,8 +408,15 @@ def _failed_item(item: UploadedItem, exc: Exception) -> dict[str, str]:
     }
 
 
-def _uses_v2_sidecar(factory_work_root: Path, item: UploadedItem) -> bool:
-    sidecar = factory_work_root / item.slug / "factory" / "delivery" / item.language / "narration.inputs.json"
+def _factory_for_item(item: UploadedItem, args: argparse.Namespace) -> Path:
+    if args.factory_root is not None:
+        return args.factory_root
+    assert args.factory_work_root is not None
+    return args.factory_work_root / item.slug / "factory"
+
+
+def _uses_v2_sidecar(item: UploadedItem, args: argparse.Namespace) -> bool:
+    sidecar = _factory_for_item(item, args) / "delivery" / item.language / "narration.inputs.json"
     try:
         return json.loads(sidecar.read_text(encoding="utf-8")).get("version") == 2
     except (OSError, json.JSONDecodeError, AttributeError):
