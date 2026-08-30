@@ -23,6 +23,7 @@ from backend.studio.youtube.caption_alignment import AlignmentCacheMissing
 LANGUAGES = ("en", "es", "pt-BR")
 DEFAULT_STATE = Path("backend/studio/work/youtube_release_state.json")
 DEFAULT_REPORT = Path("backend/studio/work/youtube_caption_repair_report.json")
+DEFAULT_LEDGER = Path("backend/studio/work/youtube_caption_repair_ledger.json")
 RepairMain = Callable[[list[str] | None], int]
 _HTTP_ERROR_CATEGORIES = {
     "quotaExceeded": "youtube_quota_exceeded",
@@ -46,7 +47,25 @@ class UploadedItem:
     video_id: str
 
 
-def main(argv: list[str] | None = None, *, repair_main: RepairMain = repair.main) -> int:
+# This is deliberately an allowlist, not an inference from a previous report.
+# Bootstrap is an operator attestation for precisely the tracks confirmed in
+# this run; it is never evidence from ``captions_uploaded``.
+BOOTSTRAP_APPLIED = frozenset({
+    (slug, language)
+    for slug in (
+        "music_in_the_new_millennium", "ahmet_ertegun", "alan_freed",
+        "banda_sinaloense", "beatles_vs_stones", "berry_gordy",
+    )
+    for language in LANGUAGES
+} | {("birth_of_bossa_nova", "en"), ("birth_of_bossa_nova", "pt-BR")})
+
+
+def main(
+    argv: list[str] | None = None,
+    *,
+    repair_main: RepairMain = repair.main,
+    binding_for_item: Callable[[UploadedItem, argparse.Namespace], str] | None = None,
+) -> int:
     parser = _parser()
     args = parser.parse_args(argv)
     _validate_options(parser, args)
@@ -64,18 +83,53 @@ def main(argv: list[str] | None = None, *, repair_main: RepairMain = repair.main
     if args.max_items is not None:
         items = items[: args.max_items]
 
+    if args.bootstrap_applied:
+        return _bootstrap(items, args, binding_for_item or _offline_binding_for_item)
+
+    ledger = _load_ledger(args.ledger)
     results: list[dict[str, str]] = []
+    updates = 0
     for item in items:
+        fingerprint: str | None = None
+        if args.apply:
+            try:
+                fingerprint = (binding_for_item or _binding_for_item)(item, args)
+            except Exception as exc:
+                result = _failed_item(item, exc)
+                results.append(result)
+                print(f"FAILED {item.slug}/{item.language} ({result['error_category']}: {result['error_message']})")
+                continue
+            if _ledger_matches(ledger, item, fingerprint):
+                result = _result(item, "already_applied")
+                results.append(result)
+                print(f"ALREADY_APPLIED {item.slug}/{item.language}")
+                continue
+            if args.max_updates is not None and updates >= args.max_updates:
+                result = _result(item, "ready")
+                results.append(result)
+                print(f"READY {item.slug}/{item.language} (max updates reached)")
+                continue
         result = _run_item(item, args, repair_main)
+        quota_exceeded = args.apply and result.get("error_category") == "youtube_quota_exceeded"
+        if quota_exceeded:
+            result["status"] = "quota_exceeded"
         results.append(result)
         detail = f" ({result['error_category']}: {result['error_message']})" if "error_category" in result else ""
         print(f"{result['status'].upper()} {item.slug}/{item.language}{detail}")
+        if args.apply and result["status"] == "applied":
+            # The only success record is written immediately after the
+            # narrow YouTube update returned successfully.
+            assert fingerprint is not None
+            _record_success_atomic(args.ledger, ledger, item, fingerprint)
+            updates += 1
+        if quota_exceeded:
+            break
 
     _write_report_atomic(args.report, mode=_mode(args), items=results)
     summary = _summary(results)
     print("SUMMARY " + " ".join(f"{key}={value}" for key, value in sorted(summary.items())))
     print(f"REPORT: {args.report}")
-    return 1 if summary.get("failed", 0) else 0
+    return 1 if summary.get("failed", 0) or summary.get("quota_exceeded", 0) else 0
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -83,16 +137,20 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--factory-work-root", required=True, type=Path)
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
+    parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER)
     parser.add_argument("--legacy-env-file", type=Path)
     parser.add_argument("--env-file", type=Path)
     parser.add_argument("--client-secrets", type=Path)
     parser.add_argument("--slug", action="append", default=[])
     parser.add_argument("--language", action="append", choices=LANGUAGES, default=[])
     parser.add_argument("--max-items", type=_positive_int)
+    parser.add_argument("--max-updates", type=_positive_int)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--align", action="store_true")
     mode.add_argument("--apply", action="store_true")
+    mode.add_argument("--bootstrap-applied", action="store_true", help="offline-record the explicitly confirmed completed repairs")
     parser.add_argument("--confirm-apply-existing-captions", action="store_true")
+    parser.add_argument("--confirm-bootstrap-applied", action="store_true")
     return parser
 
 
@@ -107,6 +165,14 @@ def _validate_options(parser: argparse.ArgumentParser, args: argparse.Namespace)
         parser.error("--apply requires --confirm-apply-existing-captions")
     if args.confirm_apply_existing_captions and not args.apply:
         parser.error("--confirm-apply-existing-captions is valid only with --apply")
+    if args.bootstrap_applied and (args.apply or args.align):
+        parser.error("--bootstrap-applied cannot be combined with --align or --apply")
+    if args.bootstrap_applied and not args.confirm_bootstrap_applied:
+        parser.error("--bootstrap-applied requires --confirm-bootstrap-applied")
+    if args.confirm_bootstrap_applied and not args.bootstrap_applied:
+        parser.error("--confirm-bootstrap-applied is valid only with --bootstrap-applied")
+    if args.max_updates is not None and not args.apply:
+        parser.error("--max-updates is valid only with --apply")
 
 
 def _positive_int(value: str) -> int:
@@ -187,12 +253,77 @@ def _run_item(item: UploadedItem, args: argparse.Namespace, repair_main: RepairM
         if _is_alignment_required(args, exc):
             return _alignment_required_item(item, exc)
         return _failed_item(item, exc)
-    return {
-        "slug": item.slug,
-        "language": item.language,
-        "video_id": item.video_id,
-        "status": "applied" if args.apply else "aligned" if args.align else "ready",
+    return _result(item, "applied" if args.apply else "aligned" if args.align else "ready")
+
+
+def _result(item: UploadedItem, status: str) -> dict[str, str]:
+    return {"slug": item.slug, "language": item.language, "video_id": item.video_id, "status": status}
+
+
+def _binding_for_item(item: UploadedItem, args: argparse.Namespace) -> str:
+    """Validate the local VTT/cache/audio/transcript binding without YouTube."""
+    factory = args.factory_work_root / item.slug / "factory"
+    return repair.validated_repair_fingerprint(
+        factory=factory, slug=item.slug, language=item.language,
+        legacy_env_file=args.legacy_env_file,
+    )
+
+
+def _offline_binding_for_item(item: UploadedItem, args: argparse.Namespace) -> str:
+    return repair.offline_validated_repair_fingerprint(
+        factory=args.factory_work_root / item.slug / "factory", language=item.language
+    )
+
+
+def _load_ledger(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {"schema_version": 1, "applied": {}}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError("Caption repair ledger cannot be read") from exc
+    if not isinstance(payload, dict) or payload.get("schema_version") != 1 or not isinstance(payload.get("applied"), dict):
+        raise RuntimeError("Caption repair ledger has an unsupported schema")
+    return payload
+
+
+def _ledger_key(item: UploadedItem) -> str:
+    return f"{item.slug}|{item.language}"
+
+
+def _ledger_matches(ledger: dict[str, Any], item: UploadedItem, fingerprint: str) -> bool:
+    entry = ledger["applied"].get(_ledger_key(item))
+    return isinstance(entry, dict) and entry.get("video_id") == item.video_id and entry.get("fingerprint") == fingerprint
+
+
+def _record_success_atomic(path: Path, ledger: dict[str, Any], item: UploadedItem, fingerprint: str) -> None:
+    ledger["applied"][_ledger_key(item)] = {
+        "slug": item.slug, "language": item.language, "video_id": item.video_id,
+        "fingerprint": fingerprint, "status": "applied",
     }
+    _write_json_atomic(path, ledger)
+
+
+def _bootstrap(items: list[UploadedItem], args: argparse.Namespace, binding_for_item: Callable[[UploadedItem, argparse.Namespace], str]) -> int:
+    ledger = _load_ledger(args.ledger)
+    results: list[dict[str, str]] = []
+    for item in items:
+        if (item.slug, item.language) not in BOOTSTRAP_APPLIED:
+            result = _failed_item(item, RuntimeError("Track is not in the explicit offline bootstrap allowlist"))
+        else:
+            try:
+                fingerprint = binding_for_item(item, args)
+                _record_success_atomic(args.ledger, ledger, item, fingerprint)
+                result = _result(item, "already_applied")
+            except Exception as exc:
+                result = _failed_item(item, exc)
+        results.append(result)
+        print(f"{result['status'].upper()} {item.slug}/{item.language}")
+    _write_report_atomic(args.report, mode="bootstrap", items=results)
+    summary = _summary(results)
+    print("SUMMARY " + " ".join(f"{key}={value}" for key, value in sorted(summary.items())))
+    print(f"REPORT: {args.report}")
+    return 1 if summary.get("failed", 0) else 0
 
 
 def _is_alignment_required(args: argparse.Namespace, exc: Exception) -> bool:
@@ -363,6 +494,10 @@ def _write_report_atomic(
     }
     if catalog_error:
         payload["catalog_error"] = {"category": catalog_error[0], "message": catalog_error[1]}
+    _write_json_atomic(path, payload)
+
+
+def _write_json_atomic(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

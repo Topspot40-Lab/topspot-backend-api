@@ -31,7 +31,7 @@ def _uploaded(video_id: str = "video") -> dict[str, object]:
     return {"status": "uploaded", "video_id": video_id, "captions_uploaded": True}
 
 
-def _run(tmp_path: Path, uploads: dict[str, object], extra: list[str] | None = None, engine=None) -> tuple[int, list[list[str]], dict[str, object]]:
+def _run(tmp_path: Path, uploads: dict[str, object], extra: list[str] | None = None, engine=None, binding=None) -> tuple[int, list[list[str]], dict[str, object]]:
     state = _state(tmp_path / "state.json", uploads)
     report = tmp_path / "report.json"
     calls: list[list[str]] = []
@@ -39,9 +39,11 @@ def _run(tmp_path: Path, uploads: dict[str, object], extra: list[str] | None = N
         def engine(argv: list[str] | None) -> int:
             calls.append(list(argv or []))
             return 0
+    if binding is None and "--apply" in (extra or []):
+        binding = lambda item, _args: f"test-binding:{item.slug}:{item.language}:{item.video_id}"
     code = batch.main([
-        "--factory-work-root", str(tmp_path / "factories"), "--state", str(state), "--report", str(report), *(extra or [])
-    ], repair_main=engine)
+        "--factory-work-root", str(tmp_path / "factories"), "--state", str(state), "--report", str(report), "--ledger", str(tmp_path / "youtube_caption_repair_ledger.json"), *(extra or [])
+    ], repair_main=engine, binding_for_item=binding)
     return code, calls, json.loads(report.read_text(encoding="utf-8"))
 
 
@@ -294,7 +296,8 @@ def test_google_http_failures_are_classified_safely_and_batch_continues(
         engine,
     )
     assert code == 1
-    assert [call[0] for call in seen] == ["--slug=broken", "--slug=good"]
+    expected_calls = ["--slug=broken"] if reason == "quotaExceeded" else ["--slug=broken", "--slug=good"]
+    assert [call[0] for call in seen] == expected_calls
     failed = report["items"][0]
     assert failed["error_category"] == category
     assert failed["error_message"] == f"YouTube captions API request failed with HTTP {status}" + (
@@ -316,3 +319,63 @@ def test_audit_never_authorizes_elevenlabs_or_youtube_calls(tmp_path: Path, monk
     code, _, report = _run(tmp_path, {"alpha|en": _uploaded()}, engine=engine)
     assert code == 0
     assert report["items"][0]["status"] == "ready"
+
+
+def test_apply_ledger_skips_only_an_exact_successful_binding_and_records_each_success(tmp_path: Path) -> None:
+    seen: list[list[str]] = []
+    def engine(argv: list[str] | None) -> int:
+        seen.append(list(argv or [])); return 0
+    binding = lambda item, _args: f"binding:{item.video_id}"
+    extra = ["--apply", "--client-secrets", "client.json", "--confirm-apply-existing-captions"]
+    code, _, report = _run(tmp_path, {"alpha|en": _uploaded("one")}, extra, engine, binding)
+    assert code == 0 and report["items"][0]["status"] == "applied"
+    code, calls, report = _run(tmp_path, {"alpha|en": _uploaded("one")}, extra, engine, binding)
+    assert code == 0 and not calls and report["items"][0]["status"] == "already_applied"
+    code, calls, report = _run(tmp_path, {"alpha|en": _uploaded("two")}, extra, engine, binding)
+    assert code == 0 and len(seen) == 2 and report["items"][0]["status"] == "applied"
+    changed_binding = lambda item, _args: f"binding:changed-vtt-audio-transcript-alignment:{item.video_id}"
+    code, _, report = _run(tmp_path, {"alpha|en": _uploaded("two")}, extra, engine, changed_binding)
+    assert code == 0 and len(seen) == 3 and report["items"][0]["status"] == "applied"
+    ledger = json.loads((tmp_path / "youtube_caption_repair_ledger.json").read_text(encoding="utf-8"))
+    assert ledger["applied"]["alpha|en"]["video_id"] == "two"
+
+
+def test_max_updates_counts_youtube_calls_not_skipped_items(tmp_path: Path) -> None:
+    extra = ["--apply", "--client-secrets", "client.json", "--confirm-apply-existing-captions", "--max-updates", "1"]
+    binding = lambda item, _args: f"binding:{item.slug}"
+    # Seed alpha: it must not consume the one permitted update.
+    _run(tmp_path, {"alpha|en": _uploaded()}, extra[:-2], lambda _: 0, binding)
+    seen: list[list[str]] = []
+    def engine(argv: list[str] | None) -> int:
+        seen.append(list(argv or [])); return 0
+    code, _, report = _run(tmp_path, {"alpha|en": _uploaded(), "beta|es": _uploaded(), "gamma|pt-BR": _uploaded()}, extra, engine, binding)
+    assert code == 0 and len(seen) == 1
+    assert [item["status"] for item in report["items"]] == ["already_applied", "applied", "ready"]
+
+
+def test_quota_exceeded_stops_calls_and_never_records_failure(tmp_path: Path) -> None:
+    quota = json.dumps({"error": {"errors": [{"reason": "quotaExceeded"}]}}).encode()
+    seen: list[list[str]] = []
+    def engine(argv: list[str] | None) -> int:
+        seen.append(list(argv or []))
+        raise HttpError(403, quota)
+    extra = ["--apply", "--client-secrets", "client.json", "--confirm-apply-existing-captions", "--max-updates", "1"]
+    code, calls, report = _run(tmp_path, {"alpha|en": _uploaded(), "beta|es": _uploaded()}, extra, engine, lambda item, _: item.slug)
+    assert code == 1 and len(seen) == 1 and not calls
+    assert report["items"] == [{"slug": "alpha", "language": "en", "video_id": "video", "status": "quota_exceeded", "error_category": "youtube_quota_exceeded", "error_message": "YouTube captions API request failed with HTTP 403 (quotaExceeded)."}]
+    assert not (tmp_path / "youtube_caption_repair_ledger.json").exists()
+
+
+def test_offline_bootstrap_requires_confirmation_and_only_records_allowlisted_tracks(tmp_path: Path) -> None:
+    assert len(batch.BOOTSTRAP_APPLIED) == 20
+    with pytest.raises(SystemExit):
+        _run(tmp_path, {"ahmet_ertegun|en": _uploaded()}, ["--bootstrap-applied"])
+    code, calls, report = _run(
+        tmp_path, {"ahmet_ertegun|en": _uploaded(), "not_confirmed|es": _uploaded()},
+        ["--bootstrap-applied", "--confirm-bootstrap-applied"],
+        lambda _: pytest.fail("bootstrap must not call repair/YouTube"), lambda item, _: "offline:" + item.slug,
+    )
+    assert code == 1 and not calls
+    assert [item["status"] for item in report["items"]] == ["already_applied", "failed"]
+    ledger = json.loads((tmp_path / "youtube_caption_repair_ledger.json").read_text(encoding="utf-8"))
+    assert set(ledger["applied"]) == {"ahmet_ertegun|en"}

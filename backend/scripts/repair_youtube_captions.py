@@ -118,6 +118,120 @@ class LocalizedTranscripts:
 SEGMENTS = ("hook", "intro", "story", "outro")
 
 
+def validated_repair_fingerprint(
+    *, factory: Path, slug: str, language: str, legacy_env_file: Path | None = None
+) -> str:
+    """Return a stable proof of the exact repair that may be sent to YouTube.
+
+    This validates the authoritative narration/transcript source, both cached
+    alignments, timing, and the already-generated VTT.  It performs no remote
+    request; v2 transcript recovery is only available when the caller has
+    explicitly supplied its legacy environment file.
+    """
+    transcripts = _localized_transcripts(factory, language, slug=slug, legacy_env_file=legacy_env_file)
+    return _validated_fingerprint(factory, language, transcripts)
+
+
+def offline_validated_repair_fingerprint(*, factory: Path, language: str) -> str:
+    """Validate a local repair binding without database or network access.
+
+    V3 uses its authoritative transcript sidecar.  For historical v2 work the
+    existing VTT is the locally retained transcript representation; its two
+    timeline regions are independently revalidated against their cache keys.
+    """
+    sidecar = factory / "delivery" / language / "narration.inputs.json"
+    try:
+        payload = json.loads(sidecar.read_text(encoding="utf-8"))
+        version = payload.get("version")
+    except (OSError, json.JSONDecodeError, AttributeError) as exc:
+        raise RuntimeError("Authoritative narration inputs are invalid") from exc
+    if version == 3:
+        transcripts = _localized_transcripts(factory, language)
+    elif version == 2:
+        hashes = payload.get("source_sha256") if isinstance(payload, dict) else None
+        if not isinstance(hashes, dict) or set(hashes) != set(SEGMENTS):
+            raise RuntimeError("Authoritative narration audio digests are missing")
+        _verify_narration_hashes(factory / "delivery" / language / "narration", hashes, sidecar)
+        transcripts = _transcripts_from_repair_vtt(factory, language)
+    else:
+        raise RuntimeError("Authoritative narration inputs have an unsupported schema")
+    return _validated_fingerprint(factory, language, transcripts)
+
+
+def _validated_fingerprint(factory: Path, language: str, transcripts: LocalizedTranscripts) -> str:
+    from backend.studio.youtube.publishing_package import build_aligned_captions, documentary_timing, media_duration
+
+    narration = factory / "delivery" / language / "narration"
+    timing = documentary_timing(factory, language=language, probe=media_duration)
+    alignment_paths = _alignment_cache_paths(factory, narration, transcripts)
+    # A bootstrap/audit must only validate existing primary cache entries.  Do
+    # not promote a quarantine file as a side effect of proving a repair.
+    if any(not path.is_file() or path.stat().st_size == 0 for path in alignment_paths):
+        raise RuntimeError("A validated alignment cache is required for caption repair")
+    vtt = build_aligned_captions(
+        factory=factory, hook_audio=narration / "hook.mp3", hook_text=transcripts.hook,
+        hook_start=timing.hook_start, hook_duration=timing.durations["hook"],
+        story_audio=narration / "story.mp3", story_text=transcripts.story,
+        story_start=timing.story_start, story_duration=timing.durations["story"],
+        requester=_cached_alignment_only,
+    )
+    output = factory / "publishing_repair" / language / "captions.vtt"
+    if not output.is_file() or output.read_text(encoding="utf-8") != vtt:
+        raise RuntimeError("Corrected VTT is missing or does not match the validated alignment cache")
+    components = {
+        "vtt_sha256": _sha256(output),
+        # All four audio inputs are bound.  Intro/outro do not have captions,
+        # but changing either means this is no longer the exact assembled
+        # repair context (and intro can also move story timing).
+        "narration_sha256": {part: _sha256(narration / f"{part}.mp3") for part in SEGMENTS},
+        "hook_transcript_sha256": hashlib.sha256(transcripts.hook.encode("utf-8")).hexdigest(),
+        "story_transcript_sha256": hashlib.sha256(transcripts.story.encode("utf-8")).hexdigest(),
+        "hook_alignment_sha256": _sha256(alignment_paths[0]),
+        "story_alignment_sha256": _sha256(alignment_paths[1]),
+        "hook_start": timing.hook_start,
+        "story_start": timing.story_start,
+        "expected_duration": timing.expected_duration,
+        "documentary_duration": timing.documentary_duration,
+    }
+    return hashlib.sha256(json.dumps(components, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def _transcripts_from_repair_vtt(factory: Path, language: str) -> LocalizedTranscripts:
+    """Recover only the cleaned hook/story text encoded in a repair VTT."""
+    from backend.studio.youtube.publishing_package import documentary_timing, media_duration
+
+    path = factory / "publishing_repair" / language / "captions.vtt"
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError as exc:
+        raise RuntimeError("Corrected VTT is missing") from exc
+    timing = documentary_timing(factory, language=language, probe=media_duration)
+    hook: list[str] = []
+    story: list[str] = []
+    for index, line in enumerate(lines):
+        if " --> " not in line or index + 1 >= len(lines):
+            continue
+        try:
+            start = _vtt_seconds(line.split(" --> ", 1)[0])
+        except ValueError as exc:
+            raise RuntimeError("Corrected VTT has an invalid cue timeline") from exc
+        text = lines[index + 1].strip()
+        if not text:
+            raise RuntimeError("Corrected VTT has an empty cue")
+        if start < timing.story_start:
+            hook.append(text)
+        else:
+            story.append(text)
+    if not hook or not story:
+        raise RuntimeError("Corrected VTT does not contain both repaired transcript regions")
+    return LocalizedTranscripts(" ".join(hook), " ".join(story))
+
+
+def _vtt_seconds(value: str) -> float:
+    hours, minutes, seconds = value.split(":")
+    return int(hours) * 3600 + int(minutes) * 60 + float(seconds)
+
+
 def _factory_root(factory_root: Path | None, *, work_root: Path, slug: str) -> Path:
     """Resolve an exact topic factory directory and reject cross-topic inputs."""
     candidate = factory_root if factory_root is not None else work_root / slug / "factory"
