@@ -91,6 +91,20 @@ def main(
     updates = 0
     for item in items:
         fingerprint: str | None = None
+        if not args.align and not args.apply:
+            # A cache-only audit can prove that an existing bootstrap entry is
+            # still the exact local repair without invoking legacy recovery or
+            # any remote service.  If local validation cannot prove it, retain
+            # the normal repair CLI diagnostic path below.
+            try:
+                fingerprint = (binding_for_item or _offline_binding_for_item)(item, args)
+            except Exception:
+                fingerprint = None
+            if fingerprint is not None and _ledger_matches(ledger, item, fingerprint):
+                result = _result(item, "already_applied")
+                results.append(result)
+                print(f"ALREADY_APPLIED {item.slug}/{item.language}")
+                continue
         if args.apply:
             try:
                 fingerprint = (binding_for_item or _binding_for_item)(item, args)
@@ -313,12 +327,19 @@ def _bootstrap(items: list[UploadedItem], args: argparse.Namespace, binding_for_
         else:
             try:
                 fingerprint = binding_for_item(item, args)
-                _record_success_atomic(args.ledger, ledger, item, fingerprint)
-                result = _result(item, "already_applied")
+                if _ledger_matches(ledger, item, fingerprint):
+                    result = _result(item, "already_applied")
+                else:
+                    # The binding is computed exactly once, then immediately
+                    # persisted with an atomic replacement before reporting
+                    # this locally attested repair as bootstrapped.
+                    _record_success_atomic(args.ledger, ledger, item, fingerprint)
+                    result = _result(item, "bootstrapped")
             except Exception as exc:
                 result = _failed_item(item, exc)
         results.append(result)
-        print(f"{result['status'].upper()} {item.slug}/{item.language}")
+        detail = f" ({result['error_category']}: {result['error_message']})" if "error_category" in result else ""
+        print(f"{result['status'].upper()} {item.slug}/{item.language}{detail}")
     _write_report_atomic(args.report, mode="bootstrap", items=results)
     summary = _summary(results)
     print("SUMMARY " + " ".join(f"{key}={value}" for key, value in sorted(summary.items())))
@@ -381,7 +402,6 @@ def _safe_error(exc: Exception) -> tuple[str, str]:
     """Keep operational diagnostics useful without exposing sensitive inputs."""
     if diagnostic := _google_http_diagnostic(exc):
         return diagnostic
-    category = type(exc).__name__
     message = str(exc) or "Repair engine failed without a diagnostic"
     message = re.sub(r"\b(?:postgres(?:ql)?|mysql|https?)://\S+", "[redacted-url]", message, flags=re.IGNORECASE)
     message = re.sub(r"(?i)(api[_ -]?key|token|password|secret)\s*[=:]\s*\S+", r"\1=[redacted]", message)
@@ -410,7 +430,13 @@ def _safe_error(exc: Exception) -> tuple[str, str]:
     )
     if not message.startswith(safe_prefixes):
         message = "Repair engine failed; inspect local command diagnostics."
-    return category, message[:500]
+    if message.startswith("A validated alignment cache"):
+        return "alignment_cache_missing", message[:500]
+    if message.startswith("Cached alignment") or message.startswith("Quarantined alignment"):
+        return "alignment_cache_invalid", message[:500]
+    if message.startswith("Final documentary duration") or message.startswith("Legacy-v2 reconstructed duration"):
+        return "timing_validation_failed", message[:500]
+    return type(exc).__name__, message[:500]
 
 
 def _google_http_diagnostic(exc: Exception) -> tuple[str, str] | None:

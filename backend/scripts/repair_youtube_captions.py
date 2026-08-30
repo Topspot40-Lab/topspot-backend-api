@@ -8,7 +8,10 @@ import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from backend.studio.youtube.publishing_package import DocumentaryTiming
 
 
 KNOWN_VIDEO_IDS = {("music_in_the_new_millennium", "en"): "tTiah5ncQsw"}
@@ -147,22 +150,32 @@ def offline_validated_repair_fingerprint(*, factory: Path, language: str) -> str
         raise RuntimeError("Authoritative narration inputs are invalid") from exc
     if version == 3:
         transcripts = _localized_transcripts(factory, language)
+        timing = None
     elif version == 2:
         hashes = payload.get("source_sha256") if isinstance(payload, dict) else None
         if not isinstance(hashes, dict) or set(hashes) != set(SEGMENTS):
             raise RuntimeError("Authoritative narration audio digests are missing")
         _verify_narration_hashes(factory / "delivery" / language / "narration", hashes, sidecar)
-        transcripts = _transcripts_from_repair_vtt(factory, language)
+        # Legacy VTT recovery needs the story boundary.  Keep this one
+        # measured timeline for the fingerprint too: probing media twice can
+        # produce duplicate verification output and needlessly repeats the
+        # same production validation.
+        from backend.studio.youtube.publishing_package import documentary_timing, media_duration
+        timing = documentary_timing(factory, language=language, probe=media_duration)
+        transcripts = _transcripts_from_repair_vtt(factory, language, timing=timing)
     else:
         raise RuntimeError("Authoritative narration inputs have an unsupported schema")
-    return _validated_fingerprint(factory, language, transcripts)
+    return _validated_fingerprint(factory, language, transcripts, timing=timing)
 
 
-def _validated_fingerprint(factory: Path, language: str, transcripts: LocalizedTranscripts) -> str:
+def _validated_fingerprint(
+    factory: Path, language: str, transcripts: LocalizedTranscripts, *, timing: DocumentaryTiming | None = None
+) -> str:
     from backend.studio.youtube.publishing_package import build_aligned_captions, documentary_timing, media_duration
 
     narration = factory / "delivery" / language / "narration"
-    timing = documentary_timing(factory, language=language, probe=media_duration)
+    if timing is None:
+        timing = documentary_timing(factory, language=language, probe=media_duration)
     alignment_paths = _alignment_cache_paths(factory, narration, transcripts)
     # A bootstrap/audit must only validate existing primary cache entries.  Do
     # not promote a quarantine file as a side effect of proving a repair.
@@ -196,16 +209,15 @@ def _validated_fingerprint(factory: Path, language: str, transcripts: LocalizedT
     return hashlib.sha256(json.dumps(components, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
-def _transcripts_from_repair_vtt(factory: Path, language: str) -> LocalizedTranscripts:
+def _transcripts_from_repair_vtt(
+    factory: Path, language: str, *, timing: DocumentaryTiming
+) -> LocalizedTranscripts:
     """Recover only the cleaned hook/story text encoded in a repair VTT."""
-    from backend.studio.youtube.publishing_package import documentary_timing, media_duration
-
     path = factory / "publishing_repair" / language / "captions.vtt"
     try:
         lines = path.read_text(encoding="utf-8").splitlines()
     except OSError as exc:
         raise RuntimeError("Corrected VTT is missing") from exc
-    timing = documentary_timing(factory, language=language, probe=media_duration)
     hook: list[str] = []
     story: list[str] = []
     for index, line in enumerate(lines):

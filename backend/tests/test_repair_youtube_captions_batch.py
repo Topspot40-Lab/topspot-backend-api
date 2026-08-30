@@ -8,6 +8,17 @@ from types import SimpleNamespace
 import pytest
 
 from backend.scripts import repair_youtube_captions_batch as batch
+from backend.studio.studio_config import (
+    HOOK_PAUSE_SECONDS,
+    INTRO_PAUSE_SECONDS,
+    OUTRO_PAUSE_SECONDS,
+)
+from backend.studio.youtube.caption_alignment import clean_transcript
+from backend.studio.youtube.publishing_package import (
+    LEGACY_V2_FINAL_TAIL_SECONDS,
+    build_aligned_captions,
+    documentary_timing,
+)
 
 
 class HttpError(Exception):
@@ -230,7 +241,7 @@ def test_invalid_alignment_cache_remains_failed(tmp_path: Path) -> None:
     code, _, report = _run(tmp_path, {"alpha|en": _uploaded()}, engine=engine)
     assert code == 1
     assert report["items"][0]["status"] == "failed"
-    assert report["items"][0]["error_category"] == "AlignmentError"
+    assert report["items"][0]["error_category"] == "alignment_cache_invalid"
 
 
 def test_filters_max_items_and_deterministic_order(tmp_path: Path) -> None:
@@ -376,6 +387,69 @@ def test_offline_bootstrap_requires_confirmation_and_only_records_allowlisted_tr
         lambda _: pytest.fail("bootstrap must not call repair/YouTube"), lambda item, _: "offline:" + item.slug,
     )
     assert code == 1 and not calls
-    assert [item["status"] for item in report["items"]] == ["already_applied", "failed"]
+    assert [item["status"] for item in report["items"]] == ["bootstrapped", "failed"]
     ledger = json.loads((tmp_path / "youtube_caption_repair_ledger.json").read_text(encoding="utf-8"))
     assert set(ledger["applied"]) == {"ahmet_ertegun|en"}
+
+
+def test_real_v2_bootstrap_records_once_and_cache_only_audit_recognizes_it(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Exercise batch -> offline fingerprint -> real cache/VTT validation with no credentials."""
+    slug, language, video_id = "music_in_the_new_millennium", "en", "tTiah5ncQsw"
+    factories = tmp_path / "factories"
+    factory = _write_cache_only_factory(factories, slug, language)
+    sidecar = factory / "delivery" / language / "narration.inputs.json"
+    payload = json.loads(sidecar.read_text(encoding="utf-8"))
+    payload.pop("transcripts")
+    payload["version"] = 2
+    sidecar.write_text(json.dumps(payload), encoding="utf-8")
+
+    narration = factory / "delivery" / language / "narration"
+    transcripts = {"hook": "The legacy hook.", "story": "The legacy story."}
+    cache = factory / "cache" / "caption_alignment"
+    cache.mkdir(parents=True)
+    for part, text in transcripts.items():
+        words = [
+            {"text": word, "start": index * 2.0, "end": index * 2.0 + 1.0, "loss": 0.0}
+            for index, word in enumerate(text.split())
+        ]
+        key = batch.repair._alignment_cache_key(narration / f"{part}.mp3", clean_transcript(text))
+        (cache / f"{key}.json").write_text(json.dumps({"loss": 0.0, "words": words}), encoding="utf-8")
+
+    timing_calls: list[Path] = []
+    def duration(path: Path) -> float:
+        timing_calls.append(path)
+        if path.name == "opening.mp4":
+            return 3.0
+        if path.name == "documentary.mp4":
+            return 3.0 + 40.0 + HOOK_PAUSE_SECONDS + INTRO_PAUSE_SECONDS + OUTRO_PAUSE_SECONDS + LEGACY_V2_FINAL_TAIL_SECONDS
+        return 10.0
+
+    monkeypatch.setattr("backend.studio.youtube.publishing_package.media_duration", duration)
+    monkeypatch.setattr("backend.studio.youtube.caption_alignment.requests.post", lambda *_a, **_k: pytest.fail("no ElevenLabs call"))
+    monkeypatch.setattr("backend.studio.youtube.uploader.upload_captions", lambda *_a, **_k: pytest.fail("no YouTube call"))
+    timing = documentary_timing(factory, language=language, probe=duration)
+    vtt = build_aligned_captions(
+        factory=factory, hook_audio=narration / "hook.mp3", hook_text=transcripts["hook"],
+        hook_start=timing.hook_start, hook_duration=timing.durations["hook"],
+        story_audio=narration / "story.mp3", story_text=transcripts["story"],
+        story_start=timing.story_start, story_duration=timing.durations["story"],
+        requester=batch.repair._cached_alignment_only,
+    )
+    output = factory / "publishing_repair" / language / "captions.vtt"
+    output.parent.mkdir(parents=True)
+    output.write_text(vtt, encoding="utf-8")
+    timing_calls.clear()
+
+    state = _state(tmp_path / "state.json", {f"{slug}|{language}": _uploaded(video_id)})
+    report, ledger = tmp_path / "report.json", tmp_path / "ledger.json"
+    args = ["--factory-work-root", str(factories), "--state", str(state), "--report", str(report), "--ledger", str(ledger), "--slug", slug, "--language", language]
+    assert batch.main([*args, "--bootstrap-applied", "--confirm-bootstrap-applied"], repair_main=batch.repair.main) == 0
+    assert json.loads(report.read_text(encoding="utf-8"))["items"][0]["status"] == "bootstrapped"
+    saved = json.loads(ledger.read_text(encoding="utf-8"))["applied"]
+    assert list(saved) == [f"{slug}|{language}"]
+    assert len(timing_calls) == 6  # one documentary_timing invocation, not two
+
+    assert batch.main(args, repair_main=batch.repair.main) == 0
+    assert json.loads(report.read_text(encoding="utf-8"))["items"][0]["status"] == "already_applied"
