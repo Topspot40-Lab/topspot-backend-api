@@ -33,6 +33,35 @@ def parse_supabase_timestamptz(
     return parsed.astimezone(timezone.utc)
 
 
+def compute_complimentary_access(
+    user: dict[str, Any] | None,
+    *,
+    now: datetime | None = None,
+) -> dict[str, Any] | None:
+    """Return active complimentary access, or None when normal rules apply."""
+    if not user or user.get("complimentary_access") is not True:
+        return None
+
+    current_time = parse_supabase_timestamptz(now) if now is not None else utc_now()
+    expires_at = parse_supabase_timestamptz(
+        user.get("complimentary_access_expires_at")
+    )
+    if expires_at is not None and expires_at <= current_time:
+        return None
+
+    response = {
+        "is_subscribed": True,
+        "status": "complimentary",
+        "access_state": "complimentary",
+        "access_source": "complimentary",
+        "requires_checkout": False,
+        "complimentary_reason": user.get("complimentary_access_reason"),
+    }
+    if expires_at is not None:
+        response["access_expires_at"] = expires_at.isoformat()
+    return response
+
+
 def compute_offer_access(
     entitlement: dict[str, Any] | None,
     *,

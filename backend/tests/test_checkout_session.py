@@ -219,6 +219,57 @@ def test_create_checkout_session_blocks_grace_2027_standard_checkout():
     mock_create.assert_not_called()
 
 
+def test_active_complimentary_user_cannot_open_standard_checkout():
+    user_result = MagicMock()
+    user_result.data = {
+        "stripe_customer_id": None,
+        "complimentary_access": True,
+        "complimentary_access_expires_at": None,
+        "complimentary_access_reason": "Lifetime award",
+    }
+    entitlement_result = MagicMock()
+    entitlement_result.data = []
+    fake_supabase = _checkout_supabase(user_result, entitlement_result)
+
+    with patch("backend.isaiah.isaiah_router.decode_jwt_token", return_value={"user_id": "topspot-user-123"}), patch(
+        "backend.isaiah.isaiah_router.STRIPE_PRICE_ID", "price_test_123"
+    ), patch("backend.isaiah.isaiah_router.stripe_config", {"secret_key": "sk_test_fake"}), patch(
+        "backend.isaiah.isaiah_router.supabase", fake_supabase
+    ), patch("backend.isaiah.isaiah_router.stripe.checkout.Session.create") as mock_create:
+        response = client.post("/api/create-checkout-session", cookies={"access_token": "fake_jwt"})
+
+    assert response.status_code == 403
+    mock_create.assert_not_called()
+
+
+def test_active_complimentary_user_cannot_open_early_checkout():
+    user_result = MagicMock()
+    user_result.data = {
+        "stripe_customer_id": None,
+        "complimentary_access": True,
+        "complimentary_access_expires_at": None,
+        "complimentary_access_reason": "Lifetime award",
+    }
+    entitlement_result = MagicMock()
+    entitlement_result.data = [
+        {"offer_code": "topspot_2026_free_2027_discount"}
+    ]
+    fake_supabase = _checkout_supabase(user_result, entitlement_result)
+
+    with patch("backend.isaiah.isaiah_router.decode_jwt_token", return_value={"user_id": "topspot-user-123"}), patch(
+        "backend.isaiah.isaiah_router.stripe_config", {"secret_key": "sk_test_fake"}
+    ), patch("backend.isaiah.isaiah_router.supabase", fake_supabase), patch(
+        "backend.isaiah.isaiah_router.stripe.checkout.Session.create"
+    ) as mock_create:
+        response = client.post(
+            "/api/create-2027-promo-checkout-session?plan=monthly",
+            cookies={"access_token": "fake_jwt"},
+        )
+
+    assert response.status_code == 403
+    mock_create.assert_not_called()
+
+
 
 def test_create_2027_promo_checkout_uses_monthly_promo_price():
     fake_session = MagicMock()

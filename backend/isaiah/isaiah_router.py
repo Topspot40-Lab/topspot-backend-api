@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import stripe
 from backend.isaiah.jwt_session import create_jwt_token, JWT_EXP_DELTA_SECONDS, decode_jwt_token
 from backend.isaiah.isaiah_spotify import get_valid_access_token
-from backend.isaiah.offer_access import OFFER_CODE, compute_offer_access, parse_supabase_timestamptz
+from backend.isaiah.offer_access import OFFER_CODE, compute_complimentary_access, compute_offer_access
 from datetime import datetime, timedelta, timezone
 #from main import supabase  # import your Supabase client
 from supabase import create_client
@@ -105,7 +105,6 @@ async def get_or_create_topspot_user(user_profile: dict):
         "spotify_country": user_profile.get("country"),
         "spotify_product": user_profile.get("product"),
         "role": "user", # default permissions
-        "is_tester": False,
         "spotify_profile_image": user_profile.get("images")[0]["url"] if user_profile.get("images") else None,
     }).execute()
 
@@ -317,10 +316,16 @@ async def create_checkout_session(access_token: str = Cookie(None)):
     user_id = payload["user_id"]
 
     user = supabase.table("topspot_users") \
-        .select("stripe_customer_id") \
+        .select("stripe_customer_id, complimentary_access, complimentary_access_expires_at, complimentary_access_reason") \
         .eq("id", user_id) \
         .single() \
         .execute()
+
+    if compute_complimentary_access(user.data):
+        raise HTTPException(
+            status_code=403,
+            detail="Checkout is unavailable while complimentary access is active",
+        )
 
     stripe_customer_id = (
         user.data.get("stripe_customer_id")
@@ -399,13 +404,19 @@ async def create_2027_promo_checkout_session(
     user_id = payload["user_id"]
 
     user = supabase.table("topspot_users") \
-        .select("stripe_customer_id") \
+        .select("stripe_customer_id, complimentary_access, complimentary_access_expires_at, complimentary_access_reason") \
         .eq("id", user_id) \
         .single() \
         .execute()
 
     if not user.data:
         raise HTTPException(status_code=404, detail="User not found")
+
+    if compute_complimentary_access(user.data):
+        raise HTTPException(
+            status_code=403,
+            detail="Checkout is unavailable while complimentary access is active",
+        )
 
     stripe_customer_id = user.data.get("stripe_customer_id")
 
@@ -524,22 +535,6 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
         raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
     user_id = payload["user_id"]
 
-    user = supabase.table("topspot_users") \
-        .select("is_tester") \
-        .eq("id", user_id) \
-        .single() \
-        .execute()
-
-    if user.data and user.data.get("is_tester"):
-        return {
-            "status": "tester",
-            "subscription_id": None,
-            "is_active": True
-        }
-    
-    
-
-
     try:
         # Retrieve the checkout session
         session = stripe.checkout.Session.retrieve(session_id)
@@ -642,14 +637,9 @@ async def get_subscription_status(access_token: str = Cookie(None)):
         logger.critical("❌ No spotify premium found")
         return {"is_subscribed": False}
         """
-    if user.data and user.data.get("is_tester"):
-        return {
-            "is_subscribed": True,
-            "status": "tester",
-            "access_state": "tester",
-            "access_source": "tester",
-            "requires_checkout": False
-        }
+    complimentary_access = compute_complimentary_access(user.data)
+    if complimentary_access:
+        return complimentary_access
 
     res = supabase.table("subscriptions").select("*").eq("user_id", user_id).in_("status", ["active", "past_due"]).limit(1).execute()
     
@@ -771,127 +761,6 @@ def consume_2027_promo_discount_if_applicable(subscription, customer_id: str, us
         .eq("offer_code", OFFER_CODE) \
         .is_("discount_consumed_at", None) \
         .execute()
-
-
-def create_2027_promo_subscription_schedule_if_applicable(subscription, user_id: str):
-    metadata = subscription.get("metadata", {}) or {}
-    plan_kind = metadata.get("topspot_plan_kind")
-
-    if plan_kind not in ("promo_2027_monthly", "promo_2027_annual"):
-        return
-
-    subscription_id = subscription.get("id")
-    if not subscription_id:
-        logger.warning("Cannot create 2027 promotional schedule without subscription ID")
-        return
-
-    existing_schedule = subscription.get("schedule")
-    if isinstance(existing_schedule, dict):
-        existing_schedule_id = existing_schedule.get("id")
-    else:
-        existing_schedule_id = existing_schedule
-
-    entitlement_res = supabase.table("topspot_offer_entitlements") \
-        .select("standard_transition_at") \
-        .eq("user_id", user_id) \
-        .eq("offer_code", OFFER_CODE) \
-        .limit(1) \
-        .execute()
-
-    entitlement = entitlement_res.data[0] if entitlement_res.data else None
-    if not entitlement:
-        logger.warning(
-            "Cannot create 2027 promotional schedule without entitlement | user_id=%s",
-            user_id,
-        )
-        return
-
-    transition_at = parse_supabase_timestamptz(
-        entitlement.get("standard_transition_at")
-    )
-    if transition_at is None:
-        logger.warning(
-            "Cannot create 2027 promotional schedule without standard transition timestamp"
-        )
-        return
-
-    transition_timestamp = int(transition_at.timestamp())
-
-    subscription_items = subscription.get("items", {}).get("data", [])
-    if not subscription_items:
-        logger.warning("Cannot create 2027 promotional schedule without subscription item")
-        return
-
-    current_price_id = subscription_items[0].get("price", {}).get("id")
-    if not current_price_id:
-        logger.warning("Cannot create 2027 promotional schedule without current price ID")
-        return
-
-    standard_price_id = (
-        STRIPE_STANDARD_MONTHLY_PRICE_ID
-        if plan_kind == "promo_2027_monthly"
-        else STRIPE_STANDARD_ANNUAL_PRICE_ID
-    )
-
-    if not standard_price_id:
-        logger.warning("Cannot create 2027 promotional schedule without standard price ID")
-        return
-
-    if existing_schedule_id:
-        schedule = stripe.SubscriptionSchedule.retrieve(existing_schedule_id)
-    else:
-        schedule = stripe.SubscriptionSchedule.create(
-            from_subscription=subscription_id,
-            metadata={
-                "topspot_user_id": user_id,
-                "topspot_plan_kind": plan_kind,
-            },
-        )
-
-    current_phase = schedule.get("current_phase") or {}
-    current_phase_start = current_phase.get("start_date")
-
-    if not current_phase_start:
-        logger.warning(
-            "Cannot configure 2027 promotional schedule without current phase start"
-        )
-        return
-
-    future_phase = {
-        "start_date": transition_timestamp,
-        "duration": {
-            "interval": "year",
-            "interval_count": 1,
-        },
-        "items": [{
-            "price": standard_price_id,
-            "quantity": 1,
-        }],
-        "proration_behavior": "none",
-    }
-
-    if plan_kind == "promo_2027_annual":
-        future_phase["billing_cycle_anchor"] = "phase_start"
-
-    stripe.SubscriptionSchedule.modify(
-        schedule["id"],
-        end_behavior="release",
-        proration_behavior="none",
-        phases=[
-            {
-                "start_date": current_phase_start,
-                "end_date": transition_timestamp,
-                "items": [{
-                    "price": current_price_id,
-                    "quantity": 1,
-                }],
-                "proration_behavior": "none",
-            },
-            future_phase,
-        ],
-    )
-
-
 
 
 """
@@ -1056,7 +925,6 @@ async def stripe_webhook(request: Request):
 
                     sync_subscription_to_supabase(subscription, customer_id, user_id)
                     consume_2027_promo_discount_if_applicable(subscription, customer_id, user_id)
-                    create_2027_promo_subscription_schedule_if_applicable(subscription, user_id)
                     return JSONResponse({"status": "recovered_via_metadata"})
                 return JSONResponse({"status": "no_user_found"})
             
@@ -1067,7 +935,6 @@ async def stripe_webhook(request: Request):
 
             sync_subscription_to_supabase(subscription, customer_id, user_id)
             consume_2027_promo_discount_if_applicable(subscription, customer_id, user_id)
-            create_2027_promo_subscription_schedule_if_applicable(subscription, user_id)
             logger.critical("💰 Subscription RENEWED + period extended")
 
 

@@ -58,7 +58,6 @@ EXPECTED_MOUNTED_ROUTES = {
     ("GET", "/music-docuseries/collections"),
     ("GET", "/music-docuseries/items"),
     ("POST", "/music-docuseries/play"),
-    ("POST", "/admin/set-tester"),
 }
 
 
