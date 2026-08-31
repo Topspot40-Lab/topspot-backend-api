@@ -23,9 +23,6 @@ from backend.routers.artist_spotlight import router as artist_spotlight_router
 from backend.isaiah.isaiah_router import stripe_router
 from backend.isaiah.isaiah_router import spotify_user_auth_router
 
-# ADMIN
-from backend.routers.admin import router as admin_router
-
 from backend.routers import supabase_collections
 
 import logging
@@ -109,7 +106,3 @@ app.include_router(resend_webhook_router, prefix="/api")
 app.include_router(feedback_router, prefix="/api")
 app.include_router(supabase_collections.router)
 app.include_router(music_docuseries_router)
-
-
-# ADMIN endpoints
-app.include_router(admin_router)

@@ -109,25 +109,62 @@ def get_status(fake_supabase, user_id="topspot-user-123"):
     return response
 
 
-def test_tester_bypass_returns_tester_fields_and_does_not_need_entitlement_access():
-    fake_supabase = FakeSupabase(user={"id": "topspot-user-123", "is_tester": True})
+def test_lifetime_complimentary_access_takes_priority_over_paid_access():
+    fake_supabase = FakeSupabase(user={
+        "id": "topspot-user-123",
+        "complimentary_access": True,
+        "complimentary_access_expires_at": None,
+        "complimentary_access_reason": "Founding contributor",
+    }, subscription_rows=[{"status": "active"}])
 
     response = get_status(fake_supabase)
 
     assert response.status_code == 200
     assert response.json() == {
         "is_subscribed": True,
-        "status": "tester",
-        "access_state": "tester",
-        "access_source": "tester",
+        "status": "complimentary",
+        "access_state": "complimentary",
+        "access_source": "complimentary",
         "requires_checkout": False,
+        "complimentary_reason": "Founding contributor",
     }
     assert fake_supabase.calls_for("topspot_offer_entitlements") == []
 
 
+def test_temporary_complimentary_access_includes_expiration():
+    expires_at = (datetime.now(timezone.utc) + timedelta(days=1)).isoformat()
+    fake_supabase = FakeSupabase(user={
+        "id": "topspot-user-123",
+        "complimentary_access": True,
+        "complimentary_access_expires_at": expires_at,
+        "complimentary_access_reason": "Partner access",
+    })
+
+    response = get_status(fake_supabase)
+
+    assert response.status_code == 200
+    assert response.json()["access_expires_at"] == expires_at
+    assert response.json()["complimentary_reason"] == "Partner access"
+
+
+def test_expired_complimentary_access_falls_through_to_paid_access():
+    fake_supabase = FakeSupabase(user={
+        "id": "topspot-user-123",
+        "complimentary_access": True,
+        "complimentary_access_expires_at": (datetime.now(timezone.utc) - timedelta(days=1)).isoformat(),
+    }, subscription_rows=[{"status": "active"}])
+
+    response = get_status(fake_supabase)
+
+    assert response.status_code == 200
+    assert response.json()["access_state"] == "paid"
+
+
+
+
 def test_active_stripe_returns_paid_fields_and_does_not_need_entitlement_access():
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         subscription_rows=[{
             "status": "active",
             "current_period_start": "2026-08-01T00:00:00+00:00",
@@ -155,7 +192,7 @@ def test_active_stripe_returns_paid_fields_and_does_not_need_entitlement_access(
 
 def test_free_entitlement_returns_helper_free_2026_response():
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         entitlement_rows=[entitlement()],
     )
 
@@ -174,7 +211,7 @@ def test_free_entitlement_returns_helper_free_2026_response():
 def test_grace_entitlement_returns_helper_grace_2027_response():
     now = datetime.now(timezone.utc)
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         entitlement_rows=[
             entitlement(
                 free_access_expires_at=(now - timedelta(days=1)).isoformat(),
@@ -198,7 +235,7 @@ def test_grace_entitlement_returns_helper_grace_2027_response():
 def test_expired_entitlement_returns_unsubscribed_expired():
     now = datetime.now(timezone.utc)
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         entitlement_rows=[
             entitlement(
                 free_access_expires_at=(now - timedelta(days=2)).isoformat(),
@@ -216,7 +253,7 @@ def test_expired_entitlement_returns_unsubscribed_expired():
 
 
 def test_no_entitlement_returns_inactive_none():
-    fake_supabase = FakeSupabase(user={"id": "topspot-user-123", "is_tester": False})
+    fake_supabase = FakeSupabase(user={"id": "topspot-user-123"})
 
     response = get_status(fake_supabase)
 
@@ -235,7 +272,7 @@ def test_no_entitlement_returns_inactive_none():
 
 def test_entitlement_query_failure_returns_http_500():
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         fail_entitlement=True,
     )
 
@@ -246,7 +283,7 @@ def test_entitlement_query_failure_returns_http_500():
 
 
 def test_canonical_jwt_user_id_is_used_in_entitlement_filter():
-    fake_supabase = FakeSupabase(user={"id": "different-row-id", "is_tester": False})
+    fake_supabase = FakeSupabase(user={"id": "different-row-id"})
 
     response = get_status(fake_supabase, user_id="canonical-jwt-user-id")
 
@@ -256,7 +293,7 @@ def test_canonical_jwt_user_id_is_used_in_entitlement_filter():
 
 
 def test_offer_code_filter_uses_offer_code_constant():
-    fake_supabase = FakeSupabase(user={"id": "topspot-user-123", "is_tester": False})
+    fake_supabase = FakeSupabase(user={"id": "topspot-user-123"})
 
     response = get_status(fake_supabase)
 
@@ -268,10 +305,10 @@ def test_offer_code_filter_uses_offer_code_constant():
 
 def test_existing_is_subscribed_compatibility_remains_intact():
     cases = [
-        (FakeSupabase(user={"id": "u1", "is_tester": True}), True),
-        (FakeSupabase(user={"id": "u1", "is_tester": False}, subscription_rows=[{"status": "active"}]), True),
-        (FakeSupabase(user={"id": "u1", "is_tester": False}, entitlement_rows=[entitlement()]), True),
-        (FakeSupabase(user={"id": "u1", "is_tester": False}), False),
+        (FakeSupabase(user={"id": "u1", "complimentary_access": True}), True),
+        (FakeSupabase(user={"id": "u1"}, subscription_rows=[{"status": "active"}]), True),
+        (FakeSupabase(user={"id": "u1"}, entitlement_rows=[entitlement()]), True),
+        (FakeSupabase(user={"id": "u1"}), False),
     ]
 
     for fake_supabase, expected in cases:
@@ -282,7 +319,7 @@ def test_existing_is_subscribed_compatibility_remains_intact():
 
 def test_past_due_stripe_keeps_paid_access_during_retry_period():
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         subscription_rows=[{
             "status": "past_due",
             "current_period_start": "2026-08-01T00:00:00+00:00",
@@ -309,7 +346,7 @@ def test_past_due_stripe_keeps_paid_access_during_retry_period():
 
 def test_unpaid_stripe_does_not_keep_paid_access():
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         subscription_rows=[{
             "status": "unpaid",
             "current_period_start": "2026-08-01T00:00:00+00:00",
@@ -327,7 +364,7 @@ def test_unpaid_stripe_does_not_keep_paid_access():
 
 def test_canceled_stripe_does_not_keep_paid_access():
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         subscription_rows=[{
             "status": "canceled",
             "current_period_start": "2026-08-01T00:00:00+00:00",
@@ -344,7 +381,7 @@ def test_canceled_stripe_does_not_keep_paid_access():
 
 def test_subscription_query_does_not_exclude_past_due_paid_access():
     fake_supabase = FakeSupabase(
-        user={"id": "topspot-user-123", "is_tester": False},
+        user={"id": "topspot-user-123"},
         subscription_rows=[{
             "status": "past_due",
             "current_period_start": "2026-08-01T00:00:00+00:00",

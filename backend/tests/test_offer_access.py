@@ -4,6 +4,7 @@ import pytest
 
 from backend.isaiah.offer_access import (
     OFFER_CODE,
+    compute_complimentary_access,
     compute_offer_access,
     parse_supabase_timestamptz,
     utc_now,
@@ -49,6 +50,38 @@ def test_no_entitlement():
         "discount_used": False,
         "discount_available": False,
     }
+
+
+def test_lifetime_complimentary_access_has_no_expiration():
+    assert compute_complimentary_access({
+        "complimentary_access": True,
+        "complimentary_access_reason": "Lifetime award",
+    }, now=dt("2026-01-01T00:00:00+00:00")) == {
+        "is_subscribed": True,
+        "status": "complimentary",
+        "access_state": "complimentary",
+        "access_source": "complimentary",
+        "requires_checkout": False,
+        "complimentary_reason": "Lifetime award",
+    }
+
+
+def test_temporary_complimentary_access_includes_expiration():
+    result = compute_complimentary_access({
+        "complimentary_access": True,
+        "complimentary_access_expires_at": "2026-02-01T00:00:00+00:00",
+        "complimentary_access_reason": "Launch promotion",
+    }, now=dt("2026-01-01T00:00:00+00:00"))
+
+    assert result["access_expires_at"] == "2026-02-01T00:00:00+00:00"
+    assert result["complimentary_reason"] == "Launch promotion"
+
+
+def test_expired_complimentary_access_falls_through_to_normal_rules():
+    assert compute_complimentary_access({
+        "complimentary_access": True,
+        "complimentary_access_expires_at": "2025-12-31T23:59:59+00:00",
+    }, now=dt("2026-01-01T00:00:00+00:00")) is None
 
 
 def test_free_access_immediately_before_free_boundary():
