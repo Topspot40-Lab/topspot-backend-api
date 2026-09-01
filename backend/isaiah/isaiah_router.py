@@ -12,6 +12,7 @@ from datetime import datetime, timedelta, timezone
 #from main import supabase  # import your Supabase client
 from supabase import create_client
 import logging
+from collections.abc import Mapping
 from backend.isaiah.isaiah_helper import get_env_config, get_spotify_redirect_uri, get_frontend_url
 import uuid
 from backend.isaiah.isaiah_helper import get_stripe_config
@@ -61,6 +62,30 @@ SPOTIFY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
 spotify_user_auth_router = APIRouter()
 play_router = APIRouter()
 stripe_router = APIRouter()
+
+
+def _checkout_session_is_owned_by_user(session, user_id: str) -> bool:
+    """Return whether a Checkout Session has the expected TopSpot owner.
+
+    Checkout creation writes the TopSpot user ID to both fields. Requiring both
+    values prevents callers from using a guessed session ID to inspect another
+    customer's subscription.
+    """
+    if not isinstance(user_id, str) or not user_id or user_id.strip() != user_id:
+        return False
+
+    client_reference_id = session.get("client_reference_id")
+    metadata = session.get("metadata")
+    if not isinstance(metadata, Mapping):
+        return False
+
+    metadata_user_id = metadata.get("topspot_user_id")
+    return (
+        isinstance(client_reference_id, str)
+        and isinstance(metadata_user_id, str)
+        and client_reference_id == user_id
+        and metadata_user_id == user_id
+    )
 
 
 
@@ -538,6 +563,12 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
     try:
         # Retrieve the checkout session
         session = stripe.checkout.Session.retrieve(session_id)
+        if not _checkout_session_is_owned_by_user(session, user_id):
+            raise HTTPException(
+                status_code=403,
+                detail="Checkout session is not authorized for this account",
+            )
+
         customer_id = session.get("customer")
         subscription_id = session.get("subscription")
         if not subscription_id or not customer_id:
@@ -597,9 +628,11 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
         }
 
 
-    except Exception as e:
+    except HTTPException:
+        raise
+    except Exception:
         logger.exception("Failed to verify Stripe subscription")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Could not verify subscription")
     
 
 
