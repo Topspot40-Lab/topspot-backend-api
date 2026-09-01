@@ -20,6 +20,8 @@ async def create_feedback(feedback: FeedbackCreate):
         "user_id": None,
         "email": feedback.email,
         "type": feedback.type,
+        "category": feedback.category,
+        "metadata": feedback.metadata,
         "title": feedback.title,
         "message": feedback.message,
         "route": feedback.route,
