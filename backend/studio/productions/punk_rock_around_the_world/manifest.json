@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "punk_rock_around_the_world",
+  "title": "Punk Rock Around the World",
+  "subtitle": "",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/02-punk-rock-around-the-world.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 102
+  },
+  "docuseries_id": 102,
+  "status": {
+    "current_station": "production_created",
+    "production_created": true,
+    "story_ready": false,
+    "audio_ready": false,
+    "cards_ready": false,
+    "storyboard_ready": false,
+    "visual_plan_ready": false,
+    "images_ready": false,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 302,
+      "duration_seconds": 536,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/302.mp3",
+      "youtube_key": "music-docuseries-youtube/302.mp3",
+      "local_audio": "audio/en_302.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 322,
+      "duration_seconds": 690,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/322.mp3",
+      "youtube_key": "music-docuseries-youtube/322.mp3",
+      "local_audio": "audio/es_322.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 323,
+      "duration_seconds": 786,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/323.mp3",
+      "youtube_key": "music-docuseries-youtube/323.mp3",
+      "local_audio": "audio/pt-BR_323.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/punk_rock_around_the_world.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  }
+}

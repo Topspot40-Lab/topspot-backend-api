@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "alternative_nation_nineties",
+  "title": "Alternative Nation",
+  "subtitle": "The Nineties",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/05-alternative-nation-nineties.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 5
+  },
+  "docuseries_id": 5,
+  "status": {
+    "current_station": "production_created",
+    "production_created": true,
+    "story_ready": false,
+    "audio_ready": false,
+    "cards_ready": false,
+    "storyboard_ready": false,
+    "visual_plan_ready": false,
+    "images_ready": false,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 18,
+      "duration_seconds": 481,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/18.mp3",
+      "youtube_key": "music-docuseries-youtube/18.mp3",
+      "local_audio": "audio/en_18.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 55,
+      "duration_seconds": 553,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/55.mp3",
+      "youtube_key": "music-docuseries-youtube/55.mp3",
+      "local_audio": "audio/es_55.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 86,
+      "duration_seconds": 532,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/86.mp3",
+      "youtube_key": "music-docuseries-youtube/86.mp3",
+      "local_audio": "audio/pt-BR_86.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/alternative_nation_nineties.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "history_hammond_organ",
+  "title": "The Hammond Organ",
+  "subtitle": "The Soul of Gospel, Jazz, and Rock",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/06-history-hammond-organ.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 76
+  },
+  "docuseries_id": 76,
+  "status": {
+    "current_station": "production_created",
+    "production_created": true,
+    "story_ready": false,
+    "audio_ready": false,
+    "cards_ready": false,
+    "storyboard_ready": false,
+    "visual_plan_ready": false,
+    "images_ready": false,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 220,
+      "duration_seconds": 513,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/220.mp3",
+      "youtube_key": "music-docuseries-youtube/220.mp3",
+      "local_audio": "audio/en_220.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 221,
+      "duration_seconds": 590,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/221.mp3",
+      "youtube_key": "music-docuseries-youtube/221.mp3",
+      "local_audio": "audio/es_221.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 222,
+      "duration_seconds": 557,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/222.mp3",
+      "youtube_key": "music-docuseries-youtube/222.mp3",
+      "local_audio": "audio/pt-BR_222.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/history_hammond_organ.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  }
+}

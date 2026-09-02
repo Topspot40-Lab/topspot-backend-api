@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "music_in_the_new_millennium",
+  "title": "Music in the New Millennium",
+  "subtitle": "",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/06-music-new-millennium.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 6
+  },
+  "docuseries_id": 6,
+  "status": {
+    "current_station": "production_created",
+    "production_created": true,
+    "story_ready": false,
+    "audio_ready": false,
+    "cards_ready": false,
+    "storyboard_ready": false,
+    "visual_plan_ready": false,
+    "images_ready": false,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 19,
+      "duration_seconds": 512,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/19.mp3",
+      "youtube_key": "music-docuseries-youtube/19.mp3",
+      "local_audio": "audio/en_19.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 60,
+      "duration_seconds": 594,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/60.mp3",
+      "youtube_key": "music-docuseries-youtube/60.mp3",
+      "local_audio": "audio/es_60.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 91,
+      "duration_seconds": 588,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/91.mp3",
+      "youtube_key": "music-docuseries-youtube/91.mp3",
+      "local_audio": "audio/pt-BR_91.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/music_in_the_new_millennium.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  }
+}

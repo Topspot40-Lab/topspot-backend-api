@@ -279,22 +279,16 @@ def validate_scene_plan(
                 )
 
         if len(required_terms) > 4:
-            raise RuntimeError(
-                f"Shot {shot_number}: "
-                "too many required_terms."
-            )
+            required_terms = required_terms[:4]
+            historical_plan["required_terms"] = required_terms
 
         if len(avoid_terms) > 4:
-            raise RuntimeError(
-                f"Shot {shot_number}: "
-                "too many avoid_terms."
-            )
+            avoid_terms = avoid_terms[:4]
+            historical_plan["avoid_terms"] = avoid_terms
 
         if len(search_queries) > 5:
-            raise RuntimeError(
-                f"Shot {shot_number}: "
-                "too many search_queries."
-            )
+            search_queries = search_queries[:5]
+            historical_plan["search_queries"] = search_queries
 
         if not historical_search and search_queries:
             raise RuntimeError(

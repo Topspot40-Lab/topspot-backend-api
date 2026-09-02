@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "nueva_cancion",
+  "title": "Nueva Canción",
+  "subtitle": "Music, Poetry, and Protest",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/07-nueva-cancion.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 63
+  },
+  "docuseries_id": 63,
+  "status": {
+    "current_station": "production_created",
+    "production_created": true,
+    "story_ready": false,
+    "audio_ready": false,
+    "cards_ready": false,
+    "storyboard_ready": false,
+    "visual_plan_ready": false,
+    "images_ready": false,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 182,
+      "duration_seconds": 502,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/182.mp3",
+      "youtube_key": "music-docuseries-youtube/182.mp3",
+      "local_audio": "audio/en_182.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 183,
+      "duration_seconds": 561,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/183.mp3",
+      "youtube_key": "music-docuseries-youtube/183.mp3",
+      "local_audio": "audio/es_183.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 184,
+      "duration_seconds": 533,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/184.mp3",
+      "youtube_key": "music-docuseries-youtube/184.mp3",
+      "local_audio": "audio/pt-BR_184.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/nueva_cancion.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  }
+}

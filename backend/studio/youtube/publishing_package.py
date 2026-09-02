@@ -85,6 +85,57 @@ LOCALIZED_TITLES={
         "es": "Clive Davis: El ejecutivo con oído de oro",
         "pt-BR": "Clive Davis: O executivo com ouvido de ouro",
     },
+    "day_the_music_died": {
+        "en": "The Day the Music Died",
+        "es": "El día que murió la música",
+        "pt-BR": "O dia em que a música morreu",
+    },
+    "the_27_club": {
+        "en": "The 27 Club",
+        "es": "El Club de los 27",
+        "pt-BR": "O Clube dos 27",
+    },
+    "lost_recordings_music_mysteries": {
+        "en": "Lost Recordings & Music Mysteries",
+        "es": "Grabaciones perdidas y misterios de la música",
+        "pt-BR": "Gravações perdidas e mistérios da música",
+    },
+    "mystery_legacy_pedro_infante": {
+        "en": "The Mystery & Legacy of Pedro Infante",
+        "es": "El misterio y legado de Pedro Infante",
+        "pt-BR": "O mistério e o legado de Pedro Infante",
+    },
+    "tragic_story_mamonas_assassinas": {
+        "en": "The Tragic Story of Mamonas Assassinas",
+        "es": "La trágica historia de Mamonas Assassinas",
+        "pt-BR": "A trágica história dos Mamonas Assassinas",
+    },
+    "history_of_corrido": {
+        "en": "The Corrido: Mexico's Musical Newspaper",
+        "es": "El corrido: el periódico musical de México",
+        "pt-BR": "O corrido: o jornal musical do México",
+    },
+    "golden_age_bolero": {
+        "en": "Bolero and the Golden Age of the Trío Romántico",
+        "es": "El bolero y la época dorada del trío romántico",
+        "pt-BR": "O bolero e a era de ouro do trio romântico",
+    },
+    "banda_sinaloense": {
+        "en": "Banda Sinaloense: The Sound of Northern Mexico",
+        "es": "Banda sinaloense: el sonido del norte de México",
+        "pt-BR": "Banda sinaloense: o som do norte do México",
+    },
+    "rise_of_grupera": {
+        "en": "Grupera: When Regional Mexican Music Went Pop",
+        "es": "Grupera: cuando la música regional mexicana se volvió pop",
+        "pt-BR": "Grupera: quando a música regional mexicana virou pop",
+    },
+    "mexican_rock_avandaro": {
+        "en": "Mexican Rock and the Festival de Avándaro",
+        "es": "El rock mexicano y el Festival de Avándaro",
+        "pt-BR": "O rock mexicano e o Festival de Avándaro",
+    },
+
 }
 DESCRIPTIONS={
  "en":"Explore {title}, a TopSpot40 music documentary about the artists, songs, sounds, and cultural changes that defined this unforgettable era.",

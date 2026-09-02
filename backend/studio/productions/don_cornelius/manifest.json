@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "don_cornelius",
+  "title": "Don Cornelius",
+  "subtitle": "The Soul Train Revolution",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/03-don-cornelius.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 35
+  },
+  "docuseries_id": 35,
+  "status": {
+    "current_station": "production_created",
+    "production_created": true,
+    "story_ready": false,
+    "audio_ready": false,
+    "cards_ready": false,
+    "storyboard_ready": false,
+    "visual_plan_ready": false,
+    "images_ready": false,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 99,
+      "duration_seconds": 466,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/99.mp3",
+      "youtube_key": "music-docuseries-youtube/99.mp3",
+      "local_audio": "audio/en_99.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 115,
+      "duration_seconds": 497,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/115.mp3",
+      "youtube_key": "music-docuseries-youtube/115.mp3",
+      "local_audio": "audio/es_115.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 120,
+      "duration_seconds": 473,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/120.mp3",
+      "youtube_key": "music-docuseries-youtube/120.mp3",
+      "local_audio": "audio/pt-BR_120.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/don_cornelius.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  }
+}

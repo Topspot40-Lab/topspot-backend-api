@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "hip_hop_goes_global",
+  "title": "Hip-Hop Goes Global",
+  "subtitle": "",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/01-hip-hop-goes-global.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 101
+  },
+  "docuseries_id": 101,
+  "status": {
+    "current_station": "production_created",
+    "production_created": true,
+    "story_ready": false,
+    "audio_ready": false,
+    "cards_ready": false,
+    "storyboard_ready": false,
+    "visual_plan_ready": false,
+    "images_ready": false,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 301,
+      "duration_seconds": 545,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/301.mp3",
+      "youtube_key": "music-docuseries-youtube/301.mp3",
+      "local_audio": "audio/en_301.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 320,
+      "duration_seconds": 676,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/320.mp3",
+      "youtube_key": "music-docuseries-youtube/320.mp3",
+      "local_audio": "audio/es_320.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 321,
+      "duration_seconds": 804,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/321.mp3",
+      "youtube_key": "music-docuseries-youtube/321.mp3",
+      "local_audio": "audio/pt-BR_321.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/hip_hop_goes_global.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  }
+}
