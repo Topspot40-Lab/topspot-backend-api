@@ -40,6 +40,65 @@ def object_exists(bucket: str, key: str) -> bool:
     return any(o.get("name") == name for o in (objs or []))
 
 
+_folder_cache: dict[tuple[str, str], set[str]] = {}
+
+
+def list_folder_keys(bucket: str, folder: str) -> set[str]:
+    """
+    Load all object keys in one folder into memory.
+    Returns full keys like: artist/abc123.mp3
+    """
+    cache_key = (bucket, folder)
+
+    if cache_key in _folder_cache:
+        return _folder_cache[cache_key]
+
+    limit = 1000
+    offset = 0
+    keys: set[str] = set()
+
+    while True:
+        try:
+            # supabase-py 2.x accepts these as keyword arguments.
+            objs = supabase.storage.from_(bucket).list(
+                path=folder,
+                limit=limit,
+                offset=offset,
+                sort_by={"column": "name", "order": "asc"},
+            ) or []
+        except TypeError:
+            # Older clients accept the path plus camelCase options.
+            objs = supabase.storage.from_(bucket).list(
+                folder,
+                {
+                    "limit": limit,
+                    "offset": offset,
+                    "sortBy": {"column": "name", "order": "asc"},
+                },
+            ) or []
+
+        for obj in objs:
+            name = obj.get("name")
+            if name:
+                keys.add(f"{folder}/{name}" if folder else name)
+
+        if len(objs) < limit:
+            break
+
+        offset += limit
+
+    _folder_cache[cache_key] = keys
+    return keys
+
+
+def object_exists_cached(bucket: str, key: str) -> bool:
+    """
+    Fast object check using a cached folder listing.
+    """
+    folder = key.rsplit("/", 1)[0] if "/" in key else ""
+    return key in list_folder_keys(bucket, folder)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Recursive storage walk + prefix filter (FIX)
 # ─────────────────────────────────────────────────────────────────────────────

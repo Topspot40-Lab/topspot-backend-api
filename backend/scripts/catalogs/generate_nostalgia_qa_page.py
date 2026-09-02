@@ -4,6 +4,11 @@ import argparse
 import html
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+# Storage client configuration must exist before its module is imported.
+load_dotenv(Path(__file__).resolve().parents[3] / ".env", override=False)
+
 from sqlmodel import Session, select
 from backend.services.supabase_storage import object_exists_cached
 

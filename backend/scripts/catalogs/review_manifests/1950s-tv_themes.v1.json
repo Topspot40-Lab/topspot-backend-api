@@ -1,0 +1,45 @@
+{
+  "schema_version": "catalog-review-manifest/v1",
+  "manifest_version": 1,
+  "program": {
+    "decade_genre_id": 63,
+    "slug": "1950s-tv_themes"
+  },
+  "purpose": "Read-only review foundation; this is not an approval or apply manifest.",
+  "rank_decisions": [
+    {"rank": 1, "decision": "approved_current_recording"},
+    {"rank": 2, "decision": "rejected_wrong_recording"},
+    {"rank": 3, "decision": "rejected_wrong_recording"},
+    {"rank": 4, "decision": "approved_current_recording"},
+    {"rank": 5, "decision": "approved_current_recording"},
+    {"rank": 6, "decision": "approved_current_recording"},
+    {"rank": 7, "decision": "approved_current_recording"},
+    {"rank": 8, "decision": "rejected_wrong_recording"},
+    {"rank": 9, "decision": "approved_current_recording"},
+    {"rank": 10, "decision": "rejected_wrong_recording"},
+    {"rank": 11, "decision": "rejected_wrong_recording"},
+    {"rank": 12, "decision": "rejected_wrong_recording"},
+    {"rank": 14, "decision": "approved_current_recording"},
+    {"rank": 39, "decision": "approved_current_recording"}
+  ],
+  "default_for_unlisted_ranks": "unreviewed/incomplete",
+  "rebuild_rules": {
+    "apply_enabled": false,
+    "continuous_final_ranks_required": true,
+    "spotify_recording_required": true,
+    "never_delete_shared_track_or_artist": true
+  },
+  "proposed_rebuild_workflow": [
+    "Keep this audit as the baseline; do not modify current ranking rows.",
+    "Resolve every unreviewed/incomplete row through manual recording verification.",
+    "Create a separate approval manifest containing only reviewed, historically justified themes with verified Spotify recordings.",
+    "Review shared Track and Artist usage before proposing any global narration detail change.",
+    "Only then prepare a separate backup-first, transactional, resumable apply command and verify the continuous final sequence afterward."
+  ],
+  "not_in_scope": [
+    "replacement research or selection",
+    "database apply or delete operations",
+    "storage mutation",
+    "TTS generation"
+  ]
+}
