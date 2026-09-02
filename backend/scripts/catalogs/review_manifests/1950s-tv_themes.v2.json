@@ -1,0 +1,33 @@
+{
+  "schema_version": "catalog-review-manifest/v1",
+  "manifest_version": 2,
+  "supersedes": "1950s-tv_themes.v1.json",
+  "program": {"decade_genre_id": 63, "slug": "1950s-tv_themes"},
+  "purpose": "Read-only review and listening-decision manifest. It records Gary's exact-recording approvals but authorizes no database or storage mutation.",
+  "rank_decisions": [
+    {"rank": 1, "decision": "approved_current_recording"},
+    {"rank": 2, "decision": "rejected_wrong_recording"},
+    {"rank": 3, "decision": "rejected_wrong_recording"},
+    {"rank": 4, "decision": "approved_current_recording"},
+    {"rank": 5, "decision": "approved_current_recording"},
+    {"rank": 6, "decision": "approved_current_recording"},
+    {"rank": 7, "decision": "approved_current_recording"},
+    {"rank": 8, "decision": "rejected_wrong_recording"},
+    {"rank": 9, "decision": "approved_current_recording"},
+    {"rank": 10, "decision": "rejected_wrong_recording"},
+    {"rank": 11, "decision": "rejected_wrong_recording"},
+    {"rank": 12, "decision": "rejected_wrong_recording"},
+    {"rank": 14, "decision": "approved_current_recording"},
+    {"rank": 39, "decision": "approved_current_recording"}
+  ],
+  "recording_replacement_decisions": [
+    {"rank": 2, "show_title": "Perry Mason", "historical_program_decision": "approved_historical_program", "current_database_recording_status": "rejected_wrong_recording_pending_replacement", "current_database_spotify_track_id": "6zwvB879PJSpTyFcg2wwnL", "approved_exact_spotify_recording": {"spotify_track_id": "799kpXdBhIzYscq144QVEn", "spotify_url": "https://open.spotify.com/track/799kpXdBhIzYscq144QVEn", "gary_listening_decision": "approved"}},
+    {"rank": 3, "show_title": "Rawhide", "historical_program_decision": "approved_historical_program", "current_database_recording_status": "rejected_wrong_recording_pending_replacement", "current_database_spotify_track_id": "7yr5ZuZqagB3Z5SRhCcs5x", "approved_exact_spotify_recording": {"spotify_track_id": "6cHhJfIQE4tOQ6fVcMm1CA", "spotify_url": "https://open.spotify.com/track/6cHhJfIQE4tOQ6fVcMm1CA", "gary_listening_decision": "approved"}},
+    {"rank": 8, "show_title": "Adventures of Superman", "historical_program_decision": "approved_historical_program", "current_database_recording_status": "rejected_wrong_recording_pending_replacement", "current_database_spotify_track_id": "1rmylYvGOcSzJ5AZ4BSHbr", "approved_exact_spotify_recording": {"spotify_track_id": "4sYOSzhDiBZuX88Ylh7O2N", "spotify_url": "https://open.spotify.com/track/4sYOSzhDiBZuX88Ylh7O2N", "gary_listening_decision": "approved"}},
+    {"rank": 10, "show_title": "The Rifleman", "historical_program_decision": "approved_historical_program", "current_database_recording_status": "rejected_wrong_recording_pending_replacement", "current_database_spotify_track_id": "5XC7tebqGPQNXDQImgOhcZ", "approved_exact_spotify_recording": {"spotify_track_id": "12ynoGdWbebDuV61rsJyp1", "spotify_url": "https://open.spotify.com/track/12ynoGdWbebDuV61rsJyp1", "gary_listening_decision": "approved"}},
+    {"rank": 11, "show_title": "Dragnet", "historical_program_decision": "approved_historical_program", "current_database_recording_status": "rejected_wrong_recording_pending_replacement", "current_database_spotify_track_id": "5LeCbkjJuhtqQhwXziPgUn", "approved_exact_spotify_recording": null, "gary_listening_decision": "pending"},
+    {"rank": 12, "show_title": "The Honeymooners", "historical_program_decision": "approved_historical_program", "current_database_recording_status": "rejected_wrong_recording_pending_replacement", "current_database_spotify_track_id": "6yd32AUzVz925fG3UKWyYw", "approved_exact_spotify_recording": {"spotify_track_id": "4nBCLGl2EXO3bIk30Jyv5b", "spotify_url": "https://open.spotify.com/track/4nBCLGl2EXO3bIk30Jyv5b", "gary_listening_decision": "approved"}}
+  ],
+  "rebuild_rules": {"apply_enabled": false, "continuous_final_ranks_required": true, "spotify_recording_required": true, "never_delete_shared_track_or_artist": true},
+  "not_in_scope": ["database apply or delete operations", "storage mutation", "TTS generation", "final ranking"]
+}
