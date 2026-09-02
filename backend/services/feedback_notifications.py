@@ -1,4 +1,5 @@
-﻿import logging
+import json
+import logging
 import os
 
 import httpx
@@ -29,6 +30,8 @@ async def send_feedback_notification(payload: dict) -> None:
         raise RuntimeError("FEEDBACK_NOTIFICATION_RECIPIENTS is not configured")
 
     feedback_type = payload.get("type") or "feedback"
+    category = payload.get("category") or "general_feedback"
+    metadata = payload.get("metadata") or {}
     title = payload.get("title") or "(No title)"
     message = payload.get("message") or ""
     sender_email = payload.get("email") or "(Not supplied)"
@@ -36,16 +39,24 @@ async def send_feedback_notification(payload: dict) -> None:
     created_at = payload.get("created_at") or "(Unknown)"
     feedback_id = payload.get("id") or "(Unknown)"
 
-    subject = f"TopSpot40 {feedback_type}: {title}"
+    metadata_display = (
+        json.dumps(metadata, indent=2, sort_keys=True)
+        if metadata
+        else "(None supplied)"
+    )
+    subject = f"TopSpot40 {feedback_type} [{category}]: {title}"
 
     text_body = (
         "New TopSpot40 feedback submission\n\n"
         f"Type: {feedback_type}\n"
+        f"Category: {category}\n"
         f"Title: {title}\n"
         f"Email: {sender_email}\n"
         f"Route: {route}\n"
         f"Created: {created_at}\n"
-        f"Feedback ID: {feedback_id}\n\n"
+        f"Feedback ID: {feedback_id}\n"
+        "Metadata:\n"
+        f"{metadata_display}\n\n"
         "Message:\n"
         f"{message}"
     )
@@ -54,7 +65,6 @@ async def send_feedback_notification(payload: dict) -> None:
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
-
     email_payload = {
         "from": f"TopSpot40 Notifications <{from_address}>",
         "to": recipients,
