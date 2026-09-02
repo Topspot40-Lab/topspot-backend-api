@@ -1,0 +1,83 @@
+{
+  "schema_version": "1950s-tv-themes-research-batch/v1",
+  "batch_id": "1950s-tv-themes-rejected-recordings-01",
+  "purpose": "Read-only historical and public-Spotify research. This file proposes no catalog mutation, rank, replacement, or approval.",
+  "research_method": "Public web pages only; no Spotify authentication or Spotify API was used.",
+  "programs": [
+    {
+      "existing_rank": 2,
+      "show_title": "Perry Mason",
+      "original_broadcast_years": "1957-1966",
+      "historical_theme": {"official_title": "Park Avenue Beat", "composer": "Fred Steiner", "lyricist": "", "original_performer_or_credited_orchestra": "research_needed; the consulted sources identify Steiner as composer but do not establish an on-screen performer credit", "broadcast_version": "The opening and closing theme of the Raymond Burr CBS series."},
+      "principal_characters": ["Perry Mason — Raymond Burr", "Della Street — Barbara Hale", "Paul Drake — William Hopper", "Hamilton Burger — William Talman"],
+      "historical_source_urls": ["https://www.imdb.com/title/tt0050051/", "https://en.wikipedia.org/wiki/Perry_Mason_(1957_TV_series)"],
+      "current_rejected_recording": {"spotify_track_id": "6zwvB879PJSpTyFcg2wwnL", "spotify_url": "https://open.spotify.com/track/6zwvB879PJSpTyFcg2wwnL", "public_display": "The Theme from A Summer Place — Percy Faith & His Orchestra", "rejection_basis": "The public Spotify page identifies a different composition and artist, not Steiner's Park Avenue Beat."},
+      "spotify_candidates": [
+        {"spotify_track_id": "799kpXdBhIzYscq144QVEn", "spotify_url": "https://open.spotify.com/track/799kpXdBhIzYscq144QVEn", "track_title": "Perry Mason", "displayed_artist": "Fred Steiner", "album": "Vint-i-Cinc: El Disc (Música, Sintonies i Cançons)", "duration": "1:09", "recording_claim": "uncertain", "evidence_source_urls": ["https://open.spotify.com/intl-es/track/799kpXdBhIzYscq144QVEn"], "listening_note": "Confirm the opening's rhythm, instrumentation, and whether this is a period recording rather than a later compilation attribution."},
+        {"spotify_track_id": "4NCWJ8RphBYfjk4cWUTY6R", "spotify_url": "https://open.spotify.com/track/4NCWJ8RphBYfjk4cWUTY6R", "track_title": "Perry Mason - Theme from the Television Series (Fred Steiner)", "displayed_artist": "Dominik Hauser", "album": "Perry Mason - Theme from the Television Series (Fred Steiner) - Single", "duration": "1:24", "recording_claim": "cover", "evidence_source_urls": ["https://open.spotify.com/track/4NCWJ8RphBYfjk4cWUTY6R"], "listening_note": "This is explicitly a later artist's recording; compare its tempo and orchestration with the 1957 broadcast before considering it."}
+      ]
+    },
+    {
+      "existing_rank": 3,
+      "show_title": "Rawhide",
+      "original_broadcast_years": "1959-1965",
+      "historical_theme": {"official_title": "Rawhide", "composer": "Dimitri Tiomkin", "lyricist": "Ned Washington", "original_performer_or_credited_orchestra": "Frankie Laine", "broadcast_version": "The vocal opening theme associated with the CBS series."},
+      "principal_characters": ["Gil Favor — Eric Fleming", "Rowdy Yates — Clint Eastwood"],
+      "historical_source_urls": ["https://www.paleycenter.org/collection/item?item=T78:0184&p=1&q=Rawhide", "https://en.wikipedia.org/wiki/Rawhide_(TV_series)"],
+      "current_rejected_recording": {"spotify_track_id": "7yr5ZuZqagB3Z5SRhCcs5x", "spotify_url": "https://open.spotify.com/track/7yr5ZuZqagB3Z5SRhCcs5x", "public_display": "Rawhide — Eric Weissberg, Steve Mandell", "rejection_basis": "The public Spotify page identifies performers other than the broadcast vocalist Frankie Laine."},
+      "spotify_candidates": [
+        {"spotify_track_id": "6cHhJfIQE4tOQ6fVcMm1CA", "spotify_url": "https://open.spotify.com/track/6cHhJfIQE4tOQ6fVcMm1CA", "track_title": "Rawhide - Original Version", "displayed_artist": "Frankie Laine", "album": "Western Story (Les films cultes des années 50)", "duration": "2:02", "recording_claim": "claims original", "evidence_source_urls": ["https://open.spotify.com/track/6cHhJfIQE4tOQ6fVcMm1CA"], "listening_note": "The artist and song match the broadcast identity, but verify this particular master is the familiar television vocal rather than a later/reissued source."},
+        {"spotify_track_id": "6Tc3Cxk9CqmamiJhRIfYDw", "spotify_url": "https://open.spotify.com/track/6Tc3Cxk9CqmamiJhRIfYDw", "track_title": "Rawhide (with Jimmy Carroll & His Orchestra)", "displayed_artist": "Frankie Laine, Jimmy Carroll & His Orchestra", "album": "Television Themes: 16 Most Requested Songs", "duration": "2:00", "recording_claim": "uncertain", "evidence_source_urls": ["https://open.spotify.com/track/6Tc3Cxk9CqmamiJhRIfYDw"], "listening_note": "Verify whether the named orchestra and arrangement match the television version; the compilation metadata alone is not proof."}
+      ]
+    },
+    {
+      "existing_rank": 8,
+      "show_title": "Adventures of Superman",
+      "original_broadcast_years": "1952-1958",
+      "historical_theme": {"official_title": "Superman Main Title (also called Superman March)", "composer": "Leon Klatzkin", "lyricist": "", "original_performer_or_credited_orchestra": "research_needed; the consulted credits name Klatzkin for theme music but do not establish an orchestra credit", "broadcast_version": "Klatzkin's main-title music for the George Reeves television series."},
+      "principal_characters": ["Superman/Clark Kent — George Reeves", "Lois Lane — Phyllis Coates / Noel Neill", "Jimmy Olsen — Jack Larson", "Perry White — John Hamilton"],
+      "historical_source_urls": ["https://www.imdb.com/title/tt0044231/fullcredits/", "https://www.classicthemes.com/50sTVThemes/themePages/superman.html"],
+      "current_rejected_recording": {"spotify_track_id": "1rmylYvGOcSzJ5AZ4BSHbr", "spotify_url": "https://open.spotify.com/track/1rmylYvGOcSzJ5AZ4BSHbr", "public_display": "Superman — Skee-Lo", "rejection_basis": "The public Spotify page identifies an unrelated Skee-Lo song, not the 1952 television main title."},
+      "spotify_candidates": [
+        {"spotify_track_id": "4sYOSzhDiBZuX88Ylh7O2N", "spotify_url": "https://open.spotify.com/track/4sYOSzhDiBZuX88Ylh7O2N", "track_title": "Superman Main Title", "displayed_artist": "Leon Klatzkin", "album": "Adventures Of Superman: Music From The Original 1950s Television Series (Original Television Soundtrack)", "duration": "0:59", "recording_claim": "soundtrack", "evidence_source_urls": ["https://open.spotify.com/track/4sYOSzhDiBZuX88Ylh7O2N"], "listening_note": "Spotify labels the album Original Television Soundtrack; verify the opening fanfare and the full 1950s title sequence against an episode before approval."}
+      ]
+    },
+    {
+      "existing_rank": 10,
+      "show_title": "The Rifleman",
+      "original_broadcast_years": "1958-1963",
+      "historical_theme": {"official_title": "Rifleman Main Title (also listed as The Rifleman)", "composer": "Herschel Burke Gilbert", "lyricist": "", "original_performer_or_credited_orchestra": "research_needed; consulted sources establish Gilbert's score but not a broadcast orchestra credit", "broadcast_version": "The instrumental main title used by the Chuck Connors ABC series."},
+      "principal_characters": ["Lucas McCain — Chuck Connors", "Mark McCain — Johnny Crawford", "Micah Torrance — Paul Fix"],
+      "historical_source_urls": ["https://classicthemes.com/50sTVThemes/themePages/rifleman.html", "https://www.therifleman.net/faqs/"],
+      "current_rejected_recording": {"spotify_track_id": "5XC7tebqGPQNXDQImgOhcZ", "spotify_url": "https://open.spotify.com/track/5XC7tebqGPQNXDQImgOhcZ", "public_display": "not publicly indexed by the research tool", "rejection_basis": "Preserve Gary's existing rejection. Public metadata for this ID could not be independently retrieved in this batch, so no substitute conclusion is asserted."},
+      "spotify_candidates": [
+        {"spotify_track_id": "12ynoGdWbebDuV61rsJyp1", "spotify_url": "https://open.spotify.com/track/12ynoGdWbebDuV61rsJyp1", "track_title": "The Rifleman", "displayed_artist": "Herschel Burke Gilbert", "album": "Great Tv Tunes Vol. 1", "duration": "1:04", "recording_claim": "uncertain", "evidence_source_urls": ["https://open.spotify.com/track/12ynoGdWbebDuV61rsJyp1"], "listening_note": "The displayed composer credit matches; verify it is the original main title and not an abbreviated or rerecorded compilation source."}
+      ]
+    },
+    {
+      "existing_rank": 11,
+      "show_title": "Dragnet",
+      "original_broadcast_years": "1951-1959",
+      "historical_theme": {"official_title": "Danger Ahead (commonly called Dragnet March)", "composer": "Walter Schumann", "lyricist": "", "original_performer_or_credited_orchestra": "research_needed; consulted sources establish Schumann's composition but not a verified broadcast orchestra credit", "broadcast_version": "The four-note brass-and-tympani theme of the original Jack Webb television series; do not substitute a later Dragnet incarnation."},
+      "principal_characters": ["Sergeant Joe Friday — Jack Webb", "Officer Frank Smith — Ben Alexander", "Sergeant Ben Romero — Barton Yarborough"],
+      "historical_source_urls": ["https://interviews.televisionacademy.com/news/the-story-you-are-about-to-see-is-true-dragnet-is-turning-60", "https://www.paleycenter.org/collection/item?item=T78:0184&p=1&q=Raymond%20Burr"],
+      "current_rejected_recording": {"spotify_track_id": "5LeCbkjJuhtqQhwXziPgUn", "spotify_url": "https://open.spotify.com/track/5LeCbkjJuhtqQhwXziPgUn", "public_display": "To The Stars - Dragonheart/Soundtrack Version — Randy Edelman", "rejection_basis": "The public Spotify page identifies an unrelated Dragonheart score track, not the Schumann television theme."},
+      "spotify_candidates": [
+        {"spotify_track_id": "", "spotify_url": "", "track_title": "Main Theme - Dragnet, 1953 (Remastered 2024)", "displayed_artist": "Various, Walter Schumann", "album": "research_needed", "duration": "2:48", "recording_claim": "uncertain", "evidence_source_urls": ["https://open.spotify.com/track/4Uv59r2KnHBQtwweS5Fn2L"], "listening_note": "A public Spotify result names a Schumann-associated 2:48 track, but its direct track ID was not exposed by the public page. Do not select it until a stable public track URL and source lineage are verified."}
+      ]
+    },
+    {
+      "existing_rank": 12,
+      "show_title": "The Honeymooners",
+      "original_broadcast_years": "1955-1956",
+      "historical_theme": {"official_title": "You're My Greatest Love", "composer": "Jackie Gleason and Bill Templeton", "lyricist": "", "original_performer_or_credited_orchestra": "Jackie Gleason and his orchestra; a consulted theme reference identifies an orchestra led by Ray Bloch", "broadcast_version": "The opening and extended closing theme of the 39-episode CBS series, not Melancholy Serenade from The Jackie Gleason Show."},
+      "principal_characters": ["Ralph Kramden — Jackie Gleason", "Alice Kramden — Audrey Meadows", "Ed Norton — Art Carney", "Trixie Norton — Joyce Randolph"],
+      "historical_source_urls": ["https://www.jackiegleason.com/bio.html", "https://en.wikipedia.org/wiki/The_Honeymooners"],
+      "current_rejected_recording": {"spotify_track_id": "6yd32AUzVz925fG3UKWyYw", "spotify_url": "https://open.spotify.com/track/6yd32AUzVz925fG3UKWyYw", "public_display": "Theme for Losers — Henry Mancini", "rejection_basis": "The public Spotify page identifies a different Henry Mancini work; it is neither You're My Greatest Love nor the Honeymooners broadcast theme."},
+      "spotify_candidates": [
+        {"spotify_track_id": "4nBCLGl2EXO3bIk30Jyv5b", "spotify_url": "https://open.spotify.com/track/4nBCLGl2EXO3bIk30Jyv5b", "track_title": "The Honey Mooners", "displayed_artist": "Jackie Gleason", "album": "Great Tv Tunes Vol. 1", "duration": "1:21", "recording_claim": "uncertain", "evidence_source_urls": ["https://open.spotify.com/intl-tr/track/4nBCLGl2EXO3bIk30Jyv5b"], "listening_note": "The title is imprecise and the compilation is later; verify it is You're My Greatest Love and not a generic Honeymooners-themed excerpt."}
+      ]
+    }
+  ],
+  "approval_gate": "Every Spotify candidate remains pending Gary's listening approval. No final rank or replacement is assigned."
+}
