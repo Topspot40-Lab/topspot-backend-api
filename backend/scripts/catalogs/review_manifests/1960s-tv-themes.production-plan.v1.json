@@ -1,10 +1,11 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "catalog_id": 64,
   "catalog_slug": "1960s_tv_themes",
   "approved_entries": [
     {
-      "proposed_rank": 1,
+      "sequence_order": 1,
+      "proposed_rank": 3,
       "source_rank": 3,
       "program": "star trek (original series)",
       "track_name": "star trek (original series)",
@@ -16,7 +17,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 2,
+      "sequence_order": 2,
+      "proposed_rank": 4,
       "source_rank": 4,
       "program": "hawaii five‑o",
       "track_name": "Hawaii Five-O",
@@ -28,7 +30,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 3,
+      "sequence_order": 3,
+      "proposed_rank": 6,
       "source_rank": 6,
       "program": "the munsters",
       "track_name": "the munsters",
@@ -40,7 +43,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 4,
+      "sequence_order": 4,
+      "proposed_rank": 7,
       "source_rank": 7,
       "program": "the andy griffith show",
       "track_name": "the andy griffith show",
@@ -52,7 +56,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 5,
+      "sequence_order": 5,
+      "proposed_rank": 8,
       "source_rank": 8,
       "program": "the twilight zone",
       "track_name": "the twilight zone",
@@ -64,7 +69,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 6,
+      "sequence_order": 6,
+      "proposed_rank": 10,
       "source_rank": 10,
       "program": "meet the flintstones",
       "track_name": "meet the flintstones",
@@ -76,7 +82,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 7,
+      "sequence_order": 7,
+      "proposed_rank": 11,
       "source_rank": 11,
       "program": "the jetsons",
       "track_name": "the jetsons",
@@ -88,7 +95,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 8,
+      "sequence_order": 8,
+      "proposed_rank": 12,
       "source_rank": 12,
       "program": "i dream of jeannie",
       "track_name": "i dream of jeannie",
@@ -100,7 +108,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 9,
+      "sequence_order": 9,
+      "proposed_rank": 13,
       "source_rank": 13,
       "program": "bewitched",
       "track_name": "bewitched",
@@ -112,7 +121,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 10,
+      "sequence_order": 10,
+      "proposed_rank": 15,
       "source_rank": 15,
       "program": "the avengers",
       "track_name": "the avengers",
@@ -124,7 +134,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 11,
+      "sequence_order": 11,
+      "proposed_rank": 16,
       "source_rank": 16,
       "program": "thunderbirds",
       "track_name": "thunderbirds",
@@ -136,7 +147,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 12,
+      "sequence_order": 12,
+      "proposed_rank": 18,
       "source_rank": 18,
       "program": "lost in space",
       "track_name": "lost in space",
@@ -148,7 +160,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 13,
+      "sequence_order": 13,
+      "proposed_rank": 19,
       "source_rank": 19,
       "program": "the man from u.n.c.l.e.",
       "track_name": "the man from u.n.c.l.e.",
@@ -160,7 +173,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 14,
+      "sequence_order": 14,
+      "proposed_rank": 21,
       "source_rank": 21,
       "program": "the beverly hillbillies",
       "track_name": "The Ballad of Jed Clampett",
@@ -172,7 +186,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 15,
+      "sequence_order": 15,
+      "proposed_rank": 22,
       "source_rank": 22,
       "program": "hogan’s heroes",
       "track_name": "hogan’s heroes",
@@ -184,7 +199,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 16,
+      "sequence_order": 16,
+      "proposed_rank": 23,
       "source_rank": 23,
       "program": "dark shadows",
       "track_name": "dark shadows",
@@ -196,7 +212,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 17,
+      "sequence_order": 17,
+      "proposed_rank": 24,
       "source_rank": 24,
       "program": "the prisoner",
       "track_name": "the prisoner",
@@ -208,7 +225,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 18,
+      "sequence_order": 18,
+      "proposed_rank": 25,
       "source_rank": 25,
       "program": "the monkees",
       "track_name": "theme from the monkees",
@@ -220,7 +238,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 19,
+      "sequence_order": 19,
+      "proposed_rank": 26,
       "source_rank": 26,
       "program": "Mission: Impossible",
       "track_name": "Mission: Impossible Theme",
@@ -232,7 +251,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 20,
+      "sequence_order": 20,
+      "proposed_rank": 29,
       "source_rank": 29,
       "program": "Batman",
       "track_name": "Batman Theme",
@@ -244,7 +264,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 21,
+      "sequence_order": 21,
+      "proposed_rank": 33,
       "source_rank": 33,
       "program": "The Addams Family",
       "track_name": "The Addams Family Theme",
@@ -256,7 +277,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 22,
+      "sequence_order": 22,
+      "proposed_rank": 34,
       "source_rank": 34,
       "program": "Gilligan's Island",
       "track_name": "Gilligan's Island Theme",
@@ -268,7 +290,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 23,
+      "sequence_order": 23,
+      "proposed_rank": 36,
       "source_rank": 36,
       "program": "Get Smart",
       "track_name": "Get Smart Theme",
@@ -280,7 +303,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 24,
+      "sequence_order": 24,
+      "proposed_rank": 40,
       "source_rank": 40,
       "program": "Green Acres",
       "track_name": "Green Acres Theme",
@@ -292,7 +316,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 25,
+      "sequence_order": 25,
+      "proposed_rank": 41,
       "source_rank": 41,
       "program": "Petticoat Junction",
       "track_name": "Petticoat Junction Theme",
@@ -304,7 +329,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 26,
+      "sequence_order": 26,
+      "proposed_rank": 44,
       "source_rank": 44,
       "program": "Doctor Who",
       "track_name": "Doctor Who (Original Theme) [From \"Doctor Who\"]",
@@ -316,7 +342,8 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "proposed_rank": 27,
+      "sequence_order": 27,
+      "proposed_rank": 45,
       "source_rank": 45,
       "program": "The Saint",
       "track_name": "Main Theme from \"The Saint\"",
@@ -374,6 +401,51 @@
       "reason": "duplicate_program_unresolved_recording_and_missing_artist_relation"
     }
   ],
+  "rank_preservation_policy": "Retained and replacement entries keep their current source_rank; no retained track is renumbered.",
+  "gap_filler_research": {
+    "status": "deferred_without_verified_candidates",
+    "open_ranks": [
+      1,
+      2,
+      5,
+      9,
+      14,
+      17,
+      20,
+      28,
+      30,
+      31,
+      32,
+      35,
+      37,
+      38,
+      39,
+      42,
+      43
+    ],
+    "rule": "Do not add a recording solely to fill a gap; only separately verified, unique 1960s programmes may be proposed later."
+  },
+  "intro_rewrite": {
+    "record_count": 81,
+    "languages": [
+      "en",
+      "es-MX",
+      "pt-BR"
+    ],
+    "staging_prefix": "staging/catalog-64/1960s-tv-themes-intro-rewrite-v1",
+    "canonical_key_pattern": "intro/1960s_tv_themes_{rank:02}.mp3",
+    "promotion_rule": "Generate, hash, cache-disabled download, transcribe, and validate every staged intro before atomically updating catalog-64 intro mappings.",
+    "cache_rule": "Return authoritative versioned or cache-fresh playback URLs after promotion; never select a pre-existing intro solely because it exists."
+  },
+  "detail_preservation": {
+    "retain_mapping_count": 135,
+    "replacement_mapping_count": 27,
+    "replacement_reasons": {
+      "replacement_track": 24,
+      "proven_mojibake": 3
+    },
+    "safety_rule": "Never overwrite a shared correct detail object; stage replacements and point only the affected catalog-64 locale mapping at promoted versioned objects."
+  },
   "future_apply_requires": [
     "fresh public Spotify page recheck",
     "artwork URL check",

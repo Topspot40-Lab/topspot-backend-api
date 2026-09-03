@@ -59,21 +59,70 @@ def _review_note(rank: int) -> str:
     return "retained once in proposed plan"
 
 
-def _draft(rank: int, title: str, artist: str, language: str, kind: str) -> str:
-    if language == "en":
-        base = f"Number {rank}: {title}, performed by {artist}."
-        extra = " This selected recording is the verified television-theme choice for this catalog."
-    elif language == "es-MX":
-        base = f"Número {rank}: {title}, interpretado por {artist}."
-        extra = " Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo."
-    else:
-        base = f"Número {rank}: {title}, interpretado por {artist}."
-        extra = " Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo."
-    if kind == "intro":
-        return base
-    if kind == "short_detail":
-        return base + extra
-    return base + extra + " It is presented with its recording lineage and programme association stated accurately."
+INTRO_PATTERNS = {
+    "en": (
+        "At number {rank}, {program}: {title}, performed by {artist}.",
+        "Number {rank} brings {program} with {title} from {artist}.",
+        "Here at number {rank}, it is {program} — {title}, performed by {artist}.",
+        "Number {rank}: {artist} takes us into {program} with {title}.",
+        "Coming in at {rank}, {program}, featuring {title} by {artist}.",
+        "Our number {rank} theme is {title} from {program}, performed by {artist}.",
+        "At {rank}, hear {artist} with {title}, the theme of {program}.",
+        "Number {rank} spotlights {program} and {title}, performed by {artist}.",
+        "Now at number {rank}: {title} by {artist}, from {program}.",
+    ),
+    "es-MX": (
+        "En el número {rank}, {program}: {title}, interpretado por {artist}.",
+        "El número {rank} trae {program} con {title} de {artist}.",
+        "En el puesto {rank}, escuchamos {program}: {title}, interpretado por {artist}.",
+        "Número {rank}: {artist} nos lleva a {program} con {title}.",
+        "Llega al {rank} {program}, con {title} de {artist}.",
+        "Nuestro tema número {rank} es {title}, de {program}, interpretado por {artist}.",
+        "En el {rank}, {artist} presenta {title}, el tema de {program}.",
+        "El número {rank} destaca {program} y {title}, interpretado por {artist}.",
+        "Ahora, en el número {rank}: {title} de {artist}, de {program}.",
+    ),
+    "pt-BR": (
+        "No número {rank}, {program}: {title}, interpretado por {artist}.",
+        "O número {rank} traz {program} com {title}, de {artist}.",
+        "Na posição {rank}, ouvimos {program}: {title}, interpretado por {artist}.",
+        "Número {rank}: {artist} nos leva a {program} com {title}.",
+        "Chegando ao {rank}, {program}, com {title} de {artist}.",
+        "Nosso tema de número {rank} é {title}, de {program}, interpretado por {artist}.",
+        "No {rank}, {artist} apresenta {title}, o tema de {program}.",
+        "O número {rank} destaca {program} e {title}, interpretado por {artist}.",
+        "Agora, no número {rank}: {title} de {artist}, de {program}.",
+    ),
+}
+
+DETAIL_REPLACEMENTS = {
+    (rank, language, kind): "replacement_track"
+    for rank in (4, 21, 44, 45)
+    for language in ("en", "es-MX", "pt-BR")
+    for kind in ("short_detail", "long_detail")
+} | {
+    (15, "pt-BR", "long_detail"): "proven_mojibake",
+    (16, "pt-BR", "long_detail"): "proven_mojibake",
+    (23, "pt-BR", "long_detail"): "proven_mojibake",
+}
+
+
+def _intro(entry: dict, language: str) -> str:
+    return INTRO_PATTERNS[language][entry["source_rank"] % 9].format(
+        rank=entry["source_rank"], program=entry["program"], title=entry["track_name"], artist=entry["artist"],
+    )
+
+
+def _detail(entry: dict, language: str, kind: str) -> str:
+    title, artist, program = entry["track_name"], entry["artist"], entry["program"]
+    if language == "es-MX":
+        lead = f"{title}, interpretado por {artist}, es la grabación seleccionada para {program}."
+        return lead if kind == "short_detail" else lead + " La selección respeta la identidad del programa y acredita correctamente al intérprete."
+    if language == "pt-BR":
+        lead = f"{title}, interpretado por {artist}, é a gravação selecionada para {program}."
+        return lead if kind == "short_detail" else lead + " A seleção preserva a identidade do programa e credita corretamente o intérprete."
+    lead = f"{title}, performed by {artist}, is the selected recording for {program}."
+    return lead if kind == "short_detail" else lead + " The selection preserves the programme identity and credits the performer accurately."
 
 
 def main() -> None:
@@ -98,7 +147,8 @@ def main() -> None:
             (track["track_name"], by_rank[rank]["artist"]["artist_name"], track["spotify_track_id"], _classification(rank, track)),
         )
         approved.append({
-            "proposed_rank": len(approved) + 1,
+            "sequence_order": len(approved) + 1,
+            "proposed_rank": rank,
             "source_rank": rank,
             "program": track["source_title"] or track["track_name"],
             "track_name": title,
@@ -110,24 +160,49 @@ def main() -> None:
             "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact.",
         })
     plan = {
-        "schema_version": 1,
+        "schema_version": 2,
         "catalog_id": 64,
         "catalog_slug": "1960s_tv_themes",
         "approved_entries": approved,
         "unresolved_excluded": [{"existing_rank": rank, "reason": reason} for rank, reason in EXCLUSION_REASON.items()],
+        "rank_preservation_policy": "Retained and replacement entries keep their current source_rank; no retained track is renumbered.",
+        "gap_filler_research": {
+            "status": "deferred_without_verified_candidates",
+            "open_ranks": [1, 2, 5, 9, 14, 17, 20, 28, 30, 31, 32, 35, 37, 38, 39, 42, 43],
+            "rule": "Do not add a recording solely to fill a gap; only separately verified, unique 1960s programmes may be proposed later.",
+        },
+        "intro_rewrite": {
+            "record_count": len(approved) * 3,
+            "languages": ["en", "es-MX", "pt-BR"],
+            "staging_prefix": "staging/catalog-64/1960s-tv-themes-intro-rewrite-v1",
+            "canonical_key_pattern": "intro/1960s_tv_themes_{rank:02}.mp3",
+            "promotion_rule": "Generate, hash, cache-disabled download, transcribe, and validate every staged intro before atomically updating catalog-64 intro mappings.",
+            "cache_rule": "Return authoritative versioned or cache-fresh playback URLs after promotion; never select a pre-existing intro solely because it exists.",
+        },
+        "detail_preservation": {
+            "retain_mapping_count": 135,
+            "replacement_mapping_count": len(DETAIL_REPLACEMENTS),
+            "replacement_reasons": {"replacement_track": 24, "proven_mojibake": 3},
+            "safety_rule": "Never overwrite a shared correct detail object; stage replacements and point only the affected catalog-64 locale mapping at promoted versioned objects.",
+        },
         "future_apply_requires": ["fresh public Spotify page recheck", "artwork URL check", "human review of final localized drafts", "separate production authorization"],
     }
     records = []
     for entry in approved:
         for language in ("en", "es-MX", "pt-BR"):
-            for kind in ("intro", "short_detail", "long_detail"):
-                text = _draft(entry["proposed_rank"], entry["program"], entry["artist"], language, kind)
-                records.append({"rank": entry["proposed_rank"], "language": language, "kind": kind, "text": text, "text_sha256": _sha(text)})
+            text = _intro(entry, language)
+            records.append({"rank": entry["proposed_rank"], "language": language, "kind": "intro", "purpose": "replace_all_ranked_intros", "text": text, "text_sha256": _sha(text)})
+        for language in ("en", "es-MX", "pt-BR"):
+            for kind in ("short_detail", "long_detail"):
+                reason = DETAIL_REPLACEMENTS.get((entry["source_rank"], language, kind))
+                if reason:
+                    text = _detail(entry, language, kind)
+                    records.append({"rank": entry["proposed_rank"], "language": language, "kind": kind, "purpose": reason, "text": text, "text_sha256": _sha(text)})
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "1960s-tv-themes.research.v1.json").write_text(json.dumps({"catalog_id": 64, "records": research}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (OUT / "1960s-tv-themes.production-plan.v1.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (OUT / "1960s-tv-themes.narration-drafts.v1.json").write_text(json.dumps({"catalog_id": 64, "records": records}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"research_records": len(research), "approved_entries": len(approved), "drafts": len(records)}))
+    print(json.dumps({"research_records": len(research), "approved_entries": len(approved), "drafts": len(records), "intro_drafts": len(approved) * 3, "detail_drafts": len(records) - len(approved) * 3}))
 
 
 if __name__ == "__main__":
