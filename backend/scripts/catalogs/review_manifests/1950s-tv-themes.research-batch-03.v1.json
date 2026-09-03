@@ -1,0 +1,40 @@
+{
+  "schema_version": "1950s-tv-themes-research-batch/v1",
+  "batch_id": "1950s-tv-themes-wagon-sea-davy-03",
+  "purpose": "Read-only historical and public Spotify research for a later Gary listening batch; no catalog, database, or storage mutation.",
+  "research_method": "Public web pages only; no Spotify authentication or Spotify API was used.",
+  "programs": [
+    {
+      "show_title": "Wagon Train",
+      "original_broadcast_years": "1957-1965",
+      "historical_themes": [
+        {"broadcast_years": "1957-1958", "theme_title": "Wagon Train (Main Title Theme)", "composer": "Henri Rene and Bob Russell", "lyricist": "", "original_performer_or_orchestra": "not established in this research batch"},
+        {"broadcast_years": "1958-1959", "theme_title": "(Roll Along) Wagon Train", "composer": "Sammy Fain", "lyricist": "Jack Brooks", "original_performer_or_orchestra": "John O'Neill (vocal)"},
+        {"broadcast_years": "1959-1965", "theme_title": "Wagons Ho! (from Wagon Train)", "composer": "Jerome Moross", "lyricist": "Frederick Herbert (lyrics added 1961; the 1959 theme was instrumental)", "original_performer_or_orchestra": "Orchestra conducted by Stanley Wilson on the 1959 Original TV Music from Wagon Train LP"}
+      ],
+      "spotify_candidate": {"track_title": "Wagons Ho! (From Wagon Train)", "displayed_artist": "Stanley Wilson", "spotify_track_id": "7up8IVBnHisqNGn2ewyuyk", "spotify_url": "https://open.spotify.com/track/7up8IVBnHisqNGn2ewyuyk", "album": "Cowboy Party! Classic Western Songs for Your Wild West Cowboy Party!", "duration": "1:44", "classification": "uncertain", "classification_note": "Public Spotify metadata identifies Stanley Wilson but the 2012 compilation page does not establish whether this exact edit is the 1959 soundtrack-LP performance or a later reissue/edit."},
+      "historical_source_urls": ["https://classicthemes.com/50sTVThemes/themePages/wagonTrain.html", "https://www.worldradiohistory.com/Archive-All-Music/Cash-Box/50s/1959/CB-1959-10-31.pdf"],
+      "listening_note": "Verify that the recording is the 1959 instrumental Wagons Ho! rather than the earlier Henri Rene/Bob Russell or Fain/Brooks themes, and assess whether its edit is suitable.",
+      "gary_listening_decision": "pending"
+    },
+    {
+      "show_title": "Sea Hunt",
+      "original_broadcast_years": "1958-1961",
+      "historical_themes": [{"broadcast_years": "1958-1961", "theme_title": "Sea Hunt Theme", "composer": "credited to Ray Llewellyn; probably David Rose", "lyricist": "Patricia La Salle added lyrics later; original television theme was instrumental", "original_performer_or_orchestra": "broadcast performance not established in this research batch"}],
+      "spotify_candidate": {"track_title": "Sea Hunt Theme (From the TV Series Sea Hunt)", "displayed_artist": "Buddy Morrow", "spotify_track_id": "", "spotify_url": "", "album": "Impact: Themes from TV Series", "duration": "2:00", "classification": "unresolved", "classification_note": "Public Spotify search results identify the Buddy Morrow track and album, but did not expose a reliable track-level Spotify URL or ID. The 1959 Impact LP is historically documented as a Buddy Morrow recording."},
+      "historical_source_urls": ["https://classicthemes.com/50sTVThemes/themePages/seaHunt.html", "https://music.apple.com/ca/song/894079838", "https://open.spotify.com/intl-de/track/5eh2Q3xpzWWtDRFF31Cz0p"],
+      "listening_note": "Do not send for approval until a stable public Spotify track ID is independently located; verify the instrumental theme rather than the later lyric version.",
+      "gary_listening_decision": "pending"
+    },
+    {
+      "show_title": "Davy Crockett",
+      "original_broadcast_years": "1954-1955",
+      "historical_themes": [{"broadcast_years": "1954-1955", "theme_title": "The Ballad of Davy Crockett", "composer": "George Bruns", "lyricist": "Thomas W. Blackburn", "original_performer_or_orchestra": "The Mellomen in the television miniseries; Fess Parker was the title performer and recorded a commercial version"}],
+      "spotify_candidate": {"track_title": "The Ballad Of Davy Crockett - From the Television Miniseries Davy Crockett", "displayed_artist": "Fess Parker", "spotify_track_id": "3Gr3f20ajbTXP25lmrg2Qb", "spotify_url": "https://open.spotify.com/track/3Gr3f20ajbTXP25lmrg2Qb", "album": "Fess Parker Cowboy and Indian Songs", "duration": "2:57", "classification": "rerecording", "classification_note": "The public Spotify page dates this release to 1969; it is appropriately labelled for the television miniseries but is not established as the 1954 broadcast recording."},
+      "historical_source_urls": ["https://d23.com/this-day/abc-airs-davy-crockett-indian-fighter-episode-on-the-disneyland-tv-show/", "https://interviews.televisionacademy.com/shows/davy-crockett", "https://en.wikipedia.org/wiki/The_Ballad_of_Davy_Crockett", "https://open.spotify.com/track/3Gr3f20ajbTXP25lmrg2Qb"],
+      "listening_note": "Verify that this later Fess Parker rerecording remains recognizable and appropriate for the 1954-55 television miniseries; it is not automatically approved.",
+      "gary_listening_decision": "pending"
+    }
+  ],
+  "approval_gate": "All listed records remain pending Gary's listening approval. Sea Hunt is unresolved because no defensible track-level Spotify ID was found. No final ranks or production changes are authorized."
+}

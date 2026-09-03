@@ -14,6 +14,10 @@ REVIEW_MANIFEST_V3 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv_themes.v3.json"
 )
+REVIEW_MANIFEST_V4 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv_themes.v4.json"
+)
 RANKED_REVIEW = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.ranked-review.v1.csv"
@@ -21,6 +25,10 @@ RANKED_REVIEW = (
 RESEARCH_BATCH_02 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-02.v1.json"
+)
+RESEARCH_BATCH_03 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-03.v1.json"
 )
 EXPECTED_RANKS = {2, 3, 8, 10, 11, 12}
 APPROVED_REPLACEMENTS = {
@@ -103,14 +111,16 @@ def test_ranked_review_keeps_approved_recordings_and_defers_batman():
 
 def test_conditional_listening_approvals_and_next_batch_are_explicit():
     batch = json.loads(RESEARCH_BATCH_02.read_text(encoding="utf-8"))
-    approvals = batch["listening_approved_historical_review_pending"]
+    approvals = batch["historically_accepted_catalog_candidates"]
     assert {item["spotify_track_id"] for item in approvals} == {
-        "5lSfu6Bb1lZHvEA5Lp3FSo", "71qlBJvHesvpK3TJXGN95O", "301w6yavJnABE4APW72ynW"
+        "5lSfu6Bb1lZHvEA5Lp3FSo", "71qlBJvHesvpK3TJXGN95O",
+        "2esm55sr13FFKqoP6qwjUz", "301w6yavJnABE4APW72ynW",
     }
-    assert {item["historical_relationship"] for item in approvals} == {"recognizable cover"}
-    twilight = batch["next_listening_candidates"][0]
+    relationships = {item["show_title"]: item["historical_relationship"] for item in approvals}
+    assert relationships["I Love Lucy"] == relationships["Gunsmoke"] == relationships["Zorro"] == "recognizable cover"
+    assert relationships["The Twilight Zone"] == "soundtrack-derived first-season television theme"
+    twilight = next(item for item in approvals if item["show_title"] == "The Twilight Zone")
     assert twilight["spotify_track_id"] == "2esm55sr13FFKqoP6qwjUz"
-    assert twilight["gary_listening_decision"] == "pending"
 
 
 def test_conditional_approvals_are_listening_only_and_not_catalog_acceptance():
@@ -125,3 +135,26 @@ def test_conditional_approvals_are_listening_only_and_not_catalog_acceptance():
         approved = decision["approved_exact_spotify_recording"]
         assert approved["gary_listening_decision"] == "approved"
         assert approved["recording_classification"] == "recognizable_cover"
+
+
+def test_v4_promotes_exactly_four_catalog_candidates_without_apply_authority():
+    manifest = json.loads(REVIEW_MANIFEST_V4.read_text(encoding="utf-8"))
+    assert manifest["supersedes"] == "1950s-tv_themes.v3.json"
+    approved = {item["show_title"]: item for item in manifest["approved_catalog_candidates"]}
+    assert set(approved) == {"I Love Lucy", "Gunsmoke", "The Twilight Zone", "Zorro"}
+    assert approved["The Twilight Zone"]["spotify_track_id"] == "2esm55sr13FFKqoP6qwjUz"
+    assert all(item["database_status"].endswith("no_database_apply_authorized") for item in approved.values())
+
+
+def test_research_batch_three_has_two_public_track_candidates_and_one_unresolved_program():
+    batch = json.loads(RESEARCH_BATCH_03.read_text(encoding="utf-8"))
+    programs = {item["show_title"]: item for item in batch["programs"]}
+    assert set(programs) == {"Wagon Train", "Sea Hunt", "Davy Crockett"}
+    for title in ("Wagon Train", "Davy Crockett"):
+        candidate = programs[title]["spotify_candidate"]
+        assert candidate["spotify_track_id"]
+        assert candidate["spotify_url"].endswith(candidate["spotify_track_id"])
+        assert programs[title]["gary_listening_decision"] == "pending"
+    sea_hunt = programs["Sea Hunt"]["spotify_candidate"]
+    assert sea_hunt["classification"] == "unresolved"
+    assert sea_hunt["spotify_track_id"] == sea_hunt["spotify_url"] == ""
