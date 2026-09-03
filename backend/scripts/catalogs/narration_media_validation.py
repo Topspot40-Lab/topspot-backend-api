@@ -16,11 +16,14 @@ def validate_media_records(
     entries = list(entries)
     narration = {(r["rank"], r["language"], r["kind"]): r for r in narration_records}
     media = {(r["rank"], r["language"], r["kind"]): r for r in media_records}
+    by_rank = {entry["proposed_rank"]: entry for entry in entries}
+    # The narration bundle, rather than a full three-kind cross product,
+    # defines what is staged.  Catalogs may intentionally preserve existing
+    # detail mappings, as catalog 64 does.
     expected = {
-        (entry["proposed_rank"], language, kind): entry
-        for entry in entries
-        for language in ("en", "es-MX", "pt-BR")
-        for kind in ("intro", "short_detail", "long_detail")
+        key: by_rank[key[0]]
+        for key in narration
+        if key[0] in by_rank
     }
     errors = []
     for key, entry in expected.items():
@@ -38,6 +41,8 @@ def validate_media_records(
             errors.append((key, "missing_authoritative_playback_url"))
         if not asset.get("audio_sha256"):
             errors.append((key, "missing_audio_hash"))
+        if not asset.get("staging_key"):
+            errors.append((key, "missing_staging_key"))
         if asset.get("text_sha256") != text["text_sha256"]:
             errors.append((key, "resume_text_hash_mismatch"))
         if key[2] == "intro":

@@ -430,7 +430,7 @@
     },
     {
       "sequence_order": 32,
-      "proposed_rank": 33,
+      "proposed_rank": 32,
       "source_rank": 33,
       "program": "The Addams Family",
       "track_name": "The Addams Family Theme",
@@ -443,7 +443,7 @@
     },
     {
       "sequence_order": 33,
-      "proposed_rank": 34,
+      "proposed_rank": 33,
       "source_rank": 34,
       "program": "Gilligan's Island",
       "track_name": "Gilligan's Island Theme",
@@ -456,7 +456,7 @@
     },
     {
       "sequence_order": 34,
-      "proposed_rank": 36,
+      "proposed_rank": 34,
       "source_rank": 36,
       "program": "Get Smart",
       "track_name": "Get Smart Theme",
@@ -469,7 +469,7 @@
     },
     {
       "sequence_order": 35,
-      "proposed_rank": 40,
+      "proposed_rank": 35,
       "source_rank": 40,
       "program": "Green Acres",
       "track_name": "Green Acres Theme",
@@ -482,7 +482,7 @@
     },
     {
       "sequence_order": 36,
-      "proposed_rank": 41,
+      "proposed_rank": 36,
       "source_rank": 41,
       "program": "Petticoat Junction",
       "track_name": "Petticoat Junction Theme",
@@ -495,7 +495,7 @@
     },
     {
       "sequence_order": 37,
-      "proposed_rank": 44,
+      "proposed_rank": 37,
       "source_rank": 44,
       "program": "Doctor Who",
       "track_name": "Doctor Who (Original Theme) [From \"Doctor Who\"]",
@@ -508,7 +508,7 @@
     },
     {
       "sequence_order": 38,
-      "proposed_rank": 45,
+      "proposed_rank": 38,
       "source_rank": 45,
       "program": "The Saint",
       "track_name": "Main Theme from \"The Saint\"",
@@ -566,10 +566,58 @@
       "reason": "duplicate_program_unresolved_recording_and_missing_artist_relation"
     }
   ],
-  "rank_preservation_policy": "Retained and replacement entries keep their current source_rank; no retained track is renumbered.",
+  "rank_preservation_policy": "The approved programs retain their prior relative order and are renumbered contiguously from 1 through 38; correct Track and Artist rows are preserved.",
+  "database_delta": {
+    "retained_track_artist_rows": 23,
+    "replaced_rankings_in_place": 4,
+    "new_tracks": 11,
+    "duplicate_rankings_removed": 8,
+    "unresolved_rankings_removed": 3,
+    "final_ranks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38
+    ],
+    "transaction_rule": "Apply only inside one transaction; rollback on every failure; never delete Track, Artist, detail, or artwork records."
+  },
   "gap_filler_research": {
     "status": "deferred_without_verified_candidates",
-    "open_ranks": [
+    "legacy_source_gaps": [
       32,
       35,
       37,
@@ -578,7 +626,7 @@
       42,
       43
     ],
-    "rule": "Do not add a recording solely to fill a gap; only separately verified, unique 1960s programmes may be proposed later."
+    "rule": "The approved 38-program proposal is now contiguous; do not add a recording solely to fill a former source-rank gap."
   },
   "intro_rewrite": {
     "record_count": 114,
@@ -587,10 +635,13 @@
       "es-MX",
       "pt-BR"
     ],
-    "staging_prefix": "staging/catalog-64/1960s-tv-themes-intro-rewrite-v1",
+    "staging_prefix": "staging/catalog-64/1960s-tv-themes-contiguous-intros-v2",
     "canonical_key_pattern": "intro/1960s_tv_themes_{rank:02}.mp3",
-    "promotion_rule": "Generate, hash, cache-disabled download, transcribe, and validate every staged intro before atomically updating catalog-64 intro mappings.",
-    "cache_rule": "Return authoritative versioned or cache-fresh playback URLs after promotion; never select a pre-existing intro solely because it exists."
+    "promotion_rule": "Generate all 114 intros into the new empty versioned staging prefix; hash, cache-disabled download, locally transcribe, and validate every staged intro before atomically updating catalog-64 intro mappings.",
+    "reuse_rule": "No existing, staged, or canonical 1960s TV Themes intro text or MP3 is eligible for reuse or skip.",
+    "validation_rule": "Reject wrong-rank, wrong-program, blank, truncated, duplicate, or undecodable audio; do not promote until all 114 intros pass spoken-rank and program-identity validation.",
+    "post_promotion_rule": "Re-download all 114 live catalog-64 canonical objects cache-disabled and require their audio_sha256 values to match the validated staged files.",
+    "cache_rule": "Return authoritative versioned or cache-fresh playback URLs after promotion."
   },
   "detail_preservation": {
     "retain_mapping_count": 135,
@@ -601,6 +652,14 @@
       "proven_mojibake": 3
     },
     "safety_rule": "Never overwrite a shared correct detail object; stage replacements and point only the affected catalog-64 locale mapping at promoted versioned objects."
+  },
+  "media_execution": {
+    "staging_prefix": "staging/catalog-64/1960s-tv-themes-contiguous-v2",
+    "staged_mp3_count": 207,
+    "provenance_rule": "Every staged object requires text_sha256 and audio_sha256 before promotion.",
+    "intro_validation_rule": "Every one of the 114 newly generated intros requires cache-disabled download, local ASR spoken-rank and program-identity validation before promotion.",
+    "promotion_scope": "Promote canonical mappings only for catalog ID 64, with versioned/cache-fresh live playback URLs.",
+    "existing_object_rule": "An old or canonical object is never valid merely because it exists and cannot cause an intro generation skip."
   },
   "future_apply_requires": [
     "fresh public Spotify page recheck",

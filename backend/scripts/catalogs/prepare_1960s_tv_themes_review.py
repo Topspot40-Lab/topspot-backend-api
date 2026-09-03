@@ -124,10 +124,23 @@ DETAIL_REPLACEMENTS = {
     (23, "pt-BR", "long_detail"): "proven_mojibake",
 }
 
+# Keep clean, explicit localized copy separate from the legacy source literals
+# above so regenerated review artifacts can never inherit their replacement
+# characters.  These lines are the only patterns used by `_intro`.
+CLEAN_INTRO_PATTERNS = {
+    "en": INTRO_PATTERNS["en"][:2] + ("Here at number {rank}, it is {program} — {title}, performed by {artist}.",) + INTRO_PATTERNS["en"][3:],
+    "es-MX": (
+        "En el número {rank}, {program}: {title}, interpretado por {artist}.", "El número {rank} trae {program} con {title} de {artist}.", "En el puesto {rank}, escuchamos {program}: {title}, interpretado por {artist}.", "Número {rank}: {artist} nos lleva a {program} con {title}.", "Llega al {rank} {program}, con {title} de {artist}.", "Nuestro tema número {rank} es {title}, de {program}, interpretado por {artist}.", "En el {rank}, {artist} presenta {title}, el tema de {program}.", "El número {rank} destaca {program} y {title}, interpretado por {artist}.", "Ahora, en el número {rank}: {title} de {artist}, de {program}.",
+    ),
+    "pt-BR": (
+        "No número {rank}, {program}: {title}, interpretado por {artist}.", "O número {rank} traz {program} com {title}, de {artist}.", "Na posição {rank}, ouvimos {program}: {title}, interpretado por {artist}.", "Número {rank}: {artist} nos leva a {program} com {title}.", "Chegando ao {rank}, {program}, com {title} de {artist}.", "Nosso tema de número {rank} é {title}, de {program}, interpretado por {artist}.", "No {rank}, {artist} apresenta {title}, o tema de {program}.", "O número {rank} destaca {program} e {title}, interpretado por {artist}.", "Agora, no número {rank}: {title} de {artist}, de {program}.",
+    ),
+}
+
 
 def _intro(entry: dict, language: str) -> str:
-    return INTRO_PATTERNS[language][entry["source_rank"] % 9].format(
-        rank=entry["source_rank"], program=entry["program"], title=entry["track_name"], artist=entry["artist"],
+    return CLEAN_INTRO_PATTERNS[language][entry["proposed_rank"] % 9].format(
+        rank=entry["proposed_rank"], program=entry["program"], title=entry["track_name"], artist=entry["artist"],
     )
 
 
@@ -141,6 +154,21 @@ def _detail(entry: dict, language: str, kind: str) -> str:
         return lead if kind == "short_detail" else lead + " A seleção preserva a identidade do programa e credita corretamente o intérprete."
     lead = f"{title}, performed by {artist}, is the selected recording for {program}."
     return lead if kind == "short_detail" else lead + " The selection preserves the programme identity and credits the performer accurately."
+
+
+def _review_detail(entry: dict, language: str, kind: str) -> str:
+    """Clean localized detail copy, with four sentences for every long form."""
+    title, artist, program = entry["track_name"], entry["artist"], entry["program"]
+    if language == "es-MX":
+        short = f"{title}, interpretado por {artist}, es la grabación elegida para {program}. Identifica tema, programa e intérprete con claridad."
+        long = f"{title} es la grabación acreditada a {artist} para {program}. Esta selección identifica con claridad el tema, el programa y al intérprete. La ficha conserva la identidad de la grabación seleccionada. La atribución se presenta tal como figura en el plan verificado."
+    elif language == "pt-BR":
+        short = f"{title}, interpretado por {artist}, é a gravação escolhida para {program}. Identifica tema, programa e intérprete com clareza."
+        long = f"{title} é a gravação creditada a {artist} para {program}. Esta seleção identifica com clareza o tema, o programa e o intérprete. A ficha preserva a identidade da gravação escolhida. O crédito aparece como está no plano verificado."
+    else:
+        short = f"{title}, performed by {artist}, is the selected recording for {program}. It identifies the theme, programme, and performer."
+        long = f"{title} is the recording credited to {artist} for {program}. This selection clearly identifies the theme, programme, and performer. The listing preserves the identity of the selected recording. Its credit is presented as documented in the verified plan."
+    return short if kind == "short_detail" else long
 
 
 def main() -> None:
@@ -196,25 +224,38 @@ def main() -> None:
     approved.sort(key=lambda entry: entry["proposed_rank"])
     for position, entry in enumerate(approved, start=1):
         entry["sequence_order"] = position
+        entry["proposed_rank"] = position
     plan = {
         "schema_version": 2,
         "catalog_id": 64,
         "catalog_slug": "1960s_tv_themes",
         "approved_entries": approved,
         "unresolved_excluded": [{"existing_rank": rank, "reason": reason} for rank, reason in EXCLUSION_REASON.items()],
-        "rank_preservation_policy": "Retained and replacement entries keep their current source_rank; no retained track is renumbered.",
+        "rank_preservation_policy": "The approved programs retain their prior relative order and are renumbered contiguously from 1 through 38; correct Track and Artist rows are preserved.",
+        "database_delta": {
+            "retained_track_artist_rows": 23,
+            "replaced_rankings_in_place": 4,
+            "new_tracks": 11,
+            "duplicate_rankings_removed": 8,
+            "unresolved_rankings_removed": 3,
+            "final_ranks": [entry["proposed_rank"] for entry in approved],
+            "transaction_rule": "Apply only inside one transaction; rollback on every failure; never delete Track, Artist, detail, or artwork records.",
+        },
         "gap_filler_research": {
             "status": "deferred_without_verified_candidates",
-            "open_ranks": [32, 35, 37, 38, 39, 42, 43],
-            "rule": "Do not add a recording solely to fill a gap; only separately verified, unique 1960s programmes may be proposed later.",
+            "legacy_source_gaps": [32, 35, 37, 38, 39, 42, 43],
+            "rule": "The approved 38-program proposal is now contiguous; do not add a recording solely to fill a former source-rank gap.",
         },
         "intro_rewrite": {
             "record_count": len(approved) * 3,
             "languages": ["en", "es-MX", "pt-BR"],
-            "staging_prefix": "staging/catalog-64/1960s-tv-themes-intro-rewrite-v1",
+            "staging_prefix": "staging/catalog-64/1960s-tv-themes-contiguous-intros-v2",
             "canonical_key_pattern": "intro/1960s_tv_themes_{rank:02}.mp3",
-            "promotion_rule": "Generate, hash, cache-disabled download, transcribe, and validate every staged intro before atomically updating catalog-64 intro mappings.",
-            "cache_rule": "Return authoritative versioned or cache-fresh playback URLs after promotion; never select a pre-existing intro solely because it exists.",
+            "promotion_rule": "Generate all 114 intros into the new empty versioned staging prefix; hash, cache-disabled download, locally transcribe, and validate every staged intro before atomically updating catalog-64 intro mappings.",
+            "reuse_rule": "No existing, staged, or canonical 1960s TV Themes intro text or MP3 is eligible for reuse or skip.",
+            "validation_rule": "Reject wrong-rank, wrong-program, blank, truncated, duplicate, or undecodable audio; do not promote until all 114 intros pass spoken-rank and program-identity validation.",
+            "post_promotion_rule": "Re-download all 114 live catalog-64 canonical objects cache-disabled and require their audio_sha256 values to match the validated staged files.",
+            "cache_rule": "Return authoritative versioned or cache-fresh playback URLs after promotion.",
         },
         "detail_preservation": {
             "retain_mapping_count": 135,
@@ -222,18 +263,26 @@ def main() -> None:
             "replacement_reasons": {"replacement_track": 24, "new_track": 66, "proven_mojibake": 3},
             "safety_rule": "Never overwrite a shared correct detail object; stage replacements and point only the affected catalog-64 locale mapping at promoted versioned objects.",
         },
+        "media_execution": {
+            "staging_prefix": "staging/catalog-64/1960s-tv-themes-contiguous-v2",
+            "staged_mp3_count": len(approved) * 3 + len(DETAIL_REPLACEMENTS),
+            "provenance_rule": "Every staged object requires text_sha256 and audio_sha256 before promotion.",
+            "intro_validation_rule": "Every one of the 114 newly generated intros requires cache-disabled download, local ASR spoken-rank and program-identity validation before promotion.",
+            "promotion_scope": "Promote canonical mappings only for catalog ID 64, with versioned/cache-fresh live playback URLs.",
+            "existing_object_rule": "An old or canonical object is never valid merely because it exists and cannot cause an intro generation skip.",
+        },
         "future_apply_requires": ["fresh public Spotify page recheck", "artwork URL check", "human review of final localized drafts", "separate production authorization"],
     }
     records = []
     for entry in approved:
         for language in ("en", "es-MX", "pt-BR"):
             text = _intro(entry, language)
-            records.append({"rank": entry["proposed_rank"], "language": language, "kind": "intro", "purpose": "replace_all_ranked_intros", "text": text, "text_sha256": _sha(text)})
+            records.append({"rank": entry["proposed_rank"], "language": language, "kind": "intro", "purpose": "replace_all_ranked_intros", "canonical_key": f"intro/1960s_tv_themes_{entry['proposed_rank']:02}.mp3", "text": text, "text_sha256": _sha(text)})
         for language in ("en", "es-MX", "pt-BR"):
             for kind in ("short_detail", "long_detail"):
                 reason = DETAIL_REPLACEMENTS.get((entry["source_rank"], language, kind))
                 if reason:
-                    text = _detail(entry, language, kind)
+                    text = _review_detail(entry, language, kind)
                     records.append({"rank": entry["proposed_rank"], "language": language, "kind": kind, "purpose": reason, "text": text, "text_sha256": _sha(text)})
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "1960s-tv-themes.research.v1.json").write_text(json.dumps({"catalog_id": 64, "records": research}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -245,7 +294,7 @@ def main() -> None:
         }
         for rank, (program, title, artist, spotify_id, classification, years, historical_url) in ADDITIONS.items()
     ]
-    (OUT / "1960s-tv-themes.gap-filler-research.v1.json").write_text(json.dumps({"catalog_id": 64, "approved_additions": gap_research, "unfilled_open_ranks": plan["gap_filler_research"]["open_ranks"]}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (OUT / "1960s-tv-themes.gap-filler-research.v1.json").write_text(json.dumps({"catalog_id": 64, "approved_additions": gap_research, "legacy_source_gaps": plan["gap_filler_research"]["legacy_source_gaps"]}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (OUT / "1960s-tv-themes.production-plan.v1.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (OUT / "1960s-tv-themes.narration-drafts.v1.json").write_text(json.dumps({"catalog_id": 64, "records": records}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"research_records": len(research), "approved_entries": len(approved), "drafts": len(records), "intro_drafts": len(approved) * 3, "detail_drafts": len(records) - len(approved) * 3}))
