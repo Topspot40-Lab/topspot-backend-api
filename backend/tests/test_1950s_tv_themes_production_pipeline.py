@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import pytest
 
 from backend.config import TTS_PROFILES as CONFIG_TTS_PROFILES
 from backend.config.tts_config import TTS_PROFILES as ESTABLISHED_TTS_PROFILES
@@ -10,12 +11,15 @@ from backend.scripts.catalogs.tv_themes_1950s_pipeline import (
     CATALOG_SLUG,
     build_text_bundle,
     canonical_key,
+    approved_english_intros,
+    apply_catalog_rankings,
     completeness_report,
     expected_narration,
     load_json,
     plan_summary,
     validate_production_plan,
 )
+from backend.models.dbmodels import Track, TrackRanking
 
 
 ROOT = Path(__file__).parents[1] / "scripts/catalogs/review_manifests"
@@ -110,6 +114,61 @@ def test_importer_default_mode_is_a_no_write_plan():
     summary = json.loads(result.stdout)
     assert summary["mode"] == "plan-only"
     assert summary["database_writes"] == summary["storage_writes"] == summary["paid_service_calls"] == 0
+
+
+def test_importer_validates_exactly_one_nonblank_matching_english_intro_per_rank_before_apply():
+    _, plan = _inputs()
+    entries = plan["ranked_candidates"]
+    records = build_text_bundle(plan)
+    intros = approved_english_intros(entries, records)
+    assert len(intros) == 19
+    assert all(intros[(entry["proposed_rank"], entry["spotify_track_id"])] for entry in entries)
+    broken = [dict(row) for row in records]
+    next(row for row in broken if row["language"] == "en" and row["narration_type"] == "intro")["text"] = ""
+    with pytest.raises(ValueError, match="invalid English intro"):
+        approved_english_intros(entries, broken)
+    missing = [row for row in records if not (row["language"] == "en" and row["narration_type"] == "intro" and row["ranking"] == 1)]
+    with pytest.raises(ValueError, match="exactly one English intro"):
+        approved_english_intros(entries, missing)
+
+
+class _Result:
+    def __init__(self, rows): self.rows = rows
+    def all(self): return self.rows
+
+
+class _RollbackSession:
+    def __init__(self, tracks, existing, fail_commit=False):
+        self._results = [tracks, existing]
+        self.added, self.deleted, self.flushes = [], [], 0
+        self.fail_commit, self.committed, self.rolled_back = fail_commit, False, False
+    def exec(self, _statement): return _Result(self._results.pop(0))
+    def add(self, item): self.added.append(item)
+    def delete(self, item): self.deleted.append(item)
+    def flush(self): self.flushes += 1
+    def commit(self):
+        if self.fail_commit: raise RuntimeError("simulated database failure")
+        self.committed = True
+    def rollback(self): self.rolled_back = True
+
+
+def test_importer_never_inserts_null_intros_and_rolls_back_on_commit_failure():
+    _, plan = _inputs()
+    entries, records = plan["ranked_candidates"], build_text_bundle(plan)
+    intros = approved_english_intros(entries, records)
+    tracks = [Track(id=100 + index, track_name=entry["theme_title"], spotify_track_id=entry["spotify_track_id"], artist_id=1) for index, entry in enumerate(entries)]
+    old = [TrackRanking(id=1, track_id=1, decade_genre_id=63, ranking=1, intro="old")]
+    session = _RollbackSession(tracks, old)
+    apply_catalog_rankings(session, entries, intros, create_missing_tracks=False)
+    inserted = [item for item in session.added if isinstance(item, TrackRanking)]
+    assert len(inserted) == 19
+    assert [item.intro for item in inserted] == [intros[(entry["proposed_rank"], entry["spotify_track_id"])] for entry in entries]
+    assert all(item.intro is not None for item in inserted)
+    assert session.committed is True
+    failing = _RollbackSession(tracks, old, fail_commit=True)
+    with pytest.raises(RuntimeError, match="simulated database failure"):
+        apply_catalog_rankings(failing, entries, intros, create_missing_tracks=False)
+    assert failing.rolled_back is True
 
 
 def test_ptbr_intro_voice_matches_established_tts_config_not_the_placeholder():

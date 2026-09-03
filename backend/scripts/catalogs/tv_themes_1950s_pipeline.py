@@ -111,7 +111,25 @@ def plan_summary(manifest: dict[str, Any], plan: dict[str, Any]) -> dict[str, An
     return {"mode": "plan-only", "catalog_slug": CATALOG_SLUG, "catalog_id": CATALOG_ID, "ranked_candidates": len(entries), "narration_files": 171, "narration_files_by_language": dict(counts), "database_writes": 0, "storage_writes": 0, "paid_service_calls": 0}
 
 
-def replace_catalog_rankings(session: Any, entries: list[dict[str, Any]], *, create_missing_tracks: bool = False) -> None:
+def approved_english_intros(entries: list[dict[str, Any]], records: list[dict[str, Any]]) -> dict[tuple[int, str], str]:
+    """Validate the exact English rank-intro subset before any apply transaction."""
+    expected = {(entry["proposed_rank"], entry["spotify_track_id"]): entry for entry in entries}
+    intros = [row for row in records if row.get("language") == "en" and row.get("narration_type") == "intro"]
+    identities = [(row.get("ranking"), row.get("spotify_track_id")) for row in intros]
+    if len(intros) != 19 or len(identities) != len(set(identities)) or set(identities) != set(expected):
+        raise ValueError("text bundle must contain exactly one English intro for each approved rank and Spotify ID")
+    result = {}
+    for row in intros:
+        identity = (row["ranking"], row["spotify_track_id"])
+        text = str(row.get("text", "")).strip()
+        entry = expected[identity]
+        if not text or entry["show_title"] not in text or entry["theme_title"] not in text or entry["performer"] not in text:
+            raise ValueError(f"invalid English intro identity for rank {identity[0]}")
+        result[identity] = text
+    return result
+
+
+def replace_catalog_rankings(session: Any, entries: list[dict[str, Any]], english_intros: dict[tuple[int, str], str], *, create_missing_tracks: bool = False) -> None:
     """Apply-only primitive: replace rankings for catalog id 63 after all tracks resolve."""
     from sqlmodel import select
     from backend.models.dbmodels import Artist, Track, TrackRanking
@@ -136,7 +154,21 @@ def replace_catalog_rankings(session: Any, entries: list[dict[str, Any]], *, cre
         session.delete(ranking)
     session.flush()
     for entry in entries:
-        session.add(TrackRanking(track_id=by_id[entry["spotify_track_id"]].id, decade_genre_id=CATALOG_ID, ranking=entry["proposed_rank"]))
+        identity = (entry["proposed_rank"], entry["spotify_track_id"])
+        intro = english_intros.get(identity)
+        if not intro:
+            raise ValueError(f"apply refused: missing English intro for rank {entry['proposed_rank']}")
+        session.add(TrackRanking(track_id=by_id[entry["spotify_track_id"]].id, decade_genre_id=CATALOG_ID, ranking=entry["proposed_rank"], intro=intro))
+
+
+def apply_catalog_rankings(session: Any, entries: list[dict[str, Any]], english_intros: dict[tuple[int, str], str], *, create_missing_tracks: bool) -> None:
+    """Commit one atomic catalog-only ranking replacement, rolling back on any failure."""
+    try:
+        replace_catalog_rankings(session, entries, english_intros, create_missing_tracks=create_missing_tracks)
+        session.commit()
+    except Exception:
+        session.rollback()
+        raise
 
 
 def replace_catalog_narration_text(session: Any, records: list[dict[str, Any]]) -> None:
