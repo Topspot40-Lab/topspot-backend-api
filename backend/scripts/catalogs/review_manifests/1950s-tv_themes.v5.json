@@ -1,0 +1,21 @@
+{
+  "schema_version": "catalog-review-manifest/v1",
+  "manifest_version": 5,
+  "supersedes": "1950s-tv_themes.v4.json",
+  "program": {"decade_genre_id": 63, "slug": "1950s-tv_themes"},
+  "purpose": "Read-only catalog-candidate decisions. Gary's approvals are recorded without any database, storage, replacement, or final-rank mutation.",
+  "prior_recording_replacement_manifest": "1950s-tv_themes.v2.json",
+  "prior_catalog_candidate_manifest": "1950s-tv_themes.v4.json",
+  "approved_catalog_candidates": [
+    {"rank": 13, "show_title": "I Love Lucy", "catalog_candidate_status": "approved_catalog_candidate", "recording_classification": "recognizable_cover", "spotify_track_id": "5lSfu6Bb1lZHvEA5Lp3FSo", "spotify_url": "https://open.spotify.com/track/5lSfu6Bb1lZHvEA5Lp3FSo", "gary_listening_decision": "approved", "database_status": "incomplete_unreviewed_no_database_apply_authorized"},
+    {"rank": 18, "show_title": "Gunsmoke", "catalog_candidate_status": "approved_catalog_candidate", "recording_classification": "recognizable_cover", "spotify_track_id": "71qlBJvHesvpK3TJXGN95O", "spotify_url": "https://open.spotify.com/track/71qlBJvHesvpK3TJXGN95O", "gary_listening_decision": "approved", "database_status": "incomplete_unreviewed_no_database_apply_authorized"},
+    {"rank": 20, "show_title": "The Twilight Zone", "catalog_candidate_status": "approved_catalog_candidate", "recording_classification": "soundtrack_derived_first_season_theme", "spotify_track_id": "2esm55sr13FFKqoP6qwjUz", "spotify_url": "https://open.spotify.com/track/2esm55sr13FFKqoP6qwjUz", "gary_listening_decision": "approved", "historical_constraint": "Bernard Herrmann's 1959 first-season theme only; exclude the Marius Constant second-season theme.", "database_status": "incomplete_unreviewed_no_database_apply_authorized"},
+    {"rank": 31, "show_title": "Zorro", "catalog_candidate_status": "approved_catalog_candidate", "recording_classification": "recognizable_cover", "spotify_track_id": "301w6yavJnABE4APW72ynW", "spotify_url": "https://open.spotify.com/track/301w6yavJnABE4APW72ynW", "gary_listening_decision": "approved", "database_status": "incomplete_unreviewed_no_database_apply_authorized"},
+    {"rank": 38, "show_title": "Wagon Train", "catalog_candidate_status": "approved_catalog_candidate", "recording_classification": "uncertain_exact_release_lineage", "spotify_track_id": "7up8IVBnHisqNGn2ewyuyk", "spotify_url": "https://open.spotify.com/track/7up8IVBnHisqNGn2ewyuyk", "gary_listening_decision": "approved", "historical_constraint": "Targets Jerome Moross's 1959 instrumental Wagons Ho!; the exact Spotify release lineage remains uncertain.", "database_status": "incomplete_unreviewed_no_database_apply_authorized"},
+    {"rank": null, "show_title": "Davy Crockett", "catalog_candidate_status": "approved_catalog_candidate", "recording_classification": "1969_rerecording_not_confirmed_1954_broadcast_recording", "spotify_track_id": "3Gr3f20ajbTXP25lmrg2Qb", "spotify_url": "https://open.spotify.com/track/3Gr3f20ajbTXP25lmrg2Qb", "gary_listening_decision": "approved", "database_status": "no_database_apply_authorized"}
+  ],
+  "unresolved_research": [{"show_title": "Sea Hunt", "status": "unresolved_no_defensible_spotify_track_id", "spotify_track_id": ""}],
+  "research_records": ["1950s-tv-themes.research-batch-02.v1.json", "1950s-tv-themes.research-batch-03.v1.json"],
+  "rebuild_rules": {"apply_enabled": false, "final_rank_assignment_enabled": false, "spotify_recording_required_for_catalog_acceptance": true},
+  "not_in_scope": ["database apply or delete operations", "storage mutation", "Spotify authentication or API", "TTS generation", "final database ranking"]
+}

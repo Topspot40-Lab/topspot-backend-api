@@ -1,7 +1,7 @@
 {
   "schema_version": "1950s-tv-themes-research-batch/v1",
   "batch_id": "1950s-tv-themes-wagon-sea-davy-03",
-  "purpose": "Read-only historical and public Spotify research for a later Gary listening batch; no catalog, database, or storage mutation.",
+  "purpose": "Read-only historical and public Spotify research with Gary's recorded catalog-candidate decisions; no catalog, database, or storage mutation.",
   "research_method": "Public web pages only; no Spotify authentication or Spotify API was used.",
   "programs": [
     {
@@ -14,8 +14,9 @@
       ],
       "spotify_candidate": {"track_title": "Wagons Ho! (From Wagon Train)", "displayed_artist": "Stanley Wilson", "spotify_track_id": "7up8IVBnHisqNGn2ewyuyk", "spotify_url": "https://open.spotify.com/track/7up8IVBnHisqNGn2ewyuyk", "album": "Cowboy Party! Classic Western Songs for Your Wild West Cowboy Party!", "duration": "1:44", "classification": "uncertain", "classification_note": "Public Spotify metadata identifies Stanley Wilson but the 2012 compilation page does not establish whether this exact edit is the 1959 soundtrack-LP performance or a later reissue/edit."},
       "historical_source_urls": ["https://classicthemes.com/50sTVThemes/themePages/wagonTrain.html", "https://www.worldradiohistory.com/Archive-All-Music/Cash-Box/50s/1959/CB-1959-10-31.pdf"],
-      "listening_note": "Verify that the recording is the 1959 instrumental Wagons Ho! rather than the earlier Henri Rene/Bob Russell or Fain/Brooks themes, and assess whether its edit is suitable.",
-      "gary_listening_decision": "pending"
+      "listening_note": "Gary approved this exact recording for the catalog candidate list. It still targets the 1959 instrumental Wagons Ho!, and its exact Spotify release lineage remains uncertain.",
+      "gary_listening_decision": "approved",
+      "catalog_candidate_status": "approved_catalog_candidate"
     },
     {
       "show_title": "Sea Hunt",
@@ -32,9 +33,10 @@
       "historical_themes": [{"broadcast_years": "1954-1955", "theme_title": "The Ballad of Davy Crockett", "composer": "George Bruns", "lyricist": "Thomas W. Blackburn", "original_performer_or_orchestra": "The Mellomen in the television miniseries; Fess Parker was the title performer and recorded a commercial version"}],
       "spotify_candidate": {"track_title": "The Ballad Of Davy Crockett - From the Television Miniseries Davy Crockett", "displayed_artist": "Fess Parker", "spotify_track_id": "3Gr3f20ajbTXP25lmrg2Qb", "spotify_url": "https://open.spotify.com/track/3Gr3f20ajbTXP25lmrg2Qb", "album": "Fess Parker Cowboy and Indian Songs", "duration": "2:57", "classification": "rerecording", "classification_note": "The public Spotify page dates this release to 1969; it is appropriately labelled for the television miniseries but is not established as the 1954 broadcast recording."},
       "historical_source_urls": ["https://d23.com/this-day/abc-airs-davy-crockett-indian-fighter-episode-on-the-disneyland-tv-show/", "https://interviews.televisionacademy.com/shows/davy-crockett", "https://en.wikipedia.org/wiki/The_Ballad_of_Davy_Crockett", "https://open.spotify.com/track/3Gr3f20ajbTXP25lmrg2Qb"],
-      "listening_note": "Verify that this later Fess Parker rerecording remains recognizable and appropriate for the 1954-55 television miniseries; it is not automatically approved.",
-      "gary_listening_decision": "pending"
+      "listening_note": "Gary approved this exact recording for the catalog candidate list. Preserve that it is a 1969 rerecording, not the confirmed 1954 broadcast recording.",
+      "gary_listening_decision": "approved",
+      "catalog_candidate_status": "approved_catalog_candidate"
     }
   ],
-  "approval_gate": "All listed records remain pending Gary's listening approval. Sea Hunt is unresolved because no defensible track-level Spotify ID was found. No final ranks or production changes are authorized."
+  "approval_gate": "Wagon Train and Davy Crockett are Gary-approved catalog candidates only, unranked and unapplied to the production database. Sea Hunt remains unresolved because no defensible track-level Spotify ID was found. No final ranks or production changes are authorized."
 }

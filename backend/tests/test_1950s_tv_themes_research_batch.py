@@ -18,6 +18,10 @@ REVIEW_MANIFEST_V4 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv_themes.v4.json"
 )
+REVIEW_MANIFEST_V5 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv_themes.v5.json"
+)
 RANKED_REVIEW = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.ranked-review.v1.csv"
@@ -146,7 +150,7 @@ def test_v4_promotes_exactly_four_catalog_candidates_without_apply_authority():
     assert all(item["database_status"].endswith("no_database_apply_authorized") for item in approved.values())
 
 
-def test_research_batch_three_has_two_public_track_candidates_and_one_unresolved_program():
+def test_research_batch_three_preserves_two_approved_candidates_and_one_unresolved_program():
     batch = json.loads(RESEARCH_BATCH_03.read_text(encoding="utf-8"))
     programs = {item["show_title"]: item for item in batch["programs"]}
     assert set(programs) == {"Wagon Train", "Sea Hunt", "Davy Crockett"}
@@ -154,7 +158,23 @@ def test_research_batch_three_has_two_public_track_candidates_and_one_unresolved
         candidate = programs[title]["spotify_candidate"]
         assert candidate["spotify_track_id"]
         assert candidate["spotify_url"].endswith(candidate["spotify_track_id"])
-        assert programs[title]["gary_listening_decision"] == "pending"
+        assert programs[title]["gary_listening_decision"] == "approved"
+        assert programs[title]["catalog_candidate_status"] == "approved_catalog_candidate"
     sea_hunt = programs["Sea Hunt"]["spotify_candidate"]
     assert sea_hunt["classification"] == "unresolved"
     assert sea_hunt["spotify_track_id"] == sea_hunt["spotify_url"] == ""
+
+
+def test_v5_records_wagon_and_davy_qualifications_without_promoting_sea_hunt():
+    manifest = json.loads(REVIEW_MANIFEST_V5.read_text(encoding="utf-8"))
+    assert manifest["supersedes"] == "1950s-tv_themes.v4.json"
+    approved = {item["show_title"]: item for item in manifest["approved_catalog_candidates"]}
+    assert approved["Wagon Train"]["spotify_track_id"] == "7up8IVBnHisqNGn2ewyuyk"
+    assert approved["Wagon Train"]["recording_classification"] == "uncertain_exact_release_lineage"
+    assert approved["Davy Crockett"]["spotify_track_id"] == "3Gr3f20ajbTXP25lmrg2Qb"
+    assert "1969_rerecording" in approved["Davy Crockett"]["recording_classification"]
+    assert manifest["unresolved_research"] == [{
+        "show_title": "Sea Hunt",
+        "status": "unresolved_no_defensible_spotify_track_id",
+        "spotify_track_id": "",
+    }]

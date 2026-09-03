@@ -26,6 +26,8 @@ SPOTIFY_STATUSES = {
     "candidate_public_track_verified",
     "verified_recognizable_cover",
     "verified_soundtrack_derived_first_season",
+    "verified_uncertain_exact_release_lineage",
+    "verified_1969_rerecording",
 }
 PROPOSED_ACTIONS = {
     "approved_catalog_candidate_pending_database_apply",
@@ -89,7 +91,9 @@ def test_garys_fourteen_manual_decisions_are_preserved():
 
 def test_new_catalog_candidates_are_approved_without_database_apply_authority():
     rows_by_title = {row["show_title"]: row for row in _rows() if row["show_title"]}
-    for title in ("I Love Lucy", "Gunsmoke", "The Twilight Zone", "Zorro"):
+    for title in (
+        "I Love Lucy", "Gunsmoke", "The Twilight Zone", "Zorro", "Wagon Train", "Davy Crockett",
+    ):
         row = rows_by_title[title]
         assert row["gary_recording_decision"] == "approved_catalog_candidate"
         assert row["historical_review_status"] == "historically_accepted"
