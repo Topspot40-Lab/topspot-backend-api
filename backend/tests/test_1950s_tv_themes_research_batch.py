@@ -16,6 +16,7 @@ APPROVED_REPLACEMENTS = {
     3: "6cHhJfIQE4tOQ6fVcMm1CA",
     8: "4sYOSzhDiBZuX88Ylh7O2N",
     10: "12ynoGdWbebDuV61rsJyp1",
+    11: "5Iyz89IZQSNtATjrTwpO2H",
     12: "4nBCLGl2EXO3bIk30Jyv5b",
 }
 
@@ -28,7 +29,7 @@ def test_research_batch_has_the_expected_read_only_structure():
     batch = _batch()
     assert batch["schema_version"] == "1950s-tv-themes-research-batch/v1"
     assert "no Spotify authentication" in batch["research_method"]
-    assert "Dragnet candidates remain pending Gary" in batch["approval_gate"]
+    assert "six explicitly marked exact Spotify recordings" in batch["approval_gate"]
     assert {program["existing_rank"] for program in batch["programs"]} == EXPECTED_RANKS
 
 
@@ -63,14 +64,14 @@ def test_garys_five_exact_approvals_are_separate_from_pending_database_replaceme
         assert decision["current_database_recording_status"] == "rejected_wrong_recording_pending_replacement"
         assert decision["approved_exact_spotify_recording"]["spotify_track_id"] == spotify_track_id
         assert decision["approved_exact_spotify_recording"]["gary_listening_decision"] == "approved"
-    assert decisions[11]["approved_exact_spotify_recording"] is None
-    assert decisions[11]["gary_listening_decision"] == "pending"
+    assert decisions[11]["approved_exact_spotify_recording"]["spotify_track_id"] == "5Iyz89IZQSNtATjrTwpO2H"
 
 
-def test_dragnet_candidates_have_public_ids_and_remain_pending():
+def test_dragnet_candidates_have_public_ids_and_only_the_approved_one_is_not_pending():
     dragnet = next(program for program in _batch()["programs"] if program["existing_rank"] == 11)
     assert len(dragnet["spotify_candidates"]) == 3
     for candidate in dragnet["spotify_candidates"]:
         assert candidate["spotify_track_id"]
         assert candidate["spotify_url"].endswith(candidate["spotify_track_id"])
-        assert candidate["gary_listening_decision"] == "pending"
+        expected = "approved" if candidate["spotify_track_id"] == "5Iyz89IZQSNtATjrTwpO2H" else "pending"
+        assert candidate["gary_listening_decision"] == expected
