@@ -26,6 +26,10 @@ REVIEW_MANIFEST_V6 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv_themes.v6.json"
 )
+REVIEW_MANIFEST_V7 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv_themes.v7.json"
+)
 RANKED_REVIEW = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.ranked-review.v1.csv"
@@ -41,6 +45,10 @@ RESEARCH_BATCH_03 = (
 RESEARCH_BATCH_04 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-04.v1.json"
+)
+RESEARCH_BATCH_05 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-05.v1.json"
 )
 EXPECTED_RANKS = {2, 3, 8, 10, 11, 12}
 APPROVED_REPLACEMENTS = {
@@ -206,3 +214,25 @@ def test_batch_four_records_only_the_three_track_level_approvals():
     assert set(decisions) == {"The Untouchables", "M Squad", "Bat Masterson"}
     assert all(item["gary_listening_decision"] == "approved" for item in decisions.values())
     assert all(item["catalog_candidate_status"] == "approved_catalog_candidate" for item in decisions.values())
+
+
+def test_v7_records_four_more_unranked_approvals_without_apply_authority():
+    manifest = json.loads(REVIEW_MANIFEST_V7.read_text(encoding="utf-8"))
+    assert manifest["supersedes"] == "1950s-tv_themes.v6.json"
+    approved = {item["show_title"]: item for item in manifest["approved_catalog_candidates"]}
+    assert {approved[title]["spotify_track_id"] for title in (
+        "Cheyenne", "The Life and Legend of Wyatt Earp", "Wanted: Dead or Alive", "The Red Skelton Show",
+    )} == {"5As4kPiB9eZ5Q9EVBaYqHs", "1F6N0vw7S55QK7SckEDhhY", "1kEauajzb7929zqiIVW9fQ", "5MFrmRlOVi1hBoZvgFNFvI"}
+    assert all(item["rank"] is None for item in approved.values() if item["show_title"] in {
+        "Cheyenne", "The Life and Legend of Wyatt Earp", "Wanted: Dead or Alive", "The Red Skelton Show",
+    })
+
+
+def test_batch_five_preserves_each_recording_qualification():
+    batch = json.loads(RESEARCH_BATCH_05.read_text(encoding="utf-8"))
+    decisions = {item["show_title"]: item for item in batch["programs"]}
+    assert all(item["gary_listening_decision"] == "approved" for item in decisions.values())
+    assert "not verified as the broadcast master" in decisions["Cheyenne"]["spotify_candidate"]["classification"]
+    assert decisions["The Life and Legend of Wyatt Earp"]["spotify_candidate"]["classification"].startswith("2009 recreation")
+    assert "26-second" in decisions["Wanted: Dead or Alive"]["spotify_candidate"]["classification"]
+    assert "broadcast-master use is unverified" in decisions["The Red Skelton Show"]["spotify_candidate"]["classification"]

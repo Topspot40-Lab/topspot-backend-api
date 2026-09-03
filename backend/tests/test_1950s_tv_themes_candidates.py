@@ -96,6 +96,7 @@ def test_new_catalog_candidates_are_approved_without_database_apply_authority():
     for title in (
         "I Love Lucy", "Gunsmoke", "The Twilight Zone", "Zorro", "Wagon Train", "Davy Crockett",
         "Sea Hunt", "M Squad", "Bat Masterson", "The Untouchables",
+        "Cheyenne", "The Life and Legend of Wyatt Earp", "Wanted: Dead or Alive", "The Red Skelton Show",
     ):
         row = rows_by_title[title]
         assert row["gary_recording_decision"] == "approved_catalog_candidate"
