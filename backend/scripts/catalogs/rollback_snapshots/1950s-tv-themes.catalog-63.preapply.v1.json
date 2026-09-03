@@ -1,0 +1,1950 @@
+{
+  "schema_version": "catalog-rollback-snapshot/v1",
+  "created_at": "2026-09-03T01:39:50.137890+00:00",
+  "read_only_export": true,
+  "catalog": {
+    "id": 63,
+    "slug": "1950s-tv_themes"
+  },
+  "ranking_count": 34,
+  "rankings": [
+    {
+      "track_ranking": {
+        "id": 3462,
+        "track_id": 149,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 1,
+        "intro": "#1 Peter Gunn — cozy vibes, zero wasted notes."
+      },
+      "track": {
+        "id": 149,
+        "track_name": "Peter Gunn",
+        "artist_id": 105,
+        "artist_display_name": "Henry Mancini",
+        "spotify_track_id": "58tIaHOLyqe6Q7M9pZe9GX",
+        "detail": "Let's swing into the cool world of 'Peter Gunn' by Henry Mancini. This jazz-infused theme was recorded at the RCA Victor Studio in Hollywood, where Mancini's use of a muted trumpet and a walking bass line set the tone for the entire genre of detective show music. The song's success led to a Grammy win for Best Arrangement in 1959. And did you know that the theme was so popular that it inspired a short-lived dance called 'The Peter Gunn'? Keep your dial right here, music fans, as we keep grooving through the hits.",
+        "short_detail": "Recorded at RCA Victor in Hollywood with a muted trumpet and walking bass line, Peter Gunn set the tone for detective show music, winning a 1959 Grammy for Best Arrangement and inspiring a dance.",
+        "short_detail_tts_key": "short-detail/58tIaHOLyqe6Q7M9pZe9GX.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número uno, 'Peter Gunn' de henry mancini — henry mancini! Vibras acogedoras, ni una nota de más. ¡Puro estilo!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_01.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número um, 'Peter Gunn' de Henry Mancini — Henry Mancini! Vibes acolhedoras, nem uma nota a mais. Puro estilo!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_01.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Peter Gunn es un tema instrumental icónico del jazz. Su sonido evoca misterio y sofisticación reflejando la vida de un detective cool en la gran ciudad. Las notas transmiten una mezcla de tensión y estilo que mantiene al oyente atento. Esta obra tuvo un gran impacto al cruzar del ámbito televisivo a las listas musicales de éxito.",
+          "short_detail_text": "Grabado en RCA Victor en Hollywood con una trompeta con sordina y un bajo caminante, Peter Gunn puso el tono para la música de series de detectives, ganando un Grammy en 1959 por Mejor Arreglo e inspirando un baile.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/58tIaHOLyqe6Q7M9pZe9GX.mp3",
+          "short_detail_tts_key": "short-detail/58tIaHOLyqe6Q7M9pZe9GX.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Peter Gunn é um tema instrumental icônico do jazz. Seu som evoca mistério e sofisticação, refletindo a vida de um detetive descolado na grande cidade. As notas transmitem uma mistura de tensão e estilo que mantém o ouviror atento. Esta obra teve um grande impacto ao cruzar do âmbito televisivo para as listas musicais de sucesso.",
+          "short_detail_text": "Gravada na RCA Victor em Hollywood com trompete com surdina e baixo caminhante, Peter Gunn definiu o tom da música de programas de detetive, ganhando um Grammy de 1959 para Melhor Arranjo e inspirando uma dança.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/58tIaHOLyqe6Q7M9pZe9GX.mp3",
+          "short_detail_tts_key": "short-detail/58tIaHOLyqe6Q7M9pZe9GX.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3463,
+        "track_id": 2721,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 2,
+        "intro": "#2 Perry Mason ('Park Avenue Beat') — cozy vibes, zero wasted notes."
+      },
+      "track": {
+        "id": 2721,
+        "track_name": "Perry Mason ('Park Avenue Beat')",
+        "artist_id": 1252,
+        "artist_display_name": "TV Hits",
+        "spotify_track_id": "6zwvB879PJSpTyFcg2wwnL",
+        "detail": "Perry Mason ('Park Avenue Beat') was a legal drama mainstay of the 1957Ã¢â‚¬â€œ1966 run, headlined by Raymond Burr, Barbara Hale, William Hopper, William Talman. Set around Los Angeles courtrooms and law offices, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "Announcing its characters and world in seconds, Perry Mason ('Park Avenue Beat') captured the mood of the long-running legal drama set in Los Angeles courtrooms with tidy resolutions and strong motifs.",
+        "short_detail_tts_key": "short-detail/6zwvB879PJSpTyFcg2wwnL.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número dos, Perry Mason ('Perry Mason ('Park Avenue Beat')')')')') de TV Hits! Un ambiente acogedor con notas perfectamente colocadas, ¡ni una de más!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_02.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número dois, Perry Mason ('Perry Mason ('Park Avenue Beat')')')')') de TV Hits! Um ambiente acolhedor com notas perfeitamente colocadas, nem uma de mais!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_02.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Perry Mason o Park Avenue Beat es el tema inolvidable de la serie de televisión. Esta melodía instrumental crea una sensación de suspense y elegancia clásica. Su mensaje evoca la inteligencia y la justicia en la resolución de casos misteriosos. Compuesta por Fred Steiner se convirtió en sinónimo de drama legal en la pantalla chica.",
+          "short_detail_text": "Anunciando sus personajes y su mundo en segundos, Perry Mason ('Park Avenue Beat') capturó el ambiente del drama legal de larga duración ambientado en los tribunales de Los Ángeles con resoluciones ordenadas y fuertes motivos.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6zwvB879PJSpTyFcg2wwnL.mp3",
+          "short_detail_tts_key": "short-detail/6zwvB879PJSpTyFcg2wwnL.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "'Perry Mason ou Park Avenue Beat' é o tema inesquecível da série de televisão. Esta melodia instrumental cria uma sensação de suspense e elegância clássica. Sua mensagem evoca a inteligência e a justiça na resolução de casos misteriosos. Composta por Fred Steiner, se tornou sinônimo de drama legal na tela.",
+          "short_detail_text": "Anunciando seus personagens e mundo em segundos, Perry Mason ('Park Avenue Beat') capturou o clima do drama jurídico de longa duração ambientado nos tribunais de Los Angeles com resoluções limpas e motivos fortes.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6zwvB879PJSpTyFcg2wwnL.mp3",
+          "short_detail_tts_key": "short-detail/6zwvB879PJSpTyFcg2wwnL.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3464,
+        "track_id": 2722,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 3,
+        "intro": "#3 Rawhide — the needle-drop that says it all."
+      },
+      "track": {
+        "id": 2722,
+        "track_name": "Rawhide",
+        "artist_id": 1253,
+        "artist_display_name": "Frankie Laine",
+        "spotify_track_id": "7yr5ZuZqagB3Z5SRhCcs5x",
+        "detail": "Rawhide was a western mainstay of the 1959Ã¢â‚¬â€œ1965 run, headlined by Eric Fleming, Clint Eastwood, Paul Brinegar. Set around cattle-drive trails, river crossings, and dusty camps, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "Rawhide announces the world of cattle-drive trails, river crossings, and dusty camps as the theme to the western mainstay headlined by Eric Fleming, Clint Eastwood, and Paul Brinegar from 1959 to 1965.",
+        "short_detail_tts_key": "short-detail/7yr5ZuZqagB3Z5SRhCcs5x.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número tres, 'Rawhide' de Frankie Laine! El tema que lo dice todo con solo sonar.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_03.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número três, 'Rawhide' de Frankie Laine! O tema que diz tudo só de soar.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_03.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Rawhide captura el espíritu incansable de los vaqueros. Describe las penurias del camino mientras anima a no detener el avance del rebaño. La emoción principal es de tenacidad frente a la naturaleza salvaje y el cansancio. Con el tiempo, esta canción dejó una huella imborrable en la música western.",
+          "short_detail_text": "Rawhide anuncia el mundo de los senderos de arreo de ganado, cruces de ríos y campamentos polvorientos como el tema de ese western principal protagonizado por Eric Fleming, Clint Eastwood y Paul Brinegar de 1959 a 1965.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/7yr5ZuZqagB3Z5SRhCcs5x.mp3",
+          "short_detail_tts_key": "short-detail/7yr5ZuZqagB3Z5SRhCcs5x.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Rawhide foi um dos grandes clássicos do western na televisão, exibido entre 1959 e 1965 e estrelado por Eric Fleming, Clint Eastwood e Paul Brinegar. A história se passava em trilhas de boiada, travessias de rio e acampamentos poeirentos, misturando momentos dos personagens com desafios claros a cada episódio. A narrativa seguia resoluções bem definidas e motivos marcantes, com uma produção baseada em cenários práticos e uma câmera bastante econômica. O tema musical já define esse clima em poucos segundos, mostrando quem são esses personagens e o mundo em que a história se passa.",
+          "short_detail_text": "Rawhide anuncia o mundo das trilhas de boiada, travessias de rio e acampamentos poeirentos como tema do faroeste principal com Eric Fleming, Clint Eastwood e Paul Brinegar de 1959 a 1965.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/7yr5ZuZqagB3Z5SRhCcs5x.mp3",
+          "short_detail_tts_key": "short-detail/7yr5ZuZqagB3Z5SRhCcs5x.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3465,
+        "track_id": 2723,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 4,
+        "intro": "#4 Bonanza Theme — Saturday-morning energy in a single riff."
+      },
+      "track": {
+        "id": 2723,
+        "track_name": "Bonanza Theme",
+        "artist_id": 1261,
+        "artist_display_name": null,
+        "spotify_track_id": "29UOD7lc0l7AVc2W7jVsAI",
+        "detail": "Bonanza (Main Theme) was a western mainstay of the 1959Ã¢â‚¬â€œ1973 run, headlined by Lorne Greene, Pernell Roberts, Dan Blocker, Michael Landon. Set around the Ponderosa ranch near Virginia City, Nevada, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "The Bonanza Theme served as a western mainstay for the television series running from 1959 to 1973, instantly announcing the characters and world of the Ponderosa ranch.",
+        "short_detail_tts_key": "short-detail/29UOD7lc0l7AVc2W7jVsAI.mp3",
+        "source_type": "TV",
+        "source_title": "Bonanza",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número cuatro, 'Bonanza Theme' de Jackie Gleason & His Orchestra por Jackie Gleason & His Orchestra! La energía de un sábado por la mañana concentrada en un solo riff.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_04.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número quatro, 'Bonanza Theme' de Jackie Gleason & His Orchestra por Jackie Gleason & His Orchestra! A energia de um sábado de manhã concentrada em um único riff.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_04.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Bonanza Theme ofrece una melodía orquestal poderosa y memorable. Sus notas ascendentes generan una sensación de amplitud y expectativa. La composición transmite entusiasmo por las epopeyas del Lejano Oeste. Con su estilo característico, se integró perfectamente al mundo de la televisión de aventura.",
+          "short_detail_text": "The Bonanza Theme fue un pilar del western para la serie de televisión que duró de 1959 a 1973, anunciando al instante a los personajes y el mundo del rancho Ponderosa.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/29UOD7lc0l7AVc2W7jVsAI.mp3",
+          "short_detail_tts_key": "short-detail/29UOD7lc0l7AVc2W7jVsAI.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Bonanza Theme oferece uma melodia orquestral poderosa e memorável. Suas notas ascendentes geram uma sensação de amplitude e expectativa. A composição transmite entusiasmo pelas epopeias do Oeste Longínquo. Com seu estilo característico, se integrou perfeitamente ao mundo da televisão de aventura.",
+          "short_detail_text": "O Bonanza Theme foi um tema marcante de faroeste pra série de televisão que passou de 1959 a 1973, já anunciando os personagens e o mundo do rancho Ponderosa.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/29UOD7lc0l7AVc2W7jVsAI.mp3",
+          "short_detail_tts_key": "short-detail/29UOD7lc0l7AVc2W7jVsAI.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3466,
+        "track_id": 2724,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 5,
+        "intro": "#5 Mickey Mouse March (From 'The Mickey Mouse Club') — mood-setter that does more than roll credits."
+      },
+      "track": {
+        "id": 2724,
+        "track_name": "Mickey Mouse March (From 'The Mickey Mouse Club')",
+        "artist_id": 1255,
+        "artist_display_name": "Jimmie Dodd & The Mouseketeers",
+        "spotify_track_id": "5TMudJQG4Pb4PneHIhtgA0",
+        "detail": "Mickey Mouse March (From 'The Mickey Mouse Club') was a kids/variety mainstay of the 1955Ã¢â‚¬â€œ1959 run, headlined by Jimmie Dodd, Annette Funicello, Darlene Gillespie. Set around a bright clubhouse set with roll-call sing-alongs, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "Mickey Mouse March (From 'The Mickey Mouse Club') served as the theme for the 1955-1959 Mickey Mouse Club, instantly setting its bright clubhouse mood with roll-call sing-alongs and tidy weekly adventures.",
+        "short_detail_tts_key": "short-detail/5TMudJQG4Pb4PneHIhtgA0.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número cinco, Mickey Mouse March (From 'Mickey Mouse March (From 'The Mickey Mouse Club')')')')') por Jimmie Dodd & The Mouseketeers! Una canción que no solo acompaña los créditos, sino que establece el ambiente perfecto. ¡Pura magia de Disney!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_05.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número cinco, Mickey Mouse March (From 'Mickey Mouse March (From 'The Mickey Mouse Club')')')')') por Jimmie Dodd & The Mouseketeers! Uma canção que não só acompanha os créditos, mas que estabelece o ambiente perfeito. Pura magia da Disney!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_05.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Mickey Mouse March contagia alegría y vitalidad desde sus primeras notas. Esta pieza anima a los niños a participar activamente en el canto y el juego. Su mensaje central resalta la diversión compartida y la imaginación sin límites. Se ha mantenido como un referente musical para el entretenimiento infantil por décadas.",
+          "short_detail_text": "Mickey Mouse March (From 'The Mickey Mouse Club') fue el tema del Club de Mickey Mouse de 1955 a 1959, creando al instante ese ambiente alegre del club con los cantos de pase de lista y las aventuras semanales bien ordenadas.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5TMudJQG4Pb4PneHIhtgA0.mp3",
+          "short_detail_tts_key": "short-detail/5TMudJQG4Pb4PneHIhtgA0.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Mickey Mouse March contagia alegria e vitalidade desde as primeiras notas. Esta peça incentiva as crianças a participarem ativamente do canto e do jogo. Sua mensagem central destaca a diversão compartilhada e a imaginação sem limites. Ela se manteve como um referente musical para o entretenimento infantil por décadas.",
+          "short_detail_text": "Mickey Mouse March (From 'The Mickey Mouse Club') foi o tema do Mickey Mouse Club de 1955 a 1959, já criando na hora aquele clima alegre do clube com as cantorias de chamada e as aventuras semanais bem arrumadas.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5TMudJQG4Pb4PneHIhtgA0.mp3",
+          "short_detail_tts_key": "short-detail/5TMudJQG4Pb4PneHIhtgA0.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3467,
+        "track_id": 2725,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 6,
+        "intro": "#6 Funeral March of a Marionette (Theme from 'Alfred Hitchcock Presents') — whistle-clean hook with staying power."
+      },
+      "track": {
+        "id": 2725,
+        "track_name": "Funeral March of a Marionette (Theme from 'Alfred Hitchcock Presents')",
+        "artist_id": 1256,
+        "artist_display_name": "Charles Gounod",
+        "spotify_track_id": "604ZpOVApaeGoMOzOm8lUE",
+        "detail": "Funeral March of a Marionette (Theme from 'Alfred Hitchcock Presents') was a anthology/thriller mainstay of the 1955Ã¢â‚¬â€œ1962 run, headlined by Alfred Hitchcock (host). Set around ordinary places tilted toward suspenseful twists, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "Funeral March of a Marionette served as the theme for Alfred Hitchcock Presents throughout its 1955 to 1962 run, instantly setting the mood for suspenseful twists in ordinary settings.",
+        "short_detail_tts_key": "short-detail/604ZpOVApaeGoMOzOm8lUE.mp3",
+        "source_type": "TV",
+        "source_title": "Alfred Hitchcock Presents",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número seis, Funeral March of a Marionette (Theme from 'Funeral March of a Marionette (Theme from 'Alfred Hitchcock Presents')')')')') de Charles Gounod! Un gancho silbado impecable con un poder que perdura.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_06.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número seis, Funeral March of a Marionette (Theme from 'Funeral March of a Marionette (Theme from 'Alfred Hitchcock Presents')')')') de Charles Gounod! Um gancho silbado impecável com um poder que perdura.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_06.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Funeral March of a Marionette sorprende con su tono juguetón y no sombrío. La música representa el funeral de una marioneta de forma satírica y ligera. Esto evoca una emoción de intriga humorística que engancha al oyente. Su adopción en producciones de suspenso la llevó a ser reconocida por audiencias masivas.",
+          "short_detail_text": "Funeral March of a Marionette sirvió como tema de Alfred Hitchcock Presents durante toda su temporada de 1955 a 1962, estableciendo al instante el ambiente para giros llenos de suspenso en escenarios cotidianos.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/604ZpOVApaeGoMOzOm8lUE.mp3",
+          "short_detail_tts_key": "short-detail/604ZpOVApaeGoMOzOm8lUE.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Funeral March of a Marionette surpreende com seu tom brincalhão e não sombrio. A música representa o funeral de uma marionete de forma satírica e leve. Isso evoca uma emoção de intriga humorística que prende o ouviu. Sua adoção em produções de suspense a levou a ser reconhecida por audiências em massa.",
+          "short_detail_text": "Funeral March of a Marionette serviu como tema do Alfred Hitchcock Presents de 1955 a 1962, já criando na hora o clima pra reviravoltas cheias de suspense em situações do dia a dia.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/604ZpOVApaeGoMOzOm8lUE.mp3",
+          "short_detail_tts_key": "short-detail/604ZpOVApaeGoMOzOm8lUE.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3468,
+        "track_id": 2726,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 7,
+        "intro": "#7 William Tell Overture: Finale (Theme from 'The Lone Ranger') — the fanfare that launched a thousand reruns."
+      },
+      "track": {
+        "id": 2726,
+        "track_name": "William Tell Overture: Finale (Theme from 'The Lone Ranger')",
+        "artist_id": 1257,
+        "artist_display_name": "Gioachino Rossini",
+        "spotify_track_id": "1NbD8eCoSrmFA8sNrZZTvz",
+        "detail": "William Tell Overture: Finale (Theme from 'The Lone Ranger') was a western/adventure mainstay of the 1949Ã¢â‚¬â€œ1957 run, headlined by Clayton Moore, Jay Silverheels. Set around open ranges, canyons, and frontier towns, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "William Tell Overture: Finale instantly announced the central characters and their adventurous frontier world as the theme for the 1949 to 1957 Lone Ranger series starring Clayton Moore and Jay Silverheels.",
+        "short_detail_tts_key": "short-detail/1NbD8eCoSrmFA8sNrZZTvz.mp3",
+        "source_type": "TV",
+        "source_title": "The Lone Ranger",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número siete, William Tell Overture: Finale (Theme from 'William Tell Overture: Finale (Theme from 'The Lone Ranger')')')')') de Gioachino Rossini! La fanfarria que dio inicio a miles de repeticiones en la televisión.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_07.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número sete, William Tell Overture: Finale (Theme from 'William Tell Overture: Finale (Theme from 'The Lone Ranger')')')') de Gioachino Rossini! A fanfarra que deu início a milhares de repetições na televisão.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_07.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "William Tell Overture: Finale destaca por su famoso galope orquestal. Las cuerdas aceleradas simulan el trote veloz de caballos en carrera. La pieza comunica un mensaje de triunfo y libertad en medio de la acción. Forma parte de una ópera clásica que celebra la rebeldía y el heroísmo.",
+          "short_detail_text": "William Tell Overture: Finale anunciaba de inmediato a los personajes principales y su mundo aventurero en la frontera como el tema de la serie Lone Ranger de 1949 a 1957 protagonizada por Clayton Moore y Jay Silverheels.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1NbD8eCoSrmFA8sNrZZTvz.mp3",
+          "short_detail_tts_key": "short-detail/1NbD8eCoSrmFA8sNrZZTvz.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "William Tell Overture: Finale se destaca pelo seu famoso galope orquestral. As cordas aceleradas simulam o trote veloz de cavalos em corrida. A peça comunica uma mensagem de triunfo e liberdade no meio da ação. Faz parte de uma ópera clássica que celebra a rebeldia e o heroísmo.",
+          "short_detail_text": "William Tell Overture: Finale já anunciava logo de cara os personagens centrais e o mundo aventureiro de fronteira deles como tema da série Lone Ranger de 1949 a 1957 estrelada por Clayton Moore e Jay Silverheels.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1NbD8eCoSrmFA8sNrZZTvz.mp3",
+          "short_detail_tts_key": "short-detail/1NbD8eCoSrmFA8sNrZZTvz.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3469,
+        "track_id": 2727,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 8,
+        "intro": "#8 Superman Main Title (From 'Adventures of Superman') — pure TV comfort: one bar and you’re there."
+      },
+      "track": {
+        "id": 2727,
+        "track_name": "Superman Main Title (From 'Adventures of Superman')",
+        "artist_id": 1258,
+        "artist_display_name": "Leon Klatzkin",
+        "spotify_track_id": "1rmylYvGOcSzJ5AZ4BSHbr",
+        "detail": "Superman Main Title (From 'Adventures of Superman') was a superhero/adventure mainstay of the 1952Ã¢â‚¬â€œ1958 run, headlined by George Reeves, Noel Neill, Phyllis Coates, Jack Larson. Set around Metropolis streets and the Daily Planet newsroom, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "Superman Main Title (From 'Adventures of Superman') instantly established the heroic mood and adventurous world of the 1952-1958 television series set in Metropolis and the Daily Planet with its strong motif.",
+        "short_detail_tts_key": "short-detail/1rmylYvGOcSzJ5AZ4BSHbr.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número ocho, Superman Main Title (From 'Superman Main Title (From 'Adventures of Superman')')')')') de Leon Klatzkin! Puro confort televisivo: con solo una nota, ya estás ahí.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_08.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número oito, Superman Main Title (From 'Superman Main Title (From 'Adventures of Superman')')')') de Leon Klatzkin! Puro conforto televisivo: com só uma nota, você já está aí.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_08.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Superman Main Title captura perfectamente el espíritu de un héroe legendario. Su música inspira valentía y un fuerte sentido de justicia ante cualquier amenaza. La melodía evoca optimismo y la idea de que siempre hay alguien velando por los inocentes. Se trata de una composición que ha marcado la cultura popular por décadas.",
+          "short_detail_text": "Superman Main Title (From 'Adventures of Superman') al instante estableció el tono heroico y el mundo aventurero de la serie de televisión de 1952 a 1958 ambientada en Metrópolis y el Daily Planet con su fuerte motivo.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1rmylYvGOcSzJ5AZ4BSHbr.mp3",
+          "short_detail_tts_key": "short-detail/1rmylYvGOcSzJ5AZ4BSHbr.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Superman Main Title captura perfeitamente o espírito de um herói lendário. Sua música inspira coragem e um forte senso de justiça diante de qualquer ameaça. A melodia evoca otimismo e a ideia de que sempre há alguém protegendo os inocentes. Trata-se de uma composição que marcou a cultura popular por décadas.",
+          "short_detail_text": "Superman Main Title (From 'Adventures of Superman') já estabeleceu de cara o clima heroico e o mundo aventureiro da série de televisão de 1952 a 1958 ambientada em Metrópolis e no Daily Planet com seu forte motivo.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1rmylYvGOcSzJ5AZ4BSHbr.mp3",
+          "short_detail_tts_key": "short-detail/1rmylYvGOcSzJ5AZ4BSHbr.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3470,
+        "track_id": 2728,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 9,
+        "intro": "#9 The Ballad of Paladin — glossy primetime in 30 seconds flat."
+      },
+      "track": {
+        "id": 2728,
+        "track_name": "The Ballad of Paladin",
+        "artist_id": 1259,
+        "artist_display_name": null,
+        "spotify_track_id": "5aIlwCsfbagxrVIAVDGiaA",
+        "detail": "The Ballad of Paladin (From 'Have Gun Ã¢â‚¬â€œ Will Travel') was a western mainstay of the 1957Ã¢â‚¬â€œ1963 run, headlined by Richard Boone. Set around waystations and border towns across the American West, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "The Ballad of Paladin set the mood in seconds for the 1957 to 1963 western mainstay Have Gun Will Travel by announcing its characters and the world they inhabited.",
+        "short_detail_tts_key": "short-detail/5aIlwCsfbagxrVIAVDGiaA.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número nueve, 'The Ballad of Paladin' de Johnny Western! Un clásico brillante de la televisión en tan solo 30 segundos. ¡A disfrutar!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_09.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número nove, 'The Ballad of Paladin' de Johnny Western! Um clássico brilhante da televisão em apenas 30 segundos. Aproveite!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_09.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "The Ballad of Paladin es el tema que define a un personaje inolvidable del oeste. Esta balada habla de honor, coraje y un código ético personal. Transmite emociones de aventura y soledad en la búsqueda de la justicia. Su popularidad ayudó a establecer el estándar para temas de series del género.",
+          "short_detail_text": "The Ballad of Paladin ponía el ambiente en segundos para el Have Gun Will Travel, el principal western de 1957 al 63, al anunciar sus personajes y el mundo que habitaban.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5aIlwCsfbagxrVIAVDGiaA.mp3",
+          "short_detail_tts_key": "short-detail/5aIlwCsfbagxrVIAVDGiaA.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "The Ballad of Paladin é o tema que define um personagem inesquecível do oeste. Esta balada fala de honra, coragem e um código ético pessoal. Transmite emoções de aventura e solidão na busca pela justiça. Sua popularidade ajudou a estabelecer o padrão para temas de séries do gênero.",
+          "short_detail_text": "The Ballad of Paladin criava o clima em segundos pro Have Gun Will Travel, o faroeste principal de 1957 a 1963, anunciando seus personagens e o mundo que eles habitavam.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5aIlwCsfbagxrVIAVDGiaA.mp3",
+          "short_detail_tts_key": "short-detail/5aIlwCsfbagxrVIAVDGiaA.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3471,
+        "track_id": 2729,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 10,
+        "intro": "#10 The Rifleman — a jingle with mythic staying power."
+      },
+      "track": {
+        "id": 2729,
+        "track_name": "The Rifleman",
+        "artist_id": 1260,
+        "artist_display_name": "Herschel Burke Gilbert",
+        "spotify_track_id": "5XC7tebqGPQNXDQImgOhcZ",
+        "detail": "The Rifleman was a western mainstay of the 1958Ã¢â‚¬â€œ1963 run, headlined by Chuck Connors, Johnny Crawford, Paul Fix. Set around a New Mexico homestead and the town of North Fork, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "The Rifleman theme sets the tone for the 1958 to 1963 western series set around a New Mexico homestead and the town of North Fork.",
+        "short_detail_tts_key": "short-detail/5XC7tebqGPQNXDQImgOhcZ.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número diez, 'The Rifleman' de Herschel Burke Gilbert, un jingle con un poder mítico que perdura!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_10.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número dez, 'The Rifleman' de Herschel Burke Gilbert, um jingle com um poder mítico que perdura!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_10.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "The Rifleman es un tema emblemático del western televisivo. Representa la fuerza y el coraje necesarios para mantener la paz en pueblos sin ley. La emoción principal es una mezcla de suspense y resolución moral. Su arreglo orquestal se ha recordado como uno de los más impactantes de su época.",
+          "short_detail_text": "El tema de The Rifleman marca el tono para la serie western del 58 al 63 ambientada alrededor de un rancho en Nuevo México y el pueblo de North Fork.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5XC7tebqGPQNXDQImgOhcZ.mp3",
+          "short_detail_tts_key": "short-detail/5XC7tebqGPQNXDQImgOhcZ.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "The Rifleman é um tema emblemático do western televisivo. Representa a força e o coragem necessárias para manter a paz em cidades sem lei. A emoção principal é uma mistura de suspense e resolução moral. Seu arranjo orquestral é lembrado como um dos mais impactantes da época.",
+          "short_detail_text": "O tema de The Rifleman dá o tom da série western de 1958 a 1963 que se passa numa fazenda no Novo México e na cidade de North Fork.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5XC7tebqGPQNXDQImgOhcZ.mp3",
+          "short_detail_tts_key": "short-detail/5XC7tebqGPQNXDQImgOhcZ.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3472,
+        "track_id": 2730,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 11,
+        "intro": "#11 Dragnet (Main Theme) — cozy vibes, zero wasted notes."
+      },
+      "track": {
+        "id": 2730,
+        "track_name": "Dragnet (Main Theme)",
+        "artist_id": 106,
+        "artist_display_name": "Walter Schumann",
+        "spotify_track_id": "5LeCbkjJuhtqQhwXziPgUn",
+        "detail": "Dragnet (Main Theme) was a crime/procedural mainstay of the 1951Ã¢â‚¬â€œ1959 run, headlined by Jack Webb, Ben Alexander. Set around Los Angeles squad rooms and city streets, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "Dragnet (Main Theme) served as the defining musical signature for the 1951 crime procedural series that balanced character moments with clear stakes across Los Angeles squad rooms and city streets until 1959.",
+        "short_detail_tts_key": "short-detail/5LeCbkjJuhtqQhwXziPgUn.mp3",
+        "source_type": "TV",
+        "source_title": "Dragnet",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número once, ''Dragnet (Main Theme))')' de walter schumann! Una melodía acogedora con vibras únicas, ¡ni una nota de más!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_11.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número onze, 'Dragnet (Main Theme))')' de Walter Schumann! Uma melodia acolhedora com vibrações únicas, nem uma nota a mais!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_11.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Dragnet Main Theme identifica inmediatamente el mundo de la policía en Los Ángeles. La composición transmite seriedad, método y la importancia del trabajo detectivesco. Su estructura musical genera una atmósfera de misterio y resolución inevitable. El patrón dum-de-dum-dum se ha convertido en una referencia cultural ampliamente reconocida.",
+          "short_detail_text": "Dragnet (Main Theme) sirvió como la firma musical que definió la serie de procedimientos criminales del 51 que equilibraba momentos de personajes con apuestas claras en las salas de escuadrón y calles de Los Ángeles hasta 1959.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5LeCbkjJuhtqQhwXziPgUn.mp3",
+          "short_detail_tts_key": "short-detail/5LeCbkjJuhtqQhwXziPgUn.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Dragnet Main Theme identifica imediatamente o mundo da polícia em Los Angeles. A composição transmite seriedade, método e a importância do trabalho detectivesco. Sua estrutura musical gera uma atmosfera de mistério e resolução inevitável. O padrão dum-de-dum-dum se tornou uma referência cultural amplamente reconhecida.",
+          "short_detail_text": "Dragnet (Main Theme) serviu como a assinatura musical que definiu a série procedural de crime de 1951, que equilibrava momentos de personagens com apostas claras nas salas de esquadrão e nas ruas de Los Angeles até 1959.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5LeCbkjJuhtqQhwXziPgUn.mp3",
+          "short_detail_tts_key": "short-detail/5LeCbkjJuhtqQhwXziPgUn.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3473,
+        "track_id": 2731,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 12,
+        "intro": "#12 Theme from 'The Honeymooners' (Melancholy Serenade) — Saturday-morning energy in a single riff."
+      },
+      "track": {
+        "id": 2731,
+        "track_name": "Theme from 'The Honeymooners' (Melancholy Serenade)",
+        "artist_id": 105,
+        "artist_display_name": "Jackie Gleason & His Orchestra",
+        "spotify_track_id": "6yd32AUzVz925fG3UKWyYw",
+        "detail": "Theme from 'The Honeymooners' (Melancholy Serenade) was a sitcom mainstay of the 1955Ã¢â‚¬â€œ1956 run, headlined by Jackie Gleason, Audrey Meadows, Art Carney, Joyce Randolph. Set around a Brooklyn walk-up and neighborhood corners, episodes balanced character moments with clear, week-to-week stakes. Storytelling favored tidy resolutions and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail": "Theme from 'The Honeymooners' (Melancholy Serenade) served as a sitcom mainstay of the 1955-1956 run, cueing the mood in seconds by announcing its characters and the Brooklyn world they inhabited.",
+        "short_detail_tts_key": "short-detail/6yd32AUzVz925fG3UKWyYw.mp3",
+        "source_type": "TV",
+        "source_title": "The Honeymooners",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número doce, Theme from '''Theme from 'The Honeymooners' (Melancholy Serenade))') de henry mancini! La energía de un sábado por la mañana concentrada en un solo riff.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_12.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número doze, Theme from 'The Honeymooners' (Melancholy Serenade) de Henry Mancini! A energia de um sábado pela manhã concentrada em um único riff.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_12.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Theme from 'The Honeymooners' ofrece una serenata llena de sentimiento. Esta melodía explora la melancolía y la calidez dentro de un matrimonio realista. Evoca la complejidad de las relaciones donde hay amor pese a las dificultades diarias. Su estilo jazzístico la hizo destacar en la era de las comedias televisivas.",
+          "short_detail_text": "El tema de 'The Honeymooners' (Melancholy Serenade) era un elemento clave de la comedia de situación en su temporada del 55 al 56, poniendo el ambiente en segundos al anunciar a sus personajes y el mundo de Brooklyn que habitaban.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6yd32AUzVz925fG3UKWyYw.mp3",
+          "short_detail_tts_key": "short-detail/6yd32AUzVz925fG3UKWyYw.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Theme from 'The Honeymooners' oferece uma serenata cheia de sentimento. Esta melodia explora a melancolia e a calidez dentro de um casamento realista. Evoca a complexidade das relações onde há amor apesar das dificuldades diárias. Seu estilo jazzístico a fez se destacar na era das comédias televisivas.",
+          "short_detail_text": "O tema de 'The Honeymooners' (Melancholy Serenade) foi um pilar da sitcom na temporada de 1955-1956, criando o clima em segundos ao anunciar os personagens e o mundo de Brooklyn que eles habitavam.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6yd32AUzVz925fG3UKWyYw.mp3",
+          "short_detail_tts_key": "short-detail/6yd32AUzVz925fG3UKWyYw.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3474,
+        "track_id": 2732,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 13,
+        "intro": "#13 I Love Lucy Theme — glossy primetime in 30 seconds flat."
+      },
+      "track": {
+        "id": 2732,
+        "track_name": "I Love Lucy Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "7J3T3QzZHBIdD8O3OLSTIM",
+        "detail": "I Love Lucy was a sitcom mainstay of the 1951Ã¢â‚¬â€œ1957 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The I Love Lucy Theme sets the mood in seconds with its bright close-miked cues announcing the characters and the kind of world you are stepping into.",
+        "short_detail_tts_key": "short-detail/7J3T3QzZHBIdD8O3OLSTIM.mp3",
+        "source_type": "TV",
+        "source_title": "I Love Lucy",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número trece, 'I Love Lucy Theme' de Unknown Artist! Un brillo de horario estelar en tan solo 30 segundos.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_13.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número treze, 'I Love Lucy Theme' de Unknown Artist! Um brilho de horário nobre em apenas 30 segundos.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_13.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "\"I Love Lucy fue una comedia icónica que se transmitió de 1951 a 1957. Sus episodios, ambientados en salas, cocinas y porches vecinales, mezclaban momentos de los personajes con enredos domésticos y malentendidos rápidos. La narración privilegiaba ritmos de preparación y resolución con finales ordenados, mientras que la producción usaba escenificación con múltiples cámaras y temas musicales brillantes y bien capturados. Estos temas establecen el ánimo en segundos, revelando quiénes son los personajes y el mundo al que entras.\"",
+          "short_detail_text": "El tema de I Love Lucy te pone el ambiente en segundos con sus brillantes señales microfonadas de cerca que anuncian a los personajes y el tipo de mundo en el que te estás metiendo.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/7J3T3QzZHBIdD8O3OLSTIM.mp3",
+          "short_detail_tts_key": "short-detail/7J3T3QzZHBIdD8O3OLSTIM.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "\"I Love Lucy foi um grande sucesso de sitcom entre 1951 e 1957, ambientada em salas de estar, cozinhas e degraus de vizinhança, onde os episódios equilibravam momentos dos personagens com confusões domésticas e mal-entendidos rápidos. A narrativa seguia um ritmo de preparações e resoluções bem definidas, enquanto a produção contava com cenários de múltiplas câmeras e temas musicais claros e próximos. Esses temas musicais capturam o clima em segundos, apresentando quem são os personagens e o tipo de mundo que você está prestes a entrar.\"",
+          "short_detail_text": "O I Love Lucy Theme já te coloca no clima em segundos com seus toques brilhantes gravados bem de perto anunciando os personagens e o tipo de mundo que você está entrando.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/7J3T3QzZHBIdD8O3OLSTIM.mp3",
+          "short_detail_tts_key": "short-detail/7J3T3QzZHBIdD8O3OLSTIM.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3475,
+        "track_id": 2733,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 14,
+        "intro": "#14 77 Sunset Strip Theme — sleek and punchy from bar one."
+      },
+      "track": {
+        "id": 2733,
+        "track_name": "77 Sunset Strip Theme",
+        "artist_id": 1261,
+        "artist_display_name": null,
+        "spotify_track_id": "6KZpSdpQGbTxP5jKfKY8cV",
+        "detail": "The Honeymooners was a sitcom mainstay of the 1955Ã¢â‚¬â€œ1956 run. Set around a Brooklyn walk-up and neighborhood corners, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The 77 Sunset Strip Theme deploys bright close-miked cues to set the mood in seconds while announcing its characters and the world they inhabit.",
+        "short_detail_tts_key": "short-detail/6KZpSdpQGbTxP5jKfKY8cV.mp3",
+        "source_type": "TV",
+        "source_title": "77 Sunset Strip",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número catorce, '77 Sunset Strip Theme' de Jackie Gleason & His Orchestra, con Jackie Gleason & His Orchestra! Elegante y contundente desde el primer compás.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_14.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número catorze, '77 Sunset Strip Theme' de Jackie Gleason & His Orchestra, com Jackie Gleason & His Orchestra! Elegante e contundente desde o primeiro compasso.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_14.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "77 Sunset Strip Theme es un tema instrumental que combina jazz con arreglos orquestales llenos de estilo. Esta pieza captura la intriga y el glamour de las investigaciones en la ciudad. Su melodía transmite una emoción de misterio elegante que invita a seguir pistas inesperadas. Con el tiempo se volvió un referente que definió el sonido de muchas series de detectives.",
+          "short_detail_text": "El tema de 77 Sunset Strip usa brillantes señales bien microfoneadas para poner el ambiente en segundos mientras anuncia a sus personajes y el mundo que habitan.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6KZpSdpQGbTxP5jKfKY8cV.mp3",
+          "short_detail_tts_key": "short-detail/6KZpSdpQGbTxP5jKfKY8cV.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "77 Sunset Strip Theme é um tema instrumental que combina jazz com arranjos orquestrais cheios de estilo. Esta peça captura a intriga e o glamour das investigações na cidade. Sua melodia transmite uma emoção de mistério elegante que convida a seguir pistas inesperadas. Com o tempo, se tornou um referente que definiu o som de muitas séries de detetives.",
+          "short_detail_text": "O 77 Sunset Strip Theme usa toques brilhantes gravados bem de perto para criar o clima em segundos enquanto anuncia seus personagens e o mundo que eles habitam.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6KZpSdpQGbTxP5jKfKY8cV.mp3",
+          "short_detail_tts_key": "short-detail/6KZpSdpQGbTxP5jKfKY8cV.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3476,
+        "track_id": 2734,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 15,
+        "intro": "#15 Superman Main Title — pure TV comfort: one bar and you’re there."
+      },
+      "track": {
+        "id": 2734,
+        "track_name": "Superman Main Title",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "7zurYQZPo7tjO5Spq5Lriq",
+        "detail": "The Adventures of Superman was a adventure mainstay of the 1952Ã¢â‚¬â€œ1958 run. Set around exotic locales and peril-prone outposts, episodes balanced character moments with peril-of-the-week scrapes. Storytelling favored swift pacing and clean heroism, while production leaned on stock-footage assists and bold brass fanfares. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "With its bold brass fanfares, the Superman Main Title quickly establishes the clean heroism and swift pacing that defined the 1952-1958 Adventures of Superman series.",
+        "short_detail_tts_key": "short-detail/7zurYQZPo7tjO5Spq5Lriq.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número quince, \"Superman Main Title\" de Unknown Artist! Puro consuelo televisivo: con solo una nota, ya estás ahí.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_15.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número quinze, \"Superman Main Title\" de Unknown Artist! Puro consolo televisivo: com apenas uma nota, você já está aí.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_15.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Las Aventuras de Superman fue un clásico de la aventura durante su transmisión de 1952 a 1958. Con escenarios en locaciones exóticas y lugares llenos de peligro, los episodios combinaban momentos de los personajes con aventuras semanales cargadas de acción. El estilo narrativo prefería un ritmo rápido y un heroísmo puro, mientras que la producción se apoyaba en metraje de archivo y fanfarrias de metales audaces. El tema musical captura esa atmósfera en segundos, revelando quiénes son estos personajes y el mundo al que estás entrando.",
+          "short_detail_text": "Con sus audaces fanfarrias de metales, el Superman Main Title rápidamente establece el heroísmo limpio y el ritmo veloz que definieron la serie Adventures of Superman de 1952-1958.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/7zurYQZPo7tjO5Spq5Lriq.mp3",
+          "short_detail_tts_key": "short-detail/7zurYQZPo7tjO5Spq5Lriq.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "A série \"As Aventuras de Superman\" foi um clássico de aventura que marcou os anos de 1952 a 1958, com cenários exóticos e situações cheias de perigos, equilibrando momentos dos personagens com desafios semanais empolgantes. A narrativa priorizava um ritmo rápido e um heroísmo puro, enquanto a produção usava recursos como filmagens de arquivo e fanfarras de metais ousadas para reforçar o clima. A música tema define esse tom em segundos, apresentando quem são esses personagens e o mundo intenso que eles habitam.",
+          "short_detail_text": "Com suas ousadas fanfarras de metais, o Superman Main Title logo estabelece o heroísmo limpo e o ritmo acelerado que definiram a série Adventures of Superman de 1952 a 1958.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/7zurYQZPo7tjO5Spq5Lriq.mp3",
+          "short_detail_tts_key": "short-detail/7zurYQZPo7tjO5Spq5Lriq.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3477,
+        "track_id": 2735,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 16,
+        "intro": "#16 Dragnet Theme — one intro, endless nostalgia."
+      },
+      "track": {
+        "id": 2735,
+        "track_name": "Dragnet Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "5Ohd9Cq4LsOQoVdGADqnqr",
+        "detail": "Dragnet was a crime/procedural mainstay of the 1951Ã¢â‚¬â€œ1959 run. Set around squad rooms and city streets, episodes balanced character moments with step-by-step investigations. Storytelling favored docudrama pacing and factual narration, while production leaned on minimalist scoring and utilitarian camera work. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Dragnet Theme supplied the minimalist scoring that defined the 1951 to 1959 crime procedural with its factual narration and step-by-step investigative style.",
+        "short_detail_tts_key": "short-detail/5Ohd9Cq4LsOQoVdGADqnqr.mp3",
+        "source_type": "TV",
+        "source_title": "Dragnet",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número dieciséis, 'Dragnet Theme' de Unknown Artist! Un intro icónico que despierta infinita nostalgia.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_16.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número dezesseis, 'Dragnet Theme' de Unknown Artist! Um intro icônico que desperta infinita nostalgia.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_16.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Dragnet fue un pilar de los programas de crimen y procedimientos durante su transmisión de 1951 a 1959. Ambientado en salas de escuadrones y calles urbanas, los episodios equilibraban momentos de los personajes con investigaciones paso a paso. La narración privilegiaba un ritmo de docudrama con detalles factuales, mientras que la producción se apoyaba en una banda sonora minimalista y un trabajo de cámara práctico. El tema musical captura ese ambiente en segundos, revelando quiénes son estos personajes y el mundo al que estás entrando.",
+          "short_detail_text": "El Dragnet Theme dio la música minimalista que definió el procedural de crimen de 1951 a 1959 con su narración factual y estilo de investigación paso a paso.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5Ohd9Cq4LsOQoVdGADqnqr.mp3",
+          "short_detail_tts_key": "short-detail/5Ohd9Cq4LsOQoVdGADqnqr.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Dragnet foi uma série clássica de crimes e procedimentos que marcou a TV entre 1951 e 1959. Com cenários em salas de esquadra e ruas da cidade, os episódios equilibravam momentos dos personagens com investigações passo a passo. A narrativa seguia um ritmo de docudrama, com uma contagem factual e direta, enquanto a produção apostava em uma trilha sonora minimalista e um trabalho de câmera simples. Essa trilha tema captura o clima em segundos, revelando quem são os personagens e o mundo que eles habitam.",
+          "short_detail_text": "O Dragnet Theme forneceu a trilha minimalista que definiu o crime procedural de 1951 a 1959 com sua narração factual e estilo investigativo passo a passo.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5Ohd9Cq4LsOQoVdGADqnqr.mp3",
+          "short_detail_tts_key": "short-detail/5Ohd9Cq4LsOQoVdGADqnqr.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3478,
+        "track_id": 2736,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 17,
+        "intro": "#17 Park Avenue Beat — a theme that kicks the door in."
+      },
+      "track": {
+        "id": 2736,
+        "track_name": "Park Avenue Beat",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "7smbTvpqOBh1lqgrlGfmII",
+        "detail": "Perry Mason was a legal drama mainstay of the 1957Ã¢â‚¬â€œ1966 run. Set around Los Angeles courtrooms and sleek law offices, episodes balanced character moments with client-of-the-week trials. Storytelling favored procedural clarity and late-act reversals, while production leaned on studio sets and composed arguments framed like chess matches. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "Park Avenue Beat announced the sophisticated world of Los Angeles courtrooms and chess match legal arguments for Perry Mason during its 1957 to 1966 run as a television mainstay.",
+        "short_detail_tts_key": "short-detail/7smbTvpqOBh1lqgrlGfmII.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número diecisiete, 'Park Avenue Beat' de Unknown Artist — Unknown Artist! Un tema que derriba la puerta con fuerza.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_17.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número dezessete, 'Park Avenue Beat' de Unknown Artist — Unknown Artist! Um tema que derruba a porta com força.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_17.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Perry Mason fue una serie dramática legal que dominó la televisión de 1957 a 1966. Ambientada en salas de tribunales y elegantes oficinas de abogados en Los Ángeles, cada episodio equilibraba momentos de los personajes con juicios de clientes semanales. La narración destacaba la claridad en los procedimientos y giros sorpresivos al final, mientras la producción se apoyaba en sets de estudio y argumentos bien estructurados como partidas de ajedrez. El tema musical captura esa atmósfera en segundos, presentando quiénes son estos personajes y el mundo al que te sumerges.",
+          "short_detail_text": "Park Avenue Beat anunciaba el mundo sofisticado de los tribunales de Los Ángeles y los argumentos legales como partidas de ajedrez para Perry Mason durante su emisión de 1957 a 1966 como un pilar de la televisión.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/7smbTvpqOBh1lqgrlGfmII.mp3",
+          "short_detail_tts_key": "short-detail/7smbTvpqOBh1lqgrlGfmII.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Perry Mason foi um clássico drama jurídico que marcou a TV entre 1957 e 1966. Com cenários em tribunais e escritórios elegantes de Los Angeles, os episódios misturavam momentos dos personagens com julgamentos semanais cheios de clareza procedural e reviravoltas surpreendentes. A música tema captura esse clima em segundos, passando a sensação exata de quem são esses personagens e o mundo intrigante que eles habitam.",
+          "short_detail_text": "Park Avenue Beat anunciava o mundo sofisticado dos tribunais de Los Angeles e dos argumentos jurídicos como uma partida de xadrez para Perry Mason durante sua temporada de 1957 a 1966 como um dos principais programas de televisão.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/7smbTvpqOBh1lqgrlGfmII.mp3",
+          "short_detail_tts_key": "short-detail/7smbTvpqOBh1lqgrlGfmII.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3479,
+        "track_id": 2737,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 18,
+        "intro": "#18 Gunsmoke Theme — thirty seconds of pure identity."
+      },
+      "track": {
+        "id": 2737,
+        "track_name": "Gunsmoke Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "21xSPN0i8ZZAL4JqjPXteR",
+        "detail": "Gunsmoke was a western mainstay of the 1955Ã¢â‚¬â€œ1975 run. Set around frontier towns, ranches, and wide-open ranges, episodes balanced character moments with trail dilemmas, frontier justice, and moral tests. Storytelling favored tight, episodic plots with clear stakes, while production leaned on location shooting, practical stunts, and brassy, galloping scores. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The brassy and galloping Gunsmoke Theme set the scene for two decades of frontier justice and moral tests in the western mainstay that ran from 1955 to 1975.",
+        "short_detail_tts_key": "short-detail/21xSPN0i8ZZAL4JqjPXteR.mp3",
+        "source_type": "TV",
+        "source_title": "Gunsmoke",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número dieciocho, 'Gunsmoke Theme' de Unknown Artist — treinta segundos de pura identidad!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_18.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número dezoito, 'Gunsmoke Theme' de Unknown Artist — trinta segundos de pura identidade!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_18.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Gunsmoke fue un clásico del Oeste que se mantuvo en pantalla de 1955 a 1975. Ambientada en pueblos fronterizos, ranchos y vastas llanuras, sus episodios mezclaban momentos de los personajes con dilemas en el camino, justicia en la frontera y pruebas morales. La narración se enfocaba en tramas ajustadas y episódicas con riesgos claros, mientras que la producción apostaba por rodajes en locaciones reales, acrobacias prácticas y scores musicales audaces y galopantes. El tema musical captura ese ambiente en segundos, revelando quiénes son estos personajes y el mundo al que entras.",
+          "short_detail_text": "El Gunsmoke Theme, metálico y galopante, estableció la escena para dos décadas de justicia fronteriza y pruebas morales en el pilar del western que duró de 1955 a 1975.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/21xSPN0i8ZZAL4JqjPXteR.mp3",
+          "short_detail_tts_key": "short-detail/21xSPN0i8ZZAL4JqjPXteR.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Gunsmoke foi uma série clássica do gênero western que dominou a TV de 1955 a 1975. Ambientada em cidades fronteiriças, ranchos e vastas planícies, ela misturava momentos dos personagens com dilemas da trilha, justiça no velho oeste e desafios morais. A trilha sonora, com seus toques animados e galopantes, define o clima em segundos, passando a sensação exata de quem são esses personagens e o mundo que você está prestes a explorar.",
+          "short_detail_text": "O tema metálico e galopante Gunsmoke Theme criava o clima para duas décadas de justiça na fronteira e testes morais nesse principal faroeste que foi ao ar de 1955 a 1975.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/21xSPN0i8ZZAL4JqjPXteR.mp3",
+          "short_detail_tts_key": "short-detail/21xSPN0i8ZZAL4JqjPXteR.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3480,
+        "track_id": 2738,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 20,
+        "intro": "#20 The Twilight Zone Theme — widescreen heroics, compressed to a sting."
+      },
+      "track": {
+        "id": 2738,
+        "track_name": "The Twilight Zone Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "0vAxOokfZhgwVt6rOSPJAS",
+        "detail": "The Twilight Zone was a anthology/sci-fi mainstay of the 1959Ã¢â‚¬â€œ1964 run. Set around everyday locations slanted toward the uncanny; laboratories, launch pads, and uncanny thresholds, episodes balanced character moments with standalone twist stories; speculative dilemmas and eerie reveals. Storytelling favored tight ironies and moral fables; what-if premises and twist endings, while production leaned on economical sets and mood-first scoring; theremin-tinged cues and stylized effects. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Twilight Zone Theme instantly sets the uncanny mood for the classic 1959 to 1964 anthology series renowned for its moral fables, speculative dilemmas, and twist endings.",
+        "short_detail_tts_key": "short-detail/0vAxOokfZhgwVt6rOSPJAS.mp3",
+        "source_type": "TV",
+        "source_title": "The Twilight Zone",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número veinte! El Tema de La Dimensión Desconocida — heroísmo en pantalla ancha, \"The Twilight Zone Theme\" de Unknown Artist comprimido en un impacto.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_20.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte! O tema de A Dimensão Desconhecida — heroísmo em tela grande, \"The Twilight Zone Theme\" de Unknown Artist comprimido em um impacto.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_20.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "La Zona del Crepúsculo fue un clásico de la antología y la ciencia ficción que se transmitió de 1959 a 1964. Sus episodios se ambientaban en lugares cotidianos con un toque siniestro, como laboratorios y plataformas de lanzamiento, equilibrando momentos de los personajes con historias independientes llenas de giros, dilemas especulativos y revelaciones escalofriantes. El estilo narrativo destacaba ironías precisas y fábulas morales con premisas de \"¿qué pasaría si?\" y finales sorpresivos, mientras que la producción se basaba en decorados sencillos y música enfocada en el ambiente, con sonidos de theremin y efectos estilizados. El tema musical establece ese tono en segundos, presentándonos quiénes son estos personajes y el mundo al que entras.",
+          "short_detail_text": "The Twilight Zone Theme pone al instante ese ambiente inquietante para la clásica serie antológica de 1959 a 1964, famosa por sus fábulas morales, dilemas especulativos y finales con twist.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/0vAxOokfZhgwVt6rOSPJAS.mp3",
+          "short_detail_tts_key": "short-detail/0vAxOokfZhgwVt6rOSPJAS.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "A Zona do Crepúsculo foi uma série antológica de ficção científica que marcou a TV entre 1959 e 1964. Ambientada em locais cotidianos com um toque de mistério, como laboratórios e plataformas de lançamento, os episódios misturavam momentos dos personagens com histórias independentes cheias de reviravoltas, dilemas especulativos e revelações assustadoras. A narrativa priorizava ironias bem construídas e fábulas morais com premissas hipotéticas e finais surpreendentes, enquanto a produção usava cenários simples e uma trilha sonora focada no clima, com efeitos estilizados e toques de theremin para criar atmosfera. O tema musical captura esse clima em segundos, apresentando quem são esses personagens e o tipo de mundo que você está prestes a entrar.",
+          "short_detail_text": "O The Twilight Zone Theme já cria na hora aquele clima arrepiante da clássica série de antologia de 1959 a 1964, famosa por suas fábulas morais, dilemas especulativos e finais com reviravoltas.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/0vAxOokfZhgwVt6rOSPJAS.mp3",
+          "short_detail_tts_key": "short-detail/0vAxOokfZhgwVt6rOSPJAS.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3481,
+        "track_id": 2739,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 21,
+        "intro": "#21 The Toy Parade — a hook that lodges in memory on contact."
+      },
+      "track": {
+        "id": 2739,
+        "track_name": "The Toy Parade",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "5qcKM4gqZwILtdsBsygHpk",
+        "detail": "Leave It to Beaver was a sitcom mainstay of the 1957Ã¢â‚¬â€œ1963 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Toy Parade provided the bright close-miked theme that set the mood in seconds for Leave It to Beaver, a sitcom mainstay of the 1957-1963 run.",
+        "short_detail_tts_key": "short-detail/5qcKM4gqZwILtdsBsygHpk.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número veintiuno, 'The Toy Parade' de Unknown Artist, ! Un gancho que se graba en la memoria al instante.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_21.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e um, 'The Toy Parade' de Unknown Artist! Um gancho que se grava na memória ao instante.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_21.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Leave It to Beaver fue una serie de comedia icónica que se transmitió de 1957 a 1963. Ambientada en salas, cocinas y porches de barrio, los episodios mezclaban momentos de los personajes con enredos caseros y malentendidos rápidos. La narración se enfocaba en ritmos de planteamiento y resolución con finales ordenados, mientras que la producción usaba escenificación con múltiples cámaras y temas musicales brillantes y bien capturados. Esos temas musicales establecen el tono en segundos, revelando quiénes son los personajes y el mundo al que estás entrando.",
+          "short_detail_text": "The Toy Parade dio el tema brillante y grabado de cerca que ponía el ambiente en segundos para Leave It to Beaver, un pilar de las sitcoms de 1957 al 1963.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5qcKM4gqZwILtdsBsygHpk.mp3",
+          "short_detail_tts_key": "short-detail/5qcKM4gqZwILtdsBsygHpk.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "\"Leave It to Beaver foi uma série de comédia que marcou a TV entre 1957 e 1963. Ambientada em salas de estar, cozinhas e degraus das vizinhanças, os episódios misturavam momentos dos personagens com confusões domésticas e mal-entendidos rápidos, sempre com uma narrativa que seguia ritmos de preparação e resolução bem amarrados. A produção usava filmagens com múltiplas câmeras e temas musicais claros e bem capturados, que definem o clima em segundos, mostrando quem são esses personagens e o mundo que eles habitam.\"",
+          "short_detail_text": "O The Toy Parade forneceu o tema alegre gravado bem de perto que já colocava o clima em segundos pro Leave It to Beaver, um sitcom que foi um dos principais da fase de 1957 a 1963.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5qcKM4gqZwILtdsBsygHpk.mp3",
+          "short_detail_tts_key": "short-detail/5qcKM4gqZwILtdsBsygHpk.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3482,
+        "track_id": 2740,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 22,
+        "intro": "#22 The Phil Silvers Show (Sgt. Bilko) Theme — the needle-drop that says it all."
+      },
+      "track": {
+        "id": 2740,
+        "track_name": "The Phil Silvers Show (Sgt. Bilko) Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "7bM9EZQolv1jCCgO4pibPN",
+        "detail": "The Phil Silvers Show (Sgt. Bilko) was a sitcom mainstay of the 1955Ã¢â‚¬â€œ1959 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Phil Silvers Show (Sgt. Bilko) Theme deploys bright close-miked cues that establish the 1955-1959 sitcom's characters and comedic world within seconds.",
+        "short_detail_tts_key": "short-detail/7bM9EZQolv1jCCgO4pibPN.mp3",
+        "source_type": "TV",
+        "source_title": "The Phil Silvers Show (Sgt. Bilko)",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número veintidós, \"The Phil Silvers Show (Sgt. Bilko) Theme\" de Unknown Artist el tema de The Phil Silvers Show (Sgt. Bilko)! Una melodía que lo dice todo con solo sonar.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_22.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e dois, \"The Phil Silvers Show (Sgt. Bilko) Theme\" de Unknown Artist, o tema de The Phil Silvers Show (Sgt. Bilko)! Uma melodia que diz tudo com apenas soar.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_22.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "El programa Phil Silvers Show, conocido como Sgt. Bilko, fue un pilar de las comedias sitcom durante su transmisión de 1955 a 1959. Los episodios se ambientaban en salas, cocinas y porches de barrio, equilibrando momentos de los personajes con enredos domésticos y malentendidos rápidos. La narración privilegiaba ritmos de preparación y resolución con finales ordenados, mientras que la producción se basaba en escenificación con múltiples cámaras y temas musicales brillantes y bien capturados. Estos temas establecen el ánimo en segundos, revelando quiénes son los personajes y el mundo al que entras.",
+          "short_detail_text": "El tema de The Phil Silvers Show (Sgt. Bilko) usa señales brillantes y grabadas de cerca que establecen los personajes y el mundo cómico de la sitcom de 1955-1959 en segundos.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/7bM9EZQolv1jCCgO4pibPN.mp3",
+          "short_detail_tts_key": "short-detail/7bM9EZQolv1jCCgO4pibPN.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "O programa The Phil Silvers Show, também conhecido como Sgt. Bilko, foi um grande sucesso de sitcom entre 1955 e 1959. Os episódios se passavam em salas de estar, cozinhas e degraus de vizinhança, misturando momentos dos personagens com confusões domésticas e mal-entendidos rápidos. A narrativa seguia um ritmo de preparação e resolução, com produções que usavam múltiplas câmeras e temas musicais vibrantes e bem gravados, que em segundos definem o clima e apresentam quem são esses personagens e o mundo em que eles vivem.",
+          "short_detail_text": "O tema do The Phil Silvers Show (Sgt. Bilko) traz toques brilhantes gravados bem de perto que estabelecem os personagens e o mundo cômico do sitcom de 1955 a 1959 em segundos.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/7bM9EZQolv1jCCgO4pibPN.mp3",
+          "short_detail_tts_key": "short-detail/7bM9EZQolv1jCCgO4pibPN.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3483,
+        "track_id": 2741,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 23,
+        "intro": "#23 The Jack Benny Program Theme — moody, conspiratorial, instantly iconic."
+      },
+      "track": {
+        "id": 2741,
+        "track_name": "The Jack Benny Program Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "3oMJ1AwcSE1HOuG2yxuLSP",
+        "detail": "The Jack Benny Program was a comedy/variety mainstay of the 1950Ã¢â‚¬â€œ1965 run. Set around proscenium stages and bandstands, episodes balanced character moments with sketches, novelty numbers, and guest turns. Storytelling favored buttoned gags and musical interludes, while production leaned on lush studio orchestras and show-curtain fanfares. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Jack Benny Program Theme provided the lush studio orchestra fanfares for the comedy variety mainstay that ran from 1950 to 1965 featuring sketches, musical interludes, and guest turns.",
+        "short_detail_tts_key": "short-detail/3oMJ1AwcSE1HOuG2yxuLSP.mp3",
+        "source_type": "TV",
+        "source_title": "The Jack Benny Program",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número veintitrés, \"The Jack Benny Program Theme\" de Unknown Artist! Un tema melancólico, conspirador y absolutamente icónico que te atrapa al instante.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_23.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e três, \"The Jack Benny Program Theme\" de Unknown Artist! Um tema melancólico, conspirador e absolutamente icônico que te atrapa no instante.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_23.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "El programa Jack Benny fue un pilar de comedia y variedades durante su transmisión de 1950 a 1965. Ambientado en escenarios teatrales y estrados para bandas, los episodios equilibraban momentos de personajes con sketches, números novedosos y apariciones de invitados. La narración se enfocaba en chistes bien armados y interludios musicales, mientras que la producción dependía de orquestas de estudio lujosas y fanfarrias de apertura. El tema musical captura esa esencia en segundos, revelando quiénes son estos personajes y el mundo al que te sumerges.",
+          "short_detail_text": "El tema The Jack Benny Program Theme ponía las fanfarrias exuberantes de la orquesta de estudio para ese pilar de la comedia y variedades que duró de 1950 a 1965 con sketches, interludios musicales y apariciones de invitados.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3oMJ1AwcSE1HOuG2yxuLSP.mp3",
+          "short_detail_tts_key": "short-detail/3oMJ1AwcSE1HOuG2yxuLSP.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "O Programa Jack Benny foi um dos grandes sucessos de comédia e variedades entre 1950 e 1965. Os episódios se desenrolavam em palcos e bandstands, misturando momentos dos personagens com esquetes, números especiais e participações de convidados. A narrativa valorizava piadas bem construídas e interlúdios musicais, enquanto a produção contava com orquestras ricas de estúdio e fanfarras animadas. A música tema define esse clima em segundos, apresentando quem são os personagens e o mundo que estamos prestes a explorar.",
+          "short_detail_text": "O The Jack Benny Program Theme fornecia as fanfarras luxuriantes da orquestra de estúdio para o programa que era o principal da comédia e variedades e que foi ao ar de 1950 a 1965 com esquetes, interlúdios musicais e participações de convidados.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3oMJ1AwcSE1HOuG2yxuLSP.mp3",
+          "short_detail_tts_key": "short-detail/3oMJ1AwcSE1HOuG2yxuLSP.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3484,
+        "track_id": 2742,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 24,
+        "intro": "#24 Love Nest — one intro, endless nostalgia."
+      },
+      "track": {
+        "id": 2742,
+        "track_name": "Love Nest",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "0AM95LZomnRCMe91SwUh6C",
+        "detail": "The George Burns and Gracie Allen Show was a sitcom mainstay of the 1950Ã¢â‚¬â€œ1958 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "Love Nest served as the bright close-miked theme for the George Burns and Gracie Allen Show from 1950 to 1958, setting the mood in seconds for its character moments and domestic mix-ups.",
+        "short_detail_tts_key": "short-detail/0AM95LZomnRCMe91SwUh6C.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número veinticuatro, 'Love Nest' de Unknown Artist! Un solo intro y un sinfín de nostalgia.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_24.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e quatro, 'Love Nest' de Unknown Artist! Um único intro e um sem-fim de nostalgia.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_24.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "El programa de George Burns y Gracie Allen fue un pilar de las comedias de situación durante su transmisión de 1950 a 1958. Ambientado en salas, cocinas y escalones de los vecindarios, los episodios mezclaban momentos de los personajes con enredos domésticos y malentendidos divertidos y rápidos. La narración se enfocaba en ritmos de preparación y resolución ordenada, mientras que la producción recurría a escenificaciones con múltiples cámaras y temas musicales brillantes y bien capturados. Estos temas musicales establecen el tono en segundos, revelando quiénes son los personajes y el mundo al que te sumerges.",
+          "short_detail_text": "Love Nest servía como el tema alegre y grabado de cerca del George Burns and Gracie Allen Show de 1950 a 1958, poniendo el ambiente en segundos para sus momentos de personajes y enredos domésticos.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/0AM95LZomnRCMe91SwUh6C.mp3",
+          "short_detail_tts_key": "short-detail/0AM95LZomnRCMe91SwUh6C.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "O programa George Burns e Gracie Allen foi um clássico das comédias de situação entre 1950 e 1958. Com cenários em salas de estar, cozinhas e degraus de vizinhança, os episódios misturavam momentos dos personagens com confusões domésticas e mal-entendidos rápidos, sempre com um equilíbrio cativante. A narrativa seguia ritmos de preparação e resolução bem amarrados, enquanto a produção usava cenários com múltiplas câmeras e temas musicais claros e próximos, que definem o clima em segundos e apresentam quem são esses personagens e o mundo que eles habitam.",
+          "short_detail_text": "Love Nest serviu como o tema animado gravado bem pertinho do microfone do George Burns and Gracie Allen Show de 1950 a 1958, criando o clima em segundos pros momentos dos personagens e as confusões domésticas.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/0AM95LZomnRCMe91SwUh6C.mp3",
+          "short_detail_tts_key": "short-detail/0AM95LZomnRCMe91SwUh6C.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3485,
+        "track_id": 2743,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 25,
+        "intro": "#25 Holiday for Strings — Saturday-morning energy in a single riff."
+      },
+      "track": {
+        "id": 2743,
+        "track_name": "Holiday for Strings",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "6StrrdGtUFNvSZPX9PUhIV",
+        "detail": "The Red Skelton Show was a comedy/variety mainstay of the 1951Ã¢â‚¬â€œ1971 run. Set around proscenium stages and bandstands, episodes balanced character moments with sketches, novelty numbers, and guest turns. Storytelling favored buttoned gags and musical interludes, while production leaned on lush studio orchestras and show-curtain fanfares. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "Holiday for Strings served as the theme to the Red Skelton Show, instantly establishing the lush orchestral mood for its comedy sketches and variety segments throughout the 1951 to 1971 run.",
+        "short_detail_tts_key": "short-detail/6StrrdGtUFNvSZPX9PUhIV.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número veinticinco, 'Holiday for Strings' de Unknown Artist! Energía de sábado por la mañana en un solo riff.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_25.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e cinco, 'Holiday for Strings' de Unknown Artist! Energia de sábado de manhã em um único riff.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_25.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "El programa de Red Skelton fue un pilar del humor y la variedad durante su transmisión de 1951 a 1971. Ambientado en escenarios con proscenios y estrados de bandas, los episodios equilibraban momentos de personajes con sketches, números novedosos y apariciones de invitados. La narración destacaba chistes bien estructurados y interludios musicales, mientras que la producción se apoyaba en orquestas de estudio lujosas y fanfarrias de apertura. El tema musical establece ese ambiente en segundos, presentando quiénes son estos personajes y el mundo al que estás entrando.",
+          "short_detail_text": "Holiday for Strings fue el tema del Red Skelton Show, estableciendo de inmediato el exuberante ambiente orquestal para sus sketches de comedia y segmentos de variedad durante toda su emisión de 1951 a 1971.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6StrrdGtUFNvSZPX9PUhIV.mp3",
+          "short_detail_tts_key": "short-detail/6StrrdGtUFNvSZPX9PUhIV.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "O Red Skelton Show foi um clássico dos programas de comédia e variedades, que ficou no ar de 1951 a 1971. Os episódios se passavam em palcos tradicionais e estruturas de banda, equilibrando momentos dos personagens com esquetes, números de variedades e participações especiais. A narrativa priorizava piadas bem amarradas e interlúdios musicais, enquanto a produção contava com orquestras de estúdio ricas e fanfarras de abertura impactantes. O tema do programa captura essa atmosfera em poucos segundos, apresentando quem são esses personagens e o mundo que eles habitam.",
+          "short_detail_text": "Holiday for Strings serviu de tema pro Red Skelton Show, criando na hora aquele clima orquestral exuberante pros esquetes de comédia e segmentos de variedades ao longo da exibição de 1951 a 1971.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6StrrdGtUFNvSZPX9PUhIV.mp3",
+          "short_detail_tts_key": "short-detail/6StrrdGtUFNvSZPX9PUhIV.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3486,
+        "track_id": 2744,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 26,
+        "intro": "#26 The Adventures of Ozzie and Harriet Theme — neon-soaked swagger in theme-song form."
+      },
+      "track": {
+        "id": 2744,
+        "track_name": "The Adventures of Ozzie and Harriet Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "1t9EEZYlZu348wUpTNsXJr",
+        "detail": "The Adventures of Ozzie and Harriet was a sitcom mainstay of the 1952Ã¢â‚¬â€œ1966 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Adventures of Ozzie and Harriet Theme announced the characters and world of the long-running sitcom that balanced character moments with domestic mix-ups during its 1952 to 1966 run.",
+        "short_detail_tts_key": "short-detail/1t9EEZYlZu348wUpTNsXJr.mp3",
+        "source_type": "TV",
+        "source_title": "The Adventures of Ozzie and Harriet",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número veintiséis, 'The Adventures of Ozzie and Harriet Theme' de Unknown Artist, ! Un tema que rebosa estilo con un toque de swagger empapado de neón. ¡Pura vibra en forma de canción!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_26.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e seis, 'The Adventures of Ozzie and Harriet Theme' de Unknown Artist! Um tema que transborda estilo com um toque de swagger encharcado de neón. Pura vibração em forma de canção!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_26.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Las Aventuras de Ozzie y Harriet fue un pilar de las comedias sitcom durante su transmisión de 1952 a 1966. Los episodios, ambientados en salas, cocinas y escalones de los vecindarios, mezclaban momentos de los personajes con enredos domésticos y malentendidos divertidos. La narración se enfocaba en ritmos de planteamiento y resolución con finales ordenados, mientras que la producción usaba escenografía de múltiples cámaras y temas musicales brillantes con micrófonos cercanos. Estos temas captan el ánimo en segundos, revelando quiénes son los personajes y el mundo al que estás entrando.",
+          "short_detail_text": "El tema de The Adventures of Ozzie and Harriet anunciaba a los personajes y el mundo de la longeva sitcom que equilibraba momentos de los personajes con enredos domésticos durante su emisión de 1952 a 1966.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1t9EEZYlZu348wUpTNsXJr.mp3",
+          "short_detail_tts_key": "short-detail/1t9EEZYlZu348wUpTNsXJr.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "\"A série 'The Adventures of Ozzie and Harriet' foi um clássico da TV entre 1952 e 1966. Com cenários acolhedores como salas de estar, cozinhas e degraus dos bairros, os episódios misturavam momentos dos personagens com confusões domésticas e mal-entendidos leves. A narrativa seguia um ritmo de preparação e resolução bem estruturada, enquanto a produção contava com filmagens em múltiplas câmeras e temas musicais claros e bem capturados, que em segundos transmitem o clima e apresentam quem são esses personagens e o mundo deles.\"",
+          "short_detail_text": "The Adventures of Ozzie and Harriet Theme anunciava os personagens e o mundo da sitcom de longa duração que equilibrava momentos dos personagens com trapalhadas domésticas durante sua exibição de 1952 a 1966.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1t9EEZYlZu348wUpTNsXJr.mp3",
+          "short_detail_tts_key": "short-detail/1t9EEZYlZu348wUpTNsXJr.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3487,
+        "track_id": 2745,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 27,
+        "intro": "#27 Father Knows Best Theme — instant earworm that teleports you back."
+      },
+      "track": {
+        "id": 2745,
+        "track_name": "Father Knows Best Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "7GfyRnOeyhA950v90Wz0F9",
+        "detail": "Father Knows Best was a sitcom mainstay of the 1954Ã¢â‚¬â€œ1960 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Father Knows Best Theme set the mood in seconds for the 1954-1960 sitcom with its bright close-miked cues that announced the characters and their domestic world.",
+        "short_detail_tts_key": "short-detail/7GfyRnOeyhA950v90Wz0F9.mp3",
+        "source_type": "TV",
+        "source_title": "Father Knows Best",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número veintisiete, 'Father Knows Best Theme' de Unknown Artist! Un tema pegajoso que te transporta al pasado al instante.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_27.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e sete, 'Father Knows Best Theme' de Unknown Artist! Um tema pegajoso que te transporta ao passado no instante.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_27.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "\"Father Knows Best fue una comedia icónica que se transmitió de 1954 a 1960. Sus episodios, ambientados en salas, cocinas y porches de barrio, equilibraban momentos de los personajes con enredos domésticos y malentendidos rápidos. La narración se enfocaba en estructuras de planteamiento y resolución con finales ordenados, mientras que la producción usaba escenificaciones con múltiples cámaras y temas musicales brillantes y bien capturados. Estos temas establecen el tono en segundos, presentando quiénes son los personajes y el mundo al que entras.\"",
+          "short_detail_text": "El Father Knows Best Theme ponía el ambiente en segundos para la sitcom de 1954-1960 con sus brillantes señales microfoneadas de cerca que anunciaban a los personajes y su mundo doméstico.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/7GfyRnOeyhA950v90Wz0F9.mp3",
+          "short_detail_tts_key": "short-detail/7GfyRnOeyhA950v90Wz0F9.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "\"Father Knows Best foi uma série de comédia clássica que fez sucesso entre 1954 e 1960. Com cenários em salas de estar, cozinhas e degraus das vizinhanças, os episódios misturavam momentos dos personagens com confusões domésticas e mal-entendidos leves, sempre com uma narrativa que seguia ritmos de preparação e resolução clara. Os temas musicais capturam o clima em segundos, mostrando quem são esses personagens e o mundo acolhedor que eles habitam.\"",
+          "short_detail_text": "O tema Father Knows Best criava o clima em segundos pro sitcom de 1954 a 1960 com seus toques brilhantes gravados bem de perto que anunciavam os personagens e seu mundo doméstico.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/7GfyRnOeyhA950v90Wz0F9.mp3",
+          "short_detail_tts_key": "short-detail/7GfyRnOeyhA950v90Wz0F9.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3488,
+        "track_id": 2746,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 30,
+        "intro": "#30 Mickey Mouse March — mood-setter that does more than roll credits."
+      },
+      "track": {
+        "id": 2746,
+        "track_name": "Mickey Mouse March",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "008cgGGqOzoCRthUAkY0PD",
+        "detail": "The Mickey Mouse Club was a kids/variety mainstay of the 1955Ã¢â‚¬â€œ1959 run. Set around a bright clubhouse set with roll-call sing-alongs, episodes balanced character moments with sing-along bits and serialized skits. Storytelling favored go-along participation and call-and-response hooks, while production leaned on march tempos, bright choruses, and crisp enunciation. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Mickey Mouse March theme for the 1955 to 1959 Mickey Mouse Club captured its clubhouse spirit of sing-alongs and participation through brisk march tempos, bright choruses, and crisp enunciation.",
+        "short_detail_tts_key": "short-detail/008cgGGqOzoCRthUAkY0PD.mp3",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número treinta, 'Mickey Mouse March' de Unknown Artist! Una melodía que no solo acompaña los créditos, sino que establece el ambiente perfecto.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_30.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta, 'Mickey Mouse March' de Unknown Artist! Uma melodia que não só acompanha os créditos, mas que estabelece o ambiente perfeito.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_30.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "El Club de Mickey Mouse fue un programa estrella para niños y variedades que se transmitió de 1955 a 1959. Con un escenario alegre en un club lleno de canciones de asistencia, los episodios mezclaban momentos divertidos de los personajes con secciones para cantar y sketches en serie. La narración incentivaba la participación interactiva y respuestas en grupo, mientras que la producción usaba ritmos de marcha, coros vibrantes y una pronunciación clara. El tema principal captura esa esencia en segundos, revelando quiénes son estos personajes y el mundo al que te sumerges.",
+          "short_detail_text": "El tema Mickey Mouse March del Mickey Mouse Club de 1955 a 1959 capturó el espíritu de su clubhouse de cantos en grupo y participación con ritmos de marcha rápidos, coros alegres y una enunciación nítida.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/008cgGGqOzoCRthUAkY0PD.mp3",
+          "short_detail_tts_key": "short-detail/008cgGGqOzoCRthUAkY0PD.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "O Mickey Mouse Club foi um programa adorado pelas crianças nos anos de 1955 a 1959, com um cenário de clube animado e cheio de canções de chamada para cantar junto. Os episódios misturavam momentos dos personagens com partes de canto e esquetes seriados, incentivando a participação interativa do público por meio de respostas e ganchos divertidos. A produção contava com ritmos de marcha, coros vibrantes e uma enunciação clara, passando uma sensação de alegria e energia logo de cara. O tema do programa cria esse clima em segundos, apresentando quem são os personagens e o mundo encantador que você está prestes a explorar.",
+          "short_detail_text": "O tema Mickey Mouse March do Mickey Mouse Club de 1955 a 1959 capturava o espírito de cantoria coletiva e participação do clube com ritmos de marcha animados, coros vibrantes e enunciação bem nítida.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/008cgGGqOzoCRthUAkY0PD.mp3",
+          "short_detail_tts_key": "short-detail/008cgGGqOzoCRthUAkY0PD.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3489,
+        "track_id": 2747,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 31,
+        "intro": "#31 Zorro Theme — Saturday-morning energy in a single riff."
+      },
+      "track": {
+        "id": 2747,
+        "track_name": "Zorro Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "6Jd1bgtco6NU1XpadsTyDp",
+        "detail": "Zorro was a adventure mainstay of the 1957Ã¢â‚¬â€œ1959 run. Set around exotic locales and peril-prone outposts, episodes balanced character moments with peril-of-the-week scrapes. Storytelling favored swift pacing and clean heroism, while production leaned on stock-footage assists and bold brass fanfares. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Zorro Theme deploys bold brass fanfares to instantly establish the swift pacing, clean heroism, and exotic peril of the 1957 to 1959 adventure series.",
+        "short_detail_tts_key": "short-detail/6Jd1bgtco6NU1XpadsTyDp.mp3",
+        "source_type": "TV",
+        "source_title": "Zorro",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número treinta y uno, 'Zorro Theme' de Unknown Artist! Energía de sábado por la mañana en un solo riff. ¡Pura adrenalina con Unknown Artist!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_31.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e um, 'Zorro Theme' de Unknown Artist! Energia de sábado pela manhã em um único riff. Pura adrenalina com Unknown Artist!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_31.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Zorro fue un pilar de aventuras en la serie de 1957 a 1959. Los episodios, ambientados en lugares exóticos y puestos llenos de peligros, equilibraban momentos de los personajes con escaramuzas semanales llenas de acción. La narración privilegiaba un ritmo rápido y un heroísmo puro, mientras que la producción usaba metraje de archivo y fanfarrias de metales audaces. El tema musical captura ese ambiente en segundos, revelando quiénes son estos personajes y el mundo al que estás entrando.",
+          "short_detail_text": "The Zorro Theme despliega audaces fanfarrias de metales para establecer al instante el ritmo veloz, el heroísmo limpio y el peligro exótico de la serie de aventuras de 1957 a 1959.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6Jd1bgtco6NU1XpadsTyDp.mp3",
+          "short_detail_tts_key": "short-detail/6Jd1bgtco6NU1XpadsTyDp.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Zorro foi um clássico de aventura que marcou a televisão entre 1957 e 1959. A série se passava em locais exóticos e cheios de perigos, equilibrando momentos dos personagens com aventuras semanais cheias de ação e heroísmo puro. A narrativa era rápida e heroica, com a produção usando filmagens de arquivo e fanfarras de metais ousadas, e a trilha sonora tema captura esse clima em segundos, mostrando quem são os personagens e o mundo em que eles vivem.",
+          "short_detail_text": "The Zorro Theme usa fanfarras ousadas de metais pra estabelecer na hora o ritmo veloz, o heroísmo limpo e o perigo exótico da série de aventuras de 1957 a 1959.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6Jd1bgtco6NU1XpadsTyDp.mp3",
+          "short_detail_tts_key": "short-detail/6Jd1bgtco6NU1XpadsTyDp.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3490,
+        "track_id": 2748,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 33,
+        "intro": "#33 The Life and Legend of Wyatt Earp Theme — whistle-clean hook with staying power."
+      },
+      "track": {
+        "id": 2748,
+        "track_name": "The Life and Legend of Wyatt Earp Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "2S2x5N5VJNn7vqYukvoFFC",
+        "detail": "The Life and Legend of Wyatt Earp was a western mainstay of the 1955Ã¢â‚¬â€œ1961 run. Set around frontier towns, ranches, and wide-open ranges, episodes balanced character moments with trail dilemmas, frontier justice, and moral tests. Storytelling favored tight, episodic plots with clear stakes, while production leaned on location shooting, practical stunts, and brassy, galloping scores. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Life and Legend of Wyatt Earp Theme captured the brassy galloping spirit of the television western mainstay that ran from 1955 to 1961 and specialized in frontier justice and moral tests.",
+        "short_detail_tts_key": "short-detail/2S2x5N5VJNn7vqYukvoFFC.mp3",
+        "source_type": "TV",
+        "source_title": "The Life and Legend of Wyatt Earp",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número treinta y tres! El tema de The Life and Legend of Wyatt Earp — un gancho impecable con un silbido que se queda grabado. ¡Pura leyenda! — con \"The Life and Legend of Wyatt Earp Theme\" de Unknown Artist.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_33.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e três! O tema de The Life and Legend of Wyatt Earp — um gancho impecável com um silbido que se gruda. Pura lenda! — com 'The Life and Legend of Wyatt Earp Theme' de Unknown Artist.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_33.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "La Vida y la Leyenda de Wyatt Earp fue un clásico del western que se transmitió de 1955 a 1961. Ambientada en pueblos fronterizos, ranchos y vastas praderas, los episodios mezclaban momentos de los personajes con dilemas en el camino, justicia en la frontera y pruebas morales. La narración apostaba por tramas episódicas bien ajustadas con riesgos claros, mientras la producción se basaba en rodajes en locaciones reales, acrobacias prácticas y música vibrante y galopante. El tema principal captura ese ambiente en segundos, revelando quiénes son estos personajes y el mundo al que estás entrando.",
+          "short_detail_text": "El tema de The Life and Legend of Wyatt Earp capturó el espíritu metálico y galopante de ese pilar de los westerns de televisión que duró de 1955 a 1961 y se especializaba en justicia fronteriza y pruebas morales.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/2S2x5N5VJNn7vqYukvoFFC.mp3",
+          "short_detail_tts_key": "short-detail/2S2x5N5VJNn7vqYukvoFFC.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "A Vida e a Lenda de Wyatt Earp foi um clássico do faroeste que marcou as telas de 1955 a 1961. Ambientado em vilas fronteiriças, ranchos e vastos horizontes, os episódios misturavam momentos dos personagens com dilemas das trilhas, justiça na fronteira e testes morais. A narrativa valorizava tramas episódicas e bem definidas, enquanto a produção usava locações reais, cenas de ação práticas e trilhas sonoras ousadas e galopantes. O tema musical captura essa essência em segundos, apresentando quem são esses personagens e o mundo em que eles vivem.",
+          "short_detail_text": "O tema The Life and Legend of Wyatt Earp capturou o espírito galopante e cheio de metais daquele faroeste que era um dos principais da televisão, que foi ao ar de 1955 a 1961 e se especializava em justiça de fronteira e testes morais.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/2S2x5N5VJNn7vqYukvoFFC.mp3",
+          "short_detail_tts_key": "short-detail/2S2x5N5VJNn7vqYukvoFFC.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3491,
+        "track_id": 2749,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 34,
+        "intro": "#34 Cheyenne Theme — mood-setter that does more than roll credits."
+      },
+      "track": {
+        "id": 2749,
+        "track_name": "Cheyenne Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "0pQxpyRoU2TbIg7HYc3Sgz",
+        "detail": "Cheyenne was a western mainstay of the 1955Ã¢â‚¬â€œ1963 run. Set around frontier towns, ranches, and wide-open ranges, episodes balanced character moments with trail dilemmas, frontier justice, and moral tests. Storytelling favored tight, episodic plots with clear stakes, while production leaned on location shooting, practical stunts, and brassy, galloping scores. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Cheyenne Theme instantly evokes the rugged frontier towns ranches and moral tests of the long-running western series with its bold galloping brass score.",
+        "short_detail_tts_key": "short-detail/0pQxpyRoU2TbIg7HYc3Sgz.mp3",
+        "source_type": "TV",
+        "source_title": "Cheyenne",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número treinta y cuatro, 'Cheyenne Theme' de Unknown Artist, ! Una pieza que establece el ambiente y va más allá de solo acompañar los créditos.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_34.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e quatro, 'Cheyenne Theme' de Unknown Artist! Uma peça que estabelece o ambiente e vai além de só acompanhar os créditos.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_34.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Cheyenne fue un pilar del género western durante su emisión de 1955 a 1963. Ambientada en pueblos fronterizos, ranchos y amplias llanuras, los episodios mezclaban momentos de los personajes con dilemas en el camino, justicia en la frontera y pruebas morales. La narración prefería tramas episódicas y bien definidas con apuestas claras, mientras que la producción se apoyaba en rodajes en locaciones reales, acrobacias prácticas y bandas sonoras audaces y galopantes. El tema musical captura esa esencia en segundos, presentando quiénes son estos personajes y el mundo al que te sumerges.",
+          "short_detail_text": "El Cheyenne Theme te evoca al instante los rudos pueblos fronterizos, los ranchos y las pruebas morales de la serie del oeste que duró tanto con su audaz partitura galopante de metales.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/0pQxpyRoU2TbIg7HYc3Sgz.mp3",
+          "short_detail_tts_key": "short-detail/0pQxpyRoU2TbIg7HYc3Sgz.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Cheyenne foi uma série western clássica que marcou a TV de 1955 a 1963. Com cenários em cidades fronteiriças, ranchos e vastos campos abertos, os episódios misturavam momentos dos personagens com dilemas na trilha, justiça na fronteira e desafios morais. A narrativa valorizava tramas bem amarradas e episódicas, com stakes claros, enquanto a produção apostava em filmagens reais, acrobacias práticas e trilhas sonoras vibrantes e galopantes. A música tema captura esse clima em segundos, revelando quem são esses personagens e o mundo em que eles vivem.",
+          "short_detail_text": "O Cheyenne Theme logo evoca as cidades de fronteira rústicas, os ranchos e os testes morais da série western de longa duração com sua ousada trilha galopante de metais.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/0pQxpyRoU2TbIg7HYc3Sgz.mp3",
+          "short_detail_tts_key": "short-detail/0pQxpyRoU2TbIg7HYc3Sgz.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3492,
+        "track_id": 2750,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 35,
+        "intro": "#35 Maverick Theme — the fanfare that launched a thousand reruns."
+      },
+      "track": {
+        "id": 2750,
+        "track_name": "Maverick Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "3oglutDdqY2hizoChKjXka",
+        "detail": "Maverick was a western mainstay of the 1957Ã¢â‚¬â€œ1962 run. Set around frontier towns, ranches, and wide-open ranges, episodes balanced character moments with trail dilemmas, frontier justice, and moral tests. Storytelling favored tight, episodic plots with clear stakes, while production leaned on location shooting, practical stunts, and brassy, galloping scores. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The brassy galloping Maverick Theme instantly announced the characters and rugged frontier world of the 1957-1962 western series with its signature energy of trail dilemmas and moral tests.",
+        "short_detail_tts_key": "short-detail/3oglutDdqY2hizoChKjXka.mp3",
+        "source_type": "TV",
+        "source_title": "Maverick",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número treinta y cinco, 'Maverick Theme' de Unknown Artist! La fanfarria que dio inicio a mil repeticiones en la televisión. ¡Un clásico inolvidable de Unknown Artist!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_35.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e cinco, 'Maverick Theme' de Unknown Artist! A fanfarra que deu início a mil repetições na televisão. Um clássico inesquecível de Unknown Artist!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_35.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Maverick fue un clásico del Oeste en la televisión de 1957 a 1962. Ambientada en pueblos fronterizos, ranchos y vastas llanuras, los episodios equilibraban momentos de los personajes con dilemas en el camino, justicia del frontera y pruebas morales. La narración prefería tramas ajustadas y episódicas con riesgos claros, mientras que la producción se basaba en rodajes en locaciones reales, acrobacias prácticas y bandas sonoras enérgicas y galopantes. El tema musical establece ese ambiente en segundos, anunciando quiénes son estos personajes y el mundo al que estás entrando.",
+          "short_detail_text": "El galopante y metálico Maverick Theme anunciaba al instante a los personajes y el rudo mundo fronterizo de la serie del oeste de 1957 a 1962 con su energía característica de dilemas en el camino y pruebas morales.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3oglutDdqY2hizoChKjXka.mp3",
+          "short_detail_tts_key": "short-detail/3oglutDdqY2hizoChKjXka.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Maverick foi uma série western clássica que marcou a TV entre 1957 e 1962. Ambientada em cidades fronteiriças, ranchos e vastos campos abertos, os episódios misturavam momentos dos personagens com dilemas no caminho, justiça na fronteira e desafios morais. A narrativa valorizava tramas bem amarradas e episódicas com stakes claros, enquanto a produção apostava em filmagens reais, acrobacias práticas e trilhas sonoras ousadas e galopantes. A música tema captura esse clima em segundos, passando a sensação exata de quem são esses personagens e o mundo em que eles vivem.",
+          "short_detail_text": "O Maverick Theme galopante e cheio de metais já anunciava na hora os personagens e o mundo bruto da fronteira da série de faroeste de 1957 a 1962 com sua energia característica de dilemas na trilha e testes morais.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3oglutDdqY2hizoChKjXka.mp3",
+          "short_detail_tts_key": "short-detail/3oglutDdqY2hizoChKjXka.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3493,
+        "track_id": 2751,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 38,
+        "intro": "#38 Wagon Train Theme — instant earworm that teleports you back."
+      },
+      "track": {
+        "id": 2751,
+        "track_name": "Wagon Train Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "5ExLFU23mqHrQsE6xe9ejk",
+        "detail": "Wagon Train was a western mainstay of the 1957Ã¢â‚¬â€œ1965 run. Set around frontier towns, ranches, and wide-open ranges, episodes balanced character moments with trail dilemmas, frontier justice, and moral tests. Storytelling favored tight, episodic plots with clear stakes, while production leaned on location shooting, practical stunts, and brassy, galloping scores. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Wagon Train Theme deployed a brassy galloping score to instantly evoke the frontier world of the 1957-1965 western series and its stories of trail dilemmas and moral tests.",
+        "short_detail_tts_key": "short-detail/5ExLFU23mqHrQsE6xe9ejk.mp3",
+        "source_type": "TV",
+        "source_title": "Wagon Train",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número treinta y ocho, 'Wagon Train Theme' de Unknown Artist! Un tema que se pega al instante y te transporta al pasado. ¡Prepárate para este clásico!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_38.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e oito, 'Wagon Train Theme' de Unknown Artist! Um tema que se gruda no instante e te transporta ao passado. Prepare-se para este clássico!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_38.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Wagon Train fue un pilar del género western durante su transmisión de 1957 a 1965. Ambientada en pueblos fronterizos, ranchos y extensas llanuras, los episodios mezclaban momentos de los personajes con dilemas en el camino, justicia en la frontera y pruebas morales. La narración prefería tramas ajustadas y episódicas con riesgos claros, mientras que la producción se apoyaba en rodajes en locaciones reales, acrobacias prácticas y bandas sonoras vibrantes y galopantes. El tema musical captura ese ambiente en segundos, revelando quiénes son estos personajes y el mundo al que estás entrando.",
+          "short_detail_text": "El Wagon Train Theme usaba una partitura galopante de metales para evocar de inmediato el mundo fronterizo de la serie western de 1957-1965 y sus historias de dilemas en la ruta y pruebas morales.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5ExLFU23mqHrQsE6xe9ejk.mp3",
+          "short_detail_tts_key": "short-detail/5ExLFU23mqHrQsE6xe9ejk.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Wagon Train foi um clássico do faroeste americano, transmitido entre 1957 e 1965. Com cenários em cidades fronteiriças, ranchos e vastos campos abertos, os episódios misturavam momentos dos personagens com dilemas da trilha, justiça no oeste e desafios morais. A narrativa valorizava tramas bem amarradas e de alto impacto, enquanto a produção usava filmagens reais, cenas de ação prática e trilhas sonoras vibrantes e cheias de galope, que transmitem o clima da história em poucos segundos, mostrando quem são os personagens e o mundo que eles habitam.",
+          "short_detail_text": "O Wagon Train Theme usava uma trilha galopante cheia de metais pra evocar imediatamente o mundo de fronteira da série western de 1957-1965 e suas histórias de dilemas na trilha e testes morais.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5ExLFU23mqHrQsE6xe9ejk.mp3",
+          "short_detail_tts_key": "short-detail/5ExLFU23mqHrQsE6xe9ejk.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3494,
+        "track_id": 2752,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 39,
+        "intro": "#39 Batman Theme — Saturday-morning energy in a single riff."
+      },
+      "track": {
+        "id": 2752,
+        "track_name": "Batman Theme",
+        "artist_id": 109,
+        "artist_display_name": "Neal Hefti",
+        "spotify_track_id": "4lwV7SpU0JSM1OIm0aIkNP",
+        "detail": "Batman was a superhero mainstay of the 1966–1968 run. Set around metropolitan skylines and newsrooms, episodes balanced character moments with rescue-driven conflicts and secret-identity dilemmas. Storytelling favored square-jawed optimism and serial momentum, while production leaned on miniatures, wire gags, and declarative title cards. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Batman Theme instantly captures the square-jawed optimism and serial momentum of the 1966 series by announcing its heroic characters and the adventurous world they inhabit in just seconds.",
+        "short_detail_tts_key": "short-detail/4lwV7SpU0JSM1OIm0aIkNP.mp3",
+        "source_type": "TV",
+        "source_title": "Batman",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número treinta y nueve, 'Batman Theme' de neal hefti! La energía de un sábado por la mañana capturada en un solo riff.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_39.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e nove, 'Batman Theme' de Neal Hefti! A energia de um sábado pela manhã capturada em um único riff.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_39.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Batman Theme irrumpe con un golpe orquestal poderoso que define su identidad al instante. El tema representa la valentía y el ingenio de un héroe que enfrenta al crimen sin descanso. Su ritmo genera emoción de adrenalina y triunfo que conecta con el público de todas las edades. Esta composición logró cruzar a las listas de popularidad y sigue siendo un ícono en la cultura pop.",
+          "short_detail_text": "The Batman Theme capta al instante el optimismo de mandíbula cuadrada y el impulso serial de la serie del 66 al anunciar en tan solo segundos a sus personajes heroicos y el mundo aventurero que habitan.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/4lwV7SpU0JSM1OIm0aIkNP.mp3",
+          "short_detail_tts_key": "short-detail/4lwV7SpU0JSM1OIm0aIkNP.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Batman Theme irrompe com um golpe orquestral poderoso que define sua identidade no instante. O tema representa a valentia e o engenho de um herói que enfrenta o crime sem descanso. Seu ritmo gera emoção de adrenalina e triunfo que conecta com o público de todas as idades. Esta composição conseguiu entrar nas listas de popularidade e continua sendo um ícone na cultura pop.",
+          "short_detail_text": "The Batman Theme captura na hora o otimismo de queixo quadrado e o ímpeto serial da série de 1966 ao anunciar em segundos seus personagens heroicos e o mundo aventureiro que eles habitam.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/4lwV7SpU0JSM1OIm0aIkNP.mp3",
+          "short_detail_tts_key": "short-detail/4lwV7SpU0JSM1OIm0aIkNP.mp3"
+        }
+      ]
+    },
+    {
+      "track_ranking": {
+        "id": 3495,
+        "track_id": 2754,
+        "decade_genre_id": 63,
+        "tracklist_id": 1,
+        "ranking": 44,
+        "intro": "#44 Sea Hunt Theme — the cue everyone can hum on command."
+      },
+      "track": {
+        "id": 2754,
+        "track_name": "Sea Hunt Theme",
+        "artist_id": null,
+        "artist_display_name": null,
+        "spotify_track_id": "1vjXVcGSjO6LTl2xlHhafz",
+        "detail": "Sea Hunt was a adventure mainstay of the 1958Ã¢â‚¬â€œ1961 run. Set around exotic locales and peril-prone outposts, episodes balanced character moments with peril-of-the-week scrapes. Storytelling favored swift pacing and clean heroism, while production leaned on stock-footage assists and bold brass fanfares. The theme cues that mood in secondsÃ¢â‚¬â€announcing who these characters are and the kind of world youÃ¢â‚¬â„¢re stepping into.",
+        "short_detail": "The Sea Hunt Theme deploys bold brass fanfares to instantly establish the swift pacing and clean heroism of the 1958-1961 adventure series set in exotic peril-prone locales.",
+        "short_detail_tts_key": "short-detail/1vjXVcGSjO6LTl2xlHhafz.mp3",
+        "source_type": "TV",
+        "source_title": "Sea Hunt",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "track_ranking_locales": [
+        {
+          "language_code": "es",
+          "intro_text": "¡número cuarenta y cuatro, 'Sea Hunt Theme' de Unknown Artist, ! La melodía que todos pueden tararear al instante.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1950s_tv_themes_44.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "intro_text": "Número quarenta e quatro, 'Sea Hunt Theme' de Unknown Artist! A melodia que todos podem tararear no instante.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1950s_tv_themes_44.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "language_code": "es",
+          "detail_text": "Sea Hunt fue un clásico de aventuras que se transmitió de 1958 a 1961. Ambientada en locaciones exóticas y lugares llenos de peligros, los episodios mezclaban momentos de los personajes con aventuras semanales cargadas de acción. La narración apostaba por un ritmo rápido y heroísmo puro, mientras que la producción recurría a metraje de archivo y fanfarrias de metales audaces. El tema musical captura esa atmósfera en segundos, revelando quiénes son estos personajes y el mundo al que te sumerges.",
+          "short_detail_text": "The Sea Hunt Theme usa fanfarrias audaces de metales para establecer de inmediato el ritmo veloz y el heroísmo limpio de la serie de aventuras del 58 al 61 ambientada en lugares exóticos propensos al peligro.",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1vjXVcGSjO6LTl2xlHhafz.mp3",
+          "short_detail_tts_key": "short-detail/1vjXVcGSjO6LTl2xlHhafz.mp3"
+        },
+        {
+          "language_code": "pt-BR",
+          "detail_text": "Sea Hunt foi um clássico de aventura que marcou os anos de 1958 a 1961. Com cenários exóticos e cheios de perigos, os episódios misturavam momentos dos personagens com aventuras semanais cheias de emoção. A narrativa valorizava um ritmo rápido e um heroísmo simples, enquanto a produção usava filmagens de arquivo e fanfarras de metais ousadas. O tema musical captura essa atmosfera em segundos, passando a sensação exata de quem são os personagens e o mundo que eles habitam.",
+          "short_detail_text": "O The Sea Hunt Theme usa fanfarras ousadas de metais pra estabelecer na hora o ritmo veloz e o heroísmo puro da série de aventura de 1958 a 1961 ambientada em locais exóticos cheios de perigo.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1vjXVcGSjO6LTl2xlHhafz.mp3",
+          "short_detail_tts_key": "short-detail/1vjXVcGSjO6LTl2xlHhafz.mp3"
+        }
+      ]
+    }
+  ]
+}
