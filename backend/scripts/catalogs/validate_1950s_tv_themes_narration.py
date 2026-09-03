@@ -9,13 +9,13 @@ ROOT = Path(__file__).parent / "review_manifests"
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--text-records", type=Path, required=True)
-    parser.add_argument("--audio-records", type=Path, required=True)
+    parser.add_argument("--audio-records", type=Path, help="local audio record manifest; required unless --live")
     parser.add_argument("--live", action="store_true", help="read database and storage; never writes")
     args = parser.parse_args()
     manifest, plan = load_json(ROOT / "1950s-tv_themes.v9.json"), load_json(ROOT / "1950s-tv-themes.production-plan.v1.json")
     validate_production_plan(manifest, plan)
     expected = expected_narration(plan)
-    texts, audio = load_json(args.text_records)["records"], load_json(args.audio_records)["records"]
+    texts = load_json(args.text_records)["records"]
     if args.live:
         from sqlmodel import Session
         from backend.database import engine
@@ -24,6 +24,9 @@ def main() -> None:
             texts, mapped = live_database_narration_rows(session, expected)
         audio = [row for row in expected if object_exists(row["bucket"], row["key"])]
     else:
+        if args.audio_records is None:
+            parser.error("--audio-records is required unless --live is used")
+        audio = load_json(args.audio_records)["records"]
         mapped = "not_checked"
     report = completeness_report(expected, texts, audio)
     report["database_mapping_count"] = mapped
