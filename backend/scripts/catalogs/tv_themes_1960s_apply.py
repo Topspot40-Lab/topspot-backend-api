@@ -29,7 +29,9 @@ def load_entries() -> list[dict]:
     return entries
 
 
-def apply_catalog_64(session: Any, entries: list[dict] | None = None) -> None:
+def apply_catalog_64(
+    session: Any, entries: list[dict] | None = None, *, commit: bool = True
+) -> dict[int, tuple[Any, Any]]:
     """Replace only bad/catalog-missing selections; rollback every failure.
 
     Correct retained Track and Artist rows are neither mutated nor recreated.
@@ -107,7 +109,15 @@ def apply_catalog_64(session: Any, entries: list[dict] | None = None) -> None:
             raise ValueError("apply refused: catalog-64 post-apply sequence is not exactly the approved 38 rows")
         if any(track.artist_id is None for track in final_by_rank.values()):
             raise ValueError("apply refused: a final catalog-64 Track has no artist_id")
-        session.commit()
+        # The production promotion executor owns the enclosing transaction so
+        # it can compensate Storage if anything after this primitive fails.
+        # Keep the historical standalone behaviour for existing callers.
+        if commit:
+            session.commit()
+        return {
+            ranking.ranking: (ranking, track)
+            for ranking, track in final_rows
+        }
     except Exception:
         session.rollback()
         raise

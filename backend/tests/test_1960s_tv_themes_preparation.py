@@ -67,3 +67,35 @@ def test_closed_set_identity_rejects_a_competing_rank():
     decision = closed_set_decision(row, entries, "Number 2, Batman, performed by Neal Hefti.")
     assert decision["nearest_rank"] == 2
     assert decision["automatic_pass"] is False
+
+
+def test_catalog_64_promotion_dry_run_formally_accepts_committed_manual_adjudication():
+    from backend.scripts.catalogs.promote_1960s_tv_themes import dry_run
+
+    report = dry_run()
+    assert report["mode"] == "dry_run_no_service_calls"
+    assert report["assets_to_promote"] == report["canonical_targets"] == 207
+    assert report["final_ranks"] == list(range(1, 39))
+    assert report["retained_tracks"] == 23
+    assert report["retained_detail_mappings"] == 135
+    assert report["database_writes"] == report["storage_writes"] == 0
+
+
+def test_catalog_64_promotion_uses_only_canonical_intro_ranks_and_versioned_staging():
+    from backend.scripts.catalogs.promote_1960s_tv_themes import canonical_key, load_approved_bundle
+
+    bundle = load_approved_bundle()
+    intros = [row for row in bundle["records"] if row["kind"] == "intro"]
+    assert len(intros) == 114
+    assert {canonical_key(row) for row in intros} == {f"intro/1960s_tv_themes_{rank:02}.mp3" for rank in range(1, 39)}
+    assert all(row["staging_key"].startswith("staging/catalog-64/1960s-tv-themes-contiguous-v2/") for row in bundle["records"])
+
+
+def test_catalog_64_promotion_executor_is_explicitly_live_only_and_fail_closed():
+    from pathlib import Path
+    source = (Path(__file__).parents[1] / "scripts/catalogs/promote_1960s_tv_themes.py").read_text(encoding="utf-8")
+    assert "--execute requires --approved-commit and --api-base" in source
+    assert "working tree is not clean" in source
+    assert "staged hash mismatch" in source
+    assert "_restore_storage" in source
+    assert "Cache-Control" in source
