@@ -2,6 +2,150 @@
   "catalog_id": 64,
   "records": [
     {
+      "rank": 1,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Number 1 brings The Dick Van Dyke Show with Theme from \"The Dick Van Dyke Show\" from TV Sounds Unlimited.",
+      "text_sha256": "b7c19c247649be76acfeb4280e6f574e5c42dd51da0201475a4ef038cd61488e"
+    },
+    {
+      "rank": 1,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "El número 1 trae The Dick Van Dyke Show con Theme from \"The Dick Van Dyke Show\" de TV Sounds Unlimited.",
+      "text_sha256": "776298439626761f389ac2abdaa81417bfbdd4c0dc12fe0c5243084bb7eea402"
+    },
+    {
+      "rank": 1,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "O número 1 traz The Dick Van Dyke Show com Theme from \"The Dick Van Dyke Show\", de TV Sounds Unlimited.",
+      "text_sha256": "a275ce1bb70ed1b828648e706cd65f72ccd9fbb3736a8387a4f4094bfc45bc82"
+    },
+    {
+      "rank": 1,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme from \"The Dick Van Dyke Show\", performed by TV Sounds Unlimited, is the selected recording for The Dick Van Dyke Show.",
+      "text_sha256": "5f26e2bc4fc63ca4258344e48080526fe0e04b018057aaa9830ba2f3d2ff6978"
+    },
+    {
+      "rank": 1,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme from \"The Dick Van Dyke Show\", performed by TV Sounds Unlimited, is the selected recording for The Dick Van Dyke Show. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "40e78c9ec56fa785685b05b3719b7f04c6ac247569d46228bd42d7b35d087abd"
+    },
+    {
+      "rank": 1,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme from \"The Dick Van Dyke Show\", interpretado por TV Sounds Unlimited, es la grabación seleccionada para The Dick Van Dyke Show.",
+      "text_sha256": "b8894addb8ca9090a87787564fbece5e87f99b764389cd355b5c4233e6fe148f"
+    },
+    {
+      "rank": 1,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme from \"The Dick Van Dyke Show\", interpretado por TV Sounds Unlimited, es la grabación seleccionada para The Dick Van Dyke Show. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "9e83b17a6e9fe118f8d36d73aac2ff09714819c95a15866f583ab0195287c59b"
+    },
+    {
+      "rank": 1,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme from \"The Dick Van Dyke Show\", interpretado por TV Sounds Unlimited, é a gravação selecionada para The Dick Van Dyke Show.",
+      "text_sha256": "879ef859233e630888d061f4ed0b97ae62f4bd0fd66d37b860811196e7841e27"
+    },
+    {
+      "rank": 1,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme from \"The Dick Van Dyke Show\", interpretado por TV Sounds Unlimited, é a gravação selecionada para The Dick Van Dyke Show. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "2e0f4605a2b8248b00deaffbf03755c2506453bdc1620f8b0ef0858a79ba4c20"
+    },
+    {
+      "rank": 2,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Here at number 2, it is The Virginian — Theme from The Virginian - From \"The Virginian\", performed by 101 Strings Orchestra.",
+      "text_sha256": "b1b8a907f02e70e2c97d20d8e2e5d349401f15e45d1a7f46fa1c4f0dfd80677e"
+    },
+    {
+      "rank": 2,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "En el puesto 2, escuchamos The Virginian: Theme from The Virginian - From \"The Virginian\", interpretado por 101 Strings Orchestra.",
+      "text_sha256": "90f5c8e77a72257a8351a17df6fc01739b74ef36ad16274810d73f8c949a04e5"
+    },
+    {
+      "rank": 2,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Na posição 2, ouvimos The Virginian: Theme from The Virginian - From \"The Virginian\", interpretado por 101 Strings Orchestra.",
+      "text_sha256": "5876f4ffac3496c7d890523feee7d8e585d4d8761aedc6ffa309f6d487ff5e20"
+    },
+    {
+      "rank": 2,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme from The Virginian - From \"The Virginian\", performed by 101 Strings Orchestra, is the selected recording for The Virginian.",
+      "text_sha256": "9ec10f51655a3c0c27658de202181f310081d0a0cb052eff61717ec747289737"
+    },
+    {
+      "rank": 2,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme from The Virginian - From \"The Virginian\", performed by 101 Strings Orchestra, is the selected recording for The Virginian. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "0fdb6fed092721ddba942c43b62cf1c54a9811294f6f2b6f4a50602c193bc1a3"
+    },
+    {
+      "rank": 2,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme from The Virginian - From \"The Virginian\", interpretado por 101 Strings Orchestra, es la grabación seleccionada para The Virginian.",
+      "text_sha256": "5b1ed7d629c54797e0587464328d46e8f06bc6e05eed66c4df06498975afa3a0"
+    },
+    {
+      "rank": 2,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme from The Virginian - From \"The Virginian\", interpretado por 101 Strings Orchestra, es la grabación seleccionada para The Virginian. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "f8a55173e3256a68768133cf574ec450faa01ee741a92b8c5b97a23d5665aed1"
+    },
+    {
+      "rank": 2,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme from The Virginian - From \"The Virginian\", interpretado por 101 Strings Orchestra, é a gravação selecionada para The Virginian.",
+      "text_sha256": "4463667c129b9005f6d1e2ee71fbf5ce889caa787c0051ee4e3de209c41ea76f"
+    },
+    {
+      "rank": 2,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme from The Virginian - From \"The Virginian\", interpretado por 101 Strings Orchestra, é a gravação selecionada para The Virginian. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "868ef4e96e105cfcc32ccdb1ef807d92607446f969003ba30a3950d80fef6af5"
+    },
+    {
       "rank": 3,
       "language": "en",
       "kind": "intro",
@@ -98,6 +242,78 @@
       "text_sha256": "cce1752a22e8c07ce447e4e0b7d3abe25edc682fb42c2f5e45a13650e4437a03"
     },
     {
+      "rank": 5,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Our number 5 theme is Theme From \"I Spy\" - From the NBC Television show \"I Spy\" from I Spy, performed by Hugo Montenegro & His Orchestra.",
+      "text_sha256": "dc4d94d8982b66797c80a5ac23a6b4303cb3235d7180776e14d575fcc0052b32"
+    },
+    {
+      "rank": 5,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Nuestro tema número 5 es Theme From \"I Spy\" - From the NBC Television show \"I Spy\", de I Spy, interpretado por Hugo Montenegro & His Orchestra.",
+      "text_sha256": "761835c34ac8e60982f35f46fe8b536b257d36add637a776ccc78cc7395f1fda"
+    },
+    {
+      "rank": 5,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Nosso tema de número 5 é Theme From \"I Spy\" - From the NBC Television show \"I Spy\", de I Spy, interpretado por Hugo Montenegro & His Orchestra.",
+      "text_sha256": "e2a186d3fd64d9d9ecbea3ff7dc4533861d648299c61162df1bac71e29a2658a"
+    },
+    {
+      "rank": 5,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"I Spy\" - From the NBC Television show \"I Spy\", performed by Hugo Montenegro & His Orchestra, is the selected recording for I Spy.",
+      "text_sha256": "69a859b109716887f86c791378fab0571640bf10f449011717b163bb9ddaf462"
+    },
+    {
+      "rank": 5,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"I Spy\" - From the NBC Television show \"I Spy\", performed by Hugo Montenegro & His Orchestra, is the selected recording for I Spy. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "91759f217f6e0ab0ded3c8a42e1d38663526ba839c540834e3b251533cce0f83"
+    },
+    {
+      "rank": 5,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"I Spy\" - From the NBC Television show \"I Spy\", interpretado por Hugo Montenegro & His Orchestra, es la grabación seleccionada para I Spy.",
+      "text_sha256": "b1238abf60000ad66493ff12e4d3f3a5bd81a72e655f4b4c15741aa80fe54a8a"
+    },
+    {
+      "rank": 5,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"I Spy\" - From the NBC Television show \"I Spy\", interpretado por Hugo Montenegro & His Orchestra, es la grabación seleccionada para I Spy. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "26b7c86a6fa7f2b04b34155d9c7d52c92cba964de6642ea50c5ee841868444f6"
+    },
+    {
+      "rank": 5,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"I Spy\" - From the NBC Television show \"I Spy\", interpretado por Hugo Montenegro & His Orchestra, é a gravação selecionada para I Spy.",
+      "text_sha256": "a66d8a03be9db930d04dd748365767ce11d4643ab7a31859203977656094d444"
+    },
+    {
+      "rank": 5,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"I Spy\" - From the NBC Television show \"I Spy\", interpretado por Hugo Montenegro & His Orchestra, é a gravação selecionada para I Spy. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "32496259b2206c559afd05f34ed96785e380904cdcb63ec804d17fcb7a7acd6f"
+    },
+    {
       "rank": 6,
       "language": "en",
       "kind": "intro",
@@ -168,6 +384,78 @@
       "purpose": "replace_all_ranked_intros",
       "text": "Agora, no número 8: the twilight zone de marius constant, de the twilight zone.",
       "text_sha256": "ee427a920b1a11b8fa5c12b14c3bd50d9483b7421a777cbd3218c2dcc7ccd855"
+    },
+    {
+      "rank": 9,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "At number 9, The F.B.I.: Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), performed by Hugo Montenegro & His Orchestra.",
+      "text_sha256": "8188fbc2ca28093b8b2872f9e5752e3718a7c8739586acfb5591f109b8849fe1"
+    },
+    {
+      "rank": 9,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "En el número 9, The F.B.I.: Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), interpretado por Hugo Montenegro & His Orchestra.",
+      "text_sha256": "dd841cbc2fb841387b774edabd649a466f5d5b6f1f3622bd47037c4d2a403984"
+    },
+    {
+      "rank": 9,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "No número 9, The F.B.I.: Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), interpretado por Hugo Montenegro & His Orchestra.",
+      "text_sha256": "17306bf13a0490d85569192073d75f4fd1b41bfd49dac95e9ed5f032c1ff7d87"
+    },
+    {
+      "rank": 9,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), performed by Hugo Montenegro & His Orchestra, is the selected recording for The F.B.I..",
+      "text_sha256": "5daa684e658cf61b628f591dc9976c6b48838fa9f9c18e8c7a14b54e98c927dc"
+    },
+    {
+      "rank": 9,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), performed by Hugo Montenegro & His Orchestra, is the selected recording for The F.B.I.. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "02f5c1a02bb79202a74b372eccd1fdbdc6d72453b3110e7483658896b6291ae4"
+    },
+    {
+      "rank": 9,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), interpretado por Hugo Montenegro & His Orchestra, es la grabación seleccionada para The F.B.I..",
+      "text_sha256": "d1574cd0cf56244be0b3a5c25fb961e44597c006e30f91960a0737bd48cce674"
+    },
+    {
+      "rank": 9,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), interpretado por Hugo Montenegro & His Orchestra, es la grabación seleccionada para The F.B.I.. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "0eadb2e3967917afef3bdbce1d29314654c722b80cafc386c46e9ca812abfcd0"
+    },
+    {
+      "rank": 9,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), interpretado por Hugo Montenegro & His Orchestra, é a gravação selecionada para The F.B.I..",
+      "text_sha256": "d081e109c83162018d69c3ea5cae5033639f1bae32a7384276c62f2db749ad82"
+    },
+    {
+      "rank": 9,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\"), interpretado por Hugo Montenegro & His Orchestra, é a gravação selecionada para The F.B.I.. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "3764c9e218d3cb57b5f407bff5950d1b48c200cb49e5afbe3890bea785b7cd93"
     },
     {
       "rank": 10,
@@ -266,6 +554,78 @@
       "text_sha256": "6520b15b0a5e90ae81c0c6f7f3d6b35b5e892bcee94f53428aab3bb7dc98c3d3"
     },
     {
+      "rank": 14,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Our number 14 theme is The Outer Limits Theme from The Outer Limits, performed by TV Tunesters.",
+      "text_sha256": "2e706a8c46ae08b7f6249c17aa0514f7b44a6337849bd0149dd104d66c800e51"
+    },
+    {
+      "rank": 14,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Nuestro tema número 14 es The Outer Limits Theme, de The Outer Limits, interpretado por TV Tunesters.",
+      "text_sha256": "428e38afc1e900aedc096e86768cba60ee6e82158be9e95738e70e136896466a"
+    },
+    {
+      "rank": 14,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Nosso tema de número 14 é The Outer Limits Theme, de The Outer Limits, interpretado por TV Tunesters.",
+      "text_sha256": "ce302ac5928f58ec018c5f7e277e8f032088d3f5815cca8b02ee74badd209a72"
+    },
+    {
+      "rank": 14,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "The Outer Limits Theme, performed by TV Tunesters, is the selected recording for The Outer Limits.",
+      "text_sha256": "98e1e3a59a5f0d673962a2ccf8e4e7d725681cbc882483a9a0b06ad57771245c"
+    },
+    {
+      "rank": 14,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "The Outer Limits Theme, performed by TV Tunesters, is the selected recording for The Outer Limits. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "0b7e541b9678dc5d561eaa9f3c1cbaf7fd918a3a0ad5425074a66eaab1435781"
+    },
+    {
+      "rank": 14,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "The Outer Limits Theme, interpretado por TV Tunesters, es la grabación seleccionada para The Outer Limits.",
+      "text_sha256": "fcbd7d12e45f07ac3006c593c9b60d65f6a3ef958d985b0904ff4cd72c6ac0f5"
+    },
+    {
+      "rank": 14,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "The Outer Limits Theme, interpretado por TV Tunesters, es la grabación seleccionada para The Outer Limits. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "1381ff5b88f3a2aaff802537b9f468291053f311bd97556114ddac1c0aed2094"
+    },
+    {
+      "rank": 14,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "The Outer Limits Theme, interpretado por TV Tunesters, é a gravação selecionada para The Outer Limits.",
+      "text_sha256": "5ba439fc3b3ccb80c43fc7f187578710a575eb2792571a629404b42977b67532"
+    },
+    {
+      "rank": 14,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "The Outer Limits Theme, interpretado por TV Tunesters, é a gravação selecionada para The Outer Limits. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "06b12205852ab7109316d8e3518ea81d83dc8bf1ac48755a25106511c63fae50"
+    },
+    {
       "rank": 15,
       "language": "en",
       "kind": "intro",
@@ -330,6 +690,78 @@
       "text_sha256": "17c0a972291cf825eaf353991ee8b5bdfc60a54276512f6161ada89258ac351f"
     },
     {
+      "rank": 17,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Now at number 17: Mannix - From \"Mannix\" Soundtrack by Lalo Schifrin, from Mannix.",
+      "text_sha256": "472be66ad15153e7e44abd8773e29f9daedc3ec1b76f2a78e288b6d6166b9b69"
+    },
+    {
+      "rank": 17,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Ahora, en el número 17: Mannix - From \"Mannix\" Soundtrack de Lalo Schifrin, de Mannix.",
+      "text_sha256": "f575022adc3afefc87b3c29d496852c11ec6e01ba4bf20ec81e428ec165553e2"
+    },
+    {
+      "rank": 17,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Agora, no número 17: Mannix - From \"Mannix\" Soundtrack de Lalo Schifrin, de Mannix.",
+      "text_sha256": "1f4ff11f74d2bcb1c7cf791fefd398d4486bbed4b5f50ac0104695ea3c0f76e8"
+    },
+    {
+      "rank": 17,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Mannix - From \"Mannix\" Soundtrack, performed by Lalo Schifrin, is the selected recording for Mannix.",
+      "text_sha256": "b56315fb3ac3b6dfbc899695babd77f8af07dac4f6fdb1301ea5682230ab11db"
+    },
+    {
+      "rank": 17,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Mannix - From \"Mannix\" Soundtrack, performed by Lalo Schifrin, is the selected recording for Mannix. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "c0df357e12c8df2213f7c16645e09ac8af700d9732553eec48999486cad8a021"
+    },
+    {
+      "rank": 17,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Mannix - From \"Mannix\" Soundtrack, interpretado por Lalo Schifrin, es la grabación seleccionada para Mannix.",
+      "text_sha256": "d24eda61b3963920b82b1c7bae4f762e3789415bae784e986bc76e3af46b0ae3"
+    },
+    {
+      "rank": 17,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Mannix - From \"Mannix\" Soundtrack, interpretado por Lalo Schifrin, es la grabación seleccionada para Mannix. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "35ede06fd45da7c3d1edae7828d72ca7a11def8793b678e1f38652146c28aac9"
+    },
+    {
+      "rank": 17,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Mannix - From \"Mannix\" Soundtrack, interpretado por Lalo Schifrin, é a gravação selecionada para Mannix.",
+      "text_sha256": "3d7c67dc20060282ffe49586089d2846401ac984aaa38f08b012d3bc93730ae0"
+    },
+    {
+      "rank": 17,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Mannix - From \"Mannix\" Soundtrack, interpretado por Lalo Schifrin, é a gravação selecionada para Mannix. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "06dc09403cd85fc8d247953a80b4946872e9d06d366e41d1e0adc2e278abfe84"
+    },
+    {
       "rank": 18,
       "language": "en",
       "kind": "intro",
@@ -376,6 +808,78 @@
       "purpose": "replace_all_ranked_intros",
       "text": "O número 19 traz the man from u.n.c.l.e. com the man from u.n.c.l.e., de Jerry Goldsmith.",
       "text_sha256": "8d03258753208801a18caad23bc960b95135b797b5b772dc7ba2f03d7ab7ee58"
+    },
+    {
+      "rank": 20,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Here at number 20, it is Ironside — Ironside - Theme From \"Ironside\", performed by Quincy Jones.",
+      "text_sha256": "87bd52c5adf48fc6987df12a6406fc90d550345d15380d10c2bda921761942ca"
+    },
+    {
+      "rank": 20,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "En el puesto 20, escuchamos Ironside: Ironside - Theme From \"Ironside\", interpretado por Quincy Jones.",
+      "text_sha256": "4440e2436cba2df7879b2889be6073cf4ef3af62d00327d703aa39f1d4d7dba3"
+    },
+    {
+      "rank": 20,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Na posição 20, ouvimos Ironside: Ironside - Theme From \"Ironside\", interpretado por Quincy Jones.",
+      "text_sha256": "f957dabc965d84d0fe4dc38af4c1b520923197dc441c32570a55ae6cb4a3dee3"
+    },
+    {
+      "rank": 20,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Ironside - Theme From \"Ironside\", performed by Quincy Jones, is the selected recording for Ironside.",
+      "text_sha256": "7fbe09c574bd9754cef13361637a14ee73416ca8f306825bb9719e5c2921b7ce"
+    },
+    {
+      "rank": 20,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Ironside - Theme From \"Ironside\", performed by Quincy Jones, is the selected recording for Ironside. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "a848ff9c8d7c176129eee4ba8bb4d03151771bc5465c6b956de068521920bb0a"
+    },
+    {
+      "rank": 20,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Ironside - Theme From \"Ironside\", interpretado por Quincy Jones, es la grabación seleccionada para Ironside.",
+      "text_sha256": "690a7efdf193d25bc30c00c3f1d325690b0d50f2f7280140e4f6e3e8ac0c6b87"
+    },
+    {
+      "rank": 20,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Ironside - Theme From \"Ironside\", interpretado por Quincy Jones, es la grabación seleccionada para Ironside. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "a7fd62a1c0064b98ea490305914329a3af243adba8007be753dafabbf70ad14c"
+    },
+    {
+      "rank": 20,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Ironside - Theme From \"Ironside\", interpretado por Quincy Jones, é a gravação selecionada para Ironside.",
+      "text_sha256": "3cb1ccbdb6097bd1a9ff13671ef510802149803a811dfa52a8d7f540d7b3367f"
+    },
+    {
+      "rank": 20,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Ironside - Theme From \"Ironside\", interpretado por Quincy Jones, é a gravação selecionada para Ironside. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "a4ae7ea2453ffe9a83f878854a16787b5ca119d949694a230b6a07bc6f0e4af8"
     },
     {
       "rank": 21,
@@ -578,6 +1082,150 @@
       "text_sha256": "5ceacc07e1c89a7b90b859d6333f54dbfc6746b0a777c70a56c17bdd80c2ab46"
     },
     {
+      "rank": 27,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "At number 27, Sesame Street: Sesame Street Theme, performed by Sesame Street Cast.",
+      "text_sha256": "7e743c7b50d8ea64f70d46f0c728ab2f0c34f0605ab3b53bf4935280a4f2333d"
+    },
+    {
+      "rank": 27,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "En el número 27, Sesame Street: Sesame Street Theme, interpretado por Sesame Street Cast.",
+      "text_sha256": "7f5f3cb93417f4a4d0f90d6292ad4a6bb2934f395401f9a00a6113de4f34523c"
+    },
+    {
+      "rank": 27,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "No número 27, Sesame Street: Sesame Street Theme, interpretado por Sesame Street Cast.",
+      "text_sha256": "d181abd1c6ad494441f33b62cc4191a3d2b003cf52cccfbc1487432b06e0ad36"
+    },
+    {
+      "rank": 27,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Sesame Street Theme, performed by Sesame Street Cast, is the selected recording for Sesame Street.",
+      "text_sha256": "83668a504945c2d51bafb7b99d86f7ec3261c6f2eddbe64e8abae507588f6893"
+    },
+    {
+      "rank": 27,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Sesame Street Theme, performed by Sesame Street Cast, is the selected recording for Sesame Street. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "22b33b890e55333f71947f94b8af348e55791fbb0fda8573fb119fdcfe60186c"
+    },
+    {
+      "rank": 27,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Sesame Street Theme, interpretado por Sesame Street Cast, es la grabación seleccionada para Sesame Street.",
+      "text_sha256": "43f776771b553832831d4f789a6fc32cbd72a1e09eb5dedd8aed984d11ac7822"
+    },
+    {
+      "rank": 27,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Sesame Street Theme, interpretado por Sesame Street Cast, es la grabación seleccionada para Sesame Street. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "2e1adf12ecc3fe23ef97a35a2e3189b5ebbaebfefb509fa8a64193a3c489d90e"
+    },
+    {
+      "rank": 27,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Sesame Street Theme, interpretado por Sesame Street Cast, é a gravação selecionada para Sesame Street.",
+      "text_sha256": "5aacff61b63a92843f8f7595ee89cca43b42c7c1a97ab9d40567bc6ca8dfbc41"
+    },
+    {
+      "rank": 27,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Sesame Street Theme, interpretado por Sesame Street Cast, é a gravação selecionada para Sesame Street. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "194bd3f0d79f1d65423c94baf5b52231b50ea3286f1538cd6709c634fa25ffbb"
+    },
+    {
+      "rank": 28,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Number 28 brings Mister Rogers' Neighborhood with Won't You Be My Neighbor? from Mister Rogers.",
+      "text_sha256": "e34baff3c27becaf80ceedc67c74ed9cab977d4ccc9a9ed73bf88263b019d0f4"
+    },
+    {
+      "rank": 28,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "El número 28 trae Mister Rogers' Neighborhood con Won't You Be My Neighbor? de Mister Rogers.",
+      "text_sha256": "76776e3334dfd70b3ad808b2d24ca84840075d92299580f355bae1bc67c26708"
+    },
+    {
+      "rank": 28,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "O número 28 traz Mister Rogers' Neighborhood com Won't You Be My Neighbor?, de Mister Rogers.",
+      "text_sha256": "5524d039007bce1b9cda65379ad727637bf02b37ba988308b38c2733998f340f"
+    },
+    {
+      "rank": 28,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Won't You Be My Neighbor?, performed by Mister Rogers, is the selected recording for Mister Rogers' Neighborhood.",
+      "text_sha256": "7812fb02db43979f135807906b5831437d49df14878e00cbfb60b24783d77cba"
+    },
+    {
+      "rank": 28,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Won't You Be My Neighbor?, performed by Mister Rogers, is the selected recording for Mister Rogers' Neighborhood. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "3e5dd55377746b83a59e41fa52a99ecc4b54cf26b9afcea299d29199ca611ae6"
+    },
+    {
+      "rank": 28,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Won't You Be My Neighbor?, interpretado por Mister Rogers, es la grabación seleccionada para Mister Rogers' Neighborhood.",
+      "text_sha256": "352cb110fcf86b889db53ee6a961aaddaabff50f836a0516494abdd90d419dfe"
+    },
+    {
+      "rank": 28,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Won't You Be My Neighbor?, interpretado por Mister Rogers, es la grabación seleccionada para Mister Rogers' Neighborhood. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "cfdd5766db1401195123db0b143beaa03d10dc3a3cf09602a1c10050fae807ee"
+    },
+    {
+      "rank": 28,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Won't You Be My Neighbor?, interpretado por Mister Rogers, é a gravação selecionada para Mister Rogers' Neighborhood.",
+      "text_sha256": "f05875dd2c5c09683eac720d8260ed9e27cc84cc068502c3c103d5ec2ff96608"
+    },
+    {
+      "rank": 28,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Won't You Be My Neighbor?, interpretado por Mister Rogers, é a gravação selecionada para Mister Rogers' Neighborhood. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "352ff43c7453ec4f5332b06a1f1db7ac40d2af0273f353434116287fd72371aa"
+    },
+    {
       "rank": 29,
       "language": "en",
       "kind": "intro",
@@ -600,6 +1248,150 @@
       "purpose": "replace_all_ranked_intros",
       "text": "Na posição 29, ouvimos Batman: Batman Theme, interpretado por neal hefti.",
       "text_sha256": "448562bb7f917f652ce6248f208981e54507b75dabdd9e476aca9708c927a53b"
+    },
+    {
+      "rank": 30,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Number 30: David Rose takes us into The High Chaparral with Main Theme - From \"The High Chaparral\" Original Soundtrack.",
+      "text_sha256": "4f8ce63786002421d7a465ad8eef1a52dda90ff4f1312f366ca797e0bfc2f7eb"
+    },
+    {
+      "rank": 30,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Número 30: David Rose nos lleva a The High Chaparral con Main Theme - From \"The High Chaparral\" Original Soundtrack.",
+      "text_sha256": "59b3ea19cec251e85941e5ca71bd345d803cc545193e5936c184996ac5ffdb86"
+    },
+    {
+      "rank": 30,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Número 30: David Rose nos leva a The High Chaparral com Main Theme - From \"The High Chaparral\" Original Soundtrack.",
+      "text_sha256": "944d7831e34fb2110a8379943a48a938b5cb4c298fc544e5ee6643ad5c2dd053"
+    },
+    {
+      "rank": 30,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Main Theme - From \"The High Chaparral\" Original Soundtrack, performed by David Rose, is the selected recording for The High Chaparral.",
+      "text_sha256": "4854001faf4730f9a853e0d17a74d8af8cac3e0d2d8bf5d6fd74b866efadaca6"
+    },
+    {
+      "rank": 30,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Main Theme - From \"The High Chaparral\" Original Soundtrack, performed by David Rose, is the selected recording for The High Chaparral. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "9ccc14c478077547d95abbc4aec15005e7e16083baf09fe365ffbe8139d0a0c3"
+    },
+    {
+      "rank": 30,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Main Theme - From \"The High Chaparral\" Original Soundtrack, interpretado por David Rose, es la grabación seleccionada para The High Chaparral.",
+      "text_sha256": "899881f17cc035e72e881b3832a4ad7be08865986e969dfae1c17fd546ba30b4"
+    },
+    {
+      "rank": 30,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Main Theme - From \"The High Chaparral\" Original Soundtrack, interpretado por David Rose, es la grabación seleccionada para The High Chaparral. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "74b5be99290731937d735fd80a7acc93d1a5b027cb8c945efb5d8a762067853a"
+    },
+    {
+      "rank": 30,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "Main Theme - From \"The High Chaparral\" Original Soundtrack, interpretado por David Rose, é a gravação selecionada para The High Chaparral.",
+      "text_sha256": "294bcdc6d2793d30234a441040d2e2556bad1cf262bceba2acb9a4344bdced7f"
+    },
+    {
+      "rank": 30,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "Main Theme - From \"The High Chaparral\" Original Soundtrack, interpretado por David Rose, é a gravação selecionada para The High Chaparral. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "7d42779495bd26d3fd87dee271eb88cd451070f556954794f4e48e1076e250d6"
+    },
+    {
+      "rank": 31,
+      "language": "en",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Coming in at 31, The Rat Patrol, featuring The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol) by Dominic Frontiere.",
+      "text_sha256": "c5753f285cfb68101671b481738f0adf5e33a7965b85a22d8b1a4f5befb6c9e5"
+    },
+    {
+      "rank": 31,
+      "language": "es-MX",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Llega al 31 The Rat Patrol, con The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol) de Dominic Frontiere.",
+      "text_sha256": "d86ab24ffe4682200cc716c8def67a3425a0502e0a13ab2f189de0a6dc3f3f08"
+    },
+    {
+      "rank": 31,
+      "language": "pt-BR",
+      "kind": "intro",
+      "purpose": "replace_all_ranked_intros",
+      "text": "Chegando ao 31, The Rat Patrol, com The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol) de Dominic Frontiere.",
+      "text_sha256": "f032fd9a5bad309a837ec71518eada950e62215fea932850fe683b9b2e8a2981"
+    },
+    {
+      "rank": 31,
+      "language": "en",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol), performed by Dominic Frontiere, is the selected recording for The Rat Patrol.",
+      "text_sha256": "69b004a4c33a2273868c9859a548e13e1e220125410ee433cb09f13cf14d6077"
+    },
+    {
+      "rank": 31,
+      "language": "en",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol), performed by Dominic Frontiere, is the selected recording for The Rat Patrol. The selection preserves the programme identity and credits the performer accurately.",
+      "text_sha256": "a010ffc6c3b4c885c474dd06c5b8fee4bb534f3a187d07c379f45fd71d3678f5"
+    },
+    {
+      "rank": 31,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol), interpretado por Dominic Frontiere, es la grabación seleccionada para The Rat Patrol.",
+      "text_sha256": "dbdd4a2bad503de3b8d90c3fa80ea0351503c48a008b134ec1dc6fc25270f3fc"
+    },
+    {
+      "rank": 31,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol), interpretado por Dominic Frontiere, es la grabación seleccionada para The Rat Patrol. La selección respeta la identidad del programa y acredita correctamente al intérprete.",
+      "text_sha256": "684d966edf8f01e22dffd57e4a540f56a335d39e80546696fa2f0429b5649329"
+    },
+    {
+      "rank": 31,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "purpose": "new_track",
+      "text": "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol), interpretado por Dominic Frontiere, é a gravação selecionada para The Rat Patrol.",
+      "text_sha256": "ab41b9d4c9f0b9062ba854beefb4a856bb199fafbda9208a9fcd41992fa3bcbc"
+    },
+    {
+      "rank": 31,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "purpose": "new_track",
+      "text": "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol), interpretado por Dominic Frontiere, é a gravação selecionada para The Rat Patrol. A seleção preserva a identidade do programa e credita corretamente o intérprete.",
+      "text_sha256": "06f9fb4d00e1263a2ed0ab2932d7af511b0c67917c62f5a016009229066f3a97"
     },
     {
       "rank": 33,

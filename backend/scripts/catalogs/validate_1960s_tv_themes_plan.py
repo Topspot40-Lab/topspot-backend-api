@@ -6,7 +6,7 @@ import json
 import re
 from pathlib import Path
 
-from backend.scripts.catalogs.prepare_1960s_tv_themes_review import DETAIL_REPLACEMENTS
+from backend.scripts.catalogs.prepare_1960s_tv_themes_review import ADDITIONS, DETAIL_REPLACEMENTS, RETAINED_RANKS
 
 ROOT = Path(__file__).parent / "review_manifests"
 PLAN = ROOT / "1960s-tv-themes.production-plan.v1.json"
@@ -23,11 +23,13 @@ def validate() -> dict:
     assert plan["catalog_id"] == 64
     assert [entry["sequence_order"] for entry in entries] == list(range(1, len(entries) + 1))
     assert [entry["proposed_rank"] for entry in entries] == [entry["source_rank"] for entry in entries]
+    assert {entry["proposed_rank"] for entry in entries} == set(RETAINED_RANKS) | set(ADDITIONS)
     assert len({entry["spotify_track_id"] for entry in entries}) == len(entries)
     assert all(re.fullmatch(r"[A-Za-z0-9]{22}", entry["spotify_track_id"]) for entry in entries)
     assert all(entry["classification"] in {"correct_original_or_broadcast_associated", "correct_contemporary_commercial_recording", "recognizable_rerecording_or_cover"} for entry in entries)
     assert all(entry["artist"] and entry["artwork_source"] for entry in entries)
     assert plan["gap_filler_research"]["status"] == "deferred_without_verified_candidates"
+    assert plan["gap_filler_research"]["open_ranks"] == [32, 35, 37, 38, 39, 42, 43]
     expected_intro = {(entry["proposed_rank"], language, "intro") for entry in entries for language in ("en", "es-MX", "pt-BR")}
     expected_detail = set(DETAIL_REPLACEMENTS)
     expected = expected_intro | expected_detail

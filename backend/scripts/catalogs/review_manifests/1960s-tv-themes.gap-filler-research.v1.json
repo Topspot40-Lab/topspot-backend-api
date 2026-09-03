@@ -1,0 +1,135 @@
+{
+  "catalog_id": 64,
+  "approved_additions": [
+    {
+      "proposed_open_rank": 1,
+      "program": "The Dick Van Dyke Show",
+      "recording": "Theme from \"The Dick Van Dyke Show\"",
+      "artist": "TV Sounds Unlimited",
+      "spotify_track_id": "3EsN4lGtZX7TYlMyH0CcK3",
+      "spotify_public_url": "https://open.spotify.com/track/3EsN4lGtZX7TYlMyH0CcK3",
+      "classification": "recognizable_rerecording_or_cover",
+      "historical_years": "1961-1966",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_Dick_Van_Dyke_Show"
+    },
+    {
+      "proposed_open_rank": 2,
+      "program": "The Virginian",
+      "recording": "Theme from The Virginian - From \"The Virginian\"",
+      "artist": "101 Strings Orchestra",
+      "spotify_track_id": "323Ys8qcHBgNiKvRxernN1",
+      "spotify_public_url": "https://open.spotify.com/track/323Ys8qcHBgNiKvRxernN1",
+      "classification": "recognizable_rerecording_or_cover",
+      "historical_years": "1962-1971",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_Virginian_(TV_series)"
+    },
+    {
+      "proposed_open_rank": 5,
+      "program": "I Spy",
+      "recording": "Theme From \"I Spy\" - From the NBC Television show \"I Spy\"",
+      "artist": "Hugo Montenegro & His Orchestra",
+      "spotify_track_id": "1nTD2cATmzFZKgufzkAHPL",
+      "spotify_public_url": "https://open.spotify.com/track/1nTD2cATmzFZKgufzkAHPL",
+      "classification": "recognizable_rerecording_or_cover",
+      "historical_years": "1965-1968",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/I_Spy_(1965_TV_series)"
+    },
+    {
+      "proposed_open_rank": 9,
+      "program": "The F.B.I.",
+      "recording": "Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\")",
+      "artist": "Hugo Montenegro & His Orchestra",
+      "spotify_track_id": "2ygk3Op3lrmgjkZr1L6iby",
+      "spotify_public_url": "https://open.spotify.com/track/2ygk3Op3lrmgjkZr1L6iby",
+      "classification": "recognizable_rerecording_or_cover",
+      "historical_years": "1965-1974",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_F.B.I._(TV_series)"
+    },
+    {
+      "proposed_open_rank": 14,
+      "program": "The Outer Limits",
+      "recording": "The Outer Limits Theme",
+      "artist": "TV Tunesters",
+      "spotify_track_id": "2aRxRElu4TpqWtJK4xasFk",
+      "spotify_public_url": "https://open.spotify.com/track/2aRxRElu4TpqWtJK4xasFk",
+      "classification": "recognizable_rerecording_or_cover",
+      "historical_years": "1963-1965",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_Outer_Limits_(1963_TV_series)"
+    },
+    {
+      "proposed_open_rank": 17,
+      "program": "Mannix",
+      "recording": "Mannix - From \"Mannix\" Soundtrack",
+      "artist": "Lalo Schifrin",
+      "spotify_track_id": "5XeT2svrGgYWY9ItW6omKJ",
+      "spotify_public_url": "https://open.spotify.com/track/5XeT2svrGgYWY9ItW6omKJ",
+      "classification": "correct_contemporary_commercial_recording",
+      "historical_years": "1967-1975",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/Mannix"
+    },
+    {
+      "proposed_open_rank": 20,
+      "program": "Ironside",
+      "recording": "Ironside - Theme From \"Ironside\"",
+      "artist": "Quincy Jones",
+      "spotify_track_id": "30RmekD1dSy913wZnryc1h",
+      "spotify_public_url": "https://open.spotify.com/track/30RmekD1dSy913wZnryc1h",
+      "classification": "correct_contemporary_commercial_recording",
+      "historical_years": "1967-1975",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/Ironside_(1967_TV_series)"
+    },
+    {
+      "proposed_open_rank": 27,
+      "program": "Sesame Street",
+      "recording": "Sesame Street Theme",
+      "artist": "Sesame Street Cast",
+      "spotify_track_id": "6ygYhprIQI9ypKyTJo17aB",
+      "spotify_public_url": "https://open.spotify.com/track/6ygYhprIQI9ypKyTJo17aB",
+      "classification": "correct_contemporary_commercial_recording",
+      "historical_years": "1969-present",
+      "historical_evidence_url": "https://www.sesameworkshop.org/who-we-are/our-history"
+    },
+    {
+      "proposed_open_rank": 28,
+      "program": "Mister Rogers' Neighborhood",
+      "recording": "Won't You Be My Neighbor?",
+      "artist": "Mister Rogers",
+      "spotify_track_id": "2kZzRXWdTrgxpPet4ePP9y",
+      "spotify_public_url": "https://open.spotify.com/track/2kZzRXWdTrgxpPet4ePP9y",
+      "classification": "correct_contemporary_commercial_recording",
+      "historical_years": "1968-2001",
+      "historical_evidence_url": "https://www.fredrogers.org/our-work/mister-rogers-neighborhood/"
+    },
+    {
+      "proposed_open_rank": 30,
+      "program": "The High Chaparral",
+      "recording": "Main Theme - From \"The High Chaparral\" Original Soundtrack",
+      "artist": "David Rose",
+      "spotify_track_id": "0qIfrXXLgb7MmmrrYdhEgh",
+      "spotify_public_url": "https://open.spotify.com/track/0qIfrXXLgb7MmmrrYdhEgh",
+      "classification": "correct_original_or_broadcast_associated",
+      "historical_years": "1967-1971",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_High_Chaparral"
+    },
+    {
+      "proposed_open_rank": 31,
+      "program": "The Rat Patrol",
+      "recording": "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol)",
+      "artist": "Dominic Frontiere",
+      "spotify_track_id": "54sQ4BZgpxDD8baHHLTyOq",
+      "spotify_public_url": "https://open.spotify.com/track/54sQ4BZgpxDD8baHHLTyOq",
+      "classification": "correct_original_or_broadcast_associated",
+      "historical_years": "1966-1968",
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_Rat_Patrol"
+    }
+  ],
+  "unfilled_open_ranks": [
+    32,
+    35,
+    37,
+    38,
+    39,
+    42,
+    43
+  ]
+}

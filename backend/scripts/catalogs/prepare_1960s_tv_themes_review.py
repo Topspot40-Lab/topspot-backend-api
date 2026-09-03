@@ -16,6 +16,19 @@ OUT = ROOT / "review_manifests"
 # Existing ranks retained exactly once, in editorial order.  The four tuples at
 # the end are public-Spotify replacement candidates verified during review.
 RETAINED_RANKS = (3, 4, 6, 7, 8, 10, 11, 12, 13, 15, 16, 18, 19, 21, 22, 23, 24, 25, 26, 29, 33, 34, 36, 40, 41, 44, 45)
+ADDITIONS = {
+    1: ("The Dick Van Dyke Show", 'Theme from "The Dick Van Dyke Show"', "TV Sounds Unlimited", "3EsN4lGtZX7TYlMyH0CcK3", "recognizable_rerecording_or_cover", "1961-1966", "https://en.wikipedia.org/wiki/The_Dick_Van_Dyke_Show"),
+    2: ("The Virginian", 'Theme from The Virginian - From "The Virginian"', "101 Strings Orchestra", "323Ys8qcHBgNiKvRxernN1", "recognizable_rerecording_or_cover", "1962-1971", "https://en.wikipedia.org/wiki/The_Virginian_(TV_series)"),
+    5: ("I Spy", 'Theme From "I Spy" - From the NBC Television show "I Spy"', "Hugo Montenegro & His Orchestra", "1nTD2cATmzFZKgufzkAHPL", "recognizable_rerecording_or_cover", "1965-1968", "https://en.wikipedia.org/wiki/I_Spy_(1965_TV_series)"),
+    9: ("The F.B.I.", 'Theme From "The F.B.I." - (From the Television Series "The F.B.I.")', "Hugo Montenegro & His Orchestra", "2ygk3Op3lrmgjkZr1L6iby", "recognizable_rerecording_or_cover", "1965-1974", "https://en.wikipedia.org/wiki/The_F.B.I._(TV_series)"),
+    14: ("The Outer Limits", "The Outer Limits Theme", "TV Tunesters", "2aRxRElu4TpqWtJK4xasFk", "recognizable_rerecording_or_cover", "1963-1965", "https://en.wikipedia.org/wiki/The_Outer_Limits_(1963_TV_series)"),
+    17: ("Mannix", 'Mannix - From "Mannix" Soundtrack', "Lalo Schifrin", "5XeT2svrGgYWY9ItW6omKJ", "correct_contemporary_commercial_recording", "1967-1975", "https://en.wikipedia.org/wiki/Mannix"),
+    20: ("Ironside", 'Ironside - Theme From "Ironside"', "Quincy Jones", "30RmekD1dSy913wZnryc1h", "correct_contemporary_commercial_recording", "1967-1975", "https://en.wikipedia.org/wiki/Ironside_(1967_TV_series)"),
+    27: ("Sesame Street", "Sesame Street Theme", "Sesame Street Cast", "6ygYhprIQI9ypKyTJo17aB", "correct_contemporary_commercial_recording", "1969-present", "https://www.sesameworkshop.org/who-we-are/our-history"),
+    28: ("Mister Rogers' Neighborhood", "Won't You Be My Neighbor?", "Mister Rogers", "2kZzRXWdTrgxpPet4ePP9y", "correct_contemporary_commercial_recording", "1968-2001", "https://www.fredrogers.org/our-work/mister-rogers-neighborhood/"),
+    30: ("The High Chaparral", 'Main Theme - From "The High Chaparral" Original Soundtrack', "David Rose", "0qIfrXXLgb7MmmrrYdhEgh", "correct_original_or_broadcast_associated", "1967-1971", "https://en.wikipedia.org/wiki/The_High_Chaparral"),
+    31: ("The Rat Patrol", "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol)", "Dominic Frontiere", "54sQ4BZgpxDD8baHHLTyOq", "correct_original_or_broadcast_associated", "1966-1968", "https://en.wikipedia.org/wiki/The_Rat_Patrol"),
+}
 REPLACEMENTS = {
     4: ("Hawaii Five-O", "Morton Stevens", "6I2oKAEHPCtFUPe7Tsm1Xt", "correct_original_or_broadcast_associated"),
     21: ("The Ballad of Jed Clampett", "Flatt & Scruggs", "2bNADRKyZiui7TOgIFilFr", "correct_contemporary_commercial_recording"),
@@ -101,6 +114,11 @@ DETAIL_REPLACEMENTS = {
     for language in ("en", "es-MX", "pt-BR")
     for kind in ("short_detail", "long_detail")
 } | {
+    (rank, language, kind): "new_track"
+    for rank in ADDITIONS
+    for language in ("en", "es-MX", "pt-BR")
+    for kind in ("short_detail", "long_detail")
+} | {
     (15, "pt-BR", "long_detail"): "proven_mojibake",
     (16, "pt-BR", "long_detail"): "proven_mojibake",
     (23, "pt-BR", "long_detail"): "proven_mojibake",
@@ -159,6 +177,25 @@ def main() -> None:
             "artwork_source": "Spotify public track metadata at apply-time",
             "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact.",
         })
+    for rank, (program, title, artist, spotify_id, classification, years, historical_url) in ADDITIONS.items():
+        approved.append({
+            "sequence_order": 0,
+            "proposed_rank": rank,
+            "source_rank": rank,
+            "program": program,
+            "track_name": title,
+            "artist": artist,
+            "spotify_track_id": spotify_id,
+            "spotify_public_url": f"https://open.spotify.com/track/{spotify_id}",
+            "classification": classification,
+            "artwork_source": "Spotify public track metadata at apply-time",
+            "qualification": f"Unique 1960s programme ({years}); public Spotify recording verified during gap research.",
+            "addition": True,
+            "historical_evidence_url": historical_url,
+        })
+    approved.sort(key=lambda entry: entry["proposed_rank"])
+    for position, entry in enumerate(approved, start=1):
+        entry["sequence_order"] = position
     plan = {
         "schema_version": 2,
         "catalog_id": 64,
@@ -168,7 +205,7 @@ def main() -> None:
         "rank_preservation_policy": "Retained and replacement entries keep their current source_rank; no retained track is renumbered.",
         "gap_filler_research": {
             "status": "deferred_without_verified_candidates",
-            "open_ranks": [1, 2, 5, 9, 14, 17, 20, 28, 30, 31, 32, 35, 37, 38, 39, 42, 43],
+            "open_ranks": [32, 35, 37, 38, 39, 42, 43],
             "rule": "Do not add a recording solely to fill a gap; only separately verified, unique 1960s programmes may be proposed later.",
         },
         "intro_rewrite": {
@@ -182,7 +219,7 @@ def main() -> None:
         "detail_preservation": {
             "retain_mapping_count": 135,
             "replacement_mapping_count": len(DETAIL_REPLACEMENTS),
-            "replacement_reasons": {"replacement_track": 24, "proven_mojibake": 3},
+            "replacement_reasons": {"replacement_track": 24, "new_track": 66, "proven_mojibake": 3},
             "safety_rule": "Never overwrite a shared correct detail object; stage replacements and point only the affected catalog-64 locale mapping at promoted versioned objects.",
         },
         "future_apply_requires": ["fresh public Spotify page recheck", "artwork URL check", "human review of final localized drafts", "separate production authorization"],
@@ -200,6 +237,15 @@ def main() -> None:
                     records.append({"rank": entry["proposed_rank"], "language": language, "kind": kind, "purpose": reason, "text": text, "text_sha256": _sha(text)})
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "1960s-tv-themes.research.v1.json").write_text(json.dumps({"catalog_id": 64, "records": research}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    gap_research = [
+        {
+            "proposed_open_rank": rank, "program": program, "recording": title, "artist": artist,
+            "spotify_track_id": spotify_id, "spotify_public_url": f"https://open.spotify.com/track/{spotify_id}",
+            "classification": classification, "historical_years": years, "historical_evidence_url": historical_url,
+        }
+        for rank, (program, title, artist, spotify_id, classification, years, historical_url) in ADDITIONS.items()
+    ]
+    (OUT / "1960s-tv-themes.gap-filler-research.v1.json").write_text(json.dumps({"catalog_id": 64, "approved_additions": gap_research, "unfilled_open_ranks": plan["gap_filler_research"]["open_ranks"]}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (OUT / "1960s-tv-themes.production-plan.v1.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (OUT / "1960s-tv-themes.narration-drafts.v1.json").write_text(json.dumps({"catalog_id": 64, "records": records}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"research_records": len(research), "approved_entries": len(approved), "drafts": len(records), "intro_drafts": len(approved) * 3, "detail_drafts": len(records) - len(approved) * 3}))

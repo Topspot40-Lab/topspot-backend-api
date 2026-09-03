@@ -5,6 +5,36 @@
   "approved_entries": [
     {
       "sequence_order": 1,
+      "proposed_rank": 1,
+      "source_rank": 1,
+      "program": "The Dick Van Dyke Show",
+      "track_name": "Theme from \"The Dick Van Dyke Show\"",
+      "artist": "TV Sounds Unlimited",
+      "spotify_track_id": "3EsN4lGtZX7TYlMyH0CcK3",
+      "spotify_public_url": "https://open.spotify.com/track/3EsN4lGtZX7TYlMyH0CcK3",
+      "classification": "recognizable_rerecording_or_cover",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1961-1966); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_Dick_Van_Dyke_Show"
+    },
+    {
+      "sequence_order": 2,
+      "proposed_rank": 2,
+      "source_rank": 2,
+      "program": "The Virginian",
+      "track_name": "Theme from The Virginian - From \"The Virginian\"",
+      "artist": "101 Strings Orchestra",
+      "spotify_track_id": "323Ys8qcHBgNiKvRxernN1",
+      "spotify_public_url": "https://open.spotify.com/track/323Ys8qcHBgNiKvRxernN1",
+      "classification": "recognizable_rerecording_or_cover",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1962-1971); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_Virginian_(TV_series)"
+    },
+    {
+      "sequence_order": 3,
       "proposed_rank": 3,
       "source_rank": 3,
       "program": "star trek (original series)",
@@ -17,7 +47,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 2,
+      "sequence_order": 4,
       "proposed_rank": 4,
       "source_rank": 4,
       "program": "hawaii five‑o",
@@ -30,7 +60,22 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 3,
+      "sequence_order": 5,
+      "proposed_rank": 5,
+      "source_rank": 5,
+      "program": "I Spy",
+      "track_name": "Theme From \"I Spy\" - From the NBC Television show \"I Spy\"",
+      "artist": "Hugo Montenegro & His Orchestra",
+      "spotify_track_id": "1nTD2cATmzFZKgufzkAHPL",
+      "spotify_public_url": "https://open.spotify.com/track/1nTD2cATmzFZKgufzkAHPL",
+      "classification": "recognizable_rerecording_or_cover",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1965-1968); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/I_Spy_(1965_TV_series)"
+    },
+    {
+      "sequence_order": 6,
       "proposed_rank": 6,
       "source_rank": 6,
       "program": "the munsters",
@@ -43,7 +88,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 4,
+      "sequence_order": 7,
       "proposed_rank": 7,
       "source_rank": 7,
       "program": "the andy griffith show",
@@ -56,7 +101,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 5,
+      "sequence_order": 8,
       "proposed_rank": 8,
       "source_rank": 8,
       "program": "the twilight zone",
@@ -69,7 +114,22 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 6,
+      "sequence_order": 9,
+      "proposed_rank": 9,
+      "source_rank": 9,
+      "program": "The F.B.I.",
+      "track_name": "Theme From \"The F.B.I.\" - (From the Television Series \"The F.B.I.\")",
+      "artist": "Hugo Montenegro & His Orchestra",
+      "spotify_track_id": "2ygk3Op3lrmgjkZr1L6iby",
+      "spotify_public_url": "https://open.spotify.com/track/2ygk3Op3lrmgjkZr1L6iby",
+      "classification": "recognizable_rerecording_or_cover",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1965-1974); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_F.B.I._(TV_series)"
+    },
+    {
+      "sequence_order": 10,
       "proposed_rank": 10,
       "source_rank": 10,
       "program": "meet the flintstones",
@@ -82,7 +142,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 7,
+      "sequence_order": 11,
       "proposed_rank": 11,
       "source_rank": 11,
       "program": "the jetsons",
@@ -95,7 +155,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 8,
+      "sequence_order": 12,
       "proposed_rank": 12,
       "source_rank": 12,
       "program": "i dream of jeannie",
@@ -108,7 +168,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 9,
+      "sequence_order": 13,
       "proposed_rank": 13,
       "source_rank": 13,
       "program": "bewitched",
@@ -121,7 +181,22 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 10,
+      "sequence_order": 14,
+      "proposed_rank": 14,
+      "source_rank": 14,
+      "program": "The Outer Limits",
+      "track_name": "The Outer Limits Theme",
+      "artist": "TV Tunesters",
+      "spotify_track_id": "2aRxRElu4TpqWtJK4xasFk",
+      "spotify_public_url": "https://open.spotify.com/track/2aRxRElu4TpqWtJK4xasFk",
+      "classification": "recognizable_rerecording_or_cover",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1963-1965); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_Outer_Limits_(1963_TV_series)"
+    },
+    {
+      "sequence_order": 15,
       "proposed_rank": 15,
       "source_rank": 15,
       "program": "the avengers",
@@ -134,7 +209,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 11,
+      "sequence_order": 16,
       "proposed_rank": 16,
       "source_rank": 16,
       "program": "thunderbirds",
@@ -147,7 +222,22 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 12,
+      "sequence_order": 17,
+      "proposed_rank": 17,
+      "source_rank": 17,
+      "program": "Mannix",
+      "track_name": "Mannix - From \"Mannix\" Soundtrack",
+      "artist": "Lalo Schifrin",
+      "spotify_track_id": "5XeT2svrGgYWY9ItW6omKJ",
+      "spotify_public_url": "https://open.spotify.com/track/5XeT2svrGgYWY9ItW6omKJ",
+      "classification": "correct_contemporary_commercial_recording",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1967-1975); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/Mannix"
+    },
+    {
+      "sequence_order": 18,
       "proposed_rank": 18,
       "source_rank": 18,
       "program": "lost in space",
@@ -160,7 +250,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 13,
+      "sequence_order": 19,
       "proposed_rank": 19,
       "source_rank": 19,
       "program": "the man from u.n.c.l.e.",
@@ -173,7 +263,22 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 14,
+      "sequence_order": 20,
+      "proposed_rank": 20,
+      "source_rank": 20,
+      "program": "Ironside",
+      "track_name": "Ironside - Theme From \"Ironside\"",
+      "artist": "Quincy Jones",
+      "spotify_track_id": "30RmekD1dSy913wZnryc1h",
+      "spotify_public_url": "https://open.spotify.com/track/30RmekD1dSy913wZnryc1h",
+      "classification": "correct_contemporary_commercial_recording",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1967-1975); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/Ironside_(1967_TV_series)"
+    },
+    {
+      "sequence_order": 21,
       "proposed_rank": 21,
       "source_rank": 21,
       "program": "the beverly hillbillies",
@@ -186,7 +291,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 15,
+      "sequence_order": 22,
       "proposed_rank": 22,
       "source_rank": 22,
       "program": "hogan’s heroes",
@@ -199,7 +304,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 16,
+      "sequence_order": 23,
       "proposed_rank": 23,
       "source_rank": 23,
       "program": "dark shadows",
@@ -212,7 +317,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 17,
+      "sequence_order": 24,
       "proposed_rank": 24,
       "source_rank": 24,
       "program": "the prisoner",
@@ -225,7 +330,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 18,
+      "sequence_order": 25,
       "proposed_rank": 25,
       "source_rank": 25,
       "program": "the monkees",
@@ -238,7 +343,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 19,
+      "sequence_order": 26,
       "proposed_rank": 26,
       "source_rank": 26,
       "program": "Mission: Impossible",
@@ -251,7 +356,37 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 20,
+      "sequence_order": 27,
+      "proposed_rank": 27,
+      "source_rank": 27,
+      "program": "Sesame Street",
+      "track_name": "Sesame Street Theme",
+      "artist": "Sesame Street Cast",
+      "spotify_track_id": "6ygYhprIQI9ypKyTJo17aB",
+      "spotify_public_url": "https://open.spotify.com/track/6ygYhprIQI9ypKyTJo17aB",
+      "classification": "correct_contemporary_commercial_recording",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1969-present); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://www.sesameworkshop.org/who-we-are/our-history"
+    },
+    {
+      "sequence_order": 28,
+      "proposed_rank": 28,
+      "source_rank": 28,
+      "program": "Mister Rogers' Neighborhood",
+      "track_name": "Won't You Be My Neighbor?",
+      "artist": "Mister Rogers",
+      "spotify_track_id": "2kZzRXWdTrgxpPet4ePP9y",
+      "spotify_public_url": "https://open.spotify.com/track/2kZzRXWdTrgxpPet4ePP9y",
+      "classification": "correct_contemporary_commercial_recording",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1968-2001); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://www.fredrogers.org/our-work/mister-rogers-neighborhood/"
+    },
+    {
+      "sequence_order": 29,
       "proposed_rank": 29,
       "source_rank": 29,
       "program": "Batman",
@@ -264,7 +399,37 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 21,
+      "sequence_order": 30,
+      "proposed_rank": 30,
+      "source_rank": 30,
+      "program": "The High Chaparral",
+      "track_name": "Main Theme - From \"The High Chaparral\" Original Soundtrack",
+      "artist": "David Rose",
+      "spotify_track_id": "0qIfrXXLgb7MmmrrYdhEgh",
+      "spotify_public_url": "https://open.spotify.com/track/0qIfrXXLgb7MmmrrYdhEgh",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1967-1971); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_High_Chaparral"
+    },
+    {
+      "sequence_order": 31,
+      "proposed_rank": 31,
+      "source_rank": 31,
+      "program": "The Rat Patrol",
+      "track_name": "The Rat Patrol Main Title (Original Television Soundtrack for the Rat Patrol)",
+      "artist": "Dominic Frontiere",
+      "spotify_track_id": "54sQ4BZgpxDD8baHHLTyOq",
+      "spotify_public_url": "https://open.spotify.com/track/54sQ4BZgpxDD8baHHLTyOq",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Unique 1960s programme (1966-1968); public Spotify recording verified during gap research.",
+      "addition": true,
+      "historical_evidence_url": "https://en.wikipedia.org/wiki/The_Rat_Patrol"
+    },
+    {
+      "sequence_order": 32,
       "proposed_rank": 33,
       "source_rank": 33,
       "program": "The Addams Family",
@@ -277,7 +442,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 22,
+      "sequence_order": 33,
       "proposed_rank": 34,
       "source_rank": 34,
       "program": "Gilligan's Island",
@@ -290,7 +455,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 23,
+      "sequence_order": 34,
       "proposed_rank": 36,
       "source_rank": 36,
       "program": "Get Smart",
@@ -303,7 +468,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 24,
+      "sequence_order": 35,
       "proposed_rank": 40,
       "source_rank": 40,
       "program": "Green Acres",
@@ -316,7 +481,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 25,
+      "sequence_order": 36,
       "proposed_rank": 41,
       "source_rank": 41,
       "program": "Petticoat Junction",
@@ -329,7 +494,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 26,
+      "sequence_order": 37,
       "proposed_rank": 44,
       "source_rank": 44,
       "program": "Doctor Who",
@@ -342,7 +507,7 @@
       "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
     },
     {
-      "sequence_order": 27,
+      "sequence_order": 38,
       "proposed_rank": 45,
       "source_rank": 45,
       "program": "The Saint",
@@ -405,16 +570,6 @@
   "gap_filler_research": {
     "status": "deferred_without_verified_candidates",
     "open_ranks": [
-      1,
-      2,
-      5,
-      9,
-      14,
-      17,
-      20,
-      28,
-      30,
-      31,
       32,
       35,
       37,
@@ -426,7 +581,7 @@
     "rule": "Do not add a recording solely to fill a gap; only separately verified, unique 1960s programmes may be proposed later."
   },
   "intro_rewrite": {
-    "record_count": 81,
+    "record_count": 114,
     "languages": [
       "en",
       "es-MX",
@@ -439,9 +594,10 @@
   },
   "detail_preservation": {
     "retain_mapping_count": 135,
-    "replacement_mapping_count": 27,
+    "replacement_mapping_count": 93,
     "replacement_reasons": {
       "replacement_track": 24,
+      "new_track": 66,
       "proven_mojibake": 3
     },
     "safety_rule": "Never overwrite a shared correct detail object; stage replacements and point only the affected catalog-64 locale mapping at promoted versioned objects."

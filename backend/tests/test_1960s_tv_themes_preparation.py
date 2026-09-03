@@ -4,10 +4,10 @@ from backend.scripts.catalogs.narration_media_validation import validate_media_r
 
 def test_1960s_tv_themes_preparation_plan_is_complete_and_utf8_safe():
     assert validate() == {
-        "approved_track_count": 27,
-        "intro_draft_count": 81,
-        "detail_draft_count": 27,
-        "expected_future_mp3_count": 108,
+        "approved_track_count": 38,
+        "intro_draft_count": 114,
+        "detail_draft_count": 93,
+        "expected_future_mp3_count": 207,
     }
 
 
