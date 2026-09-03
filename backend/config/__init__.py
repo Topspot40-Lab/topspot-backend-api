@@ -246,7 +246,7 @@ def _default_tts_profiles() -> Dict[str, Dict[str, Any]]:
             "artist": {"voice_id": "bIHbv24MWmeRgasZH58o","settings": {"stability": 0.6,  "similarity_boost": 0.8,  "style": 0.4,  "use_speaker_boost": True}},
         },
         "pt-BR": {
-            "intro":  {"voice_id": "5dF3gH7abcXYZ1234567","settings": {"stability": 0.5,  "similarity_boost": 0.85, "style": 0.5,  "use_speaker_boost": True}},
+            "intro":  {"voice_id": "cyD08lEy76q03ER1jZ7y","settings": {"stability": 0.5,  "similarity_boost": 0.85, "style": 0.7,  "use_speaker_boost": True}},
             "detail": {"voice_id": "cyD08lEy76q03ER1jZ7y","settings": {"stability": 0.65, "similarity_boost": 0.7,  "style": 0.25, "use_speaker_boost": False}},
             "artist": {"voice_id": "CstacWqMhJQlnfLPxRG4","settings": {"stability": 0.6,  "similarity_boost": 0.8,  "style": 0.4,  "use_speaker_boost": True}},
         },
