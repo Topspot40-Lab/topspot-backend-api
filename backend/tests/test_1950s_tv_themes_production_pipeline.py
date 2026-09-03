@@ -174,6 +174,7 @@ def test_importer_never_inserts_null_intros_and_rolls_back_on_commit_failure():
 def test_tts_executor_has_an_explicit_resume_mode_for_interrupted_authorized_runs():
     source = (Path(__file__).parents[1] / "scripts/catalogs/generate_1950s_tv_themes_tts.py").read_text(encoding="utf-8")
     assert 'parser.add_argument("--resume"' in source
+    assert 'parser.add_argument("--max-generate"' in source
     assert "object_exists_cached" in source
     assert "if narration_identity(record) in existing:" in source
 

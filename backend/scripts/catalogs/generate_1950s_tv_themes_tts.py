@@ -17,6 +17,7 @@ def main() -> None:
     parser.add_argument("--generate", action="store_true")
     parser.add_argument("--replace-all-narration", action="store_true")
     parser.add_argument("--resume", action="store_true", help="skip already-present canonical keys after an interrupted run")
+    parser.add_argument("--max-generate", type=int, default=None, help="bounded resume batch; defers DB key mapping until a final complete run")
     args = parser.parse_args()
     manifest, plan = load_json(ROOT / "1950s-tv_themes.v9.json"), load_json(ROOT / "1950s-tv-themes.production-plan.v1.json")
     validate_production_plan(manifest, plan)
@@ -37,6 +38,8 @@ def main() -> None:
     for record in expected:
         if narration_identity(record) in existing:
             continue
+        if args.max_generate is not None and generated >= args.max_generate:
+            break
         kind = "intro" if record["narration_type"] == "intro" else "detail"
         profile = TTS_PROFILES[record["language"]][kind]
         with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as tmp:
@@ -47,6 +50,9 @@ def main() -> None:
             generated += 1
         finally:
             temp_path.unlink(missing_ok=True)
+    if args.max_generate is not None:
+        print(f"Generated {generated}; reused {len(existing)} existing scoped MP3s; DB mappings deferred until final completion.")
+        return
     from sqlmodel import Session
     from backend.database import engine
     with Session(engine) as session:
