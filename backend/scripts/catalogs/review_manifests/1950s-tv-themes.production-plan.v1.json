@@ -2,8 +2,8 @@
   "schema_version": "1950s-tv-themes-production-plan/v1",
   "source_manifest": "1950s-tv_themes.v9.json",
   "catalog": {"decade_genre_id": 63, "slug": "1950s-tv_themes"},
-  "status": "proposed_ranking_not_applied",
-  "ranking_method": "Broad recognition, television importance, theme distinctiveness, and variety across western, crime, family, children's, and adventure programming. This is a proposed order only.",
+  "status": "final_production_order_approved_not_applied",
+  "ranking_method": "Broad recognition, television importance, theme distinctiveness, and variety across western, crime, family, children's, and adventure programming. This is Gary's final approved production order, not yet applied.",
   "ranked_candidates": [
     {"proposed_rank":1,"show_title":"I Love Lucy","theme_title":"I Love Lucy Theme","performer":"Soundtrack & Theme Orchestra","original_broadcast_years":"1951-1957","spotify_track_id":"5lSfu6Bb1lZHvEA5Lp3FSo","classification":"recognizable cover","qualification":"Gary accepted this recognizable cover; it is not the original broadcast recording.","ranking_rationale":"Foundational mass-audience sitcom with an immediately recognizable theme."},
     {"proposed_rank":2,"show_title":"The Twilight Zone","theme_title":"Main Title First Season","performer":"Bernard Herrmann","original_broadcast_years":"1959-1964","spotify_track_id":"2esm55sr13FFKqoP6qwjUz","classification":"soundtrack-derived first-season television theme","qualification":"This is the required Bernard Herrmann 1959 first-season theme, not the later Marius Constant theme.","ranking_rationale":"Landmark anthology series and the period's most distinctive approved dramatic theme."},

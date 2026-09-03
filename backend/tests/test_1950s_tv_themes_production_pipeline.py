@@ -30,7 +30,7 @@ def _inputs():
 def test_production_plan_is_exactly_the_authoritative_playable_set_and_is_unapplied():
     manifest, plan = _inputs()
     entries = validate_production_plan(manifest, plan)
-    assert plan["status"] == "proposed_ranking_not_applied"
+    assert plan["status"] == "final_production_order_approved_not_applied"
     assert plan["catalog"] == {"decade_genre_id": CATALOG_ID, "slug": CATALOG_SLUG}
     assert [entry["proposed_rank"] for entry in entries] == list(range(1, 20))
     assert {entry["spotify_track_id"] for entry in entries} == {
@@ -58,6 +58,22 @@ def test_deterministic_multilingual_text_bundle_is_complete_and_has_no_ai_depend
     source = Path(__file__).parents[1] / "scripts/catalogs/tv_themes_1950s_pipeline.py"
     assert "elevenlabs" not in source.read_text(encoding="utf-8").lower()
     assert "xai" not in source.read_text(encoding="utf-8").lower()
+
+
+def test_every_draft_has_a_concise_short_form_and_four_natural_long_sentences():
+    _, plan = _inputs()
+    records = build_text_bundle(plan)
+    for language in ("en", "es", "pt-BR"):
+        shorts = [row["text"] for row in records if row["language"] == language and row["narration_type"] == "short_detail"]
+        assert len(shorts) == 19
+        assert all(20 <= len(text.replace(",", "").replace(".", "").split()) <= 35 for text in shorts)
+        for narration_type in ("intro", "short_detail", "long_detail"):
+            texts = [row["text"] for row in records if row["language"] == language and row["narration_type"] == narration_type]
+            assert len(texts) == len(set(texts)) == 19
+    longs = [row["text"] for row in records if row["narration_type"] == "long_detail"]
+    assert all(text.count(".") == 4 for text in longs)
+    localized = [row["text"] for row in records if row["language"] in {"es", "pt-BR"}]
+    assert not any("Gary accepted" in text or "Recording qualification" in text for text in localized)
 
 
 def test_completeness_validator_detects_missing_audio_and_wrong_key_without_external_reads():

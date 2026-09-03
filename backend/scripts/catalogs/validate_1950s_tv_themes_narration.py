@@ -11,12 +11,17 @@ def main() -> None:
     parser.add_argument("--text-records", type=Path, required=True)
     parser.add_argument("--audio-records", type=Path, help="local audio record manifest; required unless --live")
     parser.add_argument("--live", action="store_true", help="read database and storage; never writes")
+    parser.add_argument("--text-only", action="store_true", help="validate the 171 text records before TTS is authorized")
     args = parser.parse_args()
     manifest, plan = load_json(ROOT / "1950s-tv_themes.v9.json"), load_json(ROOT / "1950s-tv-themes.production-plan.v1.json")
     validate_production_plan(manifest, plan)
     expected = expected_narration(plan)
     texts = load_json(args.text_records)["records"]
-    if args.live:
+    if args.text_only and args.live:
+        parser.error("--text-only and --live cannot be combined")
+    if args.text_only:
+        audio, mapped = [], "not_checked"
+    elif args.live:
         from sqlmodel import Session
         from backend.database import engine
         from backend.services.supabase_storage import object_exists
@@ -30,5 +35,11 @@ def main() -> None:
         mapped = "not_checked"
     report = completeness_report(expected, texts, audio)
     report["database_mapping_count"] = mapped
+    report["text_complete"] = not report["missing_text"] and not report["unexpected_text"]
+    if args.text_only:
+        report["audio_not_checked_count"] = len(expected)
+        report["missing_audio"] = []
+        report["complete"] = report["text_complete"]
+        report["audio_checked"] = False
     print(json.dumps(report, indent=2))
 if __name__ == "__main__": main()
