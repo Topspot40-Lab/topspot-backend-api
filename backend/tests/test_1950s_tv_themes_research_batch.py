@@ -22,6 +22,10 @@ REVIEW_MANIFEST_V5 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv_themes.v5.json"
 )
+REVIEW_MANIFEST_V6 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv_themes.v6.json"
+)
 RANKED_REVIEW = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.ranked-review.v1.csv"
@@ -33,6 +37,10 @@ RESEARCH_BATCH_02 = (
 RESEARCH_BATCH_03 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-03.v1.json"
+)
+RESEARCH_BATCH_04 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-04.v1.json"
 )
 EXPECTED_RANKS = {2, 3, 8, 10, 11, 12}
 APPROVED_REPLACEMENTS = {
@@ -178,3 +186,23 @@ def test_v5_records_wagon_and_davy_qualifications_without_promoting_sea_hunt():
         "status": "unresolved_no_defensible_spotify_track_id",
         "spotify_track_id": "",
     }]
+
+
+def test_v6_records_four_new_approved_candidates_without_database_apply():
+    manifest = json.loads(REVIEW_MANIFEST_V6.read_text(encoding="utf-8"))
+    assert manifest["supersedes"] == "1950s-tv_themes.v5.json"
+    approved = {item["show_title"]: item for item in manifest["approved_catalog_candidates"]}
+    assert approved["Sea Hunt"]["spotify_track_id"] == ""
+    assert approved["Sea Hunt"]["public_listening_url"].endswith("Tp2PAnPi_uw")
+    assert approved["The Untouchables"]["spotify_track_id"] == "5BO1NDOaXxuEN0mqMaapnC"
+    assert approved["M Squad"]["spotify_track_id"] == "5qc4Q3sRK0mjKdomhfMqxN"
+    assert "second/third-season" in approved["M Squad"]["historical_constraint"]
+    assert approved["Bat Masterson"]["spotify_track_id"] == "2N4bp5eHNlL6pNogf4DpTR"
+
+
+def test_batch_four_records_only_the_three_track_level_approvals():
+    batch = json.loads(RESEARCH_BATCH_04.read_text(encoding="utf-8"))
+    decisions = {item["show_title"]: item for item in batch["programs"]}
+    assert set(decisions) == {"The Untouchables", "M Squad", "Bat Masterson"}
+    assert all(item["gary_listening_decision"] == "approved" for item in decisions.values())
+    assert all(item["catalog_candidate_status"] == "approved_catalog_candidate" for item in decisions.values())

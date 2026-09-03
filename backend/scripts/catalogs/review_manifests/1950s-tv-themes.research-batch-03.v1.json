@@ -24,8 +24,10 @@
       "historical_themes": [{"broadcast_years": "1958-1961", "theme_title": "Sea Hunt Theme", "composer": "credited to Ray Llewellyn; probably David Rose", "lyricist": "Patricia La Salle added lyrics later; original television theme was instrumental", "original_performer_or_orchestra": "broadcast performance not established in this research batch"}],
       "spotify_candidate": {"track_title": "Sea Hunt Theme (From the TV Series Sea Hunt)", "displayed_artist": "Buddy Morrow", "spotify_track_id": "", "spotify_url": "", "album": "Impact: Themes from TV Series", "duration": "2:00", "classification": "unresolved", "classification_note": "Public Spotify search results identify the Buddy Morrow track and album, but did not expose a reliable track-level Spotify URL or ID. The 1959 Impact LP is historically documented as a Buddy Morrow recording."},
       "historical_source_urls": ["https://classicthemes.com/50sTVThemes/themePages/seaHunt.html", "https://music.apple.com/ca/song/894079838", "https://open.spotify.com/intl-de/track/5eh2Q3xpzWWtDRFF31Cz0p"],
-      "listening_note": "Do not send for approval until a stable public Spotify track ID is independently located; verify the instrumental theme rather than the later lyric version.",
-      "gary_listening_decision": "pending"
+      "listening_note": "Gary approved the documented 1959 Buddy Morrow commercial recording as a catalog candidate. It is not confirmed as the broadcast master; no Spotify track ID is asserted.",
+      "gary_listening_decision": "approved",
+      "catalog_candidate_status": "approved_catalog_candidate",
+      "public_listening_url": "https://www.youtube.com/watch?v=Tp2PAnPi_uw"
     },
     {
       "show_title": "Davy Crockett",
@@ -38,5 +40,5 @@
       "catalog_candidate_status": "approved_catalog_candidate"
     }
   ],
-  "approval_gate": "Wagon Train and Davy Crockett are Gary-approved catalog candidates only, unranked and unapplied to the production database. Sea Hunt remains unresolved because no defensible track-level Spotify ID was found. No final ranks or production changes are authorized."
+  "approval_gate": "Wagon Train, Sea Hunt, and Davy Crockett are Gary-approved catalog candidates only, unranked and unapplied to the production database. Sea Hunt has no defensible Spotify track ID. No final ranks or production changes are authorized."
 }

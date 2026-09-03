@@ -1,0 +1,23 @@
+{
+  "schema_version": "catalog-review-manifest/v1",
+  "manifest_version": 6,
+  "supersedes": "1950s-tv_themes.v5.json",
+  "program": {"decade_genre_id": 63, "slug": "1950s-tv_themes"},
+  "purpose": "Read-only catalog-candidate decisions. Approvals do not authorize database, storage, replacement, or final-rank mutation.",
+  "prior_catalog_candidate_manifest": "1950s-tv_themes.v5.json",
+  "approved_catalog_candidates": [
+    {"rank": 13, "show_title": "I Love Lucy", "spotify_track_id": "5lSfu6Bb1lZHvEA5Lp3FSo", "recording_classification": "recognizable_cover"},
+    {"rank": 18, "show_title": "Gunsmoke", "spotify_track_id": "71qlBJvHesvpK3TJXGN95O", "recording_classification": "recognizable_cover"},
+    {"rank": 20, "show_title": "The Twilight Zone", "spotify_track_id": "2esm55sr13FFKqoP6qwjUz", "recording_classification": "soundtrack_derived_first_season_theme"},
+    {"rank": 31, "show_title": "Zorro", "spotify_track_id": "301w6yavJnABE4APW72ynW", "recording_classification": "recognizable_cover"},
+    {"rank": 38, "show_title": "Wagon Train", "spotify_track_id": "7up8IVBnHisqNGn2ewyuyk", "recording_classification": "uncertain_exact_release_lineage"},
+    {"rank": null, "show_title": "Davy Crockett", "spotify_track_id": "3Gr3f20ajbTXP25lmrg2Qb", "recording_classification": "1969_rerecording_not_confirmed_1954_broadcast_recording"},
+    {"rank": 44, "show_title": "Sea Hunt", "spotify_track_id": "", "public_listening_url": "https://www.youtube.com/watch?v=Tp2PAnPi_uw", "recording_classification": "documented_1959_commercial_recording_not_confirmed_broadcast_master", "historical_constraint": "Do not infer or fabricate a Spotify track ID."},
+    {"rank": null, "show_title": "The Untouchables", "spotify_track_id": "5BO1NDOaXxuEN0mqMaapnC", "recording_classification": "later_issued_release_broadcast_master_lineage_unconfirmed"},
+    {"rank": null, "show_title": "M Squad", "spotify_track_id": "5qc4Q3sRK0mjKdomhfMqxN", "recording_classification": "later_issued_release_broadcast_master_lineage_unconfirmed", "historical_constraint": "Count Basie's second/third-season theme only; distinct from Stanley Wilson's first-season theme."},
+    {"rank": null, "show_title": "Bat Masterson", "spotify_track_id": "2N4bp5eHNlL6pNogf4DpTR", "recording_classification": "uncertain_exact_release_lineage", "historical_constraint": "Theme credits name Havens Wray and Bart Corwin, with Bill Lee as singer; Wray may be a David Rose pseudonym."}
+  ],
+  "research_records": ["1950s-tv-themes.research-batch-02.v1.json", "1950s-tv-themes.research-batch-03.v1.json", "1950s-tv-themes.research-batch-04.v1.json"],
+  "rebuild_rules": {"apply_enabled": false, "final_rank_assignment_enabled": false, "spotify_recording_required_for_database_apply": true},
+  "not_in_scope": ["database apply or delete operations", "storage mutation", "Spotify authentication or API", "TTS generation", "final database ranking"]
+}
