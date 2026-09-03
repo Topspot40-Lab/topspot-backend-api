@@ -391,7 +391,7 @@ def execute(*, approved_commit: str, api_base: str, storage: Storage | None = No
     return {"catalog_id": CATALOG_ID, "promoted": 207, "rollback_backups": len(backups)}
 
 
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--approved-commit")
@@ -401,7 +401,8 @@ def main() -> None:
         parser.error("--execute requires --approved-commit and --api-base")
     report = execute(approved_commit=args.approved_commit, api_base=args.api_base) if args.execute else dry_run()
     print(json.dumps(report, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

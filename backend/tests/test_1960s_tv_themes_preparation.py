@@ -122,3 +122,15 @@ def test_catalog_64_preapply_gate_requires_sparse_committed_snapshot_before_stor
     execute = source[source.index("def execute("):]
     assert "catalog-64 no longer matches the committed pre-apply snapshot" in source
     assert execute.index("verify_preapply_snapshot(preflight_session)") < execute.index("_backup_and_promote(storage")
+
+
+def test_catalog_64_module_main_routes_execute_arguments_to_production_function(monkeypatch, capsys):
+    import sys
+    from backend.scripts.catalogs import promote_1960s_tv_themes as promotion
+
+    called = {}
+    monkeypatch.setattr(promotion, "execute", lambda **kwargs: called.update(kwargs) or {"ok": True})
+    monkeypatch.setattr(sys, "argv", ["promote_1960s_tv_themes.py", "--execute", "--approved-commit", "abc", "--api-base", "https://api.example"])
+    promotion.main()
+    assert called == {"approved_commit": "abc", "api_base": "https://api.example"}
+    assert '"ok": true' in capsys.readouterr().out
