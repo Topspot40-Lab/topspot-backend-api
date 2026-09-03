@@ -1,0 +1,20 @@
+{
+  "schema_version": "catalog-review-manifest/v1",
+  "manifest_version": 9,
+  "supersedes": "1950s-tv_themes.v8.json",
+  "program": {"decade_genre_id": 63, "slug": "1950s-tv_themes"},
+  "purpose": "Read-only correction to the completed catalog review. This supersedes the erroneous Burns and Allen approval; it authorizes no production mutation or rank assignment.",
+  "prior_catalog_candidate_manifest": "1950s-tv_themes.v8.json",
+  "approved_catalog_candidates": [
+    {"rank":13,"show_title":"I Love Lucy","spotify_track_id":"5lSfu6Bb1lZHvEA5Lp3FSo"},{"rank":18,"show_title":"Gunsmoke","spotify_track_id":"71qlBJvHesvpK3TJXGN95O"},{"rank":20,"show_title":"The Twilight Zone","spotify_track_id":"2esm55sr13FFKqoP6qwjUz"},{"rank":31,"show_title":"Zorro","spotify_track_id":"301w6yavJnABE4APW72ynW"},{"rank":38,"show_title":"Wagon Train","spotify_track_id":"7up8IVBnHisqNGn2ewyuyk"},{"rank":null,"show_title":"Davy Crockett","spotify_track_id":"3Gr3f20ajbTXP25lmrg2Qb"},{"rank":44,"show_title":"Sea Hunt","spotify_track_id":""},{"rank":null,"show_title":"The Untouchables","spotify_track_id":"5BO1NDOaXxuEN0mqMaapnC"},{"rank":null,"show_title":"M Squad","spotify_track_id":"5qc4Q3sRK0mjKdomhfMqxN"},{"rank":null,"show_title":"Bat Masterson","spotify_track_id":"2N4bp5eHNlL6pNogf4DpTR"},{"rank":null,"show_title":"Cheyenne","spotify_track_id":"5As4kPiB9eZ5Q9EVBaYqHs"},{"rank":null,"show_title":"The Life and Legend of Wyatt Earp","spotify_track_id":"1F6N0vw7S55QK7SckEDhhY"},{"rank":null,"show_title":"Wanted: Dead or Alive","spotify_track_id":"1kEauajzb7929zqiIVW9fQ"},{"rank":null,"show_title":"The Red Skelton Show","spotify_track_id":"5MFrmRlOVi1hBoZvgFNFvI"},{"rank":null,"show_title":"The Jack Benny Program","spotify_track_id":""},{"rank":null,"show_title":"The Adventures of Ozzie and Harriet","spotify_track_id":""},{"rank":null,"show_title":"Father Knows Best","spotify_track_id":"1u1mZ6NgPmLohzNAVMExhh"},{"rank":null,"show_title":"Maverick","spotify_track_id":"3PowPOuvw8BE8Dx2XkzPHF"},{"rank":null,"show_title":"Leave It to Beaver","spotify_track_id":"1aiXLeKljeTCbX5fVPISTS"},{"rank":null,"show_title":"American Bandstand","spotify_track_id":""},{"rank":null,"show_title":"The Ed Sullivan Show","spotify_track_id":""},{"rank":null,"show_title":"Disneyland","spotify_track_id":""},{"rank":null,"show_title":"Howdy Doody","spotify_track_id":"1uLyJWPzDJeMCSi3dH6jEb"},{"rank":null,"show_title":"Captain Kangaroo","spotify_track_id":"7BOhsPHziYhIIQmPdYS6c0"},{"rank":null,"show_title":"The Roy Rogers Show","spotify_track_id":"1FaiVQR1BUHxttxYUMAQiW"},{"rank":null,"show_title":"Naked City","spotify_track_id":""},{"rank":null,"show_title":"The Many Loves of Dobie Gillis","spotify_track_id":""},{"rank":null,"show_title":"Dennis the Menace","spotify_track_id":""}
+  ],
+  "unresolved_research": [
+    {"show_title":"The Phil Silvers Show","status":"unresolved_no_defensible_recording"},
+    {"show_title":"Lassie","status":"unresolved_early_theme_identity_not_sufficiently_resolved"},
+    {"show_title":"The Adventures of Rin Tin Tin","status":"unresolved_no_defensible_program_specific_recording"},
+    {"show_title":"The Donna Reed Show","status":"unresolved_no_defensible_recording"},
+    {"show_title":"The George Burns and Gracie Allen Show","status":"unresolved_no_defensible_love_nest_recording","reason":"Love Nest is the documented program theme, but no performer or recording specific to the program was established. Bing Crosby and Kitty Carlisle are not accepted as this target, and there is no shared-recording assertion with The Jack Benny Program."}
+  ],
+  "research_records":["1950s-tv-themes.research-batch-07.v1.json"],
+  "rebuild_rules":{"apply_enabled":false,"final_rank_assignment_enabled":false,"spotify_recording_required_for_database_apply":true}
+}

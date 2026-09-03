@@ -52,6 +52,8 @@ RESEARCH_BATCH_05 = (
     / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-05.v1.json"
 )
 RESEARCH_BATCH_06 = Path(__file__).parents[1] / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-06.v1.json"
+REVIEW_MANIFEST_V9 = Path(__file__).parents[1] / "scripts/catalogs/review_manifests/1950s-tv_themes.v9.json"
+RESEARCH_BATCH_07 = Path(__file__).parents[1] / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-07.v1.json"
 EXPECTED_RANKS = {2, 3, 8, 10, 11, 12}
 APPROVED_REPLACEMENTS = {
     2: "799kpXdBhIzYscq144QVEn",
@@ -262,3 +264,17 @@ def test_batch_six_requires_exact_dennis_track_without_using_an_album_id_as_trac
     assert dennis["theme_title"] == "Mi Televizhun Song (Dennis the Menace Theme)"
     assert dennis["spotify_track_id"] == ""
     assert "/album/" in dennis["listening_url"]
+
+
+def test_v9_returns_burns_and_allen_to_unresolved_without_cross_contamination():
+    manifest = json.loads(REVIEW_MANIFEST_V9.read_text(encoding="utf-8"))
+    assert manifest["supersedes"] == "1950s-tv_themes.v8.json"
+    assert "The George Burns and Gracie Allen Show" not in {
+        item["show_title"] for item in manifest["approved_catalog_candidates"]
+    }
+    burns = next(item for item in manifest["unresolved_research"] if item["show_title"] == "The George Burns and Gracie Allen Show")
+    assert burns["status"] == "unresolved_no_defensible_love_nest_recording"
+    correction = json.loads(RESEARCH_BATCH_07.read_text(encoding="utf-8"))["program"]
+    assert correction["recording_status"] == "unresolved_no_defensible_program_specific_recording"
+    assert correction["spotify_track_id"] == ""
+    assert "not accepted" in correction["correction"]

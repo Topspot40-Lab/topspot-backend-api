@@ -1,0 +1,8 @@
+{
+  "schema_version":"1950s-tv-themes-research-batch/v1",
+  "batch_id":"1950s-tv-themes-burns-allen-correction-07",
+  "purpose":"Read-only correction of an unsupported Burns and Allen candidate approval.",
+  "research_method":"Public web pages only; no Spotify authentication or Spotify API was used.",
+  "program":{"show_title":"The George Burns and Gracie Allen Show","original_broadcast_years":"1950-1958","theme_title":"Love Nest","composer":"Louis A. Hirsch","lyricist":"Otto Harbach","historical_status":"theme_identity_verified","recording_status":"unresolved_no_defensible_program_specific_recording","spotify_track_id":"","correction":"Bing Crosby and Kitty Carlisle are not accepted as the proposed performer, and no shared-recording relationship with The Jack Benny Program is asserted.","source_urls":["https://www.classicthemes.com/50sTVThemes/themePages/burnsAndAllen.html","https://www.si.edu/object/love-nest%3Anmah_679213"]},
+  "approval_gate":"Burns and Allen remains unresolved, unranked, and unapplied to production."
+}
