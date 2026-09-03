@@ -46,3 +46,24 @@ def test_contiguous_intro_regeneration_contract_rejects_stale_or_reused_media():
     assert "No existing, staged, or canonical" in source
     assert "wrong-rank, wrong-program, blank, truncated, duplicate, or undecodable" in source
     assert "Re-download all 114 live" in source
+
+
+def test_asr_identity_normalization_keeps_numeric_ranks_and_documented_variants_strict():
+    from backend.scripts.catalogs.stage_1960s_tv_themes_narration import _identity_ok
+    row = {"rank": 20, "language": "en", "kind": "intro"}
+    assert _identity_ok(row, {"program": "Ironside", "artist": "Quincy Jones"}, "Here at number 20, it is iron side, performed by Quincy Jones.", "en") == []
+    assert _identity_ok({"rank": 5, "language": "en", "kind": "short_detail"}, {"program": "I Spy", "artist": "Hugo Montenegro & His Orchestra"}, "Theme from iSpy, performed by Hugo Montenegro and his orchestra.", "en") == []
+    assert _identity_ok({"rank": 9, "language": "es-MX", "kind": "short_detail"}, {"program": "The F.B.I.", "artist": "Hugo Montenegro & His Orchestra"}, "FBI, interpretado por Hugo Montenegro y his orchestra.", "es") == []
+    assert _identity_ok({"rank": 4, "language": "pt-BR", "kind": "short_detail"}, {"program": "Hawaii Five-O", "artist": "Morton Stevens"}, "Hawai 5O, interpretado por Morton Stevens.", "pt") == []
+    assert _identity_ok({"rank": 14, "language": "en", "kind": "long_detail"}, {"program": "The Outer Limits", "artist": "TV Tunesters"}, "The Outer Limits, credited to TV tunisters.", "en") == []
+    assert "wrong_rank" in _identity_ok(row, {"program": "Ironside", "artist": "Quincy Jones"}, "Here at number 19, it is iron side, performed by Quincy Jones.", "en")
+    assert "wrong_program" in _identity_ok(row, {"program": "Ironside", "artist": "Quincy Jones"}, "Here at number 20, it is Batman, performed by Quincy Jones.", "en")
+
+
+def test_closed_set_identity_rejects_a_competing_rank():
+    from backend.scripts.catalogs.stage_1960s_tv_themes_narration import closed_set_decision
+    entries = {1: {"program": "Ironside", "artist": "Quincy Jones"}, 2: {"program": "Batman", "artist": "Neal Hefti"}}
+    row = {"rank": 1, "language": "en", "kind": "intro"}
+    decision = closed_set_decision(row, entries, "Number 2, Batman, performed by Neal Hefti.")
+    assert decision["nearest_rank"] == 2
+    assert decision["automatic_pass"] is False
