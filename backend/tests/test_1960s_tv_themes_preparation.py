@@ -106,3 +106,11 @@ def test_catalog_64_live_verification_runs_only_after_database_commit():
     source = (Path(__file__).parents[1] / "scripts/catalogs/promote_1960s_tv_themes.py").read_text(encoding="utf-8")
     execute = source[source.index("def execute("):]
     assert execute.index("session.commit()") < execute.index("verify_live_api(api_base, bundle)")
+
+
+def test_catalog_64_direct_database_and_canonical_hash_gates_precede_public_api_gate():
+    from pathlib import Path
+    source = (Path(__file__).parents[1] / "scripts/catalogs/promote_1960s_tv_themes.py").read_text(encoding="utf-8")
+    execute = source[source.index("def execute("):]
+    assert execute.index("verify_database_projection(session, bundle)") < execute.index("verify_live_api(api_base, bundle)")
+    assert execute.index("verify_canonical_storage(storage, bundle[\"records\"])") < execute.index("verify_live_api(api_base, bundle)")

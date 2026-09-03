@@ -193,6 +193,49 @@ def _restore_storage(storage: Storage, backups: list[dict]) -> None:
             storage.remove(item["bucket"], item["target"])
 
 
+def verify_canonical_storage(storage: Storage, records: list[dict]) -> None:
+    """The promoted canonical bytes must be the exact approved staged bytes."""
+    for record in records:
+        data = storage.get(record["bucket"], canonical_key(record))
+        if not data or _sha(data) != record["audio_sha256"]:
+            raise ValueError(f"production Storage refused: canonical hash mismatch for {canonical_key(record)}")
+
+
+def verify_database_projection(session: Any, bundle: dict[str, Any]) -> None:
+    """Verify the committed source of truth before any eventually-consistent API."""
+    from sqlmodel import select
+    from backend.models.dbmodels import Artist, Track, TrackLocale, TrackRanking, TrackRankingLocale
+    expected = {entry["proposed_rank"]: entry for entry in bundle["entries"]}
+    rows = session.exec(select(TrackRanking, Track, Artist).join(Track).join(Artist).where(TrackRanking.decade_genre_id == CATALOG_ID).order_by(TrackRanking.ranking)).all()
+    if len(rows) != 38 or tuple(ranking.ranking for ranking, _, _ in rows) != FINAL_RANKS:
+        raise ValueError("production database refused: catalog-64 is not exactly ranks 1..38")
+    by_rank = {ranking.ranking: (ranking, track, artist) for ranking, track, artist in rows}
+    for rank, entry in expected.items():
+        _, track, artist = by_rank[rank]
+        if track.spotify_track_id != entry["spotify_track_id"] or artist.artist_name != entry["artist"] or track.artist_id is None:
+            raise ValueError(f"production database refused: identity mismatch at rank {rank}")
+    for record in bundle["records"]:
+        ranking, track, _ = by_rank[record["rank"]]
+        draft = bundle["drafts"][(record["rank"], record["language"], record["kind"])]
+        if record["kind"] == "intro":
+            if record["language"] == "en":
+                if ranking.intro != draft["text"]: raise ValueError(f"production database refused: English intro {record['rank']}")
+            else:
+                code = "es" if record["language"] == "es-MX" else "pt-BR"
+                locale = session.exec(select(TrackRankingLocale).where(TrackRankingLocale.track_ranking_id == ranking.id, TrackRankingLocale.language_code == code)).first()
+                if not locale or locale.intro_text != draft["text"] or locale.tts_key != canonical_key(record): raise ValueError(f"production database refused: intro mapping {record['rank']}/{code}")
+        elif record["language"] == "en":
+            if record["kind"] == "short_detail": ok = track.short_detail == draft["text"] and track.short_detail_tts_key == canonical_key(record)
+            else: ok = track.detail == draft["text"]
+            if not ok: raise ValueError(f"production database refused: English detail mapping {record['rank']}")
+        else:
+            code = "es" if record["language"] == "es-MX" else "pt-BR"
+            locale = session.exec(select(TrackLocale).where(TrackLocale.track_id == track.id, TrackLocale.language_code == code)).first()
+            if record["kind"] == "short_detail": ok = locale and locale.short_detail_text == draft["text"] and locale.short_detail_tts_key == canonical_key(record)
+            else: ok = locale and locale.detail_text == draft["text"] and locale.tts_key == canonical_key(record)
+            if not ok: raise ValueError(f"production database refused: detail mapping {record['rank']}/{code}")
+
+
 def _database_snapshot(session: Any) -> dict[str, Any]:
     """Capture only catalog-64 rows and their mutable locale/track fields."""
     from sqlmodel import select
@@ -315,8 +358,8 @@ def execute(*, approved_commit: str, api_base: str, storage: Storage | None = No
             created_artist_ids = {track.artist_id for _, track in final_rows.values() if track.artist_id not in before_artists}
             session.commit()
             committed = True
-        verify_live_api(api_base, bundle)
-        return {"catalog_id": CATALOG_ID, "promoted": 207, "rollback_backups": len(backups)}
+            verify_database_projection(session, bundle)
+        verify_canonical_storage(storage, bundle["records"])
     except Exception:
         try:
             if committed and snapshot is not None:
@@ -325,6 +368,11 @@ def execute(*, approved_commit: str, api_base: str, storage: Storage | None = No
             _restore_storage(storage, backups)
         finally:
             raise
+    # The public API is outside this transaction.  A stale response must never
+    # compensate an already verified database/Storage commit; callers recheck
+    # it after the platform's ordinary cache invalidation or deployment.
+    verify_live_api(api_base, bundle)
+    return {"catalog_id": CATALOG_ID, "promoted": 207, "rollback_backups": len(backups)}
 
 
 def main() -> None:
