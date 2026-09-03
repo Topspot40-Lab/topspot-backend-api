@@ -475,6 +475,7 @@ async def run_all_radio_sequence(
                         lang=narration_lang,
                         track=track,
                         artist=artist,
+                        decade_genre_id=tr_rank.decade_genre_id,
                     )
 
                     detail_by_lang[narration_lang] = (dbucket, dkey)

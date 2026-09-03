@@ -187,29 +187,72 @@ def log_header_and_texts(
 # ─────────────────────────────────────────────
 # Narration asset builders
 # ─────────────────────────────────────────────
+def _locale_narration_keys(*, lang: str, ranking_id: int | None = None, track_id: int | None = None) -> tuple[Optional[str], Optional[str]]:
+    """Return an explicitly mapped localized narration asset, when one exists."""
+    if lang == "en":
+        return None, None
+
+    from sqlmodel import select
+    from backend.models.dbmodels import TrackLocale, TrackRankingLocale
+
+    with SQLSession(engine) as session:
+        if ranking_id is not None:
+            locale = session.exec(
+                select(TrackRankingLocale).where(
+                    TrackRankingLocale.track_ranking_id == ranking_id,
+                    TrackRankingLocale.language_code == lang,
+                )
+            ).first()
+        elif track_id is not None:
+            locale = session.exec(
+                select(TrackLocale).where(
+                    TrackLocale.track_id == track_id,
+                    TrackLocale.language_code == lang,
+                )
+            ).first()
+        else:
+            return None, None
+
+    return getattr(locale, "tts_bucket", None), getattr(locale, "tts_key", None)
+
+
 def build_intro_jobs(*, lang: str, tr_rows) -> List[Tuple[str, str, str, str, int]]:
     jobs: List[Tuple[str, str, str, str, int]] = []
     if not tr_rows:
         return jobs
 
     for tr, decade_name, genre_name in tr_rows:
-        intro_filename = build_intro_filename(decade_name, genre_name, tr.ranking)
-        bucket = bucket_for(lang, "intro")
-        key = key_for("intro", intro_filename)
+        bucket, key = (
+            _locale_narration_keys(lang=lang, ranking_id=getattr(tr, "id", None))
+            if getattr(tr, "decade_genre_id", None) == 63
+            else (None, None)
+        )
+        if not (bucket and key):
+            intro_filename = build_intro_filename(decade_name, genre_name, tr.ranking)
+            bucket = bucket_for(lang, "intro")
+            key = key_for("intro", intro_filename)
         if bucket and key:
             jobs.append((bucket, key, decade_name, genre_name, tr.ranking))
 
     return jobs
 
 
-def narration_keys_for(*, lang: str, track, artist):
+def narration_keys_for(*, lang: str, track, artist, decade_genre_id: int | None = None):
+    # Catalog 63's replacement is intentionally isolated: Track rows can be
+    # shared by other catalogs, whose historical naming convention remains intact.
+    detail_bucket, detail_key = (
+        _locale_narration_keys(lang=lang, track_id=getattr(track, "id", None))
+        if decade_genre_id == 63
+        else (None, None)
+    )
     detail_filename = build_detail_filename(track.spotify_track_id)
     artist_filename = build_artist_filename(artist.spotify_artist_id)
 
-    detail_key = key_for("detail", detail_filename) if detail_filename else None
+    if not detail_key:
+        detail_key = key_for("detail", detail_filename) if detail_filename else None
     artist_key = key_for("artist", artist_filename) if artist_filename else None
 
-    detail_bucket = bucket_for(lang, "detail") if detail_key else None
+    detail_bucket = detail_bucket or (bucket_for(lang, "detail") if detail_key else None)
     artist_bucket = bucket_for(lang, "artist") if artist_key else None
 
     return detail_bucket, detail_key, artist_bucket, artist_key

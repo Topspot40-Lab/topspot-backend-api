@@ -24,10 +24,10 @@ def main() -> None:
     elif args.live:
         from sqlmodel import Session
         from backend.database import engine
-        from backend.services.supabase_storage import object_exists
+        from backend.services.supabase_storage import object_exists_cached
         with Session(engine) as session:
             texts, mapped = live_database_narration_rows(session, expected)
-        audio = [row for row in expected if object_exists(row["bucket"], row["key"])]
+        audio = [row for row in expected if object_exists_cached(row["bucket"], row["key"])]
     else:
         if args.audio_records is None:
             parser.error("--audio-records is required unless --live is used")
