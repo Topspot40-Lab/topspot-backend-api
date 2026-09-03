@@ -42,13 +42,21 @@ def _sha(text: str) -> str:
 
 
 def _classification(rank: int, track: dict) -> str:
-    if rank in (21, 27, 39, 44, 45):
+    if rank in (4, 21, 27, 39, 44, 45):
         return "incorrect_recording"
     if rank in EXCLUSION_REASON:
         return "unresolved"
     if (track["artist_display_name"] or "").casefold() in {"jack marshall", "hugo montenegro"}:
         return "recognizable_rerecording_or_cover"
     return "correct_original_or_broadcast_associated"
+
+
+def _review_note(rank: int) -> str:
+    if rank in EXCLUSION_REASON:
+        return EXCLUSION_REASON[rank]
+    if rank in REPLACEMENTS:
+        return "current recording rejected; verified public Spotify replacement is in production plan"
+    return "retained once in proposed plan"
 
 
 def _draft(rank: int, title: str, artist: str, language: str, kind: str) -> str:
@@ -80,7 +88,7 @@ def main() -> None:
             "spotify_track_id": track["spotify_track_id"],
             "classification": _classification(rank, track),
             "public_spotify_url": f"https://open.spotify.com/track/{track['spotify_track_id']}",
-            "review_note": EXCLUSION_REASON.get(rank, "retained once in proposed plan"),
+            "review_note": _review_note(rank),
         })
     approved = []
     for rank in RETAINED_RANKS:

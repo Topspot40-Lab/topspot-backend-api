@@ -13,9 +13,9 @@
       "existing_rank": 4,
       "track_name": "hawaii five‑o",
       "spotify_track_id": "6rYSAr9jGVpVNBL0ftkIDi",
-      "classification": "correct_original_or_broadcast_associated",
+      "classification": "incorrect_recording",
       "public_spotify_url": "https://open.spotify.com/track/6rYSAr9jGVpVNBL0ftkIDi",
-      "review_note": "retained once in proposed plan"
+      "review_note": "current recording rejected; verified public Spotify replacement is in production plan"
     },
     {
       "existing_rank": 6,
@@ -111,7 +111,7 @@
       "spotify_track_id": "29qFlNOssruDfoEN8vN2Uu",
       "classification": "incorrect_recording",
       "public_spotify_url": "https://open.spotify.com/track/29qFlNOssruDfoEN8vN2Uu",
-      "review_note": "retained once in proposed plan"
+      "review_note": "current recording rejected; verified public Spotify replacement is in production plan"
     },
     {
       "existing_rank": 22,
@@ -295,7 +295,7 @@
       "spotify_track_id": "6owgMJENlBFIDIT0JgB9j8",
       "classification": "incorrect_recording",
       "public_spotify_url": "https://open.spotify.com/track/6owgMJENlBFIDIT0JgB9j8",
-      "review_note": "retained once in proposed plan"
+      "review_note": "current recording rejected; verified public Spotify replacement is in production plan"
     },
     {
       "existing_rank": 45,
@@ -303,7 +303,7 @@
       "spotify_track_id": "3EkvO25frZN1PH76J8KKhI",
       "classification": "incorrect_recording",
       "public_spotify_url": "https://open.spotify.com/track/3EkvO25frZN1PH76J8KKhI",
-      "review_note": "retained once in proposed plan"
+      "review_note": "current recording rejected; verified public Spotify replacement is in production plan"
     }
   ]
 }
