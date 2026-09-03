@@ -24,6 +24,12 @@ from backend.models.dbmodels import (
 
 from backend.services.single_track_player import play_one_server_side
 from backend.services.decade_genre_sequence import run_decade_genre_sequence
+from backend.services.audio_urls import resolve_audio_ref
+from backend.services.radio_runtime import (
+    build_intro_jobs,
+    narration_keys_for,
+    short_detail_keys_for,
+)
 
 from backend.routers.playback_control import start_new_sequence
 from backend.state.playback_flags import flags
@@ -34,6 +40,48 @@ router = APIRouter(
     tags=["Supabase: Decade/Genre"],
 )
 logger = logging.getLogger(__name__)
+
+
+def resolve_sequence_narration_audio(*, language: str, track, artist, ranking, decade_name: str, genre_name: str, ranking_locale=None, track_locale=None) -> dict:
+    """Build the frontend narration contract from the same resolvers as playback."""
+    intro_jobs = build_intro_jobs(
+        lang=language,
+        tr_rows=[(ranking, decade_name, genre_name)],
+        mapped_bucket=getattr(ranking_locale, "tts_bucket", None),
+        mapped_key=getattr(ranking_locale, "tts_key", None),
+    )
+    intro_bucket, intro_key = intro_jobs[0][:2] if intro_jobs else (None, None)
+    detail_bucket, detail_key, _, _ = narration_keys_for(
+        lang=language,
+        track=track,
+        artist=artist,
+        decade_genre_id=ranking.decade_genre_id,
+        mapped_detail_bucket=getattr(track_locale, "tts_bucket", None),
+        mapped_detail_key=getattr(track_locale, "tts_key", None),
+    )
+    short_detail_bucket, short_detail_key = short_detail_keys_for(
+        lang=language,
+        track=track,
+        decade_genre_id=ranking.decade_genre_id,
+        mapped_short_detail_key=(
+            getattr(track, "short_detail_tts_key", None)
+            if language == "en"
+            else getattr(track_locale, "short_detail_tts_key", None)
+        ),
+    )
+
+    def payload(bucket, key):
+        return {
+            "bucket": bucket,
+            "key": key,
+            "url": resolve_audio_ref(bucket, key) if bucket and key else None,
+        }
+
+    return {
+        "intro": payload(intro_bucket, intro_key),
+        "detail": payload(detail_bucket, detail_key),
+        "short_detail": payload(short_detail_bucket, short_detail_key),
+    }
 
 
 def get_max_rank_for_decade_genre(db, decade: str, genre: str) -> int:
@@ -557,6 +605,16 @@ async def get_sequence_decade_genre(
             if ranking_locale
             else getattr(ranking, "intro", None)
         )
+        narration_audio = resolve_sequence_narration_audio(
+            language=locale_code,
+            track=track,
+            artist=artist,
+            ranking=ranking,
+            decade_name=decade_obj.decade_name,
+            genre_name=genre_obj.genre_name,
+            ranking_locale=ranking_locale,
+            track_locale=track_locale,
+        )
 
         tracks.append({
             "rankingId": ranking.id,
@@ -578,8 +636,15 @@ async def get_sequence_decade_genre(
             "detail": detail_text,
             "artistDescription": artist_description_text,
 
-            "introKey": getattr(ranking, "intro_key", None),
-            "detailKey": getattr(track, "detail_key", None),
+            "introBucket": narration_audio["intro"]["bucket"],
+            "introKey": narration_audio["intro"]["key"],
+            "introUrl": narration_audio["intro"]["url"],
+            "detailBucket": narration_audio["detail"]["bucket"],
+            "detailKey": narration_audio["detail"]["key"],
+            "detailUrl": narration_audio["detail"]["url"],
+            "shortDetailBucket": narration_audio["short_detail"]["bucket"],
+            "shortDetailKey": narration_audio["short_detail"]["key"],
+            "shortDetailUrl": narration_audio["short_detail"]["url"],
             "artistKey": getattr(artist, "artist_description_key", None),
         })
 

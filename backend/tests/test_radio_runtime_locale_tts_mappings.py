@@ -34,3 +34,12 @@ def test_detail_job_prefers_the_database_locale_mapping(monkeypatch):
     )
 
     assert (detail_bucket, detail_key) == ("audio-ptbr", "detail/spotify-1950s-theme.mp3")
+
+
+def test_catalog_63_english_intro_uses_the_canonical_hyphenated_slug():
+    jobs = radio_runtime.build_intro_jobs(
+        lang="en",
+        tr_rows=[(SimpleNamespace(id=71, ranking=1, decade_genre_id=63), "1950s", "TV Themes")],
+    )
+
+    assert jobs[0][:2] == ("audio-en", "intro/1950s-tv_themes_01.mp3")

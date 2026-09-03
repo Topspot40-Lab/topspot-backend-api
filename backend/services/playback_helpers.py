@@ -69,6 +69,7 @@ Kind = Literal[
     "liner",
     "intro",
     "detail",
+    "short_detail",
     "artist",
     "collections_intro",
 ]

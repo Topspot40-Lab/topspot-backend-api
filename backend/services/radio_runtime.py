@@ -24,6 +24,8 @@ from backend.services.radio_render import clean_text
 from backend.state.skip import skip_event
 from backend.state.playback_runtime import bind_task, current_runtime, current_user_id
 
+_CATALOG_63_INTRO_SLUG = "1950s-tv_themes"
+
 
 def start_playback_sequence(coro) -> None:
     """
@@ -216,19 +218,25 @@ def _locale_narration_keys(*, lang: str, ranking_id: int | None = None, track_id
     return getattr(locale, "tts_bucket", None), getattr(locale, "tts_key", None)
 
 
-def build_intro_jobs(*, lang: str, tr_rows) -> List[Tuple[str, str, str, str, int]]:
+def build_intro_jobs(*, lang: str, tr_rows, mapped_bucket: str | None = None, mapped_key: str | None = None) -> List[Tuple[str, str, str, str, int]]:
     jobs: List[Tuple[str, str, str, str, int]] = []
     if not tr_rows:
         return jobs
 
     for tr, decade_name, genre_name in tr_rows:
-        bucket, key = (
-            _locale_narration_keys(lang=lang, ranking_id=getattr(tr, "id", None))
-            if getattr(tr, "decade_genre_id", None) == 63
-            else (None, None)
-        )
+        bucket, key = mapped_bucket, mapped_key
         if not (bucket and key):
-            intro_filename = build_intro_filename(decade_name, genre_name, tr.ranking)
+            bucket, key = (
+                _locale_narration_keys(lang=lang, ranking_id=getattr(tr, "id", None))
+                if getattr(tr, "decade_genre_id", None) == 63
+                else (None, None)
+            )
+        if not (bucket and key):
+            intro_filename = (
+                f"{_CATALOG_63_INTRO_SLUG}_{tr.ranking:02d}.mp3"
+                if getattr(tr, "decade_genre_id", None) == 63
+                else build_intro_filename(decade_name, genre_name, tr.ranking)
+            )
             bucket = bucket_for(lang, "intro")
             key = key_for("intro", intro_filename)
         if bucket and key:
@@ -237,14 +245,16 @@ def build_intro_jobs(*, lang: str, tr_rows) -> List[Tuple[str, str, str, str, in
     return jobs
 
 
-def narration_keys_for(*, lang: str, track, artist, decade_genre_id: int | None = None):
+def narration_keys_for(*, lang: str, track, artist, decade_genre_id: int | None = None, mapped_detail_bucket: str | None = None, mapped_detail_key: str | None = None):
     # Catalog 63's replacement is intentionally isolated: Track rows can be
     # shared by other catalogs, whose historical naming convention remains intact.
-    detail_bucket, detail_key = (
-        _locale_narration_keys(lang=lang, track_id=getattr(track, "id", None))
-        if decade_genre_id == 63
-        else (None, None)
-    )
+    detail_bucket, detail_key = mapped_detail_bucket, mapped_detail_key
+    if not (detail_bucket and detail_key):
+        detail_bucket, detail_key = (
+            _locale_narration_keys(lang=lang, track_id=getattr(track, "id", None))
+            if decade_genre_id == 63
+            else (None, None)
+        )
     detail_filename = build_detail_filename(track.spotify_track_id)
     artist_filename = build_artist_filename(artist.spotify_artist_id)
 
@@ -256,6 +266,30 @@ def narration_keys_for(*, lang: str, track, artist, decade_genre_id: int | None 
     artist_bucket = bucket_for(lang, "artist") if artist_key else None
 
     return detail_bucket, detail_key, artist_bucket, artist_key
+
+
+def short_detail_keys_for(*, lang: str, track, decade_genre_id: int | None = None, mapped_short_detail_key: str | None = None):
+    """Resolve the short-detail asset using catalog-scoped locale mappings."""
+    short_detail_key = mapped_short_detail_key
+    if not short_detail_key and decade_genre_id == 63:
+        if lang == "en":
+            short_detail_key = getattr(track, "short_detail_tts_key", None)
+        else:
+            from sqlmodel import select
+            from backend.models.dbmodels import TrackLocale
+
+            with SQLSession(engine) as session:
+                locale = session.exec(
+                    select(TrackLocale).where(
+                        TrackLocale.track_id == track.id,
+                        TrackLocale.language_code == lang,
+                    )
+                ).first()
+            short_detail_key = getattr(locale, "short_detail_tts_key", None)
+
+    filename = build_detail_filename(track.spotify_track_id)
+    short_detail_key = short_detail_key or key_for("short_detail", filename)
+    return bucket_for(lang, "detail"), short_detail_key
 
 def skip_to_next() -> None:
     """
