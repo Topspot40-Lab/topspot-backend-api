@@ -99,3 +99,10 @@ def test_catalog_64_promotion_executor_is_explicitly_live_only_and_fail_closed()
     assert "staged hash mismatch" in source
     assert "_restore_storage" in source
     assert "Cache-Control" in source
+
+
+def test_catalog_64_live_verification_runs_only_after_database_commit():
+    from pathlib import Path
+    source = (Path(__file__).parents[1] / "scripts/catalogs/promote_1960s_tv_themes.py").read_text(encoding="utf-8")
+    execute = source[source.index("def execute("):]
+    assert execute.index("session.commit()") < execute.index("verify_live_api(api_base, bundle)")
