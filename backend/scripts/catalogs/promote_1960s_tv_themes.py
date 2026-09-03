@@ -236,6 +236,17 @@ def verify_database_projection(session: Any, bundle: dict[str, Any]) -> None:
             if not ok: raise ValueError(f"production database refused: detail mapping {record['rank']}/{code}")
 
 
+def verify_preapply_snapshot(session: Any) -> None:
+    """Require the reviewed sparse source state before any production write."""
+    from sqlmodel import select
+    from backend.models.dbmodels import TrackRanking
+    snapshot = _read(ROLLBACK_SNAPSHOT)
+    expected = tuple(sorted(item["ranking"]["ranking"] for item in snapshot["records"]))
+    rows = session.exec(select(TrackRanking.ranking).where(TrackRanking.decade_genre_id == CATALOG_ID).order_by(TrackRanking.ranking)).all()
+    if tuple(rows) != expected or len(rows) != 38:
+        raise ValueError("production database refused: catalog-64 no longer matches the committed pre-apply snapshot")
+
+
 def _database_snapshot(session: Any) -> dict[str, Any]:
     """Capture only catalog-64 rows and their mutable locale/track fields."""
     from sqlmodel import select
@@ -346,8 +357,13 @@ def execute(*, approved_commit: str, api_base: str, storage: Storage | None = No
     from backend.database import get_db_session
     from backend.scripts.catalogs.tv_themes_1960s_apply import apply_catalog_64
     try:
+        # Refuse before the first Storage write unless production is precisely
+        # the reviewed sparse source state.
+        with get_db_session() as preflight_session:
+            verify_preapply_snapshot(preflight_session)
         backups = _backup_and_promote(storage, bundle["records"], payloads, uuid.uuid4().hex)
         with get_db_session() as session:
+            verify_preapply_snapshot(session)
             snapshot = _database_snapshot(session)
             from sqlmodel import select
             from backend.models.dbmodels import Artist

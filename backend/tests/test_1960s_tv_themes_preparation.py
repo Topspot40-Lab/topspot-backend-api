@@ -114,3 +114,11 @@ def test_catalog_64_direct_database_and_canonical_hash_gates_precede_public_api_
     execute = source[source.index("def execute("):]
     assert execute.index("verify_database_projection(session, bundle)") < execute.index("verify_live_api(api_base, bundle)")
     assert execute.index("verify_canonical_storage(storage, bundle[\"records\"])") < execute.index("verify_live_api(api_base, bundle)")
+
+
+def test_catalog_64_preapply_gate_requires_sparse_committed_snapshot_before_storage_write():
+    from pathlib import Path
+    source = (Path(__file__).parents[1] / "scripts/catalogs/promote_1960s_tv_themes.py").read_text(encoding="utf-8")
+    execute = source[source.index("def execute("):]
+    assert "catalog-64 no longer matches the committed pre-apply snapshot" in source
+    assert execute.index("verify_preapply_snapshot(preflight_session)") < execute.index("_backup_and_promote(storage")
