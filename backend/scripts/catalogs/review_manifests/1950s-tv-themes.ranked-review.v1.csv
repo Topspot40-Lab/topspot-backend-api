@@ -1,0 +1,26 @@
+proposed_rank,program_name,theme_title,spotify_recording,spotify_track_id,original_broadcast_years,composer,performer,source_type,source_role,status,concise_justification
+1,Peter Gunn,Peter Gunn,Henry Mancini,58tIaHOLyqe6Q7M9pZe9GX,1958-1961,Henry Mancini,Henry Mancini,TV,THEME,keep,Gary approved the existing database recording; historical and recording identity require no replacement.
+2,Perry Mason,Park Avenue Beat,Fred Steiner,799kpXdBhIzYscq144QVEn,1957-1966,Fred Steiner,Fred Steiner,TV,THEME,keep,Gary personally approved this exact replacement; current database track remains pending replacement.
+3,Rawhide,Rawhide,Frankie Laine - Original Version,6cHhJfIQE4tOQ6fVcMm1CA,1959-1965,Dimitri Tiomkin; Ned Washington,Frankie Laine,TV,THEME,keep,Gary personally approved this exact replacement; current database track remains pending replacement.
+4,The Mickey Mouse Club,Mickey Mouse March,Jimmie Dodd & The Mouseketeers,5TMudJQG4Pb4PneHIhtgA0,1955-1959,Jimmie Dodd,Jimmie Dodd & The Mouseketeers,TV,THEME,keep,Gary approved the existing database recording.
+5,Alfred Hitchcock Presents,Funeral March of a Marionette,Charles Gounod,604ZpOVApaeGoMOzOm8lUE,1955-1962,Charles Gounod,Charles Gounod,TV,THEME,keep,Gary approved the existing database recording.
+6,The Lone Ranger,William Tell Overture Finale,Gioachino Rossini,1NbD8eCoSrmFA8sNrZZTvz,1949-1957,Gioachino Rossini,Gioachino Rossini,TV,THEME,keep,Gary approved the existing database recording.
+7,Adventures of Superman,Superman Main Title,Leon Klatzkin,4sYOSzhDiBZuX88Ylh7O2N,1952-1958,Leon Klatzkin,Leon Klatzkin,TV,THEME,keep,Gary personally approved this exact replacement; current database track remains pending replacement.
+8,Have Gun – Will Travel,The Ballad of Paladin,Johnny Western,5aIlwCsfbagxrVIAVDGiaA,1957-1963,Johnny Western,Johnny Western,TV,THEME,keep,Gary approved the existing database recording.
+9,The Rifleman,Rifleman Main Title,Herschel Burke Gilbert,12ynoGdWbebDuV61rsJyp1,1958-1963,Herschel Burke Gilbert,Herschel Burke Gilbert,TV,THEME,keep,Gary personally approved this exact replacement; current database track remains pending replacement.
+10,Dragnet,Danger Ahead / Dragnet Theme,Ray Anthony & His Orchestra,5Iyz89IZQSNtATjrTwpO2H,1951-1959,Walter Schumann,Ray Anthony & His Orchestra,TV,THEME,keep,Gary personally approved this exact replacement; current database track remains pending replacement.
+11,The Honeymooners,You're My Greatest Love,Jackie Gleason,4nBCLGl2EXO3bIk30Jyv5b,1955-1956,Jackie Gleason; Bill Templeton,Jackie Gleason,TV,THEME,keep,Gary personally approved this exact replacement; current database track remains pending replacement.
+12,77 Sunset Strip,77 Sunset Strip Theme,Jackie Gleason & His Orchestra,6KZpSdpQGbTxP5jKfKY8cV,1958-1964,Jerry Livingston; Mack David,Jackie Gleason & His Orchestra,TV,THEME,keep,Gary approved the existing database recording.
+13,Bonanza,Bonanza Theme,Jackie Gleason & His Orchestra,29UOD7lc0l7AVc2W7jVsAI,1959-1973,Jay Livingston; Ray Evans,Jackie Gleason & His Orchestra,TV,THEME,keep,Gary approved the existing database recording.
+,I Love Lucy,I Love Lucy Theme,,,1951-1957,,,TV,THEME,research-needed,Existing incomplete row; confirm historical theme and a public Spotify recording before any ranking.
+,Gunsmoke,Gunsmoke Theme,,,1955-1975,,,TV,THEME,research-needed,Existing incomplete row; research broadcast-era theme identity and recording.
+,The Twilight Zone,First-season theme,,,1959-1964,Bernard Herrmann,,TV,THEME,research-needed,Only Bernard Herrmann's first-season theme qualifies for a 1950s entry; do not use the 1960 Marius Constant theme.
+,The Phil Silvers Show,Theme,,,1955-1959,,,TV,THEME,research-needed,Existing incomplete row; research exact broadcast recording.
+,The Adventures of Ozzie and Harriet,Theme,,,1952-1966,,,TV,THEME,research-needed,Existing incomplete row; confirm television rather than radio identity and recording.
+,Zorro,Theme,,,1957-1959,,,TV,THEME,research-needed,Existing incomplete row; research exact broadcast recording.
+,Wagon Train,Theme,,,1957-1965,,,TV,THEME,research-needed,Existing incomplete row; research exact broadcast recording.
+,Sea Hunt,Theme,,,1958-1961,,,TV,THEME,research-needed,Existing incomplete row; research exact broadcast recording.
+,Davy Crockett,Theme,,,1954-1956,,,TV,THEME,research-needed,New research candidate; verify television source scope and recording before ranking.
+,The Ed Sullivan Show,Theme,,,1948-1971,,,TV,THEME,research-needed,New research candidate; verify a theme recording appropriate to the program.
+,Lassie,Theme,,,1954-1973,,,TV,THEME,research-needed,New research candidate; research early television theme version and recording.
+,Batman,Batman Theme,Neal Hefti,4lwV7SpU0JSM1OIm0aIkNP,1966-1968,Neal Hefti,Neal Hefti,TV,THEME,defer,Belongs to the 1960s historical-review queue and is excluded from the 1950s program.

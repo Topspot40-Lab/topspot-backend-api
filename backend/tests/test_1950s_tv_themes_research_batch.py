@@ -10,6 +10,10 @@ REVIEW_MANIFEST = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv_themes.v2.json"
 )
+RANKED_REVIEW = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv-themes.ranked-review.v1.csv"
+)
 EXPECTED_RANKS = {2, 3, 8, 10, 11, 12}
 APPROVED_REPLACEMENTS = {
     2: "799kpXdBhIzYscq144QVEn",
@@ -75,3 +79,15 @@ def test_dragnet_candidates_have_public_ids_and_only_the_approved_one_is_not_pen
         assert candidate["spotify_url"].endswith(candidate["spotify_track_id"])
         expected = "approved" if candidate["spotify_track_id"] == "5Iyz89IZQSNtATjrTwpO2H" else "pending"
         assert candidate["gary_listening_decision"] == expected
+
+
+def test_ranked_review_keeps_approved_recordings_and_defers_batman():
+    import csv
+
+    with RANKED_REVIEW.open(encoding="utf-8", newline="") as file:
+        rows = list(csv.DictReader(file))
+    keepers = [row for row in rows if row["status"] == "keep"]
+    assert [int(row["proposed_rank"]) for row in keepers] == list(range(1, 14))
+    assert {row["spotify_track_id"] for row in keepers} >= set(APPROVED_REPLACEMENTS.values())
+    batman = next(row for row in rows if row["program_name"] == "Batman")
+    assert batman["status"] == "defer"
