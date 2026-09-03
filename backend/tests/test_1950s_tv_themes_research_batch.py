@@ -10,9 +10,17 @@ REVIEW_MANIFEST = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv_themes.v2.json"
 )
+REVIEW_MANIFEST_V3 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv_themes.v3.json"
+)
 RANKED_REVIEW = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.ranked-review.v1.csv"
+)
+RESEARCH_BATCH_02 = (
+    Path(__file__).parents[1]
+    / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-02.v1.json"
 )
 EXPECTED_RANKS = {2, 3, 8, 10, 11, 12}
 APPROVED_REPLACEMENTS = {
@@ -91,3 +99,29 @@ def test_ranked_review_keeps_approved_recordings_and_defers_batman():
     assert {row["spotify_track_id"] for row in keepers} >= set(APPROVED_REPLACEMENTS.values())
     batman = next(row for row in rows if row["program_name"] == "Batman")
     assert batman["status"] == "defer"
+
+
+def test_conditional_listening_approvals_and_next_batch_are_explicit():
+    batch = json.loads(RESEARCH_BATCH_02.read_text(encoding="utf-8"))
+    approvals = batch["listening_approved_historical_review_pending"]
+    assert {item["spotify_track_id"] for item in approvals} == {
+        "5lSfu6Bb1lZHvEA5Lp3FSo", "71qlBJvHesvpK3TJXGN95O", "301w6yavJnABE4APW72ynW"
+    }
+    assert {item["historical_relationship"] for item in approvals} == {"recognizable cover"}
+    twilight = batch["next_listening_candidates"][0]
+    assert twilight["spotify_track_id"] == "2esm55sr13FFKqoP6qwjUz"
+    assert twilight["gary_listening_decision"] == "pending"
+
+
+def test_conditional_approvals_are_listening_only_and_not_catalog_acceptance():
+    manifest = json.loads(REVIEW_MANIFEST_V3.read_text(encoding="utf-8"))
+    assert manifest["supersedes"] == "1950s-tv_themes.v2.json"
+    decisions = manifest["conditional_listening_approvals"]
+    assert {decision["show_title"] for decision in decisions} == {
+        "I Love Lucy", "Gunsmoke", "Zorro"
+    }
+    for decision in decisions:
+        assert decision["catalog_acceptance_status"] == "pending_historical_acceptance"
+        approved = decision["approved_exact_spotify_recording"]
+        assert approved["gary_listening_decision"] == "approved"
+        assert approved["recording_classification"] == "recognizable_cover"

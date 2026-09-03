@@ -1,0 +1,37 @@
+{
+  "schema_version": "catalog-review-manifest/v1",
+  "manifest_version": 3,
+  "supersedes": "1950s-tv_themes.v2.json",
+  "program": {"decade_genre_id": 63, "slug": "1950s-tv_themes"},
+  "purpose": "Read-only conditional listening approvals. This manifest records Gary's approval of exact recordings without authorizing catalog acceptance, database changes, or storage changes.",
+  "prior_recording_replacement_manifest": "1950s-tv_themes.v2.json",
+  "conditional_listening_approvals": [
+    {
+      "rank": 13,
+      "show_title": "I Love Lucy",
+      "catalog_acceptance_status": "pending_historical_acceptance",
+      "current_database_recording_status": "incomplete_unreviewed_no_replacement_authorized",
+      "approved_exact_spotify_recording": {"spotify_track_id": "5lSfu6Bb1lZHvEA5Lp3FSo", "spotify_url": "https://open.spotify.com/track/5lSfu6Bb1lZHvEA5Lp3FSo", "gary_listening_decision": "approved", "recording_classification": "recognizable_cover"},
+      "historical_relationship": "The composition is the I Love Lucy television theme by Eliot Daniel with lyrics by Harold Adamson; this Spotify recording is not credited as the broadcast performance."
+    },
+    {
+      "rank": 18,
+      "show_title": "Gunsmoke",
+      "catalog_acceptance_status": "pending_historical_acceptance",
+      "current_database_recording_status": "incomplete_unreviewed_no_replacement_authorized",
+      "approved_exact_spotify_recording": {"spotify_track_id": "71qlBJvHesvpK3TJXGN95O", "spotify_url": "https://open.spotify.com/track/71qlBJvHesvpK3TJXGN95O", "gary_listening_decision": "approved", "recording_classification": "recognizable_cover"},
+      "historical_relationship": "The television theme is Gunsmoke/The Old Trail, associated with Rex Koury; this Spotify recording is credited to the later 101 Strings Orchestra."
+    },
+    {
+      "rank": 31,
+      "show_title": "Zorro",
+      "catalog_acceptance_status": "pending_historical_acceptance",
+      "current_database_recording_status": "incomplete_unreviewed_no_replacement_authorized",
+      "approved_exact_spotify_recording": {"spotify_track_id": "301w6yavJnABE4APW72ynW", "spotify_url": "https://open.spotify.com/track/301w6yavJnABE4APW72ynW", "gary_listening_decision": "approved", "recording_classification": "recognizable_cover"},
+      "historical_relationship": "The 1957 television theme was written by Norman Foster and George Bruns and first recorded by the Mellomen; this Spotify recording is credited to a later compilation artist."
+    }
+  ],
+  "research_record": "1950s-tv-themes.research-batch-02.v1.json",
+  "rebuild_rules": {"apply_enabled": false, "final_rank_assignment_enabled": false, "spotify_recording_required_for_catalog_acceptance": true},
+  "not_in_scope": ["database apply or delete operations", "storage mutation", "Spotify authentication or API", "TTS generation", "final catalog acceptance", "final ranking"]
+}
