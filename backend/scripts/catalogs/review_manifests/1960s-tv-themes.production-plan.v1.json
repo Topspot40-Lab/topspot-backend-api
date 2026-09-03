@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "catalog_id": 64,
+  "catalog_slug": "1960s_tv_themes",
+  "approved_entries": [
+    {
+      "proposed_rank": 1,
+      "source_rank": 3,
+      "program": "star trek (original series)",
+      "track_name": "star trek (original series)",
+      "artist": "alexander courage",
+      "spotify_track_id": "5NabM6VYeGHGZxzf2u5bV1",
+      "spotify_public_url": "https://open.spotify.com/track/5NabM6VYeGHGZxzf2u5bV1",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 2,
+      "source_rank": 4,
+      "program": "hawaii five‑o",
+      "track_name": "Hawaii Five-O",
+      "artist": "Morton Stevens",
+      "spotify_track_id": "6I2oKAEHPCtFUPe7Tsm1Xt",
+      "spotify_public_url": "https://open.spotify.com/track/6I2oKAEHPCtFUPe7Tsm1Xt",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 3,
+      "source_rank": 6,
+      "program": "the munsters",
+      "track_name": "the munsters",
+      "artist": "jack marshall",
+      "spotify_track_id": "1HAzaGNVyyMYVtmykjfNX9",
+      "spotify_public_url": "https://open.spotify.com/track/1HAzaGNVyyMYVtmykjfNX9",
+      "classification": "recognizable_rerecording_or_cover",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 4,
+      "source_rank": 7,
+      "program": "the andy griffith show",
+      "track_name": "the andy griffith show",
+      "artist": "earle hagen",
+      "spotify_track_id": "01xNAT6uyYzohxapcUYzom",
+      "spotify_public_url": "https://open.spotify.com/track/01xNAT6uyYzohxapcUYzom",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 5,
+      "source_rank": 8,
+      "program": "the twilight zone",
+      "track_name": "the twilight zone",
+      "artist": "marius constant",
+      "spotify_track_id": "3fV1YeAqMcCY8lmpK9duaZ",
+      "spotify_public_url": "https://open.spotify.com/track/3fV1YeAqMcCY8lmpK9duaZ",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 6,
+      "source_rank": 10,
+      "program": "meet the flintstones",
+      "track_name": "meet the flintstones",
+      "artist": "Hoyt Curtin",
+      "spotify_track_id": "1sG6BspN4NeOW1bTvvpGvq",
+      "spotify_public_url": "https://open.spotify.com/track/1sG6BspN4NeOW1bTvvpGvq",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 7,
+      "source_rank": 11,
+      "program": "the jetsons",
+      "track_name": "the jetsons",
+      "artist": "Hoyt Curtin",
+      "spotify_track_id": "3X598Ps4bvCBkSERGcTPdH",
+      "spotify_public_url": "https://open.spotify.com/track/3X598Ps4bvCBkSERGcTPdH",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 8,
+      "source_rank": 12,
+      "program": "i dream of jeannie",
+      "track_name": "i dream of jeannie",
+      "artist": "Hugo Montenegro",
+      "spotify_track_id": "3gaSWTWH2MmAfvHo2miMGI",
+      "spotify_public_url": "https://open.spotify.com/track/3gaSWTWH2MmAfvHo2miMGI",
+      "classification": "recognizable_rerecording_or_cover",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 9,
+      "source_rank": 13,
+      "program": "bewitched",
+      "track_name": "bewitched",
+      "artist": "Jack Keller",
+      "spotify_track_id": "6bcVz2qBQsHWd9EYVbv8Fp",
+      "spotify_public_url": "https://open.spotify.com/track/6bcVz2qBQsHWd9EYVbv8Fp",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 10,
+      "source_rank": 15,
+      "program": "the avengers",
+      "track_name": "the avengers",
+      "artist": "Laurie Johnson",
+      "spotify_track_id": "476qYPUYL8SrbCmLTOS6Pl",
+      "spotify_public_url": "https://open.spotify.com/track/476qYPUYL8SrbCmLTOS6Pl",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 11,
+      "source_rank": 16,
+      "program": "thunderbirds",
+      "track_name": "thunderbirds",
+      "artist": "Barry Gray",
+      "spotify_track_id": "7lo5ec5T4QEz0V0KjFiPvk",
+      "spotify_public_url": "https://open.spotify.com/track/7lo5ec5T4QEz0V0KjFiPvk",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 12,
+      "source_rank": 18,
+      "program": "lost in space",
+      "track_name": "lost in space",
+      "artist": "John Williams",
+      "spotify_track_id": "5LjGowo4uakZ33L9vkEN6S",
+      "spotify_public_url": "https://open.spotify.com/track/5LjGowo4uakZ33L9vkEN6S",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 13,
+      "source_rank": 19,
+      "program": "the man from u.n.c.l.e.",
+      "track_name": "the man from u.n.c.l.e.",
+      "artist": "Jerry Goldsmith",
+      "spotify_track_id": "1vcO7u6E8M8zswANiOM3sX",
+      "spotify_public_url": "https://open.spotify.com/track/1vcO7u6E8M8zswANiOM3sX",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 14,
+      "source_rank": 21,
+      "program": "the beverly hillbillies",
+      "track_name": "The Ballad of Jed Clampett",
+      "artist": "Flatt & Scruggs",
+      "spotify_track_id": "2bNADRKyZiui7TOgIFilFr",
+      "spotify_public_url": "https://open.spotify.com/track/2bNADRKyZiui7TOgIFilFr",
+      "classification": "correct_contemporary_commercial_recording",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 15,
+      "source_rank": 22,
+      "program": "hogan’s heroes",
+      "track_name": "hogan’s heroes",
+      "artist": "Jerry Fielding",
+      "spotify_track_id": "3S88g2kI7LDnuU28ans60r",
+      "spotify_public_url": "https://open.spotify.com/track/3S88g2kI7LDnuU28ans60r",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 16,
+      "source_rank": 23,
+      "program": "dark shadows",
+      "track_name": "dark shadows",
+      "artist": "Robert Cobert",
+      "spotify_track_id": "5fRR7vIOIFJmeCBdmhrQ95",
+      "spotify_public_url": "https://open.spotify.com/track/5fRR7vIOIFJmeCBdmhrQ95",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 17,
+      "source_rank": 24,
+      "program": "the prisoner",
+      "track_name": "the prisoner",
+      "artist": "Ron Grainer",
+      "spotify_track_id": "2nszvpDVQZMRmElP5exL6Q",
+      "spotify_public_url": "https://open.spotify.com/track/2nszvpDVQZMRmElP5exL6Q",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 18,
+      "source_rank": 25,
+      "program": "the monkees",
+      "track_name": "theme from the monkees",
+      "artist": "The Monkees",
+      "spotify_track_id": "6uwT4xzDhCY7vtJsqHv67c",
+      "spotify_public_url": "https://open.spotify.com/track/6uwT4xzDhCY7vtJsqHv67c",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 19,
+      "source_rank": 26,
+      "program": "Mission: Impossible",
+      "track_name": "Mission: Impossible Theme",
+      "artist": "lalo schifrin",
+      "spotify_track_id": "5cX8HdwlOH0l4GvMVWegJG",
+      "spotify_public_url": "https://open.spotify.com/track/5cX8HdwlOH0l4GvMVWegJG",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 20,
+      "source_rank": 29,
+      "program": "Batman",
+      "track_name": "Batman Theme",
+      "artist": "neal hefti",
+      "spotify_track_id": "4lwV7SpU0JSM1OIm0aIkNP",
+      "spotify_public_url": "https://open.spotify.com/track/4lwV7SpU0JSM1OIm0aIkNP",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 21,
+      "source_rank": 33,
+      "program": "The Addams Family",
+      "track_name": "The Addams Family Theme",
+      "artist": "Vic Mizzy",
+      "spotify_track_id": "00oHVAstyM08Q82e2XYvkS",
+      "spotify_public_url": "https://open.spotify.com/track/00oHVAstyM08Q82e2XYvkS",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 22,
+      "source_rank": 34,
+      "program": "Gilligan's Island",
+      "track_name": "Gilligan's Island Theme",
+      "artist": "jack marshall",
+      "spotify_track_id": "3T8lqmIn5TAUzU9wjPt2YD",
+      "spotify_public_url": "https://open.spotify.com/track/3T8lqmIn5TAUzU9wjPt2YD",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 23,
+      "source_rank": 36,
+      "program": "Get Smart",
+      "track_name": "Get Smart Theme",
+      "artist": "Irving Szathmary",
+      "spotify_track_id": "4CPXXSophg3YetIRSod3It",
+      "spotify_public_url": "https://open.spotify.com/track/4CPXXSophg3YetIRSod3It",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 24,
+      "source_rank": 40,
+      "program": "Green Acres",
+      "track_name": "Green Acres Theme",
+      "artist": "jack marshall",
+      "spotify_track_id": "3mljcjVvt1Lh7vp8zzOhlV",
+      "spotify_public_url": "https://open.spotify.com/track/3mljcjVvt1Lh7vp8zzOhlV",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 25,
+      "source_rank": 41,
+      "program": "Petticoat Junction",
+      "track_name": "Petticoat Junction Theme",
+      "artist": "jack marshall",
+      "spotify_track_id": "7nwqv0XgjG2seVqYc8PsKr",
+      "spotify_public_url": "https://open.spotify.com/track/7nwqv0XgjG2seVqYc8PsKr",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 26,
+      "source_rank": 44,
+      "program": "Doctor Who",
+      "track_name": "Doctor Who (Original Theme) [From \"Doctor Who\"]",
+      "artist": "Ron Grainer, Delia Derbyshire",
+      "spotify_track_id": "5dxWU9epbOtZ0XHv60tydp",
+      "spotify_public_url": "https://open.spotify.com/track/5dxWU9epbOtZ0XHv60tydp",
+      "classification": "correct_original_or_broadcast_associated",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    },
+    {
+      "proposed_rank": 27,
+      "source_rank": 45,
+      "program": "The Saint",
+      "track_name": "Main Theme from \"The Saint\"",
+      "artist": "Edwin Astley & His Orchestra",
+      "spotify_track_id": "4Up8UssyK2nFZWVp7k0A1O",
+      "spotify_public_url": "https://open.spotify.com/track/4Up8UssyK2nFZWVp7k0A1O",
+      "classification": "correct_contemporary_commercial_recording",
+      "artwork_source": "Spotify public track metadata at apply-time",
+      "qualification": "Verified public Spotify-compatible selection; no production apply authorized by this artifact."
+    }
+  ],
+  "unresolved_excluded": [
+    {
+      "existing_rank": 27,
+      "reason": "duplicate_program_and_wrong_lalo_schifrin_attribution"
+    },
+    {
+      "existing_rank": 28,
+      "reason": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 30,
+      "reason": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 31,
+      "reason": "unresolved_public_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 32,
+      "reason": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 35,
+      "reason": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 37,
+      "reason": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 38,
+      "reason": "unresolved_public_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 39,
+      "reason": "karaoke_recording_mislabeled_as_flatt_and_scruggs"
+    },
+    {
+      "existing_rank": 42,
+      "reason": "unresolved_public_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 43,
+      "reason": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    }
+  ],
+  "future_apply_requires": [
+    "fresh public Spotify page recheck",
+    "artwork URL check",
+    "human review of final localized drafts",
+    "separate production authorization"
+  ]
+}

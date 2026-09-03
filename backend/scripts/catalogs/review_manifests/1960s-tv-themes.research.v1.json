@@ -1,0 +1,309 @@
+{
+  "catalog_id": 64,
+  "records": [
+    {
+      "existing_rank": 3,
+      "track_name": "star trek (original series)",
+      "spotify_track_id": "5NabM6VYeGHGZxzf2u5bV1",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/5NabM6VYeGHGZxzf2u5bV1",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 4,
+      "track_name": "hawaii five‑o",
+      "spotify_track_id": "6rYSAr9jGVpVNBL0ftkIDi",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/6rYSAr9jGVpVNBL0ftkIDi",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 6,
+      "track_name": "the munsters",
+      "spotify_track_id": "1HAzaGNVyyMYVtmykjfNX9",
+      "classification": "recognizable_rerecording_or_cover",
+      "public_spotify_url": "https://open.spotify.com/track/1HAzaGNVyyMYVtmykjfNX9",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 7,
+      "track_name": "the andy griffith show",
+      "spotify_track_id": "01xNAT6uyYzohxapcUYzom",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/01xNAT6uyYzohxapcUYzom",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 8,
+      "track_name": "the twilight zone",
+      "spotify_track_id": "3fV1YeAqMcCY8lmpK9duaZ",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/3fV1YeAqMcCY8lmpK9duaZ",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 10,
+      "track_name": "meet the flintstones",
+      "spotify_track_id": "1sG6BspN4NeOW1bTvvpGvq",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/1sG6BspN4NeOW1bTvvpGvq",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 11,
+      "track_name": "the jetsons",
+      "spotify_track_id": "3X598Ps4bvCBkSERGcTPdH",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/3X598Ps4bvCBkSERGcTPdH",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 12,
+      "track_name": "i dream of jeannie",
+      "spotify_track_id": "3gaSWTWH2MmAfvHo2miMGI",
+      "classification": "recognizable_rerecording_or_cover",
+      "public_spotify_url": "https://open.spotify.com/track/3gaSWTWH2MmAfvHo2miMGI",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 13,
+      "track_name": "bewitched",
+      "spotify_track_id": "6bcVz2qBQsHWd9EYVbv8Fp",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/6bcVz2qBQsHWd9EYVbv8Fp",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 15,
+      "track_name": "the avengers",
+      "spotify_track_id": "476qYPUYL8SrbCmLTOS6Pl",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/476qYPUYL8SrbCmLTOS6Pl",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 16,
+      "track_name": "thunderbirds",
+      "spotify_track_id": "7lo5ec5T4QEz0V0KjFiPvk",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/7lo5ec5T4QEz0V0KjFiPvk",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 18,
+      "track_name": "lost in space",
+      "spotify_track_id": "5LjGowo4uakZ33L9vkEN6S",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/5LjGowo4uakZ33L9vkEN6S",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 19,
+      "track_name": "the man from u.n.c.l.e.",
+      "spotify_track_id": "1vcO7u6E8M8zswANiOM3sX",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/1vcO7u6E8M8zswANiOM3sX",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 21,
+      "track_name": "the beverly hillbillies",
+      "spotify_track_id": "29qFlNOssruDfoEN8vN2Uu",
+      "classification": "incorrect_recording",
+      "public_spotify_url": "https://open.spotify.com/track/29qFlNOssruDfoEN8vN2Uu",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 22,
+      "track_name": "hogan’s heroes",
+      "spotify_track_id": "3S88g2kI7LDnuU28ans60r",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/3S88g2kI7LDnuU28ans60r",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 23,
+      "track_name": "dark shadows",
+      "spotify_track_id": "5fRR7vIOIFJmeCBdmhrQ95",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/5fRR7vIOIFJmeCBdmhrQ95",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 24,
+      "track_name": "the prisoner",
+      "spotify_track_id": "2nszvpDVQZMRmElP5exL6Q",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/2nszvpDVQZMRmElP5exL6Q",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 25,
+      "track_name": "theme from the monkees",
+      "spotify_track_id": "6uwT4xzDhCY7vtJsqHv67c",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/6uwT4xzDhCY7vtJsqHv67c",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 26,
+      "track_name": "Mission: Impossible Theme",
+      "spotify_track_id": "5cX8HdwlOH0l4GvMVWegJG",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/5cX8HdwlOH0l4GvMVWegJG",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 27,
+      "track_name": "Hawaii Five-O Theme",
+      "spotify_track_id": "0DTqdX36KAZ4xAfnsb5qNe",
+      "classification": "incorrect_recording",
+      "public_spotify_url": "https://open.spotify.com/track/0DTqdX36KAZ4xAfnsb5qNe",
+      "review_note": "duplicate_program_and_wrong_lalo_schifrin_attribution"
+    },
+    {
+      "existing_rank": 28,
+      "track_name": "Star Trek Theme",
+      "spotify_track_id": "0885P8PukshcT7KRszRkvU",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/0885P8PukshcT7KRszRkvU",
+      "review_note": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 29,
+      "track_name": "Batman Theme",
+      "spotify_track_id": "4lwV7SpU0JSM1OIm0aIkNP",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/4lwV7SpU0JSM1OIm0aIkNP",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 30,
+      "track_name": "The Andy Griffith Show Theme",
+      "spotify_track_id": "1LVFdKAMpgLfR0HS1fFAry",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/1LVFdKAMpgLfR0HS1fFAry",
+      "review_note": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 31,
+      "track_name": "The Dick Van Dyke Show Theme",
+      "spotify_track_id": "1DB3bkoSlaCeynq4C4BwXJ",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/1DB3bkoSlaCeynq4C4BwXJ",
+      "review_note": "unresolved_public_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 32,
+      "track_name": "Bewitched Theme",
+      "spotify_track_id": "0bAYaMWzquNBAmcvQ3mSbh",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/0bAYaMWzquNBAmcvQ3mSbh",
+      "review_note": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 33,
+      "track_name": "The Addams Family Theme",
+      "spotify_track_id": "00oHVAstyM08Q82e2XYvkS",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/00oHVAstyM08Q82e2XYvkS",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 34,
+      "track_name": "Gilligan's Island Theme",
+      "spotify_track_id": "3T8lqmIn5TAUzU9wjPt2YD",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/3T8lqmIn5TAUzU9wjPt2YD",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 35,
+      "track_name": "The Monkees Theme",
+      "spotify_track_id": "5kyq8Q7wYI6dIuLQ9PuUG9",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/5kyq8Q7wYI6dIuLQ9PuUG9",
+      "review_note": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 36,
+      "track_name": "Get Smart Theme",
+      "spotify_track_id": "4CPXXSophg3YetIRSod3It",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/4CPXXSophg3YetIRSod3It",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 37,
+      "track_name": "I Dream of Jeannie Theme",
+      "spotify_track_id": "6JOrdSW4jaHKkz2UmqedGW",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/6JOrdSW4jaHKkz2UmqedGW",
+      "review_note": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 38,
+      "track_name": "The Brady Bunch Theme",
+      "spotify_track_id": "2PTEZDY5EgTG8UhrZFestM",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/2PTEZDY5EgTG8UhrZFestM",
+      "review_note": "unresolved_public_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 39,
+      "track_name": "The Beverly Hillbillies Theme",
+      "spotify_track_id": "33HZhyTkFanklZ98gltpxm",
+      "classification": "incorrect_recording",
+      "public_spotify_url": "https://open.spotify.com/track/33HZhyTkFanklZ98gltpxm",
+      "review_note": "karaoke_recording_mislabeled_as_flatt_and_scruggs"
+    },
+    {
+      "existing_rank": 40,
+      "track_name": "Green Acres Theme",
+      "spotify_track_id": "3mljcjVvt1Lh7vp8zzOhlV",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/3mljcjVvt1Lh7vp8zzOhlV",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 41,
+      "track_name": "Petticoat Junction Theme",
+      "spotify_track_id": "7nwqv0XgjG2seVqYc8PsKr",
+      "classification": "correct_original_or_broadcast_associated",
+      "public_spotify_url": "https://open.spotify.com/track/7nwqv0XgjG2seVqYc8PsKr",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 42,
+      "track_name": "The Fugitive Theme",
+      "spotify_track_id": "0ol30eU69b7p5seYRyZD53",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/0ol30eU69b7p5seYRyZD53",
+      "review_note": "unresolved_public_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 43,
+      "track_name": "The Avengers Theme",
+      "spotify_track_id": "3QLjDkgLh9AOEHlhQtDuhs",
+      "classification": "unresolved",
+      "public_spotify_url": "https://open.spotify.com/track/3QLjDkgLh9AOEHlhQtDuhs",
+      "review_note": "duplicate_program_unresolved_recording_and_missing_artist_relation"
+    },
+    {
+      "existing_rank": 44,
+      "track_name": "Doctor Who Theme",
+      "spotify_track_id": "6owgMJENlBFIDIT0JgB9j8",
+      "classification": "incorrect_recording",
+      "public_spotify_url": "https://open.spotify.com/track/6owgMJENlBFIDIT0JgB9j8",
+      "review_note": "retained once in proposed plan"
+    },
+    {
+      "existing_rank": 45,
+      "track_name": "The Saint Theme",
+      "spotify_track_id": "3EkvO25frZN1PH76J8KKhI",
+      "classification": "incorrect_recording",
+      "public_spotify_url": "https://open.spotify.com/track/3EkvO25frZN1PH76J8KKhI",
+      "review_note": "retained once in proposed plan"
+    }
+  ]
+}

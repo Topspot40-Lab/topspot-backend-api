@@ -1,0 +1,1706 @@
+{
+  "catalog_id": 64,
+  "records": [
+    {
+      "rank": 1,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 1: star trek (original series), performed by alexander courage.",
+      "text_sha256": "f22d6eb8e7847295d44a0ef86d75747e8168d7149812bbda3ce737ed4475a3f6"
+    },
+    {
+      "rank": 1,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 1: star trek (original series), performed by alexander courage. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "aa607fda2ae967d570a895e333c88b8f42575888fbbc3e899d314fa51756e4d3"
+    },
+    {
+      "rank": 1,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 1: star trek (original series), performed by alexander courage. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "4f781eed8a0a8d52c4de50a30296ea976981b94648092268c772fc47de85a2c3"
+    },
+    {
+      "rank": 1,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 1: star trek (original series), interpretado por alexander courage.",
+      "text_sha256": "29765081f6d991f8789f349c8ce18f452c8fc8c544eb0189f51cdfe37b13234f"
+    },
+    {
+      "rank": 1,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 1: star trek (original series), interpretado por alexander courage. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "dd9ad37a46c0056df4098b4127f3dfe78530baf4c463b4ac750e74bb4eeca34b"
+    },
+    {
+      "rank": 1,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 1: star trek (original series), interpretado por alexander courage. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "96bd600eb6cca5f95a94d813892b4f302b142cd38d713c5fc5d65bcd3170b064"
+    },
+    {
+      "rank": 1,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 1: star trek (original series), interpretado por alexander courage.",
+      "text_sha256": "29765081f6d991f8789f349c8ce18f452c8fc8c544eb0189f51cdfe37b13234f"
+    },
+    {
+      "rank": 1,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 1: star trek (original series), interpretado por alexander courage. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "f9fd206e3d0a1c8de9a8e546266e020af9430610907f640515940beed8a99c7c"
+    },
+    {
+      "rank": 1,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 1: star trek (original series), interpretado por alexander courage. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "f2c612151f30bc1701f5493d5604a560605ab8f32738fe47f3bc8f367616ad8a"
+    },
+    {
+      "rank": 2,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 2: hawaii five‑o, performed by Morton Stevens.",
+      "text_sha256": "b7af9a2bdfe481c337eb71342e5b6f3edec765cf415bb4038e23dfaaef2ccacd"
+    },
+    {
+      "rank": 2,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 2: hawaii five‑o, performed by Morton Stevens. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "73c26f1dc08b898ac19134162992b170242140352870ac519219898686a81edd"
+    },
+    {
+      "rank": 2,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 2: hawaii five‑o, performed by Morton Stevens. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "b96bf6a53ddb95576c0f0406db6ffe55e18d9713039ec6d57ff9aa1435cbb50f"
+    },
+    {
+      "rank": 2,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 2: hawaii five‑o, interpretado por Morton Stevens.",
+      "text_sha256": "569ad959bcdde5a592efe03465255c2c2d2afe8594a3d8b7f4553cbf33ecceac"
+    },
+    {
+      "rank": 2,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 2: hawaii five‑o, interpretado por Morton Stevens. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "9e65b6b2c19c69215645823ec39dc37f0b57c81cfb399705587239c02e786f98"
+    },
+    {
+      "rank": 2,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 2: hawaii five‑o, interpretado por Morton Stevens. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "4307f86edcee3b2203f68e24a6cbc34cef18548d273111a95f02a339a0949809"
+    },
+    {
+      "rank": 2,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 2: hawaii five‑o, interpretado por Morton Stevens.",
+      "text_sha256": "569ad959bcdde5a592efe03465255c2c2d2afe8594a3d8b7f4553cbf33ecceac"
+    },
+    {
+      "rank": 2,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 2: hawaii five‑o, interpretado por Morton Stevens. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "85614eb5f8a304884c726737c4349819ec8e4458943033f30e62cd55619df1dc"
+    },
+    {
+      "rank": 2,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 2: hawaii five‑o, interpretado por Morton Stevens. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "2388d1d471ca6c4c413921a4d928bf93012a1cf21e7906fbcdf77f6e4ecd2c82"
+    },
+    {
+      "rank": 3,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 3: the munsters, performed by jack marshall.",
+      "text_sha256": "3f5048379f91b8a9e5ca3f5d424d9e3f32cb735bc7c3ab2b60449ea76149bbc5"
+    },
+    {
+      "rank": 3,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 3: the munsters, performed by jack marshall. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "187de1beb9cc4a6d819cffdc4b29465004fc060f673dd744e49cb149fffa15c8"
+    },
+    {
+      "rank": 3,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 3: the munsters, performed by jack marshall. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "cb363617fb3f38ed618e016cca42bcb7bd81ac3ba6c28b056d7b64ed16ec5a5a"
+    },
+    {
+      "rank": 3,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 3: the munsters, interpretado por jack marshall.",
+      "text_sha256": "4ce3084ef9bfb53f19401a6182103ed5c6f4aa088cf8b057881361302044a632"
+    },
+    {
+      "rank": 3,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 3: the munsters, interpretado por jack marshall. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "bb5678e04966815019af8e6efa62096a95af1bcd97aafb9a3489a92dcf8f670b"
+    },
+    {
+      "rank": 3,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 3: the munsters, interpretado por jack marshall. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "3c4d45fd7199f2a0fd2b3b2c1812d57a5548a96fa01bf9caa1aa237570091f98"
+    },
+    {
+      "rank": 3,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 3: the munsters, interpretado por jack marshall.",
+      "text_sha256": "4ce3084ef9bfb53f19401a6182103ed5c6f4aa088cf8b057881361302044a632"
+    },
+    {
+      "rank": 3,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 3: the munsters, interpretado por jack marshall. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "bab403a1f0c7d6f2f4d0670e851a0ed150591839f598125c2bfc4e7e4ca03a60"
+    },
+    {
+      "rank": 3,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 3: the munsters, interpretado por jack marshall. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "93e7afce5b09e1fd07fd9380b1f3d4618c6c8c23692ccf43e410bfcfa0511f21"
+    },
+    {
+      "rank": 4,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 4: the andy griffith show, performed by earle hagen.",
+      "text_sha256": "052c9afdce749eabbbad55ec3c8be1a9ec162397cc61f615ce1cd34d23db8725"
+    },
+    {
+      "rank": 4,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 4: the andy griffith show, performed by earle hagen. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "9a2cc1cc35d009f2115e6be8fe93453b13817db386f0ef2e05ce247ebb6c1820"
+    },
+    {
+      "rank": 4,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 4: the andy griffith show, performed by earle hagen. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "c1826dc8ec1973008534fb83a9ad996c564abbef555ebe0a6a1361cb1f570dfd"
+    },
+    {
+      "rank": 4,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 4: the andy griffith show, interpretado por earle hagen.",
+      "text_sha256": "63f1aa25c7375e2d0495a20724f07b888552464eb2a1c5769642091b20a0492a"
+    },
+    {
+      "rank": 4,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 4: the andy griffith show, interpretado por earle hagen. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "4a3afadae69c5b0c423c6acfe44ccf2b3715114b0ea0478408b07a2c2bb1d6cb"
+    },
+    {
+      "rank": 4,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 4: the andy griffith show, interpretado por earle hagen. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "9dc9077a70a3592dfbd2c3bd2bbdc066b0803c70d9af56de1ff813a306ad654b"
+    },
+    {
+      "rank": 4,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 4: the andy griffith show, interpretado por earle hagen.",
+      "text_sha256": "63f1aa25c7375e2d0495a20724f07b888552464eb2a1c5769642091b20a0492a"
+    },
+    {
+      "rank": 4,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 4: the andy griffith show, interpretado por earle hagen. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "9ba342f1cfbb5efa80f2e39dff32a7d352d4a37995faae423f739559f2f9f620"
+    },
+    {
+      "rank": 4,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 4: the andy griffith show, interpretado por earle hagen. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "2d767670106454c9562e09fefd76741528abb4ea734a6b0500320a7488baed9d"
+    },
+    {
+      "rank": 5,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 5: the twilight zone, performed by marius constant.",
+      "text_sha256": "f9d793eed699f75453a60fedcec3add93a1150be1c9142be1cbd9621d70ed461"
+    },
+    {
+      "rank": 5,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 5: the twilight zone, performed by marius constant. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "abded74bb0635f13f2f13fbcdd80bc104f84ca4775290dd0e072c8a84422f196"
+    },
+    {
+      "rank": 5,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 5: the twilight zone, performed by marius constant. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "de27398eb1e87aa230f60ae207da286266b0c2f6724f5fc026e07011cda468ff"
+    },
+    {
+      "rank": 5,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 5: the twilight zone, interpretado por marius constant.",
+      "text_sha256": "9862457556a477c65397c2788fb8a9cfdfbc8b255a10a92a6a1bd4f64b6c2f4a"
+    },
+    {
+      "rank": 5,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 5: the twilight zone, interpretado por marius constant. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "1e8d3c8aaf3d296eae8058d9c75fbd708c0557920e1d01ab5521cd260124e91d"
+    },
+    {
+      "rank": 5,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 5: the twilight zone, interpretado por marius constant. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "0d5739b254d752f13daf50e299608923ac127a58ac40c725a25d0bae053094a7"
+    },
+    {
+      "rank": 5,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 5: the twilight zone, interpretado por marius constant.",
+      "text_sha256": "9862457556a477c65397c2788fb8a9cfdfbc8b255a10a92a6a1bd4f64b6c2f4a"
+    },
+    {
+      "rank": 5,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 5: the twilight zone, interpretado por marius constant. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "a4fc3ee119f1f273be7fdb4d6ddf42120265424673d22eb7e760bb076a97dfd1"
+    },
+    {
+      "rank": 5,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 5: the twilight zone, interpretado por marius constant. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "35ab6e7dc1ac9a64f6e68b02d0d4f43390d704c97a9dd3dfe384e03b5d6c32dc"
+    },
+    {
+      "rank": 6,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 6: meet the flintstones, performed by Hoyt Curtin.",
+      "text_sha256": "d1250b92fc4c2e259a0ead1e14325bce1d750e84693a4cbf96bc1de0c55d3743"
+    },
+    {
+      "rank": 6,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 6: meet the flintstones, performed by Hoyt Curtin. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "dc07dd0075c573a42df7bf937973b8855ff0ad9a65cddbb728a46aa57dad8644"
+    },
+    {
+      "rank": 6,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 6: meet the flintstones, performed by Hoyt Curtin. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "63edb6ccfcc9fce7ac377dae189517e8f537b17da53bf768222f42975e9037bf"
+    },
+    {
+      "rank": 6,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 6: meet the flintstones, interpretado por Hoyt Curtin.",
+      "text_sha256": "e49d2c15c0cb67b5156ba243b6170193a764aaa85dd7a5be7e753e0f85393c3f"
+    },
+    {
+      "rank": 6,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 6: meet the flintstones, interpretado por Hoyt Curtin. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "a21fb452b6469aa29159a276a1a11218fa8009c294c48c78002523db1031282e"
+    },
+    {
+      "rank": 6,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 6: meet the flintstones, interpretado por Hoyt Curtin. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "e8d610a78ec9d79dd636e66a77088e51dd3a43b46a4cd77fc3cbae4e6509e626"
+    },
+    {
+      "rank": 6,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 6: meet the flintstones, interpretado por Hoyt Curtin.",
+      "text_sha256": "e49d2c15c0cb67b5156ba243b6170193a764aaa85dd7a5be7e753e0f85393c3f"
+    },
+    {
+      "rank": 6,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 6: meet the flintstones, interpretado por Hoyt Curtin. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "83f0494a54cfab6861b546b7f2b7d5b66d8b4dc9fd3a96461b47f7bec70996b2"
+    },
+    {
+      "rank": 6,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 6: meet the flintstones, interpretado por Hoyt Curtin. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "ecb9ffbf83188652bd27e5790331b735db3c7df401e5c560ea71f70bbe200951"
+    },
+    {
+      "rank": 7,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 7: the jetsons, performed by Hoyt Curtin.",
+      "text_sha256": "5bbe54c54ff667735f4ee11f935688f1948027bd3217327bad5f0d709bd11d6f"
+    },
+    {
+      "rank": 7,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 7: the jetsons, performed by Hoyt Curtin. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "e05c64340fe7cf09e4be81e5392489f4ce640636c78a34cc83fa6bf72cd2a1eb"
+    },
+    {
+      "rank": 7,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 7: the jetsons, performed by Hoyt Curtin. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "568f86835c1a2316d7b2a479a4d27d408905ac348b0b27e969581a5abca3a1bd"
+    },
+    {
+      "rank": 7,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 7: the jetsons, interpretado por Hoyt Curtin.",
+      "text_sha256": "c9fa09ed730a6120cac3aa7bf4f034b800156a07642c22035d801ddceafb0a5b"
+    },
+    {
+      "rank": 7,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 7: the jetsons, interpretado por Hoyt Curtin. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "aa734bf0c4a59cbf5329cb0fc5929fffee66a4859f162c8d60e204fad50b2bf5"
+    },
+    {
+      "rank": 7,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 7: the jetsons, interpretado por Hoyt Curtin. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "81862c24d8051c749c87e536b240b7ab6f41fb564d7b2b0507c7486f1e6693ce"
+    },
+    {
+      "rank": 7,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 7: the jetsons, interpretado por Hoyt Curtin.",
+      "text_sha256": "c9fa09ed730a6120cac3aa7bf4f034b800156a07642c22035d801ddceafb0a5b"
+    },
+    {
+      "rank": 7,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 7: the jetsons, interpretado por Hoyt Curtin. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "ca375daa14f37b6feb98f18358d88253d0d05e4133bc37179b7dff4ceaf6c295"
+    },
+    {
+      "rank": 7,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 7: the jetsons, interpretado por Hoyt Curtin. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "7e03d70391189385e1baf2d87f4346e58250d3af082f59fa9410ba6bcdfb2abb"
+    },
+    {
+      "rank": 8,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 8: i dream of jeannie, performed by Hugo Montenegro.",
+      "text_sha256": "c1004f88dabb759a6619ceeee1d097dd29eaf2a8a17b797556bb4bba033b0a0e"
+    },
+    {
+      "rank": 8,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 8: i dream of jeannie, performed by Hugo Montenegro. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "208b32b5d08b920da8864944712002d1f436905f27b6113daa7c1fa84f99ed14"
+    },
+    {
+      "rank": 8,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 8: i dream of jeannie, performed by Hugo Montenegro. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "3d8704033e9bc7add0ca9029ea91413908f0d7d91bddf2ba20dab5787fc8f840"
+    },
+    {
+      "rank": 8,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 8: i dream of jeannie, interpretado por Hugo Montenegro.",
+      "text_sha256": "8a21fb5ecb1ff1c361fbfbaa4f391423a15cff694b5c224f4046f8f2b2b8575e"
+    },
+    {
+      "rank": 8,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 8: i dream of jeannie, interpretado por Hugo Montenegro. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "511fa08ca8a6acc08c2ce443401d0661cbae19a41c209259cca9b56b7a4278e3"
+    },
+    {
+      "rank": 8,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 8: i dream of jeannie, interpretado por Hugo Montenegro. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "0376973910afe0b28df6af1f931a204c9d463d0cb858a91a8ab93e3a8dbc2634"
+    },
+    {
+      "rank": 8,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 8: i dream of jeannie, interpretado por Hugo Montenegro.",
+      "text_sha256": "8a21fb5ecb1ff1c361fbfbaa4f391423a15cff694b5c224f4046f8f2b2b8575e"
+    },
+    {
+      "rank": 8,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 8: i dream of jeannie, interpretado por Hugo Montenegro. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "4d4b40e1c1ad480ccdf6d57e3e17d9aa661c0f4035ed5e43265445c0e29bd7d2"
+    },
+    {
+      "rank": 8,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 8: i dream of jeannie, interpretado por Hugo Montenegro. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "2fa42fe43ba405e7a737eac66ad008fec3381184c3ccb02ad8898efbdc0fd842"
+    },
+    {
+      "rank": 9,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 9: bewitched, performed by Jack Keller.",
+      "text_sha256": "acf34c75a55685e5b2813b57053386eec1a511d6694fc7700749b8aa070c82a5"
+    },
+    {
+      "rank": 9,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 9: bewitched, performed by Jack Keller. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "6e327b293b487bdb42c51ecd1ee984331ca0e3bd07ebe505338e74e829e617b6"
+    },
+    {
+      "rank": 9,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 9: bewitched, performed by Jack Keller. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "0ef21ca1fb48f0e64518d00b0ebc94ca7e7e6b69ad9fd68f55bbd6859ba767c2"
+    },
+    {
+      "rank": 9,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 9: bewitched, interpretado por Jack Keller.",
+      "text_sha256": "7fbbe861a6ee1b3cad877d357a9cd0541f6419deb09d6e5b56046f0d5b888fdd"
+    },
+    {
+      "rank": 9,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 9: bewitched, interpretado por Jack Keller. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "ef724bd751ff96a7a37e7fecc0fa585faa806f30d08b8ac57d27b0b50ac3684b"
+    },
+    {
+      "rank": 9,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 9: bewitched, interpretado por Jack Keller. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "4fbff64e98a7446e39823400671d871e75633771e45daa52a9966c3077c1a2f9"
+    },
+    {
+      "rank": 9,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 9: bewitched, interpretado por Jack Keller.",
+      "text_sha256": "7fbbe861a6ee1b3cad877d357a9cd0541f6419deb09d6e5b56046f0d5b888fdd"
+    },
+    {
+      "rank": 9,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 9: bewitched, interpretado por Jack Keller. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "8408ff82e5334cb57b4b1a9673ee24659fcf52e8702550572e3f91f8d3f06e4b"
+    },
+    {
+      "rank": 9,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 9: bewitched, interpretado por Jack Keller. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "a9b8540fde9a6ee19b5f48b75c183dc09ee62bbc466d268b540d95600519db48"
+    },
+    {
+      "rank": 10,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 10: the avengers, performed by Laurie Johnson.",
+      "text_sha256": "defcf1452917c2978a6a79360b7ea8091628b93e3b4a1c5bd0fd91092f763052"
+    },
+    {
+      "rank": 10,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 10: the avengers, performed by Laurie Johnson. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "e18268b402fd0726563744d44ff4977056c686b0be6c5d7f26370e4ce5afd293"
+    },
+    {
+      "rank": 10,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 10: the avengers, performed by Laurie Johnson. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "8dcc44ac73b03f711e002d292aa098ce6d4d221faa70064b5eea8f8b68b7343d"
+    },
+    {
+      "rank": 10,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 10: the avengers, interpretado por Laurie Johnson.",
+      "text_sha256": "fac48ad7356a69573714f0033363634365311fcfba1e8965021bf5e16f01eebe"
+    },
+    {
+      "rank": 10,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 10: the avengers, interpretado por Laurie Johnson. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "035400b2516ac9693025960a4bc7b8cbdf831c4e901461d6bb7ce29967ef2621"
+    },
+    {
+      "rank": 10,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 10: the avengers, interpretado por Laurie Johnson. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "80333f03e580ba38a94303d8febf4ef57d15444a812994ca9caaf9fcf949cd32"
+    },
+    {
+      "rank": 10,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 10: the avengers, interpretado por Laurie Johnson.",
+      "text_sha256": "fac48ad7356a69573714f0033363634365311fcfba1e8965021bf5e16f01eebe"
+    },
+    {
+      "rank": 10,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 10: the avengers, interpretado por Laurie Johnson. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "684a468e4e7959f4f579627ac447e0bb5cce28f6ac3fd86b04c06fb6dec67233"
+    },
+    {
+      "rank": 10,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 10: the avengers, interpretado por Laurie Johnson. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "40cfbfff1c5412847427be9e00c17f4f63a6dd4bbb2576120754cc941cf33c41"
+    },
+    {
+      "rank": 11,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 11: thunderbirds, performed by Barry Gray.",
+      "text_sha256": "0b304ae4e9a3b94437c909ddf5709ba031649179006107020e14fa6e54d02bf9"
+    },
+    {
+      "rank": 11,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 11: thunderbirds, performed by Barry Gray. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "6f44f3b27df2510816ed8b2b5c0989c8ac28f9b325a9c0738a513e009658384f"
+    },
+    {
+      "rank": 11,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 11: thunderbirds, performed by Barry Gray. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "5c8070a4c85f04de0504ead6a93723ec2289b37d55045d8e9d3fc0fce2ca7a12"
+    },
+    {
+      "rank": 11,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 11: thunderbirds, interpretado por Barry Gray.",
+      "text_sha256": "39d6538d32779571d6d601c8bcf40b5df215d85806b089459ea0e41b819d0b5e"
+    },
+    {
+      "rank": 11,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 11: thunderbirds, interpretado por Barry Gray. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "d7c978e569ae487d16bd63de2dd2ebecd957ad1399ec7523493cea90deae7f03"
+    },
+    {
+      "rank": 11,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 11: thunderbirds, interpretado por Barry Gray. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "ca6b2bf37bd7f57d237a3693a936ee0107478a3c89aaef91b8fc9bd569ef9a2a"
+    },
+    {
+      "rank": 11,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 11: thunderbirds, interpretado por Barry Gray.",
+      "text_sha256": "39d6538d32779571d6d601c8bcf40b5df215d85806b089459ea0e41b819d0b5e"
+    },
+    {
+      "rank": 11,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 11: thunderbirds, interpretado por Barry Gray. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "2130e1e2e4a172b2ba303b2948604288c3476e6ffe28782bcb3cecfd44ced6a0"
+    },
+    {
+      "rank": 11,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 11: thunderbirds, interpretado por Barry Gray. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "148f67a57d7c5324ec271e064ec199d47533b8fc57702273f6bc2e168dec06f6"
+    },
+    {
+      "rank": 12,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 12: lost in space, performed by John Williams.",
+      "text_sha256": "16d12af736ffb46e3170fca67b4ae75b57b79d5c05f3ea126af0d1403f4265d8"
+    },
+    {
+      "rank": 12,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 12: lost in space, performed by John Williams. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "dbbf34eaecab04e584b62fe77c4c99dbe013066e13986e82f8e96280ee6ad48b"
+    },
+    {
+      "rank": 12,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 12: lost in space, performed by John Williams. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "4491407a14277e3fbb9d55071a23f18f81d6e213b72cf17ba9f1e14a1d204bd8"
+    },
+    {
+      "rank": 12,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 12: lost in space, interpretado por John Williams.",
+      "text_sha256": "fc067cb6de6538aeb7ae33081b4afb17824869245fb61aa343c35af3e814a4cd"
+    },
+    {
+      "rank": 12,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 12: lost in space, interpretado por John Williams. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "3719d7a5dea6510620c74f8e32f5a6f3d5bf45fdaae4a29decf791f4007bf069"
+    },
+    {
+      "rank": 12,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 12: lost in space, interpretado por John Williams. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "ca335ea872b308a311ae93fd383fe934177243eb6dea62e9829b85c6e463db61"
+    },
+    {
+      "rank": 12,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 12: lost in space, interpretado por John Williams.",
+      "text_sha256": "fc067cb6de6538aeb7ae33081b4afb17824869245fb61aa343c35af3e814a4cd"
+    },
+    {
+      "rank": 12,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 12: lost in space, interpretado por John Williams. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "e568fa160d349332f6ca875adc2cfbf37a09dad04c8d933914ffb30fb958ea60"
+    },
+    {
+      "rank": 12,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 12: lost in space, interpretado por John Williams. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "e980f4b81fc1df71b4e6d42544f596355d576bf718005f0240928e1e9ad25498"
+    },
+    {
+      "rank": 13,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 13: the man from u.n.c.l.e., performed by Jerry Goldsmith.",
+      "text_sha256": "68d224782b3e2a7692ac76cae84cd916e3d35d1ca054464371bd4c222b2dc454"
+    },
+    {
+      "rank": 13,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 13: the man from u.n.c.l.e., performed by Jerry Goldsmith. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "024a3fd7f519b193f96455106f4c9f24ffcc0ab3246a94c9b392c146fb21e98b"
+    },
+    {
+      "rank": 13,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 13: the man from u.n.c.l.e., performed by Jerry Goldsmith. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "0cffd9dcd83f58bfc2ff539913a74773942a363cfcab871ce29f95f387266c24"
+    },
+    {
+      "rank": 13,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 13: the man from u.n.c.l.e., interpretado por Jerry Goldsmith.",
+      "text_sha256": "54f5f99d681dcc8373863180782d81a0c07a16b88ef82d0a5822557045fcccaa"
+    },
+    {
+      "rank": 13,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 13: the man from u.n.c.l.e., interpretado por Jerry Goldsmith. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "ccd81021fb2a6b8dd3f70bf3b523b4a9a658169e27109b94c49ea04499e3db55"
+    },
+    {
+      "rank": 13,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 13: the man from u.n.c.l.e., interpretado por Jerry Goldsmith. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "cb73a4adc6c1964a01abf9125c1f0c5560d7ec83385627b52395b56a16c194af"
+    },
+    {
+      "rank": 13,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 13: the man from u.n.c.l.e., interpretado por Jerry Goldsmith.",
+      "text_sha256": "54f5f99d681dcc8373863180782d81a0c07a16b88ef82d0a5822557045fcccaa"
+    },
+    {
+      "rank": 13,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 13: the man from u.n.c.l.e., interpretado por Jerry Goldsmith. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "86ecb59637094ffd44200d80f60a80c2c07b62eb2456f2ec3426faeafe2ed493"
+    },
+    {
+      "rank": 13,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 13: the man from u.n.c.l.e., interpretado por Jerry Goldsmith. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "5ae85d46e15851b9e107d57422730d1dc80e2f67d65a1c12c6cc9d7dddbb540c"
+    },
+    {
+      "rank": 14,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 14: the beverly hillbillies, performed by Flatt & Scruggs.",
+      "text_sha256": "78c7711878a35d37f793d20d28dfeca2c639779dfb0b84d3e297500f8825255f"
+    },
+    {
+      "rank": 14,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 14: the beverly hillbillies, performed by Flatt & Scruggs. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "b7f89e8f2eac0b92f4e8c1cf6154451fd909d1f9134fe9a61f4d928600e28dab"
+    },
+    {
+      "rank": 14,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 14: the beverly hillbillies, performed by Flatt & Scruggs. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "377abca630abbbf7f759b92819ad950d19708f1d7b4d49f645cdf1c9c8b1bcb1"
+    },
+    {
+      "rank": 14,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 14: the beverly hillbillies, interpretado por Flatt & Scruggs.",
+      "text_sha256": "8e23feddd64f288bcb325e18f35ba02d00a01e9ae97a170a98ecf57da51f49a7"
+    },
+    {
+      "rank": 14,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 14: the beverly hillbillies, interpretado por Flatt & Scruggs. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "0f0700682f4323db0f1390ce6ffaa01cc427331e3681273fd2568e2c23887016"
+    },
+    {
+      "rank": 14,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 14: the beverly hillbillies, interpretado por Flatt & Scruggs. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "5c0da6476f3bd5e146dff61d6f4343e7111d34d2f142a289a1bc8bd06d6cadd1"
+    },
+    {
+      "rank": 14,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 14: the beverly hillbillies, interpretado por Flatt & Scruggs.",
+      "text_sha256": "8e23feddd64f288bcb325e18f35ba02d00a01e9ae97a170a98ecf57da51f49a7"
+    },
+    {
+      "rank": 14,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 14: the beverly hillbillies, interpretado por Flatt & Scruggs. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "f1a99d5850be908b36d1660d12b57e25dbc0716d4e2eeb3f43c6cf496a0f35ec"
+    },
+    {
+      "rank": 14,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 14: the beverly hillbillies, interpretado por Flatt & Scruggs. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "d369a1a56377dca01a575ed191592ee45453d2dba4a62c45982fee7535fac45f"
+    },
+    {
+      "rank": 15,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 15: hogan’s heroes, performed by Jerry Fielding.",
+      "text_sha256": "ab32adb133aeb5be75c0c5dd12db726ed4aa68a496a85418f7143df1d57a6e4b"
+    },
+    {
+      "rank": 15,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 15: hogan’s heroes, performed by Jerry Fielding. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "54b290c89ae34957b6bf0f09fafecea2d672cd3608806861d4ac70a3dfb0bc0d"
+    },
+    {
+      "rank": 15,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 15: hogan’s heroes, performed by Jerry Fielding. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "2936a73f4090920f5cb8bcb2b70f66dbb7ab5b712852b8c8c94a647bd5ea9e6e"
+    },
+    {
+      "rank": 15,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 15: hogan’s heroes, interpretado por Jerry Fielding.",
+      "text_sha256": "eee2ab1c224ca8a6bdfe881d645a24d4e6fa41efa46b76a1eacd1f8b7cf20672"
+    },
+    {
+      "rank": 15,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 15: hogan’s heroes, interpretado por Jerry Fielding. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "6acc53f686771b23f5ea6f0f215aa59b2c2a9e548fcfca4ff990dcd862a27913"
+    },
+    {
+      "rank": 15,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 15: hogan’s heroes, interpretado por Jerry Fielding. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "a25abd55300239da57c43c6a2d2be7f493a34c53be26a015c1c280e82660fcb6"
+    },
+    {
+      "rank": 15,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 15: hogan’s heroes, interpretado por Jerry Fielding.",
+      "text_sha256": "eee2ab1c224ca8a6bdfe881d645a24d4e6fa41efa46b76a1eacd1f8b7cf20672"
+    },
+    {
+      "rank": 15,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 15: hogan’s heroes, interpretado por Jerry Fielding. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "981ccaba2a820024b6f4654e23d834c1f19ee4b100ea4ef548b4758232b28045"
+    },
+    {
+      "rank": 15,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 15: hogan’s heroes, interpretado por Jerry Fielding. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "c8865723467d04b016a3a16b272542296859d4b6a994e17aa845ccdc9f2e37e9"
+    },
+    {
+      "rank": 16,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 16: dark shadows, performed by Robert Cobert.",
+      "text_sha256": "07864da4d656b53c37f4523934a0abb2155e5b04b63d3192031430e7bc458926"
+    },
+    {
+      "rank": 16,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 16: dark shadows, performed by Robert Cobert. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "962696b486a7262885fa54dce10d82b7534750e0c218b9ab7fa740c54c202124"
+    },
+    {
+      "rank": 16,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 16: dark shadows, performed by Robert Cobert. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "bc67b66f32c9e00a9530478d3382df8fef476923e2ca7b8618ffbd181df86c98"
+    },
+    {
+      "rank": 16,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 16: dark shadows, interpretado por Robert Cobert.",
+      "text_sha256": "42b01ae69203ceb7831ef5475f52c0460699f101278f8dfe9a3b3d46f8c23ec3"
+    },
+    {
+      "rank": 16,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 16: dark shadows, interpretado por Robert Cobert. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "ded92b3188421ec4a53b7846c82d1a868a5479ea7fd429a3c60b691ebc8fda9c"
+    },
+    {
+      "rank": 16,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 16: dark shadows, interpretado por Robert Cobert. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "797108d565176bfd8ecddd99b8a68a2925f3efae9150215748e31642275a349f"
+    },
+    {
+      "rank": 16,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 16: dark shadows, interpretado por Robert Cobert.",
+      "text_sha256": "42b01ae69203ceb7831ef5475f52c0460699f101278f8dfe9a3b3d46f8c23ec3"
+    },
+    {
+      "rank": 16,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 16: dark shadows, interpretado por Robert Cobert. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "86107f7ee5bad978a81b07591874680c298868b5640d0097577efd09009d02fa"
+    },
+    {
+      "rank": 16,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 16: dark shadows, interpretado por Robert Cobert. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "789d9a54626d203118bf62fcf71fd8b3094c0862104ad4a43bd6c67280bc4f5e"
+    },
+    {
+      "rank": 17,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 17: the prisoner, performed by Ron Grainer.",
+      "text_sha256": "205cd93d9aae4d09a3a074ead9edd61bfe2b83ee7de453be7b48955c66ee3780"
+    },
+    {
+      "rank": 17,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 17: the prisoner, performed by Ron Grainer. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "30a0714d77af2582942825d2d43886ddc68374357c46470e1819a86eb8d19c4a"
+    },
+    {
+      "rank": 17,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 17: the prisoner, performed by Ron Grainer. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "715f9f53e1ebab40306a226cbbd2f7ad109bf31e889412c3d1d30e22ffb9a9e0"
+    },
+    {
+      "rank": 17,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 17: the prisoner, interpretado por Ron Grainer.",
+      "text_sha256": "c8c81d083b886b06e4f7a9bfbd6e6ee6d3272df7babaefbe961165a5156e4432"
+    },
+    {
+      "rank": 17,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 17: the prisoner, interpretado por Ron Grainer. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "c23e168730647a3fc9874f23538ed11c5631432396818d3530383ff29753329b"
+    },
+    {
+      "rank": 17,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 17: the prisoner, interpretado por Ron Grainer. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "224eb73bee20bfa80c8ae46d9a97b2d593d70a70209c0f94236d0677217fcf56"
+    },
+    {
+      "rank": 17,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 17: the prisoner, interpretado por Ron Grainer.",
+      "text_sha256": "c8c81d083b886b06e4f7a9bfbd6e6ee6d3272df7babaefbe961165a5156e4432"
+    },
+    {
+      "rank": 17,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 17: the prisoner, interpretado por Ron Grainer. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "864195232f1865f400f5d31629ae80ba6d49c4a6fc7be50c6ec06230e06c1f84"
+    },
+    {
+      "rank": 17,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 17: the prisoner, interpretado por Ron Grainer. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "e1e1dea6d730b348ec2027f7d6a0431c0e4d928939c89f52a73eb9867400005c"
+    },
+    {
+      "rank": 18,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 18: the monkees, performed by The Monkees.",
+      "text_sha256": "c585dcecccb8f36734bab2026f9e98c49bee3afe836e882a93019272f1138c60"
+    },
+    {
+      "rank": 18,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 18: the monkees, performed by The Monkees. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "20e463d7440f23a2e1f14e62b54013af3dc2bba41b22e86b3b9014fea1a79708"
+    },
+    {
+      "rank": 18,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 18: the monkees, performed by The Monkees. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "d0b79b86f22f44cf0e6b8309df1f81392e8dd17342552b8f49a0337e3f0fd30e"
+    },
+    {
+      "rank": 18,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 18: the monkees, interpretado por The Monkees.",
+      "text_sha256": "de010b49c4a044a3fc3f79c8417486f63917c2f1e30259572234cd9d2219d0e3"
+    },
+    {
+      "rank": 18,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 18: the monkees, interpretado por The Monkees. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "6a2e4ed4b8490121633df0a5038f6d3fd3245c8d865f6e374cf5ec4d33890c14"
+    },
+    {
+      "rank": 18,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 18: the monkees, interpretado por The Monkees. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "9a6cc52bba278eb8a8f426c8a98733131740c1e170364eeb1ca0dc21e50e8493"
+    },
+    {
+      "rank": 18,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 18: the monkees, interpretado por The Monkees.",
+      "text_sha256": "de010b49c4a044a3fc3f79c8417486f63917c2f1e30259572234cd9d2219d0e3"
+    },
+    {
+      "rank": 18,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 18: the monkees, interpretado por The Monkees. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "c6255d6eeab992d723d3a2d9ba2c23b788b043640734d7523c96a85d5c949703"
+    },
+    {
+      "rank": 18,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 18: the monkees, interpretado por The Monkees. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "e9fb68bf45450193e8636631043f80e8b706321da3386d0875282970fef2307b"
+    },
+    {
+      "rank": 19,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 19: Mission: Impossible, performed by lalo schifrin.",
+      "text_sha256": "c36ba1b318af2b6744d9920e4c26076d9fe0c43a7a00ab23bbbff25db89ce524"
+    },
+    {
+      "rank": 19,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 19: Mission: Impossible, performed by lalo schifrin. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "0b9a031728efe6815581993e87e06ca038e4d8eb6064205b53be99315b546070"
+    },
+    {
+      "rank": 19,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 19: Mission: Impossible, performed by lalo schifrin. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "7a8bf1624f2108a349bc26118d21c950267f324922d37b1c4ce94e7aa231ffa9"
+    },
+    {
+      "rank": 19,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 19: Mission: Impossible, interpretado por lalo schifrin.",
+      "text_sha256": "7ac1c303e8717105b370e275a015dbb60b189d2d3d70bd63e4563400e99b667a"
+    },
+    {
+      "rank": 19,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 19: Mission: Impossible, interpretado por lalo schifrin. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "6b4ff6eb271a1f8af9e720827cbd0cbb92f5b0ae46cac90ace3f858a828d09d9"
+    },
+    {
+      "rank": 19,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 19: Mission: Impossible, interpretado por lalo schifrin. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "2fe160b88d0351425b1ed2b23a3cbb164e9b00c5612ebb552b235a3e1a0cd7aa"
+    },
+    {
+      "rank": 19,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 19: Mission: Impossible, interpretado por lalo schifrin.",
+      "text_sha256": "7ac1c303e8717105b370e275a015dbb60b189d2d3d70bd63e4563400e99b667a"
+    },
+    {
+      "rank": 19,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 19: Mission: Impossible, interpretado por lalo schifrin. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "1b4276a8711f6cb4c6b62196517f804688feb1d3f69bad52cda802632a334f24"
+    },
+    {
+      "rank": 19,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 19: Mission: Impossible, interpretado por lalo schifrin. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "b0ee3597ee57be14bf2b6e66a900bb5f1d41508e3eb47f831ad05dd2dfc390eb"
+    },
+    {
+      "rank": 20,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 20: Batman, performed by neal hefti.",
+      "text_sha256": "783beb6c29ebd691867bc71275fa33f1b75ad576ce53de81df6b1e8a3f3885eb"
+    },
+    {
+      "rank": 20,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 20: Batman, performed by neal hefti. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "a857a22f44e2192429079a3c429f22bf4fcc1d697ee2e9fcbebfc5e986abc6ae"
+    },
+    {
+      "rank": 20,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 20: Batman, performed by neal hefti. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "273c6adbc75ac4add4d9cca7685e2801587b48a449f51e27b1b1937d101c8eee"
+    },
+    {
+      "rank": 20,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 20: Batman, interpretado por neal hefti.",
+      "text_sha256": "b6e80320f4d2d344204e6325f2f15452eace5d4f1b954ce9b2a991fa2652bff2"
+    },
+    {
+      "rank": 20,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 20: Batman, interpretado por neal hefti. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "b9b1c0af7464f1b61f2bda4d09381b73fb6742b56fb9f479c554ea88ab3c89b0"
+    },
+    {
+      "rank": 20,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 20: Batman, interpretado por neal hefti. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "a20ee5634fd33548590725ab73e4215ce84a42f74648eee214684c67d56e7af2"
+    },
+    {
+      "rank": 20,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 20: Batman, interpretado por neal hefti.",
+      "text_sha256": "b6e80320f4d2d344204e6325f2f15452eace5d4f1b954ce9b2a991fa2652bff2"
+    },
+    {
+      "rank": 20,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 20: Batman, interpretado por neal hefti. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "957788436968480eca44ce713e057aa5a7a9a7492fd0e973aed3f9de91c0b664"
+    },
+    {
+      "rank": 20,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 20: Batman, interpretado por neal hefti. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "14cdd2936c13041afa3565465c9624a11e4582f00c0cd1ea2847c14d05f9a014"
+    },
+    {
+      "rank": 21,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 21: The Addams Family, performed by Vic Mizzy.",
+      "text_sha256": "6297d9315eaa3f5baadb0893e51fa0bfe0cca3a4f19ca4451ac3d0a9c1cedf45"
+    },
+    {
+      "rank": 21,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 21: The Addams Family, performed by Vic Mizzy. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "760c0b449653096e8037bb366351ea653c3cb4e9821e74518bd351cc87d5fa5c"
+    },
+    {
+      "rank": 21,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 21: The Addams Family, performed by Vic Mizzy. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "f84622959e1ebcc716cf3942c11eb90c19abc230f55c6030690a8f43633fef54"
+    },
+    {
+      "rank": 21,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 21: The Addams Family, interpretado por Vic Mizzy.",
+      "text_sha256": "65269514a9f16da4fe210fcb83c23a8098472929cf45b71214f7d3928b0dab94"
+    },
+    {
+      "rank": 21,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 21: The Addams Family, interpretado por Vic Mizzy. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "d8ac075dc0cfff2ee087660cb397831f53cfdfd066c781594adbc53a5c3d5252"
+    },
+    {
+      "rank": 21,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 21: The Addams Family, interpretado por Vic Mizzy. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "caf65fdc5cfa506920b643cdeebbade492673e4f1760f4365b7358408f63bbb3"
+    },
+    {
+      "rank": 21,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 21: The Addams Family, interpretado por Vic Mizzy.",
+      "text_sha256": "65269514a9f16da4fe210fcb83c23a8098472929cf45b71214f7d3928b0dab94"
+    },
+    {
+      "rank": 21,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 21: The Addams Family, interpretado por Vic Mizzy. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "bf55996177f2009fa7a640337377afb615049f1768421cdd6dcdba110915d22e"
+    },
+    {
+      "rank": 21,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 21: The Addams Family, interpretado por Vic Mizzy. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "0822b1230f56be17f6688fbdd2fb23f54a4ce8d0df4bafda1274a946948917ff"
+    },
+    {
+      "rank": 22,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 22: Gilligan's Island, performed by jack marshall.",
+      "text_sha256": "72c90cd9b40c3e6d9a270935c168f31411d16fb15c063aa487b067e0838da62f"
+    },
+    {
+      "rank": 22,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 22: Gilligan's Island, performed by jack marshall. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "f28ae7db2b1537ebe8e9f06bc26229a4bbae4ba63b985ab99df657569476e659"
+    },
+    {
+      "rank": 22,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 22: Gilligan's Island, performed by jack marshall. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "b9d97806bbe0e53977f49d6fa42e53a3a6f523162fee83bd6941472792fcbf4a"
+    },
+    {
+      "rank": 22,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 22: Gilligan's Island, interpretado por jack marshall.",
+      "text_sha256": "c42fd30753c052e7873772d0568db5c6019ee456e5d2ee43cb8f0bf715504361"
+    },
+    {
+      "rank": 22,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 22: Gilligan's Island, interpretado por jack marshall. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "57b5a028f02fe178bdfa9b30e8db066bd0435ad27dfad8d31a48e76e8b90f315"
+    },
+    {
+      "rank": 22,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 22: Gilligan's Island, interpretado por jack marshall. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "6133080d2a875c57262d7dc521cd14ccc40ef19f4fda4a6dd3d085dde7b835c3"
+    },
+    {
+      "rank": 22,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 22: Gilligan's Island, interpretado por jack marshall.",
+      "text_sha256": "c42fd30753c052e7873772d0568db5c6019ee456e5d2ee43cb8f0bf715504361"
+    },
+    {
+      "rank": 22,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 22: Gilligan's Island, interpretado por jack marshall. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "7b0c69688da03df0f9d63731341c224eab956e1cc9ea108cede8d03c07c4a099"
+    },
+    {
+      "rank": 22,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 22: Gilligan's Island, interpretado por jack marshall. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "ec17de0f4039d5eee36193c5e9b9d1580b6edb80e84f6aee9cca261b642e3117"
+    },
+    {
+      "rank": 23,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 23: Get Smart, performed by Irving Szathmary.",
+      "text_sha256": "5ce4079a65a99f42a5c414ad02be8e0c054651ceb3b6ab51195b95294291086a"
+    },
+    {
+      "rank": 23,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 23: Get Smart, performed by Irving Szathmary. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "5552e977b6bff6f9820d9a6af6fb7d546fdc83535bb53f5e1b7ff570cc66f51b"
+    },
+    {
+      "rank": 23,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 23: Get Smart, performed by Irving Szathmary. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "19b11bd97cbec8a880b5456a21349912221272e798f3676ab45b0ca783e97d09"
+    },
+    {
+      "rank": 23,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 23: Get Smart, interpretado por Irving Szathmary.",
+      "text_sha256": "7e7c4b2df9b852779678215a2978e12848d447754576aea7097fba9e1dde3d45"
+    },
+    {
+      "rank": 23,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 23: Get Smart, interpretado por Irving Szathmary. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "72618ae71990b2e5999057c1893726fbabca5c3d6bb489e238ebcb3958c00607"
+    },
+    {
+      "rank": 23,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 23: Get Smart, interpretado por Irving Szathmary. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "c80d388e881267a3a63dfc3f2c76a78f5fadceb87a48190f2858149f05c99c20"
+    },
+    {
+      "rank": 23,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 23: Get Smart, interpretado por Irving Szathmary.",
+      "text_sha256": "7e7c4b2df9b852779678215a2978e12848d447754576aea7097fba9e1dde3d45"
+    },
+    {
+      "rank": 23,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 23: Get Smart, interpretado por Irving Szathmary. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "0a728af86105f107544596ad6c074e01b30c5b6109867f2d7109a58ea1a94605"
+    },
+    {
+      "rank": 23,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 23: Get Smart, interpretado por Irving Szathmary. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "d518d7528d8864c1f8e0eba4b4e9ce74dfa6fa1dc9075cd182c62c245d8d20c5"
+    },
+    {
+      "rank": 24,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 24: Green Acres, performed by jack marshall.",
+      "text_sha256": "8ec98789a1a1791c8438ff67b4b3a079739b2b8e6431d582f7088318d52a6200"
+    },
+    {
+      "rank": 24,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 24: Green Acres, performed by jack marshall. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "cebd2b22ccbe82b3cb9a4e31112dc3aa83c1db6e5a9f285bb069328736a1fc3a"
+    },
+    {
+      "rank": 24,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 24: Green Acres, performed by jack marshall. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "3dbaefc98978788c260e994b02dffb74836696df8fa13f68d66451736b26307c"
+    },
+    {
+      "rank": 24,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 24: Green Acres, interpretado por jack marshall.",
+      "text_sha256": "0640f539ad6369c8a2c4628e8e14200cce7a40957daed1718901afd14d0924e5"
+    },
+    {
+      "rank": 24,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 24: Green Acres, interpretado por jack marshall. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "b2e6901511c5ac0781318b315d08ac3f8f055dc0c690f0cb6b8683bbbe85508c"
+    },
+    {
+      "rank": 24,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 24: Green Acres, interpretado por jack marshall. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "7dcb500aa6f21639b2ee11b8101626b63198eb678351b51772948ff0e8f49c27"
+    },
+    {
+      "rank": 24,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 24: Green Acres, interpretado por jack marshall.",
+      "text_sha256": "0640f539ad6369c8a2c4628e8e14200cce7a40957daed1718901afd14d0924e5"
+    },
+    {
+      "rank": 24,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 24: Green Acres, interpretado por jack marshall. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "341fae3bfe6054c65c7c7405763cbbfd921edb517ed545a3367bc4a9d3f75400"
+    },
+    {
+      "rank": 24,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 24: Green Acres, interpretado por jack marshall. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "13e56266314f6b36169b92a349d8b746ff268b40e02ac590fafa81235d96aae2"
+    },
+    {
+      "rank": 25,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 25: Petticoat Junction, performed by jack marshall.",
+      "text_sha256": "f3a92f3135d593ca1f666ec7bd0e5fa0c93baa91abf350c0b3bdf1cc91c92954"
+    },
+    {
+      "rank": 25,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 25: Petticoat Junction, performed by jack marshall. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "b415bf141c0502aa9ad58ab67d7baa61fd00b6011f9c8586940bedc06171c43e"
+    },
+    {
+      "rank": 25,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 25: Petticoat Junction, performed by jack marshall. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "f2255661b7516ee52758bce2ab72ef2c5e933dc5d2b8eeff1ca8bf7b312f742c"
+    },
+    {
+      "rank": 25,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 25: Petticoat Junction, interpretado por jack marshall.",
+      "text_sha256": "003c7f9c4162d201298e04a9878251f1bcba875ee04c5f8938786c164845bae6"
+    },
+    {
+      "rank": 25,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 25: Petticoat Junction, interpretado por jack marshall. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "15fa6b7e55ee525d65ce200bf80ac652413b263fa473fb236990e089380c9dfc"
+    },
+    {
+      "rank": 25,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 25: Petticoat Junction, interpretado por jack marshall. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "b418e9fbaae4c545d8dc411e78af934c1fc7c40ffbef6b1983f5ce82b29df4df"
+    },
+    {
+      "rank": 25,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 25: Petticoat Junction, interpretado por jack marshall.",
+      "text_sha256": "003c7f9c4162d201298e04a9878251f1bcba875ee04c5f8938786c164845bae6"
+    },
+    {
+      "rank": 25,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 25: Petticoat Junction, interpretado por jack marshall. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "110c35725b5af30cb865d95779c164471fb833ee90fa08decb57c512f8091aa0"
+    },
+    {
+      "rank": 25,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 25: Petticoat Junction, interpretado por jack marshall. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "70dc6d8196adc285bfb00e30a742414ef6ed70051eb1fdc6fb0e592e75dd628c"
+    },
+    {
+      "rank": 26,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 26: Doctor Who, performed by Ron Grainer, Delia Derbyshire.",
+      "text_sha256": "c3b8c030bd5a6db849a4e8ff0c27eb0910705611c706dce45f8db7b911cb65b9"
+    },
+    {
+      "rank": 26,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 26: Doctor Who, performed by Ron Grainer, Delia Derbyshire. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "5174769c430aa0c014fe403576fed547667a15fe9f1f3ec6a818ce3814221e82"
+    },
+    {
+      "rank": 26,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 26: Doctor Who, performed by Ron Grainer, Delia Derbyshire. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "892f1134ba25df61b7f613a2674524e0c17448e7b982f1bdf86675990090904f"
+    },
+    {
+      "rank": 26,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 26: Doctor Who, interpretado por Ron Grainer, Delia Derbyshire.",
+      "text_sha256": "9a2733c1d297d3d64cd1f1d61f95a799ac08c2ee77372a63c9e2b495f9cca223"
+    },
+    {
+      "rank": 26,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 26: Doctor Who, interpretado por Ron Grainer, Delia Derbyshire. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "b1ffb68ff58a2bf82a6e7201af29a56b9427c0e505aa64040ff1ea59b277de8c"
+    },
+    {
+      "rank": 26,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 26: Doctor Who, interpretado por Ron Grainer, Delia Derbyshire. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "298d47c37258b913e128d524805e949d841ea4d6f0fb47104ee4e5442a5c300f"
+    },
+    {
+      "rank": 26,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 26: Doctor Who, interpretado por Ron Grainer, Delia Derbyshire.",
+      "text_sha256": "9a2733c1d297d3d64cd1f1d61f95a799ac08c2ee77372a63c9e2b495f9cca223"
+    },
+    {
+      "rank": 26,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 26: Doctor Who, interpretado por Ron Grainer, Delia Derbyshire. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "ae78c631fa87aba80c997fcb66d4377120eb7441e33f9966d3b7ca0f0ed87ed7"
+    },
+    {
+      "rank": 26,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 26: Doctor Who, interpretado por Ron Grainer, Delia Derbyshire. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "0ddd477f12a095daadfdabc2a73a903f38cc79918968d003c706953cc03ba101"
+    },
+    {
+      "rank": 27,
+      "language": "en",
+      "kind": "intro",
+      "text": "Number 27: The Saint, performed by Edwin Astley & His Orchestra.",
+      "text_sha256": "9820815a8af0401e2d26c6245ba0b872cf4b013056e48065de16d3fb02966f94"
+    },
+    {
+      "rank": 27,
+      "language": "en",
+      "kind": "short_detail",
+      "text": "Number 27: The Saint, performed by Edwin Astley & His Orchestra. This selected recording is the verified television-theme choice for this catalog.",
+      "text_sha256": "04401ea80d0ab70438793343386a441005c3f744904c95f0231a04f0672cda1d"
+    },
+    {
+      "rank": 27,
+      "language": "en",
+      "kind": "long_detail",
+      "text": "Number 27: The Saint, performed by Edwin Astley & His Orchestra. This selected recording is the verified television-theme choice for this catalog. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "b11432e434640a14af57bad97482566ecfba10fac3743b572d22dcfacdcf1f78"
+    },
+    {
+      "rank": 27,
+      "language": "es-MX",
+      "kind": "intro",
+      "text": "Número 27: The Saint, interpretado por Edwin Astley & His Orchestra.",
+      "text_sha256": "7e9f52b8b273d0e1a360b4fc0bc783becbae5f00ea21e62869c30510c9408522"
+    },
+    {
+      "rank": 27,
+      "language": "es-MX",
+      "kind": "short_detail",
+      "text": "Número 27: The Saint, interpretado por Edwin Astley & His Orchestra. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo.",
+      "text_sha256": "37029693606e6b2af321b4d8ca4e434cf1a7edf727a0a9a415a6724c7499242d"
+    },
+    {
+      "rank": 27,
+      "language": "es-MX",
+      "kind": "long_detail",
+      "text": "Número 27: The Saint, interpretado por Edwin Astley & His Orchestra. Esta grabación seleccionada es la opción verificada para el tema televisivo de este catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "f57ac46d7aa10c4e185317014811fccb93f3ef9f15e85dfd93e7d76e8c6dae20"
+    },
+    {
+      "rank": 27,
+      "language": "pt-BR",
+      "kind": "intro",
+      "text": "Número 27: The Saint, interpretado por Edwin Astley & His Orchestra.",
+      "text_sha256": "7e9f52b8b273d0e1a360b4fc0bc783becbae5f00ea21e62869c30510c9408522"
+    },
+    {
+      "rank": 27,
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "Número 27: The Saint, interpretado por Edwin Astley & His Orchestra. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo.",
+      "text_sha256": "3c0b262b571e66e185bf6d994b6b11d51ebe73c0491da8ba99aef5038af676c1"
+    },
+    {
+      "rank": 27,
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "Número 27: The Saint, interpretado por Edwin Astley & His Orchestra. Esta gravação selecionada é a escolha verificada para o tema de televisão deste catálogo. It is presented with its recording lineage and programme association stated accurately.",
+      "text_sha256": "454a1021630077ce1a1874364f5b8fa34b019c5483349c0f54a35cebb074a322"
+    }
+  ]
+}

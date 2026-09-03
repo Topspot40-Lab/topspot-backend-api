@@ -1,0 +1,3166 @@
+{
+  "schema_version": 1,
+  "catalog_id": 64,
+  "purpose": "read-only rollback/reference snapshot; contains no credentials or audio bytes",
+  "record_count": 38,
+  "records": [
+    {
+      "ranking": {
+        "id": 3498,
+        "track_id": 2757,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 3,
+        "intro": "#3 star trek (original series) — widescreen heroics, compressed to a sting.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2757,
+        "track_name": "star trek (original series)",
+        "album_name": "The Best Of Star Trek: 30th Anniversary Special",
+        "artist_display_name": "Alexander Courage",
+        "spotify_track_id": "5NabM6VYeGHGZxzf2u5bV1",
+        "mode_flag": "SOLO",
+        "duration_ms": 62653,
+        "popularity": 17,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2734ef065f63f1b7c9cdb064783",
+        "year_released": 1966,
+        "artist_id": 110,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Star Trek (Original Series) was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Alexander Courage, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Star Trek (Original Series) theme became a television staple in 1966 by setting the mood in seconds and announcing its characters and the world they enter.",
+        "short_detail_tts_key": "short-detail/5NabM6VYeGHGZxzf2u5bV1.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 110,
+        "artist_name": "alexander courage",
+        "spotify_artist_id": "2qLGUeF6YNEfR2lyzY6Nah",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b2730edc5013d2cf80371d904dbc",
+        "artist_description": "Alexander Courage was an American orchestrator, arranger, and composer known for creating the theme for Star Trek. His work in film and television music earned him multiple Emmy Awards, and his themes are some of the most recognizable in science fiction. Courage's contributions to the genre have had a lasting impact on the sound of space exploration in media.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3285,
+          "track_ranking_id": 3498,
+          "language_code": "es",
+          "intro_text": "¡número tres, \"'star trek (original series))')\" de alexander courage! Heroísmo en pantalla ancha, comprimido en un impacto sonoro. ¡Escúchalo ahora!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_03.mp3"
+        },
+        {
+          "id": 6194,
+          "track_ranking_id": 3498,
+          "language_code": "pt-BR",
+          "intro_text": "Número três, \"Star Trek (Original Series)\" de Alexander Courage! Heroísmo em tela ampla, comprimido em um impacto sonoro. Ouça agora!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_03.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3300,
+          "track_id": 2757,
+          "language_code": "es",
+          "detail_text": "Star trek (original series) abre con una fanfarria orquestal que invita a la exploración del cosmos. El tema comunica optimismo hacia el futuro y el deseo de descubrir nuevos mundos. Su melodía inspira curiosidad y cooperación como valores esenciales para la humanidad. Esta pieza se convirtió en fundamento de una franquicia que ha marcado a millones de seguidores por décadas.",
+          "short_detail_text": "El tema de Star Trek (Original Series) se volvió un clásico de la tele en 1966 al poner el ambiente en segundos y anunciar a sus personajes y el mundo al que entran.",
+          "short_detail_tts_key": "short-detail/5NabM6VYeGHGZxzf2u5bV1.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5NabM6VYeGHGZxzf2u5bV1.mp3"
+        },
+        {
+          "id": 6875,
+          "track_id": 2757,
+          "language_code": "pt-BR",
+          "detail_text": "Star Trek (original series) abre com uma fanfarra orquestral que convida à exploração do cosmos. O tema comunica otimismo para o futuro e o desejo de descobrir novos mundos. Sua melodia inspira curiosidade e cooperação como valores essenciais para a humanidade. Esta peça se tornou o fundamento de uma franquia que marcou milhões de seguidores por décadas.",
+          "short_detail_text": "O tema de Star Trek (Original Series) virou um clássico da televisão em 1966 ao criar o clima em segundos e anunciar seus personagens e o mundo que eles entram.",
+          "short_detail_tts_key": "short-detail/5NabM6VYeGHGZxzf2u5bV1.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5NabM6VYeGHGZxzf2u5bV1.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3499,
+        "track_id": 2758,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 4,
+        "intro": "#4 hawaii five‑o — neon-soaked swagger in theme-song form.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2758,
+        "track_name": "hawaii five‑o",
+        "album_name": "Ultimate TV Theme Tunes",
+        "artist_display_name": "Morton Stevens",
+        "spotify_track_id": "6rYSAr9jGVpVNBL0ftkIDi",
+        "mode_flag": "SOLO",
+        "duration_ms": 112186,
+        "popularity": 25,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273cc8e565e64b287b0bc215a8f",
+        "year_released": 1968,
+        "artist_id": 1262,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Hawaii Five‑O was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Morton Stevens, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "Hawaii Five-O serves as a television theme staple that announces the show's characters and the distinctive world they inhabit within seconds.",
+        "short_detail_tts_key": "short-detail/6rYSAr9jGVpVNBL0ftkIDi.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1262,
+        "artist_name": "Morton Stevens",
+        "spotify_artist_id": "0RDdPCcAkdDxiRCNJbBlK0",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b273e8559319f4155d5cd1fe7c5c",
+        "artist_description": "Morton Stevens was an American film and television composer, best known for his work on the TV series 'Hawaii Five-O,' for which he won an Emmy Award. His scores often blended orchestral and jazz elements, contributing to the distinctive sound of 1970s television.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3286,
+          "track_ranking_id": 3499,
+          "language_code": "es",
+          "intro_text": "¡número cuatro, \"hawaii five‑o\" de Morton Stevens hawaii five‑o de Morton Stevens! Un tema lleno de estilo, empapado de neón y pura actitud.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_04.mp3"
+        },
+        {
+          "id": 6195,
+          "track_ranking_id": 3499,
+          "language_code": "pt-BR",
+          "intro_text": "Número quatro, \"Hawaii Five-O\" de Morton Stevens! Um tema cheio de estilo, empapado de néon e pura atitude.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_04.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3301,
+          "track_id": 2758,
+          "language_code": "es",
+          "detail_text": "Hawaii five‑o arranca con un riff de trompetas imposible de olvidar que pone todo en movimiento. Este tema encarna la intensidad de proteger una comunidad en un paraíso tropical. Su energía transmite determinación y orgullo por enfrentar cualquier amenaza con coraje. La composición recibió amplio reconocimiento y se mantiene como sinónimo de acción policiaca en la memoria colectiva.",
+          "short_detail_text": "Hawaii Five-O es un tema de televisión clásico que en segundos anuncia a los personajes del show y el mundo tan distintivo que habitan.",
+          "short_detail_tts_key": "short-detail/6rYSAr9jGVpVNBL0ftkIDi.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6rYSAr9jGVpVNBL0ftkIDi.mp3"
+        },
+        {
+          "id": 6876,
+          "track_id": 2758,
+          "language_code": "pt-BR",
+          "detail_text": "Hawaii Five-O arranca com um riff de trompetes impossível de esquecer que coloca tudo em movimento. Este tema encarna a intensidade de proteger uma comunidade em um paraíso tropical. Sua energia transmite determinação e orgulho por enfrentar qualquer ameaça com coragem. A composição recebeu amplo reconhecimento e continua como sinônimo de ação policial na memória coletiva.",
+          "short_detail_text": "O Hawaii Five-O é um tema de televisão clássico que anuncia os personagens do show e o mundo distinto que eles habitam em segundos.",
+          "short_detail_tts_key": "short-detail/6rYSAr9jGVpVNBL0ftkIDi.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6rYSAr9jGVpVNBL0ftkIDi.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3501,
+        "track_id": 143,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 6,
+        "intro": "#6 the munsters — sleek and punchy from bar one.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 143,
+        "track_name": "the munsters",
+        "album_name": "The Greatest Tv Show Themes",
+        "artist_display_name": "Jack Marshall",
+        "spotify_track_id": "1HAzaGNVyyMYVtmykjfNX9",
+        "mode_flag": "SOLO",
+        "duration_ms": 77216,
+        "popularity": 26,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273e3cb6f7455acc2b1f6e4cc2f",
+        "year_released": 1964,
+        "artist_id": 98,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "The Munsters was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Jack Marshall, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "Jack Marshall's The Munsters became a television themes staple by instantly establishing its quirky characters and the singular world they inhabit.",
+        "short_detail_tts_key": "short-detail/1HAzaGNVyyMYVtmykjfNX9.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 98,
+        "artist_name": "jack marshall",
+        "spotify_artist_id": "3Aph9hft9LO5087r28M3MZ",
+        "artist_artwork": "https://i.scdn.co/image/ab6761610000e5eb51b788e4c730718fff40fa4c",
+        "artist_description": "Jack Marshall was an American guitarist, conductor, and composer known for his work on television themes, including the theme for The Munsters. He was a prolific session musician and arranger, contributing to numerous recordings across various genres. Marshall's distinctive guitar work and compositions have left a lasting impact on the sound of television in the 1960s.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3288,
+          "track_ranking_id": 3501,
+          "language_code": "es",
+          "intro_text": "¡, en el puesto número seis, ¡'the munsters' de jack marshall! Un tema elegante y directo desde el primer compás. ¡A disfrutarlo!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_06.mp3"
+        },
+        {
+          "id": 6196,
+          "track_ranking_id": 3501,
+          "language_code": "pt-BR",
+          "intro_text": "No número seis, 'The Munsters' de Jack Marshall! Um tema elegante e direto desde o primeiro compasso. A desfrutá-lo!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_06.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 911,
+          "track_id": 143,
+          "language_code": "es",
+          "detail_text": "Esta pieza instrumental crea una atmósfera misteriosa pero divertida. Su contexto real es presentar a una peculiar familia que se considera completamente normal. Evoca emociones de diversión y ligereza ante lo inusual y aterrador. Se ha convertido en un clásico referente para temas de comedia macabra en la pantalla.",
+          "short_detail_text": "The Munsters de Jack Marshall se volvió un clásico de los temas de televisión al establecer de inmediato a sus personajes excéntricos y el mundo tan singular que habitan.",
+          "short_detail_tts_key": "short-detail/1HAzaGNVyyMYVtmykjfNX9.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1HAzaGNVyyMYVtmykjfNX9.mp3"
+        },
+        {
+          "id": 4486,
+          "track_id": 143,
+          "language_code": "pt-BR",
+          "detail_text": "Esta peça instrumental cria uma atmosfera misteriosa, mas divertida. Seu contexto real é apresentar uma família peculiar que se considera completamente normal. Evoca emoções de diversão e leveza diante do inusitado e aterrorizante. Tornou-se um clássico de referência para temas de comédia macabra na tela.",
+          "short_detail_text": "The Munsters do Jack Marshall se tornou um clássico dos temas de televisão ao estabelecer logo de cara seus personagens excêntricos e o mundo singular que eles habitam.",
+          "short_detail_tts_key": "short-detail/1HAzaGNVyyMYVtmykjfNX9.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1HAzaGNVyyMYVtmykjfNX9.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3502,
+        "track_id": 145,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 7,
+        "intro": "#7 the andy griffith show — pure TV comfort: one bar and you’re there.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 145,
+        "track_name": "the andy griffith show",
+        "album_name": "Country Fried TV Tunes",
+        "artist_display_name": "Earle Hagen",
+        "spotify_track_id": "01xNAT6uyYzohxapcUYzom",
+        "mode_flag": "SOLO",
+        "duration_ms": 164160,
+        "popularity": 0,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273c56aec36dd4a5023a28dea80",
+        "year_released": 1960,
+        "artist_id": 100,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "The Andy Griffith Show was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Earle Hagen, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "A television themes staple, The Andy Griffith Show cues the mood in seconds by announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail_tts_key": "short-detail/01xNAT6uyYzohxapcUYzom.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 100,
+        "artist_name": "earle hagen",
+        "spotify_artist_id": "2yAjgGMoWrfjWXnZ63ynP5",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b273f79eb984a5d87231fa8a6ea1",
+        "artist_description": "Earle Hagen was an American composer best known for creating the themes for The Andy Griffith Show and The Dick Van Dyke Show. His work in television music earned him multiple Emmy Awards, and his themes are some of the most recognizable in television history. Hagen's contributions to the genre have had a lasting impact on the sound of classic TV shows.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3289,
+          "track_ranking_id": 3502,
+          "language_code": "es",
+          "intro_text": "¡número siete, \"the andy griffith show\" de earle hagen! Puro confort televisivo: con solo una nota, ya estás ahí.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_07.mp3"
+        },
+        {
+          "id": 6197,
+          "track_ranking_id": 3502,
+          "language_code": "pt-BR",
+          "intro_text": "Número sete, \"The Andy Griffith Show\" de Earle Hagen! Puro conforto televisivo: com apenas uma nota, você já está aí.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_07.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 913,
+          "track_id": 145,
+          "language_code": "es",
+          "detail_text": "The Andy Griffith Show se identifica por su tema silbado que transmite una vibra tranquila y hogareña. Este tema evoca la nostalgia por los pueblos pequeños donde la gente es amable y se ayuda mutuamente. La emoción que provoca es de paz y optimismo ante la vida sencilla. Su silbido único lo ha hecho uno de los más reconocidos en la historia de la televisión.",
+          "short_detail_text": "Un clásico de los temas de televisión, The Andy Griffith Show te pone en el ambiente en segundos al anunciar quiénes son estos personajes y el tipo de mundo en el que vas a entrar.",
+          "short_detail_tts_key": "short-detail/01xNAT6uyYzohxapcUYzom.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/01xNAT6uyYzohxapcUYzom.mp3"
+        },
+        {
+          "id": 4488,
+          "track_id": 145,
+          "language_code": "pt-BR",
+          "detail_text": "O The Andy Griffith Show se identifica por seu tema silbado que transmite uma vibra tranquila e acolhedora. Esse tema evoca a nostalgia pelos povoados pequenos onde as pessoas são amáveis e se ajudam mutuamente. A emoção que provoca é de paz e otimismo diante da vida simples. Seu silbido único o tornou um dos mais reconhecidos na história da televisão.",
+          "short_detail_text": "Clássico dos temas de televisão, The Andy Griffith Show já te coloca no clima em segundos ao anunciar quem são esses personagens e o tipo de mundo que você está entrando.",
+          "short_detail_tts_key": "short-detail/01xNAT6uyYzohxapcUYzom.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/01xNAT6uyYzohxapcUYzom.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3503,
+        "track_id": 146,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 8,
+        "intro": "#8 the twilight zone — whistle-clean hook with staying power.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 146,
+        "track_name": "the twilight zone",
+        "album_name": "Audio Visual",
+        "artist_display_name": "Marius Constant",
+        "spotify_track_id": "3fV1YeAqMcCY8lmpK9duaZ",
+        "mode_flag": "SOLO",
+        "duration_ms": 79040,
+        "popularity": 0,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b27303295fdd6c6f3a41ef412b6c",
+        "year_released": 1960,
+        "artist_id": 101,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "The Twilight Zone was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Marius Constant, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The twilight zone became a television staple by quickly signaling the intriguing characters and unusual world awaiting viewers in each episode of the series.",
+        "short_detail_tts_key": "short-detail/3fV1YeAqMcCY8lmpK9duaZ.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 101,
+        "artist_name": "marius constant",
+        "spotify_artist_id": "0TFFISao0xA2ax2vkzbN0l",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b27311c0f478c6f6f61bd5641c2e",
+        "artist_description": "Marius Constant was a Romanian-born French composer known for creating the iconic theme for The Twilight Zone. His work in film and television music blended classical and modern elements, creating a unique and haunting sound. Constant's theme for The Twilight Zone remains one of the most recognized and influential pieces in television history.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3290,
+          "track_ranking_id": 3503,
+          "language_code": "es",
+          "intro_text": "¡número ocho, \"the twilight zone\" de marius constant! Un gancho impecable con un poder que perdura.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_08.mp3"
+        },
+        {
+          "id": 6198,
+          "track_ranking_id": 3503,
+          "language_code": "pt-BR",
+          "intro_text": "Número oito, \"The Twilight Zone\" de Marius Constant! Um gancho impecable com um poder que perdura.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_08.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 914,
+          "track_id": 146,
+          "language_code": "es",
+          "detail_text": "The Twilight Zone inicia con un tema musical lleno de suspense y rareza. Sus sonidos crean una atmósfera que invita a pensar en lo paranormal y lo inexplicable. El mensaje de la pieza es que hay dimensiones de la realidad que desafían nuestra comprensión. Esta composición ha marcado un antes y un después en los soundtracks de programas de misterio.",
+          "short_detail_text": "The Twilight Zone se volvió un clásico de la tele al señalar rápido los personajes intrigantes y el mundo inusual que esperaban a los espectadores en cada episodio de la serie.",
+          "short_detail_tts_key": "short-detail/3fV1YeAqMcCY8lmpK9duaZ.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3fV1YeAqMcCY8lmpK9duaZ.mp3"
+        },
+        {
+          "id": 4489,
+          "track_id": 146,
+          "language_code": "pt-BR",
+          "detail_text": "The Twilight Zone inicia com um tema musical cheio de suspense e estranheza. Seus sons criam uma atmosfera que convida a pensar no paranormal e no inexplicável. A mensagem da peça é que há dimensões da realidade que desafiam nossa compreensão. Esta composição marcou um antes e um depois nas trilhas sonoras de programas de mistério.",
+          "short_detail_text": "The Twilight Zone se tornou um clássico da tevê ao sinalizar rapidamente os personagens intrigantes e o mundo incomum que aguardava os espectadores em cada episódio da série.",
+          "short_detail_tts_key": "short-detail/3fV1YeAqMcCY8lmpK9duaZ.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3fV1YeAqMcCY8lmpK9duaZ.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3505,
+        "track_id": 2761,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 10,
+        "intro": "#10 meet the flintstones — whistle-clean hook with staying power.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2761,
+        "track_name": "meet the flintstones",
+        "album_name": "Go Simpsonic with The Simpsons (More Original Music from the Television Series)",
+        "artist_display_name": "Hoyt Curtin",
+        "spotify_track_id": "1sG6BspN4NeOW1bTvvpGvq",
+        "mode_flag": "SOLO",
+        "duration_ms": 31561,
+        "popularity": 23,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273d4a550b8301a25a4b36c890b",
+        "year_released": 1962,
+        "artist_id": 1265,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Meet the Flintstones was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Hoyt Curtin, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "Meet the Flintstones became a television themes staple that instantly cues the show's mood while announcing its characters and the distinctive world they inhabit.",
+        "short_detail_tts_key": "short-detail/1sG6BspN4NeOW1bTvvpGvq.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1265,
+        "artist_name": "Hoyt Curtin",
+        "spotify_artist_id": "5FTVl7BcCW86THl2pNrYcX",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b2737278039e1d94a98ebee41150",
+        "artist_description": "Hoyt Curtin was an American composer best known for his work on Hanna-Barbera cartoons, including the iconic themes for 'The Flintstones' and 'The Jetsons.' His music defined the sound of animated television in the 1960s and 1970s, influencing generations of viewers and composers.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3278,
+          "track_ranking_id": 3505,
+          "language_code": "es",
+          "intro_text": "¡número diez, conoce a los Picapiedra con \"meet the flintstones\" de Hoyt Curtin! Un gancho limpio como un silbido y con un poder que perdura.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_10.mp3"
+        },
+        {
+          "id": 6199,
+          "track_ranking_id": 3505,
+          "language_code": "pt-BR",
+          "intro_text": "Número dez, conheça os Flintstones com \"Meet the Flintstones\" de Hoyt Curtin! Um gancho limpo como um assobio e com um poder que perdura.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_10.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3304,
+          "track_id": 2761,
+          "language_code": "es",
+          "detail_text": "Meet the Flintstones es el tema que da la bienvenida a una familia de la edad de piedra. La canción muestra sus aventuras con autos de piedra y dinosaurios domesticados de forma divertida. Su significado es mezclar el pasado con el presente para crear situaciones hilarantes. Su estilo jazzístico la hace única y perdurable a través de los años.",
+          "short_detail_text": "Meet the Flintstones se volvió un clásico de los temas de televisión que de inmediato te pone en el ambiente del programa mientras anuncia a sus personajes y el mundo tan distintivo en el que viven.",
+          "short_detail_tts_key": "short-detail/1sG6BspN4NeOW1bTvvpGvq.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1sG6BspN4NeOW1bTvvpGvq.mp3"
+        },
+        {
+          "id": 6879,
+          "track_id": 2761,
+          "language_code": "pt-BR",
+          "detail_text": "Meet the Flintstones é o tema que dá as boas-vindas a uma família da era da pedra. A canção mostra suas aventuras com carros de pedra e dinossauros domesticados de forma divertida. Seu significado é misturar o passado com o presente para criar situações hilárias. Seu estilo jazzístico a torna única e duradoura ao longo dos anos.",
+          "short_detail_text": "Meet the Flintstones se tornou um clássico dos temas de televisão que na hora já te coloca no clima do programa enquanto anuncia seus personagens e o mundo distinto que eles habitam.",
+          "short_detail_tts_key": "short-detail/1sG6BspN4NeOW1bTvvpGvq.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1sG6BspN4NeOW1bTvvpGvq.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3506,
+        "track_id": 2762,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 11,
+        "intro": "#11 the jetsons — Saturday-morning energy in a single riff.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2762,
+        "track_name": "the jetsons",
+        "album_name": "Spartan Warriors",
+        "artist_display_name": "Hoyt Curtin",
+        "spotify_track_id": "3X598Ps4bvCBkSERGcTPdH",
+        "mode_flag": "SOLO",
+        "duration_ms": 132413,
+        "popularity": 14,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273b25a2adaa4354adfcd311ff4",
+        "year_released": 1962,
+        "artist_id": 1265,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "The Jetsons was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Hoyt Curtin, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "A television themes staple composed by Hoyt Curtin, the jetsons cues the mood in seconds by announcing its characters and the kind of world you're stepping into.",
+        "short_detail_tts_key": "short-detail/3X598Ps4bvCBkSERGcTPdH.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1265,
+        "artist_name": "Hoyt Curtin",
+        "spotify_artist_id": "5FTVl7BcCW86THl2pNrYcX",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b2737278039e1d94a98ebee41150",
+        "artist_description": "Hoyt Curtin was an American composer best known for his work on Hanna-Barbera cartoons, including the iconic themes for 'The Flintstones' and 'The Jetsons.' His music defined the sound of animated television in the 1960s and 1970s, influencing generations of viewers and composers.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3279,
+          "track_ranking_id": 3506,
+          "language_code": "es",
+          "intro_text": "¡número once, 'the jetsons' de Hoyt Curtin — Hoyt Curtin! ¡Energía de sábado por la mañana en un solo riff!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_11.mp3"
+        },
+        {
+          "id": 6200,
+          "track_ranking_id": 3506,
+          "language_code": "pt-BR",
+          "intro_text": "Número onze, 'The Jetsons' de Hoyt Curtin — Hoyt Curtin! Energia de sábado de manhã em um único riff!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_11.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3305,
+          "track_id": 2762,
+          "language_code": "es",
+          "detail_text": "the jetsons es una sintonía futurista que inspira sensación de progreso y modernidad. La melodía refleja la vida con robots y ciudades flotantes en un mundo avanzado. El mensaje central es que la familia permanece como el núcleo incluso en mundos avanzados. Esta creación se convirtió en sinónimo de la animación espacial de su tiempo.",
+          "short_detail_text": "Un clásico de los temas de televisión compuesto por Hoyt Curtin, The Jetsons te pone en ambiente en segundos al anunciar a sus personajes y el tipo de mundo al que estás entrando.",
+          "short_detail_tts_key": "short-detail/3X598Ps4bvCBkSERGcTPdH.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3X598Ps4bvCBkSERGcTPdH.mp3"
+        },
+        {
+          "id": 6880,
+          "track_id": 2762,
+          "language_code": "pt-BR",
+          "detail_text": "The Jetsons é uma sintonía futurista que inspira sensação de progresso e modernidade. A melodia reflete a vida com robôs e cidades flutuantes em um mundo avançado. A mensagem central é que a família permanece como o núcleo mesmo em mundos avançados. Esta criação se tornou sinônimo da animação espacial de sua época.",
+          "short_detail_text": "The Jetsons, um clássico dos temas de TV composto por Hoyt Curtin, já te coloca no clima em segundos anunciando os personagens e o tipo de mundo que você tá entrando.",
+          "short_detail_tts_key": "short-detail/3X598Ps4bvCBkSERGcTPdH.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3X598Ps4bvCBkSERGcTPdH.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3507,
+        "track_id": 2763,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 12,
+        "intro": "#12 i dream of jeannie — instant earworm that teleports you back.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2763,
+        "track_name": "i dream of jeannie",
+        "album_name": "Stephen Foster Songs",
+        "artist_display_name": "Hugo Montenegro",
+        "spotify_track_id": "3gaSWTWH2MmAfvHo2miMGI",
+        "mode_flag": "SOLO",
+        "duration_ms": 182826,
+        "popularity": 2,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b27358354ded1353869f12b58313",
+        "year_released": 1965,
+        "artist_id": 1266,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "I Dream of Jeannie was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Hugo Montenegro, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "I Dream of Jeannie composed by Hugo Montenegro became a television theme staple that established the show's central characters and distinctive world in seconds.",
+        "short_detail_tts_key": "short-detail/3gaSWTWH2MmAfvHo2miMGI.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1266,
+        "artist_name": "Hugo Montenegro",
+        "spotify_artist_id": "5g64xp3hpxoCXRJkNd5tmE",
+        "artist_artwork": "https://i.scdn.co/image/ab6761610000e5eb9acfeac5c7a845cda4d18c93",
+        "artist_description": "Hugo Montenegro was an American orchestra leader and composer known for his work in film scores and pop music. He gained fame for his innovative use of the Moog synthesizer, most notably in his hit version of 'The Good, the Bad and the Ugly.' His contributions to music technology and arrangement are notable.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3280,
+          "track_ranking_id": 3507,
+          "language_code": "es",
+          "intro_text": "¡número doce, \"i dream of jeannie\" de Hugo Montenegro! Un clásico instantáneo que te transporta al pasado con solo escucharlo.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_12.mp3"
+        },
+        {
+          "id": 6201,
+          "track_ranking_id": 3507,
+          "language_code": "pt-BR",
+          "intro_text": "Número doze, \"I Dream of Jeannie\" de Hugo Montenegro! Um clássico instantâneo que te transporta ao passado com apenas ouvi-lo.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_12.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3306,
+          "track_id": 2763,
+          "language_code": "es",
+          "detail_text": "i dream of jeannie tiene un ritmo que evoca magia y encanto desde el primer segundo. Esta pieza musical representa los deseos y las situaciones cómicas que surgen de tener una genia. Su contexto es el de una comedia donde lo imposible se vuelve cotidiano. Un hecho interesante es que su silbido principal se reconoce al instante en cualquier parte del mundo.",
+          "short_detail_text": "I Dream of Jeannie compuesta por Hugo Montenegro se convirtió en un tema de televisión clásico que establecía los personajes centrales del show y su mundo distintivo en segundos.",
+          "short_detail_tts_key": "short-detail/3gaSWTWH2MmAfvHo2miMGI.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3gaSWTWH2MmAfvHo2miMGI.mp3"
+        },
+        {
+          "id": 6881,
+          "track_id": 2763,
+          "language_code": "pt-BR",
+          "detail_text": "I Dream of Jeannie tem um ritmo que evoca magia e encanto desde o primeiro segundo. Esta peça musical representa os desejos e as situações cômicas que surgem de ter uma gênia. Seu contexto é o de uma comédia onde o impossível se torna cotidiano. Um fato interessante é que seu assovio principal é reconhecido instantaneamente em qualquer lugar do mundo.",
+          "short_detail_text": "I Dream of Jeannie, composta por Hugo Montenegro, virou um tema de televisão clássico que estabelecia os personagens centrais do show e o mundo distintivo dele em segundos.",
+          "short_detail_tts_key": "short-detail/3gaSWTWH2MmAfvHo2miMGI.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3gaSWTWH2MmAfvHo2miMGI.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3508,
+        "track_id": 2764,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 13,
+        "intro": "#13 bewitched — sleek and punchy from bar one.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2764,
+        "track_name": "bewitched",
+        "album_name": "TV Themes of the 50's & 60's",
+        "artist_display_name": "Jack Keller",
+        "spotify_track_id": "6bcVz2qBQsHWd9EYVbv8Fp",
+        "mode_flag": "SOLO",
+        "duration_ms": 60807,
+        "popularity": 2,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2738e731cc629583de52a5847e7",
+        "year_released": 1964,
+        "artist_id": 1267,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Bewitched was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Jack Keller, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "Bewitched was a television themes staple that cues the mood in seconds by announcing its characters and the kind of world you are stepping into.",
+        "short_detail_tts_key": "short-detail/6bcVz2qBQsHWd9EYVbv8Fp.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1267,
+        "artist_name": "Jack Keller",
+        "spotify_artist_id": "5ZSSTVknQ9MfLwkcF2eyY4",
+        "artist_artwork": null,
+        "artist_description": "Jack Keller was an American songwriter who penned numerous hits in the 1950s and 1960s, including 'Venus in Blue Jeans' and 'Everybody's Somebody's Fool.' His work spanned various genres, from pop to rock, and he was a significant figure in the Brill Building era of songwriting.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3281,
+          "track_ranking_id": 3508,
+          "language_code": "es",
+          "intro_text": "¡número trece, 'bewitched' de Jack Keller! Directo y contundente desde el primer compás.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_13.mp3"
+        },
+        {
+          "id": 6202,
+          "track_ranking_id": 3508,
+          "language_code": "pt-BR",
+          "intro_text": "Número treze, 'Bewitched' de Jack Keller! Direto e contundente desde o primeiro compasso.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_13.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3307,
+          "track_id": 2764,
+          "language_code": "es",
+          "detail_text": "La melodía bewitched invita a un universo donde la magia se encuentra con la vida diaria. Esta melodía refleja el conflicto entre ocultar poderes sobrenaturales y mantener una relación normal, lleno de encanto y risas. El sentimiento principal es de ligereza y optimismo ante cualquier problema que aparezca. Con el tiempo se ha establecido como un referente en las bandas sonoras de comedias televisivas.",
+          "short_detail_text": "Bewitched era un clásico de los temas de televisión que te ponía el ambiente en segundos al anunciar a sus personajes y el tipo de mundo al que estás entrando.",
+          "short_detail_tts_key": "short-detail/6bcVz2qBQsHWd9EYVbv8Fp.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6bcVz2qBQsHWd9EYVbv8Fp.mp3"
+        },
+        {
+          "id": 6882,
+          "track_id": 2764,
+          "language_code": "pt-BR",
+          "detail_text": "A melodia Bewitched convida a um universo onde a magia se encontra com a vida cotidiana. Essa melodia reflete o conflito entre esconder poderes sobrenaturais e manter uma relação normal, cheia de encanto e risos. O sentimento principal é de leveza e otimismo diante de qualquer problema que apareça. Com o tempo, ela se estabeleceu como um referente nas trilhas sonoras de comédias televisivas.",
+          "short_detail_text": "Bewitched era um clássico dos temas de televisão que já te coloca no clima em segundos ao anunciar seus personagens e o tipo de mundo que você está entrando.",
+          "short_detail_tts_key": "short-detail/6bcVz2qBQsHWd9EYVbv8Fp.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6bcVz2qBQsHWd9EYVbv8Fp.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3510,
+        "track_id": 2766,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 15,
+        "intro": "#15 the avengers — short, sharp, and impossible to forget.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2766,
+        "track_name": "the avengers",
+        "album_name": "Avengers and Other Top Sixties Themes",
+        "artist_display_name": "Laurie Johnson",
+        "spotify_track_id": "476qYPUYL8SrbCmLTOS6Pl",
+        "mode_flag": "SOLO",
+        "duration_ms": 139933,
+        "popularity": 25,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273664d9f90ec2c1aad33d15979",
+        "year_released": 1965,
+        "artist_id": 1269,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "The Avengers was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Laurie Johnson, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Avengers has endured as a television themes staple since 1965 by instantly signaling its central characters and the distinctive world viewers are about to enter.",
+        "short_detail_tts_key": "short-detail/476qYPUYL8SrbCmLTOS6Pl.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1269,
+        "artist_name": "Laurie Johnson",
+        "spotify_artist_id": "5Oaesk5r1hSUYieWZgPgjk",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b2735f588b9942afbc61d5473382",
+        "artist_description": "Laurie Johnson is a British composer known for his work in television and film, including the theme for 'The Avengers.' His music often blends jazz and orchestral elements, and he has been influential in the development of British television music.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3283,
+          "track_ranking_id": 3510,
+          "language_code": "es",
+          "intro_text": "¡número quince, 'the avengers' de Laurie Johnson! Corto, impactante y simplemente inolvidable, con la firma de Laurie Johnson.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_15.mp3"
+        },
+        {
+          "id": 6203,
+          "track_ranking_id": 3510,
+          "language_code": "pt-BR",
+          "intro_text": "Número quinze, 'The Avengers' de Laurie Johnson! Curto, impactante e simplesmente inesquecível, com a assinatura de Laurie Johnson.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_15.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3309,
+          "track_id": 2766,
+          "language_code": "es",
+          "detail_text": "the avengers suena con un estilo británico inconfundible y audaz. La composición transmite elegancia y peligro, representando a héroes que combaten el crimen con clase y astucia. Su emoción radica en la mezcla de jazz y orquesta que genera adrenalina y sofisticación. Este tema se posicionó como uno de los más memorables en la historia de la televisión británica.",
+          "short_detail_text": "The Avengers se ha mantenido como un clásico de los temas de televisión desde 1965 al señalar de inmediato a sus personajes principales y el mundo tan distintivo al que los espectadores están a punto de entrar.",
+          "short_detail_tts_key": "short-detail/476qYPUYL8SrbCmLTOS6Pl.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/476qYPUYL8SrbCmLTOS6Pl.mp3"
+        },
+        {
+          "id": 6884,
+          "track_id": 2766,
+          "language_code": "pt-BR",
+          "detail_text": "The Avengers soa com um estilo britânico inconfundível e audaz. A composição transmite elegância e perigo, representando heróis que combatem o crime com classe e astúcia. Sua emoção reside na mistura de jazz e orquestra que gera adrenalina e sofisticação. Esse tema se posicionou como um dos mais memoráveis na história da televisão britânica.",
+          "short_detail_text": "The Avengers se mantém como um clássico dos temas de televisão desde 1965 ao sinalizar instantaneamente seus personagens centrais e o mundo distinto que os espectadores estão prestes a entrar.",
+          "short_detail_tts_key": "short-detail/476qYPUYL8SrbCmLTOS6Pl.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/476qYPUYL8SrbCmLTOS6Pl.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3511,
+        "track_id": 2767,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 16,
+        "intro": "#16 thunderbirds — moody, conspiratorial, instantly iconic.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2767,
+        "track_name": "thunderbirds",
+        "album_name": "Avengers and Other Top Sixties Themes",
+        "artist_display_name": "Barry Gray",
+        "spotify_track_id": "7lo5ec5T4QEz0V0KjFiPvk",
+        "mode_flag": "SOLO",
+        "duration_ms": 152866,
+        "popularity": 24,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273664d9f90ec2c1aad33d15979",
+        "year_released": 1965,
+        "artist_id": 1270,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Thunderbirds was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Barry Gray, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Thunderbirds theme became a television staple that immediately sets the mood by announcing its central characters and the distinctive world they inhabit.",
+        "short_detail_tts_key": "short-detail/7lo5ec5T4QEz0V0KjFiPvk.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1270,
+        "artist_name": "Barry Gray",
+        "spotify_artist_id": "0hu7tJHYHdnsGF5of5fHOp",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b27387ee2b2c1c09dcf56f835c16",
+        "artist_description": "Barry Gray was a British composer known for his work on Gerry Anderson's television series, such as 'Thunderbirds' and 'Captain Scarlet.' His innovative use of electronic music and orchestral arrangements helped define the sound of 1960s and 1970s sci-fi television.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3284,
+          "track_ranking_id": 3511,
+          "language_code": "es",
+          "intro_text": "¡número dieciséis, 'thunderbirds' de Barry Gray — misterioso, conspirativo y absolutamente icónico!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_16.mp3"
+        },
+        {
+          "id": 6204,
+          "track_ranking_id": 3511,
+          "language_code": "pt-BR",
+          "intro_text": "Número dezesseis, 'Thunderbirds' de Barry Gray — misterioso, conspirativo e absolutamente icônico!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_16.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3310,
+          "track_id": 2767,
+          "language_code": "es",
+          "detail_text": "thunderbirds impresiona con su ritmo dinámico y orquestal. Esta sintonía captura el espíritu de heroísmo tecnológico y trabajo en equipo ante amenazas globales. El mensaje inspira valentía y determinación para salvar a quienes están en peligro sin importar las dificultades. Su creación para la serie de marionetas la hizo destacar en el ámbito de la televisión infantil de ciencia ficción.",
+          "short_detail_text": "El tema de Thunderbirds se volvió un clásico de la tele que de inmediato pone el ambiente al anunciar a sus personajes principales y el mundo tan distintivo que habitan.",
+          "short_detail_tts_key": "short-detail/7lo5ec5T4QEz0V0KjFiPvk.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/7lo5ec5T4QEz0V0KjFiPvk.mp3"
+        },
+        {
+          "id": 6885,
+          "track_id": 2767,
+          "language_code": "pt-BR",
+          "detail_text": "Thunderbirds impressiona com seu ritmo dinâmico e orquestral. Essa sintonia captura o espírito de heroísmo tecnológico e trabalho em equipe diante de ameaças globais. A mensagem inspira coragem e determinação para salvar aqueles em perigo, não importando as dificuldades. Sua criação para a série de marionetes a fez se destacar no âmbito da televisão infantil de ficção científica.",
+          "short_detail_text": "O tema de Thunderbirds virou um clássico da televisão que imediatamente define o clima ao anunciar os personagens centrais e o mundo distinto que eles habitam.",
+          "short_detail_tts_key": "short-detail/7lo5ec5T4QEz0V0KjFiPvk.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/7lo5ec5T4QEz0V0KjFiPvk.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3513,
+        "track_id": 2769,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 18,
+        "intro": "#18 lost in space — a theme that kicks the door in.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2769,
+        "track_name": "lost in space",
+        "album_name": "Retro TV Themes (Cover Versions)",
+        "artist_display_name": "John Williams",
+        "spotify_track_id": "5LjGowo4uakZ33L9vkEN6S",
+        "mode_flag": "SOLO",
+        "duration_ms": 65000,
+        "popularity": 2,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b27316a716f90bab2292dbd1f524",
+        "year_released": 1965,
+        "artist_id": 1272,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Lost in Space was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by John Williams, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "A television themes staple, lost in space cues the mood in seconds by announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail_tts_key": "short-detail/5LjGowo4uakZ33L9vkEN6S.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1272,
+        "artist_name": "John Williams",
+        "spotify_artist_id": "6mBYeMZZUhJKEvRXagJYzY",
+        "artist_artwork": "https://i.scdn.co/image/ab6772690000c46c9de9d1e530c2c12dbb3b089a",
+        "artist_description": "John Williams is an American composer renowned for his film scores, including 'Star Wars,' 'Jaws,' and 'E.T.' His work has earned him multiple Academy Awards and has significantly influenced the genre of film music, making him one of the most celebrated composers in cinema history.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3274,
+          "track_ranking_id": 3513,
+          "language_code": "es",
+          "intro_text": "¡número dieciocho, \"lost in space\" de John Williams — un tema que derriba la puerta! La genialidad de John Williams te transporta directo al cosmos. ¡Prepárate para despegar!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_18.mp3"
+        },
+        {
+          "id": 6205,
+          "track_ranking_id": 3513,
+          "language_code": "pt-BR",
+          "intro_text": "Número dezoito, 'Lost in Space' de John Williams — um tema que derruba a porta! A genialidade de John Williams te transporta direto ao cosmos. Prepare-se para decolar!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_18.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3312,
+          "track_id": 2769,
+          "language_code": "es",
+          "detail_text": "Lost in space captura la esencia de las aventuras más allá de nuestro planeta. La melodía inspira sentimientos de asombro y precaución ante lo desconocido. Su contexto se relaciona con el interés por el espacio que había en esa década. Esta creación se volvió un estándar para los openings de series futuristas.",
+          "short_detail_text": "Un clásico de los temas de televisión, Lost in Space te pone el ambiente en segundos diciéndote quiénes son estos personajes y el tipo de mundo en el que te estás metiendo.",
+          "short_detail_tts_key": "short-detail/5LjGowo4uakZ33L9vkEN6S.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5LjGowo4uakZ33L9vkEN6S.mp3"
+        },
+        {
+          "id": 6887,
+          "track_id": 2769,
+          "language_code": "pt-BR",
+          "detail_text": "Lost in Space captura a essência das aventuras além do nosso planeta. A melodia inspira sentimentos de assombro e precaução diante do desconhecido. Seu contexto se relaciona com o interesse pelo espaço daquela década. Essa criação se tornou um padrão para os openings de séries futuristas.",
+          "short_detail_text": "Um clássico dos temas de televisão, Lost in Space já te coloca no clima em segundos anunciando quem são esses personagens e o tipo de mundo que você tá entrando.",
+          "short_detail_tts_key": "short-detail/5LjGowo4uakZ33L9vkEN6S.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5LjGowo4uakZ33L9vkEN6S.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3514,
+        "track_id": 2770,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 19,
+        "intro": "#19 the man from u.n.c.l.e. — cozy vibes, zero wasted notes.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2770,
+        "track_name": "the man from u.n.c.l.e.",
+        "album_name": "All-Time Greatest Movie Themes & Schemes",
+        "artist_display_name": "Jerry Goldsmith",
+        "spotify_track_id": "1vcO7u6E8M8zswANiOM3sX",
+        "mode_flag": "SOLO",
+        "duration_ms": 119693,
+        "popularity": 9,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273fa844d949377ce2704ee2a25",
+        "year_released": 1964,
+        "artist_id": 1273,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "The Man from U.N.C.L.E. was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Jerry Goldsmith, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "A television themes staple since its debut, The Man from U.N.C.L.E. sets the mood in seconds while announcing its central characters and the world they inhabit.",
+        "short_detail_tts_key": "short-detail/1vcO7u6E8M8zswANiOM3sX.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1273,
+        "artist_name": "Jerry Goldsmith",
+        "spotify_artist_id": "7t8q7ikEtcPNtoaKAm9Vu6",
+        "artist_artwork": "https://i.scdn.co/image/58617532053465c8dd3725d0ebfde61edf2c6b03",
+        "artist_description": "Jerry Goldsmith was an American composer known for his innovative film scores, including 'Planet of the Apes' and 'Alien.' His use of unconventional instruments and electronic music has had a profound impact on the sound of film scores, earning him numerous awards and accolades.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3275,
+          "track_ranking_id": 3514,
+          "language_code": "es",
+          "intro_text": "¡número diecinueve, \"'the man from u.n.c.l.e..'... \" de Jerry Goldsmith! Vibras acogedoras y ni una nota de más. ¡Puro estilo!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_19.mp3"
+        },
+        {
+          "id": 6206,
+          "track_ranking_id": 3514,
+          "language_code": "pt-BR",
+          "intro_text": "Número dezenove, 'The Man from U.N.C.L.E.' de Jerry Goldsmith! Vibrações acolhedoras e nem uma nota a mais. Puro estilo!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_19.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3313,
+          "track_id": 2770,
+          "language_code": "es",
+          "detail_text": "The man from u.n.c.l.e. entrega un ritmo contagioso con toques de misterio. La música expresa la sofisticación y el peligro del espionaje en plena guerra fría. Sus sonidos generan expectativa y admiración por los héroes discretos. Este tema elevó la calidad de las producciones televisivas de su tiempo.",
+          "short_detail_text": "Un clásico de los temas de televisión desde su debut, The Man from U.N.C.L.E. pone el ambiente en segundos mientras anuncia a sus personajes principales y el mundo en el que viven.",
+          "short_detail_tts_key": "short-detail/1vcO7u6E8M8zswANiOM3sX.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1vcO7u6E8M8zswANiOM3sX.mp3"
+        },
+        {
+          "id": 6888,
+          "track_id": 2770,
+          "language_code": "pt-BR",
+          "detail_text": "The Man from U.N.C.L.E. entrega um ritmo contagioso com toques de mistério. A música expressa a sofisticação e o perigo do espionagem durante a Guerra Fria. Seus sons geram expectativa e admiração pelos heróis discretos. Esse tema elevou a qualidade das produções televisivas da sua época.",
+          "short_detail_text": "Desde sua estreia, The Man from U.N.C.L.E. é um clássico dos temas de televisão que estabelece o clima em segundos enquanto anuncia seus personagens centrais e o mundo que eles habitam.",
+          "short_detail_tts_key": "short-detail/1vcO7u6E8M8zswANiOM3sX.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1vcO7u6E8M8zswANiOM3sX.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3516,
+        "track_id": 144,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 21,
+        "intro": "#21 the beverly hillbillies — instant earworm that teleports you back.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 144,
+        "track_name": "the beverly hillbillies",
+        "album_name": "Town and Country",
+        "artist_display_name": "Flatt & Scruggs",
+        "spotify_track_id": "29qFlNOssruDfoEN8vN2Uu",
+        "mode_flag": "SOLO",
+        "duration_ms": 140413,
+        "popularity": 52,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273eb29e3e4514ef5f374778827",
+        "year_released": 1962,
+        "artist_id": 99,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-07-25T10:56:04.571883",
+        "detail": "Here's a little-known fact about 'The Beverly Hillbillies' theme song: it was written by Paul Henning, the show's creator, in just one evening! Flatt and Scruggs brought their bluegrass magic to the track, recording it at RCA Studio B in Nashville. The song's catchy banjo riff was inspired by a traditional folk tune, giving it that down-home feel. And did you know that the iconic 'come and listen to my story' line was inspired by a phrase Henning's grandfather used to say? So, keep your dial right here, and we'll keep the good times rolling with more fantastic tunes!",
+        "short_detail": "Paul Henning wrote The Beverly Hillbillies in one evening, with its iconic come and listen to my story line inspired by a phrase his grandfather used to say.",
+        "short_detail_tts_key": "short-detail/29qFlNOssruDfoEN8vN2Uu.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 99,
+        "artist_name": "flatt and scruggs",
+        "spotify_artist_id": "1iNNWK8bYjc5EK0waLk1J1",
+        "artist_artwork": "https://i.scdn.co/image/02b9a077c9972ca7d79069f1485da39e82634af4",
+        "artist_description": "Flatt and Scruggs were an influential American bluegrass duo, consisting of Lester Flatt and Earl Scruggs. They are best known for their theme song for The Beverly Hillbillies, 'The Ballad of Jed Clampett,' which became a crossover hit. Their innovative style and virtuosity on the banjo and guitar helped define and popularize bluegrass music.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3293,
+          "track_ranking_id": 3516,
+          "language_code": "es",
+          "intro_text": "¡número veintiuno, \"the beverly hillbillies\" de flatt and scruggs! Un pegajoso instantáneo que te transporta al pasado.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_21.mp3"
+        },
+        {
+          "id": 6207,
+          "track_ranking_id": 3516,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e um, 'The Beverly Hillbillies' de Flatt and Scruggs! Um pegajoso instantâneo que te transporta ao passado.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_21.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 912,
+          "track_id": 144,
+          "language_code": "es",
+          "detail_text": "The Beverly Hillbillies narra la divertida historia de una familia rural que se enriquece de repente. La canción explora el choque cultural con la élite de Beverly Hills a través de situaciones cómicas. Su mensaje principal es que los valores familiares y la humildad son más importantes que la fortuna. Esta canción logró un gran impacto al popularizar el bluegrass entre el público general.",
+          "short_detail_text": "Paul Henning escribió The Beverly Hillbillies en una sola noche, con su icónica línea come and listen to my story inspirada en una frase que solía decir su abuelo.",
+          "short_detail_tts_key": "short-detail/29qFlNOssruDfoEN8vN2Uu.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/29qFlNOssruDfoEN8vN2Uu.mp3"
+        },
+        {
+          "id": 4487,
+          "track_id": 144,
+          "language_code": "pt-BR",
+          "detail_text": "Uma curiosidade pouco conhecida sobre o tema de 'The Beverly Hillbillies' é que ele foi composto por Paul Henning, o criador da série, em apenas uma noite. Flatt and Scruggs gravaram a faixa com seu estilo bluegrass no RCA Studio B, em Nashville, e o riff marcante de banjo veio de uma melodia folclórica tradicional, trazendo aquela sensação caseira. A frase icônica \"come and listen to my story\" foi inspirada em algo que o avô de Henning costumava dizer. Fique por aqui para continuar ouvindo boas músicas.",
+          "short_detail_text": "Paul Henning escreveu The Beverly Hillbillies em uma noite só, com aquela linha icônica come and listen to my story inspirada numa frase que o avô dele costumava dizer.",
+          "short_detail_tts_key": "short-detail/29qFlNOssruDfoEN8vN2Uu.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/29qFlNOssruDfoEN8vN2Uu.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3517,
+        "track_id": 2773,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 22,
+        "intro": "#22 hogan’s heroes — instant earworm that teleports you back.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2773,
+        "track_name": "hogan’s heroes",
+        "album_name": "Television Themes: 16 Most Requested Songs",
+        "artist_display_name": "Jerry Fielding",
+        "spotify_track_id": "3S88g2kI7LDnuU28ans60r",
+        "mode_flag": "SOLO",
+        "duration_ms": 144173,
+        "popularity": 13,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273ce76951dbfa5ac22df3859bf",
+        "year_released": 1965,
+        "artist_id": 1275,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Hogan’s Heroes was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Jerry Fielding, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "Hogan’s Heroes became a television themes staple that sets up the show's characters and world in a matter of seconds.",
+        "short_detail_tts_key": "short-detail/3S88g2kI7LDnuU28ans60r.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1275,
+        "artist_name": "Jerry Fielding",
+        "spotify_artist_id": "6gtQ1qOHTbRCIPPlxf4J99",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b2732feddd32d9b3e1c446722268",
+        "artist_description": "Jerry Fielding was an American composer known for his work in film and television, including the scores for 'The Wild Bunch' and 'Straw Dogs.' His music often combined jazz and orchestral elements, creating memorable and impactful soundtracks. Fielding's contributions to film music have left a lasting legacy in the industry.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3294,
+          "track_ranking_id": 3517,
+          "language_code": "es",
+          "intro_text": "¡, número veintidós en el puesto 22, ¡tenemos a 'hogan’s heroes' de Jerry Fielding! Una melodía pegajosa que te transporta al pasado al instante. ¡Prepárate para este viaje nostálgico!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_22.mp3"
+        },
+        {
+          "id": 6208,
+          "track_ranking_id": 3517,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e dois no posto 22, temos 'Hogan’s Heroes' de Jerry Fielding! Uma melodia pegajosa que te transporta ao passado no instante. Prepare-se para esta viagem nostálgica!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_22.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3316,
+          "track_id": 2773,
+          "language_code": "es",
+          "detail_text": "Hogan’s heroes usa una marcha vibrante que contrasta con su premisa cómica. La melodía infunde un sentido de ingenio y unión entre compañeros. Esta creación transmite positividad y astucia en lugar de dramatismo bélico. Su estilo único contribuyó al éxito de la serie durante varios años.",
+          "short_detail_text": "Hogan’s Heroes se volvió un clásico de los temas de televisión que establece los personajes y el mundo del show en cuestión de segundos.",
+          "short_detail_tts_key": "short-detail/3S88g2kI7LDnuU28ans60r.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3S88g2kI7LDnuU28ans60r.mp3"
+        },
+        {
+          "id": 6891,
+          "track_id": 2773,
+          "language_code": "pt-BR",
+          "detail_text": "Hogan’s Heroes usa uma marcha vibrante que contrasta com sua premissa cômica. A melodia infunde um sentido de engenho e união entre companheiros. Essa criação transmite positividade e astúcia em vez de dramatismo bélico. Seu estilo único contribuiu para o sucesso da série por vários anos.",
+          "short_detail_text": "Hogan’s Heroes virou um clássico dos temas de TV que apresenta os personagens e o mundo da série em questão de segundos.",
+          "short_detail_tts_key": "short-detail/3S88g2kI7LDnuU28ans60r.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3S88g2kI7LDnuU28ans60r.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3518,
+        "track_id": 2774,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 23,
+        "intro": "#23 dark shadows — widescreen heroics, compressed to a sting.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2774,
+        "track_name": "dark shadows",
+        "album_name": "The Best Of The Chad Mitchell Trio The Mercury Years",
+        "artist_display_name": "Robert Cobert",
+        "spotify_track_id": "5fRR7vIOIFJmeCBdmhrQ95",
+        "mode_flag": "SOLO",
+        "duration_ms": 167960,
+        "popularity": 5,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2733d244416d9c8d7e7da19ab32",
+        "year_released": 1966,
+        "artist_id": 1276,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Dark Shadows was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Robert Cobert, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "Dark Shadows has long been a staple of television themes, instantly conveying the distinctive mood and world its characters inhabit.",
+        "short_detail_tts_key": "short-detail/5fRR7vIOIFJmeCBdmhrQ95.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1276,
+        "artist_name": "Robert Cobert",
+        "spotify_artist_id": "2uO7F2AlShzFVlgNQ8fpM7",
+        "artist_artwork": null,
+        "artist_description": "Robert Cobert was an American composer known for his work on the television series 'Dark Shadows.' His eerie and atmospheric scores contributed significantly to the show's gothic horror feel. Cobert's music has been influential in the genre of horror and suspense.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3295,
+          "track_ranking_id": 3518,
+          "language_code": "es",
+          "intro_text": "¡número veintitrés, \"dark shadows\" de Robert Cobert! Heroísmo en pantalla ancha, comprimido en un impacto inolvidable.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_23.mp3"
+        },
+        {
+          "id": 6209,
+          "track_ranking_id": 3518,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e três, 'Dark Shadows' de Robert Cobert! Heroísmo em tela larga, comprimido em um impacto inesquecível.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_23.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3317,
+          "track_id": 2774,
+          "language_code": "es",
+          "detail_text": "Dark Shadows crea una atmósfera única de intriga y elegancia sombría desde el primer instante. El tema explora el significado del conflicto entre el bien y el mal en un contexto de horror gótico. Sus sonidos despiertan emociones de misterio y fascinación por lo paranormal que envuelven al público. Esta melodía ayudó a popularizar las historias sobrenaturales en las telenovelas diurnas.",
+          "short_detail_text": "Dark Shadows lleva mucho tiempo siendo un clásico de los temas de televisión, que al instante te mete en el ambiente tan distintivo y el mundo que habitan sus personajes.",
+          "short_detail_tts_key": "short-detail/5fRR7vIOIFJmeCBdmhrQ95.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5fRR7vIOIFJmeCBdmhrQ95.mp3"
+        },
+        {
+          "id": 6892,
+          "track_id": 2774,
+          "language_code": "pt-BR",
+          "detail_text": "Dark Shadows cria uma atmosfera única de intriga e elegância sombria desde o primeiro instante. O tema explora o significado do conflito entre o bem e o mal em um contexto de horror gótico. Seus sons despertam emoções de mistério e fascinação pelo paranormal que envolvem o público. Essa melodia ajudou a popularizar as histórias sobrenaturais nas telenovelas diurnas.",
+          "short_detail_text": "Dark Shadows já faz tempo que é um clássico dos temas de televisão, transmitindo na hora o clima e o mundo marcantes que seus personagens habitam.",
+          "short_detail_tts_key": "short-detail/5fRR7vIOIFJmeCBdmhrQ95.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5fRR7vIOIFJmeCBdmhrQ95.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3519,
+        "track_id": 2775,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 24,
+        "intro": "#24 the prisoner — Saturday-morning energy in a single riff.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2775,
+        "track_name": "the prisoner",
+        "album_name": "Battlestar Galactica: The A to Z of Fantasy TV",
+        "artist_display_name": "Ron Grainer",
+        "spotify_track_id": "2nszvpDVQZMRmElP5exL6Q",
+        "mode_flag": "SOLO",
+        "duration_ms": 206240,
+        "popularity": 5,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b27302c3a042d158afd9f0b74820",
+        "year_released": 1967,
+        "artist_id": 1277,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "The Prisoner was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by Ron Grainer, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Prisoner has endured as a television themes staple that sets the distinctive mood in seconds by announcing its characters and the world they inhabit.",
+        "short_detail_tts_key": "short-detail/2nszvpDVQZMRmElP5exL6Q.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": null,
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1277,
+        "artist_name": "Ron Grainer",
+        "spotify_artist_id": "4qLcZ00bh6qqKil3lXj23A",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b2739597c386ba7009b2bcab2d68",
+        "artist_description": "Ron Grainer was an Australian composer known for his iconic theme for the television series 'Doctor Who.' His work in film and television spans multiple genres, often characterized by memorable and distinctive themes. Grainer's influence is seen in his contributions to popular culture through his memorable compositions.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3296,
+          "track_ranking_id": 3519,
+          "language_code": "es",
+          "intro_text": "¡número veinticuatro, \"the prisoner\" de Ron Grainer! Energía de sábado por la mañana en un solo riff.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_24.mp3"
+        },
+        {
+          "id": 6210,
+          "track_ranking_id": 3519,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e quatro, 'The Prisoner' de Ron Grainer! Energia de sábado de manhã em um único riff.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_24.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3318,
+          "track_id": 2775,
+          "language_code": "es",
+          "detail_text": "The Prisoner utiliza su arreglo musical para evocar un mundo de conspiración y escape imposible. Representa la búsqueda incansable de libertad en un entorno que suprime la identidad individual. La pieza transmite una mezcla de tensión y esperanza ante las fuerzas que intentan doblegar al ser humano. Su estructura innovadora la ha posicionado como un hito en el diseño de temas para series de culto.",
+          "short_detail_text": "The Prisoner ha perdurado como un clásico de los temas de televisión que te pone el ambiente distintivo en segundos al anunciar a sus personajes y el mundo que habitan.",
+          "short_detail_tts_key": "short-detail/2nszvpDVQZMRmElP5exL6Q.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/2nszvpDVQZMRmElP5exL6Q.mp3"
+        },
+        {
+          "id": 6893,
+          "track_id": 2775,
+          "language_code": "pt-BR",
+          "detail_text": "The Prisoner utiliza seu arranjo musical para evocar um mundo de conspiração e escape impossível. Representa a busca incansável pela liberdade em um ambiente que suprime a identidade individual. A peça transmite uma mistura de tensão e esperança diante das forças que tentam dominar o ser humano. Sua estrutura inovadora a posicionou como um marco no design de temas para séries de culto.",
+          "short_detail_text": "The Prisoner perdura como um clássico dos temas de televisão que define o clima distinto em segundos ao anunciar seus personagens e o mundo que eles habitam.",
+          "short_detail_tts_key": "short-detail/2nszvpDVQZMRmElP5exL6Q.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/2nszvpDVQZMRmElP5exL6Q.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3520,
+        "track_id": 2776,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 25,
+        "intro": "#25 theme from the monkees — mood-setter that does more than roll credits.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2776,
+        "track_name": "theme from the monkees",
+        "album_name": "The Best of The Monkees",
+        "artist_display_name": "The Monkees",
+        "spotify_track_id": "6uwT4xzDhCY7vtJsqHv67c",
+        "mode_flag": "SOLO",
+        "duration_ms": 138120,
+        "popularity": 43,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2730b74e9fcbe76d8245535a207",
+        "year_released": 1966,
+        "artist_id": 183,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T10:42:43.986010",
+        "detail": "Theme from The Monkees was a tv themes staple. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. Composed/arranged by The Monkees, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Theme from the Monkees has been a staple of television themes since 1966, capturing the show's characters and their world in just seconds.",
+        "short_detail_tts_key": "short-detail/6uwT4xzDhCY7vtJsqHv67c.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "the monkees",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 183,
+        "artist_name": "The Monkees",
+        "spotify_artist_id": "320EPCSEezHt1rtbfwH6Ck",
+        "artist_artwork": "https://i.scdn.co/image/ab6761610000e5ebbdef7f178c9cf2e8d50cb9b9",
+        "artist_description": "The Monkees, formed in 1965, were a pop-rock band created for a television show. Hits like 'I'm a Believer' and 'Last Train to Clarksville' became classics. Their influence on pop culture is notable, and they continue to be celebrated for their contributions.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3297,
+          "track_ranking_id": 3520,
+          "language_code": "es",
+          "intro_text": "¡número veinticinco, \"theme from the monkees\" de the monkees! Una melodía que no solo acompaña los créditos, sino que establece el ambiente perfecto.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_25.mp3"
+        },
+        {
+          "id": 6211,
+          "track_ranking_id": 3520,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e cinco, 'Theme from The Monkees' de The Monkees! Uma melodia que não só acompanha os créditos, mas que estabelece o ambiente perfeito.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_25.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3319,
+          "track_id": 2776,
+          "language_code": "es",
+          "detail_text": "Theme from the Monkees entrega una vibra positiva y divertida que invita a la diversión inmediata. Esta canción significa la vida sin complicaciones y el placer de ser uno mismo en grupo. Genera emociones de entusiasmo y ligereza que capturan el espíritu juguetón de la banda. Se convirtió en un éxito que trascendió la pantalla para sonar en radios de todo el mundo.",
+          "short_detail_text": "The Theme from the Monkees ha sido un clásico de los temas de televisión desde 1966, capturando a los personajes del show y su mundo en solo segundos.",
+          "short_detail_tts_key": "short-detail/6uwT4xzDhCY7vtJsqHv67c.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6uwT4xzDhCY7vtJsqHv67c.mp3"
+        },
+        {
+          "id": 6894,
+          "track_id": 2776,
+          "language_code": "pt-BR",
+          "detail_text": "Theme from the Monkees entrega uma vibe positiva e divertida que convida à diversão imediata. Essa canção significa a vida sem complicações e o prazer de ser você mesmo em grupo. Gera emoções de entusiasmo e leveza que capturam o espírito brincalhão da banda. Se tornou um sucesso que ultrapassou a tela para tocar em rádios ao redor do mundo.",
+          "short_detail_text": "The Theme from the Monkees tem sido um clássico dos temas de televisão desde 1966, capturando os personagens do show e o mundo deles em apenas segundos.",
+          "short_detail_tts_key": "short-detail/6uwT4xzDhCY7vtJsqHv67c.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6uwT4xzDhCY7vtJsqHv67c.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3521,
+        "track_id": 2756,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 26,
+        "intro": "#26 Mission: Impossible Theme (1966–1973) — one intro, endless nostalgia.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2756,
+        "track_name": "Mission: Impossible Theme",
+        "album_name": "T.V. America",
+        "artist_display_name": null,
+        "spotify_track_id": "5cX8HdwlOH0l4GvMVWegJG",
+        "mode_flag": "SOLO",
+        "duration_ms": 52760,
+        "popularity": 30,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273fb327488a88b79016bad6478",
+        "year_released": null,
+        "artist_id": 104,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": null,
+        "detail": "Mission: Impossible was a spy mainstay of the 1966–1973 run. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Mission: Impossible Theme instantly establishes the secretive spy tension of the classic 1966 to 1973 television series by capturing its distinctive characters and shadowy world within seconds.",
+        "short_detail_tts_key": "short-detail/5cX8HdwlOH0l4GvMVWegJG.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Mission: Impossible",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 104,
+        "artist_name": "lalo schifrin",
+        "spotify_artist_id": "39iHRO9MH9To3gjW7wqaW1",
+        "artist_artwork": "https://i.scdn.co/image/eb76a42d736645df1fd87f88e9dc57297a181698",
+        "artist_description": "Lalo Schifrin is an Argentine-American composer, conductor, and pianist known for his work on film and television scores, including the theme for Mission: Impossible. His innovative use of jazz and Latin elements in his compositions has earned him multiple Grammy and Emmy Awards. Schifrin's work has had a significant impact on the sound of action and thriller genres.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3298,
+          "track_ranking_id": 3521,
+          "language_code": "es",
+          "intro_text": "¡número veintiséis, 'Mission: Impossible Theme' de lalo schifrin (mil novecientos sesenta y seis–mil novecientos setenta y tres) de lalo schifrin! Un tema icónico, pura nostalgia sin fin.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_26.mp3"
+        },
+        {
+          "id": 6212,
+          "track_ranking_id": 3521,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e seis, 'Mission: Impossible Theme' de Lalo Schifrin (mil novecentos sessenta e seis–mil novecentos setenta e três) de Lalo Schifrin! Um tema icônico, pura nostalgia sem fim.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_26.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3299,
+          "track_id": 2756,
+          "language_code": "es",
+          "detail_text": "Mission: Impossible Theme se distingue por su ritmo inusual que genera suspense desde el primer segundo. Esta pieza refleja los riesgos y la astucia que implican las misiones secretas de alto nivel. Su progresión musical transmite tensión constante y la necesidad de precisión absoluta. El tema ha sido sampleado en muchos éxitos y su legado perdura en producciones actuales de espionaje.",
+          "short_detail_text": "El tema de Mission: Impossible establece al instante la tensión secreta de espías de la clásica serie de televisión de 1966 a 1973 al capturar sus personajes distintivos y su mundo sombrío en segundos.",
+          "short_detail_tts_key": "short-detail/5cX8HdwlOH0l4GvMVWegJG.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5cX8HdwlOH0l4GvMVWegJG.mp3"
+        },
+        {
+          "id": 6874,
+          "track_id": 2756,
+          "language_code": "pt-BR",
+          "detail_text": "Mission: Impossible Theme se destaca por seu ritmo incomum que gera suspense desde o primeiro segundo. Esta peça reflete os riscos e a astúcia que envolvem as missões secretas de alto nível. Sua progressão musical transmite tensão constante e a necessidade de precisão absoluta. O tema foi sampleado em muitos sucessos e seu legado perdura em produções atuais de espionagem.",
+          "short_detail_text": "O tema de Mission: Impossible estabelece instantaneamente a tensão secreta de espionagem da clássica série de TV de 1966 a 1973 ao capturar seus personagens marcantes e seu mundo sombrio em segundos.",
+          "short_detail_tts_key": "short-detail/5cX8HdwlOH0l4GvMVWegJG.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5cX8HdwlOH0l4GvMVWegJG.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3522,
+        "track_id": 2777,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 27,
+        "intro": "#27 Hawaii Five-O Theme (1968–1980) — glossy primetime in 30 seconds flat.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2777,
+        "track_name": "Hawaii Five-O Theme",
+        "album_name": "Watching the Detectives",
+        "artist_display_name": null,
+        "spotify_track_id": "0DTqdX36KAZ4xAfnsb5qNe",
+        "mode_flag": "SOLO",
+        "duration_ms": 98560,
+        "popularity": 1,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2736d19c41c30e4e0f19ec258c8",
+        "year_released": null,
+        "artist_id": 104,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:39:57.089764",
+        "detail": "Hawaii Five-O was a crime mainstay of the 1968–1980 run. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Hawaii Five-O Theme introduces the central characters and world of the crime mainstay that ran from 1968 to 1980.",
+        "short_detail_tts_key": "short-detail/0DTqdX36KAZ4xAfnsb5qNe.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Hawaii Five-O",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 104,
+        "artist_name": "lalo schifrin",
+        "spotify_artist_id": "39iHRO9MH9To3gjW7wqaW1",
+        "artist_artwork": "https://i.scdn.co/image/eb76a42d736645df1fd87f88e9dc57297a181698",
+        "artist_description": "Lalo Schifrin is an Argentine-American composer, conductor, and pianist known for his work on film and television scores, including the theme for Mission: Impossible. His innovative use of jazz and Latin elements in his compositions has earned him multiple Grammy and Emmy Awards. Schifrin's work has had a significant impact on the sound of action and thriller genres.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3299,
+          "track_ranking_id": 3522,
+          "language_code": "es",
+          "intro_text": "¡número veintisiete, 'Hawaii Five-O Theme' de lalo schifrin (mil novecientos sesenta y ocho–mil novecientos ochenta) por lalo schifrin! Un brillo de máxima audiencia en solo 30 segundos.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_27.mp3"
+        },
+        {
+          "id": 6213,
+          "track_ranking_id": 3522,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e sete, 'Hawaii Five-O Theme' de Lalo Schifrin (mil novecentos sessenta e oito–mil novecentos oitenta) por Lalo Schifrin! Um brilho de máxima audiência em apenas 30 segundos.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_27.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3320,
+          "track_id": 2777,
+          "language_code": "es",
+          "detail_text": "Hawaii Five-O Theme arranca con un impacto sonoro que prepara para la acción sin pausas. El tema encarna la determinación de proteger la ley y el orden en un lugar paradisiaco. Sus acordes despiertan sensaciones de urgencia y poder que mantienen la atención del oyente. Este clásico se reconoce al instante por sus primeras cuatro notas características.",
+          "short_detail_text": "El Hawaii Five-O Theme introduce a los personajes centrales y el mundo de esa serie policiaca que duró de 1968 a 1980.",
+          "short_detail_tts_key": "short-detail/0DTqdX36KAZ4xAfnsb5qNe.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/0DTqdX36KAZ4xAfnsb5qNe.mp3"
+        },
+        {
+          "id": 6895,
+          "track_id": 2777,
+          "language_code": "pt-BR",
+          "detail_text": "Hawaii Five-O Theme começa com um impacto sonoro que prepara para a ação sem pausas. O tema encarna a determinação de proteger a lei e a ordem em um lugar paradisíaco. Seus acordes despertam sensações de urgência e poder que mantêm a atenção do ouviu. Esse clássico é reconhecido na hora pelas suas primeiras quatro notas características.",
+          "short_detail_text": "O Hawaii Five-O Theme apresenta os personagens principais e o mundo desse clássico do crime que foi ao ar de 1968 a 1980.",
+          "short_detail_tts_key": "short-detail/0DTqdX36KAZ4xAfnsb5qNe.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/0DTqdX36KAZ4xAfnsb5qNe.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3523,
+        "track_id": 2778,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 28,
+        "intro": "#28 Star Trek Theme (1966–1969) — instant earworm that teleports you back.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2778,
+        "track_name": "Star Trek Theme",
+        "album_name": "Star Trek: The Motion Picture (Original Soundtrack--20th Anniversary Collectors' Edition) / Inside Star Trek",
+        "artist_display_name": null,
+        "spotify_track_id": "0885P8PukshcT7KRszRkvU",
+        "mode_flag": "SOLO",
+        "duration_ms": 91533,
+        "popularity": 8,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273d11147898c8222ed890f18cf",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:39:57.393596",
+        "detail": "Star Trek was a sci-fi mainstay of the 1966–1969 run. Set around laboratories, launch pads, and uncanny thresholds, episodes balanced character moments with speculative dilemmas and eerie reveals. Storytelling favored what-if premises and twist endings, while production leaned on theremin-tinged cues and stylized effects. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Star Trek Theme uses theremin-tinged cues to announce its characters and speculative world of the 1966 to 1969 sci-fi mainstay in seconds.",
+        "short_detail_tts_key": "short-detail/0885P8PukshcT7KRszRkvU.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Star Trek",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3300,
+          "track_ranking_id": 3523,
+          "language_code": "es",
+          "intro_text": "¡número veintiocho, 'Star Trek Theme' de Unknown Artist (mil novecientos sesenta y seis–mil novecientos sesenta y nueve) por Unknown Artist! Un tema que se graba al instante en tu mente y te transporta de vuelta en el tiempo. ¡Prepárate para este viaje nostálgico!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_28.mp3"
+        },
+        {
+          "id": 6214,
+          "track_ranking_id": 3523,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e oito, 'Star Trek Theme' de Unknown Artist (mil novecentos sessenta e seis–mil novecentos sessenta e nove) por Unknown Artist! Um tema que se grava instantaneamente na sua mente e te transporta de volta no tempo. Prepare-se para esta viagem nostálgica!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_28.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7806,
+          "track_id": 2778,
+          "language_code": "es",
+          "detail_text": "Star Trek fue un clásico de la ciencia ficción durante su transmisión de 1966 a 1969. Ambientada en laboratorios, plataformas de lanzamiento y umbrales misteriosos, los episodios mezclaban momentos de los personajes con dilemas especulativos y revelaciones escalofriantes. La narración se inclinaba por premisas de \"qué pasaría si\" y finales con giros inesperados, mientras que la producción recurría a pistas musicales con toques de theremin y efectos estilizados. El tema principal captura ese ambiente en segundos, presentándonos quiénes son estos personajes y el mundo al que entras.",
+          "short_detail_text": "El tema de Star Trek usa señales con tintes de teremín para anunciar a sus personajes y el mundo especulativo de ese pilar de la ciencia ficción de 1966 a 1969 en segundos.",
+          "short_detail_tts_key": "short-detail/0885P8PukshcT7KRszRkvU.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/0885P8PukshcT7KRszRkvU.mp3"
+        },
+        {
+          "id": 8068,
+          "track_id": 2778,
+          "language_code": "pt-BR",
+          "detail_text": "Star Trek foi um clássico da ficção científica durante sua exibição de 1966 a 1969. Os episódios se passavam em laboratórios, plataformas de lançamento e fronteiras misteriosas, equilibrando momentos dos personagens com dilemas especulativos e revelações surpreendentes. A narrativa priorizava premissas do tipo \"e se\" e finais inesperados, enquanto a produção apostava em trilhas com toques de theremin e efeitos estilizados. Essa trilha tema captura essa atmosfera em segundos, apresentando quem são os personagens e o mundo que você está prestes a explorar.",
+          "short_detail_text": "O tema de Star Trek usa toques com theremin pra anunciar seus personagens e o mundo especulativo do pilar da ficção científica de 1966 a 1969 em segundos.",
+          "short_detail_tts_key": "short-detail/0885P8PukshcT7KRszRkvU.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/0885P8PukshcT7KRszRkvU.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3524,
+        "track_id": 2752,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 29,
+        "intro": "#29 Batman Theme (1966–1968) — thirty seconds of pure identity.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2752,
+        "track_name": "Batman Theme",
+        "album_name": "Batman Theme & Other Bat Songs (Expanded Edition)",
+        "artist_display_name": "Neal Hefti",
+        "spotify_track_id": "4lwV7SpU0JSM1OIm0aIkNP",
+        "mode_flag": "SOLO",
+        "duration_ms": 138666,
+        "popularity": 51,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273fbdd11fc5c3be27892bdc496",
+        "year_released": 1966,
+        "artist_id": 109,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": null,
+        "detail": "Batman was a superhero mainstay of the 1966–1968 run. Set around metropolitan skylines and newsrooms, episodes balanced character moments with rescue-driven conflicts and secret-identity dilemmas. Storytelling favored square-jawed optimism and serial momentum, while production leaned on miniatures, wire gags, and declarative title cards. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Batman Theme instantly captures the square-jawed optimism and serial momentum of the 1966 series by announcing its heroic characters and the adventurous world they inhabit in just seconds.",
+        "short_detail_tts_key": "short-detail/4lwV7SpU0JSM1OIm0aIkNP.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Batman",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 109,
+        "artist_name": "neal hefti",
+        "spotify_artist_id": "3IjVHk8Mo8GBMKyHnwmth8",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b273fbdd11fc5c3be27892bdc496",
+        "artist_description": "Neal Hefti was an American jazz trumpeter, composer, and arranger known for creating the themes for The Odd Couple and Batman. His work in television and film music blended jazz and pop elements, creating catchy and memorable themes. Hefti's influence on television music is significant, with his themes remaining popular and iconic.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3301,
+          "track_ranking_id": 3524,
+          "language_code": "es",
+          "intro_text": "¡número veintinueve, 'Batman Theme' de neal hefti (mil novecientos sesenta y seis–mil novecientos sesenta y ocho) de neal hefti! Treinta segundos de pura identidad que te transportan directo a la acción.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_29.mp3"
+        },
+        {
+          "id": 6215,
+          "track_ranking_id": 3524,
+          "language_code": "pt-BR",
+          "intro_text": "Número vinte e nove, 'Batman Theme' de Neal Hefti (mil novecentos sessenta e seis–mil novecentos sessenta e oito) de Neal Hefti! Trinta segundos de pura identidade que te transportam direto à ação.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_29.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3298,
+          "track_id": 2752,
+          "language_code": "es",
+          "detail_text": "Batman Theme irrumpe con un golpe orquestal poderoso que define su identidad al instante. El tema representa la valentía y el ingenio de un héroe que enfrenta al crimen sin descanso. Su ritmo genera emoción de adrenalina y triunfo que conecta con el público de todas las edades. Esta composición logró cruzar a las listas de popularidad y sigue siendo un ícono en la cultura pop.",
+          "short_detail_text": "The Batman Theme capta al instante el optimismo de mandíbula cuadrada y el impulso serial de la serie del 66 al anunciar en tan solo segundos a sus personajes heroicos y el mundo aventurero que habitan.",
+          "short_detail_tts_key": "short-detail/4lwV7SpU0JSM1OIm0aIkNP.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/4lwV7SpU0JSM1OIm0aIkNP.mp3"
+        },
+        {
+          "id": 6873,
+          "track_id": 2752,
+          "language_code": "pt-BR",
+          "detail_text": "Batman Theme irrompe com um golpe orquestral poderoso que define sua identidade no instante. O tema representa a valentia e o engenho de um herói que enfrenta o crime sem descanso. Seu ritmo gera emoção de adrenalina e triunfo que conecta com o público de todas as idades. Esta composição conseguiu entrar nas listas de popularidade e continua sendo um ícone na cultura pop.",
+          "short_detail_text": "The Batman Theme captura na hora o otimismo de queixo quadrado e o ímpeto serial da série de 1966 ao anunciar em segundos seus personagens heroicos e o mundo aventureiro que eles habitam.",
+          "short_detail_tts_key": "short-detail/4lwV7SpU0JSM1OIm0aIkNP.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/4lwV7SpU0JSM1OIm0aIkNP.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3525,
+        "track_id": 2779,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 30,
+        "intro": "#30 The Andy Griffith Show Theme (1960–1968) — moody, conspiratorial, instantly iconic.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2779,
+        "track_name": "The Andy Griffith Show Theme",
+        "album_name": "Those Who Know History Are Doomed to Repeat It",
+        "artist_display_name": null,
+        "spotify_track_id": "1LVFdKAMpgLfR0HS1fFAry",
+        "mode_flag": "SOLO",
+        "duration_ms": 235400,
+        "popularity": 1,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273e71f800a475fa6837e5d4519",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:39:58.007682",
+        "detail": "The Andy Griffith Show was a sitcom mainstay of the 1960–1968 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Andy Griffith Show Theme established the characters and world of the sitcom in seconds during its 1960 to 1968 run.",
+        "short_detail_tts_key": "short-detail/1LVFdKAMpgLfR0HS1fFAry.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Andy Griffith Show",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3302,
+          "track_ranking_id": 3525,
+          "language_code": "es",
+          "intro_text": "¡número treinta! El tema de The Andy Griffith Show (mil novecientos sesenta–mil novecientos sesenta y ocho), \"The Andy Griffith Show Theme\" de Unknown Artist con un aire melancólico, conspirador y absolutamente icónico. ¡Un clásico instantáneo que no puedes olvidar!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_30.mp3"
+        },
+        {
+          "id": 6216,
+          "track_ranking_id": 3525,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta! O tema de The Andy Griffith Show (mil novecentos sessenta–mil novecentos sessenta e oito), \"The Andy Griffith Show Theme\" de Unknown Artist com um ar melancólico, conspirador e absolutamente icônico. Um clássico instantâneo que você não pode esquecer!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_30.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7807,
+          "track_id": 2779,
+          "language_code": "es",
+          "detail_text": "El Show de Andy Griffith fue un clásico de las series de comedia entre 1960 y 1968. Sus episodios, ambientados en salas, cocinas y porches de barrio, mezclaban momentos de los personajes con enredos domésticos y malentendidos divertidos. La narración privilegiaba ritmos de preparación y resolución con finales ordenados, mientras que la producción usaba escenificaciones con múltiples cámaras y temas musicales claros y bien capturados. Estos temas musicales establecen el ánimo en segundos, revelando quiénes son los personajes y el mundo que estás por entrar.",
+          "short_detail_text": "El tema de The Andy Griffith Show establecía los personajes y el mundo de la sitcom en segundos durante su emisión de 1960 a 1968.",
+          "short_detail_tts_key": "short-detail/1LVFdKAMpgLfR0HS1fFAry.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1LVFdKAMpgLfR0HS1fFAry.mp3"
+        },
+        {
+          "id": 8069,
+          "track_id": 2779,
+          "language_code": "pt-BR",
+          "detail_text": "O Show de Andy Griffith foi um clássico dos seriados dos anos 1960 a 1968, ambientado em salas de estar, cozinhas e calçadas de bairro, onde os episódios misturavam momentos dos personagens com confusões domésticas e mal-entendidos rápidos. A narrativa seguia um ritmo de preparo e resolução bem estruturado, enquanto a produção usava cenários com múltiplas câmeras e temas musicais gravados de forma clara e vibrante. Esses temas musicais capturam o clima em segundos, revelando quem são os personagens e o mundo acolhedor que eles habitam.",
+          "short_detail_text": "O The Andy Griffith Show Theme estabeleceu os personagens e o mundo da sitcom em segundos durante sua exibição de 1960 a 1968.",
+          "short_detail_tts_key": "short-detail/1LVFdKAMpgLfR0HS1fFAry.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1LVFdKAMpgLfR0HS1fFAry.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3526,
+        "track_id": 2780,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 31,
+        "intro": "#31 The Dick Van Dyke Show Theme (1961–1966) — a jingle with mythic staying power.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2780,
+        "track_name": "The Dick Van Dyke Show Theme",
+        "album_name": "All Time Top TV Themes",
+        "artist_display_name": null,
+        "spotify_track_id": "1DB3bkoSlaCeynq4C4BwXJ",
+        "mode_flag": "SOLO",
+        "duration_ms": 139880,
+        "popularity": 3,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273bcc834855d445ab282478805",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:39:58.320582",
+        "detail": "The Dick Van Dyke Show was a sitcom mainstay of the 1961–1966 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Dick Van Dyke Show Theme served as the bright close-miked introduction that instantly announced its characters and domestic world for the popular 1961-1966 sitcom mainstay.",
+        "short_detail_tts_key": "short-detail/1DB3bkoSlaCeynq4C4BwXJ.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Dick Van Dyke Show",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3303,
+          "track_ranking_id": 3526,
+          "language_code": "es",
+          "intro_text": "¡número treinta y uno! El tema de \"The Dick Van Dyke Show Theme\" de Unknown Artist (mil novecientos sesenta y uno–mil novecientos sesenta y seis), una melodía con un poder mítico que perdura. ¡Un clásico inolvidable!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_31.mp3"
+        },
+        {
+          "id": 6217,
+          "track_ranking_id": 3526,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e um! O tema de \"The Dick Van Dyke Show Theme\" de Unknown Artist (mil novecentos sessenta e um–mil novecentos sessenta e seis), uma melodia com um poder mítico que perdura. Um clássico inesquecível!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_31.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7808,
+          "track_id": 2780,
+          "language_code": "es",
+          "detail_text": "El show de Dick Van Dyke fue un pilar de las comedias de situación durante su transmisión de 1961 a 1966. Ambientado en salas de estar, cocinas y escalones de los vecindarios, los episodios mezclaban momentos de los personajes con enredos domésticos y malentendidos rápidos. La narración se enfocaba en ritmos de planteamiento y resolución ordenada, mientras que la producción usaba escenificación con múltiples cámaras y temas musicales brillantes y bien capturados. Estos temas establecen el tono en segundos, revelando quiénes son los personajes y el mundo al que te sumerges.",
+          "short_detail_text": "El tema de The Dick Van Dyke Show servía como la brillante introducción grabada de cerca que inmediatamente anunciaba a sus personajes y su mundo doméstico para esa popular sitcom que fue un pilar de 1961 a 1966.",
+          "short_detail_tts_key": "short-detail/1DB3bkoSlaCeynq4C4BwXJ.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/1DB3bkoSlaCeynq4C4BwXJ.mp3"
+        },
+        {
+          "id": 8070,
+          "track_id": 2780,
+          "language_code": "pt-BR",
+          "detail_text": "O Show de Dick Van Dyke foi um clássico das sitcoms entre 1961 e 1966, ambientado em salas de estar, cozinhas e degraus de vizinhança, onde os episódios misturavam momentos dos personagens com confusões domésticas e mal-entendidos rápidos. A narrativa valorizava ritmos de preparação e resolução, além de finais bem amarrados, enquanto a produção contava com filmagens em múltiplas câmeras e temas musicais vibrantes e bem capturados. Esses temas musicais definem o clima em segundos, mostrando quem são os personagens e o mundo que você está prestes a explorar.",
+          "short_detail_text": "O The Dick Van Dyke Show Theme era a introdução brilhante gravada bem de perto que instantaneamente anunciava os personagens e o mundo doméstico dessa sitcom popular de 1961 a 1966.",
+          "short_detail_tts_key": "short-detail/1DB3bkoSlaCeynq4C4BwXJ.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/1DB3bkoSlaCeynq4C4BwXJ.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3527,
+        "track_id": 2781,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 32,
+        "intro": "#32 Bewitched Theme (1964–1972) — mood-setter that does more than roll credits.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2781,
+        "track_name": "Bewitched Theme",
+        "album_name": "As Seen On TV (Comedy Theme Songs)",
+        "artist_display_name": null,
+        "spotify_track_id": "0bAYaMWzquNBAmcvQ3mSbh",
+        "mode_flag": "SOLO",
+        "duration_ms": 62906,
+        "popularity": 6,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2734850498c61bcb1cce8a96266",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:39:58.619751",
+        "detail": "Bewitched was a sitcom mainstay of the 1964–1972 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Bewitched Theme set the mood in seconds for the 1964-1972 sitcom by announcing its characters and their world of domestic mix-ups balanced with brisk misunderstandings in living rooms and neighborhood stoops.",
+        "short_detail_tts_key": "short-detail/0bAYaMWzquNBAmcvQ3mSbh.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Bewitched",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3304,
+          "track_ranking_id": 3527,
+          "language_code": "es",
+          "intro_text": "¡número treinta y dos, 'Bewitched Theme' de Unknown Artist (mil novecientos sesenta y cuatro–mil novecientos setenta y dos) de Unknown Artist! Esta pieza establece el ambiente y hace mucho más que solo acompañar los créditos. ¡Un clásico que encanta!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_32.mp3"
+        },
+        {
+          "id": 6218,
+          "track_ranking_id": 3527,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e dois, 'Bewitched Theme' de Unknown Artist (mil novecentos sessenta e quatro–mil novecentos setenta e dois) de Unknown Artist! Esta peça estabelece o ambiente e faz muito mais do que apenas acompanhar os créditos. Um clássico que encanta!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_32.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7809,
+          "track_id": 2781,
+          "language_code": "es",
+          "detail_text": "\"Bewitched fue una serie de comedia icónica que se transmitió de 1964 a 1972. Sus episodios, ambientados en salas, cocinas y porches de barrio, mezclaban momentos de los personajes con enredos domésticos y malentendidos rápidos. La narración se basaba en ritmos de planteamiento y resolución ordenada, mientras que la producción usaba escenificación con múltiples cámaras y temas musicales brillantes y cercanos. El tema musical captura el ánimo en segundos, presentando quiénes son estos personajes y el mundo que vas a entrar.\"",
+          "short_detail_text": "The Bewitched Theme ponía el ambiente en segundos para la sitcom de 1964-1972 al presentar a sus personajes y su mundo de enredos domésticos equilibrados con malentendidos rápidos en salas y escalinatas del vecindario.",
+          "short_detail_tts_key": "short-detail/0bAYaMWzquNBAmcvQ3mSbh.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/0bAYaMWzquNBAmcvQ3mSbh.mp3"
+        },
+        {
+          "id": 8071,
+          "track_id": 2781,
+          "language_code": "pt-BR",
+          "detail_text": "Bewitched foi uma série de comédia clássica que fez sucesso entre 1964 e 1972, ambientada em salas de estar, cozinhas e degraus das vizinhanças, com episódios que misturavam momentos dos personagens e confusões domésticas com mal-entendidos rápidos. A narrativa seguia um ritmo de preparo e resolução, com finais bem amarrados, e a produção contava com filmagens em múltiplas câmeras e músicas tema gravadas de perto, cheias de vivacidade. Essa música tema captura o clima em segundos, apresentando quem são os personagens e o mundo acolhedor que eles habitam.",
+          "short_detail_text": "O The Bewitched Theme já criava o clima em segundos pro sitcom de 1964 a 1972 anunciando os personagens e o mundo deles de confusões domésticas misturadas com mal-entendidos rápidos nas salas de estar e nos degraus do bairro.",
+          "short_detail_tts_key": "short-detail/0bAYaMWzquNBAmcvQ3mSbh.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/0bAYaMWzquNBAmcvQ3mSbh.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3528,
+        "track_id": 2759,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 33,
+        "intro": "#33 The Addams Family Theme (1964–1966) — cozy vibes, zero wasted notes.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2759,
+        "track_name": "The Addams Family Theme",
+        "album_name": "The Addams Family (Original Music From The T.V. Show)",
+        "artist_display_name": null,
+        "spotify_track_id": "00oHVAstyM08Q82e2XYvkS",
+        "mode_flag": "SOLO",
+        "duration_ms": 53093,
+        "popularity": 36,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273f9a975a01c9e3255376430e9",
+        "year_released": null,
+        "artist_id": 1263,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": null,
+        "detail": "The Addams Family was a sitcom mainstay of the 1964–1966 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Addams Family Theme set the mood in seconds for the 1964 to 1966 sitcom by announcing its characters and the distinctive world they inhabited with bright close-miked cues.",
+        "short_detail_tts_key": "short-detail/00oHVAstyM08Q82e2XYvkS.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Addams Family",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1263,
+        "artist_name": "Vic Mizzy",
+        "spotify_artist_id": "30Vw5pqdpoPBHNVeT5Eknv",
+        "artist_artwork": null,
+        "artist_description": "Vic Mizzy was an American composer best known for his television and film scores, including the iconic themes for 'The Addams Family' and 'Green Acres.' His work in the 1960s and 1970s helped define the sound of American television during that era.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3372,
+          "track_ranking_id": 3528,
+          "language_code": "es",
+          "intro_text": "¡número treinta y tres, 'The Addams Family Theme' de Vic Mizzy (mil novecientos sesenta y cuatro–mil novecientos sesenta y seis) de Vic Mizzy! Vibras acogedoras y ni una nota de más. ¡Un clásico que te atrapa!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_33.mp3"
+        },
+        {
+          "id": 6219,
+          "track_ranking_id": 3528,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e três, 'The Addams Family Theme' de Vic Mizzy (mil novecentos sessenta e quatro–mil novecentos sessenta e seis) de Vic Mizzy! Vibrações acolhedoras e nem uma nota a mais. Um clássico que te atrapa!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_33.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3302,
+          "track_id": 2759,
+          "language_code": "es",
+          "detail_text": "The Addams Family Theme es una melodía clásica que capta la esencia de su peculiar familia. La canción describe con humor a sus miembros como personas extrañas y misteriosas que viven juntas. Su mensaje es que ser diferente no impide tener una vida llena de amor y risas. Los chasquidos de dedos incluidos en la grabación se volvieron su rasgo más imitado en la historia.",
+          "short_detail_text": "El The Addams Family Theme ponía el ambiente en segundos para la sitcom de 1964 a 1966 al anunciar a sus personajes y el mundo tan distintivo que habitaban con brillantes señales cercanamente micrófoneadas.",
+          "short_detail_tts_key": "short-detail/00oHVAstyM08Q82e2XYvkS.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/00oHVAstyM08Q82e2XYvkS.mp3"
+        },
+        {
+          "id": 6877,
+          "track_id": 2759,
+          "language_code": "pt-BR",
+          "detail_text": "The Addams Family Theme é uma melodia clássica que capta a essência de sua peculiar família. A canção descreve com humor seus membros como pessoas estranhas e misteriosas que vivem juntos. Sua mensagem é que ser diferente não impede de ter uma vida cheia de amor e risadas. Os estalos de dedos incluídos na gravação se tornaram seu traço mais imitado na história.",
+          "short_detail_text": "O The Addams Family Theme já criava o clima em segundos pro sitcom de 1964 a 1966 anunciando os personagens e o mundo distinto que eles habitavam com toques brilhantes gravados bem de perto.",
+          "short_detail_tts_key": "short-detail/00oHVAstyM08Q82e2XYvkS.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/00oHVAstyM08Q82e2XYvkS.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3529,
+        "track_id": 2760,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 34,
+        "intro": "#34 Gilligan's Island Theme (1964–1967) — sleek and punchy from bar one.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2760,
+        "track_name": "Gilligan's Island Theme",
+        "album_name": "The Greatest Tv Show Themes",
+        "artist_display_name": null,
+        "spotify_track_id": "3T8lqmIn5TAUzU9wjPt2YD",
+        "mode_flag": "SOLO",
+        "duration_ms": 93777,
+        "popularity": 34,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273e3cb6f7455acc2b1f6e4cc2f",
+        "year_released": null,
+        "artist_id": 98,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": null,
+        "detail": "Gilligan's Island was a sitcom mainstay of the 1964–1967 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The bright close-miked Gilligan's Island Theme sets the mood in seconds by announcing its cast of characters and the exact world viewers step into on the 1964-1967 sitcom mainstay.",
+        "short_detail_tts_key": "short-detail/3T8lqmIn5TAUzU9wjPt2YD.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Gilligan's Island",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 98,
+        "artist_name": "jack marshall",
+        "spotify_artist_id": "3Aph9hft9LO5087r28M3MZ",
+        "artist_artwork": "https://i.scdn.co/image/ab6761610000e5eb51b788e4c730718fff40fa4c",
+        "artist_description": "Jack Marshall was an American guitarist, conductor, and composer known for his work on television themes, including the theme for The Munsters. He was a prolific session musician and arranger, contributing to numerous recordings across various genres. Marshall's distinctive guitar work and compositions have left a lasting impact on the sound of television in the 1960s.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3373,
+          "track_ranking_id": 3529,
+          "language_code": "es",
+          "intro_text": "¡número treinta y cuatro, \"'Gilligan's Island Theme' Island (mil novecientos sesenta y cuatro–mil novecientos sesenta y siete) de jack marshall! Suena elegante y contundente desde el primer compás.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_34.mp3"
+        },
+        {
+          "id": 6220,
+          "track_ranking_id": 3529,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e quatro, \"'Gilligan's Island Theme' Island (mil novecentos sessenta e quatro–mil novecentos sessenta e sete) de Jack Marshall! Soa elegante e contundente desde o primeiro compasso.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_34.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3303,
+          "track_id": 2760,
+          "language_code": "es",
+          "detail_text": "Gilligan's Island Theme es el relato musical de un viaje que salió mal. La letra detalla las personalidades de los náufragos y su nueva vida en la isla. Este tema genera una emoción de esperanza y comedia ante la adversidad. Su impacto perdura como uno de los openings más narrativos de la televisión clásica.",
+          "short_detail_text": "El brillante tema de Gilligan's Island grabado de cerca pone el ambiente en segundos al anunciar su elenco de personajes y el mundo exacto al que los espectadores entran en esta comedia de situación que fue un pilar de 1964 a 1967.",
+          "short_detail_tts_key": "short-detail/3T8lqmIn5TAUzU9wjPt2YD.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3T8lqmIn5TAUzU9wjPt2YD.mp3"
+        },
+        {
+          "id": 6878,
+          "track_id": 2760,
+          "language_code": "pt-BR",
+          "detail_text": "Gilligan's Island Theme é o relato musical de uma viagem que deu errado. A letra detalha as personalidades dos náufragos e sua nova vida na ilha. Este tema gera uma emoção de esperança e comédia diante da adversidade. Seu impacto perdura como um dos openings mais narrativos da televisão clássica.",
+          "short_detail_text": "O tema vibrante e gravado bem de perto de Gilligan's Island Theme já cria o clima em segundos ao anunciar o elenco de personagens e o mundo exato que os espectadores entram nessa sitcom de 1964 a 1967.",
+          "short_detail_tts_key": "short-detail/3T8lqmIn5TAUzU9wjPt2YD.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3T8lqmIn5TAUzU9wjPt2YD.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3530,
+        "track_id": 2782,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 35,
+        "intro": "#35 The Monkees Theme (1966–1968) — a theme that kicks the door in.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2782,
+        "track_name": "The Monkees Theme",
+        "album_name": "Mississippi Squirrel Revival",
+        "artist_display_name": null,
+        "spotify_track_id": "5kyq8Q7wYI6dIuLQ9PuUG9",
+        "mode_flag": "SOLO",
+        "duration_ms": 191733,
+        "popularity": 7,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2734d26e4017f7744806d4153ee",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:39:59.537299",
+        "detail": "The Monkees was a sitcom/music mainstay of the 1966–1968 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Monkees Theme deployed its bright close-miked energy to establish the 1966-1968 sitcom's characters and their world of domestic mix-ups within seconds.",
+        "short_detail_tts_key": "short-detail/5kyq8Q7wYI6dIuLQ9PuUG9.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Monkees",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3374,
+          "track_ranking_id": 3530,
+          "language_code": "es",
+          "intro_text": "¡número treinta y cinco, 'The Monkees Theme' de Unknown Artist (mil novecientos sesenta y seis–mil novecientos sesenta y ocho), ! Un tema que entra con todo y abre la puerta de un golpe.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_35.mp3"
+        },
+        {
+          "id": 6221,
+          "track_ranking_id": 3530,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e cinco, 'The Monkees Theme' de Unknown Artist (mil novecentos sessenta e seis–mil novecentos sessenta e oito)! Um tema que entra com tudo e abre a porta de um golpe.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_35.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7810,
+          "track_id": 2782,
+          "language_code": "es",
+          "detail_text": "Los Monkees fue una serie de comedia y música icónica que se transmitió de 1966 a 1968. Ambientada en salas, cocinas y escalones de los barrios, los episodios equilibraban momentos de los personajes con enredos domésticos y malentendidos rápidos. La narración se enfocaba en ritmos de planteamiento y resolución con finales ordenados, mientras que la producción usaba escenografía de múltiples cámaras y temas musicales brillantes y cercanos. Estos temas establecen el ánimo en segundos, revelando quiénes son los personajes y el mundo al que te sumerges.",
+          "short_detail_text": "The Monkees Theme sacó su energía brillante y cercana al micrófono para establecer en segundos los personajes del sitcom de 1966-1968 y su mundo de enredos domésticos.",
+          "short_detail_tts_key": "short-detail/5kyq8Q7wYI6dIuLQ9PuUG9.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/5kyq8Q7wYI6dIuLQ9PuUG9.mp3"
+        },
+        {
+          "id": 8072,
+          "track_id": 2782,
+          "language_code": "pt-BR",
+          "detail_text": "Os Monkees foi uma série de TV e grupo musical que marcou a época de 1966 a 1968. Ambientada em salas de estar, cozinhas e degraus de vizinhança, os episódios equilibravam momentos dos personagens com confusões domésticas e mal-entendidos rápidos. A narrativa priorizava ritmos de preparação e resolução, com finais arrumadinhos, enquanto a produção usava cenários com múltiplas câmeras e temas musicais vibrantes e bem gravados. Esses temas musicais definem o clima em segundos, apresentando quem são os personagens e o mundo que você está prestes a entrar.",
+          "short_detail_text": "O The Monkees Theme usou sua energia brilhante gravada bem de perto pra estabelecer os personagens do sitcom de 1966 a 1968 e o mundo deles de confusões domésticas em segundos.",
+          "short_detail_tts_key": "short-detail/5kyq8Q7wYI6dIuLQ9PuUG9.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/5kyq8Q7wYI6dIuLQ9PuUG9.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3531,
+        "track_id": 2765,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 36,
+        "intro": "#36 Get Smart Theme (1965–1970) — sleek and punchy from bar one.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2765,
+        "track_name": "Get Smart Theme",
+        "album_name": "Get Smart Theme",
+        "artist_display_name": null,
+        "spotify_track_id": "4CPXXSophg3YetIRSod3It",
+        "mode_flag": "SOLO",
+        "duration_ms": 86482,
+        "popularity": 11,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2738c14649c0caf236939dc417a",
+        "year_released": null,
+        "artist_id": 1268,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": null,
+        "detail": "Get Smart was a spy/sitcom mainstay of the 1965–1970 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Get Smart Theme sets the mood in seconds for the 1965 to 1970 spy sitcom with bright close-miked cues announcing its characters and their world.",
+        "short_detail_tts_key": "short-detail/4CPXXSophg3YetIRSod3It.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Get Smart",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1268,
+        "artist_name": "Irving Szathmary",
+        "spotify_artist_id": "2MimNLes32eejanNEXJBo6",
+        "artist_artwork": null,
+        "artist_description": "Irving Szathmary was an American composer and conductor known for his work in film and television. He composed the theme for 'The Addams Family,' which became an iconic piece of 1960s television music. His career also included work in radio and live orchestras.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3375,
+          "track_ranking_id": 3531,
+          "language_code": "es",
+          "intro_text": "¡número treinta y seis! El tema de Get Smart (mil novecientos sesenta y cinco–mil novecientos setenta), \"Get Smart Theme\" de Irving Szathmary compuesto por Irving Szathmary, ¡elegante y contundente desde el primer compás!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_36.mp3"
+        },
+        {
+          "id": 6222,
+          "track_ranking_id": 3531,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e seis! O tema de Get Smart (mil novecentos sessenta e cinco–mil novecentos setenta), \"Get Smart Theme\" de Irving Szathmary composto por Irving Szathmary, elegante e contundente desde o primeiro compasso!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_36.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3308,
+          "track_id": 2765,
+          "language_code": "es",
+          "detail_text": "Get Smart Theme marca el inicio de misiones llenas de intriga y risas. Esta pieza combina ritmos de jazz con toques de suspense para reflejar una parodia inteligente del mundo del espionaje. El tema principal evoca la torpeza heroica y el ingenio ante villanos ridículos. Su influencia perdura en innumerables referencias y parodias dentro de la cultura pop.",
+          "short_detail_text": "El tema de Get Smart pone el ambiente en segundos para la sitcom de espías del 65 al 70 con brillantes señales grabadas de cerca que anuncian a sus personajes y su mundo.",
+          "short_detail_tts_key": "short-detail/4CPXXSophg3YetIRSod3It.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/4CPXXSophg3YetIRSod3It.mp3"
+        },
+        {
+          "id": 6883,
+          "track_id": 2765,
+          "language_code": "pt-BR",
+          "detail_text": "Get Smart Theme marca o início de missões cheias de intriga e risos. Essa peça combina ritmos de jazz com toques de suspense para refletir uma paródia inteligente do mundo do espionagem. O tema principal evoca a torpeza heroica e o engenho diante de vilões ridículos. Sua influência perdura em inúmeras referências e paródias na cultura pop.",
+          "short_detail_text": "O Get Smart Theme já cria o clima em segundos pro sitcom de espionagem de 1965 a 1970 com toques brilhantes gravados bem de perto anunciando os personagens e o mundo deles.",
+          "short_detail_tts_key": "short-detail/4CPXXSophg3YetIRSod3It.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/4CPXXSophg3YetIRSod3It.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3532,
+        "track_id": 2783,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 37,
+        "intro": "#37 I Dream of Jeannie Theme (1965–1970) — sleek and punchy from bar one.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2783,
+        "track_name": "I Dream of Jeannie Theme",
+        "album_name": "Totally Hot Nashville Steel Guitar",
+        "artist_display_name": null,
+        "spotify_track_id": "6JOrdSW4jaHKkz2UmqedGW",
+        "mode_flag": "SOLO",
+        "duration_ms": 137693,
+        "popularity": 0,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273dabb30f06cd5a89b108dcaec",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:40:00.141725",
+        "detail": "I Dream of Jeannie was a sitcom mainstay of the 1965–1970 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The I Dream of Jeannie Theme set the mood in seconds for the 1965-1970 sitcom with its bright close-miked cues announcing the characters and the world they inhabited.",
+        "short_detail_tts_key": "short-detail/6JOrdSW4jaHKkz2UmqedGW.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "I Dream of Jeannie",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3376,
+          "track_ranking_id": 3532,
+          "language_code": "es",
+          "intro_text": "¡número treinta y siete, \"I Dream of Jeannie Theme\" de Unknown Artist el tema de I Dream of Jeannie (mil novecientos sesenta y cinco–mil novecientos setenta)! Elegante y directo desde el primer compás. ¡Un clásico que no pasa de moda!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_37.mp3"
+        },
+        {
+          "id": 6223,
+          "track_ranking_id": 3532,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e sete, \"I Dream of Jeannie Theme\" de Unknown Artist, o tema de I Dream of Jeannie (mil novecentos sessenta e cinco–mil novecentos setenta)! Elegante e direto desde o primeiro compasso. Um clássico que não passa de moda!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_37.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7811,
+          "track_id": 2783,
+          "language_code": "es",
+          "detail_text": "\"I Dream of Jeannie\" fue una comedia icónica que se transmitió de 1965 a 1970. Sus episodios, ambientados en salas, cocinas y porches de barrio, mezclaban momentos de los personajes con enredos domésticos y malentendidos rápidos. La narración seguía ritmos de preparación y resolución con finales ordenados, mientras la producción usaba escenificación con múltiples cámaras y temas musicales brillantes y bien capturados. El tema musical establece el ánimo en segundos, presentando quiénes son estos personajes y el mundo al que entras.",
+          "short_detail_text": "El tema de I Dream of Jeannie ponía el ambiente en segundos para la sitcom de 1965-1970 con sus brillantes señales microfonadas de cerca que anunciaban a los personajes y el mundo que habitaban.",
+          "short_detail_tts_key": "short-detail/6JOrdSW4jaHKkz2UmqedGW.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6JOrdSW4jaHKkz2UmqedGW.mp3"
+        },
+        {
+          "id": 8073,
+          "track_id": 2783,
+          "language_code": "pt-BR",
+          "detail_text": "\"I Dream of Jeannie foi uma série de comédia que marcou a TV entre 1965 e 1970. Ambientada em salas de estar, cozinhas e degraus de vizinhança, os episódios misturavam momentos dos personagens com confusões domésticas e mal-entendidos rápidos. A narrativa valorizava ritmos de preparação e resolução, com produções que usavam filmagens em múltiplas câmeras e temas musicais vibrantes e bem gravados, que capturam o clima em segundos, mostrando quem são esses personagens e o mundo que você está prestes a entrar.\"",
+          "short_detail_text": "O tema de I Dream of Jeannie já criava o clima em segundos pro sitcom de 1965-1970 com suas vinhetas brilhantes gravadas bem de perto anunciando os personagens e o mundo que eles habitavam.",
+          "short_detail_tts_key": "short-detail/6JOrdSW4jaHKkz2UmqedGW.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6JOrdSW4jaHKkz2UmqedGW.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3533,
+        "track_id": 2784,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 38,
+        "intro": "#38 The Brady Bunch Theme (1969–1974) — widescreen heroics, compressed to a sting.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2784,
+        "track_name": "The Brady Bunch Theme",
+        "album_name": "Dick At Nite",
+        "artist_display_name": null,
+        "spotify_track_id": "2PTEZDY5EgTG8UhrZFestM",
+        "mode_flag": "SOLO",
+        "duration_ms": 89306,
+        "popularity": 5,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273ac13515309286b97f4c19e77",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:40:00.440315",
+        "detail": "The Brady Bunch was a sitcom mainstay of the 1969–1974 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Brady Bunch Theme used its bright close-miked sound to establish the characters and familiar world of the popular 1969-1974 sitcom in just seconds.",
+        "short_detail_tts_key": "short-detail/2PTEZDY5EgTG8UhrZFestM.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Brady Bunch",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3377,
+          "track_ranking_id": 3533,
+          "language_code": "es",
+          "intro_text": "¡número treinta y ocho, \"The Brady Bunch Theme\" de Unknown Artist (mil novecientos sesenta y nueve–mil novecientos setenta y cuatro) de Unknown Artist! Heroísmo en pantalla ancha, condensado en un impacto inolvidable. ¡Escúchalo ahora!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_38.mp3"
+        },
+        {
+          "id": 6224,
+          "track_ranking_id": 3533,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e oito, \"The Brady Bunch Theme\" de Unknown Artist (mil novecentos sessenta e nove–mil novecentos setenta e quatro) de Unknown Artist! Heroísmo em tela larga, condensado em um impacto inesquecível. Ouça agora!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_38.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7812,
+          "track_id": 2784,
+          "language_code": "es",
+          "detail_text": "\"The Brady Bunch fue una serie de comedia icónica que se transmitió de 1969 a 1974. Ambientada en salas, cocinas y escalones de los vecindarios, los episodios mezclaban momentos de los personajes con enredos domésticos y malentendidos rápidos. La narración se enfocaba en estructuras de preparación y resolución con finales ordenados, mientras que la producción usaba escenarios con múltiples cámaras y temas musicales brillantes y bien capturados. El tema musical establece el tono en segundos, presentando quiénes son estos personajes y el mundo al que te sumerges.\"",
+          "short_detail_text": "The Brady Bunch Theme usó su sonido brillante y cercano para establecer los personajes y el mundo familiar de la popular sitcom de 1969 a 1974 en tan solo segundos.",
+          "short_detail_tts_key": "short-detail/2PTEZDY5EgTG8UhrZFestM.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/2PTEZDY5EgTG8UhrZFestM.mp3"
+        },
+        {
+          "id": 8074,
+          "track_id": 2784,
+          "language_code": "pt-BR",
+          "detail_text": "A \"The Brady Bunch\" foi uma série de comédia que marcou a TV entre 1969 e 1974, ambientada em salas de estar, cozinhas e calçadas dos bairros, com episódios que equilibravam momentos dos personagens e confusões domésticas leves e divertidas. A narrativa seguia um ritmo de preparo e resolução bem estruturado, enquanto a produção usava filmagens com múltiplas câmeras e temas musicais vibrantes e bem capturados. Esses temas musicais definem o clima em segundos, apresentando quem são os personagens e o mundo acolhedor que eles habitam.",
+          "short_detail_text": "O The Brady Bunch Theme usava seu som brilhante gravado bem de perto pra estabelecer os personagens e o mundo familiar daquele popular sitcom de 1969-1974 em apenas segundos.",
+          "short_detail_tts_key": "short-detail/2PTEZDY5EgTG8UhrZFestM.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/2PTEZDY5EgTG8UhrZFestM.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3534,
+        "track_id": 2772,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 39,
+        "intro": "#39 The Beverly Hillbillies Theme (1962–1971) — glossy primetime in 30 seconds flat.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2772,
+        "track_name": "The Beverly Hillbillies Theme",
+        "album_name": "Sing Classic TV Tunes v.1 (Karaoke Performance Tracks)",
+        "artist_display_name": null,
+        "spotify_track_id": "33HZhyTkFanklZ98gltpxm",
+        "mode_flag": "SOLO",
+        "duration_ms": 71517,
+        "popularity": 2,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b27331329d2948f74edc20fb2dbb",
+        "year_released": null,
+        "artist_id": 1274,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": null,
+        "detail": "The Beverly Hillbillies was a sitcom mainstay of the 1962–1971 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Beverly Hillbillies Theme introduced the sitcom's central characters and their world in seconds across its mainstay run from 1962 to 1971.",
+        "short_detail_tts_key": "short-detail/33HZhyTkFanklZ98gltpxm.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Beverly Hillbillies",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1274,
+        "artist_name": "Flatt & Scruggs",
+        "spotify_artist_id": "1iNNWK8bYjc5EK0waLk1J1",
+        "artist_artwork": "https://i.scdn.co/image/02b9a077c9972ca7d79069f1485da39e82634af4",
+        "artist_description": "Flatt & Scruggs were an American bluegrass duo consisting of Lester Flatt and Earl Scruggs. Known for their instrumental prowess and songs like 'Foggy Mountain Breakdown,' they were instrumental in popularizing bluegrass music. Their influence extends to both traditional and modern bluegrass, impacting numerous artists.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3378,
+          "track_ranking_id": 3534,
+          "language_code": "es",
+          "intro_text": "¡número treinta y nueve, 'The Beverly Hillbillies Theme' de Flatt & Scruggs por Flatt & Scruggs (mil novecientos sesenta y dos–mil novecientos setenta y uno)! Un brillo de máxima audiencia en solo 30 segundos.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_39.mp3"
+        },
+        {
+          "id": 6225,
+          "track_ranking_id": 3534,
+          "language_code": "pt-BR",
+          "intro_text": "Número trinta e nove, 'The Beverly Hillbillies Theme' de Flatt & Scruggs por Flatt & Scruggs (mil novecentos sessenta e dois–mil novecentos setenta e um)! Um brilho de máxima audiência em apenas 30 segundos.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_39.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3315,
+          "track_id": 2772,
+          "language_code": "es",
+          "detail_text": "The Beverly Hillbillies Theme suena con banjos y un estilo bluegrass inconfundible. La canción comunica diversión ante la idea de riqueza repentina y cambio de vida. Sus notas evocan el contraste entre la simplicidad montañesa y el lujo citadino de forma amena. Este tema logró cruzar fronteras y convertirse en un clásico de la cultura pop.",
+          "short_detail_text": "The Beverly Hillbillies Theme presentaba a los personajes centrales de la sitcom y su mundo en segundos a lo largo de su etapa principal de 1962 a 1971.",
+          "short_detail_tts_key": "short-detail/33HZhyTkFanklZ98gltpxm.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/33HZhyTkFanklZ98gltpxm.mp3"
+        },
+        {
+          "id": 6890,
+          "track_id": 2772,
+          "language_code": "pt-BR",
+          "detail_text": "The Beverly Hillbillies Theme soa com banjos e um estilo bluegrass inconfundível. A canção comunica diversão diante da ideia de riqueza repentina e mudança de vida. Suas notas evocam o contraste entre a simplicidade montanhesa e o luxo urbano de forma amena. Esse tema conseguiu cruzar fronteiras e se tornar um clássico da cultura pop.",
+          "short_detail_text": "O The Beverly Hillbillies Theme apresentava os personagens centrais do sitcom e o mundo deles em segundos ao longo de sua temporada principal de 1962 a 1971.",
+          "short_detail_tts_key": "short-detail/33HZhyTkFanklZ98gltpxm.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/33HZhyTkFanklZ98gltpxm.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3535,
+        "track_id": 2771,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 40,
+        "intro": "#40 Green Acres Theme (1965–1971) — short, sharp, and impossible to forget.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2771,
+        "track_name": "Green Acres Theme",
+        "album_name": "The Greatest Tv Show Themes",
+        "artist_display_name": null,
+        "spotify_track_id": "3mljcjVvt1Lh7vp8zzOhlV",
+        "mode_flag": "SOLO",
+        "duration_ms": 65120,
+        "popularity": 24,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273e3cb6f7455acc2b1f6e4cc2f",
+        "year_released": null,
+        "artist_id": 98,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": null,
+        "detail": "Green Acres was a sitcom mainstay of the 1965–1971 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The bright close-miked Green Acres Theme set the mood in seconds for the 1965 to 1971 sitcom, announcing who these characters are and the kind of world you're stepping into.",
+        "short_detail_tts_key": "short-detail/3mljcjVvt1Lh7vp8zzOhlV.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Green Acres",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 98,
+        "artist_name": "jack marshall",
+        "spotify_artist_id": "3Aph9hft9LO5087r28M3MZ",
+        "artist_artwork": "https://i.scdn.co/image/ab6761610000e5eb51b788e4c730718fff40fa4c",
+        "artist_description": "Jack Marshall was an American guitarist, conductor, and composer known for his work on television themes, including the theme for The Munsters. He was a prolific session musician and arranger, contributing to numerous recordings across various genres. Marshall's distinctive guitar work and compositions have left a lasting impact on the sound of television in the 1960s.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3379,
+          "track_ranking_id": 3535,
+          "language_code": "es",
+          "intro_text": "¡número cuarenta, 'Green Acres Theme' de jack marshall (mil novecientos sesenta y cinco–mil novecientos setenta y uno) de jack marshall! Corto, directo y simplemente inolvidable.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_40.mp3"
+        },
+        {
+          "id": 6226,
+          "track_ranking_id": 3535,
+          "language_code": "pt-BR",
+          "intro_text": "Número quarenta, 'Green Acres Theme' de Jack Marshall (mil novecentos sessenta e cinco–mil novecentos setenta e um) de Jack Marshall! Curto, direto e simplesmente inesquecível.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_40.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3314,
+          "track_id": 2771,
+          "language_code": "es",
+          "detail_text": "Green Acres Theme tiene un aire campirano que pone una sonrisa al instante. Esta sintonía refleja el humor en los choques entre la modernidad y la tradición rural. La pieza transmite una emoción de libertad y nuevos retos con ligereza. Su arreglo instrumental se destacó por usar elementos de la música folclórica.",
+          "short_detail_text": "El brillante tema de Green Acres grabado de cerca ponía el ambiente en segundos para la sitcom de 1965 a 1971, anunciando quiénes son esos personajes y el tipo de mundo al que te estás metiendo.",
+          "short_detail_tts_key": "short-detail/3mljcjVvt1Lh7vp8zzOhlV.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3mljcjVvt1Lh7vp8zzOhlV.mp3"
+        },
+        {
+          "id": 6889,
+          "track_id": 2771,
+          "language_code": "pt-BR",
+          "detail_text": "Green Acres Theme tem um ar campestre que coloca um sorriso no rosto imediatamente. Essa sintonia reflete o humor nos choques entre a modernidade e a tradição rural. A peça transmite uma emoção de liberdade e novos desafios com leveza. Seu arranjo instrumental se destacou por usar elementos da música folclórica.",
+          "short_detail_text": "O vibrante Green Acres Theme gravado bem de perto já definia o clima em segundos pro sitcom de 1965 a 1971, anunciando quem são esses personagens e o tipo de mundo que você tá entrando.",
+          "short_detail_tts_key": "short-detail/3mljcjVvt1Lh7vp8zzOhlV.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3mljcjVvt1Lh7vp8zzOhlV.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3536,
+        "track_id": 2785,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 41,
+        "intro": "#41 Petticoat Junction Theme (1963–1970) — thirty seconds of pure identity.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2785,
+        "track_name": "Petticoat Junction Theme",
+        "album_name": "The Greatest Tv Show Themes",
+        "artist_display_name": null,
+        "spotify_track_id": "7nwqv0XgjG2seVqYc8PsKr",
+        "mode_flag": "SOLO",
+        "duration_ms": 88196,
+        "popularity": 14,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273e3cb6f7455acc2b1f6e4cc2f",
+        "year_released": null,
+        "artist_id": 98,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:40:01.501896",
+        "detail": "Petticoat Junction was a sitcom mainstay of the 1963–1970 run. Set around living rooms, kitchens, and neighborhood stoops, episodes balanced character moments with domestic mix-ups and brisk misunderstandings. Storytelling favored setup-payoff rhythms and tidy resolutions, while production leaned on multi-camera staging and bright, close-miked theme cues. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Petticoat Junction Theme set the mood for the 1963–1970 sitcom in seconds by announcing its characters and the cozy world they inhabited.",
+        "short_detail_tts_key": "short-detail/7nwqv0XgjG2seVqYc8PsKr.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Petticoat Junction",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 98,
+        "artist_name": "jack marshall",
+        "spotify_artist_id": "3Aph9hft9LO5087r28M3MZ",
+        "artist_artwork": "https://i.scdn.co/image/ab6761610000e5eb51b788e4c730718fff40fa4c",
+        "artist_description": "Jack Marshall was an American guitarist, conductor, and composer known for his work on television themes, including the theme for The Munsters. He was a prolific session musician and arranger, contributing to numerous recordings across various genres. Marshall's distinctive guitar work and compositions have left a lasting impact on the sound of television in the 1960s.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3380,
+          "track_ranking_id": 3536,
+          "language_code": "es",
+          "intro_text": "¡número cuarenta y uno, 'Petticoat Junction Theme' de jack marshall (mil novecientos sesenta y tres–mil novecientos setenta) por jack marshall! Treinta segundos de pura identidad que te transportan directo a la serie. ¡Escúchalo ya!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_41.mp3"
+        },
+        {
+          "id": 6227,
+          "track_ranking_id": 3536,
+          "language_code": "pt-BR",
+          "intro_text": "Número quarenta e um, 'Petticoat Junction Theme' de Jack Marshall (mil novecentos sessenta e três–mil novecentos setenta) por Jack Marshall! Trinta segundos de pura identidade que te transportam direto à série. Ouça já!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_41.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3321,
+          "track_id": 2785,
+          "language_code": "es",
+          "detail_text": "Petticoat Junction Theme pinta un cuadro sonoro de vida sencilla en el campo con toques de humor. Este tema representa el encanto de la rutina familiar y las pequeñas aventuras cotidianas. La melodía evoca calidez y nostalgia por una América rural idealizada. Su composición folk se volvió inseparable de la comedia y acompañó a la serie durante años.",
+          "short_detail_text": "El Petticoat Junction Theme ponía el ambiente para la sitcom de 1963 a 1970 en segundos al anunciar a sus personajes y el mundo acogedor en el que vivían.",
+          "short_detail_tts_key": "short-detail/7nwqv0XgjG2seVqYc8PsKr.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/7nwqv0XgjG2seVqYc8PsKr.mp3"
+        },
+        {
+          "id": 6896,
+          "track_id": 2785,
+          "language_code": "pt-BR",
+          "detail_text": "Petticoat Junction Theme pinta um quadro sonoro de vida simples no campo com toques de humor. Esse tema representa o encanto da rotina familiar e as pequenas aventuras do dia a dia. A melodia evoca calor e nostalgia por uma América rural idealizada. Sua composição folk se tornou inseparável da comédia e acompanhou a série por anos.",
+          "short_detail_text": "O Petticoat Junction Theme já estabelecia o clima do sitcom de 1963 a 1970 em segundos anunciando seus personagens e o mundo aconchegante que eles viviam.",
+          "short_detail_tts_key": "short-detail/7nwqv0XgjG2seVqYc8PsKr.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/7nwqv0XgjG2seVqYc8PsKr.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3537,
+        "track_id": 2786,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 42,
+        "intro": "#42 The Fugitive Theme (1963–1967) — cozy vibes, zero wasted notes.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2786,
+        "track_name": "The Fugitive Theme",
+        "album_name": "Ultra-Lounge: TV Town",
+        "artist_display_name": null,
+        "spotify_track_id": "0ol30eU69b7p5seYRyZD53",
+        "mode_flag": "SOLO",
+        "duration_ms": 123251,
+        "popularity": 20,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273c455303ab8fc53f6d137ebfc",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:40:01.810184",
+        "detail": "The Fugitive was a drama mainstay of the 1963–1967 run. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Fugitive Theme establishes its main characters and their world within seconds for the drama mainstay that ran from 1963 to 1967 while balancing key moments with week-to-week conflicts.",
+        "short_detail_tts_key": "short-detail/0ol30eU69b7p5seYRyZD53.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Fugitive",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3381,
+          "track_ranking_id": 3537,
+          "language_code": "es",
+          "intro_text": "¡número cuarenta y dos, 'The Fugitive Theme' de Unknown Artist (mil novecientos sesenta y tres–mil novecientos sesenta y siete) de Unknown Artist! Vibras acogedoras y ni una nota de más, ¡puro impacto!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_42.mp3"
+        },
+        {
+          "id": 6228,
+          "track_ranking_id": 3537,
+          "language_code": "pt-BR",
+          "intro_text": "Número quarenta e dois, 'The Fugitive Theme' de Unknown Artist (mil novecentos sessenta e três–mil novecentos sessenta e sete) de Unknown Artist! Vibrações acolhedoras e nem uma nota a mais, puro impacto!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_42.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7813,
+          "track_id": 2786,
+          "language_code": "es",
+          "detail_text": "El Fugitivo fue un pilar del drama en su transmisión de 1963 a 1967. Ambientado en sus icónicos escenarios, los episodios equilibraban momentos de los personajes con conflictos semanales. La narración destacaba arcos claros y motivos fuertes, mientras que la producción se apoyaba en escenografías prácticas y un trabajo de cámara sencillo. El tema musical captura esa atmósfera en segundos, revelando quiénes son estos personajes y el mundo al que entras.",
+          "short_detail_text": "El tema The Fugitive establece a sus personajes principales y su mundo en segundos para el pilar del drama que corrió de 1963 a 1967 mientras equilibra momentos clave con conflictos de semana a semana.",
+          "short_detail_tts_key": "short-detail/0ol30eU69b7p5seYRyZD53.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/0ol30eU69b7p5seYRyZD53.mp3"
+        },
+        {
+          "id": 8075,
+          "track_id": 2786,
+          "language_code": "pt-BR",
+          "detail_text": "O Fugitive foi uma série de drama icônica que marcou a televisão entre 1963 e 1967. Seus episódios, ambientados em locações características, equilibravam momentos dos personagens com conflitos semanais. A narrativa valorizava arcos claros e temas fortes, enquanto a produção apostava em cenários práticos e filmagens eficientes. O tema musical captura esse clima em segundos, apresentando quem são esses personagens e o mundo que eles habitam.",
+          "short_detail_text": "O The Fugitive Theme estabelece os personagens principais e o mundo deles em segundos pro drama que foi ao ar de 1963 a 1967, equilibrando momentos chave com os conflitos de semana a semana.",
+          "short_detail_tts_key": "short-detail/0ol30eU69b7p5seYRyZD53.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/0ol30eU69b7p5seYRyZD53.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3538,
+        "track_id": 2787,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 43,
+        "intro": "#43 The Avengers Theme (1961–1969) — the cue everyone can hum on command.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2787,
+        "track_name": "The Avengers Theme",
+        "album_name": "So Far Gone",
+        "artist_display_name": null,
+        "spotify_track_id": "3QLjDkgLh9AOEHlhQtDuhs",
+        "mode_flag": "SOLO",
+        "duration_ms": 257690,
+        "popularity": 77,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b27354ef13c30a024a7f1ba79efd",
+        "year_released": null,
+        "artist_id": null,
+        "featured_artist_id": null,
+        "is_explicit": true,
+        "created_at": "2025-09-06T11:40:02.113647",
+        "detail": "The Avengers was a spy mainstay of the 1961–1969 run. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Avengers Theme captures the spirit of the 1961-1969 spy mainstay whose episodes combined character moments and week-to-week conflicts with clear arcs and strong motifs.",
+        "short_detail_tts_key": "short-detail/3QLjDkgLh9AOEHlhQtDuhs.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Avengers",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": null,
+      "ranking_locales": [
+        {
+          "id": 3382,
+          "track_ranking_id": 3538,
+          "language_code": "es",
+          "intro_text": "¡número cuarenta y tres, 'The Avengers Theme' de Unknown Artist (mil novecientos sesenta y uno–mil novecientos sesenta y nueve) de Unknown Artist! La melodía que todos pueden tararear al instante. ¡Un clásico que no pasa de moda!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_43.mp3"
+        },
+        {
+          "id": 6229,
+          "track_ranking_id": 3538,
+          "language_code": "pt-BR",
+          "intro_text": "Número quarenta e três, 'The Avengers Theme' de Unknown Artist (mil novecentos sessenta e um–mil novecentos sessenta e nove) de Unknown Artist! A melodia que todos podem tararear no instante. Um clássico que não passa de moda!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_43.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 7814,
+          "track_id": 2787,
+          "language_code": "es",
+          "detail_text": "Los Vengadores fue una serie de espías icónica que se transmitió de 1961 a 1969. Sus episodios, ambientados en locaciones características, equilibraban momentos de los personajes con conflictos semanales. La narración privilegiaba arcos claros y motivos fuertes, mientras que la producción se basaba en escenografías prácticas y un trabajo de cámara eficiente. El tema musical establece esa atmósfera en segundos, revelando quiénes son estos personajes y el mundo al que te sumerges.",
+          "short_detail_text": "El The Avengers Theme captura el espíritu de ese pilar de espías de 1961 al 69 cuyos episodios combinaban momentos de personajes y conflictos de semana a semana con arcos claros y motivos fuertes.",
+          "short_detail_tts_key": "short-detail/3QLjDkgLh9AOEHlhQtDuhs.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3QLjDkgLh9AOEHlhQtDuhs.mp3"
+        },
+        {
+          "id": 8076,
+          "track_id": 2787,
+          "language_code": "pt-BR",
+          "detail_text": "O The Avengers foi uma série de espionagem icônica que marcou a TV entre 1961 e 1969. Seus episódios, ambientados em locações clássicas, equilibravam momentos dos personagens com conflitos semanais. A narrativa valorizava arcos claros e temas fortes, enquanto a produção apostava em cenários práticos e filmagens simples. O tema musical captura essa atmosfera em segundos, apresentando quem são os personagens e o mundo que eles habitam.",
+          "short_detail_text": "O The Avengers Theme captura o espírito do pilar de espionagem de 1961 a 1969 cujos episódios combinavam momentos de personagens e conflitos de semana a semana com arcos claros e fortes motivos.",
+          "short_detail_tts_key": "short-detail/3QLjDkgLh9AOEHlhQtDuhs.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3QLjDkgLh9AOEHlhQtDuhs.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3539,
+        "track_id": 2768,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 44,
+        "intro": "#44 Doctor Who Theme (1963–1989) — Saturday-morning energy in a single riff.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2768,
+        "track_name": "Doctor Who Theme",
+        "album_name": "Doctor Who (Original Television Soundtrack)",
+        "artist_display_name": "Murray Gold",
+        "spotify_track_id": "6owgMJENlBFIDIT0JgB9j8",
+        "mode_flag": "SOLO",
+        "duration_ms": 41706,
+        "popularity": 37,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2734d7f8d29fd3ae02f6bae61c4",
+        "year_released": null,
+        "artist_id": 1352,
+        "featured_artist_id": null,
+        "is_explicit": null,
+        "created_at": null,
+        "detail": "Doctor Who was a sci-fi mainstay of the 2005– run. Set around laboratories, launch pads, and uncanny thresholds, episodes balanced character moments with speculative dilemmas and eerie reveals. Storytelling favored what-if premises and twist endings, while production leaned on theremin-tinged cues and stylized effects. Composed/arranged by Murray Gold, the theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Doctor Who Theme instantly captures the eerie reveals and speculative dilemmas of the long-running sci-fi mainstay with theremin-tinged cues that establish its characters and world in seconds.",
+        "short_detail_tts_key": "short-detail/6owgMJENlBFIDIT0JgB9j8.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "Doctor Who",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 1352,
+        "artist_name": "Murray Gold",
+        "spotify_artist_id": "3vmtDGkzacafVdenyPHPMb",
+        "artist_artwork": "https://i.scdn.co/image/ab67616d0000b2733e6c3c7ba4e1648308b05a8d",
+        "artist_description": "Murray Gold is a British composer known for his work on the television series 'Doctor Who' and its spin-offs. His scores are noted for their emotional depth and thematic richness, often incorporating leitmotifs to enhance storytelling. Gold's music has become synonymous with the modern era of 'Doctor Who'.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3383,
+          "track_ranking_id": 3539,
+          "language_code": "es",
+          "intro_text": "¡número cuarenta y cuatro, 'Doctor Who Theme' de Murray Gold (mil novecientos sesenta y tres–mil novecientos ochenta y nueve) por Murray Gold! Energía de sábado por la mañana en un solo riff.",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_44.mp3"
+        },
+        {
+          "id": 6230,
+          "track_ranking_id": 3539,
+          "language_code": "pt-BR",
+          "intro_text": "Número quarenta e quatro, 'Doctor Who Theme' de Murray Gold (mil novecentos sessenta e três–mil novecentos oitenta e nove) por Murray Gold! Energia de sábado de manhã em um único riff.",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_44.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3311,
+          "track_id": 2768,
+          "language_code": "es",
+          "detail_text": "Doctor Who Theme es reconocible al instante por sus ondas electrónicas misteriosas. La música evoca la vastedad del tiempo y el espacio, junto con la curiosidad por lo desconocido. Este tema transmite una sensación de maravilla y urgencia ante las batallas contra fuerzas alienígenas. Una versión renovada ayudó a que la serie regresara con éxito a la pantalla en el nuevo milenio.",
+          "short_detail_text": "The Doctor Who Theme capta al instante las revelaciones escalofriantes y los dilemas especulativos de este pilar de la ciencia ficción de larga duración con pistas teñidas de theremin que establecen sus personajes y mundo en segundos.",
+          "short_detail_tts_key": "short-detail/6owgMJENlBFIDIT0JgB9j8.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/6owgMJENlBFIDIT0JgB9j8.mp3"
+        },
+        {
+          "id": 6886,
+          "track_id": 2768,
+          "language_code": "pt-BR",
+          "detail_text": "Doctor Who Theme é reconhecível instantaneamente por suas ondas eletrônicas misteriosas. A música evoca a vastidão do tempo e do espaço, junto com a curiosidade pelo desconhecido. Esse tema transmite uma sensação de maravilha e urgência diante das batalhas contra forças alienígenas. Uma versão renovada ajudou a série a retornar com sucesso à tela no novo milênio.",
+          "short_detail_text": "O Doctor Who Theme captura na hora as revelações arrepiantes e os dilemas especulativos do clássico de ficção científica de longa duração com toques tingidos de theremin que estabelecem seus personagens e mundo em segundos.",
+          "short_detail_tts_key": "short-detail/6owgMJENlBFIDIT0JgB9j8.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/6owgMJENlBFIDIT0JgB9j8.mp3"
+        }
+      ]
+    },
+    {
+      "ranking": {
+        "id": 3540,
+        "track_id": 2788,
+        "decade_genre_id": 64,
+        "tracklist_id": 1,
+        "ranking": 45,
+        "intro": "#45 The Saint Theme (1962–1969) — the fanfare that launched a thousand reruns.",
+        "created_at": "2025-09-06T00:00:00"
+      },
+      "track": {
+        "id": 2788,
+        "track_name": "The Saint Theme",
+        "album_name": "Detective T.V. Themes",
+        "artist_display_name": null,
+        "spotify_track_id": "3EkvO25frZN1PH76J8KKhI",
+        "mode_flag": "SOLO",
+        "duration_ms": 122520,
+        "popularity": 0,
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b2738ecad72f02134fd99ae7abac",
+        "year_released": null,
+        "artist_id": 104,
+        "featured_artist_id": null,
+        "is_explicit": false,
+        "created_at": "2025-09-06T11:40:02.881374",
+        "detail": "The Saint was a spy mainstay of the 1962–1969 run. Set around its signature locales, episodes balanced character moments with week-to-week conflicts. Storytelling favored clear arcs and strong motifs, while production leaned on practical staging and economical camera work. The theme cues that mood in seconds—announcing who these characters are and the kind of world you’re stepping into.",
+        "short_detail": "The Saint Theme instantly announces the compelling characters and intriguing world of the spy series that served as a television mainstay from 1962 to 1969.",
+        "short_detail_tts_key": "short-detail/3EkvO25frZN1PH76J8KKhI.mp3",
+        "language": "en",
+        "source_type": "TV",
+        "source_title": "The Saint",
+        "years_on_air": null,
+        "source_role": "THEME",
+        "version_notes": "TV opening"
+      },
+      "artist": {
+        "id": 104,
+        "artist_name": "lalo schifrin",
+        "spotify_artist_id": "39iHRO9MH9To3gjW7wqaW1",
+        "artist_artwork": "https://i.scdn.co/image/eb76a42d736645df1fd87f88e9dc57297a181698",
+        "artist_description": "Lalo Schifrin is an Argentine-American composer, conductor, and pianist known for his work on film and television scores, including the theme for Mission: Impossible. His innovative use of jazz and Latin elements in his compositions has earned him multiple Grammy and Emmy Awards. Schifrin's work has had a significant impact on the sound of action and thriller genres.",
+        "not_on_spotify": false,
+        "language": "en"
+      },
+      "ranking_locales": [
+        {
+          "id": 3384,
+          "track_ranking_id": 3540,
+          "language_code": "es",
+          "intro_text": "¡número cuarenta y cinco, 'The Saint Theme' de lalo schifrin (mil novecientos sesenta y dos–mil novecientos sesenta y nueve) de lalo schifrin, la fanfarria que dio inicio a miles de repeticiones!",
+          "tts_bucket": "audio-es",
+          "tts_key": "intro/1960s_tv_themes_45.mp3"
+        },
+        {
+          "id": 6231,
+          "track_ranking_id": 3540,
+          "language_code": "pt-BR",
+          "intro_text": "Número quarenta e cinco, 'The Saint Theme' de Lalo Schifrin (mil novecentos sessenta e dois–mil novecentos sessenta e nove) de Lalo Schifrin, a fanfarra que deu início a milhares de repetições!",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "intro/1960s_tv_themes_45.mp3"
+        }
+      ],
+      "track_locales": [
+        {
+          "id": 3322,
+          "track_id": 2788,
+          "language_code": "es",
+          "detail_text": "The Saint Theme es una melodía que engancha desde el principio con su estilo único. Esta canción transmite una sensación de intriga y sofisticación que te mantiene atento. Su significado radica en proyectar confianza y astucia ante lo desconocido. Un hecho concreto es que su estructura musical ha servido de inspiración para otros compositores de temas de aventura.",
+          "short_detail_text": "El tema de The Saint anuncia al instante los personajes fascinantes y el mundo intrigante de la serie de espías que fue un pilar de la televisión de 1962 a 1969.",
+          "short_detail_tts_key": "short-detail/3EkvO25frZN1PH76J8KKhI.mp3",
+          "tts_bucket": "audio-es",
+          "tts_key": "detail/3EkvO25frZN1PH76J8KKhI.mp3"
+        },
+        {
+          "id": 6897,
+          "track_id": 2788,
+          "language_code": "pt-BR",
+          "detail_text": "The Saint Theme é uma melodia que engancha desde o começo com seu estilo único. Essa canção transmite uma sensação de intriga e sofisticação que mantém você atento. Seu significado está em projetar confiança e astúcia diante do desconhecido. Um fato concreto é que sua estrutura musical serviu de inspiração para outros compositores de temas de aventura.",
+          "short_detail_text": "O The Saint Theme já anuncia os personagens cativantes e o mundo intrigante da série de espionagem que foi um pilar da televisão de 1962 a 1969.",
+          "short_detail_tts_key": "short-detail/3EkvO25frZN1PH76J8KKhI.mp3",
+          "tts_bucket": "audio-ptbr",
+          "tts_key": "detail/3EkvO25frZN1PH76J8KKhI.mp3"
+        }
+      ]
+    }
+  ]
+}
