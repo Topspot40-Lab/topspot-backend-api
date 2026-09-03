@@ -30,6 +30,7 @@ REVIEW_MANIFEST_V7 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv_themes.v7.json"
 )
+REVIEW_MANIFEST_V8 = Path(__file__).parents[1] / "scripts/catalogs/review_manifests/1950s-tv_themes.v8.json"
 RANKED_REVIEW = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.ranked-review.v1.csv"
@@ -50,6 +51,7 @@ RESEARCH_BATCH_05 = (
     Path(__file__).parents[1]
     / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-05.v1.json"
 )
+RESEARCH_BATCH_06 = Path(__file__).parents[1] / "scripts/catalogs/review_manifests/1950s-tv-themes.research-batch-06.v1.json"
 EXPECTED_RANKS = {2, 3, 8, 10, 11, 12}
 APPROVED_REPLACEMENTS = {
     2: "799kpXdBhIzYscq144QVEn",
@@ -236,3 +238,27 @@ def test_batch_five_preserves_each_recording_qualification():
     assert decisions["The Life and Legend of Wyatt Earp"]["spotify_candidate"]["classification"].startswith("2009 recreation")
     assert "26-second" in decisions["Wanted: Dead or Alive"]["spotify_candidate"]["classification"]
     assert "broadcast-master use is unverified" in decisions["The Red Skelton Show"]["spotify_candidate"]["classification"]
+
+
+def test_v8_completes_evidence_based_review_without_rank_or_apply_authority():
+    manifest = json.loads(REVIEW_MANIFEST_V8.read_text(encoding="utf-8"))
+    assert manifest["supersedes"] == "1950s-tv_themes.v7.json"
+    approved = {item["show_title"]: item for item in manifest["approved_catalog_candidates"]}
+    assert approved["Maverick"]["spotify_track_id"] == "3PowPOuvw8BE8Dx2XkzPHF"
+    assert approved["The Roy Rogers Show"]["spotify_track_id"] == "1FaiVQR1BUHxttxYUMAQiW"
+    assert approved["Dennis the Menace"]["spotify_track_id"] == ""
+    assert all(item["rank"] is None for item in approved.values() if item["show_title"] in {
+        "Maverick", "The Roy Rogers Show", "Dennis the Menace",
+    })
+    assert {item["show_title"] for item in manifest["unresolved_research"]} == {
+        "The Phil Silvers Show", "Lassie", "The Adventures of Rin Tin Tin", "The Donna Reed Show",
+    }
+
+
+def test_batch_six_requires_exact_dennis_track_without_using_an_album_id_as_track_id():
+    batch = json.loads(RESEARCH_BATCH_06.read_text(encoding="utf-8"))
+    decisions = {item["show_title"]: item for item in batch["approved_programs"]}
+    dennis = decisions["Dennis the Menace"]
+    assert dennis["theme_title"] == "Mi Televizhun Song (Dennis the Menace Theme)"
+    assert dennis["spotify_track_id"] == ""
+    assert "/album/" in dennis["listening_url"]

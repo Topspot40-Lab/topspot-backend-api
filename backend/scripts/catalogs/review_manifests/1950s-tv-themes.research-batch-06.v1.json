@@ -1,0 +1,30 @@
+{
+  "schema_version": "1950s-tv-themes-research-batch/v1",
+  "batch_id": "1950s-tv-themes-completed-self-approved-review-06",
+  "purpose": "Evidence-based self-approval record authorized by Gary; all approvals remain unranked and unapplied to production.",
+  "research_method": "Public web pages only; no Spotify authentication or Spotify API was used.",
+  "approved_programs": [
+    {"show_title":"The Jack Benny Program","theme_title":"Love in Bloom","recording":"Bing Crosby and Kitty Carlisle","spotify_track_id":"","classification":"1934 commercial performance; not the television arrangement","listening_url":"https://www.youtube.com/watch?v=_ePhCaBar_s"},
+    {"show_title":"The Adventures of Ozzie and Harriet","theme_title":"Nelson Family Theme","recording":"Ozzie Nelson television opening","spotify_track_id":"","classification":"broadcast-associated television opening; release lineage unverified","listening_url":"https://www.youtube.com/watch?v=aEwLpYPg8YA"},
+    {"show_title":"Father Knows Best","theme_title":"Father Knows Best / Waiting","recording":"The TV Theme Players","spotify_track_id":"1u1mZ6NgPmLohzNAVMExhh","classification":"later recognizable cover"},
+    {"show_title":"Maverick","theme_title":"Maverick","recording":"TV Themes","spotify_track_id":"3PowPOuvw8BE8Dx2XkzPHF","classification":"later recognizable cover of David Buttolph and Paul Francis Webster theme"},
+    {"show_title":"Leave It to Beaver","theme_title":"Toy Parade","recording":"The Richard Gleason Orchestra","spotify_track_id":"1aiXLeKljeTCbX5fVPISTS","classification":"later recognizable recreation of David Rose composition"},
+    {"show_title":"The George Burns and Gracie Allen Show","theme_title":"Love Nest","recording":"Bing Crosby and Kitty Carlisle","spotify_track_id":"","classification":"1934 commercial performance of shared theme; not program arrangement","shared_track_warning":true},
+    {"show_title":"American Bandstand","theme_title":"Bandstand Boogie","recording":"Les Elgart and His Orchestra","spotify_track_id":"","classification":"1954 contemporary commercial recording"},
+    {"show_title":"The Ed Sullivan Show","theme_title":"Toast of the Town Theme","recording":"Ray Bloch and His Orchestra broadcast performance","spotify_track_id":"","classification":"documented original broadcast theme performance; no commercial track verified"},
+    {"show_title":"Disneyland","theme_title":"When You Wish Upon a Star","recording":"Pinocchio soundtrack recording","spotify_track_id":"","classification":"original soundtrack recording reused for television"},
+    {"show_title":"Howdy Doody","theme_title":"It's Howdy Doody Time","recording":"Cartoon Theme Ensemble","spotify_track_id":"1uLyJWPzDJeMCSi3dH6jEb","classification":"later recognizable cover"},
+    {"show_title":"Captain Kangaroo","theme_title":"Puffin' Billy","recording":"Melodi Light Orchestra","spotify_track_id":"7BOhsPHziYhIIQmPdYS6c0","classification":"original commercial recording reissue"},
+    {"show_title":"The Roy Rogers Show","theme_title":"Happy Trails","recording":"Roy Rogers, Dale Evans and The Whippoorwills","spotify_track_id":"1FaiVQR1BUHxttxYUMAQiW","classification":"1952 original commercial recording reissue; Spotify compilation metadata is later but Apple identifies the 1952 recording"},
+    {"show_title":"Naked City","theme_title":"This Is the Naked City","recording":"Buddy Morrow and His Orchestra","spotify_track_id":"","classification":"1959 contemporary commercial recording; not confirmed broadcast master","listening_url":"https://audiomack.com/buddy-morrow/song/this-is-the-naked-city"},
+    {"show_title":"The Many Loves of Dobie Gillis","theme_title":"Dobie","recording":"Lionel Newman and His Orchestra and Jud Conlon's Rhythmaires","spotify_track_id":"","classification":"broadcast-associated television performance; release lineage unverified","listening_url":"https://www.shazam.com/song/461579563/dobie"},
+    {"show_title":"Dennis the Menace","theme_title":"Mi Televizhun Song (Dennis the Menace Theme)","recording":"Phillip Fox and the Jimmy Carroll Orchestra","spotify_track_id":"","classification":"1959 contemporary commercial cover; exact track is verified but no track-level Spotify ID was exposed","listening_url":"https://open.spotify.com/album/3chxRaUQPzpxTyyKYquiGp"}
+  ],
+  "unresolved_programs": [
+    {"show_title":"The Phil Silvers Show","reason":"Theme identity is known (John Strauss) but no defensible recording was found."},
+    {"show_title":"Lassie","reason":"The early-series theme cannot be safely substituted with the later Whistler association."},
+    {"show_title":"The Adventures of Rin Tin Tin","reason":"No program-specific recording was verified."},
+    {"show_title":"The Donna Reed Show","reason":"Music to Wash Windows By is identified, but no defensible recording was found."}
+  ],
+  "approval_gate":"All listed approvals are catalog candidates only: unranked and unapplied to the production database."
+}

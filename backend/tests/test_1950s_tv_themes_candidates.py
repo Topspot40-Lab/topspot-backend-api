@@ -97,6 +97,10 @@ def test_new_catalog_candidates_are_approved_without_database_apply_authority():
         "I Love Lucy", "Gunsmoke", "The Twilight Zone", "Zorro", "Wagon Train", "Davy Crockett",
         "Sea Hunt", "M Squad", "Bat Masterson", "The Untouchables",
         "Cheyenne", "The Life and Legend of Wyatt Earp", "Wanted: Dead or Alive", "The Red Skelton Show",
+        "The Jack Benny Program", "The Adventures of Ozzie and Harriet", "Father Knows Best", "Maverick",
+        "Leave It to Beaver", "The George Burns and Gracie Allen Show", "American Bandstand", "The Ed Sullivan Show",
+        "Disneyland", "Howdy Doody", "Captain Kangaroo", "The Roy Rogers Show", "Naked City",
+        "The Many Loves of Dobie Gillis", "Dennis the Menace",
     ):
         row = rows_by_title[title]
         assert row["gary_recording_decision"] == "approved_catalog_candidate"
