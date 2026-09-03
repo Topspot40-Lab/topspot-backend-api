@@ -16,6 +16,7 @@ def main() -> None:
     parser.add_argument("--text-records", type=Path, required=True)
     parser.add_argument("--generate", action="store_true")
     parser.add_argument("--replace-all-narration", action="store_true")
+    parser.add_argument("--resume", action="store_true", help="skip already-present canonical keys after an interrupted run")
     args = parser.parse_args()
     manifest, plan = load_json(ROOT / "1950s-tv_themes.v9.json"), load_json(ROOT / "1950s-tv-themes.production-plan.v1.json")
     validate_production_plan(manifest, plan)
@@ -26,10 +27,16 @@ def main() -> None:
     if not (args.generate and args.replace_all_narration):
         print(json.dumps({"mode":"plan-only","expected_mp3s":171,"replacement_required":True,"paid_service_calls":0}, indent=2)); return
     from backend.config.tts_config import TTS_PROFILES
-    from backend.services.supabase_storage import upload_bytes
+    from backend.services.supabase_storage import object_exists_cached, upload_bytes
     from backend.services.tts.elevenlabs_tts import generate_tts_mp3
     text_by_identity = {narration_identity(row): row["text"] for row in texts}
+    existing = set()
+    if args.resume:
+        existing = {narration_identity(record) for record in expected if object_exists_cached(record["bucket"], record["key"])}
+    generated = 0
     for record in expected:
+        if narration_identity(record) in existing:
+            continue
         kind = "intro" if record["narration_type"] == "intro" else "detail"
         profile = TTS_PROFILES[record["language"]][kind]
         with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as tmp:
@@ -37,6 +44,7 @@ def main() -> None:
         try:
             generate_tts_mp3(text=text_by_identity[narration_identity(record)], out_path=temp_path, voice_id=profile["voice_id"], settings=profile.get("settings"), language=record["language"], overwrite=True)
             upload_bytes(record["bucket"], record["key"], temp_path.read_bytes(), "audio/mpeg")
+            generated += 1
         finally:
             temp_path.unlink(missing_ok=True)
     from sqlmodel import Session
@@ -44,5 +52,5 @@ def main() -> None:
     with Session(engine) as session:
         replace_catalog_tts_mappings(session, expected)
         session.commit()
-    print("Generated and replaced all 171 scoped MP3s; run completeness validation before release.")
+    print(f"Generated {generated}; reused {len(existing)} existing scoped MP3s; run completeness validation before release.")
 if __name__ == "__main__": main()
