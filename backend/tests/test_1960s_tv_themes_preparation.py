@@ -134,3 +134,14 @@ def test_catalog_64_module_main_routes_execute_arguments_to_production_function(
     promotion.main()
     assert called == {"approved_commit": "abc", "api_base": "https://api.example"}
     assert '"ok": true' in capsys.readouterr().out
+
+
+def test_catalog_64_module_main_rejects_silent_execute_result(monkeypatch):
+    import sys
+    import pytest
+    from backend.scripts.catalogs import promote_1960s_tv_themes as promotion
+
+    monkeypatch.setattr(promotion, "execute", lambda **_: None)
+    monkeypatch.setattr(sys, "argv", ["promote_1960s_tv_themes.py", "--execute", "--approved-commit", "abc", "--api-base", "https://api.example"])
+    with pytest.raises(RuntimeError, match="no structured result"):
+        promotion.main()

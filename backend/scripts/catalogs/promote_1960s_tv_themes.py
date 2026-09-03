@@ -340,28 +340,34 @@ def apply_narration_mappings(session: Any, final_rows: dict[int, tuple[Any, Any]
 
 def execute(*, approved_commit: str, api_base: str, storage: Storage | None = None) -> dict[str, Any]:
     """The live-only path.  Compensates Storage and rolls back DB on failure."""
-    actual = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
-    if actual != approved_commit:
-        raise ValueError(f"promotion refused: HEAD {actual} is not approved commit {approved_commit}")
-    if subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
-        raise ValueError("promotion refused: working tree is not clean")
-    dry_run()  # includes the committed rollback-snapshot completeness gate
-    bundle = load_approved_bundle()
-    storage = storage or SupabaseStorage()
-    payloads = _verify_staged_objects(storage, bundle["records"])
+    phase = "release_commit_gate"
     backups: list[dict] = []
     snapshot: dict[str, Any] | None = None
     created_track_ids: set[int] = set()
     created_artist_ids: set[int] = set()
     committed = False
-    from backend.database import get_db_session
-    from backend.scripts.catalogs.tv_themes_1960s_apply import apply_catalog_64
     try:
+        actual = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+        if actual != approved_commit:
+            raise ValueError(f"promotion refused: HEAD {actual} is not approved commit {approved_commit}")
+        if subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
+            raise ValueError("promotion refused: working tree is not clean")
+        phase = "local_preflight"
+        dry_run()  # includes the committed rollback-snapshot completeness gate
+        bundle = load_approved_bundle()
+        storage = storage or SupabaseStorage()
+        phase = "staged_hash_verification"
+        payloads = _verify_staged_objects(storage, bundle["records"])
+        from backend.database import get_db_session
+        from backend.scripts.catalogs.tv_themes_1960s_apply import apply_catalog_64
         # Refuse before the first Storage write unless production is precisely
         # the reviewed sparse source state.
+        phase = "preapply_database_snapshot"
         with get_db_session() as preflight_session:
             verify_preapply_snapshot(preflight_session)
+        phase = "storage_backup_and_promotion"
         backups = _backup_and_promote(storage, bundle["records"], payloads, uuid.uuid4().hex)
+        phase = "database_apply"
         with get_db_session() as session:
             verify_preapply_snapshot(session)
             snapshot = _database_snapshot(session)
@@ -374,20 +380,27 @@ def execute(*, approved_commit: str, api_base: str, storage: Storage | None = No
             created_artist_ids = {track.artist_id for _, track in final_rows.values() if track.artist_id not in before_artists}
             session.commit()
             committed = True
+            phase = "postapply_database_verification"
             verify_database_projection(session, bundle)
+        phase = "canonical_storage_verification"
         verify_canonical_storage(storage, bundle["records"])
-    except Exception:
+    except Exception as exc:
         try:
             if committed and snapshot is not None:
                 with get_db_session() as restore_session:
                     _restore_database_snapshot(restore_session, snapshot, created_track_ids, created_artist_ids)
-            _restore_storage(storage, backups)
+            if storage is not None:
+                _restore_storage(storage, backups)
         finally:
-            raise
+            raise RuntimeError(f"catalog-64 production failed during {phase}: {type(exc).__name__}: {exc}") from exc
     # The public API is outside this transaction.  A stale response must never
     # compensate an already verified database/Storage commit; callers recheck
     # it after the platform's ordinary cache invalidation or deployment.
-    verify_live_api(api_base, bundle)
+    phase = "cache_disabled_live_api_verification"
+    try:
+        verify_live_api(api_base, bundle)
+    except Exception as exc:
+        raise RuntimeError(f"catalog-64 production failed during {phase}: {type(exc).__name__}: {exc}") from exc
     return {"catalog_id": CATALOG_ID, "promoted": 207, "rollback_backups": len(backups)}
 
 
@@ -400,6 +413,8 @@ def main() -> int:
     if args.execute and (not args.approved_commit or not args.api_base):
         parser.error("--execute requires --approved-commit and --api-base")
     report = execute(approved_commit=args.approved_commit, api_base=args.api_base) if args.execute else dry_run()
+    if args.execute and not isinstance(report, dict):
+        raise RuntimeError("catalog-64 production failed: execute returned no structured result")
     print(json.dumps(report, indent=2))
     return 0
 
