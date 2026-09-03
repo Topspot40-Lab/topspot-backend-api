@@ -12,6 +12,30 @@ LANGUAGES = ("en", "es", "pt-BR")
 NARRATION_TYPES = ("intro", "short_detail", "long_detail")
 BUCKETS = {"en": "audio-en", "es": "audio-es", "pt-BR": "audio-ptbr"}
 
+# Covers published on the approved tracks' public, unauthenticated Spotify web
+# pages. These are fixed catalog metadata, not runtime Spotify API lookups.
+ALBUM_ARTWORK_BY_SPOTIFY_TRACK_ID = {
+    "5lSfu6Bb1lZHvEA5Lp3FSo": "https://i.scdn.co/image/ab67616d0000b273151141f5d992c02322847648",
+    "2esm55sr13FFKqoP6qwjUz": "https://i.scdn.co/image/ab67616d0000b273f2b8fc493fcd8d6738efaff4",
+    "71qlBJvHesvpK3TJXGN95O": "https://i.scdn.co/image/ab67616d0000b27363221fdf21ea6e83737b93cb",
+    "301w6yavJnABE4APW72ynW": "https://i.scdn.co/image/ab67616d0000b2739db8c7a0afd569bb31a0fb7d",
+    "3Gr3f20ajbTXP25lmrg2Qb": "https://i.scdn.co/image/ab67616d0000b273d704338a0b33cb86ab8c5a0d",
+    "3PowPOuvw8BE8Dx2XkzPHF": "https://i.scdn.co/image/ab67616d0000b273c48bc2c274fd1f02bc3717ef",
+    "7up8IVBnHisqNGn2ewyuyk": "https://i.scdn.co/image/ab67616d0000b273009f72a9d461bd07ebb5eab0",
+    "5BO1NDOaXxuEN0mqMaapnC": "https://i.scdn.co/image/ab67616d0000b273d28f834e4643004bb860cf0c",
+    "1aiXLeKljeTCbX5fVPISTS": "https://i.scdn.co/image/ab67616d0000b2730f6cd9f8d9e8b7b978bdf199",
+    "1uLyJWPzDJeMCSi3dH6jEb": "https://i.scdn.co/image/ab67616d0000b273671ddfff4ddb439040375417",
+    "1FaiVQR1BUHxttxYUMAQiW": "https://i.scdn.co/image/ab67616d0000b2735dcd6b1e8b96e6e55bd4fe10",
+    "5As4kPiB9eZ5Q9EVBaYqHs": "https://i.scdn.co/image/ab67616d0000b273c3e1d62c7991ecfc000c059c",
+    "1F6N0vw7S55QK7SckEDhhY": "https://i.scdn.co/image/ab67616d0000b2731ac214238ae6f9f43a6e2265",
+    "5qc4Q3sRK0mjKdomhfMqxN": "https://i.scdn.co/image/ab67616d0000b273ac459e1fb6478fc38ab1114b",
+    "7BOhsPHziYhIIQmPdYS6c0": "https://i.scdn.co/image/ab67616d0000b27355ed9506b1a321b6a1495fba",
+    "5MFrmRlOVi1hBoZvgFNFvI": "https://i.scdn.co/image/ab67616d0000b2739cfd468cf6f6445b49a95481",
+    "1u1mZ6NgPmLohzNAVMExhh": "https://i.scdn.co/image/ab67616d0000b273364c299394362dc7fe98a477",
+    "2N4bp5eHNlL6pNogf4DpTR": "https://i.scdn.co/image/ab67616d0000b27324b851c72b54e6fbaac46af6",
+    "1kEauajzb7929zqiIVW9fQ": "https://i.scdn.co/image/ab67616d0000b273e14a925519e0a6ebf5b19a54",
+}
+
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -47,6 +71,21 @@ def canonical_key(entry: dict[str, Any], narration_type: str) -> str:
     if narration_type == "long_detail":
         return f"detail/{entry['spotify_track_id']}.mp3"
     raise ValueError(f"unsupported narration type: {narration_type}")
+
+
+def album_artwork_records(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Return the complete, catalog-scoped established album-artwork mapping."""
+    approved_ids = {entry["spotify_track_id"] for entry in entries}
+    if approved_ids != set(ALBUM_ARTWORK_BY_SPOTIFY_TRACK_ID):
+        raise ValueError("album artwork mapping must match exactly the 19 approved catalog tracks")
+    return [
+        {
+            "ranking": entry["proposed_rank"],
+            "spotify_track_id": entry["spotify_track_id"],
+            "album_artwork": ALBUM_ARTWORK_BY_SPOTIFY_TRACK_ID[entry["spotify_track_id"]],
+        }
+        for entry in entries
+    ]
 
 
 def expected_narration(plan: dict[str, Any]) -> list[dict[str, Any]]:
@@ -165,6 +204,36 @@ def apply_catalog_rankings(session: Any, entries: list[dict[str, Any]], english_
     """Commit one atomic catalog-only ranking replacement, rolling back on any failure."""
     try:
         replace_catalog_rankings(session, entries, english_intros, create_missing_tracks=create_missing_tracks)
+        session.commit()
+    except Exception:
+        session.rollback()
+        raise
+
+
+def apply_catalog_album_artwork(session: Any, records: list[dict[str, Any]]) -> None:
+    """Atomically update only the 19 unshared Track rows used by catalog 63."""
+    from sqlmodel import select
+    from backend.models.dbmodels import Track, TrackRanking
+
+    expected = {record["spotify_track_id"]: record["album_artwork"] for record in records}
+    if len(expected) != 19 or any(not url for url in expected.values()):
+        raise ValueError("album artwork apply refused: complete 19-record mapping required")
+    try:
+        rows = session.exec(
+            select(TrackRanking, Track)
+            .join(Track, Track.id == TrackRanking.track_id)
+            .where(TrackRanking.decade_genre_id == CATALOG_ID)
+        ).all()
+        mapped = {track.spotify_track_id: track for ranking, track in rows}
+        if len(mapped) != 19 or set(mapped) != set(expected):
+            raise ValueError("album artwork apply refused: catalog tracks do not exactly match the approved mapping")
+        track_ids = [track.id for track in mapped.values()]
+        shared = session.exec(select(TrackRanking).where(TrackRanking.track_id.in_(track_ids))).all()
+        if any(ranking.decade_genre_id != CATALOG_ID for ranking in shared):
+            raise ValueError("album artwork apply refused: catalog Track rows are shared by another catalog")
+        for spotify_track_id, track in mapped.items():
+            track.album_artwork = expected[spotify_track_id]
+            session.add(track)
         session.commit()
     except Exception:
         session.rollback()

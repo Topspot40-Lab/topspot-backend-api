@@ -9,6 +9,8 @@ from backend.config.tts_config import TTS_PROFILES as ESTABLISHED_TTS_PROFILES
 from backend.scripts.catalogs.tv_themes_1950s_pipeline import (
     CATALOG_ID,
     CATALOG_SLUG,
+    ALBUM_ARTWORK_BY_SPOTIFY_TRACK_ID,
+    album_artwork_records,
     build_text_bundle,
     canonical_key,
     approved_english_intros,
@@ -51,6 +53,23 @@ def test_plan_has_the_required_171_scoped_audio_records_and_canonical_keys():
     }
     assert canonical_key(plan["ranked_candidates"][0], "intro") == "intro/1950s-tv_themes_01.mp3"
     assert all(row["catalog_id"] == 63 and row["catalog_slug"] == "1950s-tv_themes" for row in expected)
+
+
+def test_album_artwork_mapping_is_complete_for_only_the_19_approved_tracks():
+    manifest, plan = _inputs()
+    entries = validate_production_plan(manifest, plan)
+    records = album_artwork_records(entries)
+    assert len(records) == 19
+    assert {record["spotify_track_id"] for record in records} == {
+        entry["spotify_track_id"] for entry in entries
+    } == set(ALBUM_ARTWORK_BY_SPOTIFY_TRACK_ID)
+    assert all(record["album_artwork"].startswith("https://i.scdn.co/image/") for record in records)
+    rank_17 = next(record for record in records if record["ranking"] == 17)
+    assert rank_17 == {
+        "ranking": 17,
+        "spotify_track_id": "1u1mZ6NgPmLohzNAVMExhh",
+        "album_artwork": "https://i.scdn.co/image/ab67616d0000b273364c299394362dc7fe98a477",
+    }
 
 
 def test_deterministic_multilingual_text_bundle_is_complete_and_has_no_ai_dependency():
