@@ -12,11 +12,13 @@ import math
 import re
 import tempfile
 import unicodedata
+from urllib.parse import quote
 from collections import Counter
 from io import BytesIO
 from pathlib import Path
 
 from mutagen.mp3 import MP3
+import requests
 
 ROOT = Path(__file__).parent / "review_manifests"
 PLAN_PATH = ROOT / "1960s-tv-themes.production-plan.v1.json"
@@ -54,6 +56,25 @@ def _duration(data: bytes) -> float:
     if not math.isfinite(duration) or duration <= 0:
         raise ValueError("nonpositive_or_undecodable_duration")
     return duration
+
+
+def _download_staged(bucket: str, key: str, *, attempts: int = 3) -> bytes:
+    """Cache-disabled public-object read with bounded timeout and retries."""
+    from backend.config import SUPABASE_URL
+    if not SUPABASE_URL:
+        raise RuntimeError("Supabase URL unavailable for staged validation")
+    url = f"{SUPABASE_URL.rstrip('/')}/storage/v1/object/public/{quote(bucket, safe='')}/{quote(key, safe='/')}"
+    last_error = None
+    for attempt in range(attempts):
+        try:
+            response = requests.get(url, params={"v": _sha(f"{key}:{attempt}".encode())[:12]}, headers={"Cache-Control": "no-cache"}, timeout=(10, 30))
+            response.raise_for_status()
+            if not response.content:
+                raise RuntimeError("empty staged object")
+            return response.content
+        except (requests.RequestException, RuntimeError) as exc:
+            last_error = exc
+    raise RuntimeError(f"staged download failed after {attempts} bounded attempts: {last_error}")
 
 
 def _load() -> tuple[dict, list[dict], dict[int, dict]]:
@@ -128,7 +149,6 @@ def generate_and_validate(manifest_path: Path, *, resume: bool = False) -> dict:
     state = preflight(resume=resume)
     plan, rows, entries, prefix = state["plan"], state["rows"], state["entries"], state["prefix"]
     from backend.config import TTS_PROFILES
-    from backend.services.supabase_client import supabase
     from backend.services.supabase_storage import _walk, upload_bytes
     from backend.services.tts.elevenlabs_tts import generate_tts_mp3
     records = []
@@ -142,7 +162,7 @@ def generate_and_validate(manifest_path: Path, *, resume: bool = False) -> dict:
         profile = TTS_PROFILES[language_key][kind]
         bucket, key = _bucket(row["language"]), _key(prefix, row, entry["spotify_track_id"])
         if key in existing:
-            data = supabase.storage.from_(bucket).download(key)
+            data = _download_staged(bucket, key)
             records.append({"rank": row["rank"], "spotify_track_id": entry["spotify_track_id"], "program": entry["program"], "artist": entry["artist"], "language": row["language"], "kind": row["kind"], "bucket": bucket, "staging_key": key, "text_sha256": row["text_sha256"], "audio_sha256": _sha(data), "size_bytes": len(data), "duration_seconds": _duration(data), "resumed_from_verified_staging": True})
             continue
         with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as tmp:
@@ -157,7 +177,11 @@ def generate_and_validate(manifest_path: Path, *, resume: bool = False) -> dict:
     model = __import__("faster_whisper", fromlist=["WhisperModel"]).WhisperModel("tiny", device="cpu", compute_type="int8")
     errors, audio_hashes = [], set()
     for record in records:
-        data = supabase.storage.from_(record["bucket"]).download(record["staging_key"])
+        try:
+            data = _download_staged(record["bucket"], record["staging_key"])
+        except Exception as exc:
+            errors.append((record["staging_key"], str(exc)))
+            continue
         record["downloaded_audio_sha256"] = _sha(data)
         try: record["downloaded_duration_seconds"] = _duration(data)
         except Exception as exc: errors.append((record["staging_key"], str(exc))); continue
