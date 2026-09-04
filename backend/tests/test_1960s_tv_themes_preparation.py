@@ -37,6 +37,18 @@ def test_apply_contract_is_exactly_preservation_first_and_catalog_64_scoped():
     assert "source_rank + 100" in source
 
 
+def test_new_additions_never_reuse_an_old_ranking_row():
+    from backend.scripts.catalogs.tv_themes_1960s_apply import (
+        _existing_ranking_for_entry,
+    )
+
+    old_ranking = object()
+    current = {1: (old_ranking, object())}
+
+    assert _existing_ranking_for_entry(current, {"source_rank": 1, "addition": True}) is None
+    assert _existing_ranking_for_entry(current, {"source_rank": 1, "addition": False})[0] is old_ranking
+
+
 def test_contiguous_intro_regeneration_contract_rejects_stale_or_reused_media():
     from backend.scripts.catalogs.validate_1960s_tv_themes_plan import validate
     report = validate()

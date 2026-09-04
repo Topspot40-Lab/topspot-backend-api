@@ -29,6 +29,12 @@ def load_entries() -> list[dict]:
     return entries
 
 
+def _existing_ranking_for_entry(current_by_rank: dict, entry: dict):
+    if entry.get("addition"):
+        return None
+    return current_by_rank.get(entry["source_rank"])
+
+
 def apply_catalog_64(
     session: Any, entries: list[dict] | None = None, *, commit: bool = True
 ) -> dict[int, tuple[Any, Any]]:
@@ -90,7 +96,7 @@ def apply_catalog_64(
         session.flush()
         for rank in FINAL_RANKS:
             entry = by_rank[rank]
-            existing = current_by_rank.get(entry["source_rank"])
+            existing = _existing_ranking_for_entry(current_by_rank, entry)
             if existing is None:
                 session.add(TrackRanking(track_id=desired_tracks[rank].id, decade_genre_id=CATALOG_ID, ranking=rank))
             else:
