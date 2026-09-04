@@ -35,6 +35,7 @@ def test_apply_contract_is_exactly_preservation_first_and_catalog_64_scoped():
     assert "session.delete(artist)" not in source
     assert "session.rollback()" in source and "session.commit()" in source
     assert "source_rank + 100" in source
+    assert 'intro=""' in source
 
 
 def test_new_additions_never_reuse_an_old_ranking_row():

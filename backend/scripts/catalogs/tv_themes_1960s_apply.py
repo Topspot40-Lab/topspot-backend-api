@@ -98,7 +98,14 @@ def apply_catalog_64(
             entry = by_rank[rank]
             existing = _existing_ranking_for_entry(current_by_rank, entry)
             if existing is None:
-                session.add(TrackRanking(track_id=desired_tracks[rank].id, decade_genre_id=CATALOG_ID, ranking=rank))
+                session.add(
+                    TrackRanking(
+                        track_id=desired_tracks[rank].id,
+                        decade_genre_id=CATALOG_ID,
+                        ranking=rank,
+                        intro="",
+                    )
+                )
             else:
                 existing[0].ranking = rank
                 if entry["source_rank"] in REPLACED_SOURCE_RANKS:
