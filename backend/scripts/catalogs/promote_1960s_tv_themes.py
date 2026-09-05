@@ -206,7 +206,14 @@ def verify_database_projection(session: Any, bundle: dict[str, Any]) -> None:
     from sqlmodel import select
     from backend.models.dbmodels import Artist, Track, TrackLocale, TrackRanking, TrackRankingLocale
     expected = {entry["proposed_rank"]: entry for entry in bundle["entries"]}
-    rows = session.exec(select(TrackRanking, Track, Artist).join(Track).join(Artist).where(TrackRanking.decade_genre_id == CATALOG_ID).order_by(TrackRanking.ranking)).all()
+    rows = session.exec(
+        select(TrackRanking, Track, Artist)
+        .select_from(TrackRanking)
+        .join(Track, Track.id == TrackRanking.track_id)
+        .join(Artist, Artist.id == Track.artist_id)
+        .where(TrackRanking.decade_genre_id == CATALOG_ID)
+        .order_by(TrackRanking.ranking)
+    ).all()
     if len(rows) != 38 or tuple(ranking.ranking for ranking, _, _ in rows) != FINAL_RANKS:
         raise ValueError("production database refused: catalog-64 is not exactly ranks 1..38")
     by_rank = {ranking.ranking: (ranking, track, artist) for ranking, track, artist in rows}

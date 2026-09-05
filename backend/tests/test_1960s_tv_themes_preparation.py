@@ -127,6 +127,9 @@ def test_catalog_64_direct_database_and_canonical_hash_gates_precede_public_api_
     execute = source[source.index("def execute("):]
     assert execute.index("verify_database_projection(session, bundle)") < execute.index("verify_live_api(api_base, bundle)")
     assert execute.index("verify_canonical_storage(storage, bundle[\"records\"])") < execute.index("verify_live_api(api_base, bundle)")
+    assert ".select_from(TrackRanking)" in source
+    assert ".join(Track, Track.id == TrackRanking.track_id)" in source
+    assert ".join(Artist, Artist.id == Track.artist_id)" in source
 
 
 def test_catalog_64_preapply_gate_requires_sparse_committed_snapshot_before_storage_write():
