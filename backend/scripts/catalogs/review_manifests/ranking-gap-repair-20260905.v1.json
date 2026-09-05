@@ -1,0 +1,167 @@
+{
+  "schema_version": "ranking-gap-repair/v1",
+  "approved_on": "2026-09-04",
+  "status": "approved_by_gary",
+  "policy": {
+    "method": "minimal_move",
+    "tracks_deleted": 0,
+    "tracks_replaced": 0,
+    "rank_specific_intros_must_be_regenerated": true,
+    "languages": [
+      "en",
+      "es",
+      "pt-BR"
+    ]
+  },
+  "excluded_catalogs": [
+    {
+      "catalog_id": 22,
+      "label": "2020s pop",
+      "reason": "Gary may completely rebuild this older catalog."
+    }
+  ],
+  "catalogs": [
+    {
+      "catalog_id": 33,
+      "label": "1950s Latin Global",
+      "moves": [
+        {
+          "source_rank": 44,
+          "target_rank": 8,
+          "track_ranking_id": 1401,
+          "track_id": 1222,
+          "spotify_track_id": "3Qtblo28eUWyombW4aBd80",
+          "track_name": "aquellos ojos verdes",
+          "artist_id": 717,
+          "artist_name": "adolfo utrera"
+        },
+        {
+          "source_rank": 45,
+          "target_rank": 31,
+          "track_ranking_id": 1366,
+          "track_id": 1187,
+          "spotify_track_id": "2ZJD1J8ocgDcHfaI6TKTdw",
+          "track_name": "frenesi",
+          "artist_id": 674,
+          "artist_name": "alberto dominguez"
+        }
+      ]
+    },
+    {
+      "catalog_id": 7,
+      "label": "1960s country",
+      "moves": [
+        {
+          "source_rank": 45,
+          "target_rank": 39,
+          "track_ranking_id": 222,
+          "track_id": 218,
+          "spotify_track_id": "5kDQ02FBkj0Hx7YUGPcuhO",
+          "track_name": "swinging doors",
+          "artist_id": 155,
+          "artist_name": "merle haggard"
+        }
+      ]
+    },
+    {
+      "catalog_id": 10,
+      "label": "1960s rock",
+      "moves": [
+        {
+          "source_rank": 45,
+          "target_rank": 14,
+          "track_ranking_id": 2540,
+          "track_id": 1984,
+          "spotify_track_id": "1oXq63OUf43LDnNPVtfvX8",
+          "track_name": "im a man",
+          "artist_id": 192,
+          "artist_name": "the spencer davis group"
+        }
+      ]
+    },
+    {
+      "catalog_id": 44,
+      "label": "1980s Blues Jazz",
+      "moves": [
+        {
+          "source_rank": 44,
+          "target_rank": 16,
+          "track_ranking_id": 1893,
+          "track_id": 1622,
+          "spotify_track_id": "0DnGfA1r8pAssJCuq4ojla",
+          "track_name": "still got the blues for you",
+          "artist_id": 954,
+          "artist_name": "gary moore"
+        },
+        {
+          "source_rank": 45,
+          "target_rank": 18,
+          "track_ranking_id": 1894,
+          "track_id": 1623,
+          "spotify_track_id": "7LpcB50dBOGO3Ph6zlJyyH",
+          "track_name": "oh pretty woman",
+          "artist_id": 954,
+          "artist_name": "gary moore"
+        }
+      ]
+    },
+    {
+      "catalog_id": 15,
+      "label": "1990s country",
+      "moves": [
+        {
+          "source_rank": 44,
+          "target_rank": 38,
+          "track_ranking_id": 614,
+          "track_id": 533,
+          "spotify_track_id": "7GswRwV5zQcMsys9niOQ87",
+          "track_name": "i feel lucky",
+          "artist_id": 329,
+          "artist_name": "Mary Chapin Carpenter"
+        }
+      ]
+    },
+    {
+      "catalog_id": 47,
+      "label": "2010s Blues Jazz",
+      "moves": [
+        {
+          "source_rank": 44,
+          "target_rank": 6,
+          "track_ranking_id": 2026,
+          "track_id": 1723,
+          "spotify_track_id": "1ncSAZD0bzvU3cu0uPLbWd",
+          "track_name": "midnight in harlem",
+          "artist_id": 995,
+          "artist_name": "Tedeschi Trucks Band"
+        },
+        {
+          "source_rank": 45,
+          "target_rank": 7,
+          "track_ranking_id": 2027,
+          "track_id": 1724,
+          "spotify_track_id": "6P6PwoZNACtrkTsIZV8XS8",
+          "track_name": "bound for glory",
+          "artist_id": 995,
+          "artist_name": "Tedeschi Trucks Band"
+        }
+      ]
+    },
+    {
+      "catalog_id": 21,
+      "label": "2020s country",
+      "moves": [
+        {
+          "source_rank": 45,
+          "target_rank": 44,
+          "track_ranking_id": 878,
+          "track_id": 759,
+          "spotify_track_id": "4oR2cCQGs0Yt0Mgr2diV6V",
+          "track_name": "country again",
+          "artist_id": 386,
+          "artist_name": "thomas rhett"
+        }
+      ]
+    }
+  ]
+}
