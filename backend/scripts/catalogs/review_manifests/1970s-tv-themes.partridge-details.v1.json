@@ -1,0 +1,48 @@
+{
+  "schema_version": "1970s-partridge-details/v1",
+  "status": "approved",
+  "records": [
+    {
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "show_title": "The Partridge Family",
+      "language": "en",
+      "kind": "short_detail",
+      "text": "The Partridge Family followed widowed mother Shirley Partridge and her five musical children as they toured in a colorful bus. Shirley Jones and David Cassidy led the cast of the ABC comedy."
+    },
+    {
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "show_title": "The Partridge Family",
+      "language": "en",
+      "kind": "long_detail",
+      "text": "The Partridge Family premiered on ABC in 1970 and followed widowed mother Shirley Partridge as she formed a pop group with her five children. Shirley Jones played the family matriarch, while David Cassidy became a teen idol as eldest son Keith. Traveling to performances in their brightly painted bus, the family balanced show-business adventures with life at home. The series ran for four seasons, and its combination of comedy, family stories, and catchy pop music made it a defining television favorite of the early nineteen-seventies."
+    },
+    {
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "show_title": "The Partridge Family",
+      "language": "es",
+      "kind": "short_detail",
+      "text": "The Partridge Family seguía a la madre viuda Shirley Partridge y sus cinco hijos músicos mientras viajaban de gira en un autobús colorido. Shirley Jones y David Cassidy encabezaban el elenco de esta comedia de ABC."
+    },
+    {
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "show_title": "The Partridge Family",
+      "language": "es",
+      "kind": "long_detail",
+      "text": "The Partridge Family se estrenó en ABC en 1970 y seguía a la madre viuda Shirley Partridge mientras formaba un grupo pop con sus cinco hijos. Shirley Jones interpretaba a la matriarca de la familia, mientras David Cassidy se convirtió en un ídolo juvenil como el hijo mayor, Keith. Viajando a sus presentaciones en un autobús pintado con colores brillantes, la familia combinaba las aventuras del espectáculo con la vida en casa. La serie duró cuatro temporadas, y su mezcla de comedia, historias familiares y música pop pegajosa la convirtió en una favorita de la televisión de principios de los años setenta."
+    },
+    {
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "show_title": "The Partridge Family",
+      "language": "pt-BR",
+      "kind": "short_detail",
+      "text": "The Partridge Family acompanhava a mãe viúva Shirley Partridge e seus cinco filhos músicos enquanto viajavam em turnê num ônibus colorido. Shirley Jones e David Cassidy lideravam o elenco da comédia da ABC."
+    },
+    {
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "show_title": "The Partridge Family",
+      "language": "pt-BR",
+      "kind": "long_detail",
+      "text": "The Partridge Family estreou na ABC em 1970 e acompanhava a mãe viúva Shirley Partridge enquanto ela formava um grupo pop com seus cinco filhos. Shirley Jones interpretava a matriarca da família, enquanto David Cassidy se tornou um ídolo adolescente como o filho mais velho, Keith. Viajando para as apresentações num ônibus pintado com cores vivas, a família equilibrava as aventuras do show business com a vida em casa. A série durou quatro temporadas, e sua combinação de comédia, histórias familiares e músicas pop cativantes fez dela uma favorita da televisão do início dos anos setenta."
+    }
+  ]
+}
