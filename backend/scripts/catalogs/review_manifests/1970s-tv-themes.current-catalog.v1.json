@@ -554,7 +554,7 @@
   "approved_program_ranking": {
     "status": "approved_by_gary",
     "approved_on": "2026-09-05",
-    "target_count": 45,
+    "target_count": 44,
     "removed_from_current_catalog": [
       {
         "current_rank": 30,
@@ -563,8 +563,7 @@
       }
     ],
     "new_programs": [
-      "The Partridge Family",
-      "Emergency!"
+      "The Partridge Family"
     ],
     "entries": [
       {
@@ -920,21 +919,15 @@
         "show_title": "The Partridge Family",
         "source": "new_candidate",
         "current_rank": null,
-        "spotify_track_id": null,
-        "spotify_public_url": null,
-        "recording_decision": "research_required"
+        "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+        "spotify_public_url": "https://open.spotify.com/track/3fiWru4ins2Mso83shTZTz",
+        "recording_decision": "approved_recognizable_theme",
+        "current_track_name": "Come On Get Happy - The Partridge Family Theme",
+        "current_artist_display_name": "David Cassidy",
+        "recording_reason": "Gary approved retaining recognizable theme recordings; this recording is explicitly identified as The Partridge Family theme."
       },
       {
         "proposed_rank": 31,
-        "show_title": "Emergency!",
-        "source": "new_candidate",
-        "current_rank": null,
-        "spotify_track_id": null,
-        "spotify_public_url": null,
-        "recording_decision": "research_required"
-      },
-      {
-        "proposed_rank": 32,
         "show_title": "The Six Million Dollar Man",
         "source": "current_catalog",
         "current_rank": 23,
@@ -946,7 +939,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 33,
+        "proposed_rank": 32,
         "show_title": "The Bionic Woman",
         "source": "current_catalog",
         "current_rank": 24,
@@ -958,7 +951,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 34,
+        "proposed_rank": 33,
         "show_title": "Fantasy Island",
         "source": "current_catalog",
         "current_rank": 29,
@@ -970,7 +963,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 35,
+        "proposed_rank": 34,
         "show_title": "Baretta",
         "source": "current_catalog",
         "current_rank": 18,
@@ -982,7 +975,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 36,
+        "proposed_rank": 35,
         "show_title": "CHiPs",
         "source": "current_catalog",
         "current_rank": 17,
@@ -994,7 +987,7 @@
         "recording_reason": "Spotify recording is Goodbye Mr. Chips, not CHiPs."
       },
       {
-        "proposed_rank": 37,
+        "proposed_rank": 36,
         "show_title": "The Waltons",
         "source": "current_catalog",
         "current_rank": 35,
@@ -1006,7 +999,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 38,
+        "proposed_rank": 37,
         "show_title": "Rhoda",
         "source": "current_catalog",
         "current_rank": 37,
@@ -1018,7 +1011,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 39,
+        "proposed_rank": 38,
         "show_title": "Soap",
         "source": "current_catalog",
         "current_rank": 31,
@@ -1030,7 +1023,7 @@
         "recording_reason": "Spotify recording is Goodbye by Soap&Skin from Dark, not Soap."
       },
       {
-        "proposed_rank": 40,
+        "proposed_rank": 39,
         "show_title": "The Incredible Hulk",
         "source": "current_catalog",
         "current_rank": 43,
@@ -1042,7 +1035,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 41,
+        "proposed_rank": 40,
         "show_title": "Eight Is Enough",
         "source": "current_catalog",
         "current_rank": 42,
@@ -1054,7 +1047,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 42,
+        "proposed_rank": 41,
         "show_title": "The White Shadow",
         "source": "current_catalog",
         "current_rank": 40,
@@ -1066,7 +1059,7 @@
         "recording_reason": "Confirm recording identity, historical association, and suitability."
       },
       {
-        "proposed_rank": 43,
+        "proposed_rank": 42,
         "show_title": "The Rookies",
         "source": "current_catalog",
         "current_rank": 38,
@@ -1078,7 +1071,7 @@
         "recording_reason": "Spotify recording is The Rookie, not The Rookies."
       },
       {
-        "proposed_rank": 44,
+        "proposed_rank": 43,
         "show_title": "Quincy, M.E.",
         "source": "current_catalog",
         "current_rank": 33,
@@ -1090,7 +1083,7 @@
         "recording_reason": "Spotify recording is quincy's craft, not Quincy, M.E."
       },
       {
-        "proposed_rank": 45,
+        "proposed_rank": 44,
         "show_title": "What's Happening!!",
         "source": "current_catalog",
         "current_rank": 41,
@@ -1100,6 +1093,12 @@
         "current_artist_display_name": "SEGA SOUND TEAM",
         "recording_decision": "reject_wrong_recording",
         "recording_reason": "Spotify recording is from Galavant, not What's Happening!!."
+      }
+    ],
+    "deferred_programs": [
+      {
+        "show_title": "Emergency!",
+        "reason": "Deferred until a defensible Spotify recording can be identified and reviewed."
       }
     ]
   }
