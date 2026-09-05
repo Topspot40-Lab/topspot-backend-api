@@ -1,0 +1,931 @@
+{
+  "schema_version": "1970s-tv-themes-intros/v2",
+  "catalog_id": 65,
+  "status": "approved_text",
+  "records": [
+    {
+      "rank": 1,
+      "show_title": "M*A*S*H",
+      "spotify_track_id": "77o4v50d0ASXOzY1quGK1p",
+      "language": "en",
+      "text": "#1 Surgeons at a mobile army hospital in Korea mixed medicine with mischief as they coped with the horrors of war. Alan Alda starred as the unforgettable Hawkeye Pierce."
+    },
+    {
+      "rank": 1,
+      "show_title": "M*A*S*H",
+      "spotify_track_id": "77o4v50d0ASXOzY1quGK1p",
+      "language": "es",
+      "text": "¡Número uno! Cirujanos de un hospital militar móvil en Corea mezclaban la medicina con la picardía mientras enfrentaban los horrores de la guerra. Alan Alda protagonizaba como el inolvidable Hawkeye Pierce."
+    },
+    {
+      "rank": 1,
+      "show_title": "M*A*S*H",
+      "spotify_track_id": "77o4v50d0ASXOzY1quGK1p",
+      "language": "pt-BR",
+      "text": "Número um! Cirurgiões de um hospital militar móvel na Coreia misturavam remédios com muita bagunça enquanto enfrentavam os horrores da guerra. Alan Alda estrelava como o inesquecível Hawkeye Pierce."
+    },
+    {
+      "rank": 2,
+      "show_title": "Happy Days",
+      "spotify_track_id": "1VJcd6jsDWGY8rNZtaouoc",
+      "language": "en",
+      "text": "#2 The Cunningham family brought nineteen-fifties Milwaukee into American living rooms, while Henry Winkler became a star as Arthur Fonzarelli, better known as Fonzie."
+    },
+    {
+      "rank": 2,
+      "show_title": "Happy Days",
+      "spotify_track_id": "1VJcd6jsDWGY8rNZtaouoc",
+      "language": "es",
+      "text": "¡Número dos! La familia Cunningham llevó el Milwaukee de los años cincuenta a las salas de estar de Estados Unidos, mientras Henry Winkler se volvió una estrella como Arthur Fonzarelli, mejor conocido como Fonzie."
+    },
+    {
+      "rank": 2,
+      "show_title": "Happy Days",
+      "spotify_track_id": "1VJcd6jsDWGY8rNZtaouoc",
+      "language": "pt-BR",
+      "text": "Número dois! A família Cunningham trouxe o Milwaukee dos anos 50 para as salas de estar americanas, enquanto Henry Winkler se tornou uma estrela como Arthur Fonzarelli, mais conhecido como Fonzie."
+    },
+    {
+      "rank": 3,
+      "show_title": "All in the Family",
+      "spotify_track_id": "4wt2HWOhegHIqwE2ulfVWk",
+      "language": "en",
+      "text": "#3 Archie Bunker held court in his Queens living room where his blunt opinions about everything under the sun created both conflict and comedy for his family."
+    },
+    {
+      "rank": 3,
+      "show_title": "All in the Family",
+      "spotify_track_id": "4wt2HWOhegHIqwE2ulfVWk",
+      "language": "es",
+      "text": "¡Número tres! Archie Bunker reinaba en su sala de Queens, donde sus opiniones directas sobre todo lo imaginable generaban tanto pleitos como risas en su familia."
+    },
+    {
+      "rank": 3,
+      "show_title": "All in the Family",
+      "spotify_track_id": "4wt2HWOhegHIqwE2ulfVWk",
+      "language": "pt-BR",
+      "text": "Número três! Archie Bunker reinava na sala de estar da sua casa no Queens, onde suas opiniões diretas sobre tudo criavam tanto conflito quanto comédia para a família."
+    },
+    {
+      "rank": 4,
+      "show_title": "The Jeffersons",
+      "spotify_track_id": "4IYxFsrwFngUrqTF8oTxDO",
+      "language": "en",
+      "text": "#4 George Jefferson’s dry-cleaning success moved him and Louise from Queens to Manhattan, where family, neighbors, and business ambitions fueled this All in the Family spinoff."
+    },
+    {
+      "rank": 4,
+      "show_title": "The Jeffersons",
+      "spotify_track_id": "4IYxFsrwFngUrqTF8oTxDO",
+      "language": "es",
+      "text": "¡Número cuatro! El éxito de la tintorería de George Jefferson llevó a George y Louise de Queens a Manhattan, donde la familia, los vecinos y las ambiciones empresariales impulsaron este spin-off de All in the Family."
+    },
+    {
+      "rank": 4,
+      "show_title": "The Jeffersons",
+      "spotify_track_id": "4IYxFsrwFngUrqTF8oTxDO",
+      "language": "pt-BR",
+      "text": "Número quatro! O sucesso da lavanderia de George Jefferson levou George e Louise de Queens para Manhattan, onde a família, os vizinhos e as ambições nos negócios movimentaram este spin-off de All in the Family."
+    },
+    {
+      "rank": 5,
+      "show_title": "The Mary Tyler Moore Show",
+      "spotify_track_id": "1ox0uUBoxCyCScaEQcmysB",
+      "language": "en",
+      "text": "#5 Mary Richards built a career at a Minneapolis television station while forming lasting friendships with her colleagues in this smart and funny workplace comedy."
+    },
+    {
+      "rank": 5,
+      "show_title": "The Mary Tyler Moore Show",
+      "spotify_track_id": "1ox0uUBoxCyCScaEQcmysB",
+      "language": "es",
+      "text": "¡Número cinco! Mary Richards se forjó una carrera en una estación de televisión de Minneapolis mientras formaba amistades duraderas con sus compañeros en esta comedia inteligente y divertida de oficina."
+    },
+    {
+      "rank": 5,
+      "show_title": "The Mary Tyler Moore Show",
+      "spotify_track_id": "1ox0uUBoxCyCScaEQcmysB",
+      "language": "pt-BR",
+      "text": "Número cinco! Mary Richards construía sua carreira numa emissora de TV de Minneapolis enquanto formava amizades duradouras com os colegas nessa comédia inteligente e divertida de escritório."
+    },
+    {
+      "rank": 6,
+      "show_title": "Sanford and Son",
+      "spotify_track_id": "5FP8WdyCiupHXgOPbYsaok",
+      "language": "en",
+      "text": "#6 Junk dealer Fred Sanford and his son Lamont ran their Watts business with constant bickering and schemes that rarely went according to plan."
+    },
+    {
+      "rank": 6,
+      "show_title": "Sanford and Son",
+      "spotify_track_id": "5FP8WdyCiupHXgOPbYsaok",
+      "language": "es",
+      "text": "¡Número seis! El chatarrero Fred Sanford y su hijo Lamont llevaban su negocio en Watts entre constantes discusiones y planes que casi nunca salían como esperaban."
+    },
+    {
+      "rank": 6,
+      "show_title": "Sanford and Son",
+      "spotify_track_id": "5FP8WdyCiupHXgOPbYsaok",
+      "language": "pt-BR",
+      "text": "Número seis! O vendedor de sucata Fred Sanford e seu filho Lamont tocavam o negócio em Watts entre brigas constantes e planos que quase nunca davam certo."
+    },
+    {
+      "rank": 7,
+      "show_title": "The Rockford Files",
+      "spotify_track_id": "1JaKRac5NLK28vEvtWHgVZ",
+      "language": "en",
+      "text": "#7 Private investigator Jim Rockford lived in a trailer at the beach and took on cases that the police had given up on."
+    },
+    {
+      "rank": 7,
+      "show_title": "The Rockford Files",
+      "spotify_track_id": "1JaKRac5NLK28vEvtWHgVZ",
+      "language": "es",
+      "text": "¡Número siete! El investigador privado Jim Rockford vivía en un tráiler frente a la playa y aceptaba casos que la policía ya había dado por perdidos."
+    },
+    {
+      "rank": 7,
+      "show_title": "The Rockford Files",
+      "spotify_track_id": "1JaKRac5NLK28vEvtWHgVZ",
+      "language": "pt-BR",
+      "text": "Número sete! O investigador particular Jim Rockford morava num trailer à beira-mar e assumia casos que a polícia já tinha desistido."
+    },
+    {
+      "rank": 8,
+      "show_title": "Welcome Back, Kotter",
+      "spotify_track_id": "6t4huQeBNMRVWCWIjmtHOL",
+      "language": "en",
+      "text": "#8 Gabe Kotter returned to his old Brooklyn high school to teach a rowdy group of students known as the Sweathogs."
+    },
+    {
+      "rank": 8,
+      "show_title": "Welcome Back, Kotter",
+      "spotify_track_id": "6t4huQeBNMRVWCWIjmtHOL",
+      "language": "es",
+      "text": "¡Número ocho! Gabe Kotter regresó a su antigua preparatoria en Brooklyn para dar clases a un grupo de alumnos revoltosos conocidos como los Sweathogs."
+    },
+    {
+      "rank": 8,
+      "show_title": "Welcome Back, Kotter",
+      "spotify_track_id": "6t4huQeBNMRVWCWIjmtHOL",
+      "language": "pt-BR",
+      "text": "Número oito! Gabe Kotter voltou para sua antiga escola no Brooklyn para dar aula a um grupo bagunceiro de alunos conhecidos como os Sweathogs."
+    },
+    {
+      "rank": 9,
+      "show_title": "Laverne & Shirley",
+      "spotify_track_id": "2wKtsk6eXoTwa5SxqPZRcr",
+      "language": "en",
+      "text": "#9 Laverne and Shirley worked at a brewery in Milwaukee and shared a basement apartment where they pursued their dreams and romances."
+    },
+    {
+      "rank": 9,
+      "show_title": "Laverne & Shirley",
+      "spotify_track_id": "2wKtsk6eXoTwa5SxqPZRcr",
+      "language": "es",
+      "text": "¡Número nueve! Laverne y Shirley trabajaban en una cervecería de Milwaukee y compartían un apartamento en el sótano donde perseguían sus sueños y el amor."
+    },
+    {
+      "rank": 9,
+      "show_title": "Laverne & Shirley",
+      "spotify_track_id": "2wKtsk6eXoTwa5SxqPZRcr",
+      "language": "pt-BR",
+      "text": "Número nove! Laverne e Shirley trabalhavam numa cervejaria em Milwaukee e dividiam um apartamento no porão, onde corriam atrás de sonhos e romances."
+    },
+    {
+      "rank": 10,
+      "show_title": "Good Times",
+      "spotify_track_id": "3ukmRrbISNbvSMl52hw0nL",
+      "language": "en",
+      "text": "#10 The Evans family struggled to make ends meet in a Chicago housing project while maintaining their dignity and sense of humor."
+    },
+    {
+      "rank": 10,
+      "show_title": "Good Times",
+      "spotify_track_id": "3ukmRrbISNbvSMl52hw0nL",
+      "language": "es",
+      "text": "¡Número diez! La familia Evans batallaba para llegar a fin de mes en un complejo habitacional de Chicago, pero siempre mantenían su dignidad y su buen humor."
+    },
+    {
+      "rank": 10,
+      "show_title": "Good Times",
+      "spotify_track_id": "3ukmRrbISNbvSMl52hw0nL",
+      "language": "pt-BR",
+      "text": "Número dez! A família Evans se esforçava para pagar as contas num conjunto habitacional de Chicago, sempre mantendo a dignidade e o bom humor."
+    },
+    {
+      "rank": 11,
+      "show_title": "Taxi",
+      "spotify_track_id": "7cniNCyIJM96CiECzRVBlm",
+      "language": "en",
+      "text": "#11 New York City cab drivers dreamed of better futures while working out of the rundown Sunshine Cab Company under a tyrannical dispatcher."
+    },
+    {
+      "rank": 11,
+      "show_title": "Taxi",
+      "spotify_track_id": "7cniNCyIJM96CiECzRVBlm",
+      "language": "es",
+      "text": "¡Número once! Taxistas de Nueva York soñaban con un futuro mejor mientras trabajaban en la destartalada Sunshine Cab Company bajo un despachador tirano."
+    },
+    {
+      "rank": 11,
+      "show_title": "Taxi",
+      "spotify_track_id": "7cniNCyIJM96CiECzRVBlm",
+      "language": "pt-BR",
+      "text": "Número onze! Motoristas de táxi de Nova York sonhavam com dias melhores enquanto trabalhavam na decadente Sunshine Cab Company, sob um despachante tirano."
+    },
+    {
+      "rank": 12,
+      "show_title": "The Dukes of Hazzard",
+      "spotify_track_id": "7xRind9RPsvGHWR0qbGmfE",
+      "language": "en",
+      "text": "#12 Cousins Bo and Luke Duke roared through Hazzard County in their orange Dodge Charger always staying one step ahead of the law."
+    },
+    {
+      "rank": 12,
+      "show_title": "The Dukes of Hazzard",
+      "spotify_track_id": "7xRind9RPsvGHWR0qbGmfE",
+      "language": "es",
+      "text": "¡Número doce! Los primos Bo y Luke Duke recorrían el condado de Hazzard en su Dodge Charger naranja, siempre un paso adelante de la ley."
+    },
+    {
+      "rank": 12,
+      "show_title": "The Dukes of Hazzard",
+      "spotify_track_id": "7xRind9RPsvGHWR0qbGmfE",
+      "language": "pt-BR",
+      "text": "Número doze! Os primos Bo e Luke Duke voavam pelas estradas do condado de Hazzard no seu Dodge Charger laranja, sempre um passo à frente da lei."
+    },
+    {
+      "rank": 13,
+      "show_title": "S.W.A.T.",
+      "spotify_track_id": "4vQUv9f7Fu18CoEOh4fHaT",
+      "language": "en",
+      "text": "#13 A highly trained Los Angeles police unit responded to the city's most dangerous emergencies with military-style precision and tactics."
+    },
+    {
+      "rank": 13,
+      "show_title": "S.W.A.T.",
+      "spotify_track_id": "4vQUv9f7Fu18CoEOh4fHaT",
+      "language": "es",
+      "text": "¡Número trece! Una unidad altamente entrenada de la policía de Los Ángeles respondía a las emergencias más peligrosas de la ciudad con precisión y tácticas militares."
+    },
+    {
+      "rank": 13,
+      "show_title": "S.W.A.T.",
+      "spotify_track_id": "4vQUv9f7Fu18CoEOh4fHaT",
+      "language": "pt-BR",
+      "text": "Número treze! Uma unidade de elite da polícia de Los Angeles atendia as emergências mais perigosas da cidade com precisão e táticas militares."
+    },
+    {
+      "rank": 14,
+      "show_title": "Wonder Woman",
+      "spotify_track_id": "6js9cjrZhVFcpCmjRAlP0J",
+      "language": "en",
+      "text": "#14 Amazon princess Diana lived among mortals as Diana Prince, using superhuman strength, bullet-deflecting bracelets, and her magic lasso to defend justice."
+    },
+    {
+      "rank": 14,
+      "show_title": "Wonder Woman",
+      "spotify_track_id": "6js9cjrZhVFcpCmjRAlP0J",
+      "language": "es",
+      "text": "¡Número catorce! La princesa amazona Diana vivía entre los mortales como Diana Prince, usando su fuerza sobrehumana, brazaletes que desviaban balas y su lazo mágico para defender la justicia."
+    },
+    {
+      "rank": 14,
+      "show_title": "Wonder Woman",
+      "spotify_track_id": "6js9cjrZhVFcpCmjRAlP0J",
+      "language": "pt-BR",
+      "text": "Número catorze! A princesa amazona Diana vivia entre os mortais como Diana Prince, usando sua força sobre-humana, braceletes que desviavam balas e seu laço mágico para defender a justiça."
+    },
+    {
+      "rank": 15,
+      "show_title": "The Love Boat",
+      "spotify_track_id": "2meiPQRfkgNhDcj6THp37y",
+      "language": "en",
+      "text": "#15 Singles and couples sailed the Pacific Princess looking for romance as the ship's crew helped their dreams come true."
+    },
+    {
+      "rank": 15,
+      "show_title": "The Love Boat",
+      "spotify_track_id": "2meiPQRfkgNhDcj6THp37y",
+      "language": "es",
+      "text": "¡Número quince! Solteros y parejas navegaban en el Pacific Princess buscando romance, mientras la tripulación del barco ayudaba a que sus sueños se hicieran realidad."
+    },
+    {
+      "rank": 15,
+      "show_title": "The Love Boat",
+      "spotify_track_id": "2meiPQRfkgNhDcj6THp37y",
+      "language": "pt-BR",
+      "text": "Número quinze! Solteiros e casais navegavam no Pacific Princess em busca de romance, enquanto a tripulação do navio ajudava a realizar seus sonhos."
+    },
+    {
+      "rank": 16,
+      "show_title": "Dallas",
+      "spotify_track_id": "6Mza5aIdNXMywbbzcptFNb",
+      "language": "en",
+      "text": "#16 The powerful Ewing family of Texas fought over oil money and power with J.R. leading the charge as chief schemer."
+    },
+    {
+      "rank": 16,
+      "show_title": "Dallas",
+      "spotify_track_id": "6Mza5aIdNXMywbbzcptFNb",
+      "language": "es",
+      "text": "¡Número dieciséis! La poderosa familia Ewing de Texas peleaba por el dinero del petróleo y el control, con J.R. a la cabeza como el principal intrigante."
+    },
+    {
+      "rank": 16,
+      "show_title": "Dallas",
+      "spotify_track_id": "6Mza5aIdNXMywbbzcptFNb",
+      "language": "pt-BR",
+      "text": "Número dezesseis! A poderosa família Ewing do Texas brigava por dinheiro do petróleo e poder, com J.R. liderando como o maior articulador de esquemas."
+    },
+    {
+      "rank": 17,
+      "show_title": "Charlie's Angels",
+      "spotify_track_id": "09zrIoLQUv9PZRaP4jBC7T",
+      "language": "en",
+      "text": "#17 Three skilled private detectives worked for the unseen Charlie Townsend, solving dangerous cases with intelligence, courage, and plenty of style."
+    },
+    {
+      "rank": 17,
+      "show_title": "Charlie's Angels",
+      "spotify_track_id": "09zrIoLQUv9PZRaP4jBC7T",
+      "language": "es",
+      "text": "¡Número diecisiete! Tres hábiles detectives privadas trabajaban para Charlie Townsend, quien nunca aparecía en pantalla, resolviendo casos peligrosos con inteligencia, valor y estilo."
+    },
+    {
+      "rank": 17,
+      "show_title": "Charlie's Angels",
+      "spotify_track_id": "09zrIoLQUv9PZRaP4jBC7T",
+      "language": "pt-BR",
+      "text": "Número dezessete! Três detetives particulares habilidosas trabalhavam para Charlie Townsend, que nunca aparecia na tela, resolvendo casos perigosos com inteligência, coragem e estilo."
+    },
+    {
+      "rank": 18,
+      "show_title": "Barney Miller",
+      "spotify_track_id": "7knlXA2UExr9iboDUIgvkZ",
+      "language": "en",
+      "text": "#18 The detectives of New York's Twelfth Precinct spent more time handling oddball citizens than actual police work under Captain Barney Miller."
+    },
+    {
+      "rank": 18,
+      "show_title": "Barney Miller",
+      "spotify_track_id": "7knlXA2UExr9iboDUIgvkZ",
+      "language": "es",
+      "text": "¡Número dieciocho! Los detectives del Distrito Doce de Nueva York pasaban más tiempo lidiando con ciudadanos excéntricos que con trabajo policial, bajo el capitán Barney Miller."
+    },
+    {
+      "rank": 18,
+      "show_title": "Barney Miller",
+      "spotify_track_id": "7knlXA2UExr9iboDUIgvkZ",
+      "language": "pt-BR",
+      "text": "Número dezoito! Os detetives do 12º Distrito de Nova York passavam mais tempo lidando com cidadãos excêntricos do que com trabalho policial de verdade, sob o capitão Barney Miller."
+    },
+    {
+      "rank": 19,
+      "show_title": "The Odd Couple",
+      "spotify_track_id": "6LVNjbx8DVsdY4z44dYlkc",
+      "language": "en",
+      "text": "#19 Neat freak Felix and sloppy Oscar made an unlikely pair of roommates whose constant bickering somehow kept their friendship alive."
+    },
+    {
+      "rank": 19,
+      "show_title": "The Odd Couple",
+      "spotify_track_id": "6LVNjbx8DVsdY4z44dYlkc",
+      "language": "es",
+      "text": "¡Número diecinueve! El maniático del orden Félix y el desordenado Óscar formaban una extraña pareja de roommates cuyas constantes peleas mantenían viva su amistad."
+    },
+    {
+      "rank": 19,
+      "show_title": "The Odd Couple",
+      "spotify_track_id": "6LVNjbx8DVsdY4z44dYlkc",
+      "language": "pt-BR",
+      "text": "Número dezenove! O maníaco por limpeza Felix e o desleixado Oscar formavam uma dupla improvável de companheiros de quarto, cujas brigas constantes mantinham a amizade viva."
+    },
+    {
+      "rank": 20,
+      "show_title": "Little House on the Prairie",
+      "spotify_track_id": "50frvPh6f1qhBK3rvaNzp5",
+      "language": "en",
+      "text": "#20 The Ingalls family built a life on the Minnesota prairie facing the challenges of frontier living with love and determination."
+    },
+    {
+      "rank": 20,
+      "show_title": "Little House on the Prairie",
+      "spotify_track_id": "50frvPh6f1qhBK3rvaNzp5",
+      "language": "es",
+      "text": "¡Número veinte! La familia Ingalls construía una vida en las praderas de Minnesota, enfrentando los retos de la frontera con amor y determinación."
+    },
+    {
+      "rank": 20,
+      "show_title": "Little House on the Prairie",
+      "spotify_track_id": "50frvPh6f1qhBK3rvaNzp5",
+      "language": "pt-BR",
+      "text": "Número vinte! A família Ingalls construía sua vida na pradaria de Minnesota, enfrentando os desafios da fronteira com amor e determinação."
+    },
+    {
+      "rank": 21,
+      "show_title": "The Muppet Show",
+      "spotify_track_id": "2fFnUnsRZ11zSqJoZalmxq",
+      "language": "en",
+      "text": "#21 Kermit the Frog and his Muppet friends presented a weekly variety show filled with music comedy and celebrity guests."
+    },
+    {
+      "rank": 21,
+      "show_title": "The Muppet Show",
+      "spotify_track_id": "2fFnUnsRZ11zSqJoZalmxq",
+      "language": "es",
+      "text": "¡Número veintiuno! Kermit the Frog y sus amigos Muppets presentaban un programa de variedades semanal lleno de música, comedia e invitados famosos."
+    },
+    {
+      "rank": 21,
+      "show_title": "The Muppet Show",
+      "spotify_track_id": "2fFnUnsRZ11zSqJoZalmxq",
+      "language": "pt-BR",
+      "text": "Número vinte e um! Kermit, o Sapo, e seus amigos Muppets apresentavam um programa de variedades semanal cheio de música, comédia e convidados famosos."
+    },
+    {
+      "rank": 22,
+      "show_title": "Three's Company",
+      "spotify_track_id": "3Dwxip86UJ0ZYY7WncQFq5",
+      "language": "en",
+      "text": "#22 Jack Tripper shared a Santa Monica apartment with Janet and Chrissy, while suspicious landlord Stanley Roper helped turn everyday situations into comic misunderstandings."
+    },
+    {
+      "rank": 22,
+      "show_title": "Three's Company",
+      "spotify_track_id": "3Dwxip86UJ0ZYY7WncQFq5",
+      "language": "es",
+      "text": "¡Número veintidós! Jack Tripper compartía un departamento en Santa Mónica con Janet y Chrissy, mientras que el casero desconfiado Stanley Roper ayudaba a convertir situaciones cotidianas en malentendidos cómicos."
+    },
+    {
+      "rank": 22,
+      "show_title": "Three's Company",
+      "spotify_track_id": "3Dwxip86UJ0ZYY7WncQFq5",
+      "language": "pt-BR",
+      "text": "Número vinte e dois! Jack Tripper dividia um apartamento em Santa Monica com Janet e Chrissy, enquanto o desconfiado senhorio Stanley Roper transformava situações do dia a dia em mal-entendidos cômicos."
+    },
+    {
+      "rank": 23,
+      "show_title": "The Bob Newhart Show",
+      "spotify_track_id": "20nYYoDKZuECf930Rn0yjk",
+      "language": "en",
+      "text": "#23 Chicago psychologist Bob Hartley tried to maintain his sanity while treating eccentric patients and dealing with his own quirky friends."
+    },
+    {
+      "rank": 23,
+      "show_title": "The Bob Newhart Show",
+      "spotify_track_id": "20nYYoDKZuECf930Rn0yjk",
+      "language": "es",
+      "text": "¡Número veintitrés! El psicólogo de Chicago Bob Hartley intentaba mantener la cordura mientras atendía pacientes excéntricos y lidiaba con sus propios amigos peculiares."
+    },
+    {
+      "rank": 23,
+      "show_title": "The Bob Newhart Show",
+      "spotify_track_id": "20nYYoDKZuECf930Rn0yjk",
+      "language": "pt-BR",
+      "text": "Número vinte e três! O psicólogo de Chicago Bob Hartley tentava manter a sanidade tratando pacientes excêntricos e lidando com seus próprios amigos excêntricos."
+    },
+    {
+      "rank": 24,
+      "show_title": "Columbo",
+      "spotify_track_id": "2ApQLWTbEOJJake2MNPC9X",
+      "language": "en",
+      "text": "#24 Lieutenant Columbo appeared bumbling but used his sharp mind to trap murderers who thought they had committed the perfect crime."
+    },
+    {
+      "rank": 24,
+      "show_title": "Columbo",
+      "spotify_track_id": "2ApQLWTbEOJJake2MNPC9X",
+      "language": "es",
+      "text": "¡Número veinticuatro! El teniente Columbo parecía despistado, pero usaba su mente astuta para atrapar asesinos que creían haber cometido el crimen perfecto."
+    },
+    {
+      "rank": 24,
+      "show_title": "Columbo",
+      "spotify_track_id": "2ApQLWTbEOJJake2MNPC9X",
+      "language": "pt-BR",
+      "text": "Número vinte e quatro! O tenente Columbo parecia desajeitado, mas usava sua mente afiada para prender assassinos que achavam ter cometido o crime perfeito."
+    },
+    {
+      "rank": 25,
+      "show_title": "Kojak",
+      "spotify_track_id": "3xqJQj9j0ZPuztJQgGaUqK",
+      "language": "en",
+      "text": "#25 Lieutenant Theo Kojak patrolled the tough streets of New York with his lollipop and a team of dedicated detectives."
+    },
+    {
+      "rank": 25,
+      "show_title": "Kojak",
+      "spotify_track_id": "3xqJQj9j0ZPuztJQgGaUqK",
+      "language": "es",
+      "text": "¡Número veinticinco! El teniente Theo Kojak patrullaba las duras calles de Nueva York con su paleta y un equipo de detectives leales."
+    },
+    {
+      "rank": 25,
+      "show_title": "Kojak",
+      "spotify_track_id": "3xqJQj9j0ZPuztJQgGaUqK",
+      "language": "pt-BR",
+      "text": "Número vinte e cinco! O tenente Theo Kojak patrulhava as ruas duras de Nova York com seu pirulito e uma equipe de detetives dedicados."
+    },
+    {
+      "rank": 26,
+      "show_title": "Starsky & Hutch",
+      "spotify_track_id": "0FScHtIzfg2zOsznaOBgtF",
+      "language": "en",
+      "text": "#26 Two young detectives cruised the streets in a red Ford Torino using unconventional methods to fight crime in their city."
+    },
+    {
+      "rank": 26,
+      "show_title": "Starsky & Hutch",
+      "spotify_track_id": "0FScHtIzfg2zOsznaOBgtF",
+      "language": "es",
+      "text": "¡Número veintiséis! Dos jóvenes detectives recorrían las calles en un Ford Torino rojo usando métodos poco convencionales para combatir el crimen."
+    },
+    {
+      "rank": 26,
+      "show_title": "Starsky & Hutch",
+      "spotify_track_id": "0FScHtIzfg2zOsznaOBgtF",
+      "language": "pt-BR",
+      "text": "Número vinte e seis! Dois jovens detetives percorriam as ruas num Ford Torino vermelho usando métodos pouco convencionais para combater o crime na cidade."
+    },
+    {
+      "rank": 27,
+      "show_title": "WKRP In Cincinnati",
+      "spotify_track_id": "32FQSlBALfhMchKdRDRUjE",
+      "language": "en",
+      "text": "#27 The employees of a struggling radio station in Cincinnati tried wild promotional stunts to boost their ratings and keep the station alive."
+    },
+    {
+      "rank": 27,
+      "show_title": "WKRP In Cincinnati",
+      "spotify_track_id": "32FQSlBALfhMchKdRDRUjE",
+      "language": "es",
+      "text": "¡Número veintisiete! Los empleados de una estación de radio en apuros en Cincinnati probaban locas promociones para subir sus ratings y mantener la emisora a flote."
+    },
+    {
+      "rank": 27,
+      "show_title": "WKRP In Cincinnati",
+      "spotify_track_id": "32FQSlBALfhMchKdRDRUjE",
+      "language": "pt-BR",
+      "text": "Número vinte e sete! Os funcionários de uma rádio em dificuldades em Cincinnati faziam promoções malucas para aumentar a audiência e manter a estação no ar."
+    },
+    {
+      "rank": 28,
+      "show_title": "Maude",
+      "spotify_track_id": "1QV930MbloRewXxzICU3v4",
+      "language": "en",
+      "text": "#28 Maude Findlay spoke her mind about every controversial issue of the day from her home in Tuckahoe New York."
+    },
+    {
+      "rank": 28,
+      "show_title": "Maude",
+      "spotify_track_id": "1QV930MbloRewXxzICU3v4",
+      "language": "es",
+      "text": "¡Número veintiocho! Maude Findlay decía lo que pensaba sobre todos los temas controversiales de la época desde su casa en Tuckahoe, Nueva York."
+    },
+    {
+      "rank": 28,
+      "show_title": "Maude",
+      "spotify_track_id": "1QV930MbloRewXxzICU3v4",
+      "language": "pt-BR",
+      "text": "Número vinte e oito! Maude Findlay não tinha papas na língua sobre qualquer assunto polêmico da época, lá da sua casa em Tuckahoe, Nova York."
+    },
+    {
+      "rank": 29,
+      "show_title": "One Day at a Time",
+      "spotify_track_id": "6sGHN6wJN8YcOsTOA5qDsG",
+      "language": "en",
+      "text": "#29 A divorced mother in Indianapolis raised her two daughters while discovering her own independence and identity in the changing times."
+    },
+    {
+      "rank": 29,
+      "show_title": "One Day at a Time",
+      "spotify_track_id": "6sGHN6wJN8YcOsTOA5qDsG",
+      "language": "es",
+      "text": "¡Número veintinueve! Una madre divorciada en Indianápolis criaba a sus dos hijas mientras descubría su propia independencia en una época de cambios."
+    },
+    {
+      "rank": 29,
+      "show_title": "One Day at a Time",
+      "spotify_track_id": "6sGHN6wJN8YcOsTOA5qDsG",
+      "language": "pt-BR",
+      "text": "Número vinte e nove! Uma mãe divorciada em Indianápolis criava as duas filhas enquanto descobria sua própria independência e identidade em tempos de mudança."
+    },
+    {
+      "rank": 30,
+      "show_title": "The Partridge Family",
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "language": "en",
+      "text": "#30 A mother and her musical children hit the road as a traveling band after finding success with their first recording."
+    },
+    {
+      "rank": 30,
+      "show_title": "The Partridge Family",
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "language": "es",
+      "text": "¡Número treinta! Una madre y sus hijos músicos se lanzaron a la carretera como banda itinerante después del éxito de su primera grabación."
+    },
+    {
+      "rank": 30,
+      "show_title": "The Partridge Family",
+      "spotify_track_id": "3fiWru4ins2Mso83shTZTz",
+      "language": "pt-BR",
+      "text": "Número trinta! Uma mãe e seus filhos músicos saíram em turnê como banda depois do sucesso do primeiro disco."
+    },
+    {
+      "rank": 31,
+      "show_title": "The Six Million Dollar Man",
+      "spotify_track_id": "503yj4iLsU6dUQFKQAp4JF",
+      "language": "en",
+      "text": "#31 Astronaut Steve Austin was rebuilt with bionic technology after a terrible accident giving him incredible strength and speed for special missions."
+    },
+    {
+      "rank": 31,
+      "show_title": "The Six Million Dollar Man",
+      "spotify_track_id": "503yj4iLsU6dUQFKQAp4JF",
+      "language": "es",
+      "text": "¡Número treinta y uno! El astronauta Steve Austin fue reconstruido con tecnología biónica tras un grave accidente, dándole fuerza y velocidad increíbles para misiones especiales."
+    },
+    {
+      "rank": 31,
+      "show_title": "The Six Million Dollar Man",
+      "spotify_track_id": "503yj4iLsU6dUQFKQAp4JF",
+      "language": "pt-BR",
+      "text": "Número trinta e um! O astronauta Steve Austin foi reconstruído com tecnologia biônica após um grave acidente, ganhando força e velocidade incríveis para missões especiais."
+    },
+    {
+      "rank": 32,
+      "show_title": "The Bionic Woman",
+      "spotify_track_id": "1UonEjJWiJZBOfFvof5kZJ",
+      "language": "en",
+      "text": "#32 Jaime Sommers gained superhuman abilities after receiving bionic implants and used her powers to serve as a government agent."
+    },
+    {
+      "rank": 32,
+      "show_title": "The Bionic Woman",
+      "spotify_track_id": "1UonEjJWiJZBOfFvof5kZJ",
+      "language": "es",
+      "text": "¡Número treinta y dos! Jaime Sommers adquirió habilidades sobrehumanas tras recibir implantes biónicos y usaba sus poderes como agente del gobierno."
+    },
+    {
+      "rank": 32,
+      "show_title": "The Bionic Woman",
+      "spotify_track_id": "1UonEjJWiJZBOfFvof5kZJ",
+      "language": "pt-BR",
+      "text": "Número trinta e dois! Jaime Sommers ganhou habilidades sobre-humanas depois de receber implantes biônicos e usava seus poderes como agente do governo."
+    },
+    {
+      "rank": 33,
+      "show_title": "Fantasy Island",
+      "spotify_track_id": "6EZmoe8vutcxEZyn2OIyi6",
+      "language": "en",
+      "text": "#33 On a mysterious tropical island Mr. Roarke helped wealthy guests experience their ultimate fantasies which rarely turned out as expected."
+    },
+    {
+      "rank": 33,
+      "show_title": "Fantasy Island",
+      "spotify_track_id": "6EZmoe8vutcxEZyn2OIyi6",
+      "language": "es",
+      "text": "¡Número treinta y tres! En una misteriosa isla tropical, el señor Roarke ayudaba a huéspedes adinerados a vivir sus fantasías más grandes, que casi nunca salían como esperaban."
+    },
+    {
+      "rank": 33,
+      "show_title": "Fantasy Island",
+      "spotify_track_id": "6EZmoe8vutcxEZyn2OIyi6",
+      "language": "pt-BR",
+      "text": "Número trinta e três! Numa misteriosa ilha tropical, o Sr. Roarke ajudava hóspedes ricos a viverem suas fantasias definitivas, que raramente saíam como esperado."
+    },
+    {
+      "rank": 34,
+      "show_title": "Baretta",
+      "spotify_track_id": "6OlBAeJZROpYxuERD0zcue",
+      "language": "en",
+      "text": "#34 Detective Tony Baretta lived simply in a downtown hotel with his pet cockatoo while solving crimes with his streetwise style."
+    },
+    {
+      "rank": 34,
+      "show_title": "Baretta",
+      "spotify_track_id": "6OlBAeJZROpYxuERD0zcue",
+      "language": "es",
+      "text": "¡Número treinta y cuatro! El detective Tony Baretta vivía de forma sencilla en un hotel del centro con su cacatúa mascota, resolviendo crímenes con su estilo callejero."
+    },
+    {
+      "rank": 34,
+      "show_title": "Baretta",
+      "spotify_track_id": "6OlBAeJZROpYxuERD0zcue",
+      "language": "pt-BR",
+      "text": "Número trinta e quatro! O detetive Tony Baretta vivia de forma simples num hotel no centro com seu cacatua de estimação, resolvendo crimes com seu jeito esperto das ruas."
+    },
+    {
+      "rank": 35,
+      "show_title": "CHiPs",
+      "spotify_track_id": "51Y04HuLsbsJ6pwTx8bQmF",
+      "language": "en",
+      "text": "#35 Two California Highway Patrol officers patrolled the freeways on motorcycles balancing dangerous pursuits with the personal side of police work."
+    },
+    {
+      "rank": 35,
+      "show_title": "CHiPs",
+      "spotify_track_id": "51Y04HuLsbsJ6pwTx8bQmF",
+      "language": "es",
+      "text": "¡Número treinta y cinco! Dos oficiales de la patrulla de caminos de California recorrían las autopistas en moto, combinando peligrosas persecuciones con el lado humano del trabajo policial."
+    },
+    {
+      "rank": 35,
+      "show_title": "CHiPs",
+      "spotify_track_id": "51Y04HuLsbsJ6pwTx8bQmF",
+      "language": "pt-BR",
+      "text": "Número trinta e cinco! Dois patrulheiros rodoviários da Califórnia percorriam as rodovias de moto, equilibrando perseguições perigosas com o lado pessoal do trabalho policial."
+    },
+    {
+      "rank": 36,
+      "show_title": "The Waltons",
+      "spotify_track_id": "1QjRZoVDCXsVkE4SsnvC9R",
+      "language": "en",
+      "text": "#36 A large family in the Virginia mountains supported one another through the difficult years of the Great Depression and World War Two."
+    },
+    {
+      "rank": 36,
+      "show_title": "The Waltons",
+      "spotify_track_id": "1QjRZoVDCXsVkE4SsnvC9R",
+      "language": "es",
+      "text": "¡Número treinta y seis! Una numerosa familia en las montañas de Virginia se apoyaba mutuamente durante los difíciles años de la Gran Depresión y la Segunda Guerra Mundial."
+    },
+    {
+      "rank": 36,
+      "show_title": "The Waltons",
+      "spotify_track_id": "1QjRZoVDCXsVkE4SsnvC9R",
+      "language": "pt-BR",
+      "text": "Número trinta e seis! Uma grande família nas montanhas da Virgínia se apoiava mutuamente durante os anos difíceis da Grande Depressão e da Segunda Guerra Mundial."
+    },
+    {
+      "rank": 37,
+      "show_title": "Rhoda",
+      "spotify_track_id": "6JDoyq7aZlNfenStcyVaqy",
+      "language": "en",
+      "text": "#37 Rhoda Morgenstern moved back to New York City where she started a window dressing business and looked for happiness."
+    },
+    {
+      "rank": 37,
+      "show_title": "Rhoda",
+      "spotify_track_id": "6JDoyq7aZlNfenStcyVaqy",
+      "language": "es",
+      "text": "¡Número treinta y siete! Rhoda Morgenstern regresó a Nueva York, donde abrió un negocio de decoración de vitrinas y buscaba la felicidad."
+    },
+    {
+      "rank": 37,
+      "show_title": "Rhoda",
+      "spotify_track_id": "6JDoyq7aZlNfenStcyVaqy",
+      "language": "pt-BR",
+      "text": "Número trinta e sete! Rhoda Morgenstern voltou para Nova York, onde montou um negócio de decoração de vitrines e buscava a felicidade."
+    },
+    {
+      "rank": 38,
+      "show_title": "Soap",
+      "spotify_track_id": "3wAEhWSx5GvfCkqJ1SPA5S",
+      "language": "en",
+      "text": "#38 Two connected families experienced every possible plot twist from murder to demonic possession in this spoof of daytime soap operas."
+    },
+    {
+      "rank": 38,
+      "show_title": "Soap",
+      "spotify_track_id": "3wAEhWSx5GvfCkqJ1SPA5S",
+      "language": "es",
+      "text": "¡Número treinta y ocho! Dos familias entrelazadas vivían todo tipo de enredos, desde asesinatos hasta posesiones demoníacas, en esta parodia de las telenovelas diurnas."
+    },
+    {
+      "rank": 38,
+      "show_title": "Soap",
+      "spotify_track_id": "3wAEhWSx5GvfCkqJ1SPA5S",
+      "language": "pt-BR",
+      "text": "Número trinta e oito! Duas famílias interligadas viviam todo tipo de reviravolta, de assassinatos a possessão demoníaca, nessa sátira de novelas diárias."
+    },
+    {
+      "rank": 39,
+      "show_title": "The Incredible Hulk",
+      "spotify_track_id": "1ZgDn35QKjN3CM2crhTIIs",
+      "language": "en",
+      "text": "#39 Mild-mannered David Banner turned into a powerful green monster when provoked and then wandered America searching for a cure."
+    },
+    {
+      "rank": 39,
+      "show_title": "The Incredible Hulk",
+      "spotify_track_id": "1ZgDn35QKjN3CM2crhTIIs",
+      "language": "es",
+      "text": "¡Número treinta y nueve! El tranquilo David Banner se convertía en un poderoso monstruo verde cuando se enfurecía y luego vagaba por el país buscando una cura."
+    },
+    {
+      "rank": 39,
+      "show_title": "The Incredible Hulk",
+      "spotify_track_id": "1ZgDn35QKjN3CM2crhTIIs",
+      "language": "pt-BR",
+      "text": "Número trinta e nove! O pacato David Banner se transformava num poderoso monstro verde quando provocavam ele e depois vagava pela América em busca de uma cura."
+    },
+    {
+      "rank": 40,
+      "show_title": "Eight Is Enough",
+      "spotify_track_id": "6RrITtyt7yo5QDvclanaOW",
+      "language": "en",
+      "text": "#40 A newspaper columnist raised his eight children with patience and love after the death of his wife in this family drama."
+    },
+    {
+      "rank": 40,
+      "show_title": "Eight Is Enough",
+      "spotify_track_id": "6RrITtyt7yo5QDvclanaOW",
+      "language": "es",
+      "text": "¡Número cuarenta! Un columnista criaba solo a sus ocho hijos con paciencia y cariño tras la muerte de su esposa en este drama familiar."
+    },
+    {
+      "rank": 40,
+      "show_title": "Eight Is Enough",
+      "spotify_track_id": "6RrITtyt7yo5QDvclanaOW",
+      "language": "pt-BR",
+      "text": "Número quarenta! Um colunista de jornal criava seus oito filhos com paciência e amor após a morte da esposa, nesse drama familiar."
+    },
+    {
+      "rank": 41,
+      "show_title": "The White Shadow",
+      "spotify_track_id": "6wnpwv5tQQNbpBK8ot2gZh",
+      "language": "en",
+      "text": "#41 A former professional basketball player found new purpose coaching a diverse group of students at an urban Los Angeles high school."
+    },
+    {
+      "rank": 41,
+      "show_title": "The White Shadow",
+      "spotify_track_id": "6wnpwv5tQQNbpBK8ot2gZh",
+      "language": "es",
+      "text": "¡Número cuarenta y uno! Un exjugador profesional de basquetbol encontró nuevo propósito como entrenador de un diverso equipo de estudiantes en una preparatoria urbana de Los Ángeles."
+    },
+    {
+      "rank": 41,
+      "show_title": "The White Shadow",
+      "spotify_track_id": "6wnpwv5tQQNbpBK8ot2gZh",
+      "language": "pt-BR",
+      "text": "Número quarenta e um! Um ex-jogador profissional de basquete encontrou novo propósito treinando um grupo diverso de alunos numa escola secundária no centro de Los Angeles."
+    },
+    {
+      "rank": 42,
+      "show_title": "The Rookies",
+      "spotify_track_id": "5EbR6Cqd8RU6t4vewsyiEr",
+      "language": "en",
+      "text": "#42 Three young police officers faced the challenges of their dangerous profession while learning from experienced veterans on the force."
+    },
+    {
+      "rank": 42,
+      "show_title": "The Rookies",
+      "spotify_track_id": "5EbR6Cqd8RU6t4vewsyiEr",
+      "language": "es",
+      "text": "¡Número cuarenta y dos! Tres jóvenes policías enfrentaban los peligros de su trabajo mientras aprendían de los veteranos del cuerpo."
+    },
+    {
+      "rank": 42,
+      "show_title": "The Rookies",
+      "spotify_track_id": "5EbR6Cqd8RU6t4vewsyiEr",
+      "language": "pt-BR",
+      "text": "Número quarenta e dois! Três jovens policiais enfrentavam os desafios da profissão perigosa enquanto aprendiam com os veteranos da corporação."
+    },
+    {
+      "rank": 43,
+      "show_title": "Quincy, M.E.",
+      "spotify_track_id": "0tnqNundeaHkwHWFegIUDu",
+      "language": "en",
+      "text": "#43 Medical examiner Quincy investigated suspicious deaths that often turned out to be murders in this pioneering forensic drama."
+    },
+    {
+      "rank": 43,
+      "show_title": "Quincy, M.E.",
+      "spotify_track_id": "0tnqNundeaHkwHWFegIUDu",
+      "language": "es",
+      "text": "¡Número cuarenta y tres! El forense Quincy investigaba muertes sospechosas que solían resultar asesinatos en este drama pionero de la ciencia forense."
+    },
+    {
+      "rank": 43,
+      "show_title": "Quincy, M.E.",
+      "spotify_track_id": "0tnqNundeaHkwHWFegIUDu",
+      "language": "pt-BR",
+      "text": "Número quarenta e três! O legista Quincy investigava mortes suspeitas que muitas vezes se revelavam assassinatos, nesse drama forense pioneiro."
+    },
+    {
+      "rank": 44,
+      "show_title": "What's Happening!!",
+      "spotify_track_id": "2WkS30T5bnZpDK72gbh1ir",
+      "language": "en",
+      "text": "#44 Three close friends from a working-class Los Angeles neighborhood shared their dreams troubles and many humorous moments together."
+    },
+    {
+      "rank": 44,
+      "show_title": "What's Happening!!",
+      "spotify_track_id": "2WkS30T5bnZpDK72gbh1ir",
+      "language": "es",
+      "text": "¡Número cuarenta y cuatro! Tres amigos inseparables de un barrio obrero de Los Ángeles compartían sus sueños, problemas y muchos momentos llenos de humor."
+    },
+    {
+      "rank": 44,
+      "show_title": "What's Happening!!",
+      "spotify_track_id": "2WkS30T5bnZpDK72gbh1ir",
+      "language": "pt-BR",
+      "text": "Número quarenta e quatro! Três grandes amigos de um bairro operário de Los Angeles dividiam sonhos, problemas e muitas risadas juntos."
+    }
+  ]
+}
