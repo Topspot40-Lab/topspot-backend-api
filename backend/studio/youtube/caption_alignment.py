@@ -116,7 +116,7 @@ def aligned_words(
                 headers={"xi-api-key": api_key},
                 files={"file": (audio.name, handle, "audio/mpeg")},
                 data={"text": transcript},
-                timeout=(10, 300),
+                timeout=(120, 300),
             )
         response.raise_for_status()
         payload = response.json()
