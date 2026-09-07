@@ -55,6 +55,7 @@ BOOTSTRAP_APPLIED = frozenset({
     for slug in (
         "music_in_the_new_millennium", "ahmet_ertegun", "alan_freed",
         "banda_sinaloense", "beatles_vs_stones", "berry_gordy",
+        "george_martin", "brian_epstein", "colonel_tom_parker", "les_paul",
     )
     for language in LANGUAGES
 } | {("birth_of_bossa_nova", "en"), ("birth_of_bossa_nova", "pt-BR")})

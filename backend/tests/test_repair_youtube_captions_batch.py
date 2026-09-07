@@ -378,7 +378,7 @@ def test_quota_exceeded_stops_calls_and_never_records_failure(tmp_path: Path) ->
 
 
 def test_offline_bootstrap_requires_confirmation_and_only_records_allowlisted_tracks(tmp_path: Path) -> None:
-    assert len(batch.BOOTSTRAP_APPLIED) == 20
+    assert len(batch.BOOTSTRAP_APPLIED) == 32
     with pytest.raises(SystemExit):
         _run(tmp_path, {"ahmet_ertegun|en": _uploaded()}, ["--bootstrap-applied"])
     code, calls, report = _run(
