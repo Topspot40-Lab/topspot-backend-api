@@ -621,10 +621,32 @@ async def verify_subscription(session_id: str, access_token: str = Cookie(None))
 
         #return {"status": status, "subscription_id": subscription_id}
         #return RedirectResponse(url=f"{get_frontend_url(local=IS_LOCAL)}/app/success?session_id={session_id}")
+        session_metadata = session.get("metadata")
+        plan_kind = (
+            session_metadata.get("topspot_plan_kind")
+            if hasattr(session_metadata, "get")
+            else None
+        )
+
+        if plan_kind == "promo_2027_monthly":
+            offer = "early_member"
+            plan = "monthly"
+        elif plan_kind == "promo_2027_annual":
+            offer = "early_member"
+            plan = "annual"
+        elif not plan_kind:
+            offer = "standard"
+            plan = "standard"
+        else:
+            offer = "unknown"
+            plan = "unknown"
+
         return {
             "status": status,
             "subscription_id": subscription_id,
-            "is_active": status in ("active", "trialing", "past_due")
+            "is_active": status in ("active", "trialing", "past_due"),
+            "offer": offer,
+            "plan": plan,
         }
 
 

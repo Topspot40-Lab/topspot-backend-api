@@ -50,8 +50,38 @@ def test_verify_subscription_accepts_session_owned_by_caller():
         "status": "active",
         "subscription_id": "sub_topspot_123",
         "is_active": True,
+        "offer": "standard",
+        "plan": "standard",
     }
     retrieve_subscription.assert_called_once_with("sub_topspot_123")
+
+
+@pytest.mark.parametrize(
+    ("plan_kind", "expected_offer", "expected_plan"),
+    [
+        ("promo_2027_monthly", "early_member", "monthly"),
+        ("promo_2027_annual", "early_member", "annual"),
+        ("future_plan_kind", "unknown", "unknown"),
+    ],
+)
+def test_verify_subscription_classifies_checkout_plan(
+    plan_kind,
+    expected_offer,
+    expected_plan,
+):
+    response, _, _ = _verify(
+        _checkout_session(
+            client_reference_id="topspot-user-123",
+            metadata={
+                "topspot_user_id": "topspot-user-123",
+                "topspot_plan_kind": plan_kind,
+            },
+        )
+    )
+
+    assert response.status_code == 200
+    assert response.json()["offer"] == expected_offer
+    assert response.json()["plan"] == expected_plan
 
 
 @pytest.mark.parametrize(
