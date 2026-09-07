@@ -20,6 +20,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path)
     parser.add_argument("--client-secrets", type=Path)
+    parser.add_argument("--state", type=Path, default=STATE, help="restart-safe upload state file")
     parser.add_argument(
         "--report",
         type=Path,
@@ -69,15 +70,15 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     youtube = build_youtube_service(get_credentials(args.client_secrets))
-    state = _load_state()
+    state = _load_state(args.state)
     playlist_ids = state.setdefault("playlists", {})
     try:
         for spec in manifest.playlists:
             if spec.key not in playlist_ids:
                 playlist_ids[spec.key] = ensure_playlist(youtube, spec)
-                _save_state(state)
+                _save_state(state, args.state)
     except Exception as exc:
-        return _handle_apply_error(exc, args.report, manifest, state)
+        return _handle_apply_error(exc, args.report, manifest, state, args.state)
 
     uploads = state.setdefault("uploads", {})
     batch = _select_batch(manifest.uploads, uploads, args.max_uploads)
@@ -98,7 +99,7 @@ def main(argv: list[str] | None = None) -> int:
                     youtube,
                     spec,
                     on_uploaded=lambda value, record=record: _record_video(
-                        state, record, value
+                        state, record, value, args.state
                     ),
                 )
                 record["video_id"] = video_id
@@ -106,14 +107,14 @@ def main(argv: list[str] | None = None) -> int:
             if not record.get("thumbnail_uploaded"):
                 set_thumbnail(youtube, video_id, spec.thumbnail_path)
                 record["thumbnail_uploaded"] = True
-                _save_state(state)
+                _save_state(state, args.state)
 
             if spec.captions_path and not record.get("captions_uploaded"):
                 upload_captions(
                     youtube, video_id, spec.language_code, spec.captions_path
                 )
                 record["captions_uploaded"] = True
-                _save_state(state)
+                _save_state(state, args.state)
 
             completed_playlists = record.setdefault("playlist_keys", [])
             for playlist_key in spec.playlist_keys:
@@ -121,19 +122,23 @@ def main(argv: list[str] | None = None) -> int:
                     continue
                 add_to_playlist(youtube, playlist_ids[playlist_key], video_id)
                 completed_playlists.append(playlist_key)
-                _save_state(state)
+                _save_state(state, args.state)
 
             record.update(
                 status="uploaded",
-                scheduled_publish_at=spec.scheduled_publish_at.isoformat(),
+                scheduled_publish_at=(
+                    spec.scheduled_publish_at.isoformat()
+                    if spec.scheduled_publish_at is not None
+                    else None
+                ),
                 end_screen_status=(
                     "manual_required" if spec.end_screen_required else "not_required"
                 ),
             )
-            _save_state(state)
+            _save_state(state, args.state)
             print(f"READY {key} https://www.youtube.com/watch?v={video_id}")
         except Exception as exc:
-            return _handle_apply_error(exc, args.report, manifest, state)
+            return _handle_apply_error(exc, args.report, manifest, state, args.state)
 
     _write_report(args.report, manifest, uploads)
     remaining = sum(
@@ -167,9 +172,10 @@ def _select_batch(
 
 
 def _handle_apply_error(
-    exc: Exception, report: Path, manifest: Any, state: dict[str, Any]
+    exc: Exception, report: Path, manifest: Any, state: dict[str, Any],
+    state_path: Path = STATE,
 ) -> int:
-    _save_state(state)
+    _save_state(state, state_path)
     _write_report(report, manifest, state.get("uploads", {}))
     if _is_quota_error(exc):
         print("QUOTA STOP: progress was saved safely; retry after the daily reset.")
@@ -194,36 +200,40 @@ def _is_quota_error(exc: Exception) -> bool:
 
 
 def _dry_run(manifest: Any) -> None:
-    print(f"DRY RUN: {len(manifest.uploads)} private scheduled uploads")
-    print(f"Playlists: {len(manifest.playlists)} (9 new + 3 existing language masters)")
+    print(f"DRY RUN: {len(manifest.uploads)} validated uploads")
+    print(f"Playlists: {len(manifest.playlists)}")
     for spec in manifest.uploads:
         print(
-            f"READY {spec.scheduled_publish_at.isoformat()} "
+            f"READY {spec.privacy_status} "
+            f"{spec.scheduled_publish_at.isoformat() if spec.scheduled_publish_at else 'unscheduled'} "
             f"{spec.slug}/{spec.language_code} -> {', '.join(spec.playlist_keys)}"
         )
     print("No network calls were made. Use --apply to create playlists and upload.")
 
 
-def _load_state() -> dict[str, Any]:
-    if not STATE.exists():
+def _load_state(path: Path = STATE) -> dict[str, Any]:
+    if not path.exists():
         return {"schema_version": 2, "playlists": {}, "uploads": {}}
-    state = json.loads(STATE.read_text(encoding="utf-8"))
+    state = json.loads(path.read_text(encoding="utf-8"))
     state["schema_version"] = 2
     return state
 
 
-def _save_state(state: dict[str, Any]) -> None:
-    STATE.parent.mkdir(parents=True, exist_ok=True)
-    temporary = STATE.with_suffix(".tmp")
+def _save_state(state: dict[str, Any], path: Path = STATE) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(
         json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
-    os.replace(temporary, STATE)
+    os.replace(temporary, path)
 
 
-def _record_video(state: dict[str, Any], record: dict[str, Any], video_id: str) -> None:
+def _record_video(
+    state: dict[str, Any], record: dict[str, Any], video_id: str,
+    state_path: Path = STATE,
+) -> None:
     record.update(status="video_uploaded", video_id=video_id)
-    _save_state(state)
+    _save_state(state, state_path)
 
 
 def _write_report(path: Path, manifest: Any, state_uploads: dict[str, Any]) -> None:
@@ -258,7 +268,11 @@ def _write_report(path: Path, manifest: Any, state_uploads: dict[str, Any]) -> N
                     "collection": spec.collection_key,
                     "language": spec.language_code,
                     "title": spec.title,
-                    "scheduled_publish_at": spec.scheduled_publish_at.isoformat(),
+                    "scheduled_publish_at": (
+                        spec.scheduled_publish_at.isoformat()
+                        if spec.scheduled_publish_at is not None
+                        else ""
+                    ),
                     "playlists": " | ".join(spec.playlist_keys),
                     "thumbnail": spec.thumbnail_path,
                     "captions": spec.captions_path or "",

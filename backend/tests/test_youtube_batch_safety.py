@@ -6,6 +6,8 @@ import pytest
 
 from backend.scripts.upload_youtube_release import (
     _is_quota_error,
+    _load_state,
+    _save_state,
     _positive_int,
     _select_batch,
 )
@@ -43,3 +45,12 @@ def test_non_quota_error_is_not_misclassified() -> None:
 
 def test_caption_scope_is_requested() -> None:
     assert "https://www.googleapis.com/auth/youtube.force-ssl" in SCOPES
+
+
+
+def test_custom_state_file_is_isolated(tmp_path) -> None:
+    replacement = tmp_path / "replacement-state.json"
+    state = {"schema_version": 2, "playlists": {}, "uploads": {"replacement|en": {"status": "uploaded"}}}
+    _save_state(state, replacement)
+    assert _load_state(replacement)["uploads"] == state["uploads"]
+    assert replacement.is_file()

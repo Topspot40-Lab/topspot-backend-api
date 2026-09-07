@@ -40,7 +40,7 @@ class UploadSpec:
     title: str
     description: str
     tags: tuple[str, ...]
-    scheduled_publish_at: datetime
+    scheduled_publish_at: datetime | None
     playlist_keys: tuple[str, ...]
     visual_approval: str
     approved_video_sha256: str
@@ -49,6 +49,7 @@ class UploadSpec:
     contains_synthetic_media: bool = True
     notify_subscribers: bool = True
     end_screen_required: bool = True
+    privacy_status: str = "private"
 
 
 @dataclass(frozen=True, slots=True)
@@ -120,17 +121,28 @@ def _upload(value: Any, index: int, base: Path, playlist_keys: frozenset[str]) -
     if not isinstance(tags, list) or not tags or not all(_text(tag) for tag in tags):
         raise ManifestError(f"{prefix} tags must be non-empty strings")
     requested_playlists = value.get("playlist_keys")
-    if not isinstance(requested_playlists, list) or not requested_playlists:
+    if not isinstance(requested_playlists, list):
+        raise ManifestError(f"{prefix} playlist_keys must be a list")
+    if not requested_playlists and value.get("privacy_status", "private") != "unlisted":
         raise ManifestError(f"{prefix} requires playlist_keys")
     unknown = sorted(set(requested_playlists) - playlist_keys)
     if unknown:
         raise ManifestError(f"{prefix} references unknown playlists: {', '.join(unknown)}")
-    try:
-        publish_at = datetime.fromisoformat(_required(value, "scheduled_publish_at", prefix))
-    except ValueError as exc:
-        raise ManifestError(f"{prefix} has invalid scheduled_publish_at") from exc
-    if publish_at.tzinfo is None or publish_at.utcoffset() is None:
-        raise ManifestError(f"{prefix} scheduled_publish_at must include an offset")
+    privacy = value.get("privacy_status", "private")
+    if privacy not in PLAYLIST_PRIVACY:
+        raise ManifestError(f"{prefix} has invalid privacy_status")
+    scheduled_value = value.get("scheduled_publish_at")
+    if scheduled_value is None:
+        publish_at = None
+    else:
+        try:
+            publish_at = datetime.fromisoformat(_required(value, "scheduled_publish_at", prefix))
+        except ValueError as exc:
+            raise ManifestError(f"{prefix} has invalid scheduled_publish_at") from exc
+        if publish_at.tzinfo is None or publish_at.utcoffset() is None:
+            raise ManifestError(f"{prefix} scheduled_publish_at must include an offset")
+    if publish_at is not None and privacy != "private":
+        raise ManifestError(f"{prefix} scheduled uploads must be private")
 
     video = _file(value.get("video_path"), base, prefix, {".mp4"})
     approval = _required(value, "visual_approval", prefix)
@@ -163,6 +175,7 @@ def _upload(value: Any, index: int, base: Path, playlist_keys: frozenset[str]) -
         contains_synthetic_media=_required_bool(value, "contains_synthetic_media", True, prefix),
         notify_subscribers=_required_bool(value, "notify_subscribers", True, prefix),
         end_screen_required=_required_bool(value, "end_screen_required", True, prefix),
+        privacy_status=privacy,
     )
 
 

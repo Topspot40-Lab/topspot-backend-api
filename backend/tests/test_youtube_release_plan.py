@@ -50,7 +50,7 @@ def test_manifest_builds_48_localized_private_scheduled_uploads(tmp_path: Path) 
     manifest = load_manifest(output)
 
     assert len(manifest.uploads) == 48
-    assert len(manifest.playlists) == 12
+    assert len(manifest.playlists) == 30
     assert sum(item.language_code == "en" for item in manifest.uploads) == 16
     assert all(item.notify_subscribers for item in manifest.uploads)
     assert all(item.contains_synthetic_media for item in manifest.uploads)
@@ -101,3 +101,23 @@ def _build_manifest(root: Path) -> dict[str, object]:
         spanish_docuseries_playlist_id="PLPOixzTGhR1s",
         portuguese_docuseries_playlist_id="PLCKwRppGaVAs",
     )
+
+
+
+def test_manifest_accepts_unlisted_review_upload_without_schedule(tmp_path: Path) -> None:
+    _factory_assets(tmp_path)
+    document = _build_manifest(tmp_path)
+    upload = document["uploads"][0]
+    upload.pop("scheduled_publish_at")
+    upload["privacy_status"] = "unlisted"
+    upload["notify_subscribers"] = False
+    upload["playlist_keys"] = []
+    output = tmp_path / "replacement-manifest.json"
+    write_manifest(document, output)
+
+    manifest = load_manifest(output)
+    spec = manifest.uploads[0]
+    assert spec.privacy_status == "unlisted"
+    assert spec.scheduled_publish_at is None
+    assert spec.notify_subscribers is False
+    assert spec.playlist_keys == ()

@@ -51,6 +51,17 @@ def upload_video(
 ) -> str:
     from googleapiclient.http import MediaFileUpload
 
+    status = {
+        "privacyStatus": spec.privacy_status,
+        "selfDeclaredMadeForKids": spec.made_for_kids,
+        "containsSyntheticMedia": spec.contains_synthetic_media,
+        "embeddable": True,
+        "publicStatsViewable": True,
+        "license": "youtube",
+    }
+    if spec.scheduled_publish_at is not None:
+        status["publishAt"] = spec.scheduled_publish_at.isoformat()
+
     request = youtube.videos().insert(
         part="snippet,status",
         notifySubscribers=spec.notify_subscribers,
@@ -63,15 +74,7 @@ def upload_video(
                 "defaultLanguage": spec.language_code,
                 "defaultAudioLanguage": spec.language_code,
             },
-            "status": {
-                "privacyStatus": "private",
-                "publishAt": spec.scheduled_publish_at.isoformat(),
-                "selfDeclaredMadeForKids": spec.made_for_kids,
-                "containsSyntheticMedia": spec.contains_synthetic_media,
-                "embeddable": True,
-                "publicStatsViewable": True,
-                "license": "youtube",
-            },
+            "status": status,
         },
         media_body=MediaFileUpload(str(spec.video_path), mimetype="video/mp4", chunksize=-1, resumable=True),
     )
