@@ -71,7 +71,7 @@ TTS_PROFILES = {
         "artist": {"voice_id": "CstacWqMhJQlnfLPxRG4", "settings": {"stability": 0.6, "similarity_boost": 0.8, "style": 0.4, "use_speaker_boost": True}},
 
         "artist_story": {
-            "voice_id": "n1PvBOwxb8X6m7tahp2h",
+            "voice_id": "CstacWqMhJQlnfLPxRG4",
             "settings": {
                 "stability": 0.6,
                 "similarity_boost": 0.8,

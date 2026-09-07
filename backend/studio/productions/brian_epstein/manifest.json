@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "production_type": "documentary",
+  "slug": "brian_epstein",
+  "title": "Brian Epstein",
+  "subtitle": "The Man Who Managed the Beatles",
+  "website": "TopSpot40.com",
+  "artwork_url": "/docuseries/14-brian-epstein.png",
+  "source": {
+    "type": "music_docuseries",
+    "id": 46
+  },
+  "docuseries_id": 46,
+  "status": {
+    "current_station": "production_created",
+    "production_created": true,
+    "story_ready": false,
+    "audio_ready": false,
+    "cards_ready": false,
+    "storyboard_ready": false,
+    "visual_plan_ready": false,
+    "images_ready": false,
+    "image_review_complete": false,
+    "preview_ready": false,
+    "video_review_complete": false,
+    "thumbnail_ready": false,
+    "youtube_package_ready": false,
+    "published": false
+  },
+  "languages": [
+    {
+      "language_code": "en",
+      "locale_id": 110,
+      "duration_seconds": 531,
+      "bucket": "audio-en",
+      "source_key": "music-docuseries/110.mp3",
+      "youtube_key": "music-docuseries-youtube/110.mp3",
+      "local_audio": "audio/en_110.mp3"
+    },
+    {
+      "language_code": "es",
+      "locale_id": 136,
+      "duration_seconds": 624,
+      "bucket": "audio-es",
+      "source_key": "music-docuseries/136.mp3",
+      "youtube_key": "music-docuseries-youtube/136.mp3",
+      "local_audio": "audio/es_136.mp3"
+    },
+    {
+      "language_code": "pt-BR",
+      "locale_id": 142,
+      "duration_seconds": 850,
+      "bucket": "audio-ptbr",
+      "source_key": "music-docuseries/142.mp3",
+      "youtube_key": "music-docuseries-youtube/142.mp3",
+      "local_audio": "audio/pt-BR_142.mp3"
+    }
+  ],
+  "cards": {
+    "logo": "cards/01_logo.png",
+    "languages": "cards/02_languages.png",
+    "title": "cards/03_title.png"
+  },
+  "images": [],
+  "output": {
+    "video": "output/brian_epstein.mp4",
+    "thumbnail": "output/thumbnail.png"
+  },
+  "audio_mix": {
+    "bed_key": "bed-tracks/docuseries/bed_01.mp3",
+    "bed_volume_db": -26.0,
+    "duck_threshold": 0.03,
+    "duck_ratio": 8.0,
+    "duck_attack_ms": 25,
+    "duck_release_ms": 500
+  }
+}

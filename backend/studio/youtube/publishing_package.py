@@ -60,6 +60,21 @@ LOCALIZED_TITLES={
         "es": "George Martin: El quinto Beatle",
         "pt-BR": "George Martin: O quinto Beatle",
     },
+    "brian_epstein": {
+        "en": "Brian Epstein: The Man Who Managed the Beatles",
+        "es": "Brian Epstein: El hombre que dirigió a los Beatles",
+        "pt-BR": "Brian Epstein: O homem que empresariou os Beatles",
+    },
+    "colonel_tom_parker": {
+        "en": "Colonel Tom Parker: The Business of Elvis Presley",
+        "es": "Coronel Tom Parker: El negocio de Elvis Presley",
+        "pt-BR": "Coronel Tom Parker: O negócio de Elvis Presley",
+    },
+    "les_paul": {
+        "en": "Les Paul: The Inventor Who Changed Recording Forever",
+        "es": "Les Paul: El inventor que cambió la grabación para siempre",
+        "pt-BR": "Les Paul: O inventor que mudou a gravação para sempre",
+    },
     "quincy_jones": {
         "en": "Quincy Jones: The Producer Who Changed Pop Music",
         "es": "Quincy Jones: El productor que cambió la música pop",
