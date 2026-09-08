@@ -43,6 +43,7 @@ EXPECTED_MOUNTED_ROUTES = {
     ("GET", "/api/auth/me"),
     ("POST", "/api/auth/logout"),
     ("POST", "/api/auth/supabase/signup"),
+    ("POST", "/api/auth/profile-completion"),
     ("GET", "/api/auth/marketing-preference"),
     ("POST", "/api/auth/marketing-preference"),
     ("POST", "/api/auth/supabase/session"),
