@@ -6,7 +6,6 @@ from fastapi import APIRouter, Cookie, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from supabase import create_client
-from supabase_auth.errors import AuthApiError
 
 from backend.isaiah.isaiah_helper import get_env_config
 from backend.isaiah.jwt_session import (
@@ -47,11 +46,67 @@ class SupabaseSessionRequest(BaseModel):
 
 class SupabaseSignupRequest(BaseModel):
     access_token: str
+    display_name: str
+    preferred_language: str
     marketing_opt_in: bool = False
 
 
 class MarketingPreferenceRequest(BaseModel):
     marketing_opt_in: bool
+
+
+class ProfileCompletionRequest(BaseModel):
+    display_name: str
+
+
+SUPPORTED_PREFERRED_LANGUAGES = {"en", "es", "pt-BR"}
+
+
+def normalized_display_name(value: str) -> str:
+    name = value.strip() if isinstance(value, str) else ""
+    if not 2 <= len(name) <= 50:
+        raise HTTPException(
+            status_code=422,
+            detail="Display name must be between 2 and 50 characters",
+        )
+    return name
+
+
+def require_preferred_language(value: str) -> str:
+    if value not in SUPPORTED_PREFERRED_LANGUAGES:
+        raise HTTPException(status_code=422, detail="Unsupported preferred language")
+    return value
+
+
+def _session_response(
+    topspot_user_id: str,
+    *,
+    status_code: int,
+    created: bool = False,
+    legacy_linked: bool = False,
+    display_name: str | None = None,
+):
+    response = JSONResponse(
+        status_code=status_code,
+        content={
+            "authenticated": True,
+            "created": created,
+            "legacy_linked": legacy_linked,
+            "user_id": topspot_user_id,
+            "profile_completion_required": not bool((display_name or "").strip()),
+        },
+    )
+    response.set_cookie(
+        key="access_token",
+        value=create_jwt_token(topspot_user_id),
+        httponly=True,
+        secure=cookie_config["SECURE_COOKIE"],
+        samesite="none",
+        max_age=JWT_EXP_DELTA_SECONDS,
+        path="/",
+        domain=cookie_config["COOKIE_DOMAIN"],
+    )
+    return response
 
 
 @router.post("/logout")
@@ -76,6 +131,8 @@ def logout():
 @router.post("/supabase/signup")
 def create_supabase_signup(payload: SupabaseSignupRequest):
     token = payload.access_token.strip()
+    display_name = normalized_display_name(payload.display_name)
+    preferred_language = require_preferred_language(payload.preferred_language)
 
     if not token:
         raise HTTPException(
@@ -118,8 +175,8 @@ def create_supabase_signup(payload: SupabaseSignupRequest):
     try:
         email_result = (
             supabase.table("topspot_users")
-            .select("id")
-            .ilike("email", verified_email)
+            .select("id,auth_user_id,display_name")
+            .eq("email", verified_email)
             .limit(1)
             .execute()
         )
@@ -138,16 +195,41 @@ def create_supabase_signup(payload: SupabaseSignupRequest):
             detail="Unable to complete signup",
         )
 
-    if email_result.data:
-        raise HTTPException(
-            status_code=409,
-            detail="A TopSpot40 account already exists with this email. Please sign in instead.",
-        )
-
     if auth_result.data:
         raise HTTPException(
             status_code=409,
-            detail="This sign-in identity is already linked to a TopSpot40 account.",
+            detail="This identity is already linked to a TopSpot40 account. Please sign in instead.",
+        )
+
+    existing_user = email_result.data[0] if email_result.data else None
+    if existing_user:
+        # Legacy activation is allowed only after this verified sign-up and only
+        # while the legacy row has never been linked to Supabase authentication.
+        if existing_user.get("auth_user_id") is not None:
+            raise HTTPException(
+                status_code=409,
+                detail="A TopSpot40 account already exists with this email. Please sign in instead.",
+            )
+        try:
+            linked_result = (
+                supabase.table("topspot_users")
+                .update({"auth_user_id": auth_user_id})
+                .eq("id", existing_user["id"])
+                .is_("auth_user_id", "null")
+                .execute()
+            )
+        except Exception:
+            logger.exception("Legacy TopSpot identity linking failed")
+            raise HTTPException(status_code=409, detail="Unable to complete signup")
+
+        if not linked_result.data:
+            raise HTTPException(status_code=409, detail="Unable to complete signup")
+
+        return _session_response(
+            str(existing_user["id"]),
+            status_code=200,
+            legacy_linked=True,
+            display_name=existing_user.get("display_name"),
         )
 
     try:
@@ -157,6 +239,8 @@ def create_supabase_signup(payload: SupabaseSignupRequest):
                 {
                     "email": verified_email,
                     "auth_user_id": auth_user_id,
+                    "display_name": display_name,
+                    "preferred_language": preferred_language,
                 }
             )
             .execute()
@@ -212,29 +296,45 @@ def create_supabase_signup(payload: SupabaseSignupRequest):
                 topspot_user_id,
             )
 
-    topspot_jwt = create_jwt_token(topspot_user_id)
-
-    response = JSONResponse(
+    return _session_response(
+        topspot_user_id,
         status_code=201,
-        content={
-            "authenticated": True,
-            "created": True,
-            "user_id": topspot_user_id,
-        },
+        created=True,
+        display_name=display_name,
     )
 
-    response.set_cookie(
-        key="access_token",
-        value=topspot_jwt,
-        httponly=True,
-        secure=cookie_config["SECURE_COOKIE"],
-        samesite="none",
-        max_age=JWT_EXP_DELTA_SECONDS,
-        path="/",
-        domain=cookie_config["COOKIE_DOMAIN"],
-    )
 
-    return response
+@router.post("/profile-completion")
+def complete_profile(
+    payload: ProfileCompletionRequest,
+    access_token: str = Cookie(None),
+):
+    jwt_payload = decode_jwt_token(access_token)
+    if not jwt_payload:
+        raise HTTPException(status_code=401, detail="Invalid or expired JWT Session")
+
+    display_name = normalized_display_name(payload.display_name)
+    topspot_user_id = str(jwt_payload["user_id"])
+
+    try:
+        result = (
+            supabase.rpc(
+                "complete_topspot_user_display_name",
+                {
+                    "p_user_id": topspot_user_id,
+                    "p_display_name": display_name,
+                },
+            )
+            .execute()
+        )
+    except Exception:
+        logger.exception("Profile completion save failed for user_id=%s", topspot_user_id)
+        raise HTTPException(status_code=500, detail="Unable to complete profile")
+
+    if not result.data:
+        raise HTTPException(status_code=409, detail="Profile is already complete")
+
+    return {"display_name": result.data[0]["display_name"]}
 
 
 @router.get("/marketing-preference")
@@ -459,8 +559,8 @@ def create_supabase_session(payload: SupabaseSessionRequest):
     try:
         user_result = (
             supabase.table("topspot_users")
-            .select("id,email,auth_user_id")
-            .ilike("email", verified_email)
+            .select("id,email,auth_user_id,display_name")
+            .eq("email", verified_email)
             .limit(2)
             .execute()
         )
@@ -476,7 +576,7 @@ def create_supabase_session(payload: SupabaseSessionRequest):
     if len(matching_users) == 0:
         raise HTTPException(
             status_code=403,
-            detail="No existing TopSpot40 account matches this email",
+            detail="Unable to complete sign-in",
         )
 
     if len(matching_users) != 1:
@@ -490,64 +590,15 @@ def create_supabase_session(payload: SupabaseSessionRequest):
 
     topspot_user = matching_users[0]
     topspot_user_id = str(topspot_user["id"])
-    existing_auth_user_id = topspot_user.get("auth_user_id")
-
-    if (
-        existing_auth_user_id is not None
-        and str(existing_auth_user_id) != auth_user_id
-    ):
-        try:
-            existing_auth_response = (
-                supabase.auth.admin.get_user_by_id(
-                    str(existing_auth_user_id)
-                )
-            )
-        except AuthApiError as exc:
-            if exc.status != 404:
-                logger.exception(
-                    "Unable to verify existing Supabase identity link"
-                )
-                raise HTTPException(
-                    status_code=503,
-                    detail="Unable to complete sign-in",
-                )
-
-            logger.warning(
-                "Replacing stale legacy Supabase identity link "
-                "for TopSpot user %s",
-                topspot_user_id,
-            )
-        except Exception:
-            logger.exception(
-                "Unable to verify existing Supabase identity link"
-            )
-            raise HTTPException(
-                status_code=503,
-                detail="Unable to complete sign-in",
-            )
-        else:
-            if getattr(existing_auth_response, "user", None) is not None:
-                logger.warning(
-                    "Refusing to replace a valid Supabase identity link "
-                    "for TopSpot user %s",
-                    topspot_user_id,
-                )
-                raise HTTPException(
-                    status_code=409,
-                    detail=(
-                        "This TopSpot40 account is already linked "
-                        "to another identity"
-                    ),
-                )
+    if str(topspot_user.get("auth_user_id") or "") != auth_user_id:
+        logger.warning("Refusing sign-in with a non-matching Supabase identity")
+        raise HTTPException(status_code=403, detail="Unable to complete sign-in")
 
     try:
         update_result = (
             supabase.table("topspot_users")
             .update(
-                {
-                    "auth_user_id": auth_user_id,
-                    "last_login_at": datetime.now(timezone.utc).isoformat(),
-                }
+                {"last_login_at": datetime.now(timezone.utc).isoformat()}
             )
             .eq("id", topspot_user_id)
             .execute()
@@ -565,25 +616,8 @@ def create_supabase_session(payload: SupabaseSessionRequest):
             detail="Unable to complete sign-in",
         )
 
-    topspot_jwt = create_jwt_token(topspot_user_id)
-
-    response = JSONResponse(
+    return _session_response(
+        topspot_user_id,
         status_code=200,
-        content={
-            "authenticated": True,
-            "user_id": topspot_user_id,
-        },
+        display_name=topspot_user.get("display_name"),
     )
-
-    response.set_cookie(
-        key="access_token",
-        value=topspot_jwt,
-        httponly=True,
-        secure=cookie_config["SECURE_COOKIE"],
-        samesite="none",
-        max_age=JWT_EXP_DELTA_SECONDS,
-        path="/",
-        domain=cookie_config["COOKIE_DOMAIN"],
-    )
-
-    return response
