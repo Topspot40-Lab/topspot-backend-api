@@ -44,11 +44,11 @@ def test_approval_copies_all_reviewed_assets(tmp_path:Path)->None:
  for name in names:(source/name).write_bytes(b"approved")
  destination=approve_review_package(tmp_path/"factory",language="en");assert {path.name for path in destination.iterdir()}==names
 
-def _legacy_v2_factory(factory: Path) -> None:
+def _legacy_v2_factory(factory: Path, language: str = "en") -> None:
  _assets(factory)
- narration = factory / "delivery" / "en" / "narration"
+ narration = factory / "delivery" / language / "narration"
  hashes = {part: hashlib.sha256((narration / f"{part}.mp3").read_bytes()).hexdigest() for part in ("hook", "intro", "story", "outro")}
- (factory / "delivery" / "en" / "narration.inputs.json").write_text(json.dumps({"version": 2, "source_sha256": hashes}), encoding="utf-8")
+ (factory / "delivery" / language / "narration.inputs.json").write_text(json.dumps({"version": 2, "source_sha256": hashes}), encoding="utf-8")
  (factory / "shared" / "opening.mp4").unlink()
 
 def test_verified_legacy_v2_reconstructs_deleted_intermediate_timing(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -64,6 +64,21 @@ def test_verified_legacy_v2_reconstructs_deleted_intermediate_timing(tmp_path: P
  assert timing.expected_duration == pytest.approx(581.227890)
  assert timing.duration_delta == pytest.approx(0.000115)
  assert "Legacy reconstructed timing was used; verified duration delta: +0.000115s" in capsys.readouterr().out
+
+@pytest.mark.parametrize(("language", "duration_delta"), (("en", 0.020795), ("es", -0.000476), ("pt-BR", 0.013174)))
+def test_verified_legacy_v2_reconstructs_no_hook_transition_layout(tmp_path: Path, capsys: pytest.CaptureFixture[str], language: str, duration_delta: float) -> None:
+ factory = tmp_path / "factory"
+ _legacy_v2_factory(factory, language)
+ durations = {"hook": 25.959909, "intro": 7.012426, "story": 520.080544, "outro": 14.675011}
+ no_hook_expected_duration = 579.977890
+ def probe(path: Path) -> float:
+  return no_hook_expected_duration + duration_delta if path.name == "documentary.mp4" else durations[path.stem]
+ timing = documentary_timing(factory, language=language, probe=probe)
+ assert timing.legacy_reconstructed is True
+ assert timing.story_start == pytest.approx(40.222335)
+ assert timing.expected_duration == pytest.approx(no_hook_expected_duration)
+ assert timing.duration_delta == pytest.approx(duration_delta)
+ assert "Legacy reconstructed timing used no-hook-transition layout" in capsys.readouterr().out
 
 def test_verified_legacy_v2_rejects_duration_mismatch(tmp_path: Path) -> None:
  factory = tmp_path / "factory"

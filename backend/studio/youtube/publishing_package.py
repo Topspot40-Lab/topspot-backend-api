@@ -189,16 +189,24 @@ def documentary_timing(factory: Path, *, language: str, probe: Probe = media_dur
  if not _is_verified_legacy_v2(narration, delivery / "narration.inputs.json"):
   raise FileNotFoundError(f"Missing opening media: {opening}")
  hook_start = LEGACY_V2_OPENING_SECONDS
- story_start = hook_start + durations["hook"] + LEGACY_V2_HOOK_TRANSITION_SECONDS + durations["intro"] + LEGACY_V2_INTRO_TRANSITION_SECONDS
- outro_start = story_start + durations["story"] + LEGACY_V2_OUTRO_TRANSITION_SECONDS
- expected_duration = outro_start + durations["outro"] + LEGACY_V2_FINAL_TAIL_SECONDS
- timing = DocumentaryTiming(hook_start, story_start, outro_start, expected_duration, documentary_duration, durations, True)
+ def reconstructed_timing(hook_transition_seconds: float) -> DocumentaryTiming:
+  story_start = hook_start + durations["hook"] + hook_transition_seconds + durations["intro"] + LEGACY_V2_INTRO_TRANSITION_SECONDS
+  outro_start = story_start + durations["story"] + LEGACY_V2_OUTRO_TRANSITION_SECONDS
+  expected_duration = outro_start + durations["outro"] + LEGACY_V2_FINAL_TAIL_SECONDS
+  return DocumentaryTiming(hook_start, story_start, outro_start, expected_duration, documentary_duration, durations, True)
+
+ timing = reconstructed_timing(LEGACY_V2_HOOK_TRANSITION_SECONDS)
+ if abs(timing.duration_delta) <= LEGACY_V2_DURATION_TOLERANCE_SECONDS:
+  print(f"Legacy reconstructed timing was used; verified duration delta: {timing.duration_delta:+.6f}s")
+  return timing
+
+ timing = reconstructed_timing(0.0)
  if abs(timing.duration_delta) > LEGACY_V2_DURATION_TOLERANCE_SECONDS:
   raise RuntimeError(
    "Legacy-v2 reconstructed duration does not match the final documentary "
    f"within {LEGACY_V2_DURATION_TOLERANCE_SECONDS:.2f} seconds (delta {timing.duration_delta:+.6f}s)"
   )
- print(f"Legacy reconstructed timing was used; verified duration delta: {timing.duration_delta:+.6f}s")
+ print(f"Legacy reconstructed timing used no-hook-transition layout; verified duration delta: {timing.duration_delta:+.6f}s")
  return timing
 
 
