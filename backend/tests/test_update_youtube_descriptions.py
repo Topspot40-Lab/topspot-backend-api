@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -147,6 +148,70 @@ def test_apply_refuses_snapshot_fingerprint_conflict_and_writes_no_ledger(tmp_pa
     ledger = tmp_path / "ledger.json"
     code = updater.main(["--state", str(state), "--snapshot", str(snapshot), "--ledger", str(ledger), "--client-secrets", "client.json", "--apply", "--confirm-apply-description-update", "--max-updates", "1", "--slug", "alpha"], service_factory=lambda _: youtube)
     assert code == 1 and not youtube.videos_api.updates and not ledger.exists()
+
+
+@pytest.mark.parametrize("change", ["etag", "thumbnail"])
+def test_apply_ignores_etag_or_thumbnail_url_churn(tmp_path: Path, change: str) -> None:
+    binding = _binding("alpha", "en", "abcdefghijk")
+    state = _state(tmp_path / "state.json", {"alpha|en": {"status": "uploaded", "video_id": binding.video_id}})
+    snapshot_resource = _resource(binding.video_id)
+    snapshot_resource["etag"] = "original-etag"
+    snapshot_resource["snippet"]["thumbnails"] = {"high": {"url": "https://old.example/thumb.jpg", "width": 480}}  # type: ignore[index]
+    current = deepcopy(snapshot_resource)
+    if change == "etag":
+        current["etag"] = "new-etag"
+    else:
+        current["snippet"]["thumbnails"]["high"]["url"] = "https://new.example/thumb.jpg"  # type: ignore[index]
+    snapshot = _snapshot(tmp_path / "snapshot.json", binding, snapshot_resource)
+    youtube, ledger = FakeYoutube({binding.video_id: current}), tmp_path / "ledger.json"
+    code = updater.main(["--state", str(state), "--snapshot", str(snapshot), "--ledger", str(ledger), "--client-secrets", "client.json", "--apply", "--confirm-apply-description-update", "--max-updates", "1", "--slug", "alpha"], service_factory=lambda _: youtube)
+    assert code == 0 and len(youtube.videos_api.updates) == 1 and ledger.exists()
+
+
+@pytest.mark.parametrize("section,key,value", [("snippet", "title", "Changed title"), ("snippet", "categoryId", "22"), ("snippet", "tags", ["changed"]), ("snippet", "defaultLanguage", "es"), ("snippet", "defaultAudioLanguage", "es"), ("status", "privacyStatus", "public"), ("localizations", "fr", {"title": "Titre", "description": "Description"}), ("recordingDetails", "recordingDate", "2026-02-02")])
+def test_apply_conflicts_on_meaningful_stable_metadata_changes(tmp_path: Path, section: str, key: str, value: object) -> None:
+    binding = _binding("alpha", "en", "abcdefghijk")
+    state = _state(tmp_path / "state.json", {"alpha|en": {"status": "uploaded", "video_id": binding.video_id}})
+    snapshot_resource = _resource(binding.video_id)
+    snapshot_resource["recordingDetails"] = {"recordingDate": "2026-01-01"}
+    current = deepcopy(snapshot_resource)
+    current[section][key] = value  # type: ignore[index]
+    snapshot = _snapshot(tmp_path / "snapshot.json", binding, snapshot_resource)
+    youtube, ledger = FakeYoutube({binding.video_id: current}), tmp_path / "ledger.json"
+    code = updater.main(["--state", str(state), "--snapshot", str(snapshot), "--ledger", str(ledger), "--client-secrets", "client.json", "--apply", "--confirm-apply-description-update", "--max-updates", "1", "--slug", "alpha"], service_factory=lambda _: youtube)
+    assert code == 1 and not youtube.videos_api.updates and not ledger.exists()
+
+
+def test_stable_resource_fingerprint_does_not_mutate_resource() -> None:
+    resource = _resource("abcdefghijk")
+    resource["snippet"]["thumbnails"] = {"high": {"url": "https://example.test/thumb.jpg"}}  # type: ignore[index]
+    original = deepcopy(resource)
+    updater.stable_resource_fingerprint(resource)
+    assert resource == original
+
+
+def test_apply_uses_legacy_snapshot_with_only_raw_resource_and_fingerprint(tmp_path: Path) -> None:
+    binding = _binding("alpha", "en", "abcdefghijk")
+    state = _state(tmp_path / "state.json", {"alpha|en": {"status": "uploaded", "video_id": binding.video_id}})
+    resource = _resource(binding.video_id)
+    records = updater._snapshot_records([binding], {binding.video_id: resource})
+    records[0].pop("stable_fingerprint")
+    snapshot = tmp_path / "legacy-snapshot.json"
+    updater._write_json(snapshot, {"schema_version": 1, "records": records})
+    current = deepcopy(resource)
+    current["etag"] = "changed-etag"
+    youtube, ledger = FakeYoutube({binding.video_id: current}), tmp_path / "ledger.json"
+    code = updater.main(["--state", str(state), "--snapshot", str(snapshot), "--ledger", str(ledger), "--client-secrets", "client.json", "--apply", "--confirm-apply-description-update", "--max-updates", "1", "--slug", "alpha"], service_factory=lambda _: youtube)
+    assert code == 0 and len(youtube.videos_api.updates) == 1 and ledger.exists()
+
+
+def test_existing_2026_09_10_snapshot_uses_derived_stable_fingerprint() -> None:
+    snapshot = Path(__file__).parents[1] / "studio" / "work" / "youtube_description_backups" / "2026-09-10" / "snapshot.json"
+    record = updater.load_snapshot(snapshot)[0]
+    binding = _binding(record["slug"], record["language"], record["video_id"])
+    plan = updater._plan(binding, record)
+    assert "stable_fingerprint" not in record
+    assert plan["snapshot_fingerprint"] == updater.stable_resource_fingerprint(record["resource"])
 
 
 def test_apply_records_atomic_ledger_and_honors_limit(tmp_path: Path) -> None:

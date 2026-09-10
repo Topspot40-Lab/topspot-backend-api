@@ -66,6 +66,29 @@ def sha256_text(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
+def stable_resource_fingerprint(resource: dict[str, Any]) -> str:
+    """Fingerprint operator-meaningful video metadata, excluding API churn.
+
+    YouTube changes the top-level etag and can rotate snippet thumbnail URLs
+    without anyone changing the video metadata this workflow protects.
+    """
+    snippet = resource.get("snippet")
+    stable_snippet = (
+        {key: value for key, value in snippet.items() if key != "thumbnails"}
+        if isinstance(snippet, dict)
+        else snippet
+    )
+    return sha256_json(
+        {
+            "id": resource.get("id"),
+            "snippet": stable_snippet,
+            "status": resource.get("status"),
+            "localizations": resource.get("localizations"),
+            "recordingDetails": resource.get("recordingDetails"),
+        }
+    )
+
+
 def _valid_binding(value: Any, source: str) -> VideoBinding:
     if not isinstance(value, dict):
         raise ValueError(f"Invalid {source} mapping")
@@ -143,7 +166,7 @@ def _snapshot_records(bindings: Iterable[VideoBinding], remote: dict[str, dict[s
         snippet = resource.get("snippet")
         if not isinstance(snippet, dict) or not isinstance(snippet.get("description"), str):
             raise RuntimeError(f"Remote video lacks a description: {binding.video_id}")
-        records.append({"slug": binding.slug, "language": binding.language, "video_id": binding.video_id, "source": binding.source, "resource": resource, "fingerprint": sha256_json(resource)})
+        records.append({"slug": binding.slug, "language": binding.language, "video_id": binding.video_id, "source": binding.source, "resource": resource, "fingerprint": sha256_json(resource), "stable_fingerprint": stable_resource_fingerprint(resource)})
     return records
 
 
@@ -190,7 +213,11 @@ def _plan(binding: VideoBinding, record: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(snippet, dict) or not isinstance(snippet.get("description"), str):
         raise ValueError(f"Snapshot description is invalid for {binding.video_id}")
     desired, marker_present = desired_description(binding, snippet["description"])
-    return {"slug": binding.slug, "language": binding.language, "video_id": binding.video_id, "source": binding.source, "snapshot_fingerprint": record.get("fingerprint") or sha256_json(resource), "description_sha256": sha256_text(desired), "original_description_sha256": sha256_text(snippet["description"]), "canonical_url": canonical_url(binding.slug, binding.language), "marker_present": marker_present, "status": "already_applied" if marker_present else "ready", "desired_description": desired, "resource": resource}
+    # Derive the planned value from the immutable raw resource.  This keeps
+    # pre-stable-fingerprint snapshots (including 2026-09-10) compatible and
+    # prevents a stored fingerprint field from drifting from the raw snapshot.
+    snapshot_fingerprint = stable_resource_fingerprint(resource)
+    return {"slug": binding.slug, "language": binding.language, "video_id": binding.video_id, "source": binding.source, "snapshot_fingerprint": snapshot_fingerprint, "description_sha256": sha256_text(desired), "original_description_sha256": sha256_text(snippet["description"]), "canonical_url": canonical_url(binding.slug, binding.language), "marker_present": marker_present, "status": "already_applied" if marker_present else "ready", "desired_description": desired, "resource": resource}
 
 
 def _load_ledger(path: Path) -> dict[str, Any]:
@@ -317,7 +344,7 @@ def main(argv: list[str] | None = None, *, service_factory: Callable[[Path], Any
         if plan["status"] == "already_applied" or updates >= args.max_updates:
             continue
         current = remote[plan["video_id"]]
-        if sha256_json(current) != plan["snapshot_fingerprint"]:
+        if stable_resource_fingerprint(current) != plan["snapshot_fingerprint"]:
             plan["status"] = "fingerprint_conflict"
             continue
         try:
