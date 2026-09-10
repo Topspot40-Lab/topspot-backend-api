@@ -77,9 +77,51 @@ def test_localized_intro_preserves_existing_description_exactly(language: str, e
     binding = _binding("alpha", language, "abcdefghijk")
     original = "Original\r\ntext\n\nunchanged"
     desired, present = updater.desired_description(binding, original)
-    assert desired.startswith(expected)
+    assert desired.startswith("🎵 " + expected)
     assert desired.endswith(original)
     assert present is False
+
+
+@pytest.mark.parametrize("language", ["en", "es", "pt-BR"])
+def test_all_localized_introductions_contain_approved_music_symbol(language: str) -> None:
+    assert updater.INTRODUCTIONS[language].startswith("🎵 ")
+
+
+@pytest.mark.parametrize("language", ["en", "es", "pt-BR"])
+def test_old_non_emoji_pilot_introduction_is_upgraded_without_duplication(language: str) -> None:
+    binding = _binding("alpha", language, "abcdefghijk")
+    marker = updater.canonical_url(binding.slug, binding.language)
+    original_description = "Original description beneath the introduction."
+    old_introduction = updater.OLD_INTRODUCTIONS[language].format(url=marker)
+    approved_introduction = updater.INTRODUCTIONS[language].format(url=marker)
+
+    desired, present = updater.desired_description(binding, old_introduction + original_description)
+
+    assert present is False
+    assert desired == approved_introduction + original_description
+    assert desired.count(approved_introduction) == 1
+
+
+@pytest.mark.parametrize("language", ["en", "es", "pt-BR"])
+def test_complete_approved_emoji_introduction_remains_unchanged(language: str) -> None:
+    binding = _binding("alpha", language, "abcdefghijk")
+    original = updater.INTRODUCTIONS[language].format(url=updater.canonical_url("alpha", language)) + "Legacy description"
+
+    desired, present = updater.desired_description(binding, original)
+
+    assert present is True
+    assert desired == original
+
+
+def test_unrelated_canonical_url_occurrence_is_not_destructively_rewritten() -> None:
+    binding = _binding("alpha", "en", "abcdefghijk")
+    marker = updater.canonical_url(binding.slug, binding.language)
+    original = f"For more details, see {marker}.\n\nOriginal description."
+
+    desired, present = updater.desired_description(binding, original)
+
+    assert present is False
+    assert desired == updater.INTRODUCTIONS["en"].format(url=marker) + original
 
 
 def test_inventory_uses_current_state_and_rejects_conflicting_supplement(tmp_path: Path) -> None:
@@ -111,6 +153,50 @@ def test_adele_marker_is_idempotent() -> None:
     original = updater.INTRODUCTIONS["en"].format(url=updater.canonical_url("adele", "en")) + "Legacy description"
     desired, present = updater.desired_description(binding, original)
     assert present and desired == original
+
+
+def test_write_json_atomic_retries_transient_replace_permission_error(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    path = tmp_path / "ledger.json"
+    original_replace = updater.os.replace
+    attempts = 0
+
+    def transient_permission_error(source: Path, destination: Path) -> None:
+        nonlocal attempts
+        attempts += 1
+        if attempts == 1:
+            raise PermissionError("temporarily locked")
+        original_replace(source, destination)
+
+    monkeypatch.setattr(updater.os, "replace", transient_permission_error)
+    monkeypatch.setattr(updater.time, "sleep", lambda _: None)
+
+    updater._write_json_atomic(path, {"status": "saved"})
+
+    assert attempts == 2
+    assert json.loads(path.read_text(encoding="utf-8")) == {"status": "saved"}
+    assert not path.with_suffix(".json.tmp").exists()
+
+
+def test_write_json_atomic_preserves_recovery_data_on_permanent_replace_failure(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    path = tmp_path / "ledger.json"
+    path.write_text('{"status": "old"}\n', encoding="utf-8")
+    attempts = 0
+
+    def permanent_permission_error(source: Path, destination: Path) -> None:
+        nonlocal attempts
+        attempts += 1
+        raise PermissionError("locked")
+
+    monkeypatch.setattr(updater.os, "replace", permanent_permission_error)
+    monkeypatch.setattr(updater.time, "sleep", lambda _: None)
+
+    with pytest.raises(PermissionError, match="locked"):
+        updater._write_json_atomic(path, {"status": "new"})
+
+    recovery = path.with_suffix(".json.tmp")
+    assert attempts == updater.ATOMIC_WRITE_REPLACE_ATTEMPTS
+    assert json.loads(path.read_text(encoding="utf-8")) == {"status": "old"}
+    assert json.loads(recovery.read_text(encoding="utf-8")) == {"status": "new"}
 
 
 def test_update_body_preserves_mutable_snippet_and_avoids_status() -> None:

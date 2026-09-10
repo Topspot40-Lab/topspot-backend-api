@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import os
+import time
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -26,10 +27,13 @@ REMOTE_PARTS = "snippet,status,localizations,recordingDetails"
 MAX_OPERATIONAL_BATCH = 50
 
 INTRODUCTIONS = {
-    "en": "Explore TopSpot40 free: {url}\n\nRediscover the music of your life through decades, genres, artists and the stories behind the songs.\n\n",
-    "es": "Explora TopSpot40 gratis: {url}\n\nRedescubre la música de tu vida a través de décadas, géneros, artistas e historias.\n\n",
-    "pt-BR": "Explore o TopSpot40 gratuitamente: {url}\n\nRedescubra a música da sua vida através de décadas, gêneros, artistas e histórias.\n\n",
+    "en": "🎵 Explore TopSpot40 free: {url}\n\nRediscover the music of your life through decades, genres, artists and the stories behind the songs.\n\n",
+    "es": "🎵 Explora TopSpot40 gratis: {url}\n\nRedescubre la música de tu vida a través de décadas, géneros, artistas e historias.\n\n",
+    "pt-BR": "🎵 Explore o TopSpot40 gratuitamente: {url}\n\nRedescubra a música da sua vida através de décadas, gêneros, artistas e histórias.\n\n",
 }
+OLD_INTRODUCTIONS = {language: introduction.removeprefix("🎵 ") for language, introduction in INTRODUCTIONS.items()}
+ATOMIC_WRITE_REPLACE_ATTEMPTS = 3
+ATOMIC_WRITE_RETRY_DELAY_SECONDS = 0.05
 
 # These are operator-approved exceptions to the release-state source.  Keep this
 # intentionally small and reviewed: a supplemental mapping is never inferred.
@@ -53,9 +57,13 @@ def canonical_url(slug: str, language: str) -> str:
 def desired_description(binding: VideoBinding, description: str) -> tuple[str, bool]:
     """Return (desired, already_has_exact_canonical_marker)."""
     marker = canonical_url(binding.slug, binding.language)
-    if marker in description:
+    introduction = INTRODUCTIONS[binding.language].format(url=marker)
+    if introduction in description:
         return description, True
-    return INTRODUCTIONS[binding.language].format(url=marker) + description, False
+    old_introduction = OLD_INTRODUCTIONS[binding.language].format(url=marker)
+    if old_introduction in description:
+        return description.replace(old_introduction, introduction, 1), False
+    return introduction + description, False
 
 
 def sha256_json(value: Any) -> str:
@@ -265,7 +273,16 @@ def _write_json_atomic(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     _write_json(temporary, payload)
-    os.replace(temporary, path)
+    for attempt in range(ATOMIC_WRITE_REPLACE_ATTEMPTS):
+        try:
+            os.replace(temporary, path)
+            return
+        except PermissionError:
+            if attempt == ATOMIC_WRITE_REPLACE_ATTEMPTS - 1:
+                # Leave the fully written temporary file available for manual
+                # recovery rather than losing the only durable new payload.
+                raise
+            time.sleep(ATOMIC_WRITE_RETRY_DELAY_SECONDS)
 
 
 def _positive_at_most_50(value: str) -> int:
