@@ -27,7 +27,7 @@ from backend.services.radio_runtime import (
 from backend.config.playback_block_config import MIN_TRACKS_PER_BLOCK
 from backend.services.decade_genre_loader import load_decade_genre_rows
 from backend.services.block_builder import build_track_block
-from backend.state.playback_state import mark_playing, update_phase
+from backend.state.playback_state import begin_track, mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
 from backend.state.playback_runtime import current_runtime, current_user_id
@@ -456,6 +456,7 @@ async def run_all_radio_sequence(
                         "year": track.year_released,
                         "album_artwork": track.album_artwork,
                         "artist_artwork": artist.artist_artwork,
+                        "duration_ms": track.duration_ms,
                     },
                 )
 
@@ -573,6 +574,10 @@ async def run_all_radio_sequence(
                     "year": track.year_released,
                     "album_artwork": track.album_artwork,
                     "artist_artwork": artist.artist_artwork,
+                    # build_track_block already requires this authoritative
+                    # Spotify duration. Keep it on every radio status frame,
+                    # including prelude/set_intro and the final track frame.
+                    "duration_ms": track.duration_ms,
                     "bed_bucket": BED_BUCKET,
                     "bed_key": set_bed_key,
                     "bed_audio_url": set_bed_audio_url,
@@ -722,13 +727,20 @@ async def run_all_radio_sequence(
                 # ───────── TRACK ─────────
                 if track.spotify_track_id:
                     track_done_event(user_id).clear()
+                    # The track duration plus this start timestamp are the
+                    # authoritative clock; never expose the default epoch.
+                    begin_track(user_id, (track.duration_ms or 0) / 1000.0)
 
                     update_phase(
                         user_id,
                         "track",
+                        is_playing=True,
+                        stopped=False,
                         track_name=track.track_name,
                         artist_name=artist.artist_name,
                         current_rank=rank,
+                        current_ranking_id=tr_rank.id,
+                        spotify_track_id=track.spotify_track_id,
                         context={
                             **radio_context,
 

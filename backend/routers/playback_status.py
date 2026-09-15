@@ -131,7 +131,7 @@ def _sanitize_diagnostic_state(value: Any) -> Any:
 def update_track_clock(user_id: str):
     s = get_playback_status(user_id)
     if s.is_playing and s.phase == "track":
-        if s.track_start_ts is None:
+        if not isinstance(s.track_start_ts, (int, float)) or s.track_start_ts <= 0:
             s.track_elapsed_seconds = 0
         else:
             s.track_elapsed_seconds = time.time() - s.track_start_ts
@@ -205,6 +205,12 @@ async def get_status():
 
         "elapsedMs": elapsed_ms,
         "durationMs": duration_ms,
+        "trackStartedAtMs": (
+            int(snap["track_start_ts"] * 1000)
+            if phase == "track" and isinstance(snap.get("track_start_ts"), (int, float))
+            and snap["track_start_ts"] > 0
+            else None
+        ),
         "progress": progress,
 
         "context": ctx,

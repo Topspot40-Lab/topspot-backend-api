@@ -286,7 +286,7 @@ async def spotify_callback(request: Request):
         #secure=True,  # True if HTTPS, uncomment this when in production
         secure=config["SECURE_COOKIE"],
         #samesite="lax", # might have to change to "none" in production
-        samesite="none",# Uncomment for production
+        samesite=config["SAMESITE"],
         max_age=JWT_EXP_DELTA_SECONDS,
         path="/",
         domain=config["COOKIE_DOMAIN"],

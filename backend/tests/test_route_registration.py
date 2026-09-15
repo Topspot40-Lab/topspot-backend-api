@@ -20,6 +20,7 @@ EXPECTED_MOUNTED_ROUTES = {
     ("GET", "/artist-spotlight/artist-story"),
     ("POST", "/artist-spotlight/play-artist-story"),
     ("GET", "/playback/status"),
+    ("POST", "/playback/guest-session"),
     ("POST", "/playback/client-diagnostic"),
     ("POST", "/playback/narration-finished"),
     ("POST", "/playback/track-finished"),
