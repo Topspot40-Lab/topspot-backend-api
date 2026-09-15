@@ -1,13 +1,30 @@
 # backend/isaiah/isaiah_helper.py
 import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 def get_env_config():
     """
     Returns backend configuration for cookies.
     """
+    environment = os.getenv("TOPSPOT_ENV", "production").strip().lower()
+    if environment in {"local", "development", "dev"}:
+        return {
+            "COOKIE_DOMAIN": None,
+            "SECURE_COOKIE": False,
+            # localhost:5173 and localhost:8000 are same-site. Browsers reject
+            # SameSite=None cookies that are not Secure.
+            "SAMESITE": "lax",
+        }
+
     return {
-        "COOKIE_DOMAIN": ".topspot40.com",  # set "topspot40.com" for production if needed, None if local
-        "SECURE_COOKIE": True  # set True if using HTTPS in production, False if local
+        "COOKIE_DOMAIN": ".topspot40.com",
+        "SECURE_COOKIE": True,
+        "SAMESITE": "none",
     }
 
 def get_spotify_redirect_uri(local: bool = True):

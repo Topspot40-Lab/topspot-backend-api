@@ -7,6 +7,7 @@ from backend.routers.catalog import router as catalog_router
 
 # 🎵 Playback & Car-Mode routers
 from backend.routers.playback_status import router as playback_status_router
+from backend.routers.playback_guest import router as playback_guest_router
 from backend.routers.playback_control import router as playback_control_router
 from backend.routers.decade_genre_player import router as decade_genre_player_router
 from backend.routers.collections_player import router as collections_player_router
@@ -88,6 +89,7 @@ app.include_router(artist_spotlight_router)
 
 # 🚗 Car-Mode + Playback
 app.include_router(playback_status_router)
+app.include_router(playback_guest_router)
 app.include_router(decade_genre_player_router)
 app.include_router(collections_player_router)
 app.include_router(decade_genre_pause_router)

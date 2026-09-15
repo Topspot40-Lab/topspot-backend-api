@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import asyncio
+import time
 from dataclasses import asdict, dataclass, field, is_dataclass
 from typing import Any
 
 from fastapi import Cookie, HTTPException
 
-from backend.isaiah.jwt_session import decode_jwt_token
+from backend.isaiah.jwt_session import decode_jwt_token, decode_playback_guest_token
 
 
 @dataclass
@@ -24,6 +25,7 @@ class PlaybackRuntime:
 
 runtime_by_user: dict[str, PlaybackRuntime] = {}
 _task_user: dict[asyncio.Task, str] = {}
+GUEST_RUNTIME_IDLE_SECONDS = 60 * 60 * 6
 
 
 def _new_runtime() -> PlaybackRuntime:
@@ -45,11 +47,26 @@ def get_runtime_for_user(user_id: str) -> PlaybackRuntime:
     return runtime
 
 
-def user_id_from_token(access_token: str | None) -> str:
+def account_identity_from_token(access_token: str | None) -> str | None:
     payload = decode_jwt_token(access_token) if access_token else None
     if not payload or not payload.get("user_id"):
-        raise HTTPException(status_code=401, detail="Invalid or missing session")
-    return str(payload["user_id"])
+        return None
+    return f"user:{payload['user_id']}"
+
+
+def guest_identity_from_token(playback_guest: str | None) -> str | None:
+    payload = decode_playback_guest_token(playback_guest) if playback_guest else None
+    if not payload:
+        return None
+    return f"guest:{payload['guest_id']}"
+
+
+def resolve_playback_identity(access_token: str | None, playback_guest: str | None) -> str:
+    """Resolve an authenticated account first, then a signed guest identity."""
+    identity = account_identity_from_token(access_token) or guest_identity_from_token(playback_guest)
+    if not identity:
+        raise HTTPException(status_code=401, detail="Invalid or missing playback session")
+    return identity
 
 
 def bind_task(task: asyncio.Task, user_id: str) -> None:
@@ -71,8 +88,35 @@ def bind_current_task(user_id: str) -> str:
     return str(user_id)
 
 
-async def bind_request_user(access_token: str | None = Cookie(None)) -> str:
-    return bind_current_task(user_id_from_token(access_token))
+async def bind_request_user(
+        access_token: str | None = Cookie(None),
+        playback_guest: str | None = Cookie(None),
+) -> str:
+    cleanup_inactive_guest_runtimes()
+    return bind_current_task(resolve_playback_identity(access_token, playback_guest))
+
+
+def cleanup_inactive_guest_runtimes(now: float | None = None) -> None:
+    """Bound anonymous in-memory state without ever touching account runtimes."""
+    from backend.state.playback_flags import flags_by_user
+    from backend.state.playback_state import statuses
+    from backend.state.narration import narration_done_events, track_done_events
+
+    current_time = time.time() if now is None else now
+    for identity, runtime in list(runtime_by_user.items()):
+        if not identity.startswith("guest:"):
+            continue
+        status = statuses.get(identity)
+        last_action = getattr(status, "last_action_ts", 0.0) if status else 0.0
+        if current_time - last_action < GUEST_RUNTIME_IDLE_SECONDS:
+            continue
+        if runtime.current_task and not runtime.current_task.done():
+            runtime.current_task.cancel()
+        runtime_by_user.pop(identity, None)
+        statuses.pop(identity, None)
+        flags_by_user.pop(identity, None)
+        narration_done_events.pop(identity, None)
+        track_done_events.pop(identity, None)
 
 
 def current_user_id() -> str:

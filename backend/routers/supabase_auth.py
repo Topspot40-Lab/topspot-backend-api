@@ -101,7 +101,7 @@ def _session_response(
         value=create_jwt_token(topspot_user_id),
         httponly=True,
         secure=cookie_config["SECURE_COOKIE"],
-        samesite="none",
+        samesite=cookie_config["SAMESITE"],
         max_age=JWT_EXP_DELTA_SECONDS,
         path="/",
         domain=cookie_config["COOKIE_DOMAIN"],
@@ -122,7 +122,7 @@ def logout():
         domain=cookie_config["COOKIE_DOMAIN"],
         secure=cookie_config["SECURE_COOKIE"],
         httponly=True,
-        samesite="none",
+        samesite=cookie_config["SAMESITE"],
     )
 
     return response
