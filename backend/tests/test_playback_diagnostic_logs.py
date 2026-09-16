@@ -156,3 +156,46 @@ async def test_track_finished_logs_only_identifier_presence_and_preserves_comple
     assert "has_ranking_id=True has_spotify_track=True" in message
     assert "spotify-track-sentinel" not in message
     assert "314159" not in message
+
+
+@pytest.mark.asyncio
+async def test_skip_track_advances_an_active_track_without_a_minimum_age(monkeypatch):
+    user_id = "playback-explicit-skip-test"
+    status = playback_state.get_status(user_id)
+    status.phase = "track"
+    status.track_start_ts = time.time()
+
+    class Event:
+        set_called = False
+
+        def set(self):
+            self.set_called = True
+
+    event = Event()
+    monkeypatch.setattr(playback_status, "current_user_id", lambda: user_id)
+    monkeypatch.setattr(playback_status, "track_done_event", lambda _: event)
+
+    try:
+        assert await playback_status.skip_track() == {"ok": True, "skipped": True}
+    finally:
+        playback_state.statuses.pop(user_id, None)
+
+    assert event.set_called is True
+
+
+@pytest.mark.asyncio
+async def test_skip_track_is_ignored_outside_the_track_phase(monkeypatch):
+    user_id = "playback-explicit-skip-phase-test"
+    status = playback_state.get_status(user_id)
+    status.phase = "intro"
+
+    monkeypatch.setattr(playback_status, "current_user_id", lambda: user_id)
+
+    try:
+        assert await playback_status.skip_track() == {
+            "ok": True,
+            "ignored": True,
+            "reason": "not_in_track_phase",
+        }
+    finally:
+        playback_state.statuses.pop(user_id, None)
