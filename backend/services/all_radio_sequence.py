@@ -23,6 +23,7 @@ from backend.services.decade_genre_sequence import (
 from backend.services.radio_runtime import (
     build_intro_jobs,
     narration_keys_for,
+    short_detail_keys_for,
 )
 from backend.config.playback_block_config import MIN_TRACKS_PER_BLOCK
 from backend.services.decade_genre_loader import load_decade_genre_rows
@@ -36,6 +37,55 @@ from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
 from backend.services.audio_urls import resolve_audio_ref
 
 logger = logging.getLogger(__name__)
+
+
+def detail_audio_keys_for_radio(*, detail_length: str, lang: str, track, decade_genre_id: int | None, artist):
+    """Use the same short/full narration asset resolvers as normal playback."""
+    if detail_length == "short":
+        return short_detail_keys_for(
+            lang=lang,
+            track=track,
+            decade_genre_id=decade_genre_id,
+        )
+    detail_bucket, detail_key, _, _ = narration_keys_for(
+        lang=lang,
+        track=track,
+        artist=artist,
+        decade_genre_id=decade_genre_id,
+    )
+    return detail_bucket, detail_key
+
+
+def radio_artist_identity(artist) -> str:
+    """Match the established primary-artist-once-per-session behavior."""
+    spotify_artist_id = getattr(artist, "spotify_artist_id", None)
+    if spotify_artist_id:
+        return f"spotify:{spotify_artist_id}"
+    artist_id = getattr(artist, "id", None)
+    if artist_id is not None:
+        return f"artist:{artist_id}"
+    return f"artist-name:{getattr(artist, 'artist_name', '').strip().lower()}"
+
+
+def selected_radio_narration_phases(
+        *,
+        first_track: bool,
+        play_intro: bool,
+        has_intro: bool,
+        play_detail: bool,
+        has_detail: bool,
+        play_artist: bool,
+        has_artist: bool,
+) -> list[str]:
+    """The authoritative phase order, shared by every radio track and set."""
+    phases: list[str] = ["set_intro"] if first_track else []
+    if play_intro and has_intro:
+        phases.append("intro")
+    if play_detail and has_detail:
+        phases.append("detail")
+    if play_artist and has_artist:
+        phases.append("artist")
+    return phases
 
 VALID_BUCKETS_CACHE = None
 
@@ -166,6 +216,7 @@ async def run_all_radio_sequence(
         genre_filter: str | None = None,
         play_intro: bool = True,
         play_detail: bool = True,
+        detail_length: str = "long",
         play_artist_description: bool = False,
         voice_style: str = "before",   # ✅ ADD THIS
 ):
@@ -199,13 +250,17 @@ async def run_all_radio_sequence(
     voices = selection.get("voices", [])
 
     play_intro = "intro" in voices
-    play_detail = "detail" in voices
+    detail_length = selection.get("detail_length", detail_length)
+    if detail_length not in {"off", "short", "long"}:
+        detail_length = "long" if play_detail else "off"
+    play_detail = "detail" in voices and detail_length != "off"
     play_artist = "artist" in voices
 
     logger.debug(
-        "🎛️ RADIO FLAGS | intro=%s detail=%s artist=%s",
+        "🎛️ RADIO FLAGS | intro=%s detail=%s detail_length=%s artist=%s",
         play_intro,
         play_detail,
+        detail_length,
         play_artist
     )
 
@@ -218,6 +273,7 @@ async def run_all_radio_sequence(
     """
 
     logger.info("📻 ALL-ALL RADIO MODE START")
+    played_artist_ids: set[str] = set()
 
     status.stopped = False
     status.cancel_requested = False
@@ -479,23 +535,28 @@ async def run_all_radio_sequence(
                         decade_genre_id=tr_rank.decade_genre_id,
                     )
 
-                    detail_by_lang[narration_lang] = (dbucket, dkey)
+                    detail_by_lang[narration_lang] = detail_audio_keys_for_radio(
+                        detail_length=detail_length,
+                        lang=narration_lang,
+                        track=track,
+                        artist=artist,
+                        decade_genre_id=tr_rank.decade_genre_id,
+                    )
                     artist_by_lang[narration_lang] = (abucket, akey)
 
+                artist_identity = radio_artist_identity(artist)
+                play_artist_for_track = play_artist and artist_identity not in played_artist_ids
+
                 # 🎯 Determine last narration phase for this track
-                selected_phases = []
-
-                if idx == 1:
-                    selected_phases.append("set_intro")
-
-                if play_intro and any(intro_jobs_by_lang.values()):
-                    selected_phases.append("intro")
-
-                if play_detail and any(bucket and key for bucket, key in detail_by_lang.values()):
-                    selected_phases.append("detail")
-
-                if play_artist and any(bucket and key for bucket, key in artist_by_lang.values()):
-                    selected_phases.append("artist")
+                selected_phases = selected_radio_narration_phases(
+                    first_track=idx == 1,
+                    play_intro=play_intro,
+                    has_intro=any(intro_jobs_by_lang.values()),
+                    play_detail=play_detail,
+                    has_detail=any(bucket and key for bucket, key in detail_by_lang.values()),
+                    play_artist=play_artist_for_track,
+                    has_artist=any(bucket and key for bucket, key in artist_by_lang.values()),
+                )
 
                 status.last_narration_phase = selected_phases[-1] if selected_phases else None
 
@@ -514,7 +575,11 @@ async def run_all_radio_sequence(
                         )
 
                         intro_text = getattr(tr_rank, "intro", None)
-                        detail_text = getattr(track, "detail", None)
+                        detail_text = (
+                            getattr(track, "short_detail", None)
+                            if detail_length == "short"
+                            else getattr(track, "detail", None)
+                        )
                         artist_text = getattr(artist, "artist_description", None)
 
                         if locale_code != "en":
@@ -543,8 +608,13 @@ async def run_all_radio_sequence(
                             if ranking_locale and ranking_locale.intro_text:
                                 intro_text = ranking_locale.intro_text
 
-                            if track_locale and track_locale.detail_text:
-                                detail_text = track_locale.detail_text
+                            localized_detail = (
+                                getattr(track_locale, "short_detail_text", None)
+                                if detail_length == "short"
+                                else getattr(track_locale, "detail_text", None)
+                            )
+                            if localized_detail:
+                                detail_text = localized_detail
 
                             if artist_locale and artist_locale.artist_description_text:
                                 artist_text = artist_locale.artist_description_text
@@ -578,6 +648,7 @@ async def run_all_radio_sequence(
                     # Spotify duration. Keep it on every radio status frame,
                     # including prelude/set_intro and the final track frame.
                     "duration_ms": track.duration_ms,
+                    "detail_length": detail_length,
                     "bed_bucket": BED_BUCKET,
                     "bed_key": set_bed_key,
                     "bed_audio_url": set_bed_audio_url,
@@ -695,7 +766,7 @@ async def run_all_radio_sequence(
                         )
 
                 # ───────── ARTIST ─────────
-                if play_artist:
+                if play_artist_for_track:
                     artist_audio_queue = []
 
                     for narration_lang in langs:
@@ -723,6 +794,7 @@ async def run_all_radio_sequence(
                             voice_style="before",
                             extra_context=radio_context,
                         )
+                        played_artist_ids.add(artist_identity)
 
                 # ───────── TRACK ─────────
                 if track.spotify_track_id:

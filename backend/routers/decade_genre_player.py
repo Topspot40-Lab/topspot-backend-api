@@ -181,6 +181,7 @@ def start_radio_mode(
         play_detail,
         play_artist_description,
         voice_style,
+        detail_length,
 ):
     status = current_runtime().status
 
@@ -192,7 +193,8 @@ def start_radio_mode(
                 ("detail", play_detail),
                 ("artist", play_artist_description),
             ] if enabled
-        ]
+        ],
+        "detail_length": detail_length,
     }
 
     logger.info("✅ status.selection set: %s", status.selection)
@@ -224,6 +226,7 @@ async def play_sequence_decade_genre(
         languages: str | None = Query(None),
         play_intro: bool = Query(True),
         play_detail: bool = Query(True),
+        detail_length: Literal["off", "short", "long"] | None = Query(None),
         play_artist_description: bool = Query(True),
         play_track: bool = Query(True),
         voice_style: Literal["before", "over"] = Query("before"),
@@ -268,13 +271,18 @@ async def play_sequence_decade_genre(
         logger.info(f"🧪 RADIO MODE: ALL/{genre}")
 
         genre_filter = None if genre == "ALL" else genre
+        # Legacy callers only send play_detail. Their true value keeps the
+        # previous canonical (full/long) detail; false remains Details Off.
+        radio_detail_length = detail_length or ("long" if play_detail else "off")
+        radio_play_detail = radio_detail_length != "off"
 
         start_radio_mode(
             tts_languages[0],
             play_intro,
-            play_detail,
+            radio_play_detail,
             play_artist_description,
             voice_style,
+            radio_detail_length,
         )
 
         await start_new_sequence(
@@ -283,8 +291,9 @@ async def play_sequence_decade_genre(
                 tts_language=tts_languages[0],
                 tts_languages=tts_languages,
                 play_intro=play_intro,
-                play_detail=play_detail,
+                play_detail=radio_play_detail,
                 play_artist_description=play_artist_description,
+                detail_length=radio_detail_length,
                 voice_style=voice_style,
             )
         )
