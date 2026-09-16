@@ -87,6 +87,29 @@ def selected_radio_narration_phases(
         phases.append("artist")
     return phases
 
+def resolve_radio_narration_policy(
+        status,
+        *,
+        default_play_detail: bool,
+        default_detail_length: str,
+) -> tuple[bool, bool, str, bool]:
+    """Snapshot the current radio narration policy for one complete set."""
+    selection = getattr(status, "selection", {}) or {}
+    voices = selection.get("voices", [])
+
+    play_intro = "intro" in voices
+    detail_length = selection.get("detail_length", default_detail_length)
+    if detail_length not in {"off", "short", "long"}:
+        detail_length = "long" if default_play_detail else "off"
+
+    return (
+        play_intro,
+        "detail" in voices and detail_length != "off",
+        detail_length,
+        "artist" in voices,
+    )
+
+
 VALID_BUCKETS_CACHE = None
 
 import random
@@ -244,26 +267,11 @@ async def run_all_radio_sequence(
 
     logger.info("🌎 RADIO LANGUAGES: %s", langs)
 
-    # 🎛️ Get selection from playback state (set by frontend)
-    selection = getattr(status, "selection", {}) or {}
-
-    voices = selection.get("voices", [])
-
-    play_intro = "intro" in voices
-    detail_length = selection.get("detail_length", detail_length)
-    if detail_length not in {"off", "short", "long"}:
-        detail_length = "long" if play_detail else "off"
-    play_detail = "detail" in voices and detail_length != "off"
-    play_artist = "artist" in voices
-
-    logger.debug(
-        "🎛️ RADIO FLAGS | intro=%s detail=%s detail_length=%s artist=%s",
-        play_intro,
-        play_detail,
-        detail_length,
-        play_artist
+    play_intro, play_detail, detail_length, play_artist = resolve_radio_narration_policy(
+        status,
+        default_play_detail=play_detail,
+        default_detail_length=detail_length,
     )
-
 
     """
     ALL / ALL radio mode.
@@ -310,6 +318,20 @@ async def run_all_radio_sequence(
     try:
 
         while True:
+            # Snapshot the latest selection only at the set boundary. Changes
+            # made during a set are intentionally deferred until the next set.
+            play_intro, play_detail, detail_length, play_artist = resolve_radio_narration_policy(
+                status,
+                default_play_detail=play_detail,
+                default_detail_length=detail_length,
+            )
+            logger.debug(
+                "🎛️ RADIO SET POLICY | intro=%s detail=%s detail_length=%s artist=%s",
+                play_intro,
+                play_detail,
+                detail_length,
+                play_artist,
+            )
 
             # ─────────────────────────────
             # BUILD VALID BUCKET LIST
