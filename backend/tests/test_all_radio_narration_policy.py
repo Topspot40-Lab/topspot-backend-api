@@ -1,3 +1,4 @@
+import asyncio
 from types import SimpleNamespace
 
 from backend.routers import decade_genre_player
@@ -65,3 +66,58 @@ def test_radio_phase_policy_honors_details_and_artist_combinations():
     assert phases(first_track=True, play_intro=True, has_intro=True, play_detail=True, has_detail=True, play_artist=True, has_artist=True) == [
         "set_intro", "intro", "detail", "artist"
     ]
+
+
+def test_radio_policy_update_is_queued_for_the_next_set(monkeypatch):
+    status = SimpleNamespace(
+        selection={"voices": ["intro", "detail"], "detail_length": "short"}
+    )
+    monkeypatch.setattr(
+        decade_genre_player,
+        "current_runtime",
+        lambda: SimpleNamespace(status=status),
+    )
+
+    current_set_policy = all_radio_sequence.resolve_radio_narration_policy(
+        status,
+        default_play_detail=True,
+        default_detail_length="long",
+    )
+
+    result = asyncio.run(
+        decade_genre_player.update_radio_narration_policy(
+            decade_genre_player.RadioNarrationPolicyRequest(
+                detail_length="long",
+                artist_stories_enabled=True,
+            )
+        )
+    )
+
+    assert current_set_policy == (True, True, "short", False)
+    assert status.selection == {
+        "voices": ["intro", "detail", "artist"],
+        "detail_length": "long",
+    }
+    assert result["applies_at"] == "next_set"
+
+    next_set_policy = all_radio_sequence.resolve_radio_narration_policy(
+        status,
+        default_play_detail=True,
+        default_detail_length="short",
+    )
+    assert next_set_policy == (True, True, "long", True)
+
+
+def test_radio_policy_can_turn_details_and_artist_bios_off():
+    status = SimpleNamespace(
+        selection={
+            "voices": ["intro"],
+            "detail_length": "off",
+        }
+    )
+
+    assert all_radio_sequence.resolve_radio_narration_policy(
+        status,
+        default_play_detail=True,
+        default_detail_length="long",
+    ) == (True, False, "off", False)

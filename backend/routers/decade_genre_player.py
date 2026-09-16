@@ -6,6 +6,7 @@ from typing import Literal
 import asyncio
 
 from fastapi import APIRouter, Query, Depends
+from pydantic import BaseModel
 from sqlmodel import select
 from backend.services.all_radio_sequence import run_all_radio_sequence
 
@@ -209,6 +210,41 @@ def start_radio_mode(
     flags.current_rank = None
     flags.lang = tts_language
     flags.voice_style = voice_style
+
+
+class RadioNarrationPolicyRequest(BaseModel):
+    detail_length: Literal["off", "short", "long"]
+    artist_stories_enabled: bool
+
+
+@router.post("/radio-narration-policy", dependencies=[Depends(bind_request_user)])
+async def update_radio_narration_policy(payload: RadioNarrationPolicyRequest):
+    """Queue narration choices for the next radio set boundary."""
+    status = current_runtime().status
+    current_selection = getattr(status, "selection", {}) or {}
+    current_voices = current_selection.get("voices", [])
+
+    voices = ["intro"] if "intro" in current_voices else []
+    if payload.detail_length != "off":
+        voices.append("detail")
+    if payload.artist_stories_enabled:
+        voices.append("artist")
+
+    status.selection = {
+        "voices": voices,
+        "detail_length": payload.detail_length,
+    }
+
+    logger.info(
+        "Queued radio narration policy for next set: detail_length=%s artist=%s",
+        payload.detail_length,
+        payload.artist_stories_enabled,
+    )
+    return {
+        "status": "queued",
+        "applies_at": "next_set",
+        "selection": status.selection,
+    }
 
 
 # ─────────────────────────────────────────────
@@ -664,7 +700,6 @@ async def get_sequence_decade_genre(
         "tracks": tracks,
     }
 
-from pydantic import BaseModel
 from typing import List
 
 
