@@ -63,6 +63,23 @@ def _normalize_tts_locale(language: str | None) -> str:
         return "pt-BR"
     return "en"
 
+
+def _collection_radio_detail_length(payload: dict, voices: list[str]) -> str:
+    """Read the radio detail choice without silently turning Short into Long."""
+    selection = payload.get("selection") or {}
+    context = payload.get("context") or {}
+    value = (
+        selection.get("detail_length")
+        or selection.get("detailLength")
+        or context.get("detail_length")
+        or context.get("detailLength")
+    )
+    if value is None:
+        return "long" if "detail" in voices else "off"
+    if value not in {"off", "short", "long"}:
+        raise HTTPException(status_code=422, detail="detail_length must be one of: off, short, long")
+    return value
+
 # 🔒 Global playback sequence lock — prevents overlapping launches
 # Try loading skip_event if available
 try:
@@ -90,7 +107,9 @@ async def _run_sequence_guarded(coro):
         logger.info("🛑 Sequence CANCELLED")
         raise
     except Exception:
-        logger.error("playback_sequence_failed operation=sequence_runner")
+        # Keep the stable event label for log queries, but never discard the
+        # exception that identifies which publisher failed inside a sequence.
+        logger.exception("playback_sequence_failed operation=sequence_runner")
 
 
 def cancel_for_skip() -> None:
@@ -469,11 +488,70 @@ async def play_track(payload: dict):
     elif context.get("type") == "collection_radio":
         from backend.services.collections_radio_sequence import run_collections_radio_sequence
 
+        detail_length = _collection_radio_detail_length(payload, selection.voices)
+
         collection_group_slug = (
                 context.get("collection_group_slug")
                 or context.get("collectionGroupSlug")
                 or context.get("collection_group")
                 or "ALL"
+        )
+
+        explicit_groups_present = "collection_group_slugs" in context
+        explicit_groups = context.get("collection_group_slugs")
+        normalized_groups: list[str] | None = None
+
+        if explicit_groups_present:
+            if not isinstance(explicit_groups, list):
+                raise HTTPException(status_code=422, detail="collection_group_slugs must be a list of Collection Group slugs")
+
+            normalized_groups = []
+            for value in explicit_groups:
+                if not isinstance(value, str):
+                    raise HTTPException(status_code=422, detail="collection_group_slugs must contain only strings")
+                slug = value.strip().lower()
+                if not slug or slug == "all":
+                    raise HTTPException(status_code=422, detail="collection_group_slugs must contain concrete Collection Group slugs")
+                if slug not in normalized_groups:
+                    normalized_groups.append(slug)
+
+            if not normalized_groups:
+                raise HTTPException(status_code=422, detail="collection_group_slugs cannot be empty")
+
+            if not isinstance(collection_group_slug, str):
+                raise HTTPException(status_code=422, detail="collection_group_slug must be a string")
+            normalized_legacy_group = collection_group_slug.strip().lower()
+            if normalized_legacy_group not in ("", "all"):
+                raise HTTPException(
+                    status_code=422,
+                    detail="collection_group_slug conflicts with explicit collection_group_slugs",
+                )
+
+            from backend.database import get_db_session
+            from backend.services.collections_radio_loader import get_valid_collections
+            with get_db_session() as validation_session:
+                available_groups = {
+                    item["collection_group_slug"]
+                    for item in get_valid_collections(validation_session)
+                    if item["collection_group_slug"] and item["collection_group_slug"] != "music_docuseries"
+                }
+            unavailable = [slug for slug in normalized_groups if slug not in available_groups]
+            if unavailable:
+                raise HTTPException(
+                    status_code=422,
+                    detail=f"Unavailable Collection Group slug(s): {', '.join(unavailable)}",
+                )
+
+        logger.info(
+            "collections_radio_launch module=%s program_type=%s detailLength=%s detail_length=%s "
+            "resolved_detail_length=%s artist_enabled=%s collection_groups=%s",
+            __file__,
+            context.get("type"),
+            (payload.get("selection") or {}).get("detailLength"),
+            (payload.get("selection") or {}).get("detail_length"),
+            detail_length,
+            "artist" in selection.voices,
+            normalized_groups,
         )
 
         logger.info(
@@ -485,7 +563,9 @@ async def play_track(payload: dict):
             tts_language=selection.language,
             tts_languages=tts_languages,
             collection_group_slug=collection_group_slug,
+            collection_group_slugs=normalized_groups,
             voices=selection.voices,
+            detail_length=detail_length,
             voice_style=selection.voicePlayMode,
         )
 

@@ -8,7 +8,11 @@ from backend.models import Collection, CollectionTrackRanking, Track, Artist
 logger = logging.getLogger(__name__)
 
 
-def get_valid_collections(session, collection_group_slug: str | None = None) -> list[dict]:
+def get_valid_collections(
+    session,
+    collection_group_slug: str | None = None,
+    collection_group_slugs: list[str] | None = None,
+) -> list[dict]:
     stmt = select(Collection)
 
     rows = session.exec(stmt).all()
@@ -21,7 +25,14 @@ def get_valid_collections(session, collection_group_slug: str | None = None) -> 
         group_slug = getattr(category, "slug", None) if category else None
         group_name = getattr(category, "name", None) if category else None
 
-        if collection_group_slug and collection_group_slug != "ALL":
+        # Match the Collections Program catalog: docuseries are not radio groups.
+        if group_slug == "music_docuseries":
+            continue
+
+        if collection_group_slugs is not None:
+            if group_slug not in collection_group_slugs:
+                continue
+        elif collection_group_slug and collection_group_slug != "ALL":
             if group_slug != collection_group_slug:
                 continue
 
@@ -38,7 +49,9 @@ def get_valid_collections(session, collection_group_slug: str | None = None) -> 
         "Collections loaded total=%d selected=%d filter_applied=%s",
         len(rows),
         len(items),
-        type(collection_group_slug) is str and collection_group_slug not in ("", "ALL"),
+        collection_group_slugs is not None or (
+            type(collection_group_slug) is str and collection_group_slug not in ("", "ALL")
+        ),
     )
 
     return items

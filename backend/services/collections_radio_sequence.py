@@ -4,7 +4,7 @@ import asyncio
 import logging
 import random
 
-from backend.state.playback_state import mark_playing, update_phase
+from backend.state.playback_state import begin_track, get_status, mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
 from backend.state.playback_runtime import current_runtime, current_user_id
@@ -12,7 +12,7 @@ from backend.services.collections_radio_loader import get_valid_collections, loa
 from backend.services.block_builder import build_track_block
 from backend.services.collection_sequence import publish_narration_phase, _extract_bucket_key
 from backend.services.decade_genre_sequence import publish_narration_queue_phase
-from backend.services.radio_runtime import collection_intro_jobs, narration_keys_for
+from backend.services.radio_runtime import collection_intro_jobs, narration_keys_for, short_detail_keys_for
 from backend.services.audio_urls import resolve_audio_ref
 from backend.services.bed_tracks import BED_BUCKET, get_collection_group_bed_key
 
@@ -72,12 +72,35 @@ def build_collection_radio_texts_by_language(session, *, ctr, track, artist) -> 
     }
 
 
+def detail_audio_keys_for_collections_radio(*, detail_length: str, lang: str, track, artist):
+    """Use the same short/full asset selection as Nostalgia Radio."""
+    if detail_length == "short":
+        bucket, key = short_detail_keys_for(lang=lang, track=track)
+        logger.info(
+            "collections_radio_detail_resolved module=%s detail_length=short bucket=%s key=%s",
+            __file__, bucket, key,
+        )
+        return bucket, key
+    detail_bucket, detail_key, _, _ = narration_keys_for(
+        lang=lang,
+        track=track,
+        artist=artist,
+    )
+    logger.info(
+        "collections_radio_detail_resolved module=%s detail_length=%s bucket=%s key=%s",
+        __file__, detail_length, detail_bucket, detail_key,
+    )
+    return detail_bucket, detail_key
+
+
 async def run_collections_radio_sequence(
         *,
         tts_language: str = "en",
         tts_languages: list[str] | None = None,
         collection_group_slug: str | None = None,
+        collection_group_slugs: list[str] | None = None,
         voices: list[str] | None = None,
+        detail_length: str = "long",
         voice_style: str = "before",
 ) -> None:
     user_id = current_user_id()
@@ -85,7 +108,9 @@ async def run_collections_radio_sequence(
     voices = voices or []
 
     play_intro = "intro" in voices
-    play_detail = "detail" in voices
+    if detail_length not in {"off", "short", "long"}:
+        raise ValueError("detail_length must be one of: off, short, long")
+    play_detail = "detail" in voices and detail_length != "off"
     play_artist = "artist" in voices
 
     logger.info(
@@ -98,6 +123,11 @@ async def run_collections_radio_sequence(
     status.stopped = False
     status.cancel_requested = False
     status.language = tts_language
+
+    logger.info(
+        "collections_radio_runner_launch module=%s detail_length=%s voice_style=%s groups=%s legacy_group=%s",
+        __file__, detail_length, voice_style, collection_group_slugs, collection_group_slug,
+    )
 
     def normalize_lang(value: str) -> str:
         v = (value or "en").lower()
@@ -133,7 +163,11 @@ async def run_collections_radio_sequence(
 
     try:
         with get_db_session() as session:
-            collections = get_valid_collections(session, collection_group_slug)
+            collections = get_valid_collections(
+                session,
+                collection_group_slug,
+                collection_group_slugs,
+            )
 
         if not collections:
             logger.warning("No collections found for group=%s", collection_group_slug)
@@ -276,6 +310,7 @@ async def run_collections_radio_sequence(
                             if set_intro_bucket and set_intro_key:
                                 await publish_narration_phase(
                                     "collection_intro",
+                                    user_id=user_id,
                                     track=track,
                                     artist=artist,
                                     rank=rank,
@@ -342,13 +377,17 @@ async def run_collections_radio_sequence(
                         artist_by_lang = {}
 
                         for narration_lang in langs:
-                            dbucket, dkey, abucket, akey = narration_keys_for(
+                            detail_by_lang[narration_lang] = detail_audio_keys_for_collections_radio(
+                                detail_length=detail_length,
                                 lang=narration_lang,
                                 track=track,
                                 artist=artist,
                             )
-
-                            detail_by_lang[narration_lang] = (dbucket, dkey)
+                            _, _, abucket, akey = narration_keys_for(
+                                lang=narration_lang,
+                                track=track,
+                                artist=artist,
+                            )
                             artist_by_lang[narration_lang] = (abucket, akey)
 
                         # ───────── DETAIL ─────────
@@ -372,6 +411,14 @@ async def run_collections_radio_sequence(
                                 })
 
                             if detail_audio_queue:
+                                logger.info(
+                                    "collections_radio_detail_publish detail_length=%s audio_queue=%s",
+                                    detail_length,
+                                    [
+                                        {"bucket": item["bucket"], "key": item["key"], "url": item["url"]}
+                                        for item in detail_audio_queue
+                                    ],
+                                )
                                 await publish_narration_queue_phase(
                                     "detail",
                                     track=track,
@@ -432,13 +479,18 @@ async def run_collections_radio_sequence(
                         # ───────── TRACK ─────────
                         if getattr(track, "spotify_track_id", None):
                             track_done_event(user_id).clear()
+                            begin_track(user_id, (getattr(track, "duration_ms", 0) or 0) / 1000.0)
 
                             update_phase(
                                 user_id,
                                 "track",
+                                is_playing=True,
+                                stopped=False,
                                 track_name=track.track_name,
                                 artist_name=artist.artist_name,
                                 current_rank=rank,
+                                current_ranking_id=ctr.id,
+                                spotify_track_id=track.spotify_track_id,
                                 context={
                                     **radio_context,
                                     "mode": "spotify",
@@ -446,6 +498,21 @@ async def run_collections_radio_sequence(
                                     "collection_name": collection_name,
                                     "collection_group_name": group_name,
                                 },
+                            )
+                            public_status = get_status(user_id)
+                            logger.info(
+                                "collections_radio_track_published phase=%s ranking_id=%s spotify_id=%s "
+                                "public_phase=%s public_rank=%s public_ranking_id=%s public_spotify_id=%s "
+                                "public_context_ranking_id=%s public_context_spotify_id=%s",
+                                "track",
+                                ctr.id,
+                                track.spotify_track_id,
+                                public_status.phase,
+                                public_status.current_rank,
+                                public_status.current_ranking_id,
+                                getattr(public_status, "spotify_track_id", None),
+                                (public_status.context or {}).get("ranking_id"),
+                                (public_status.context or {}).get("spotify_track_id"),
                             )
 
                             await track_done_event(user_id).wait()
