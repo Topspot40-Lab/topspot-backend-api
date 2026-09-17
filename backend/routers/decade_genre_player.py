@@ -254,6 +254,7 @@ async def update_radio_narration_policy(payload: RadioNarrationPolicyRequest):
 async def play_sequence_decade_genre(
         decade: str = Query(...),
         genre: str = Query(...),
+        genres: list[str] | None = Query(None),
         category: Literal["single", "continuous"] = Query("continuous"),  # 👈 ADD THIS
         start_rank: int = Query(1),
         end_rank: int | None = Query(None),
@@ -306,7 +307,12 @@ async def play_sequence_decade_genre(
     if decade == "ALL":
         logger.info(f"🧪 RADIO MODE: ALL/{genre}")
 
-        genre_filter = None if genre == "ALL" else genre
+        # An explicit multi-genre request takes precedence over legacy
+        # `genre=ALL`, while old scalar callers retain their exact behavior.
+        if genres:
+            genre_filter = None if len(genres) == 1 and genres[0].strip().upper() == "ALL" else genres
+        else:
+            genre_filter = None if genre == "ALL" else [genre]
         # Legacy callers only send play_detail. Their true value keeps the
         # previous canonical (full/long) detail; false remains Details Off.
         radio_detail_length = detail_length or ("long" if play_detail else "off")
@@ -323,7 +329,7 @@ async def play_sequence_decade_genre(
 
         await start_new_sequence(
             run_all_radio_sequence(
-                genre_filter=genre_filter,
+                genre_filters=genre_filter,
                 tts_language=tts_languages[0],
                 tts_languages=tts_languages,
                 play_intro=play_intro,
