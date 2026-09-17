@@ -15,6 +15,7 @@ Phase = Literal[
     "loading",
     "prelude",
     "set_intro",
+    "collection_intro",
     "liner",
     "intro",
     "detail",

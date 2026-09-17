@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 _PLAYBACK_PHASE_LABELS = frozenset({
-    "idle", "loading", "prelude", "set_intro", "liner", "intro", "detail",
+    "idle", "loading", "prelude", "set_intro", "collection_intro", "liner", "intro", "detail",
     "artist", "track", "ended", "music",
 })
 _PLAYBACK_MODE_LABELS = frozenset({"decade_genre", "collection"})
@@ -147,7 +147,24 @@ async def get_status():
     snap = asdict(s)
 
     ctx = snap.get("context") or s.context or {}
+    context_ranking_id_before_override = ctx.get("ranking_id")
+    context_spotify_id_before_override = ctx.get("spotify_track_id")
     ctx["ranking_id"] = snap.get("current_ranking_id")
+
+    if ctx.get("mode") in {"collections_radio", "spotify"}:
+        logger.info(
+            "playback_status_track_sources phase=%s current_rank=%s "
+            "current_ranking_id=%s context_ranking_id_before=%s context_ranking_id_after=%s "
+            "status_spotify_id=%s context_spotify_id_before=%s context_spotify_id_after=%s",
+            snap.get("phase"),
+            snap.get("current_rank"),
+            snap.get("current_ranking_id"),
+            context_ranking_id_before_override,
+            ctx.get("ranking_id"),
+            getattr(s, "spotify_track_id", None),
+            context_spotify_id_before_override,
+            ctx.get("spotify_track_id"),
+        )
 
     # logger.info(f"📡 STATUS CONTEXT OUT: {ctx}")
 
@@ -157,7 +174,7 @@ async def get_status():
     # 🔥 Bed track control:
     # Backend only marks bed active.
     # Frontend actually plays bed_audio_url.
-    if phase in ("set_intro", "liner", "intro", "detail", "artist") and voice_style == "before":
+    if phase in ("set_intro", "collection_intro", "liner", "intro", "detail", "artist") and voice_style == "before":
         if not getattr(s, "bed_playing", False):
             s.bed_playing = True
             logger.debug("🎧 Bed marked active; frontend will play bed_audio_url")
@@ -266,7 +283,7 @@ async def narration_finished(payload: Optional[NarrationFinishedRequest] = None)
         logger.info("Ignoring narration-finished because playbackSessionId is stale")
         return {"ok": True, "ignored": True, "reason": "stale_session"}
 
-    narration_phases = {"set_intro", "liner", "intro", "detail", "artist"}
+    narration_phases = {"set_intro", "collection_intro", "liner", "intro", "detail", "artist"}
     if s.phase not in narration_phases:
         logger.info(
             "Ignoring narration-finished because phase=%s is not narration",
