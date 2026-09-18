@@ -22,6 +22,7 @@ router = APIRouter(
     dependencies=[Depends(bind_request_user)],
 )
 logger = logging.getLogger(__name__)
+_artist_radio_status_log_keys: dict[str, tuple[object, ...]] = {}
 
 
 _PLAYBACK_PHASE_LABELS = frozenset({
@@ -170,6 +171,23 @@ async def get_status():
 
     phase = snap.get("phase")
     voice_style = ctx.get("voice_style")
+
+    if ctx.get("programType") == "RADIO_ARTIST":
+        status_key = (
+            phase,
+            snap.get("artist_name"),
+            ctx.get("genre_name"),
+            ctx.get("set_number"),
+            ctx.get("block_position"),
+            ctx.get("block_size"),
+        )
+        user_id = current_user_id()
+        if _artist_radio_status_log_keys.get(user_id) != status_key:
+            _artist_radio_status_log_keys[user_id] = status_key
+            logger.info(
+                "artist_radio_status phase=%s artist_name=%s genre=%s set_number=%s set_position=%s set_size=%s",
+                *status_key,
+            )
 
     # 🔥 Bed track control:
     # Backend only marks bed active.

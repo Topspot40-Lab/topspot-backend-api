@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import text
 from backend.database import engine
 import asyncio
+import logging
 from backend.state.playback_runtime import bind_request_user, bind_task, current_user_id
 from backend.state.playback_state import start_playback_session
 
@@ -13,6 +14,7 @@ router = APIRouter(
     prefix="/artist-spotlight",
     tags=["artist-spotlight"],
 )
+logger = logging.getLogger(__name__)
 
 
 @router.get("/artists-by-genre")
@@ -461,6 +463,7 @@ SELECT
 @router.post("/play-radio", dependencies=[Depends(bind_request_user)])
 async def play_artist_radio(
         genre: str = Query(...),
+        genres: list[str] = Query([]),
         artist_id: int | None = Query(None),
         spotify_artist_id: str | None = Query(None),
         tts_language: str = Query("en"),
@@ -468,8 +471,27 @@ async def play_artist_radio(
         play_detail: bool = Query(True),
         play_artist_description: bool = Query(False),
         play_track: bool = Query(True),
+        detail_length: str = Query("short"),
+        bio_length: str = Query("short"),
 ):
     from backend.services.artist_radio_sequence import run_artist_radio_sequence
+    from backend.services.artist_radio_sequence import ALLOWED_GENRES
+
+    requested_genres = genres or ([] if genre == "ALL" else [genre])
+    invalid_genres = [value for value in requested_genres if value not in ALLOWED_GENRES]
+    if invalid_genres:
+        raise HTTPException(status_code=422, detail="Unsupported Artist Radio genre slug(s)")
+    if not requested_genres:
+        requested_genres = list(ALLOWED_GENRES)
+    if detail_length not in {"off", "short", "long"} or bio_length not in {"short", "long"}:
+        raise HTTPException(status_code=422, detail="Unsupported Artist Radio narration option")
+
+    logger.info(
+        "artist_radio_launch genres=%s bio_length=%s detail_length=%s",
+        requested_genres,
+        bio_length,
+        detail_length,
+    )
 
     user_id = current_user_id()
     start_playback_session(user_id)
@@ -477,7 +499,10 @@ async def play_artist_radio(
     task = asyncio.create_task(
         run_artist_radio_sequence(
             genre=genre,
+            genres=requested_genres,
             tts_language=tts_language,
+            detail_length=detail_length,
+            bio_length=bio_length,
             play_intro=play_intro,
             play_detail=play_detail,
             play_artist_description=play_artist_description,
