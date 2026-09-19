@@ -14,6 +14,15 @@ ALLOWED_GENRES = ('country','pop','rock','rnb_soul','latin_global','blues_jazz',
 class Row:
     def __init__(self, d): self.__dict__.update(d)
 
+
+def choose_artist_for_set(available, wanted, *, shuffle=random.shuffle):
+    """Choose randomly from the unplayed artists in the requested genre."""
+    candidates = [artist for artist in available if artist['genre_slug'] == wanted]
+    candidates = candidates or list(available)
+    shuffle(candidates)
+    return candidates[0]
+
+
 def _artists(genres, language):
     # Existing Featured/Premium asset contract: Artist.artist_description and
     # its normal generated artist narration, plus ArtistStory for the long bio.
@@ -53,7 +62,7 @@ async def run_artist_radio_sequence(*,genres=None,genre='ALL',tts_language='en',
     while pool and not status.stopped and not status.cancel_requested:
         available=[x for x in pool.values() if x['artist_id'] not in played_artists]
         if not available: played_artists.clear(); available=list(pool.values()); random.shuffle(available)
-        wanted=selected[set_no % len(selected)]; artist=next((x for x in available if x['genre_slug']==wanted),random.choice(available))
+        wanted=selected[set_no % len(selected)]; artist=choose_artist_for_set(available,wanted)
         rows=_tracks(artist['artist_id']); fresh=[x for x in rows if x['track_id'] not in played_tracks] or rows
         chosen=[x[0].__dict__ for x in build_track_block([(Row(x),) for x in fresh],set_number=set_no+1)]
         if not chosen: played_artists.add(artist['artist_id']); continue

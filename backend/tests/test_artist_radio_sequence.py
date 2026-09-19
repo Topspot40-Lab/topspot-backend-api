@@ -17,6 +17,65 @@ def test_artist_radio_allow_list_is_the_seven_non_tv_genres():
     assert "tv_themes" not in sequence.ALLOWED_GENRES
 
 
+def _eligible_artist(artist_id: int, genre_slug: str) -> dict:
+    return {
+        "artist_id": artist_id,
+        "artist_name": f"{genre_slug.title()} {artist_id}",
+        "genre_slug": genre_slug,
+    }
+
+
+def test_artist_radio_selector_uses_the_complete_requested_genre_pool_not_database_position_zero():
+    database_order = [
+        _eligible_artist(1, "country"),
+        _eligible_artist(2, "country"),
+        _eligible_artist(3, "pop"),
+    ]
+
+    def reverse(items):
+        items.reverse()
+
+    chosen = sequence.choose_artist_for_set(
+        database_order,
+        "country",
+        shuffle=reverse,
+    )
+
+    assert chosen["artist_id"] == 2
+    assert chosen["genre_slug"] == "country"
+
+
+def test_artist_radio_selector_uses_each_eligible_artist_once_before_resetting_pool():
+    pool = {
+        artist["artist_id"]: artist
+        for artist in [
+            _eligible_artist(1, "country"),
+            _eligible_artist(2, "country"),
+            _eligible_artist(3, "pop"),
+        ]
+    }
+    played_artists: set[int] = set()
+    chosen_ids: list[int] = []
+
+    # This injected shuffle produces a deterministic alternate order while
+    # exercising the same unplayed-candidate selection contract as the runner.
+    def reverse(items):
+        items.reverse()
+
+    for wanted in ("country", "country", "pop"):
+        available = [
+            artist for artist in pool.values()
+            if artist["artist_id"] not in played_artists
+        ]
+        chosen = sequence.choose_artist_for_set(available, wanted, shuffle=reverse)
+        chosen_ids.append(chosen["artist_id"])
+        played_artists.add(chosen["artist_id"])
+
+    assert chosen_ids == [2, 1, 3]
+    assert len(set(chosen_ids)) == len(pool)
+    assert all(pool[artist_id]["genre_slug"] == wanted for artist_id, wanted in zip(chosen_ids, ("country", "country", "pop")))
+
+
 @pytest.mark.parametrize("genre", ["tv_themes", "not_a_genre"])
 def test_artist_radio_rejects_manual_unsupported_genres(genre):
     app.dependency_overrides[bind_request_user] = lambda: None
@@ -83,6 +142,7 @@ def test_http_artist_radio_progression_through_second_artist(monkeypatch):
 
             first_bio = poll_for(client, "artist")
             observed_phases = [first_bio["phase"]]
+            assert get_playback_status(user_id).language == "en"
             assert first_bio["context"]["programType"] == "RADIO_ARTIST"
             assert first_bio["context"]["selected_genres"] == ["country", "pop"]
             assert first_bio["track_name"] == "Country One 1"
