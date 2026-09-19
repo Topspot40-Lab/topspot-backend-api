@@ -100,11 +100,11 @@ def test_http_artist_radio_progression_through_second_artist(monkeypatch):
         return bind_current_task(user_id)
 
     artists = [
-        {"artist_id": 101, "artist_name": "Country One", "spotify_artist_id": "artist-101", "genre_slug": "country", "genre_name": "Country", "artist_description": "Short bio", "long_bucket": "audio-en", "long_key": "stories/101.mp3"},
-        {"artist_id": 202, "artist_name": "Pop Two", "spotify_artist_id": "artist-202", "genre_slug": "pop", "genre_name": "Pop", "artist_description": "Short bio", "long_bucket": "audio-en", "long_key": "stories/202.mp3"},
+        {"artist_id": 101, "artist_name": "Country One", "spotify_artist_id": "artist-101", "genre_slug": "country", "genre_name": "Country", "artist_description": "Short bio", "long_bucket": "audio-en", "long_key": "stories/101.mp3", "short_bucket": "audio-en", "short_key": "artist/101.mp3"},
+        {"artist_id": 202, "artist_name": "Pop Two", "spotify_artist_id": "artist-202", "genre_slug": "pop", "genre_name": "Pop", "artist_description": "Short bio", "long_bucket": "audio-en", "long_key": "stories/202.mp3", "short_bucket": "audio-en", "short_key": "artist/202.mp3"},
     ]
 
-    def tracks(artist_id):
+    def tracks(artist_id, genre_slug):
         name = "Country One" if artist_id == 101 else "Pop Two"
         return [
             {"track_id": artist_id * 10 + position, "track_name": f"{name} {position}", "spotify_track_id": f"spotify-{artist_id}-{position}", "duration_ms": 180000, "album_artwork": None, "short_detail_tts_key": None, "artist_name": name, "spotify_artist_id": f"artist-{artist_id}", "ranking_id": artist_id * 100 + position, "ranking": position, "decade_name": "1980s", "genre_name": "Country" if artist_id == 101 else "Pop"}

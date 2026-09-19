@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import text
 from backend.database import engine
+from backend.services import artist_spotlight_eligibility as eligibility
 import asyncio
 import logging
 from backend.state.playback_runtime import bind_request_user, bind_task, current_user_id
@@ -24,130 +25,13 @@ def artists_by_genre(
         max_tracks: int | None = Query(None, ge=1),
         featured_only: bool = Query(True),
 ):
-    sql = text("""
-        WITH dg_counts AS (
-
-            SELECT
-                a.id AS artist_id,
-                COUNT(DISTINCT tr.track_id) AS dg_track_count
-
-            FROM track_ranking tr
-
-            JOIN decade_genre dg
-                ON tr.decade_genre_id = dg.id
-
-            JOIN genre g
-                ON dg.genre_id = g.id
-
-            JOIN track t
-                ON tr.track_id = t.id
-
-            JOIN artist a
-                ON t.artist_id = a.id
-
-            WHERE (
-                :genre IS NULL
-                OR :genre = 'all'
-                OR g.slug = :genre
-            )
-
-            GROUP BY a.id
-        ),
-
-        collection_counts AS (
-
-            SELECT
-                a.id AS artist_id,
-                COUNT(DISTINCT ctr.track_id) AS collection_track_count
-
-            FROM collection_track_ranking ctr
-
-            JOIN track t
-                ON ctr.track_id = t.id
-
-            JOIN artist a
-                ON t.artist_id = a.id
-
-            GROUP BY a.id
-        )
-
-SELECT
-a.id AS artist_id,
-a.artist_name,
-
-EXISTS (
-    SELECT 1
-    FROM artist_story s
-    WHERE s.artist_id = a.id
-      AND s.language_code = 'en'
-) AS has_story,
-
-COALESCE(dg.dg_track_count, 0) AS genre_track_count,
-
-(
-    SELECT COUNT(DISTINCT t2.id)
-
-    FROM track t2
-
-    WHERE t2.artist_id = a.id
-      AND (
-          EXISTS (
-              SELECT 1
-              FROM track_ranking tr2
-              WHERE tr2.track_id = t2.id
-          )
-          OR
-          EXISTS (
-              SELECT 1
-              FROM collection_track_ranking ctr2
-              WHERE ctr2.track_id = t2.id
-          )
-      )
-) AS total_track_count
-
-        FROM artist a
-
-        JOIN dg_counts dg
-            ON a.id = dg.artist_id
-
-        LEFT JOIN collection_counts cc
-            ON a.id = cc.artist_id
-
-WHERE dg.dg_track_count >= :min_tracks
-
-  AND (
-        :max_tracks IS NULL
-        OR dg.dg_track_count <= :max_tracks
-      )
-
-  AND (
-        :featured_only = false
-        OR EXISTS (
-            SELECT 1
-            FROM artist_story s
-            WHERE s.artist_id = a.id
-              AND s.language_code = 'en'
-        )
-      )
-
-ORDER BY
-    genre_track_count DESC,
-    total_track_count DESC,
-    a.artist_name
-    """)
-
-    with engine.connect() as conn:
-        rows = conn.execute(
-            sql,
-            {
-                "genre": genre,
-                "min_tracks": min_tracks,
-                "max_tracks": max_tracks,
-                "featured_only": featured_only,
-            },
-        ).mappings().all()
-
-    return [dict(row) for row in rows]
+    return eligibility.featured_artist_eligibility_rows(
+        genre=genre,
+        min_tracks=min_tracks,
+        max_tracks=max_tracks,
+        featured_only=featured_only,
+        per_genre=False,
+    )
 
 
 @router.get("/artist-tracks")
