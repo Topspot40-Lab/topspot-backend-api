@@ -306,7 +306,7 @@ class ProgramCode(SQLModel, table=True):
     decade_genre_id: Optional[int] = Field(default=None, foreign_key="decade_genre.id")
     collection_id: Optional[int] = Field(default=None, foreign_key="collection.id")
     artist_id: Optional[int] = Field(default=None, foreign_key="artist.id")
-    music_docuseries_collection_id: Optional[int] = Field(default=None, foreign_key="music_docuseries_collection.id")
+    music_docuseries_id: Optional[int] = Field(default=None, foreign_key="music_docuseries.id")
     is_active: bool = Field(default=True, index=True)
     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
     retired_at: Optional[datetime] = Field(default=None)

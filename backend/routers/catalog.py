@@ -22,7 +22,7 @@ DATABASE_ERROR_CATEGORY = "database_error"
 @router.get("/programs")
 def get_coded_programs(
     q: str | None = Query(default=None, max_length=200),
-    kind: str | None = Query(default=None, pattern="^(nostalgia|collection|artist_spotlight|docuseries_group)$"),
+    kind: str | None = Query(default=None, pattern="^(nostalgia|collection|artist_spotlight|docuseries_story)$"),
     db: Session = Depends(get_db),
 ):
     """List database-authoritative, fixed programs that have public codes."""
