@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session, select
 import logging
 from sqlalchemy import func
@@ -9,6 +9,7 @@ from backend.models import DecadeGenre
 from backend.database import get_db
 from backend.models import Decade, Genre
 from backend.models.collection_models import CollectionCategory, Collection
+from backend.services.program_codes import get_program_by_code, list_programs, normalize_program_code
 
 router = APIRouter(prefix="/api/catalog", tags=["Catalog"])
 
@@ -16,6 +17,35 @@ logger = logging.getLogger(__name__)
 
 CATALOG_UNAVAILABLE_DETAIL = "Catalog is temporarily unavailable."
 DATABASE_ERROR_CATEGORY = "database_error"
+
+
+@router.get("/programs")
+def get_coded_programs(
+    q: str | None = Query(default=None, max_length=200),
+    kind: str | None = Query(default=None, pattern="^(nostalgia|collection|artist_spotlight|docuseries_group)$"),
+    db: Session = Depends(get_db),
+):
+    """List database-authoritative, fixed programs that have public codes."""
+    try:
+        return {"programs": list_programs(db, q, kind)}
+    except Exception:
+        logger.error("catalog_programs failed: %s", DATABASE_ERROR_CATEGORY)
+        raise HTTPException(status_code=500, detail=CATALOG_UNAVAILABLE_DETAIL)
+
+
+@router.get("/programs/{code}")
+def get_coded_program(code: str, db: Session = Depends(get_db)):
+    canonical_code = normalize_program_code(code)
+    if not canonical_code:
+        raise HTTPException(status_code=404, detail="Program code not found")
+    try:
+        program = get_program_by_code(db, canonical_code)
+    except Exception:
+        logger.error("catalog_program_by_code failed: %s", DATABASE_ERROR_CATEGORY)
+        raise HTTPException(status_code=500, detail=CATALOG_UNAVAILABLE_DETAIL)
+    if not program:
+        raise HTTPException(status_code=404, detail="Program code not found")
+    return program
 
 
 @router.get("/summary")

@@ -295,6 +295,23 @@ class MusicDocuseriesCollection(SQLModel, table=True):
     is_active: bool = Field(default=True)
 
 
+class ProgramCode(SQLModel, table=True):
+    """Permanent public identifier for one fixed, non-radio program."""
+
+    __tablename__ = "program_code"
+    __table_args__ = {"extend_existing": True}
+
+    code: str = Field(primary_key=True, max_length=5)
+    program_kind: str = Field(max_length=32, index=True)
+    decade_genre_id: Optional[int] = Field(default=None, foreign_key="decade_genre.id")
+    collection_id: Optional[int] = Field(default=None, foreign_key="collection.id")
+    artist_id: Optional[int] = Field(default=None, foreign_key="artist.id")
+    music_docuseries_collection_id: Optional[int] = Field(default=None, foreign_key="music_docuseries_collection.id")
+    is_active: bool = Field(default=True, index=True)
+    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(UTC))
+    retired_at: Optional[datetime] = Field(default=None)
+
+
 class MusicDocuseries(SQLModel, table=True):
     __tablename__ = "music_docuseries"
 
@@ -426,6 +443,7 @@ __all__ = [
     "ArtistLocale",
     "ArtistStory",
     "MusicDocuseriesCollection",
+    "ProgramCode",
     "MusicDocuseries",
     "MusicDocuseriesLocale",
     "MusicDiscovery",
