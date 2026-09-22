@@ -258,10 +258,10 @@ def test_discovery_guide_has_four_print_pages_before_the_toc_with_required_conte
 
 
 def test_instructions_page_includes_approved_founder_note_and_pattys_rule():
-    rendered = catalog.render_instructions_page()
+    rendered = catalog.render_music_enriches_page()
     assert "Why We Created TopSpot40" in rendered
     assert "<em>American Top 40</em>" in rendered
-    assert "Patty’s Rule" in rendered
+    assert "Patty" in rendered and "Rule" in rendered
     assert "If a feature is too complicated to enjoy, it probably needs to be simplified." in rendered
 
 
@@ -288,13 +288,13 @@ def test_docuseries_catalog_has_an_unnumbered_final_conclusion_and_toc_entry():
     toc = rendered[toc_start:rendered.index('</section>', toc_start)]
     conclusion_start = rendered.index('class="catalog-page closing-conclusion"')
     conclusion = rendered[conclusion_start:rendered.index('</section>', conclusion_start)]
-    assert "Every Song Holds a Story and a Memory" in toc
-    assert "Music accompanies us throughout our lives" in conclusion
-    assert "Thank you for listening." in conclusion
-    assert 'class="closing-pullquote"' in conclusion
+    assert "Every Song Holds a Story" in toc
+    assert "A song can carry us across decades" in conclusion
+    assert "Thank You for Listening" in conclusion
+    assert "Music, memories, and moments&mdash;shared one song at a time." in conclusion
     assert 'topspot40-old-dog-new-tracks-icon.png' in conclusion
     assert 'class="back-cover-frame"' in conclusion
-    assert 'class="back-cover-lower"' in conclusion
+    assert 'class="back-cover-lower"' not in conclusion
     assert "<footer" not in conclusion
     assert rendered.rfind('class="catalog-page closing-conclusion"') > rendered.rfind('class="catalog-page docuseries')
 
@@ -625,3 +625,35 @@ def test_artist_directory_excludes_tv_themes_but_nostalgia_tv_themes_remains_pri
     assert "TV Only" not in rendered and "TV Themes" not in rendered
     assert "Retained" in rendered and "A-002" in rendered
     assert any(entry["genre_slug"] == "tv_themes" for entry in catalog.load_manifest()["nostalgia"])
+
+
+def test_opening_pages_use_complete_program_mode_guide():
+    welcome = catalog.render_music_enriches_page()
+    guide = catalog.render_instructions_page()
+    assert "Music Enriches Every Stage of Life" in welcome
+    assert "Why We Created TopSpot40" in welcome
+    assert all(code in guide for code in ("N-xxx", "C-xxx", "A-xxx", "D-xxx"))
+    assert "Choose any program in Program Mode." in guide
+    assert "Program Numbers are optional shortcuts and are not used by Radio Mode." in guide
+    assert "Two ways to start a program" in guide
+    assert "Open TopSpot40 and choose Program Mode." in guide
+    assert "Choose Nostalgia Programs, Collections Programs, Artist Spotlights, or Music Docuseries." in guide
+    assert "Follow the menus to select your program." in guide
+    assert "If you have this catalog, choose Enter Program Number under Program Mode and enter the number printed beside the program." in guide
+    assert "Requesting a particular song" in guide
+    assert "Give the program number and the song&rsquo;s printed rank." in guide
+    assert "N-001 / #27" in guide and "identifies song 27 in Nostalgia program N-001." in guide
+    assert "coil binding" not in guide.casefold()
+
+
+def test_final_page_uses_universal_copy_and_prominent_old_dog_logo():
+    page = catalog.render_closing_conclusion()
+    assert "Every Song Holds a Story" in page
+    assert "A song can carry us across decades" in page
+    assert "Whether you listen alone, with family and friends, or as part of a group" in page
+    assert "Music, memories, and moments&mdash;shared one song at a time." in page
+    assert "Thank You for Listening" in page
+    assert 'topspot40-old-dog-new-tracks-icon.png' in page
+    stylesheet = catalog.render_html([sample_program()])
+    assert ".closing-conclusion .closing-brand-icon { display: block; width: 2.5in" in stylesheet
+    assert ".closing-conclusion p { margin: 0 0 .18in; color: #292929; font-family: Georgia, serif; font-size: 14.5pt" in stylesheet

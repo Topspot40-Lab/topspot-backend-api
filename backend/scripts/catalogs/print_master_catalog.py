@@ -28,7 +28,11 @@ def render_pdf(html_path: Path, pdf_path: Path) -> Path:
     # by a previously crashed headless browser and prevent all later renders.
     # Chrome may retain a Crashpad handle briefly after its print process ends;
     # cleanup errors must not discard an otherwise completed PDF on Windows.
-    with tempfile.TemporaryDirectory(prefix="topspot40-catalog-browser-", ignore_cleanup_errors=True) as profile:
+    # Some managed Windows environments deny cleanup in the default user-temp
+    # directory.  Allow the caller to provide an explicitly writable location.
+    temp_root = Path(os.environ.get("TOPSPOT40_CATALOG_TEMP_DIR", tempfile.gettempdir()))
+    temp_root.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="topspot40-catalog-browser-", dir=temp_root, ignore_cleanup_errors=True) as profile:
         for browser in browser_candidates():
             try:
                 subprocess.run([
