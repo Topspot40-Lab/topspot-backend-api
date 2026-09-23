@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "approved": false,
+  "assignments": [],
+  "documentation": "Example only. Production seeding requires --manifest backend/data/program_code_manifest.json, which is approved and checked in. D codes target individual MusicDocuseries story slugs, never group slugs."
+}

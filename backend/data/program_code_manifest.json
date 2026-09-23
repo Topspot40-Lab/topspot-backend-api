@@ -1,0 +1,3354 @@
+{
+  "version": 1,
+  "approved": true,
+  "source": "Phase 2 audit approved by Gary: 64 N, 52 C, 226 A, 127 D",
+  "assignments": [
+    {
+      "code": "N-001",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1950s",
+        "genre_slug": "country"
+      }
+    },
+    {
+      "code": "N-002",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1950s",
+        "genre_slug": "pop"
+      }
+    },
+    {
+      "code": "N-003",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1950s",
+        "genre_slug": "rock"
+      }
+    },
+    {
+      "code": "N-004",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1950s",
+        "genre_slug": "rnb_soul"
+      }
+    },
+    {
+      "code": "N-005",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1950s",
+        "genre_slug": "latin_global"
+      }
+    },
+    {
+      "code": "N-006",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1950s",
+        "genre_slug": "blues_jazz"
+      }
+    },
+    {
+      "code": "N-007",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1950s",
+        "genre_slug": "folk_acoustic"
+      }
+    },
+    {
+      "code": "N-008",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1950s",
+        "genre_slug": "tv_themes"
+      }
+    },
+    {
+      "code": "N-009",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1960s",
+        "genre_slug": "country"
+      }
+    },
+    {
+      "code": "N-010",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1960s",
+        "genre_slug": "pop"
+      }
+    },
+    {
+      "code": "N-011",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1960s",
+        "genre_slug": "rock"
+      }
+    },
+    {
+      "code": "N-012",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1960s",
+        "genre_slug": "rnb_soul"
+      }
+    },
+    {
+      "code": "N-013",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1960s",
+        "genre_slug": "latin_global"
+      }
+    },
+    {
+      "code": "N-014",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1960s",
+        "genre_slug": "blues_jazz"
+      }
+    },
+    {
+      "code": "N-015",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1960s",
+        "genre_slug": "folk_acoustic"
+      }
+    },
+    {
+      "code": "N-016",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1960s",
+        "genre_slug": "tv_themes"
+      }
+    },
+    {
+      "code": "N-017",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1970s",
+        "genre_slug": "country"
+      }
+    },
+    {
+      "code": "N-018",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1970s",
+        "genre_slug": "pop"
+      }
+    },
+    {
+      "code": "N-019",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1970s",
+        "genre_slug": "rock"
+      }
+    },
+    {
+      "code": "N-020",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1970s",
+        "genre_slug": "rnb_soul"
+      }
+    },
+    {
+      "code": "N-021",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1970s",
+        "genre_slug": "latin_global"
+      }
+    },
+    {
+      "code": "N-022",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1970s",
+        "genre_slug": "blues_jazz"
+      }
+    },
+    {
+      "code": "N-023",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1970s",
+        "genre_slug": "folk_acoustic"
+      }
+    },
+    {
+      "code": "N-024",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1970s",
+        "genre_slug": "tv_themes"
+      }
+    },
+    {
+      "code": "N-025",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1980s",
+        "genre_slug": "country"
+      }
+    },
+    {
+      "code": "N-026",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1980s",
+        "genre_slug": "pop"
+      }
+    },
+    {
+      "code": "N-027",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1980s",
+        "genre_slug": "rock"
+      }
+    },
+    {
+      "code": "N-028",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1980s",
+        "genre_slug": "rnb_soul"
+      }
+    },
+    {
+      "code": "N-029",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1980s",
+        "genre_slug": "latin_global"
+      }
+    },
+    {
+      "code": "N-030",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1980s",
+        "genre_slug": "blues_jazz"
+      }
+    },
+    {
+      "code": "N-031",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1980s",
+        "genre_slug": "folk_acoustic"
+      }
+    },
+    {
+      "code": "N-032",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1980s",
+        "genre_slug": "tv_themes"
+      }
+    },
+    {
+      "code": "N-033",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1990s",
+        "genre_slug": "country"
+      }
+    },
+    {
+      "code": "N-034",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1990s",
+        "genre_slug": "pop"
+      }
+    },
+    {
+      "code": "N-035",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1990s",
+        "genre_slug": "rock"
+      }
+    },
+    {
+      "code": "N-036",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1990s",
+        "genre_slug": "rnb_soul"
+      }
+    },
+    {
+      "code": "N-037",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1990s",
+        "genre_slug": "latin_global"
+      }
+    },
+    {
+      "code": "N-038",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1990s",
+        "genre_slug": "blues_jazz"
+      }
+    },
+    {
+      "code": "N-039",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1990s",
+        "genre_slug": "folk_acoustic"
+      }
+    },
+    {
+      "code": "N-040",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "1990s",
+        "genre_slug": "tv_themes"
+      }
+    },
+    {
+      "code": "N-041",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2000s",
+        "genre_slug": "country"
+      }
+    },
+    {
+      "code": "N-042",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2000s",
+        "genre_slug": "pop"
+      }
+    },
+    {
+      "code": "N-043",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2000s",
+        "genre_slug": "rock"
+      }
+    },
+    {
+      "code": "N-044",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2000s",
+        "genre_slug": "rnb_soul"
+      }
+    },
+    {
+      "code": "N-045",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2000s",
+        "genre_slug": "latin_global"
+      }
+    },
+    {
+      "code": "N-046",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2000s",
+        "genre_slug": "blues_jazz"
+      }
+    },
+    {
+      "code": "N-047",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2000s",
+        "genre_slug": "folk_acoustic"
+      }
+    },
+    {
+      "code": "N-048",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2000s",
+        "genre_slug": "tv_themes"
+      }
+    },
+    {
+      "code": "N-049",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2010s",
+        "genre_slug": "country"
+      }
+    },
+    {
+      "code": "N-050",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2010s",
+        "genre_slug": "pop"
+      }
+    },
+    {
+      "code": "N-051",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2010s",
+        "genre_slug": "rock"
+      }
+    },
+    {
+      "code": "N-052",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2010s",
+        "genre_slug": "rnb_soul"
+      }
+    },
+    {
+      "code": "N-053",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2010s",
+        "genre_slug": "latin_global"
+      }
+    },
+    {
+      "code": "N-054",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2010s",
+        "genre_slug": "blues_jazz"
+      }
+    },
+    {
+      "code": "N-055",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2010s",
+        "genre_slug": "folk_acoustic"
+      }
+    },
+    {
+      "code": "N-056",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2010s",
+        "genre_slug": "tv_themes"
+      }
+    },
+    {
+      "code": "N-057",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2020s",
+        "genre_slug": "country"
+      }
+    },
+    {
+      "code": "N-058",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2020s",
+        "genre_slug": "pop"
+      }
+    },
+    {
+      "code": "N-059",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2020s",
+        "genre_slug": "rock"
+      }
+    },
+    {
+      "code": "N-060",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2020s",
+        "genre_slug": "rnb_soul"
+      }
+    },
+    {
+      "code": "N-061",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2020s",
+        "genre_slug": "latin_global"
+      }
+    },
+    {
+      "code": "N-062",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2020s",
+        "genre_slug": "blues_jazz"
+      }
+    },
+    {
+      "code": "N-063",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2020s",
+        "genre_slug": "folk_acoustic"
+      }
+    },
+    {
+      "code": "N-064",
+      "kind": "nostalgia",
+      "target": {
+        "decade_slug": "2020s",
+        "genre_slug": "tv_themes"
+      }
+    },
+    {
+      "code": "C-001",
+      "kind": "collection",
+      "target": {
+        "slug": "african_american_heritage_favorites"
+      }
+    },
+    {
+      "code": "C-002",
+      "kind": "collection",
+      "target": {
+        "slug": "american_folk_heroes"
+      }
+    },
+    {
+      "code": "C-003",
+      "kind": "collection",
+      "target": {
+        "slug": "bluegrass_favorites"
+      }
+    },
+    {
+      "code": "C-004",
+      "kind": "collection",
+      "target": {
+        "slug": "brazilian_classics"
+      }
+    },
+    {
+      "code": "C-005",
+      "kind": "collection",
+      "target": {
+        "slug": "celtic_favorites"
+      }
+    },
+    {
+      "code": "C-006",
+      "kind": "collection",
+      "target": {
+        "slug": "civil_war_songs"
+      }
+    },
+    {
+      "code": "C-007",
+      "kind": "collection",
+      "target": {
+        "slug": "classical_music_baroque_period_1600_1750"
+      }
+    },
+    {
+      "code": "C-008",
+      "kind": "collection",
+      "target": {
+        "slug": "classical_music_classical_period_1750_1820"
+      }
+    },
+    {
+      "code": "C-009",
+      "kind": "collection",
+      "target": {
+        "slug": "classical_music_romantic_period_1820_1910"
+      }
+    },
+    {
+      "code": "C-010",
+      "kind": "collection",
+      "target": {
+        "slug": "country_duets"
+      }
+    },
+    {
+      "code": "C-011",
+      "kind": "collection",
+      "target": {
+        "slug": "cowboy_songs_western_favorites"
+      }
+    },
+    {
+      "code": "C-012",
+      "kind": "collection",
+      "target": {
+        "slug": "crooner_classics"
+      }
+    },
+    {
+      "code": "C-013",
+      "kind": "collection",
+      "target": {
+        "slug": "dance_floor_anthems"
+      }
+    },
+    {
+      "code": "C-014",
+      "kind": "collection",
+      "target": {
+        "slug": "disco_favorites"
+      }
+    },
+    {
+      "code": "C-015",
+      "kind": "collection",
+      "target": {
+        "slug": "disney_classics_pre_1988"
+      }
+    },
+    {
+      "code": "C-016",
+      "kind": "collection",
+      "target": {
+        "slug": "disney_revival_after_1988"
+      }
+    },
+    {
+      "code": "C-017",
+      "kind": "collection",
+      "target": {
+        "slug": "easy_listening"
+      }
+    },
+    {
+      "code": "C-018",
+      "kind": "collection",
+      "target": {
+        "slug": "garys_missing_country_favorites"
+      }
+    },
+    {
+      "code": "C-019",
+      "kind": "collection",
+      "target": {
+        "slug": "garys_missing_rock_pop_favorites"
+      }
+    },
+    {
+      "code": "C-020",
+      "kind": "collection",
+      "target": {
+        "slug": "german_heritage_favorites"
+      }
+    },
+    {
+      "code": "C-021",
+      "kind": "collection",
+      "target": {
+        "slug": "great_american_songbook"
+      }
+    },
+    {
+      "code": "C-022",
+      "kind": "collection",
+      "target": {
+        "slug": "holiday_favorites"
+      }
+    },
+    {
+      "code": "C-023",
+      "kind": "collection",
+      "target": {
+        "slug": "italian_favorites"
+      }
+    },
+    {
+      "code": "C-024",
+      "kind": "collection",
+      "target": {
+        "slug": "latin_crossovers"
+      }
+    },
+    {
+      "code": "C-025",
+      "kind": "collection",
+      "target": {
+        "slug": "legends_blues_jazz"
+      }
+    },
+    {
+      "code": "C-026",
+      "kind": "collection",
+      "target": {
+        "slug": "legends_country"
+      }
+    },
+    {
+      "code": "C-027",
+      "kind": "collection",
+      "target": {
+        "slug": "legends_folk_acoustic"
+      }
+    },
+    {
+      "code": "C-028",
+      "kind": "collection",
+      "target": {
+        "slug": "legends_latin_global"
+      }
+    },
+    {
+      "code": "C-029",
+      "kind": "collection",
+      "target": {
+        "slug": "legends_pop"
+      }
+    },
+    {
+      "code": "C-030",
+      "kind": "collection",
+      "target": {
+        "slug": "legends_rnb_soul"
+      }
+    },
+    {
+      "code": "C-031",
+      "kind": "collection",
+      "target": {
+        "slug": "legends_rock"
+      }
+    },
+    {
+      "code": "C-032",
+      "kind": "collection",
+      "target": {
+        "slug": "legends_tv_themes"
+      }
+    },
+    {
+      "code": "C-033",
+      "kind": "collection",
+      "target": {
+        "slug": "mexican_american_favorites"
+      }
+    },
+    {
+      "code": "C-034",
+      "kind": "collection",
+      "target": {
+        "slug": "motown_magic"
+      }
+    },
+    {
+      "code": "C-035",
+      "kind": "collection",
+      "target": {
+        "slug": "novelty_songs"
+      }
+    },
+    {
+      "code": "C-036",
+      "kind": "collection",
+      "target": {
+        "slug": "one_hit_wonders"
+      }
+    },
+    {
+      "code": "C-037",
+      "kind": "collection",
+      "target": {
+        "slug": "patriotic_favorites"
+      }
+    },
+    {
+      "code": "C-038",
+      "kind": "collection",
+      "target": {
+        "slug": "pop_duets"
+      }
+    },
+    {
+      "code": "C-039",
+      "kind": "collection",
+      "target": {
+        "slug": "power_ballads"
+      }
+    },
+    {
+      "code": "C-040",
+      "kind": "collection",
+      "target": {
+        "slug": "protest_social_justice"
+      }
+    },
+    {
+      "code": "C-041",
+      "kind": "collection",
+      "target": {
+        "slug": "railroad_train_songs"
+      }
+    },
+    {
+      "code": "C-042",
+      "kind": "collection",
+      "target": {
+        "slug": "road_trip"
+      }
+    },
+    {
+      "code": "C-043",
+      "kind": "collection",
+      "target": {
+        "slug": "singer_songwriter"
+      }
+    },
+    {
+      "code": "C-044",
+      "kind": "collection",
+      "target": {
+        "slug": "soft_rock_love_songs"
+      }
+    },
+    {
+      "code": "C-045",
+      "kind": "collection",
+      "target": {
+        "slug": "southern_gospel_favorites"
+      }
+    },
+    {
+      "code": "C-046",
+      "kind": "collection",
+      "target": {
+        "slug": "stage_screen_broadway_classics"
+      }
+    },
+    {
+      "code": "C-047",
+      "kind": "collection",
+      "target": {
+        "slug": "stage_screen_movie_themes"
+      }
+    },
+    {
+      "code": "C-048",
+      "kind": "collection",
+      "target": {
+        "slug": "traditional_hymns"
+      }
+    },
+    {
+      "code": "C-049",
+      "kind": "collection",
+      "target": {
+        "slug": "traditional_mexican_favorites"
+      }
+    },
+    {
+      "code": "C-050",
+      "kind": "collection",
+      "target": {
+        "slug": "video_game_themes"
+      }
+    },
+    {
+      "code": "C-051",
+      "kind": "collection",
+      "target": {
+        "slug": "western_heritage_favorites"
+      }
+    },
+    {
+      "code": "C-052",
+      "kind": "collection",
+      "target": {
+        "slug": "yacht_rock"
+      }
+    },
+    {
+      "code": "A-001",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 945
+      }
+    },
+    {
+      "code": "A-002",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 973
+      }
+    },
+    {
+      "code": "A-003",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 986
+      }
+    },
+    {
+      "code": "A-004",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 961
+      }
+    },
+    {
+      "code": "A-005",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 896
+      }
+    },
+    {
+      "code": "A-006",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 228
+      }
+    },
+    {
+      "code": "A-007",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 930
+      }
+    },
+    {
+      "code": "A-008",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 926
+      }
+    },
+    {
+      "code": "A-009",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 962
+      }
+    },
+    {
+      "code": "A-010",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 589
+      }
+    },
+    {
+      "code": "A-011",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 972
+      }
+    },
+    {
+      "code": "A-012",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 563
+      }
+    },
+    {
+      "code": "A-013",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 974
+      }
+    },
+    {
+      "code": "A-014",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 939
+      }
+    },
+    {
+      "code": "A-015",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 990
+      }
+    },
+    {
+      "code": "A-016",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 908
+      }
+    },
+    {
+      "code": "A-017",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 890
+      }
+    },
+    {
+      "code": "A-018",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 886
+      }
+    },
+    {
+      "code": "A-019",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 950
+      }
+    },
+    {
+      "code": "A-020",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 951
+      }
+    },
+    {
+      "code": "A-021",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 964
+      }
+    },
+    {
+      "code": "A-022",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 171
+      }
+    },
+    {
+      "code": "A-023",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 884
+      }
+    },
+    {
+      "code": "A-024",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 911
+      }
+    },
+    {
+      "code": "A-025",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 960
+      }
+    },
+    {
+      "code": "A-026",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 542
+      }
+    },
+    {
+      "code": "A-027",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 953
+      }
+    },
+    {
+      "code": "A-028",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 977
+      }
+    },
+    {
+      "code": "A-029",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 932
+      }
+    },
+    {
+      "code": "A-030",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 957
+      }
+    },
+    {
+      "code": "A-031",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 224
+      }
+    },
+    {
+      "code": "A-032",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 968
+      }
+    },
+    {
+      "code": "A-033",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 466
+      }
+    },
+    {
+      "code": "A-034",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 995
+      }
+    },
+    {
+      "code": "A-035",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 976
+      }
+    },
+    {
+      "code": "A-036",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 970
+      }
+    },
+    {
+      "code": "A-037",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 74
+      }
+    },
+    {
+      "code": "A-038",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 253
+      }
+    },
+    {
+      "code": "A-039",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 10
+      }
+    },
+    {
+      "code": "A-040",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 397
+      }
+    },
+    {
+      "code": "A-041",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 24
+      }
+    },
+    {
+      "code": "A-042",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 316
+      }
+    },
+    {
+      "code": "A-043",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 145
+      }
+    },
+    {
+      "code": "A-044",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 389
+      }
+    },
+    {
+      "code": "A-045",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 388
+      }
+    },
+    {
+      "code": "A-046",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 208
+      }
+    },
+    {
+      "code": "A-047",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 217
+      }
+    },
+    {
+      "code": "A-048",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 514
+      }
+    },
+    {
+      "code": "A-049",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 391
+      }
+    },
+    {
+      "code": "A-050",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 383
+      }
+    },
+    {
+      "code": "A-051",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 143
+      }
+    },
+    {
+      "code": "A-052",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 2
+      }
+    },
+    {
+      "code": "A-053",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 152
+      }
+    },
+    {
+      "code": "A-054",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 218
+      }
+    },
+    {
+      "code": "A-055",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 264
+      }
+    },
+    {
+      "code": "A-056",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 387
+      }
+    },
+    {
+      "code": "A-057",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 144
+      }
+    },
+    {
+      "code": "A-058",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 197
+      }
+    },
+    {
+      "code": "A-059",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 317
+      }
+    },
+    {
+      "code": "A-060",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 141
+      }
+    },
+    {
+      "code": "A-061",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 22
+      }
+    },
+    {
+      "code": "A-062",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 17
+      }
+    },
+    {
+      "code": "A-063",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 196
+      }
+    },
+    {
+      "code": "A-064",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 216
+      }
+    },
+    {
+      "code": "A-065",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 398
+      }
+    },
+    {
+      "code": "A-066",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 442
+      }
+    },
+    {
+      "code": "A-067",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 142
+      }
+    },
+    {
+      "code": "A-068",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 329
+      }
+    },
+    {
+      "code": "A-069",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 155
+      }
+    },
+    {
+      "code": "A-070",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 392
+      }
+    },
+    {
+      "code": "A-071",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 139
+      }
+    },
+    {
+      "code": "A-072",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1
+      }
+    },
+    {
+      "code": "A-073",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 21
+      }
+    },
+    {
+      "code": "A-074",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 385
+      }
+    },
+    {
+      "code": "A-075",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 523
+      }
+    },
+    {
+      "code": "A-076",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 12
+      }
+    },
+    {
+      "code": "A-077",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 198
+      }
+    },
+    {
+      "code": "A-078",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1198
+      }
+    },
+    {
+      "code": "A-079",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 158
+      }
+    },
+    {
+      "code": "A-080",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1208
+      }
+    },
+    {
+      "code": "A-081",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1209
+      }
+    },
+    {
+      "code": "A-082",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1203
+      }
+    },
+    {
+      "code": "A-083",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1206
+      }
+    },
+    {
+      "code": "A-084",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 509
+      }
+    },
+    {
+      "code": "A-085",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1207
+      }
+    },
+    {
+      "code": "A-086",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1204
+      }
+    },
+    {
+      "code": "A-087",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1210
+      }
+    },
+    {
+      "code": "A-088",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1182
+      }
+    },
+    {
+      "code": "A-089",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1205
+      }
+    },
+    {
+      "code": "A-090",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1183
+      }
+    },
+    {
+      "code": "A-091",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1189
+      }
+    },
+    {
+      "code": "A-092",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1193
+      }
+    },
+    {
+      "code": "A-093",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1184
+      }
+    },
+    {
+      "code": "A-094",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1180
+      }
+    },
+    {
+      "code": "A-095",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 164
+      }
+    },
+    {
+      "code": "A-096",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1146
+      }
+    },
+    {
+      "code": "A-097",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1150
+      }
+    },
+    {
+      "code": "A-098",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 679
+      }
+    },
+    {
+      "code": "A-099",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 812
+      }
+    },
+    {
+      "code": "A-100",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 847
+      }
+    },
+    {
+      "code": "A-101",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 879
+      }
+    },
+    {
+      "code": "A-102",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 805
+      }
+    },
+    {
+      "code": "A-103",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 784
+      }
+    },
+    {
+      "code": "A-104",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 750
+      }
+    },
+    {
+      "code": "A-105",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 410
+      }
+    },
+    {
+      "code": "A-106",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 790
+      }
+    },
+    {
+      "code": "A-107",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 826
+      }
+    },
+    {
+      "code": "A-108",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 735
+      }
+    },
+    {
+      "code": "A-109",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 3134
+      }
+    },
+    {
+      "code": "A-110",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 793
+      }
+    },
+    {
+      "code": "A-111",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 807
+      }
+    },
+    {
+      "code": "A-112",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 730
+      }
+    },
+    {
+      "code": "A-113",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 856
+      }
+    },
+    {
+      "code": "A-114",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 777
+      }
+    },
+    {
+      "code": "A-115",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 829
+      }
+    },
+    {
+      "code": "A-116",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 757
+      }
+    },
+    {
+      "code": "A-117",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 795
+      }
+    },
+    {
+      "code": "A-118",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 834
+      }
+    },
+    {
+      "code": "A-119",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 670
+      }
+    },
+    {
+      "code": "A-120",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 824
+      }
+    },
+    {
+      "code": "A-121",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 867
+      }
+    },
+    {
+      "code": "A-122",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 778
+      }
+    },
+    {
+      "code": "A-123",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 872
+      }
+    },
+    {
+      "code": "A-124",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 799
+      }
+    },
+    {
+      "code": "A-125",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 55
+      }
+    },
+    {
+      "code": "A-126",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 798
+      }
+    },
+    {
+      "code": "A-127",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1924
+      }
+    },
+    {
+      "code": "A-128",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 416
+      }
+    },
+    {
+      "code": "A-129",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 160
+      }
+    },
+    {
+      "code": "A-130",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 474
+      }
+    },
+    {
+      "code": "A-131",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 60
+      }
+    },
+    {
+      "code": "A-132",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1123
+      }
+    },
+    {
+      "code": "A-133",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1111
+      }
+    },
+    {
+      "code": "A-134",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 219
+      }
+    },
+    {
+      "code": "A-135",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1010
+      }
+    },
+    {
+      "code": "A-136",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 332
+      }
+    },
+    {
+      "code": "A-137",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 39
+      }
+    },
+    {
+      "code": "A-138",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 402
+      }
+    },
+    {
+      "code": "A-139",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 473
+      }
+    },
+    {
+      "code": "A-140",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1017
+      }
+    },
+    {
+      "code": "A-141",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 367
+      }
+    },
+    {
+      "code": "A-142",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 425
+      }
+    },
+    {
+      "code": "A-143",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 461
+      }
+    },
+    {
+      "code": "A-144",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 408
+      }
+    },
+    {
+      "code": "A-145",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 233
+      }
+    },
+    {
+      "code": "A-146",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 556
+      }
+    },
+    {
+      "code": "A-147",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 415
+      }
+    },
+    {
+      "code": "A-148",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 57
+      }
+    },
+    {
+      "code": "A-149",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 50
+      }
+    },
+    {
+      "code": "A-150",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 36
+      }
+    },
+    {
+      "code": "A-151",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 467
+      }
+    },
+    {
+      "code": "A-152",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 7
+      }
+    },
+    {
+      "code": "A-153",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 557
+      }
+    },
+    {
+      "code": "A-154",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 4
+      }
+    },
+    {
+      "code": "A-155",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 348
+      }
+    },
+    {
+      "code": "A-156",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 3
+      }
+    },
+    {
+      "code": "A-157",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 37
+      }
+    },
+    {
+      "code": "A-158",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 162
+      }
+    },
+    {
+      "code": "A-159",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 564
+      }
+    },
+    {
+      "code": "A-160",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 167
+      }
+    },
+    {
+      "code": "A-161",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 422
+      }
+    },
+    {
+      "code": "A-162",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 333
+      }
+    },
+    {
+      "code": "A-163",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 581
+      }
+    },
+    {
+      "code": "A-164",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 54
+      }
+    },
+    {
+      "code": "A-165",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 597
+      }
+    },
+    {
+      "code": "A-166",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 344
+      }
+    },
+    {
+      "code": "A-167",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 635
+      }
+    },
+    {
+      "code": "A-168",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 592
+      }
+    },
+    {
+      "code": "A-169",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 608
+      }
+    },
+    {
+      "code": "A-170",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 182
+      }
+    },
+    {
+      "code": "A-171",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 553
+      }
+    },
+    {
+      "code": "A-172",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 166
+      }
+    },
+    {
+      "code": "A-173",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 452
+      }
+    },
+    {
+      "code": "A-174",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 61
+      }
+    },
+    {
+      "code": "A-175",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 626
+      }
+    },
+    {
+      "code": "A-176",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 281
+      }
+    },
+    {
+      "code": "A-177",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 613
+      }
+    },
+    {
+      "code": "A-178",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 602
+      }
+    },
+    {
+      "code": "A-179",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 552
+      }
+    },
+    {
+      "code": "A-180",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 559
+      }
+    },
+    {
+      "code": "A-181",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 550
+      }
+    },
+    {
+      "code": "A-182",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 582
+      }
+    },
+    {
+      "code": "A-183",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 161
+      }
+    },
+    {
+      "code": "A-184",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 603
+      }
+    },
+    {
+      "code": "A-185",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 33
+      }
+    },
+    {
+      "code": "A-186",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1039
+      }
+    },
+    {
+      "code": "A-187",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 238
+      }
+    },
+    {
+      "code": "A-188",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1138
+      }
+    },
+    {
+      "code": "A-189",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1070
+      }
+    },
+    {
+      "code": "A-190",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 280
+      }
+    },
+    {
+      "code": "A-191",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 495
+      }
+    },
+    {
+      "code": "A-192",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 562
+      }
+    },
+    {
+      "code": "A-193",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 65
+      }
+    },
+    {
+      "code": "A-194",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1093
+      }
+    },
+    {
+      "code": "A-195",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 297
+      }
+    },
+    {
+      "code": "A-196",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 222
+      }
+    },
+    {
+      "code": "A-197",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1141
+      }
+    },
+    {
+      "code": "A-198",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 83
+      }
+    },
+    {
+      "code": "A-199",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 70
+      }
+    },
+    {
+      "code": "A-200",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 272
+      }
+    },
+    {
+      "code": "A-201",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 430
+      }
+    },
+    {
+      "code": "A-202",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1019
+      }
+    },
+    {
+      "code": "A-203",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 175
+      }
+    },
+    {
+      "code": "A-204",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 279
+      }
+    },
+    {
+      "code": "A-205",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 236
+      }
+    },
+    {
+      "code": "A-206",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 69
+      }
+    },
+    {
+      "code": "A-207",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1168
+      }
+    },
+    {
+      "code": "A-208",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1164
+      }
+    },
+    {
+      "code": "A-209",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 370
+      }
+    },
+    {
+      "code": "A-210",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 439
+      }
+    },
+    {
+      "code": "A-211",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 334
+      }
+    },
+    {
+      "code": "A-212",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1140
+      }
+    },
+    {
+      "code": "A-213",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 371
+      }
+    },
+    {
+      "code": "A-214",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1166
+      }
+    },
+    {
+      "code": "A-215",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 248
+      }
+    },
+    {
+      "code": "A-216",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 220
+      }
+    },
+    {
+      "code": "A-217",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 341
+      }
+    },
+    {
+      "code": "A-218",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 71
+      }
+    },
+    {
+      "code": "A-219",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1044
+      }
+    },
+    {
+      "code": "A-220",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 170
+      }
+    },
+    {
+      "code": "A-221",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 75
+      }
+    },
+    {
+      "code": "A-222",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 157
+      }
+    },
+    {
+      "code": "A-223",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1139
+      }
+    },
+    {
+      "code": "A-224",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 116
+      }
+    },
+    {
+      "code": "A-225",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 492
+      }
+    },
+    {
+      "code": "A-226",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 273
+      }
+    },
+    {
+      "code": "D-001",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_electric_guitar"
+      }
+    },
+    {
+      "code": "D-002",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_of_piano"
+      }
+    },
+    {
+      "code": "D-003",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_of_saxophone"
+      }
+    },
+    {
+      "code": "D-004",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_of_accordion"
+      }
+    },
+    {
+      "code": "D-005",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_steel_guitar"
+      }
+    },
+    {
+      "code": "D-006",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_hammond_organ"
+      }
+    },
+    {
+      "code": "D-007",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_of_synthesizer"
+      }
+    },
+    {
+      "code": "D-008",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_drum_machine"
+      }
+    },
+    {
+      "code": "D-009",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "birth_of_rock_and_roll"
+      }
+    },
+    {
+      "code": "D-010",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "british_invasion"
+      }
+    },
+    {
+      "code": "D-011",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "rise_of_motown"
+      }
+    },
+    {
+      "code": "D-012",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "birth_of_hip_hop"
+      }
+    },
+    {
+      "code": "D-013",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "napster_changes_music_forever"
+      }
+    },
+    {
+      "code": "D-014",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "mtv_revolution"
+      }
+    },
+    {
+      "code": "D-015",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_mariachi"
+      }
+    },
+    {
+      "code": "D-016",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "birth_of_bossa_nova"
+      }
+    },
+    {
+      "code": "D-017",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_samba"
+      }
+    },
+    {
+      "code": "D-018",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_tango"
+      }
+    },
+    {
+      "code": "D-019",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_flamenco"
+      }
+    },
+    {
+      "code": "D-020",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_cuban_son"
+      }
+    },
+    {
+      "code": "D-021",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "cumbia_across_the_americas"
+      }
+    },
+    {
+      "code": "D-022",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_merengue"
+      }
+    },
+    {
+      "code": "D-023",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "bachata_to_the_world"
+      }
+    },
+    {
+      "code": "D-024",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "salsa_fania_revolution"
+      }
+    },
+    {
+      "code": "D-025",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_latin_jazz"
+      }
+    },
+    {
+      "code": "D-026",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "nueva_cancion"
+      }
+    },
+    {
+      "code": "D-027",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "reggae_and_dancehall"
+      }
+    },
+    {
+      "code": "D-028",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "rock_en_espanol_and_latin_alternative"
+      }
+    },
+    {
+      "code": "D-029",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "reggaeton_latin_urban_revolution"
+      }
+    },
+    {
+      "code": "D-030",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "rise_of_latin_trap"
+      }
+    },
+    {
+      "code": "D-031",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_of_corridos_tumbados"
+      }
+    },
+    {
+      "code": "D-032",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "fabulous_fifties"
+      }
+    },
+    {
+      "code": "D-033",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "swinging_sixties"
+      }
+    },
+    {
+      "code": "D-034",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "seventies_decade_of_change"
+      }
+    },
+    {
+      "code": "D-035",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "mtv_and_the_eighties"
+      }
+    },
+    {
+      "code": "D-036",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "alternative_nation_nineties"
+      }
+    },
+    {
+      "code": "D-037",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "music_in_the_new_millennium"
+      }
+    },
+    {
+      "code": "D-038",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "beatles_vs_stones"
+      }
+    },
+    {
+      "code": "D-039",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "elvis_vs_sinatra"
+      }
+    },
+    {
+      "code": "D-040",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "country_traditionalists_vs_country_pop"
+      }
+    },
+    {
+      "code": "D-041",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "ranchera_vs_norteno"
+      }
+    },
+    {
+      "code": "D-042",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "vicente_fernandez_vs_antonio_aguilar"
+      }
+    },
+    {
+      "code": "D-043",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "bossa_nova_vs_samba"
+      }
+    },
+    {
+      "code": "D-044",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "birth_of_country_music"
+      }
+    },
+    {
+      "code": "D-045",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "delta_to_chicago_blues"
+      }
+    },
+    {
+      "code": "D-046",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "gospel_shapes_popular_music"
+      }
+    },
+    {
+      "code": "D-047",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "birth_of_jazz"
+      }
+    },
+    {
+      "code": "D-048",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "disco_rise_backlash_revival"
+      }
+    },
+    {
+      "code": "D-049",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "punk_rock_revolution"
+      }
+    },
+    {
+      "code": "D-050",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "reggae_goes_global"
+      }
+    },
+    {
+      "code": "D-051",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_sun_records"
+      }
+    },
+    {
+      "code": "D-052",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "stax_memphis_soul"
+      }
+    },
+    {
+      "code": "D-053",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "muscle_shoals_sound"
+      }
+    },
+    {
+      "code": "D-054",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "the_wrecking_crew"
+      }
+    },
+    {
+      "code": "D-055",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_live_aid"
+      }
+    },
+    {
+      "code": "D-056",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "rise_of_45_and_jukebox"
+      }
+    },
+    {
+      "code": "D-057",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "eight_tracks_to_walkman"
+      }
+    },
+    {
+      "code": "D-058",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "ed_sullivan"
+      }
+    },
+    {
+      "code": "D-059",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "dick_clark"
+      }
+    },
+    {
+      "code": "D-060",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "don_cornelius"
+      }
+    },
+    {
+      "code": "D-061",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "casey_kasem"
+      }
+    },
+    {
+      "code": "D-062",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "alan_freed"
+      }
+    },
+    {
+      "code": "D-063",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "sam_phillips"
+      }
+    },
+    {
+      "code": "D-064",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "berry_gordy"
+      }
+    },
+    {
+      "code": "D-065",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "george_martin"
+      }
+    },
+    {
+      "code": "D-066",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "quincy_jones"
+      }
+    },
+    {
+      "code": "D-067",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "phil_spector"
+      }
+    },
+    {
+      "code": "D-068",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "tom_dowd"
+      }
+    },
+    {
+      "code": "D-069",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "ahmet_ertegun"
+      }
+    },
+    {
+      "code": "D-070",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "clive_davis"
+      }
+    },
+    {
+      "code": "D-071",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "brian_epstein"
+      }
+    },
+    {
+      "code": "D-072",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "colonel_tom_parker"
+      }
+    },
+    {
+      "code": "D-073",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "les_paul"
+      }
+    },
+    {
+      "code": "D-074",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "day_the_music_died"
+      }
+    },
+    {
+      "code": "D-075",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "the_27_club"
+      }
+    },
+    {
+      "code": "D-076",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "lost_recordings_music_mysteries"
+      }
+    },
+    {
+      "code": "D-077",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "mystery_legacy_pedro_infante"
+      }
+    },
+    {
+      "code": "D-078",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "tragic_story_mamonas_assassinas"
+      }
+    },
+    {
+      "code": "D-079",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "downloads_to_streaming"
+      }
+    },
+    {
+      "code": "D-080",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "tiktok_fifteen_second_hit"
+      }
+    },
+    {
+      "code": "D-081",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "rise_of_bedroom_pop"
+      }
+    },
+    {
+      "code": "D-082",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "rise_of_edm"
+      }
+    },
+    {
+      "code": "D-083",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "kpop_goes_global"
+      }
+    },
+    {
+      "code": "D-084",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "afrobeats_meets_latin_america"
+      }
+    },
+    {
+      "code": "D-085",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "ai_future_of_music"
+      }
+    },
+    {
+      "code": "D-086",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "vinyl_revival"
+      }
+    },
+    {
+      "code": "D-087",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_behind_american_pie"
+      }
+    },
+    {
+      "code": "D-088",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "one_hit_wonders"
+      }
+    },
+    {
+      "code": "D-089",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "songs_banned_from_radio"
+      }
+    },
+    {
+      "code": "D-090",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "woodstock"
+      }
+    },
+    {
+      "code": "D-091",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "hip_hop_goes_global"
+      }
+    },
+    {
+      "code": "D-092",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "punk_rock_around_the_world"
+      }
+    },
+    {
+      "code": "D-093",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "heavy_metal_global_language"
+      }
+    },
+    {
+      "code": "D-094",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "new_wave_synth_pop_around_the_world"
+      }
+    },
+    {
+      "code": "D-095",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "house_techno_modern_dance_music"
+      }
+    },
+    {
+      "code": "D-096",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "british_rave_jungle_garage_dubstep"
+      }
+    },
+    {
+      "code": "D-097",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "music_and_memory"
+      }
+    },
+    {
+      "code": "D-098",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "science_of_earworms"
+      }
+    },
+    {
+      "code": "D-099",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "why_music_gives_us_chills"
+      }
+    },
+    {
+      "code": "D-100",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "music_and_dementia"
+      }
+    },
+    {
+      "code": "D-101",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "psychology_of_musical_nostalgia"
+      }
+    },
+    {
+      "code": "D-102",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "music_and_athletic_performance"
+      }
+    },
+    {
+      "code": "D-103",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "why_stadium_crowds_sing"
+      }
+    },
+    {
+      "code": "D-104",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "architecture_of_sound"
+      }
+    },
+    {
+      "code": "D-105",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "sound_of_fear"
+      }
+    },
+    {
+      "code": "D-106",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "music_in_medicine"
+      }
+    },
+    {
+      "code": "D-107",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "why_humans_dance"
+      }
+    },
+    {
+      "code": "D-108",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "silence_the_sound_we_rarely_hear"
+      }
+    },
+    {
+      "code": "D-109",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_choro"
+      }
+    },
+    {
+      "code": "D-110",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_forro"
+      }
+    },
+    {
+      "code": "D-111",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "tropicalia_revolution"
+      }
+    },
+    {
+      "code": "D-112",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_mpb"
+      }
+    },
+    {
+      "code": "D-113",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "brazilian_rock"
+      }
+    },
+    {
+      "code": "D-114",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "story_of_axe"
+      }
+    },
+    {
+      "code": "D-115",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "brazilian_funk"
+      }
+    },
+    {
+      "code": "D-116",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "axe_pagode_and_modern_sertanejo"
+      }
+    },
+    {
+      "code": "D-117",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "brazilian_hip_hop_and_rap_nacional"
+      }
+    },
+    {
+      "code": "D-118",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "k_pop_j_pop_and_asian_pop"
+      }
+    },
+    {
+      "code": "D-119",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "afrobeats_amapiano_music_without_borders"
+      }
+    },
+    {
+      "code": "D-120",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "history_of_corrido"
+      }
+    },
+    {
+      "code": "D-121",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "golden_age_bolero"
+      }
+    },
+    {
+      "code": "D-122",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "banda_sinaloense"
+      }
+    },
+    {
+      "code": "D-123",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "rise_of_grupera"
+      }
+    },
+    {
+      "code": "D-124",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "mexican_rock_avandaro"
+      }
+    },
+    {
+      "code": "D-125",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "sonidero_culture"
+      }
+    },
+    {
+      "code": "D-126",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "tejano_border_music"
+      }
+    },
+    {
+      "code": "D-127",
+      "kind": "docuseries_story",
+      "target": {
+        "slug": "border_blasters"
+      }
+    }
+  ]
+}
