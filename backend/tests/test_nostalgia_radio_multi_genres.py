@@ -49,7 +49,7 @@ def test_existing_track_set_size_behavior_is_unchanged(monkeypatch: pytest.Monke
 def test_genre_selection_normalizes_deduplicates_and_rejects_invalid_values() -> None:
     assert decade_genre_player.resolve_radio_genre_selection(
         [" Blues-Jazz ", "rock", "blues-jazz"], BUCKETS
-    ) == frozenset(("blues-jazz", "rock"))
+    ) == ["blues-jazz", "rock"]
     assert decade_genre_player.resolve_radio_genre_selection(["ALL"], BUCKETS) is None
 
     with pytest.raises(HTTPException, match="Invalid or unavailable") as invalid:
@@ -70,10 +70,7 @@ def radio_client(monkeypatch: pytest.MonkeyPatch) -> tuple[TestClient, list[dict
 
     async def fake_start_new_sequence(coroutine: object) -> None:
         frame = coroutine.cr_frame  # type: ignore[attr-defined]
-        captured.append({
-            "genre_filter": frame.f_locals["genre_filter"],
-            "genre_filters": frame.f_locals["genre_filters"],
-        })
+        captured.append({"genre_filters": frame.f_locals["genre_filters"]})
         coroutine.close()  # type: ignore[attr-defined]
 
     monkeypatch.setattr(decade_genre_player, "get_db", fake_get_db)
@@ -104,7 +101,7 @@ def test_repeated_genres_take_precedence_over_legacy_genre(radio_client) -> None
 
     assert response.status_code == 200
     assert response.json() == {"status": "started", "mode": "radio_country"}
-    assert captured == [{"genre_filter": None, "genre_filters": frozenset(("blues-jazz", "rock"))}]
+    assert captured == [{"genre_filters": ["blues-jazz", "rock"]}]
 
 
 def test_legacy_all_and_single_genre_requests_remain_unchanged(radio_client) -> None:
@@ -120,8 +117,8 @@ def test_legacy_all_and_single_genre_requests_remain_unchanged(radio_client) -> 
     assert all_response.json() == {"status": "started", "mode": "radio_ALL"}
     assert single_response.json() == {"status": "started", "mode": "radio_rock"}
     assert captured == [
-        {"genre_filter": None, "genre_filters": None},
-        {"genre_filter": "rock", "genre_filters": None},
+        {"genre_filters": None},
+        {"genre_filters": ["rock"]},
     ]
 
 
@@ -140,8 +137,8 @@ def test_one_selected_genre_and_select_all_use_the_new_contract(radio_client) ->
     assert one_genre_response.json() == {"status": "started", "mode": "radio_ALL"}
     assert all_genres_response.json() == {"status": "started", "mode": "radio_rock"}
     assert captured == [
-        {"genre_filter": None, "genre_filters": frozenset(("rock",))},
-        {"genre_filter": None, "genre_filters": None},
+        {"genre_filters": ["rock"]},
+        {"genre_filters": None},
     ]
 
 

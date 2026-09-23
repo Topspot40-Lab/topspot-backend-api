@@ -98,9 +98,16 @@ def build_ranked_artist_track_query():
 
 def _tracks(artist_id, genre_slug):
     with engine.connect() as connection:
-        return [dict(row) for row in connection.execute(
+        rows = connection.execute(
             build_ranked_artist_track_query(), {'id': artist_id, 'genre_slug': genre_slug}
-        ).mappings()]
+        ).mappings().all()
+        # The query is DISTINCT, but preserve the no-repeat invariant if a
+        # driver or view still yields duplicate ranked track rows.
+        unique_tracks = {}
+        for row in rows:
+            track = dict(row)
+            unique_tracks.setdefault(track['track_id'], track)
+        return list(unique_tracks.values())
 async def _narrate(user,phase,track,ctx,bucket,key):
     if not bucket or not key:
         logger.warning('artist_radio_narration_skipped phase=%s reason=missing_asset_reference',phase)

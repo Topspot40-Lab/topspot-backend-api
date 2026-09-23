@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import logging
 import random
-from typing import Literal
+from typing import Literal, Sequence
 import asyncio
 
-from fastapi import APIRouter, Query, Depends
+from fastapi import APIRouter, HTTPException, Query, Depends
 from pydantic import BaseModel
 from sqlmodel import select
-from backend.services.all_radio_sequence import run_all_radio_sequence
+from backend.services.all_radio_sequence import RadioBucket, get_valid_buckets, run_all_radio_sequence
 
 from backend.database import get_db
 from backend.models.dbmodels import (
@@ -41,6 +41,30 @@ router = APIRouter(
     tags=["Supabase: Decade/Genre"],
 )
 logger = logging.getLogger(__name__)
+
+
+def resolve_radio_genre_selection(
+        genres: Sequence[str], available_buckets: Sequence[RadioBucket]
+) -> list[str] | None:
+    """Normalize and validate explicit multi-genre radio query parameters."""
+    normalized = [genre.strip().lower() for genre in genres]
+    if not normalized or any(not genre for genre in normalized):
+        raise HTTPException(status_code=422, detail="genres must contain one or more genre slugs")
+
+    selected_genres = list(dict.fromkeys(normalized))
+    if "all" in selected_genres:
+        if len(selected_genres) == 1:
+            return None
+        raise HTTPException(status_code=422, detail="ALL cannot be combined with other genres")
+
+    available_genres = {genre for _, genre in available_buckets}
+    invalid_genres = sorted(set(selected_genres) - available_genres)
+    if invalid_genres:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Invalid or unavailable radio genres: {', '.join(invalid_genres)}",
+        )
+    return selected_genres
 
 
 def resolve_sequence_narration_audio(*, language: str, track, artist, ranking, decade_name: str, genre_name: str, ranking_locale=None, track_locale=None) -> dict:
@@ -307,12 +331,13 @@ async def play_sequence_decade_genre(
     if decade == "ALL":
         logger.info(f"🧪 RADIO MODE: ALL/{genre}")
 
-        # An explicit multi-genre request takes precedence over legacy
-        # `genre=ALL`, while old scalar callers retain their exact behavior.
-        if genres:
-            genre_filter = None if len(genres) == 1 and genres[0].strip().upper() == "ALL" else genres
-        else:
-            genre_filter = None if genre == "ALL" else [genre]
+        # Explicit multi-select requests take precedence over legacy scalar
+        # callers, while retaining the established list-based service contract.
+        genre_filter = (
+            resolve_radio_genre_selection(genres, get_valid_buckets(db))
+            if genres is not None
+            else (None if genre == "ALL" else [genre])
+        )
         # Legacy callers only send play_detail. Their true value keeps the
         # previous canonical (full/long) detail; false remains Details Off.
         radio_detail_length = detail_length or ("long" if play_detail else "off")

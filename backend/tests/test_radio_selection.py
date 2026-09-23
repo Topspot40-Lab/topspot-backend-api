@@ -27,7 +27,7 @@ def test_radio_tracks_prefer_unused_session_tracks_without_resetting_history() -
     assert played == {1, 2}
 
 
-def test_artist_radio_set_deduplicates_tracks_before_limiting(monkeypatch) -> None:
+def test_artist_radio_track_loader_deduplicates_tracks(monkeypatch) -> None:
     rows = [
         {"track_id": 1, "track_name": "One", "artist_id": 9, "artist_name": "Artist"},
         {"track_id": 1, "track_name": "One", "artist_id": 9, "artist_name": "Artist"},
@@ -58,6 +58,6 @@ def test_artist_radio_set_deduplicates_tracks_before_limiting(monkeypatch) -> No
 
     monkeypatch.setattr(artist_radio_sequence, "engine", Engine())
 
-    radio_set = artist_radio_sequence.load_artist_radio_set("ALL")
+    tracks = artist_radio_sequence._tracks(9, "rock")
 
-    assert [track["track_id"] for track in radio_set["tracks"]] == [1, 2, 3]
+    assert [track["track_id"] for track in tracks] == [1, 2, 3]
