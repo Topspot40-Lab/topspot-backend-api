@@ -15,6 +15,10 @@ from backend.services.decade_genre_sequence import publish_narration_queue_phase
 from backend.services.radio_runtime import collection_intro_jobs, narration_keys_for, short_detail_keys_for
 from backend.services.audio_urls import resolve_audio_ref
 from backend.services.bed_tracks import BED_BUCKET, get_collection_group_bed_key
+from backend.services.radio_selection import (
+    unused_session_candidates,
+    unused_source_candidates,
+)
 
 from sqlmodel import select
 
@@ -173,12 +177,20 @@ async def run_collections_radio_sequence(
             logger.warning("No collections found for group=%s", collection_group_slug)
             return
 
-        random.shuffle(collections)
-
         set_number = 0
+        used_collection_slugs: set[object] = set()
+        played_track_ids: set[object] = set()
 
         while True:
-            for collection_meta in collections:
+            unused_collections = unused_source_candidates(
+                collections,
+                used_collection_slugs,
+                lambda collection: collection["collection_slug"],
+            )
+
+            while unused_collections:
+                collection_meta = random.choice(unused_collections)
+                unused_collections.remove(collection_meta)
                 if status.stopped:
                     logger.info("🛑 Collections radio stopped")
                     return
@@ -186,6 +198,7 @@ async def run_collections_radio_sequence(
                 set_number += 1
 
                 collection_slug = collection_meta["collection_slug"]
+                used_collection_slugs.add(collection_slug)
                 collection_name = collection_meta["collection_name"]
                 group_slug = collection_meta["collection_group_slug"]
                 group_name = collection_meta["collection_group_name"]
@@ -223,7 +236,15 @@ async def run_collections_radio_sequence(
                         logger.warning("No rows for collection=%s", collection_slug)
                         continue
 
-                    block_rows = build_track_block(rows, set_number=set_number)
+                    eligible_rows = unused_session_candidates(
+                        rows,
+                        played_track_ids,
+                        lambda row: getattr(row[0], "id", None),
+                    )
+                    block_rows = build_track_block(eligible_rows, set_number=set_number)
+                    played_track_ids.update(
+                        getattr(row[0], "id", None) for row in block_rows
+                    )
 
                     for idx, (track, artist, ctr, collection, ctr_locale, track_locale, artist_locale) in enumerate(
                             block_rows,

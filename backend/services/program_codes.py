@@ -1,7 +1,9 @@
 """Lookup and presentation helpers for permanent public program codes."""
 from __future__ import annotations
 
+import json
 import re
+from pathlib import Path
 from typing import Any
 
 from sqlalchemy import or_
@@ -19,6 +21,31 @@ from backend.models.dbmodels import (
 )
 
 _CODE_INPUT = re.compile(r"^\s*([ncad])\s*-?\s*(\d{1,3})\s*$", re.IGNORECASE)
+_APPROVED_MANIFEST_PATH = Path(__file__).parents[1] / "data" / "program_code_manifest.json"
+
+
+def _load_approved_programs() -> dict[str, dict[str, Any]]:
+    """Load public code assignments independently of the DB projection."""
+    payload = json.loads(_APPROVED_MANIFEST_PATH.read_text(encoding="utf-8"))
+    if payload.get("approved") is not True or not isinstance(payload.get("assignments"), list):
+        raise ValueError("approved program code manifest is invalid")
+
+    programs: dict[str, dict[str, Any]] = {}
+    for assignment in payload["assignments"]:
+        if not isinstance(assignment, dict):
+            raise ValueError("approved program code manifest contains an invalid assignment")
+        code = normalize_program_code(str(assignment.get("code", "")))
+        kind = assignment.get("kind")
+        target = assignment.get("target")
+        if (
+            not code
+            or kind not in {"nostalgia", "collection", "artist_spotlight", "docuseries_story"}
+            or not isinstance(target, dict)
+            or code in programs
+        ):
+            raise ValueError("approved program code manifest contains an invalid assignment")
+        programs[code] = {"code": code, "kind": kind, "is_active": True, "target": target}
+    return programs
 
 
 def normalize_program_code(value: str) -> str | None:
@@ -30,6 +57,9 @@ def normalize_program_code(value: str) -> str | None:
     if number > 999:
         return None
     return f"{match.group(1).upper()}-{number:03d}"
+
+
+_APPROVED_PROGRAMS = _load_approved_programs()
 
 
 def _program_query():
@@ -68,6 +98,11 @@ def serialize_program(row: tuple[Any, ...]) -> dict[str, Any]:
 
 
 def get_program_by_code(session: Session, canonical_code: str) -> dict[str, Any] | None:
+    # The manifest is authoritative; the ProgramCode table is a seedable,
+    # derived projection and may legitimately be empty on a fresh deployment.
+    approved_program = _APPROVED_PROGRAMS.get(canonical_code)
+    if approved_program:
+        return approved_program
     row = session.exec(_program_query().where(ProgramCode.code == canonical_code).where(ProgramCode.is_active == True)).first()  # noqa: E712
     return serialize_program(row) if row else None
 

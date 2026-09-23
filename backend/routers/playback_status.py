@@ -348,6 +348,24 @@ async def narration_finished(payload: Optional[NarrationFinishedRequest] = None)
 #from backend.state.narration import track_done_event
 
 
+@router.post("/skip-track")
+async def skip_track():
+    """Explicit listener skip for an active backend-owned radio track."""
+    user_id = current_user_id()
+    status = get_playback_status(user_id)
+
+    if getattr(status, "phase", None) != "track":
+        return {
+            "ok": True,
+            "ignored": True,
+            "reason": "not_in_track_phase",
+        }
+
+    track_done_event(user_id).set()
+    logger.info("⏭️ Explicit radio track skip accepted")
+    return {"ok": True, "skipped": True}
+
+
 @router.post("/track-finished")
 async def track_finished():
     user_id = current_user_id()

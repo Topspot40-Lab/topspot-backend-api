@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from collections.abc import Sequence
 from backend.models import (
     Decade,
     Genre,
@@ -34,9 +35,25 @@ from backend.state.narration import track_done_event
 from backend.state.playback_runtime import current_runtime, current_user_id
 
 from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
+from backend.services.radio_selection import (
+    unused_session_candidates,
+    unused_source_candidates,
+)
 from backend.services.audio_urls import resolve_audio_ref
 
 logger = logging.getLogger(__name__)
+
+RadioBucket = tuple[str, str]
+
+
+def filter_radio_buckets(
+        buckets: Sequence[RadioBucket], genre_filters: Sequence[str] | None
+) -> list[RadioBucket]:
+    """Return buckets limited to the selected genres, when supplied."""
+    if genre_filters is None:
+        return list(buckets)
+    selected_genres = set(genre_filters)
+    return [(decade, genre) for decade, genre in buckets if genre in selected_genres]
 
 
 def detail_audio_keys_for_radio(*, detail_length: str, lang: str, track, decade_genre_id: int | None, artist):
@@ -305,9 +322,10 @@ async def run_all_radio_sequence(
 
     global VALID_BUCKETS_CACHE
 
-    previous_bucket = None
     last_played_ranking_id = None
     set_number = 0
+    used_buckets: set[RadioBucket] = set()
+    played_track_ids: set[object] = set()
 
     recent_decades = []
     MAX_RECENT_DECADES = 3
@@ -347,12 +365,9 @@ async def run_all_radio_sequence(
                     return
 
             # ALWAYS assign first
-            valid_buckets = VALID_BUCKETS_CACHE
-
-            # 🎯 Apply genre filter (once, clean)
+            valid_buckets = filter_radio_buckets(VALID_BUCKETS_CACHE, genre_filters)
             if genre_filters:
                 logger.info("🎸 GENRE FILTER ACTIVE: %s", genre_filters)
-                valid_buckets = [(d, g) for (d, g) in valid_buckets if g in genre_filters]
 
             # 🕒 Build station clock from filtered buckets
             genres = list({g for _, g in valid_buckets})
@@ -362,26 +377,21 @@ async def run_all_radio_sequence(
 
             clock_index = 0
 
-            valid_buckets = VALID_BUCKETS_CACHE
-            # 🎯 Apply genre filter
-            if genre_filters:
-                valid_buckets = [(d, g) for (d, g) in valid_buckets if g in genre_filters]
-
-            # 🎯 Apply genre filter (for Nostalgia Radio station selection)
-            if genre_filters:
-                valid_buckets = [(d, g) for (d, g) in valid_buckets if g in genre_filters]
-
             # ─────────────────────────────
             # PICK RANDOM BUCKET
             # ─────────────────────────────
-            # avoid repeating recent decades
-            filtered = [
-                (d, g) for (d, g) in valid_buckets
-                if d not in recent_decades
-            ]
+            # Radio selection is independent of the program-level Favor New / All
+            # Equal preference.  Use each eligible source once before recycling.
+            unused_buckets = unused_source_candidates(
+                valid_buckets, used_buckets, lambda bucket: bucket
+            )
 
-            if not filtered:
-                filtered = valid_buckets
+            # Retain the existing decade variety only when it does not conflict
+            # with the no-repeat source pool.
+            filtered = [
+                (d, g) for (d, g) in unused_buckets
+                if d not in recent_decades
+            ] or unused_buckets
 
             if genres:
                 target_genre = genres[clock_index]
@@ -395,10 +405,7 @@ async def run_all_radio_sequence(
 
             decade, genre = random.choice(candidates)
 
-            while (decade, genre) == previous_bucket:
-                decade, genre = random.choice(valid_buckets)
-
-            previous_bucket = (decade, genre)
+            used_buckets.add((decade, genre))
             set_number += 1
 
             recent_decades.append(decade)
@@ -439,7 +446,14 @@ async def run_all_radio_sequence(
             # ─────────────────────────────
             # BUILD BLOCK
             # ─────────────────────────────
-            block_rows = build_track_block(rows)
+            # Track selection is also session-local for radio.  It deliberately
+            # does not read the global Favor New / All Equal preference.
+            eligible_rows = unused_session_candidates(
+                rows,
+                played_track_ids,
+                lambda row: getattr(row[0], "id", None),
+            )
+            block_rows = build_track_block(eligible_rows)
 
             # avoid repeating recent artists
             filtered_block = [
@@ -450,6 +464,8 @@ async def run_all_radio_sequence(
             # Only apply filter if it doesn't shrink too much
             if len(filtered_block) >= MIN_TRACKS_PER_BLOCK:
                 block_rows = filtered_block
+
+            played_track_ids.update(getattr(row[0], "id", None) for row in block_rows)
 
             # SINGLE MODE → only keep one track
             if category == "single" and flags.mode != "all_radio":
