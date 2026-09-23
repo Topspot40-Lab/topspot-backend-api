@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from collections.abc import Sequence
 from backend.models import (
     Decade,
     Genre,
@@ -156,6 +157,19 @@ def get_valid_buckets(session):
     return [(d, g) for d, g in rows]
 
 
+RadioBucket = tuple[str, str]
+RadioGenreSelection = frozenset[str] | None
+
+
+def filter_radio_buckets(
+    buckets: Sequence[RadioBucket], selected_genres: RadioGenreSelection
+) -> list[RadioBucket]:
+    """Return buckets limited to an explicit genre selection, if supplied."""
+    if selected_genres is None:
+        return list(buckets)
+    return [(decade, genre) for decade, genre in buckets if genre in selected_genres]
+
+
 def build_decade_genre_intro_url(decade_slug: str, genre_slug: str) -> str:
     slug = f"{decade_slug}-{genre_slug}"
     return (
@@ -237,6 +251,7 @@ async def run_all_radio_sequence(
         tts_languages: list[str] | None = None,
         category: str | None = None,
         genre_filter: str | None = None,
+        genre_filters: RadioGenreSelection = None,
         play_intro: bool = True,
         play_detail: bool = True,
         detail_length: str = "long",
@@ -266,6 +281,10 @@ async def run_all_radio_sequence(
     lang = langs[0] if langs else "en"
 
     logger.info("🌎 RADIO LANGUAGES: %s", langs)
+
+    selected_genres: RadioGenreSelection = genre_filters
+    if selected_genres is None and genre_filter and genre_filter != "ALL":
+        selected_genres = frozenset((genre_filter,))
 
     play_intro, play_detail, detail_length, play_artist = resolve_radio_narration_policy(
         status,
@@ -347,12 +366,13 @@ async def run_all_radio_sequence(
                     return
 
             # ALWAYS assign first
-            valid_buckets = VALID_BUCKETS_CACHE
+            valid_buckets: list[RadioBucket] = filter_radio_buckets(
+                VALID_BUCKETS_CACHE, selected_genres
+            )
 
             # 🎯 Apply genre filter (once, clean)
-            if genre_filter and genre_filter != "ALL":
-                logger.info("🎸 GENRE FILTER ACTIVE: %s", genre_filter)
-                valid_buckets = [(d, g) for (d, g) in valid_buckets if g == genre_filter]
+            if selected_genres is not None:
+                logger.info("🎸 GENRE FILTER ACTIVE: %s", sorted(selected_genres))
 
             # 🕒 Build station clock from filtered buckets
             genres = list({g for _, g in valid_buckets})
@@ -361,15 +381,6 @@ async def run_all_radio_sequence(
             logger.debug("🕒 Station clock genres: %s", genres)
 
             clock_index = 0
-
-            valid_buckets = VALID_BUCKETS_CACHE
-            # 🎯 Apply genre filter
-            if genre_filter and genre_filter != "ALL":
-                valid_buckets = [(d, g) for (d, g) in valid_buckets if g == genre_filter]
-
-            # 🎯 Apply genre filter (for Nostalgia Radio station selection)
-            if genre_filter and genre_filter != "ALL":
-                valid_buckets = [(d, g) for (d, g) in valid_buckets if g == genre_filter]
 
             # ─────────────────────────────
             # PICK RANDOM BUCKET
