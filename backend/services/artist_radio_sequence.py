@@ -90,7 +90,14 @@ def load_artist_radio_set(
             }
         ).mappings().all()
 
-    tracks = [dict(row) for row in rows]
+    # A track can be ranked in more than one decade/genre.  Artist Radio's
+    # session set must contain each track at most once, independently of any
+    # global program preference.
+    tracks_by_id = {}
+    for row in rows:
+        track = dict(row)
+        tracks_by_id.setdefault(track["track_id"], track)
+    tracks = list(tracks_by_id.values())
 
     if not tracks:
         return {"ok": False, "error": "No eligible artist set found."}
