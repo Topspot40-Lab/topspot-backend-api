@@ -45,18 +45,36 @@ def test_exact_lookup_normalizes_before_database_lookup(monkeypatch, raw, canoni
     assert response.json() == {"code": canonical}
 
 
+@pytest.mark.parametrize(("code", "kind", "target"), [
+    ("N-001", "nostalgia", {"decade_slug": "1950s", "genre_slug": "country"}),
+    ("C-001", "collection", {"slug": "african_american_heritage_favorites"}),
+    ("A-001", "artist_spotlight", {"artist_id": 945}),
+    ("D-001", "docuseries_story", {"slug": "history_electric_guitar"}),
+])
+def test_approved_program_codes_resolve_without_program_code_rows(code, kind, target):
+    """Printed programs work before the derived ProgramCode table is seeded."""
+    app.dependency_overrides[get_db] = lambda: object()
+    try:
+        with TestClient(app) as client:
+            response = client.get(f"/api/catalog/programs/{code}")
+    finally:
+        app.dependency_overrides.clear()
+    assert response.status_code == 200
+    assert response.json() == {"code": code, "kind": kind, "is_active": True, "target": target}
+
+
 def test_docuseries_lookup_and_search_return_story_and_group_metadata(tmp_path):
     engine = create_engine(f"sqlite:///{tmp_path / 'program-codes.db'}")
     SQLModel.metadata.create_all(engine)
     with Session(engine) as session:
         session.add(MusicDocuseriesCollection(id=11, slug="instruments", name="Instruments"))
         session.add(MusicDocuseries(id=71, collection_id=11, slug="electric_guitar", title="The Electric Guitar"))
-        session.add(ProgramCode(code="D-001", program_kind="docuseries_story", music_docuseries_id=71))
+        session.add(ProgramCode(code="D-998", program_kind="docuseries_story", music_docuseries_id=71))
         session.commit()
 
-        result = get_program_by_code(session, "D-001")
+        result = get_program_by_code(session, "D-998")
         assert result == {
-            "code": "D-001", "kind": "docuseries_story", "is_active": True,
+            "code": "D-998", "kind": "docuseries_story", "is_active": True,
             "name": "The Electric Guitar",
             "target": {"music_docuseries_id": 71, "slug": "electric_guitar", "title": "The Electric Guitar"},
             "group": {"slug": "instruments", "name": "Instruments"},
