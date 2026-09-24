@@ -15,6 +15,7 @@ PREVIOUSLY_BACKFILLED_RANKING_IDS = (3840, 3841, 3499, 3842, 3843, 3844, 3845, 3
 ADDITIONAL_TV_THEMES_RANKING_IDS = tuple(range(3809, 3828)) + (3570,)
 TARGET_RANKING_IDS = PREVIOUSLY_BACKFILLED_RANKING_IDS + ADDITIONAL_TV_THEMES_RANKING_IDS
 SPOTIFY_SOURCE = "Spotify Web API /v1/tracks (stored canonical spotify_track_id)"
+EXCLUDED_SPOTIFY_TRACK_IDS = frozenset({"6fHq9tL4dpxoE0wIgXchEG"})
 
 
 def load_candidates(session: Session) -> list[dict[str, Any]]:
@@ -24,6 +25,15 @@ def load_candidates(session: Session) -> list[dict[str, Any]]:
     if missing:
         raise ValueError(f"missing target rankings: {missing}")
     return [by_ranking_id[ranking_id] for ranking_id in TARGET_RANKING_IDS]
+
+
+def candidates_requiring_spotify_metadata(candidates: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Limit Spotify lookups to still-null, supported target records."""
+    return [
+        candidate for candidate in candidates
+        if candidate["current_duration_ms"] is None
+        and candidate["spotify_track_id"] not in EXCLUDED_SPOTIFY_TRACK_IDS
+    ]
 
 
 def fetch_spotify_durations(spotify_track_ids: Iterable[str]) -> dict[str, int]:
@@ -59,8 +69,9 @@ def main() -> None:
     parser.add_argument("--apply", action="store_true", help="write only rows whose duration_ms remains NULL")
     args = parser.parse_args()
     with Session(engine) as session:
-        candidates = load_candidates(session)
-        rows = build_review_rows(candidates, fetch_spotify_durations(row["spotify_track_id"] for row in candidates))
+        candidates = candidates_requiring_spotify_metadata(load_candidates(session))
+        durations = fetch_spotify_durations(row["spotify_track_id"] for row in candidates) if candidates else {}
+        rows = build_review_rows(candidates, durations)
         print(json.dumps({"mode": "apply" if args.apply else "dry-run", "rows": rows}, indent=2))
         if args.apply:
             print(json.dumps({"updated": apply_null_only_backfill(session, rows)}))

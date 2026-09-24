@@ -4,9 +4,11 @@ from unittest.mock import Mock
 from backend.scripts.backfill_missing_ranked_durations import (
     ADDITIONAL_TV_THEMES_RANKING_IDS,
     PREVIOUSLY_BACKFILLED_RANKING_IDS,
+    EXCLUDED_SPOTIFY_TRACK_IDS,
     TARGET_RANKING_IDS,
     apply_null_only_backfill,
     build_review_rows,
+    candidates_requiring_spotify_metadata,
 )
 
 
@@ -34,11 +36,24 @@ def test_review_rows_match_the_exact_null_duration_backfill_proposals():
     assert all(row["source"].startswith("Spotify Web API") for row in rows)
 
 
-def test_targets_include_the_35_corrected_tv_theme_rankings_but_not_3933():
+def test_targets_include_the_35_corrected_tv_theme_rankings():
     assert TARGET_RANKING_IDS == PREVIOUSLY_BACKFILLED_RANKING_IDS + ADDITIONAL_TV_THEMES_RANKING_IDS
     assert len(TARGET_RANKING_IDS) == 35
     assert set(ADDITIONAL_TV_THEMES_RANKING_IDS) == {*range(3809, 3828), 3570}
-    assert 3933 not in TARGET_RANKING_IDS
+
+
+def test_spotify_metadata_candidates_are_null_only_and_exclude_track_3933_canonical_id():
+    track_3933_spotify_id = "6fHq9tL4dpxoE0wIgXchEG"
+    candidates = [
+        {"ranking_id": 3840, "track_id": 1, "spotify_track_id": "3EsN4lGtZX7TYlMyH0CcK3", "current_duration_ms": None},
+        {"ranking_id": 3841, "track_id": 2, "spotify_track_id": "323Ys8qcHBgNiKvRxernN1", "current_duration_ms": 144_480},
+        {"ranking_id": 9999, "track_id": 3933, "spotify_track_id": track_3933_spotify_id, "current_duration_ms": None},
+    ]
+
+    lookup_candidates = candidates_requiring_spotify_metadata(candidates)
+
+    assert track_3933_spotify_id in EXCLUDED_SPOTIFY_TRACK_IDS
+    assert [candidate["spotify_track_id"] for candidate in lookup_candidates] == ["3EsN4lGtZX7TYlMyH0CcK3"]
 
 
 def test_apply_is_null_only_and_is_a_noop_when_every_target_is_already_backfilled():
