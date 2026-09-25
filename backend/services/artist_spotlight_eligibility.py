@@ -32,20 +32,34 @@ def build_featured_artist_eligibility_query(
         count_group_by = "a.id, g.slug, g.genre_name"
         output_group_by = "gc.artist_id, gc.artist_name, gc.genre_slug, gc.genre_name, gc.genre_track_count"
         order_prefix = "gc.genre_slug,"
+        collection_catalog_union = ""
     else:
         genre_columns = ""
         genre_predicate = "(:genre IS NULL OR :genre = 'all' OR g.slug = :genre)"
         count_group_by = "a.id"
         output_group_by = "gc.artist_id, gc.artist_name, gc.genre_track_count"
         order_prefix = ""
+        collection_catalog_union = """
+            UNION
+            SELECT
+                t.id AS track_id,
+                t.artist_id,
+                g.slug AS genre_slug
+            FROM collection_track_ranking ctr
+            JOIN track t
+                ON ctr.track_id = t.id
+            JOIN artist_genre ag
+                ON ag.artist_id = t.artist_id
+            JOIN genre g
+                ON g.id = ag.genre_id
+        """
 
     query = text(f"""
-        WITH genre_counts AS (
+        WITH eligible_catalog_tracks AS (
             SELECT
-                a.id AS artist_id,
-                a.artist_name,
-                {genre_columns}
-                COUNT(DISTINCT tr.track_id) AS genre_track_count
+                t.id AS track_id,
+                t.artist_id,
+                g.slug AS genre_slug
             FROM track_ranking tr
             JOIN decade_genre dg
                 ON tr.decade_genre_id = dg.id
@@ -53,8 +67,21 @@ def build_featured_artist_eligibility_query(
                 ON dg.genre_id = g.id
             JOIN track t
                 ON tr.track_id = t.id
+            {collection_catalog_union}
+        ),
+        genre_counts AS (
+            SELECT
+                a.id AS artist_id,
+                a.artist_name,
+                {genre_columns}
+                COUNT(DISTINCT ect.track_id) AS genre_track_count
+            FROM eligible_catalog_tracks ect
+            JOIN track t
+                ON ect.track_id = t.id
             JOIN artist a
                 ON t.artist_id = a.id
+            JOIN genre g
+                ON g.slug = ect.genre_slug
             WHERE {genre_predicate}
             GROUP BY {count_group_by}
         ),
