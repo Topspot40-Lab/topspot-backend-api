@@ -11,6 +11,7 @@ EXPECTED_MOUNTED_ROUTES = {
     ("GET", "/api/catalog/summary"),
     ("GET", "/api/catalog/get-json-catalog"),
     ("GET", "/api/catalog/grouped"),
+    ("GET", "/api/catalog/songs/search"),
     ("GET", "/api/catalog/programs"),
     ("GET", "/api/catalog/programs/{code}"),
     ("GET", "/artist-spotlight/artists-by-genre"),
