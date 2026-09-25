@@ -150,7 +150,7 @@ def test_approved_manifest_has_every_expected_code_once():
         Path(__file__).parents[1] / "data" / "program_code_manifest.json",
         require_approved=True,
     )
-    assert len(manifest) == 469
+    assert len(manifest) == 470
     assert {prefix: sum(item["code"].startswith(f"{prefix}-") for item in manifest) for prefix in "NCAD"} == {
-        "N": 64, "C": 52, "A": 226, "D": 127,
+        "N": 64, "C": 52, "A": 227, "D": 127,
     }

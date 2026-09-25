@@ -1,7 +1,7 @@
 {
   "version": 1,
   "approved": true,
-  "source": "Phase 2 audit approved by Gary: 64 N, 52 C, 226 A, 127 D",
+  "source": "Phase 2 audit approved by Gary: 64 N, 52 C, 227 A, 127 D",
   "assignments": [
     {
       "code": "N-001",
@@ -2459,6 +2459,13 @@
       "kind": "artist_spotlight",
       "target": {
         "artist_id": 273
+      }
+    },
+    {
+      "code": "A-227",
+      "kind": "artist_spotlight",
+      "target": {
+        "artist_id": 1915
       }
     },
     {
