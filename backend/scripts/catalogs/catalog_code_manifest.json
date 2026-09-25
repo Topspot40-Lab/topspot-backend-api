@@ -1,0 +1,535 @@
+{
+  "schema_version": 1,
+  "nostalgia": [
+    {
+      "code": "N-001",
+      "decade_slug": "1950s",
+      "genre_slug": "country"
+    },
+    {
+      "code": "N-002",
+      "decade_slug": "1950s",
+      "genre_slug": "pop"
+    },
+    {
+      "code": "N-003",
+      "decade_slug": "1950s",
+      "genre_slug": "rock"
+    },
+    {
+      "code": "N-004",
+      "decade_slug": "1950s",
+      "genre_slug": "rnb_soul"
+    },
+    {
+      "code": "N-005",
+      "decade_slug": "1950s",
+      "genre_slug": "latin_global"
+    },
+    {
+      "code": "N-006",
+      "decade_slug": "1950s",
+      "genre_slug": "blues_jazz"
+    },
+    {
+      "code": "N-007",
+      "decade_slug": "1950s",
+      "genre_slug": "folk_acoustic"
+    },
+    {
+      "code": "N-008",
+      "decade_slug": "1950s",
+      "genre_slug": "tv_themes"
+    },
+    {
+      "code": "N-009",
+      "decade_slug": "1960s",
+      "genre_slug": "country"
+    },
+    {
+      "code": "N-010",
+      "decade_slug": "1960s",
+      "genre_slug": "pop"
+    },
+    {
+      "code": "N-011",
+      "decade_slug": "1960s",
+      "genre_slug": "rock"
+    },
+    {
+      "code": "N-012",
+      "decade_slug": "1960s",
+      "genre_slug": "rnb_soul"
+    },
+    {
+      "code": "N-013",
+      "decade_slug": "1960s",
+      "genre_slug": "latin_global"
+    },
+    {
+      "code": "N-014",
+      "decade_slug": "1960s",
+      "genre_slug": "blues_jazz"
+    },
+    {
+      "code": "N-015",
+      "decade_slug": "1960s",
+      "genre_slug": "folk_acoustic"
+    },
+    {
+      "code": "N-016",
+      "decade_slug": "1960s",
+      "genre_slug": "tv_themes"
+    },
+    {
+      "code": "N-017",
+      "decade_slug": "1970s",
+      "genre_slug": "country"
+    },
+    {
+      "code": "N-018",
+      "decade_slug": "1970s",
+      "genre_slug": "pop"
+    },
+    {
+      "code": "N-019",
+      "decade_slug": "1970s",
+      "genre_slug": "rock"
+    },
+    {
+      "code": "N-020",
+      "decade_slug": "1970s",
+      "genre_slug": "rnb_soul"
+    },
+    {
+      "code": "N-021",
+      "decade_slug": "1970s",
+      "genre_slug": "latin_global"
+    },
+    {
+      "code": "N-022",
+      "decade_slug": "1970s",
+      "genre_slug": "blues_jazz"
+    },
+    {
+      "code": "N-023",
+      "decade_slug": "1970s",
+      "genre_slug": "folk_acoustic"
+    },
+    {
+      "code": "N-024",
+      "decade_slug": "1970s",
+      "genre_slug": "tv_themes"
+    },
+    {
+      "code": "N-025",
+      "decade_slug": "1980s",
+      "genre_slug": "country"
+    },
+    {
+      "code": "N-026",
+      "decade_slug": "1980s",
+      "genre_slug": "pop"
+    },
+    {
+      "code": "N-027",
+      "decade_slug": "1980s",
+      "genre_slug": "rock"
+    },
+    {
+      "code": "N-028",
+      "decade_slug": "1980s",
+      "genre_slug": "rnb_soul"
+    },
+    {
+      "code": "N-029",
+      "decade_slug": "1980s",
+      "genre_slug": "latin_global"
+    },
+    {
+      "code": "N-030",
+      "decade_slug": "1980s",
+      "genre_slug": "blues_jazz"
+    },
+    {
+      "code": "N-031",
+      "decade_slug": "1980s",
+      "genre_slug": "folk_acoustic"
+    },
+    {
+      "code": "N-032",
+      "decade_slug": "1980s",
+      "genre_slug": "tv_themes"
+    },
+    {
+      "code": "N-033",
+      "decade_slug": "1990s",
+      "genre_slug": "country"
+    },
+    {
+      "code": "N-034",
+      "decade_slug": "1990s",
+      "genre_slug": "pop"
+    },
+    {
+      "code": "N-035",
+      "decade_slug": "1990s",
+      "genre_slug": "rock"
+    },
+    {
+      "code": "N-036",
+      "decade_slug": "1990s",
+      "genre_slug": "rnb_soul"
+    },
+    {
+      "code": "N-037",
+      "decade_slug": "1990s",
+      "genre_slug": "latin_global"
+    },
+    {
+      "code": "N-038",
+      "decade_slug": "1990s",
+      "genre_slug": "blues_jazz"
+    },
+    {
+      "code": "N-039",
+      "decade_slug": "1990s",
+      "genre_slug": "folk_acoustic"
+    },
+    {
+      "code": "N-040",
+      "decade_slug": "1990s",
+      "genre_slug": "tv_themes"
+    },
+    {
+      "code": "N-041",
+      "decade_slug": "2000s",
+      "genre_slug": "country"
+    },
+    {
+      "code": "N-042",
+      "decade_slug": "2000s",
+      "genre_slug": "pop"
+    },
+    {
+      "code": "N-043",
+      "decade_slug": "2000s",
+      "genre_slug": "rock"
+    },
+    {
+      "code": "N-044",
+      "decade_slug": "2000s",
+      "genre_slug": "rnb_soul"
+    },
+    {
+      "code": "N-045",
+      "decade_slug": "2000s",
+      "genre_slug": "latin_global"
+    },
+    {
+      "code": "N-046",
+      "decade_slug": "2000s",
+      "genre_slug": "blues_jazz"
+    },
+    {
+      "code": "N-047",
+      "decade_slug": "2000s",
+      "genre_slug": "folk_acoustic"
+    },
+    {
+      "code": "N-048",
+      "decade_slug": "2000s",
+      "genre_slug": "tv_themes"
+    },
+    {
+      "code": "N-049",
+      "decade_slug": "2010s",
+      "genre_slug": "country"
+    },
+    {
+      "code": "N-050",
+      "decade_slug": "2010s",
+      "genre_slug": "pop"
+    },
+    {
+      "code": "N-051",
+      "decade_slug": "2010s",
+      "genre_slug": "rock"
+    },
+    {
+      "code": "N-052",
+      "decade_slug": "2010s",
+      "genre_slug": "rnb_soul"
+    },
+    {
+      "code": "N-053",
+      "decade_slug": "2010s",
+      "genre_slug": "latin_global"
+    },
+    {
+      "code": "N-054",
+      "decade_slug": "2010s",
+      "genre_slug": "blues_jazz"
+    },
+    {
+      "code": "N-055",
+      "decade_slug": "2010s",
+      "genre_slug": "folk_acoustic"
+    },
+    {
+      "code": "N-056",
+      "decade_slug": "2010s",
+      "genre_slug": "tv_themes"
+    },
+    {
+      "code": "N-057",
+      "decade_slug": "2020s",
+      "genre_slug": "country"
+    },
+    {
+      "code": "N-058",
+      "decade_slug": "2020s",
+      "genre_slug": "pop"
+    },
+    {
+      "code": "N-059",
+      "decade_slug": "2020s",
+      "genre_slug": "rock"
+    },
+    {
+      "code": "N-060",
+      "decade_slug": "2020s",
+      "genre_slug": "rnb_soul"
+    },
+    {
+      "code": "N-061",
+      "decade_slug": "2020s",
+      "genre_slug": "latin_global"
+    },
+    {
+      "code": "N-062",
+      "decade_slug": "2020s",
+      "genre_slug": "blues_jazz"
+    },
+    {
+      "code": "N-063",
+      "decade_slug": "2020s",
+      "genre_slug": "folk_acoustic"
+    },
+    {
+      "code": "N-064",
+      "decade_slug": "2020s",
+      "genre_slug": "tv_themes"
+    }
+  ],
+  "collections": [
+    {
+      "code": "C-001",
+      "slug": "african_american_heritage_favorites"
+    },
+    {
+      "code": "C-002",
+      "slug": "american_folk_heroes"
+    },
+    {
+      "code": "C-003",
+      "slug": "bluegrass_favorites"
+    },
+    {
+      "code": "C-004",
+      "slug": "brazilian_classics"
+    },
+    {
+      "code": "C-005",
+      "slug": "celtic_favorites"
+    },
+    {
+      "code": "C-006",
+      "slug": "civil_war_songs"
+    },
+    {
+      "code": "C-007",
+      "slug": "classical_music_baroque_period_1600_1750"
+    },
+    {
+      "code": "C-008",
+      "slug": "classical_music_classical_period_1750_1820"
+    },
+    {
+      "code": "C-009",
+      "slug": "classical_music_romantic_period_1820_1910"
+    },
+    {
+      "code": "C-010",
+      "slug": "country_duets"
+    },
+    {
+      "code": "C-011",
+      "slug": "cowboy_songs_western_favorites"
+    },
+    {
+      "code": "C-012",
+      "slug": "crooner_classics"
+    },
+    {
+      "code": "C-013",
+      "slug": "dance_floor_anthems"
+    },
+    {
+      "code": "C-014",
+      "slug": "disco_favorites"
+    },
+    {
+      "code": "C-015",
+      "slug": "disney_classics_pre_1988"
+    },
+    {
+      "code": "C-016",
+      "slug": "disney_revival_after_1988"
+    },
+    {
+      "code": "C-017",
+      "slug": "easy_listening"
+    },
+    {
+      "code": "C-018",
+      "slug": "garys_missing_country_favorites"
+    },
+    {
+      "code": "C-019",
+      "slug": "garys_missing_rock_pop_favorites"
+    },
+    {
+      "code": "C-020",
+      "slug": "german_heritage_favorites"
+    },
+    {
+      "code": "C-021",
+      "slug": "great_american_songbook"
+    },
+    {
+      "code": "C-022",
+      "slug": "holiday_favorites"
+    },
+    {
+      "code": "C-023",
+      "slug": "italian_favorites"
+    },
+    {
+      "code": "C-024",
+      "slug": "latin_crossovers"
+    },
+    {
+      "code": "C-025",
+      "slug": "legends_blues_jazz"
+    },
+    {
+      "code": "C-026",
+      "slug": "legends_country"
+    },
+    {
+      "code": "C-027",
+      "slug": "legends_folk_acoustic"
+    },
+    {
+      "code": "C-028",
+      "slug": "legends_latin_global"
+    },
+    {
+      "code": "C-029",
+      "slug": "legends_pop"
+    },
+    {
+      "code": "C-030",
+      "slug": "legends_rnb_soul"
+    },
+    {
+      "code": "C-031",
+      "slug": "legends_rock"
+    },
+    {
+      "code": "C-032",
+      "slug": "legends_tv_themes"
+    },
+    {
+      "code": "C-033",
+      "slug": "mexican_american_favorites"
+    },
+    {
+      "code": "C-034",
+      "slug": "motown_magic"
+    },
+    {
+      "code": "C-035",
+      "slug": "novelty_songs"
+    },
+    {
+      "code": "C-036",
+      "slug": "one_hit_wonders"
+    },
+    {
+      "code": "C-037",
+      "slug": "patriotic_favorites"
+    },
+    {
+      "code": "C-038",
+      "slug": "pop_duets"
+    },
+    {
+      "code": "C-039",
+      "slug": "power_ballads"
+    },
+    {
+      "code": "C-040",
+      "slug": "protest_social_justice"
+    },
+    {
+      "code": "C-041",
+      "slug": "railroad_train_songs"
+    },
+    {
+      "code": "C-042",
+      "slug": "road_trip"
+    },
+    {
+      "code": "C-043",
+      "slug": "singer_songwriter"
+    },
+    {
+      "code": "C-044",
+      "slug": "soft_rock_love_songs"
+    },
+    {
+      "code": "C-045",
+      "slug": "southern_gospel_favorites"
+    },
+    {
+      "code": "C-046",
+      "slug": "stage_screen_broadway_classics"
+    },
+    {
+      "code": "C-047",
+      "slug": "stage_screen_movie_themes"
+    },
+    {
+      "code": "C-048",
+      "slug": "traditional_hymns"
+    },
+    {
+      "code": "C-049",
+      "slug": "traditional_mexican_favorites"
+    },
+    {
+      "code": "C-050",
+      "slug": "video_game_themes"
+    },
+    {
+      "code": "C-051",
+      "slug": "western_heritage_favorites"
+    },
+    {
+      "code": "C-052",
+      "slug": "yacht_rock"
+    }
+  ]
+}
