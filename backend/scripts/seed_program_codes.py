@@ -13,7 +13,7 @@ from backend.services.program_codes import normalize_program_code
 
 KINDS = {"nostalgia", "collection", "artist_spotlight", "docuseries_story"}
 PREFIXES = {"nostalgia": "N", "collection": "C", "artist_spotlight": "A", "docuseries_story": "D"}
-APPROVED_COUNTS = {"N": 64, "C": 52, "A": 226, "D": 127}
+APPROVED_COUNTS = {"N": 64, "C": 52, "A": 227, "D": 127}
 
 def load_manifest(path: Path, *, require_approved: bool = False) -> list[dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
