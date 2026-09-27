@@ -1,0 +1,1278 @@
+{
+  "created_utc": "2026-09-26T17:46:29.928697+00:00",
+  "purpose": "Reviewed proposed narration text and rank mapping; no live changes performed",
+  "programs": [
+    {
+      "collection": "Civil War Songs",
+      "slug": "civil_war_songs",
+      "collection_id": 69,
+      "track_count": 40,
+      "old_max_rank": 45,
+      "new_max_rank": 40,
+      "old_gaps": [
+        22,
+        31,
+        37,
+        38,
+        41
+      ],
+      "trailing_gaps_after_compaction": [
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2778,
+          "track_id": 4638,
+          "old_rank": 42,
+          "new_rank": 22,
+          "track": "Amazing Grace",
+          "artist": "Judy Collins",
+          "spotify_track_id": "6Sueudn0VQA4AXRsFKQbFl",
+          "intros_before": {
+            "en": "Coming in at number 42 in Civil War Songs, here is Amazing Grace by Judy Collins.",
+            "es": "Llegando al número 42, suena 'Amazing Grace' de Judy Collins, incluido en el álbum 'The Very Best Of Judy Collins' (2001).",
+            "pt-BR": "Na posição 42, aparece 'Amazing Grace' de Judy Collins, do álbum 'The Very Best Of Judy Collins' de 2001."
+          },
+          "audio_before": {
+            "es": "collections-intros/civil_war_songs_42.mp3",
+            "pt-BR": "collections-intros/civil_war_songs_42.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/civil_war_songs_22.mp3",
+            "es": "collections-intros/civil_war_songs_22.mp3",
+            "pt-BR": "collections-intros/civil_war_songs_22.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 22 in Civil War Songs, here is Amazing Grace by Judy Collins.",
+            "es": "Llegando al número 22, suena 'Amazing Grace' de Judy Collins, incluido en el álbum 'The Very Best Of Judy Collins' (2001).",
+            "pt-BR": "Na posição 22, aparece 'Amazing Grace' de Judy Collins, do álbum 'The Very Best Of Judy Collins' de 2001."
+          }
+        },
+        {
+          "ranking_id": 2779,
+          "track_id": 4639,
+          "old_rank": 43,
+          "new_rank": 31,
+          "track": "Follow the Drinking Gourd",
+          "artist": "Richie Havens",
+          "spotify_track_id": "5o9L8CttqYj339wDetGdcG",
+          "intros_before": {
+            "en": "Coming in at number 43 in Civil War Songs, here is Follow the Drinking Gourd by Richie Havens.",
+            "es": "Ahora en el puesto 43, 'Follow the Drinking Gourd' de Richie Havens, lanzado en el álbum 'Songs Of The Civil War' en 1991.",
+            "pt-BR": "Na posição 43, aparece 'Follow the Drinking Gourd' de Richie Havens, do álbum 'Songs Of The Civil War' de 1991."
+          },
+          "audio_before": {
+            "es": "collections-intros/civil_war_songs_43.mp3",
+            "pt-BR": "collections-intros/civil_war_songs_43.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/civil_war_songs_31.mp3",
+            "es": "collections-intros/civil_war_songs_31.mp3",
+            "pt-BR": "collections-intros/civil_war_songs_31.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 31 in Civil War Songs, here is Follow the Drinking Gourd by Richie Havens.",
+            "es": "Ahora en el puesto 31, 'Follow the Drinking Gourd' de Richie Havens, lanzado en el álbum 'Songs Of The Civil War' en 1991.",
+            "pt-BR": "Na posição 31, aparece 'Follow the Drinking Gourd' de Richie Havens, do álbum 'Songs Of The Civil War' de 1991."
+          }
+        },
+        {
+          "ranking_id": 2780,
+          "track_id": 4640,
+          "old_rank": 44,
+          "new_rank": 37,
+          "track": "Swing Low Sweet Chariot",
+          "artist": "Paul Robeson",
+          "spotify_track_id": "6d8ocUcHXMa57d6QFJWN65",
+          "intros_before": {
+            "en": "Coming in at number 44 in Civil War Songs, here is Swing Low Sweet Chariot by Paul Robeson.",
+            "es": "Llegando al número 44, suena 'Swing Low Sweet Chariot' de Paul Robeson, incluido en el álbum 'The Collector's Paul Robeson' (1991).",
+            "pt-BR": "Na posição 44, temos 'Swing Low Sweet Chariot' de Paul Robeson, do álbum 'The Collector's Paul Robeson' de 1991."
+          },
+          "audio_before": {
+            "es": "collections-intros/civil_war_songs_44.mp3",
+            "pt-BR": "collections-intros/civil_war_songs_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/civil_war_songs_37.mp3",
+            "es": "collections-intros/civil_war_songs_37.mp3",
+            "pt-BR": "collections-intros/civil_war_songs_37.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 37 in Civil War Songs, here is Swing Low Sweet Chariot by Paul Robeson.",
+            "es": "Llegando al número 37, suena 'Swing Low Sweet Chariot' de Paul Robeson, incluido en el álbum 'The Collector's Paul Robeson' (1991).",
+            "pt-BR": "Na posição 37, temos 'Swing Low Sweet Chariot' de Paul Robeson, do álbum 'The Collector's Paul Robeson' de 1991."
+          }
+        },
+        {
+          "ranking_id": 2781,
+          "track_id": 2315,
+          "old_rank": 45,
+          "new_rank": 38,
+          "track": "The Night They Drove Old Dixie Down",
+          "artist": "Muddy Waters",
+          "spotify_track_id": "2nvcTDmZkRWKNMAL29sLHo",
+          "intros_before": {
+            "en": "Coming in at number 45 in Civil War Songs, here is The Night They Drove Old Dixie Down by muddy waters.",
+            "es": "Ahora en el puesto 45, 'The Night They Drove Old Dixie Down' de muddy waters, lanzado en el álbum 'The Band' en 1969.",
+            "pt-BR": "Na posição 45, aparece 'The Night They Drove Old Dixie Down' de muddy waters, do álbum 'The Band' de 1969."
+          },
+          "audio_before": {
+            "es": "collections-intros/civil_war_songs_45.mp3",
+            "pt-BR": "collections-intros/civil_war_songs_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/civil_war_songs_38.mp3",
+            "es": "collections-intros/civil_war_songs_38.mp3",
+            "pt-BR": "collections-intros/civil_war_songs_38.mp3"
+          },
+          "review_flags": [],
+          "artist_correction_required": {
+            "old_artist": "Muddy Waters",
+            "new_artist": "The Band",
+            "spotify_track_id": "2nvcTDmZkRWKNMAL29sLHo"
+          },
+          "intros_after": {
+            "en": "Coming in at number 38 in Civil War Songs, here is The Night They Drove Old Dixie Down by The Band.",
+            "es": "Ahora en el puesto 38, 'The Night They Drove Old Dixie Down' de The Band, lanzado en el álbum 'The Band' en 1969.",
+            "pt-BR": "Na posição 38, aparece 'The Night They Drove Old Dixie Down' de The Band, do álbum 'The Band' de 1969."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Patriotic Favorites",
+      "slug": "patriotic_favorites",
+      "collection_id": 64,
+      "track_count": 42,
+      "old_max_rank": 45,
+      "new_max_rank": 42,
+      "old_gaps": [
+        7,
+        10,
+        14
+      ],
+      "trailing_gaps_after_compaction": [
+        43,
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2165,
+          "track_id": 4458,
+          "old_rank": 43,
+          "new_rank": 7,
+          "track": "America Will Survive",
+          "artist": "Hank Williams Jr.",
+          "spotify_track_id": "0wqArWJHIPnMy4BoulquMf",
+          "intros_before": {
+            "en": "Coming in at number 43 in Patriotic Favorites, here is America Will Survive by Hank Williams Jr..",
+            "es": "En el puesto 43, tenemos 'America Will Survive' de Hank Williams Jr., del álbum 'A Country Boy Can Survive (Box Set)' de 2016.",
+            "pt-BR": "Na posição 43, temos 'America Will Survive' de Hank Williams Jr., do álbum 'A Country Boy Can Survive (Box Set)' de 2016."
+          },
+          "audio_before": {
+            "es": "collections-intros/patriotic_favorites_43.mp3",
+            "pt-BR": "collections-intros/patriotic_favorites_43.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/patriotic_favorites_07.mp3",
+            "es": "collections-intros/patriotic_favorites_07.mp3",
+            "pt-BR": "collections-intros/patriotic_favorites_07.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 7 in Patriotic Favorites, here is America Will Survive by Hank Williams Jr.",
+            "es": "En el puesto 7, tenemos 'America Will Survive' de Hank Williams Jr., del álbum 'A Country Boy Can Survive (Box Set)' de 2016.",
+            "pt-BR": "Na posição 7, temos 'America Will Survive' de Hank Williams Jr., do álbum 'A Country Boy Can Survive (Box Set)' de 2016."
+          }
+        },
+        {
+          "ranking_id": 2166,
+          "track_id": 4459,
+          "old_rank": 44,
+          "new_rank": 10,
+          "track": "The Stars and Stripes Forever",
+          "artist": "United States Marine Band",
+          "spotify_track_id": "0gkdVgqO1FpRChEMlNieo8",
+          "intros_before": {
+            "en": "Coming in at number 44 in Patriotic Favorites, here is The Stars and Stripes Forever by United States Marine Band.",
+            "es": "En el puesto 44, tenemos 'The Stars and Stripes Forever' de United States Marine Band, del álbum 'John Philip Sousa: Great American Military Marches' de 2014.",
+            "pt-BR": "Agora no número 44, 'The Stars and Stripes Forever' de United States Marine Band, lançado no álbum 'John Philip Sousa: Great American Military Marches' em 2014."
+          },
+          "audio_before": {
+            "es": "collections-intros/patriotic_favorites_44.mp3",
+            "pt-BR": "collections-intros/patriotic_favorites_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/patriotic_favorites_10.mp3",
+            "es": "collections-intros/patriotic_favorites_10.mp3",
+            "pt-BR": "collections-intros/patriotic_favorites_10.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 10 in Patriotic Favorites, here is The Stars and Stripes Forever by United States Marine Band.",
+            "es": "En el puesto 10, tenemos 'The Stars and Stripes Forever' de United States Marine Band, del álbum 'John Philip Sousa: Great American Military Marches' de 2014.",
+            "pt-BR": "Agora no número 10, 'The Stars and Stripes Forever' de United States Marine Band, lançado no álbum 'John Philip Sousa: Great American Military Marches' em 2014."
+          }
+        },
+        {
+          "ranking_id": 2167,
+          "track_id": 4460,
+          "old_rank": 45,
+          "new_rank": 14,
+          "track": "God Bless America",
+          "artist": "LeAnn Rimes",
+          "spotify_track_id": "63Od9t6xI8CiIkr7T3XZfr",
+          "intros_before": {
+            "en": "Coming in at number 45 in Patriotic Favorites, here is God Bless America by LeAnn Rimes.",
+            "es": "Ahora en el puesto 45, 'God Bless America' de LeAnn Rimes, lanzado en el álbum 'God Bless America' en 2001.",
+            "pt-BR": "Na posição 45, aparece 'God Bless America' de LeAnn Rimes, do álbum 'God Bless America' de 2001."
+          },
+          "audio_before": {
+            "es": "collections-intros/patriotic_favorites_45.mp3",
+            "pt-BR": "collections-intros/patriotic_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/patriotic_favorites_14.mp3",
+            "es": "collections-intros/patriotic_favorites_14.mp3",
+            "pt-BR": "collections-intros/patriotic_favorites_14.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 14 in Patriotic Favorites, here is God Bless America by LeAnn Rimes.",
+            "es": "Ahora en el puesto 14, 'God Bless America' de LeAnn Rimes, lanzado en el álbum 'God Bless America' en 2001.",
+            "pt-BR": "Na posição 14, aparece 'God Bless America' de LeAnn Rimes, do álbum 'God Bless America' de 2001."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Railroad & Train Songs",
+      "slug": "railroad_train_songs",
+      "collection_id": 65,
+      "track_count": 42,
+      "old_max_rank": 45,
+      "new_max_rank": 42,
+      "old_gaps": [
+        34,
+        38,
+        40
+      ],
+      "trailing_gaps_after_compaction": [
+        43,
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2210,
+          "track_id": 4502,
+          "old_rank": 43,
+          "new_rank": 34,
+          "track": "Waiting for the Robert E. Lee",
+          "artist": "Al Jolson",
+          "spotify_track_id": "3P5NGKecizS5ftierkr5Xo",
+          "intros_before": {
+            "en": "Coming in at number 43 in Railroad & Train Songs, here is Waiting for the Robert E. Lee by Al Jolson.",
+            "es": "Ahora en el puesto 43, 'Waiting for the Robert E. Lee' de Al Jolson, lanzado en el álbum 'Souvenir Album (Vol. 1 & Vol. 2)' en 1947.",
+            "pt-BR": "Na posição 43, aparece 'Waiting for the Robert E. Lee' de Al Jolson, do álbum 'Souvenir Album (Vol. 1 & Vol. 2)' de 1947."
+          },
+          "audio_before": {
+            "es": "collections-intros/railroad_train_songs_43.mp3",
+            "pt-BR": "collections-intros/railroad_train_songs_43.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/railroad_train_songs_34.mp3",
+            "es": "collections-intros/railroad_train_songs_34.mp3",
+            "pt-BR": "collections-intros/railroad_train_songs_34.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 34 in Railroad & Train Songs, here is Waiting for the Robert E. Lee by Al Jolson.",
+            "es": "Ahora en el puesto 34, 'Waiting for the Robert E. Lee' de Al Jolson, lanzado en el álbum 'Souvenir Album (Vol. 1 & Vol. 2)' en 1947.",
+            "pt-BR": "Na posição 34, aparece 'Waiting for the Robert E. Lee' de Al Jolson, do álbum 'Souvenir Album (Vol. 1 & Vol. 2)' de 1947."
+          }
+        },
+        {
+          "ranking_id": 2211,
+          "track_id": 4503,
+          "old_rank": 44,
+          "new_rank": 38,
+          "track": "Last Train Home",
+          "artist": "Pat Metheny Group",
+          "spotify_track_id": "052etUv4Njn3u47ljAS5PD",
+          "intros_before": {
+            "en": "Coming in at number 44 in Railroad & Train Songs, here is Last Train Home by Pat Metheny Group.",
+            "es": "En la posición 44, aparece 'Last Train Home' de Pat Metheny Group, del álbum 'Still Life (Talking)' de 1987.",
+            "pt-BR": "Chegando ao número 44, toca 'Last Train Home' de Pat Metheny Group, do álbum 'Still Life (Talking)' (1987)."
+          },
+          "audio_before": {
+            "es": "collections-intros/railroad_train_songs_44.mp3",
+            "pt-BR": "collections-intros/railroad_train_songs_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/railroad_train_songs_38.mp3",
+            "es": "collections-intros/railroad_train_songs_38.mp3",
+            "pt-BR": "collections-intros/railroad_train_songs_38.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 38 in Railroad & Train Songs, here is Last Train Home by Pat Metheny Group.",
+            "es": "En la posición 38, aparece 'Last Train Home' de Pat Metheny Group, del álbum 'Still Life (Talking)' de 1987.",
+            "pt-BR": "Chegando ao número 38, toca 'Last Train Home' de Pat Metheny Group, do álbum 'Still Life (Talking)' (1987)."
+          }
+        },
+        {
+          "ranking_id": 2212,
+          "track_id": 4504,
+          "old_rank": 45,
+          "new_rank": 40,
+          "track": "Peace Train",
+          "artist": "Dolly Parton",
+          "spotify_track_id": "6RNhExU4CmhSEaHPjIMls9",
+          "intros_before": {
+            "en": "Coming in at number 45 in Railroad & Train Songs, here is Peace Train by Dolly Parton.",
+            "es": "Ahora en el puesto 45, 'Peace Train' de Dolly Parton, lanzado en el álbum 'Treasures' en 1996.",
+            "pt-BR": "Chegando ao número 45, toca 'Peace Train' de Dolly Parton, do álbum 'Treasures' (1996)."
+          },
+          "audio_before": {
+            "es": "collections-intros/railroad_train_songs_45.mp3",
+            "pt-BR": "collections-intros/railroad_train_songs_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/railroad_train_songs_40.mp3",
+            "es": "collections-intros/railroad_train_songs_40.mp3",
+            "pt-BR": "collections-intros/railroad_train_songs_40.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 40 in Railroad & Train Songs, here is Peace Train by Dolly Parton.",
+            "es": "Ahora en el puesto 40, 'Peace Train' de Dolly Parton, lanzado en el álbum 'Treasures' en 1996.",
+            "pt-BR": "Chegando ao número 40, toca 'Peace Train' de Dolly Parton, do álbum 'Treasures' (1996)."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Western Heritage Favorites",
+      "slug": "western_heritage_favorites",
+      "collection_id": 68,
+      "track_count": 44,
+      "old_max_rank": 45,
+      "new_max_rank": 44,
+      "old_gaps": [
+        22
+      ],
+      "trailing_gaps_after_compaction": [
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2347,
+          "track_id": 4522,
+          "old_rank": 45,
+          "new_rank": 22,
+          "track": "The Man Who Shot Liberty Valance",
+          "artist": "Gene Pitney",
+          "spotify_track_id": "6J1O1XuGLW2Gge4emsHtHH",
+          "intros_before": {
+            "en": "Coming in at number 45 in Western Heritage Favorites, here is The Man Who Shot Liberty Valance by Gene Pitney.",
+            "es": "Llegando al número 45, suena 'The Man Who Shot Liberty Valance' de Gene Pitney, incluido en el álbum 'Super Hits' (1972).",
+            "pt-BR": "Chegando ao número 45, toca 'The Man Who Shot Liberty Valance' de Gene Pitney, do álbum 'Super Hits' (1972)."
+          },
+          "audio_before": {
+            "es": "collections-intros/western_heritage_favorites_45.mp3",
+            "pt-BR": "collections-intros/western_heritage_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/western_heritage_favorites_22.mp3",
+            "es": "collections-intros/western_heritage_favorites_22.mp3",
+            "pt-BR": "collections-intros/western_heritage_favorites_22.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 22 in Western Heritage Favorites, here is The Man Who Shot Liberty Valance by Gene Pitney.",
+            "es": "Llegando al número 22, suena 'The Man Who Shot Liberty Valance' de Gene Pitney, incluido en el álbum 'Super Hits' (1972).",
+            "pt-BR": "Chegando ao número 22, toca 'The Man Who Shot Liberty Valance' de Gene Pitney, do álbum 'Super Hits' (1972)."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Bluegrass Favorites",
+      "slug": "bluegrass_favorites",
+      "collection_id": 63,
+      "track_count": 42,
+      "old_max_rank": 45,
+      "new_max_rank": 42,
+      "old_gaps": [
+        16,
+        23,
+        43
+      ],
+      "trailing_gaps_after_compaction": [
+        43,
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2121,
+          "track_id": 4416,
+          "old_rank": 44,
+          "new_rank": 16,
+          "track": "Paradise",
+          "artist": "John Prine",
+          "spotify_track_id": "47QsP5uPZp3he5UrVsK8bs",
+          "intros_before": {
+            "en": "Coming in at number 44 in Bluegrass Favorites, here is Paradise by John Prine.",
+            "es": "Llegando al número 44, suena 'Paradise' de John Prine, incluido en el álbum 'John Prine' (1971).",
+            "pt-BR": "Na posição 44, temos 'Paradise' de John Prine, do álbum 'John Prine' de 1971."
+          },
+          "audio_before": {
+            "es": "collections-intros/bluegrass_favorites_44.mp3",
+            "pt-BR": "collections-intros/bluegrass_favorites_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/bluegrass_favorites_16.mp3",
+            "es": "collections-intros/bluegrass_favorites_16.mp3",
+            "pt-BR": "collections-intros/bluegrass_favorites_16.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 16 in Bluegrass Favorites, here is Paradise by John Prine.",
+            "es": "Llegando al número 16, suena 'Paradise' de John Prine, incluido en el álbum 'John Prine' (1971).",
+            "pt-BR": "Na posição 16, temos 'Paradise' de John Prine, do álbum 'John Prine' de 1971."
+          }
+        },
+        {
+          "ranking_id": 2122,
+          "track_id": 4417,
+          "old_rank": 45,
+          "new_rank": 23,
+          "track": "Gentle on My Mind",
+          "artist": "John Hartford",
+          "spotify_track_id": "6ppsYmPvK5Wp1QBdJyTc7s",
+          "intros_before": {
+            "en": "Coming in at number 45 in Bluegrass Favorites, here is Gentle on My Mind by John Hartford.",
+            "es": "En el puesto 45, tenemos 'Gentle on My Mind' de John Hartford, del álbum 'Earthwords & Music' de 1967.",
+            "pt-BR": "Na posição 45, temos 'Gentle on My Mind' de John Hartford, do álbum 'Earthwords & Music' de 1967."
+          },
+          "audio_before": {
+            "es": "collections-intros/bluegrass_favorites_45.mp3",
+            "pt-BR": "collections-intros/bluegrass_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/bluegrass_favorites_23.mp3",
+            "es": "collections-intros/bluegrass_favorites_23.mp3",
+            "pt-BR": "collections-intros/bluegrass_favorites_23.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 23 in Bluegrass Favorites, here is Gentle on My Mind by John Hartford.",
+            "es": "En el puesto 23, tenemos 'Gentle on My Mind' de John Hartford, del álbum 'Earthwords & Music' de 1967.",
+            "pt-BR": "Na posição 23, temos 'Gentle on My Mind' de John Hartford, do álbum 'Earthwords & Music' de 1967."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Cowboy Songs & Western Favorites",
+      "slug": "cowboy_songs_western_favorites",
+      "collection_id": 66,
+      "track_count": 43,
+      "old_max_rank": 45,
+      "new_max_rank": 43,
+      "old_gaps": [
+        24,
+        41
+      ],
+      "trailing_gaps_after_compaction": [
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2256,
+          "track_id": 4547,
+          "old_rank": 44,
+          "new_rank": 24,
+          "track": "Cowboy's Lament",
+          "artist": "Burl Ives",
+          "spotify_track_id": "35ei8MTUwSymHxCbWOCApz",
+          "intros_before": {
+            "en": "Coming in at number 44 in Cowboy Songs & Western Favorites, here is Cowboy's Lament by Burl Ives.",
+            "es": "Llegando al número 44, suena 'Cowboy's Lament' de Burl Ives, incluido en el álbum 'The Wayfaring Stranger' (1955).",
+            "pt-BR": "Na posição 44, temos 'Cowboy's Lament' de Burl Ives, do álbum 'The Wayfaring Stranger' de 1955."
+          },
+          "audio_before": {
+            "es": "collections-intros/cowboy_songs_western_favorites_44.mp3",
+            "pt-BR": "collections-intros/cowboy_songs_western_favorites_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/cowboy_songs_western_favorites_24.mp3",
+            "es": "collections-intros/cowboy_songs_western_favorites_24.mp3",
+            "pt-BR": "collections-intros/cowboy_songs_western_favorites_24.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 24 in Cowboy Songs & Western Favorites, here is Cowboy's Lament by Burl Ives.",
+            "es": "Llegando al número 24, suena 'Cowboy's Lament' de Burl Ives, incluido en el álbum 'The Wayfaring Stranger' (1955).",
+            "pt-BR": "Na posição 24, temos 'Cowboy's Lament' de Burl Ives, do álbum 'The Wayfaring Stranger' de 1955."
+          }
+        },
+        {
+          "ranking_id": 2257,
+          "track_id": 4548,
+          "old_rank": 45,
+          "new_rank": 41,
+          "track": "The Wayward Wind",
+          "artist": "Gogi Grant",
+          "spotify_track_id": "2VqsUEpRPvgiiBdsBuQrJz",
+          "intros_before": {
+            "en": "Coming in at number 45 in Cowboy Songs & Western Favorites, here is The Wayward Wind by Gogi Grant.",
+            "es": "En la posición 45, aparece 'The Wayward Wind' de Gogi Grant, del álbum 'Gogi Grant' de 2015.",
+            "pt-BR": "Na posição 45, temos 'The Wayward Wind' de Gogi Grant, do álbum 'Gogi Grant' de 2015."
+          },
+          "audio_before": {
+            "es": "collections-intros/cowboy_songs_western_favorites_45.mp3",
+            "pt-BR": "collections-intros/cowboy_songs_western_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/cowboy_songs_western_favorites_41.mp3",
+            "es": "collections-intros/cowboy_songs_western_favorites_41.mp3",
+            "pt-BR": "collections-intros/cowboy_songs_western_favorites_41.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 41 in Cowboy Songs & Western Favorites, here is The Wayward Wind by Gogi Grant.",
+            "es": "En la posición 41, aparece 'The Wayward Wind' de Gogi Grant, del álbum 'Gogi Grant' de 2015.",
+            "pt-BR": "Na posição 41, temos 'The Wayward Wind' de Gogi Grant, do álbum 'Gogi Grant' de 2015."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Crooner Classics",
+      "slug": "crooner_classics",
+      "collection_id": 50,
+      "track_count": 43,
+      "old_max_rank": 44,
+      "new_max_rank": 43,
+      "old_gaps": [
+        43
+      ],
+      "trailing_gaps_after_compaction": [
+        44
+      ],
+      "moves": [
+        {
+          "ranking_id": 1986,
+          "track_id": 4282,
+          "old_rank": 44,
+          "new_rank": 43,
+          "track": "On the Street Where You Live",
+          "artist": "Vic Damone",
+          "spotify_track_id": "6Dz0GiDizGeXefxXnrbPpz",
+          "intros_before": {
+            "en": "Coming in at number 44 in Crooner Classics, here is On the Street Where You Live by Vic Damone.",
+            "es": "En la posición 44, aparece 'On the Street Where You Live' de Vic Damone, del álbum 'On The Street Where You Live' de 1964.",
+            "pt-BR": "Chegando ao número 44, toca 'On the Street Where You Live' de Vic Damone, do álbum 'On The Street Where You Live' (1964)."
+          },
+          "audio_before": {
+            "es": "collections-intros/crooner_classics_44.mp3",
+            "pt-BR": "collections-intros/crooner_classics_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/crooner_classics_43.mp3",
+            "es": "collections-intros/crooner_classics_43.mp3",
+            "pt-BR": "collections-intros/crooner_classics_43.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 43 in Crooner Classics, here is On the Street Where You Live by Vic Damone.",
+            "es": "En la posición 43, aparece 'On the Street Where You Live' de Vic Damone, del álbum 'On The Street Where You Live' de 1964.",
+            "pt-BR": "Chegando ao número 43, toca 'On the Street Where You Live' de Vic Damone, do álbum 'On The Street Where You Live' (1964)."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Southern Gospel Favorites",
+      "slug": "southern_gospel_favorites",
+      "collection_id": 62,
+      "track_count": 42,
+      "old_max_rank": 45,
+      "new_max_rank": 42,
+      "old_gaps": [
+        30,
+        42,
+        44
+      ],
+      "trailing_gaps_after_compaction": [
+        43,
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2075,
+          "track_id": 4370,
+          "old_rank": 43,
+          "new_rank": 30,
+          "track": "God on the Mountain",
+          "artist": "The McKameys",
+          "spotify_track_id": "4gtte97K4zCVavStsGVoB5",
+          "intros_before": {
+            "en": "Coming in at number 43 in Southern Gospel Favorites, here is God on the Mountain by The McKameys.",
+            "es": "En el puesto 43, tenemos 'God on the Mountain' de The McKameys, del álbum 'LIVE Like No Other' de 2020.",
+            "pt-BR": "Na posição 43, aparece 'God on the Mountain' de The McKameys, do álbum 'LIVE Like No Other' de 2020."
+          },
+          "audio_before": {
+            "es": "collections-intros/southern_gospel_favorites_43.mp3",
+            "pt-BR": "collections-intros/southern_gospel_favorites_43.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/southern_gospel_favorites_30.mp3",
+            "es": "collections-intros/southern_gospel_favorites_30.mp3",
+            "pt-BR": "collections-intros/southern_gospel_favorites_30.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 30 in Southern Gospel Favorites, here is God on the Mountain by The McKameys.",
+            "es": "En el puesto 30, tenemos 'God on the Mountain' de The McKameys, del álbum 'LIVE Like No Other' de 2020.",
+            "pt-BR": "Na posição 30, aparece 'God on the Mountain' de The McKameys, do álbum 'LIVE Like No Other' de 2020."
+          }
+        },
+        {
+          "ranking_id": 2077,
+          "track_id": 4372,
+          "old_rank": 45,
+          "new_rank": 42,
+          "track": "I Rest My Case at the Cross",
+          "artist": "The Perrys",
+          "spotify_track_id": "4O6d7ExIAQewrLzHHNKlVq",
+          "intros_before": {
+            "en": "Coming in at number 45 in Southern Gospel Favorites, here is I Rest My Case at the Cross by The Perrys.",
+            "es": "En el puesto 45, tenemos 'I Rest My Case at the Cross' de The Perrys, del álbum 'Changed Forever' de 2001.",
+            "pt-BR": "Chegando ao número 45, toca 'I Rest My Case at the Cross' de The Perrys, do álbum 'Changed Forever' (2001)."
+          },
+          "audio_before": {
+            "es": "collections-intros/southern_gospel_favorites_45.mp3",
+            "pt-BR": "collections-intros/southern_gospel_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/southern_gospel_favorites_42.mp3",
+            "es": "collections-intros/southern_gospel_favorites_42.mp3",
+            "pt-BR": "collections-intros/southern_gospel_favorites_42.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 42 in Southern Gospel Favorites, here is I Rest My Case at the Cross by The Perrys.",
+            "es": "En el puesto 42, tenemos 'I Rest My Case at the Cross' de The Perrys, del álbum 'Changed Forever' de 2001.",
+            "pt-BR": "Chegando ao número 42, toca 'I Rest My Case at the Cross' de The Perrys, do álbum 'Changed Forever' (2001)."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Traditional Hymns",
+      "slug": "traditional_hymns",
+      "collection_id": 51,
+      "track_count": 42,
+      "old_max_rank": 45,
+      "new_max_rank": 42,
+      "old_gaps": [
+        34,
+        35,
+        42
+      ],
+      "trailing_gaps_after_compaction": [
+        43,
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2030,
+          "track_id": 4326,
+          "old_rank": 43,
+          "new_rank": 34,
+          "track": "Will the Circle Be Unbroken",
+          "artist": "Nitty Gritty Dirt Band",
+          "spotify_track_id": "1SfGvSpwE0HBSjmkaEB1db",
+          "intros_before": {
+            "en": "Coming in at number 43 in Traditional Hymns, here is Will the Circle Be Unbroken by Nitty Gritty Dirt Band.",
+            "es": "Ahora en el puesto 43, 'Will the Circle Be Unbroken' de Nitty Gritty Dirt Band, lanzado en el álbum 'Will The Circle Be Unbroken Volume Two' en 1989.",
+            "pt-BR": "Na posição 43, aparece 'Will the Circle Be Unbroken' de Nitty Gritty Dirt Band, do álbum 'Will The Circle Be Unbroken Volume Two' de 1989."
+          },
+          "audio_before": {
+            "es": "collections-intros/traditional_hymns_43.mp3",
+            "pt-BR": "collections-intros/traditional_hymns_43.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/traditional_hymns_34.mp3",
+            "es": "collections-intros/traditional_hymns_34.mp3",
+            "pt-BR": "collections-intros/traditional_hymns_34.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 34 in Traditional Hymns, here is Will the Circle Be Unbroken by Nitty Gritty Dirt Band.",
+            "es": "Ahora en el puesto 34, 'Will the Circle Be Unbroken' de Nitty Gritty Dirt Band, lanzado en el álbum 'Will The Circle Be Unbroken Volume Two' en 1989.",
+            "pt-BR": "Na posição 34, aparece 'Will the Circle Be Unbroken' de Nitty Gritty Dirt Band, do álbum 'Will The Circle Be Unbroken Volume Two' de 1989."
+          }
+        },
+        {
+          "ranking_id": 2031,
+          "track_id": 4327,
+          "old_rank": 44,
+          "new_rank": 35,
+          "track": "Farther Along",
+          "artist": "Dolly Parton",
+          "spotify_track_id": "2bGZ3tD0Md5V4dnFvNhUvn",
+          "intros_before": {
+            "en": "Coming in at number 44 in Traditional Hymns, here is Farther Along by Dolly Parton.",
+            "es": "En el puesto 44, tenemos 'Farther Along' de Dolly Parton, del álbum 'Trio (2016 Remaster)' de 1987.",
+            "pt-BR": "Agora no número 44, 'Farther Along' de Dolly Parton, lançado no álbum 'Trio (2016 Remaster)' em 1987."
+          },
+          "audio_before": {
+            "es": "collections-intros/traditional_hymns_44.mp3",
+            "pt-BR": "collections-intros/traditional_hymns_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/traditional_hymns_35.mp3",
+            "es": "collections-intros/traditional_hymns_35.mp3",
+            "pt-BR": "collections-intros/traditional_hymns_35.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 35 in Traditional Hymns, here is Farther Along by Dolly Parton.",
+            "es": "En el puesto 35, tenemos 'Farther Along' de Dolly Parton, del álbum 'Trio (2016 Remaster)' de 1987.",
+            "pt-BR": "Agora no número 35, 'Farther Along' de Dolly Parton, lançado no álbum 'Trio (2016 Remaster)' em 1987."
+          }
+        },
+        {
+          "ranking_id": 2032,
+          "track_id": 4328,
+          "old_rank": 45,
+          "new_rank": 42,
+          "track": "Because He Lives",
+          "artist": "Gaither Vocal Band",
+          "spotify_track_id": "6NZ1k82r7FxoXJRFQYOH0l",
+          "intros_before": {
+            "en": "Coming in at number 45 in Traditional Hymns, here is Because He Lives by Gaither Vocal Band.",
+            "es": "En la posición 45, aparece 'Because He Lives' de Gaither Vocal Band, del álbum 'Reunited' de 2009.",
+            "pt-BR": "Chegando ao número 45, toca 'Because He Lives' de Gaither Vocal Band, do álbum 'Reunited' (2009)."
+          },
+          "audio_before": {
+            "es": "collections-intros/traditional_hymns_45.mp3",
+            "pt-BR": "collections-intros/traditional_hymns_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/traditional_hymns_42.mp3",
+            "es": "collections-intros/traditional_hymns_42.mp3",
+            "pt-BR": "collections-intros/traditional_hymns_42.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 42 in Traditional Hymns, here is Because He Lives by Gaither Vocal Band.",
+            "es": "En la posición 42, aparece 'Because He Lives' de Gaither Vocal Band, del álbum 'Reunited' de 2009.",
+            "pt-BR": "Chegando ao número 42, toca 'Because He Lives' de Gaither Vocal Band, do álbum 'Reunited' (2009)."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "African-American Heritage Favorites",
+      "slug": "african_american_heritage_favorites",
+      "collection_id": 74,
+      "track_count": 44,
+      "old_max_rank": 45,
+      "new_max_rank": 44,
+      "old_gaps": [
+        12
+      ],
+      "trailing_gaps_after_compaction": [
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2617,
+          "track_id": 963,
+          "old_rank": 45,
+          "new_rank": 12,
+          "track": "ill be there",
+          "artist": "The Jackson 5",
+          "spotify_track_id": "5RdhBLmB4DyFHLglRrfx63",
+          "intros_before": {
+            "en": "Coming in at number 45 in African-American Heritage Favorites, here is ill be there by the jackson 5.",
+            "es": "En la posición 45, aparece 'ill be there' de the jackson 5, del álbum 'Third Album' de 1970.",
+            "pt-BR": "Na posição 45, aparece 'ill be there' de the jackson 5, do álbum 'Third Album' de 1970."
+          },
+          "audio_before": {
+            "es": "collections-intros/african_american_heritage_favorites_45.mp3",
+            "pt-BR": "collections-intros/african_american_heritage_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/african_american_heritage_favorites_12.mp3",
+            "es": "collections-intros/african_american_heritage_favorites_12.mp3",
+            "pt-BR": "collections-intros/african_american_heritage_favorites_12.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 12 in African-American Heritage Favorites, here is I'll Be There by The Jackson 5.",
+            "es": "En la posición 12, aparece 'I'll Be There' de The Jackson 5, del álbum 'Third Album' de 1970.",
+            "pt-BR": "Na posição 12, aparece 'I'll Be There' de The Jackson 5, do álbum 'Third Album' de 1970."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Celtic Favorites",
+      "slug": "celtic_favorites",
+      "collection_id": 70,
+      "track_count": 44,
+      "old_max_rank": 45,
+      "new_max_rank": 44,
+      "old_gaps": [
+        30
+      ],
+      "trailing_gaps_after_compaction": [
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2437,
+          "track_id": 4684,
+          "old_rank": 45,
+          "new_rank": 30,
+          "track": "Ireland's Call",
+          "artist": "Celtic Thunder",
+          "spotify_track_id": "1EDmHdAL31ruHcX9yDbclj",
+          "intros_before": {
+            "en": "Coming in at number 45 in Celtic Favorites, here is Ireland's Call by Celtic Thunder.",
+            "es": "En el puesto 45, tenemos 'Ireland's Call' de Celtic Thunder, del álbum 'New Voyage' de 2012.",
+            "pt-BR": "Chegando ao número 45, toca 'Ireland's Call' de Celtic Thunder, do álbum 'New Voyage' (2012)."
+          },
+          "audio_before": {
+            "es": "collections-intros/celtic_favorites_45.mp3",
+            "pt-BR": "collections-intros/celtic_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/celtic_favorites_30.mp3",
+            "es": "collections-intros/celtic_favorites_30.mp3",
+            "pt-BR": "collections-intros/celtic_favorites_30.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 30 in Celtic Favorites, here is Ireland's Call by Celtic Thunder.",
+            "es": "En el puesto 30, tenemos 'Ireland's Call' de Celtic Thunder, del álbum 'New Voyage' de 2012.",
+            "pt-BR": "Chegando ao número 30, toca 'Ireland's Call' de Celtic Thunder, do álbum 'New Voyage' (2012)."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "German Heritage Favorites",
+      "slug": "german_heritage_favorites",
+      "collection_id": 72,
+      "track_count": 42,
+      "old_max_rank": 45,
+      "new_max_rank": 42,
+      "old_gaps": [
+        19,
+        21,
+        22
+      ],
+      "trailing_gaps_after_compaction": [
+        43,
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2525,
+          "track_id": 4770,
+          "old_rank": 43,
+          "new_rank": 19,
+          "track": "Erika",
+          "artist": "Herms Niel",
+          "spotify_track_id": "7M8E5yVZZ7Nf1yviXf3zVq",
+          "intros_before": {
+            "en": "Coming in at number 43 in German Heritage Favorites, here is Erika by Herms Niel.",
+            "es": "En el puesto 43, tenemos 'Erika' de Herms Niel, del álbum 'The Old Lie' de 2021.",
+            "pt-BR": "Agora no número 43, 'Erika' de Herms Niel, lançado no álbum 'The Old Lie' em 2021."
+          },
+          "audio_before": {
+            "es": "collections-intros/german_heritage_favorites_43.mp3",
+            "pt-BR": "collections-intros/german_heritage_favorites_43.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/german_heritage_favorites_19.mp3",
+            "es": "collections-intros/german_heritage_favorites_19.mp3",
+            "pt-BR": "collections-intros/german_heritage_favorites_19.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 19 in German Heritage Favorites, here is Erika by Herms Niel.",
+            "es": "En el puesto 19, tenemos 'Erika' de Herms Niel, del álbum 'The Old Lie' de 2021.",
+            "pt-BR": "Agora no número 19, 'Erika' de Herms Niel, lançado no álbum 'The Old Lie' em 2021."
+          }
+        },
+        {
+          "ranking_id": 2526,
+          "track_id": 4771,
+          "old_rank": 44,
+          "new_rank": 21,
+          "track": "O Tannenbaum",
+          "artist": "Nat King Cole",
+          "spotify_track_id": "0aJcR4COHLndzrJya4nBBc",
+          "intros_before": {
+            "en": "Coming in at number 44 in German Heritage Favorites, here is O Tannenbaum by Nat King Cole.",
+            "es": "En el puesto 44, tenemos 'O Tannenbaum' de Nat King Cole, del álbum 'The Christmas Song (Expanded Edition)' de 2018.",
+            "pt-BR": "Chegando ao número 44, toca 'O Tannenbaum' de Nat King Cole, do álbum 'The Christmas Song (Expanded Edition)' (2018)."
+          },
+          "audio_before": {
+            "es": "collections-intros/german_heritage_favorites_44.mp3",
+            "pt-BR": "collections-intros/german_heritage_favorites_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/german_heritage_favorites_21.mp3",
+            "es": "collections-intros/german_heritage_favorites_21.mp3",
+            "pt-BR": "collections-intros/german_heritage_favorites_21.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 21 in German Heritage Favorites, here is O Tannenbaum by Nat King Cole.",
+            "es": "En el puesto 21, tenemos 'O Tannenbaum' de Nat King Cole, del álbum 'The Christmas Song (Expanded Edition)' de 2018.",
+            "pt-BR": "Chegando ao número 21, toca 'O Tannenbaum' de Nat King Cole, do álbum 'The Christmas Song (Expanded Edition)' (2018)."
+          }
+        },
+        {
+          "ranking_id": 2527,
+          "track_id": 3637,
+          "old_rank": 45,
+          "new_rank": 22,
+          "track": "Silent Night",
+          "artist": "Bing Crosby",
+          "spotify_track_id": "2JwJqDEqC5IPl5bN3klNHD",
+          "intros_before": {
+            "en": "Coming in at number 45 in German Heritage Favorites, here is Silent Night by Bing Crosby.",
+            "es": "En la posición 45, aparece 'Silent Night' de Bing Crosby, del álbum 'Swinging On A Star' de 1942.",
+            "pt-BR": "Na posição 45, aparece 'Silent Night' de Bing Crosby, do álbum 'Swinging On A Star' de 1942."
+          },
+          "audio_before": {
+            "es": "collections-intros/german_heritage_favorites_45.mp3",
+            "pt-BR": "collections-intros/german_heritage_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/german_heritage_favorites_22.mp3",
+            "es": "collections-intros/german_heritage_favorites_22.mp3",
+            "pt-BR": "collections-intros/german_heritage_favorites_22.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 22 in German Heritage Favorites, here is Silent Night by Bing Crosby.",
+            "es": "En la posición 22, aparece 'Silent Night' de Bing Crosby, del álbum 'Swinging On A Star' de 1942.",
+            "pt-BR": "Na posição 22, aparece 'Silent Night' de Bing Crosby, do álbum 'Swinging On A Star' de 1942."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Italian Favorites",
+      "slug": "italian_favorites",
+      "collection_id": 71,
+      "track_count": 44,
+      "old_max_rank": 45,
+      "new_max_rank": 44,
+      "old_gaps": [
+        22
+      ],
+      "trailing_gaps_after_compaction": [
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 2482,
+          "track_id": 4728,
+          "old_rank": 45,
+          "new_rank": 22,
+          "track": "Mambo Italiano",
+          "artist": "Bette Midler",
+          "spotify_track_id": "4lhBHXbidz3fxfKZdIwZBV",
+          "intros_before": {
+            "en": "Coming in at number 45 in Italian Favorites, here is Mambo Italiano by Bette Midler.",
+            "es": "En la posición 45, aparece 'Mambo Italiano' de Bette Midler, del álbum 'Bette Midler Sings The Rosemary Clooney Songbook' de 2003.",
+            "pt-BR": "Chegando ao número 45, toca 'Mambo Italiano' de Bette Midler, do álbum 'Bette Midler Sings The Rosemary Clooney Songbook' (2003)."
+          },
+          "audio_before": {
+            "es": "collections-intros/italian_favorites_45.mp3",
+            "pt-BR": "collections-intros/italian_favorites_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/italian_favorites_22.mp3",
+            "es": "collections-intros/italian_favorites_22.mp3",
+            "pt-BR": "collections-intros/italian_favorites_22.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 22 in Italian Favorites, here is Mambo Italiano by Bette Midler.",
+            "es": "En la posición 22, aparece 'Mambo Italiano' de Bette Midler, del álbum 'Bette Midler Sings The Rosemary Clooney Songbook' de 2003.",
+            "pt-BR": "Chegando ao número 22, toca 'Mambo Italiano' de Bette Midler, do álbum 'Bette Midler Sings The Rosemary Clooney Songbook' (2003)."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Easy Listening",
+      "slug": "easy_listening",
+      "collection_id": 39,
+      "track_count": 44,
+      "old_max_rank": 45,
+      "new_max_rank": 44,
+      "old_gaps": [
+        36
+      ],
+      "trailing_gaps_after_compaction": [
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 1807,
+          "track_id": 4105,
+          "old_rank": 45,
+          "new_rank": 36,
+          "track": "This Magic Moment",
+          "artist": "Jay And The Americans",
+          "spotify_track_id": "4I1864oACA82r75TRoStdD",
+          "intros_before": {
+            "en": "Coming in at number 45, it's 'This Magic Moment' by Jay And The Americans, from 'Come a Little Bit Closer' released in 1968, a standout in Easy Listening.",
+            "es": "Ahora en el puesto 45, 'This Magic Moment' de Jay And The Americans, lanzado en el álbum 'Sands Of Time' en 1968.",
+            "pt-BR": "Na posição 45, aparece 'This Magic Moment' de Jay And The Americans, do álbum 'Sands Of Time' de 1968."
+          },
+          "audio_before": {
+            "es": "collections-intros/easy_listening_45.mp3",
+            "pt-BR": "collections-intros/easy_listening_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/easy_listening_36.mp3",
+            "es": "collections-intros/easy_listening_36.mp3",
+            "pt-BR": "collections-intros/easy_listening_36.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Coming in at number 36, it's 'This Magic Moment' by Jay And The Americans, from 'Come a Little Bit Closer' released in 1968, a standout in Easy Listening.",
+            "es": "Ahora en el puesto 36, 'This Magic Moment' de Jay And The Americans, lanzado en el álbum 'Sands Of Time' en 1968.",
+            "pt-BR": "Na posição 36, aparece 'This Magic Moment' de Jay And The Americans, do álbum 'Sands Of Time' de 1968."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Motown Magic",
+      "slug": "motown_magic",
+      "collection_id": 8,
+      "track_count": 44,
+      "old_max_rank": 45,
+      "new_max_rank": 44,
+      "old_gaps": [
+        42
+      ],
+      "trailing_gaps_after_compaction": [
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 369,
+          "track_id": 3417,
+          "old_rank": 45,
+          "new_rank": 42,
+          "track": "Touch Me in the Morning",
+          "artist": "diana ross",
+          "spotify_track_id": "4sIkDCqNjTubfb5UVs8lEA",
+          "intros_before": {
+            "en": "Experience the soulful touch of 'Touch Me in the Morning' by Diana Ross, ranked 45, from the album of the same name, a 1973 Motown Magic masterpiece.",
+            "es": "En el puesto 45, tenemos 'Touch Me in the Morning' de diana ross, del álbum 'Touch Me In The Morning' de 1973.",
+            "pt-BR": "Agora no número 45, 'Touch Me in the Morning' de diana ross, lançado no álbum 'Touch Me In The Morning' em 1973."
+          },
+          "audio_before": {
+            "es": "collections-intros/motown_magic_45.mp3",
+            "pt-BR": "collections-intros/motown_magic_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/motown_magic_42.mp3",
+            "es": "collections-intros/motown_magic_42.mp3",
+            "pt-BR": "collections-intros/motown_magic_42.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Experience the soulful touch of 'Touch Me in the Morning' by Diana Ross, ranked 42, from the album of the same name, a 1973 Motown Magic masterpiece.",
+            "es": "En el puesto 42, tenemos 'Touch Me in the Morning' de Diana Ross, del álbum 'Touch Me In The Morning' de 1973.",
+            "pt-BR": "Agora no número 42, 'Touch Me in the Morning' de Diana Ross, lançado no álbum 'Touch Me In The Morning' em 1973."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "One-Hit Wonders",
+      "slug": "one_hit_wonders",
+      "collection_id": 10,
+      "track_count": 44,
+      "old_max_rank": 45,
+      "new_max_rank": 44,
+      "old_gaps": [
+        28
+      ],
+      "trailing_gaps_after_compaction": [
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 449,
+          "track_id": 3470,
+          "old_rank": 45,
+          "new_rank": 28,
+          "track": "You Get What You Give",
+          "artist": "New Radicals",
+          "spotify_track_id": "1Cwsd5xI8CajJz795oy4XF",
+          "intros_before": {
+            "en": "Experience the energy of rank 45, 'You Get What You Give' by New Radicals, a One-Hit Wonders anthem from 'Maybe You've Been Brainwashed Too', released in 1998.",
+            "es": "Llegando al número 45, suena 'You Get What You Give' de New Radicals, incluido en el álbum 'Maybe You've Been Brainwashed Too' (1998).",
+            "pt-BR": "Chegando ao número 45, toca 'You Get What You Give' de New Radicals, do álbum 'Maybe You've Been Brainwashed Too' (1998)."
+          },
+          "audio_before": {
+            "es": "collections-intros/one_hit_wonders_45.mp3",
+            "pt-BR": "collections-intros/one_hit_wonders_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/one_hit_wonders_28.mp3",
+            "es": "collections-intros/one_hit_wonders_28.mp3",
+            "pt-BR": "collections-intros/one_hit_wonders_28.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Experience the energy of rank 28, 'You Get What You Give' by New Radicals, a One-Hit Wonders anthem from 'Maybe You've Been Brainwashed Too', released in 1998.",
+            "es": "Llegando al número 28, suena 'You Get What You Give' de New Radicals, incluido en el álbum 'Maybe You've Been Brainwashed Too' (1998).",
+            "pt-BR": "Chegando ao número 28, toca 'You Get What You Give' de New Radicals, do álbum 'Maybe You've Been Brainwashed Too' (1998)."
+          }
+        }
+      ]
+    },
+    {
+      "collection": "Stage & Screen: Movie Themes",
+      "slug": "stage_screen_movie_themes",
+      "collection_id": 12,
+      "track_count": 42,
+      "old_max_rank": 45,
+      "new_max_rank": 42,
+      "old_gaps": [
+        26,
+        33,
+        36
+      ],
+      "trailing_gaps_after_compaction": [
+        43,
+        44,
+        45
+      ],
+      "moves": [
+        {
+          "ranking_id": 534,
+          "track_id": 3549,
+          "old_rank": 43,
+          "new_rank": 26,
+          "track": "Gladiator Theme (Now We Are Free)",
+          "artist": "Hans Zimmer",
+          "spotify_track_id": "1elGwF4VwkwglV4nCBPJtv",
+          "intros_before": {
+            "en": "Climbing to rank 43, Hans Zimmer's 'Gladiator Theme (Now We Are Free)' from Gladiator - Music From The Motion Picture, released in 2000, epitomizes Stage & Screen: Movie Themes.",
+            "es": "En la posición 43, aparece 'Gladiator Theme (Now We Are Free)' de Hans Zimmer, del álbum 'Gladiator - Music From The Motion Picture' de 2000.",
+            "pt-BR": "Agora no número 43, 'Gladiator Theme (Now We Are Free)' de Hans Zimmer, lançado no álbum 'Gladiator - Music From The Motion Picture' em 2000."
+          },
+          "audio_before": {
+            "es": "collections-intros/stage_screen_movie_themes_43.mp3",
+            "pt-BR": "collections-intros/stage_screen_movie_themes_43.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/stage_screen_movie_themes_26.mp3",
+            "es": "collections-intros/stage_screen_movie_themes_26.mp3",
+            "pt-BR": "collections-intros/stage_screen_movie_themes_26.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Climbing to rank 26, Hans Zimmer's 'Gladiator Theme (Now We Are Free)' from Gladiator - Music From The Motion Picture, released in 2000, epitomizes Stage & Screen: Movie Themes.",
+            "es": "En la posición 26, aparece 'Gladiator Theme (Now We Are Free)' de Hans Zimmer, del álbum 'Gladiator - Music From The Motion Picture' de 2000.",
+            "pt-BR": "Agora no número 26, 'Gladiator Theme (Now We Are Free)' de Hans Zimmer, lançado no álbum 'Gladiator - Music From The Motion Picture' em 2000."
+          }
+        },
+        {
+          "ranking_id": 535,
+          "track_id": 3550,
+          "old_rank": 44,
+          "new_rank": 33,
+          "track": "Harry Potter Theme (Hedwig's Theme)",
+          "artist": "John Williams",
+          "spotify_track_id": "1n8NKQRg8LVHy7oUhUgbFF",
+          "intros_before": {
+            "en": "Securing rank 44, 'Harry Potter Theme (Hedwig's Theme)' by John Williams, from the album Harry Potter and The Sorcerer's Stone Original Motion Picture Soundtrack, released in 2001, defines Stage & Screen: Movie Themes.",
+            "es": "En la posición 44, aparece 'Harry Potter Theme (Hedwig's Theme)' de John Williams, del álbum 'Harry Potter and The Sorcerer's Stone Original Motion Picture Soundtrack' de 2001.",
+            "pt-BR": "Chegando ao número 44, toca 'Harry Potter Theme (Hedwig's Theme)' de John Williams, do álbum 'Harry Potter and The Sorcerer's Stone Original Motion Picture Soundtrack' (2001)."
+          },
+          "audio_before": {
+            "es": "collections-intros/stage_screen_movie_themes_44.mp3",
+            "pt-BR": "collections-intros/stage_screen_movie_themes_44.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/stage_screen_movie_themes_33.mp3",
+            "es": "collections-intros/stage_screen_movie_themes_33.mp3",
+            "pt-BR": "collections-intros/stage_screen_movie_themes_33.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "Securing rank 33, 'Harry Potter Theme (Hedwig's Theme)' by John Williams, from the album Harry Potter and The Sorcerer's Stone Original Motion Picture Soundtrack, released in 2001, defines Stage & Screen: Movie Themes.",
+            "es": "En la posición 33, aparece 'Harry Potter Theme (Hedwig's Theme)' de John Williams, del álbum 'Harry Potter and The Sorcerer's Stone Original Motion Picture Soundtrack' de 2001.",
+            "pt-BR": "Chegando ao número 33, toca 'Harry Potter Theme (Hedwig's Theme)' de John Williams, do álbum 'Harry Potter and The Sorcerer's Stone Original Motion Picture Soundtrack' (2001)."
+          }
+        },
+        {
+          "ranking_id": 536,
+          "track_id": 3551,
+          "old_rank": 45,
+          "new_rank": 36,
+          "track": "The Lord of the Rings Theme",
+          "artist": "Howard Shore",
+          "spotify_track_id": "3Knohqfb9jeYzL6wMZiWLM",
+          "intros_before": {
+            "en": "At rank 45, Howard Shore's 'The Lord of the Rings Theme' from The Lord of the Rings: The Fellowship of the Ring (Original Motion Picture Soundtrack), released in 2001, captures the essence of Stage & Screen: Movie Themes.",
+            "es": "En el puesto 45, tenemos 'The Lord of the Rings Theme' de Howard Shore, del álbum 'The Lord of the Rings: The Fellowship of the Ring (Original Motion Picture Soundtrack)' de 2001.",
+            "pt-BR": "Chegando ao número 45, toca 'The Lord of the Rings Theme' de Howard Shore, do álbum 'The Lord of the Rings: The Fellowship of the Ring (Original Motion Picture Soundtrack)' (2001)."
+          },
+          "audio_before": {
+            "es": "collections-intros/stage_screen_movie_themes_45.mp3",
+            "pt-BR": "collections-intros/stage_screen_movie_themes_45.mp3"
+          },
+          "audio_after": {
+            "en": "collections-intros/stage_screen_movie_themes_36.mp3",
+            "es": "collections-intros/stage_screen_movie_themes_36.mp3",
+            "pt-BR": "collections-intros/stage_screen_movie_themes_36.mp3"
+          },
+          "review_flags": [],
+          "intros_after": {
+            "en": "At rank 36, Howard Shore's 'The Lord of the Rings Theme' from The Lord of the Rings: The Fellowship of the Ring (Original Motion Picture Soundtrack), released in 2001, captures the essence of Stage & Screen: Movie Themes.",
+            "es": "En el puesto 36, tenemos 'The Lord of the Rings Theme' de Howard Shore, del álbum 'The Lord of the Rings: The Fellowship of the Ring (Original Motion Picture Soundtrack)' de 2001.",
+            "pt-BR": "Chegando ao número 36, toca 'The Lord of the Rings Theme' de Howard Shore, do álbum 'The Lord of the Rings: The Fellowship of the Ring (Original Motion Picture Soundtrack)' (2001)."
+          }
+        }
+      ]
+    }
+  ]
+}
