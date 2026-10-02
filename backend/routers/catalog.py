@@ -10,7 +10,7 @@ from backend.database import get_db
 from backend.models import Decade, Genre
 from backend.models.collection_models import CollectionCategory, Collection
 from backend.services.program_codes import get_program_by_code, list_programs, normalize_program_code
-from backend.services.song_search import search_songs
+from backend.services.song_search import search_songs, search_artists
 
 router = APIRouter(prefix="/api/catalog", tags=["Catalog"])
 
@@ -18,6 +18,19 @@ logger = logging.getLogger(__name__)
 
 CATALOG_UNAVAILABLE_DETAIL = "Catalog is temporarily unavailable."
 DATABASE_ERROR_CATEGORY = "database_error"
+
+
+@router.get("/artists/search")
+def get_artist_search(
+    q: str = Query(..., min_length=2, max_length=100),
+    db: Session = Depends(get_db),
+):
+    """Find artists in approved Spotlight, Nostalgia, and Collection programs."""
+    try:
+        return {"artists": search_artists(db, q)}
+    except Exception:
+        logger.exception("catalog_artist_search failed")
+        raise HTTPException(status_code=500, detail=CATALOG_UNAVAILABLE_DETAIL)
 
 
 @router.get("/songs/search")

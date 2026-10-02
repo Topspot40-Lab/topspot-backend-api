@@ -24,7 +24,7 @@ _COLLECTION_CODES = {
     if program["kind"] == "collection"
 }
 
-def search_songs(session: Session, query: str, limit: int = 25) -> list[dict]:
+def _search_recordings(session: Session, query: str, limit: int = 25, *, by_artist: bool = False) -> list[dict]:
     """Prefer existing Spotlight destinations, then approved N/C programs."""
     cleaned = query.strip()
     if len(cleaned) < 2 or limit <= 0:
@@ -39,9 +39,15 @@ def search_songs(session: Session, query: str, limit: int = 25) -> list[dict]:
     matches = session.exec(
         select(Track, Artist)
         .join(Artist, Track.artist_id == Artist.id)
-        .where(Track.track_name.ilike(f"%{escaped}%", escape="\\"))
+        .where(or_(
+            Artist.artist_name.ilike(f"%{escaped}%", escape="\\"),
+            Track.artist_display_name.ilike(f"%{escaped}%", escape="\\"),
+        ) if by_artist else Track.track_name.ilike(f"%{escaped}%", escape="\\"))
         .where(or_(ranked, collected))
-        .order_by(Track.track_name, Artist.artist_name, Track.id)
+        .order_by(*(
+            (Artist.artist_name, Track.track_name, Track.id) if by_artist
+            else (Track.track_name, Artist.artist_name, Track.id)
+        ))
     ).all()
     fallback_ids = [track.id for track, artist in matches if artist.id not in _SPOTLIGHT_CODES]
     destinations: dict[int, dict] = {}
@@ -79,6 +85,7 @@ def search_songs(session: Session, query: str, limit: int = 25) -> list[dict]:
                     "program_name": collection.name,
                 })
     results = []
+    seen_artists = set()
     for track, artist in matches:
         result = {"track_id": track.id, "title": track.track_name,
                   "artist": track.artist_display_name or artist.artist_name}
@@ -89,7 +96,26 @@ def search_songs(session: Session, query: str, limit: int = 25) -> list[dict]:
             result.update(destinations[track.id])
         else:
             continue
+        if by_artist:
+            identity = (artist.id, result.get("artist_code") or result.get("program_code"))
+            if identity in seen_artists:
+                continue
+            seen_artists.add(identity)
         results.append(result)
         if len(results) >= limit:
             break
     return results
+
+
+def search_songs(session: Session, query: str, limit: int = 25) -> list[dict]:
+    """Find recordings by title, retaining existing destination priority."""
+    return _search_recordings(session, query, limit)
+
+
+def search_artists(session: Session, query: str, limit: int = 25) -> list[dict]:
+    """Find artists in approved programs, once per artist and destination.
+
+    Spotlight artists retain their Spotlight destination. Other artists get
+    an approved Nostalgia or Collection program and a matching starting track.
+    """
+    return _search_recordings(session, query, limit, by_artist=True)
