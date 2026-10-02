@@ -97,7 +97,7 @@ class API:
             response = self.requests.post(
                 BASE + "/api/upload", headers=headers, data=fields,
                 files={"video": (Path(job["video_file"]).name, stream, "video/mp4")},
-                timeout=(15, 300))
+                timeout=(300, 600))
         if not response.ok:
             # Even HTTP errors can follow a partial upload. Never blindly retry.
             raise RuntimeError(f"Upload returned HTTP {response.status_code}; reconcile first")
