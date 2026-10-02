@@ -25,7 +25,7 @@ def get_song_search(
     q: str = Query(..., min_length=2, max_length=100),
     db: Session = Depends(get_db),
 ):
-    """Find ranked track titles recorded by approved Artist Spotlight artists."""
+    """Find recordings in approved Artist Spotlight, Nostalgia, and Collections programs."""
     try:
         return {"songs": search_songs(db, q)}
     except Exception:
