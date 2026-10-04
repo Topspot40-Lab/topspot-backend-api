@@ -1,0 +1,18 @@
+TOPSPOT40 APPROVED CONTINUATION-PAGE ARTWORK
+
+All images are grayscale, contain no intended text or branding, and were approved by Gary on 2026-09-20.
+
+Filename                                      PDF page  Program                                      Printed size / placement
+continuation-n007-1950s-folk-acoustic.png        19     N-007 1950s Folk Acoustic                  4.8 x 2.4 in at x=3.1, y=5.0
+continuation-n015-1960s-folk-acoustic.png        29     N-015 1960s Folk Acoustic                  4.8 x 2.5 in at x=3.1, y=4.8
+continuation-n023-1970s-folk-acoustic.png        42     N-023 1970s Folk Acoustic                  4.8 x 2.4 in at x=3.1, y=5.0
+continuation-n031-1980s-folk-acoustic.png        54     N-031 1980s Folk Acoustic                  4.8 x 2.3 in at x=3.1, y=5.1
+continuation-n039-1990s-folk-acoustic.png        65     N-039 1990s Folk Acoustic                  4.6 x 1.7 in at x=3.2, y=5.5
+continuation-n047-2000s-folk-acoustic.png        76     N-047 2000s Folk Acoustic                  4.6 x 1.6 in at x=3.2, y=5.6
+continuation-n055-2010s-folk-acoustic.png        88     N-055 2010s Folk Acoustic                  4.8 x 2.4 in at x=3.1, y=5.0
+continuation-c032-legends-tv-themes.png         155     C-032 Legends - TV Themes                  4.8 x 2.5 in at x=3.1, y=4.8
+continuation-c050-video-game-themes.png         165     C-050 Video Game Themes                    4.6 x 1.8 in at x=3.2, y=5.4
+
+Coordinates are measured from the top-left trim edge of the 11 x 8.5 inch landscape page.
+Integrate only on the matching continuation page. Preserve aspect ratio and use object-fit: cover only when necessary.
+Do not alter track content, senior-readable typography, pagination, footer clearance, duplex gutters, or recto divider alignment.
