@@ -117,8 +117,8 @@ def render(row, renderer):
     engine.require(abs(engine.duration(output) - engine.duration(source)) < .25, "Cached video duration differs.")
     engine.require(engine.audio_hash(output) == engine.audio_hash(source), "Cached video audio differs.")
     thumb = output_dir / "thumbnail.jpg"
-    with Image.open(frame) as image:
-        image.convert("RGB").save(thumb, quality=90)
+    from backend.studio.youtube.thumbnail_badge import save_language_thumbnail
+    save_language_thumbnail(frame, thumb, language)
     engine.require(thumb.stat().st_size < 2097152, "Thumbnail exceeds 2 MiB.")
     print("RENDER VERIFIED", row["key"], output, flush=True)
     return {"video": str(output), "sha256": engine.digest(output),

@@ -186,8 +186,8 @@ def prepare(api, studio, journal, journal_path):
         require(abs(duration(output) - duration(source)) < .25, f"Video duration changed: {key}")
         require(audio_hash(output) == audio_hash(source), f"Audio changed: {key}")
         thumb = preview / f"hook_thumbnail_{language}.jpg"
-        with Image.open(frame) as picture:
-            picture.convert("RGB").save(thumb, quality=90)
+        from backend.studio.youtube.thumbnail_badge import save_language_thumbnail
+        save_language_thumbnail(frame, thumb, language)
         require(thumb.stat().st_size < 2097152, "Thumbnail exceeds 2 MiB.")
         memberships = []
         for playlist in playlists:
