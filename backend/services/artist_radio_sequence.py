@@ -6,7 +6,7 @@ from backend.database import engine
 from backend.services import artist_spotlight_eligibility as eligibility
 from backend.services.audio_urls import resolve_audio_ref
 from backend.services.block_builder import build_track_block
-from backend.services.radio_runtime import narration_keys_for, short_detail_keys_for
+from backend.services.radio_runtime import narration_keys_for, short_detail_keys_for, build_artist_filename, bucket_for, key_for
 from backend.state.narration import narration_done_event, track_done_event
 from backend.state.playback_runtime import current_runtime, current_user_id
 from backend.state.playback_state import begin_track, mark_playing, update_phase
@@ -67,10 +67,16 @@ def _radio_metadata(artist_ids, language):
         }
 
 
-def biography_keys_for_artist(artist, bio_length):
-    """Use only the requested-language biography asset; never fall back to English."""
+def biography_keys_for_artist(artist, bio_length, language='en'):
+    """Resolve the selected biography using assets in the listening language."""
     if bio_length == 'short':
-        return artist.get('short_bucket'), artist.get('short_key')
+        bucket, key = artist.get('short_bucket'), artist.get('short_key')
+        if bucket and key:
+            return bucket, key
+        filename = build_artist_filename(artist.get('spotify_artist_id'))
+        if not filename:
+            return None, None
+        return bucket_for(language, 'artist'), key_for('artist', filename)
     return artist.get('long_bucket'), artist.get('long_key')
 
 
@@ -138,7 +144,7 @@ async def run_artist_radio_sequence(*,genres=None,genre='ALL',tts_language='en',
         set_no+=1; played_artists.add(artist['artist_id']); total=sum(x['duration_ms'] for x in chosen)
         base={'type':'artist_radio','mode':'artist_radio','programType':'RADIO_ARTIST','selected_genres':selected,'genre':artist['genre_slug'],'genre_slug':artist['genre_slug'],'genre_name':artist['genre_name'],'artist_id':artist['artist_id'],'artist_name':artist['artist_name'],'artist_set_number':set_no,'artist_set_size':len(chosen),'set_number':set_no,'block_size':len(chosen),'artist_bio_length':bio_length,'detail_length':detail_length}
         logger.info('artist_radio_chosen artist_id=%s artist_name=%s genre=%s set_number=%d set_size=%d total_duration_ms=%d',artist['artist_id'],artist['artist_name'],artist['genre_name'],set_no,len(chosen),total)
-        bio_bucket,bio_key=biography_keys_for_artist(artist,bio_length)
+        bio_bucket,bio_key=biography_keys_for_artist(artist,bio_length,tts_language)
         first_track=chosen[0]
         bio_context={**base,'artist_set_position':1,'block_position':1,'ranking_id':first_track['ranking_id'],'track_id':first_track['track_id'],'spotify_track_id':first_track['spotify_track_id'],'duration_ms':first_track['duration_ms'],'album_artwork':first_track['album_artwork']}
         if bio_bucket and bio_key and not await _narrate(user,'artist',first_track,bio_context,bio_bucket,bio_key):
