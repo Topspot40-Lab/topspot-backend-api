@@ -11,6 +11,10 @@ from backend.state.playback_state import (
 from pydantic import BaseModel
 from backend.state.narration import track_done_event, narration_done_event
 from sqlmodel import Session, select
+from sqlalchemy import text
+from urllib.parse import quote
+from backend.services.artist_spotlight_narration import spotlight_narration_choices, spotlight_bio_asset
+from backend.services.radio_runtime import short_detail_keys_for
 from backend.database import engine
 from backend.models.dbmodels import Artist
 from backend.database import get_db
@@ -327,6 +331,11 @@ async def play_track(payload: dict):
         if not track.spotify_track_id:
             return {"ok": False, "error": "Missing spotify_track_id for Artist Spotlight playback"}
 
+        try:
+            detail_length, bio_length = spotlight_narration_choices(payload.get("selection") or {}, context)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        context = {**context, "bio_length": bio_length, "detail_length": detail_length}
         spotify_artist_id = context.get("spotify_artist_id")
 
         genre_slug = context.get("genre")
@@ -387,23 +396,47 @@ async def play_track(payload: dict):
         audio_bucket = "audio-ptbr" if tts_language == "pt-BR" else f"audio-{tts_language}"
         base_url = f"https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/{audio_bucket}"
 
-        artist_audio_url = (
-            f"{base_url}/artist/{spotify_artist_id}.mp3"
-            if spotify_artist_id
-            else None
-        )
-
-        track_detail = payload["track"].get("detail")
+        def public_asset_url(bucket: str | None, key: str | None) -> str | None:
+            if not bucket or not key:
+                return None
+            key = key.lstrip("/")
+            if key.startswith(bucket + "/"):
+                key = key[len(bucket) + 1:]
+            return (
+                "https://iizlnzmmhkzedqkolgir.supabase.co/storage/v1/object/public/"
+                f"{quote(bucket, safe='')}/{quote(key, safe='/')}"
+            )
 
         if context.get("play_artist_bio", True):
-            await _play_narration_phase("artist", artist_audio_url)
+            # Use the same locale/story assets as Artist Radio, including long bios.
+            query = text("""
+                SELECT locale.tts_bucket short_bucket, locale.tts_key short_key,
+                       story.tts_bucket long_bucket, story.tts_key long_key
+                FROM artist a
+                LEFT JOIN artist_locale locale ON locale.artist_id=a.id AND locale.language_code=:language
+                LEFT JOIN artist_story story ON story.artist_id=a.id AND story.language_code=:language
+                WHERE a.id=:artist_id OR a.spotify_artist_id=:spotify_artist_id
+                LIMIT 1
+            """)
+            with engine.connect() as connection:
+                metadata = connection.execute(query, {
+                    "artist_id": int(context["artist_id"]) if context.get("artist_id") else None,
+                    "spotify_artist_id": spotify_artist_id,
+                    "language": tts_language,
+                }).mappings().first()
+            bio_bucket, bio_key = spotlight_bio_asset(dict(metadata or {}), bio_length)
+            await _play_narration_phase("artist", public_asset_url(bio_bucket, bio_key))
+            if not bio_bucket or not bio_key:
+                logger.info("artist_spotlight_biography_skipped artist_id=%s language=%s bio_length=%s reason=missing_localized_asset", context.get("artist_id"), tts_language, bio_length)
 
-        # Artist Spotlight skips intro MP3s because they are ranking-list specific.
-        # The artist bio plays once, then each track gets its detail narration.
-        await _play_narration_phase(
-            "detail",
-            f"{base_url}/detail/{track.spotify_track_id}.mp3",
-        )
+        # Artist Spotlight skips ranking-specific intros and respects detail length.
+        if detail_length != "off":
+            if detail_length == "short":
+                detail_bucket, detail_key = short_detail_keys_for(lang=tts_language, track=track)
+                detail_url = public_asset_url(detail_bucket, detail_key)
+            else:
+                detail_url = f"{base_url}/detail/{track.spotify_track_id}.mp3"
+            await _play_narration_phase("detail", detail_url)
 
         update_phase(
             user_id,

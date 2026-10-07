@@ -49,6 +49,7 @@ def artist_tracks(
         t.duration_ms,
         t.detail,
         a.id AS artist_id,
+        a.spotify_artist_id,
         a.artist_name,
         a.artist_description,
         jsonb_build_object(
