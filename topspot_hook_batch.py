@@ -253,6 +253,7 @@ def main():
     parser.add_argument("--max-uploads", type=int, default=15)
     parser.add_argument("--processing-wait", type=int, default=900)
     parser.add_argument("--fix-updated-metadata", action="store_true")
+    parser.add_argument("--skip-key", action="append", default=[])
     args = parser.parse_args()
     engine.require(args.limit > 0 and args.max_uploads > 0, "Limits must be positive.")
     repo = Path.cwd()
@@ -260,6 +261,7 @@ def main():
     inventory = json.loads(args.inventory.read_text(encoding="utf-8"))["videos"]
     rows = sorted((row for row in inventory if not row["already_updated"]), key=lambda row: row["publish_at"])[:args.limit]
     engine.require(len({row['key'] for row in rows}) == len(rows), "Duplicate inventory keys.")
+    engine.require(set(args.skip_key) <= {row["key"] for row in rows}, "Unknown skip key.")
     engine.TARGETS = {row["key"]: row["video_id"] for row in rows}
     engine.EXPECTED = {row["key"]: row["publish_at"] for row in rows}
     folder = repo / "backend/studio/work/hook_batch_20260930"
@@ -305,6 +307,9 @@ def main():
     processed = 0
     for row in rows:
         key = row["key"]
+        if key in args.skip_key:
+            print("DEFERRED", key, "existing state retained", flush=True)
+            continue
         if key not in journal["renders"]:
             continue
         record = journal["records"].get(key)
