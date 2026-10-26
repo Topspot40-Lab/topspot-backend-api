@@ -52,7 +52,12 @@ def without_footer(page: str) -> str:
 
 def approved_sources() -> tuple[list[str], list[str], str]:
     master = MASTER_SOURCE.read_text(encoding="utf-8")
-    quick = QUICK_SOURCE.read_text(encoding="utf-8")
+    # The standalone Quick Reference review artifact is intentionally ignored
+    # and may have been cleared after review.  Its approved directory markup is
+    # also present in the earlier corrected Complete Guide artifact; use that
+    # page markup only as a directory-content source, never as page structure.
+    quick_source = QUICK_SOURCE if QUICK_SOURCE.exists() else OUTPUT_DIR / "topspot40_complete_program_guide_corrected_review.html"
+    quick = quick_source.read_text(encoding="utf-8")
     stylesheet = quick.split("<style>", 1)[1].split("</style>", 1)[0]
     return [without_footer(page) for page in page_sections(master)], [without_footer(page) for page in page_sections(quick)], stylesheet
 
@@ -106,7 +111,10 @@ def quick_directories(quick_pages: list[str], codes: tuple[str, ...]) -> list[st
     selected: list[str] = []
     for code in codes:
         marker = wanted[code]
-        selected.extend(page for page in quick_pages if marker in page)
+        selected.extend(
+            page for page in quick_pages
+            if 'class="catalog-page quick-reference' in page.split(">", 1)[0] and marker in page
+        )
     return selected
 
 
@@ -213,6 +221,64 @@ def sectioned_directories(master_pages: list[str], quick_pages: list[str], codes
         if code == "A" and codes == ("A", "D"):
             pages.extend(artist_featured_by_genre_pages(master_pages))
     return pages
+
+
+def corrected_complete_toc(master_pages: list[str]) -> str:
+    """Use the approved TOC page layout with the corrected guide's page map."""
+    toc = next(page for page in master_pages if 'class="catalog-page toc"' in page)
+    entries = (
+        ("Discovery Guide", 4),
+        ("Nostalgia Programs", 10),
+        ("Collections", 101),
+        ("Artist Spotlight", 186),
+        ("Music Docuseries", 200),
+        ("Every Song Holds a Story", 231),
+    )
+    content = "".join(f"<p><strong>{title}</strong><span>{number}</span></p>" for title, number in entries)
+    return re.sub(r'<div class="major-toc">.*?</div>', f'<div class="major-toc">{content}</div>', toc, flags=re.S)
+
+
+def build_corrected_complete_guide(*, generated_on: date | None = None) -> str:
+    """Build the approved-master sequence with only the approved updates.
+
+    The master review HTML supplies every structural/content page.  Approved
+    grouped directory pages are moved from the printed reference material into
+    their owning sections; no program or artwork page is re-created.
+    """
+    master_pages, quick_pages, stylesheet = approved_sources()
+    generated = (generated_on or date.today()).isoformat()
+    nostalgia = next(index for index, page in enumerate(master_pages) if ">Nostalgia · 1950s</h1>" in page)
+    collections = next(index for index, page in enumerate(master_pages) if ">American Heritage Favorites</h1>" in page)
+    artist = next(index for index, page in enumerate(master_pages) if ">Artist Spotlight Directory</h1>" in page)
+    docuseries = next(index for index, page in enumerate(master_pages) if 'docuseries-opener' in page.split(">", 1)[0])
+    closing = next(index for index, page in enumerate(master_pages) if 'closing-conclusion' in page.split(">", 1)[0])
+    discovery = [page for page in master_pages if 'class="catalog-page discovery' in page]
+    toc_index = next(index for index, page in enumerate(master_pages) if 'class="catalog-page toc"' in page)
+    duplex_blank = master_pages[toc_index + 1]
+    pages = [
+        cover("Complete Program Guide"),
+        catalog.render_music_enriches_page(),
+        catalog.render_instructions_page(),
+        *discovery,
+        corrected_complete_toc(master_pages),
+        duplex_blank,
+        *quick_directories(quick_pages, ("N",)),
+        *master_pages[nostalgia:collections],
+        *quick_directories(quick_pages, ("C",)),
+        *master_pages[collections:artist],
+        master_pages[artist],
+        *quick_directories(quick_pages, ("A",)),
+        *master_pages[artist + 1:docuseries],
+        master_pages[docuseries],
+        *quick_directories(quick_pages, ("D",)),
+        *master_pages[docuseries + 1:closing],
+        catalog.render_closing_conclusion(),
+    ]
+    body = "".join(catalog.add_page_footers(pages, generated))
+    family_css = '''
+.family-cover { padding: 0; } .family-cover-subtitle { position: absolute; top: 2.08in; right: 1.15in; left: 1.15in; margin: 0; padding: .08in .18in; background: rgba(10,31,50,.86); color: #fff8e8; font-size: 19pt; font-weight: bold; letter-spacing: .04em; line-height: 1.15; text-align: center; text-transform: uppercase; }
+'''
+    return f'<!doctype html><html><head><meta charset="utf-8"><title>TopSpot40 — Complete Program Guide</title><style>{stylesheet}{family_css}</style></head><body>{body}</body></html>'
 
 
 def build_edition(edition: Edition, *, generated_on: date | None = None) -> str:
