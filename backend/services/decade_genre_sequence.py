@@ -36,6 +36,7 @@ from backend.state.playback_state import (
 )
 
 from backend.state.narration import narration_done_event
+from backend.state.manual_radio_skip import ManualRadioSkipTarget, wait_for_radio_event_or_manual_skip
 
 logger = logging.getLogger(__name__)
 
@@ -130,6 +131,7 @@ async def publish_narration_phase(
         track_name=track.track_name,
         artist_name=artist.artist_name,
         current_rank=int(rank),
+        current_ranking_id=base_context.get("ranking_id"),
         context=base_context,
     )
 
@@ -145,7 +147,15 @@ async def publish_narration_phase(
     # - "over": do not wait (narration overlaps track)
     if voice_style == "before":
         narration_done_event(user_id).clear()
-        await narration_done_event(user_id).wait()
+        target = ManualRadioSkipTarget(
+            status.playback_session_id,
+            base_context.get("ranking_id"),
+            base_context.get("spotify_track_id"),
+        )
+        return await wait_for_radio_event_or_manual_skip(
+            user_id, narration_done_event(user_id), target
+        )
+    return False
 
 def build_texts_by_language(
         langs,

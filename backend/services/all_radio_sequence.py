@@ -31,6 +31,7 @@ from backend.services.block_builder import build_track_block
 from backend.state.playback_state import begin_track, mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
+from backend.state.manual_radio_skip import ManualRadioSkipTarget, wait_for_radio_event_or_manual_skip
 from backend.state.playback_runtime import current_runtime, current_user_id
 
 from backend.services.bed_tracks import BED_BUCKET, get_genre_bed_key
@@ -744,7 +745,7 @@ async def run_all_radio_sequence(
                         })
 
                     if intro_audio_queue:
-                        await publish_narration_queue_phase(
+                        if await publish_narration_queue_phase(
                             "intro",
                             track=track,
                             artist=artist,
@@ -755,7 +756,8 @@ async def run_all_radio_sequence(
                             texts=texts_by_language,  # next step: multi-language text bundle
                             voice_style="before",
                             extra_context=radio_context,
-                        )
+                        ):
+                            continue
 
                 # ───────── DETAIL ─────────
                 if play_detail:
@@ -774,7 +776,7 @@ async def run_all_radio_sequence(
                         })
 
                     if detail_audio_queue:
-                        await publish_narration_queue_phase(
+                        if await publish_narration_queue_phase(
                             "detail",
                             track=track,
                             artist=artist,
@@ -785,7 +787,8 @@ async def run_all_radio_sequence(
                             texts=texts_by_language,  # later: multi-language More Info bundle
                             voice_style="before",
                             extra_context=radio_context,
-                        )
+                        ):
+                            continue
 
                 # ───────── ARTIST ─────────
                 if play_artist_for_track:
@@ -804,7 +807,7 @@ async def run_all_radio_sequence(
                         })
 
                     if artist_audio_queue:
-                        await publish_narration_queue_phase(
+                        if await publish_narration_queue_phase(
                             "artist",
                             track=track,
                             artist=artist,
@@ -815,7 +818,8 @@ async def run_all_radio_sequence(
                             texts=texts_by_language ,
                             voice_style="before",
                             extra_context=radio_context,
-                        )
+                        ):
+                            continue
                         played_artist_ids.add(artist_identity)
 
                 # ───────── TRACK ─────────
@@ -856,7 +860,15 @@ async def run_all_radio_sequence(
 
 
                     # ✅ wait for Spotify track to finish
-                    await track_done_event(user_id).wait()
+                    await wait_for_radio_event_or_manual_skip(
+                        user_id,
+                        track_done_event(user_id),
+                        ManualRadioSkipTarget(
+                            current_runtime().status.playback_session_id,
+                            tr_rank.id,
+                            track.spotify_track_id,
+                        ),
+                    )
 
                     # small buffer to avoid noise / abrupt transition
                     await asyncio.sleep(0.75)

@@ -24,6 +24,7 @@ EXPECTED_MOUNTED_ROUTES = {
     ("POST", "/playback/client-diagnostic"),
     ("POST", "/playback/narration-finished"),
     ("POST", "/playback/track-finished"),
+    ("POST", "/playback/skip-radio-track"),
     ("GET", "/supabase/decade-genre/play-first"),
     ("GET", "/supabase/decade-genre/play-sequence"),
     ("POST", "/supabase/decade-genre/radio-narration-policy"),

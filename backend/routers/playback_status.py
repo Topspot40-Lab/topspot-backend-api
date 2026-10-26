@@ -15,6 +15,7 @@ from pydantic import BaseModel
 
 from backend.state.narration import narration_done_event, track_done_event
 from backend.state.playback_runtime import bind_request_user, current_user_id
+from backend.state.manual_radio_skip import ManualRadioSkipTarget, request_manual_radio_skip
 
 router = APIRouter(
     prefix="/playback",
@@ -102,6 +103,11 @@ class ClientDiagnosticRequest(BaseModel):
 class NarrationFinishedRequest(BaseModel):
     playbackSessionId: Optional[str] = None
     phase: Optional[str] = None
+
+
+class ManualRadioSkipRequest(NarrationFinishedRequest):
+    ranking_id: Optional[int] = None
+    spotify_track_id: Optional[str] = None
 
 
 def _sanitize_diagnostic_state(value: Any) -> Any:
@@ -397,3 +403,36 @@ async def track_finished():
     event.set()
 
     return {"ok": True}
+
+
+@router.post("/skip-radio-track")
+async def skip_radio_track(payload: ManualRadioSkipRequest):
+    """Skip one backend-owned Radio track while it is in a narration phase.
+
+    This deliberately does not share the legacy ``/playback/skip`` event and
+    never weakens the normal Spotify completion clock.
+    """
+    user_id = current_user_id()
+    s = get_playback_status(user_id)
+    ctx = s.context or {}
+    current_session_id = getattr(s, "playback_session_id", None) or ctx.get("playback_session_id")
+    narration_phases = {"intro", "detail", "artist"}
+    radio_modes = {"all_radio", "collections_radio", "artist_radio"}
+    current_ranking_id = getattr(s, "current_ranking_id", None) or ctx.get("ranking_id")
+    current_spotify_id = getattr(s, "spotify_track_id", None) or ctx.get("spotify_track_id")
+
+    if ctx.get("mode") not in radio_modes and ctx.get("type") != "artist_radio":
+        return {"ok": True, "ignored": True, "reason": "not_radio"}
+    if not payload.playbackSessionId or payload.playbackSessionId != current_session_id:
+        return {"ok": True, "ignored": True, "reason": "stale_session"}
+    if s.phase not in narration_phases or payload.phase != s.phase:
+        return {"ok": True, "ignored": True, "reason": "not_narration_phase"}
+    if payload.ranking_id != current_ranking_id or payload.spotify_track_id != current_spotify_id:
+        return {"ok": True, "ignored": True, "reason": "track_mismatch"}
+
+    accepted = request_manual_radio_skip(
+        user_id,
+        ManualRadioSkipTarget(current_session_id, current_ranking_id, current_spotify_id),
+    )
+    return {"ok": True, "accepted": accepted, "ignored": not accepted,
+            "reason": None if accepted else "duplicate"}

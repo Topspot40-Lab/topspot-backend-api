@@ -8,6 +8,7 @@ from backend.services.audio_urls import resolve_audio_ref
 from backend.services.block_builder import build_track_block
 from backend.services.radio_runtime import narration_keys_for, short_detail_keys_for
 from backend.state.narration import narration_done_event, track_done_event
+from backend.state.manual_radio_skip import ManualRadioSkipTarget, wait_for_radio_event_or_manual_skip
 from backend.state.playback_runtime import current_runtime, current_user_id
 from backend.state.playback_state import begin_track, mark_playing, update_phase
 logger = logging.getLogger(__name__)
@@ -110,7 +111,9 @@ async def _narrate(user,phase,track,ctx,bucket,key):
         logger.warning('artist_radio_narration_skipped phase=%s reason=unresolvable_asset_reference',phase)
         return False
     update_phase(user,phase,is_playing=True,current_rank=track['ranking'],current_ranking_id=track['ranking_id'],track_name=track['track_name'],artist_name=track['artist_name'],context={**ctx,'bucket':bucket,'key':key,'audio_url':audio_url,'voice_style':'before'})
-    logger.info('artist_radio_published_phase phase=%s track_name=%s artist_name=%s genre=%s set_number=%s set_position=%s set_size=%s spotify_track_id=%s',phase,track['track_name'],track['artist_name'],ctx.get('genre_name'),ctx.get('set_number'),ctx.get('block_position'),ctx.get('block_size'),ctx.get('spotify_track_id')); narration_done_event(user).clear(); await narration_done_event(user).wait(); return True
+    logger.info('artist_radio_published_phase phase=%s track_name=%s artist_name=%s genre=%s set_number=%s set_position=%s set_size=%s spotify_track_id=%s',phase,track['track_name'],track['artist_name'],ctx.get('genre_name'),ctx.get('set_number'),ctx.get('block_position'),ctx.get('block_size'),ctx.get('spotify_track_id')); narration_done_event(user).clear()
+    target = ManualRadioSkipTarget(current_runtime().status.playback_session_id, track['ranking_id'], track['spotify_track_id'])
+    return "skipped" if await wait_for_radio_event_or_manual_skip(user, narration_done_event(user), target) else True
 async def run_artist_radio_sequence(*,genres=None,genre='ALL',tts_language='en',detail_length='short',bio_length='short',**_):
     requested=list(genres or ([genre] if genre!='ALL' else ALLOWED_GENRES))
     invalid=[x for x in requested if x not in ALLOWED_GENRES]
@@ -134,17 +137,31 @@ async def run_artist_radio_sequence(*,genres=None,genre='ALL',tts_language='en',
         bio_bucket,bio_key=biography_keys_for_artist(artist,bio_length)
         first_track=chosen[0]
         bio_context={**base,'artist_set_position':1,'block_position':1,'ranking_id':first_track['ranking_id'],'track_id':first_track['track_id'],'spotify_track_id':first_track['spotify_track_id'],'duration_ms':first_track['duration_ms'],'album_artwork':first_track['album_artwork']}
-        if bio_bucket and bio_key and not await _narrate(user,'artist',first_track,bio_context,bio_bucket,bio_key):
+        skip_first_track = False
+        bio_result = await _narrate(user,'artist',first_track,bio_context,bio_bucket,bio_key) if bio_bucket and bio_key else True
+        if bio_result == "skipped":
+            # A matching manual Radio skip discards the first track, not the
+            # whole artist block.
+            skip_first_track = True
+        elif not bio_result:
             logger.warning('artist_radio_artist_skipped artist_id=%s reason=unresolvable_biography',artist['artist_id'])
             continue
         if not bio_bucket or not bio_key:
             logger.info('artist_radio_biography_skipped artist_id=%s language=%s reason=missing_localized_asset',artist['artist_id'],tts_language)
         for pos,track in enumerate(chosen,1):
             if status.stopped or status.cancel_requested:return
+            if skip_first_track and pos == 1:
+                played_tracks.add(track['track_id'])
+                continue
             ctx={**base,'artist_set_position':pos,'block_position':pos,'ranking_id':track['ranking_id'],'track_id':track['track_id'],'spotify_track_id':track['spotify_track_id'],'duration_ms':track['duration_ms'],'album_artwork':track['album_artwork']}
             if detail_length!='off':
                 obj=Row(track); art=Row({'spotify_artist_id':track['spotify_artist_id']}); bucket,key=(short_detail_keys_for(lang=tts_language,track=obj) if detail_length=='short' else narration_keys_for(lang=tts_language,track=obj,artist=art)[:2])
-                if bucket and key: await _narrate(user,'detail',track,ctx,bucket,key)
+                if bucket and key and (await _narrate(user,'detail',track,ctx,bucket,key)) == "skipped":
+                    played_tracks.add(track['track_id'])
+                    continue
             update_phase(user,'track',is_playing=True,current_rank=track['ranking'],current_ranking_id=track['ranking_id'],track_name=track['track_name'],artist_name=track['artist_name'],duration_seconds=track['duration_ms']/1000,elapsed_seconds=0,context=ctx); begin_track(user,track['duration_ms']/1000)
-            logger.info('artist_radio_published_phase phase=track track_name=%s artist_name=%s genre=%s set_number=%s set_position=%s set_size=%s spotify_track_id=%s',track['track_name'],track['artist_name'],ctx.get('genre_name'),ctx.get('set_number'),ctx.get('block_position'),ctx.get('block_size'),ctx.get('spotify_track_id')); track_done_event(user).clear(); await track_done_event(user).wait(); played_tracks.add(track['track_id'])
+            logger.info('artist_radio_published_phase phase=track track_name=%s artist_name=%s genre=%s set_number=%s set_position=%s set_size=%s spotify_track_id=%s',track['track_name'],track['artist_name'],ctx.get('genre_name'),ctx.get('set_number'),ctx.get('block_position'),ctx.get('block_size'),ctx.get('spotify_track_id')); track_done_event(user).clear()
+            target = ManualRadioSkipTarget(status.playback_session_id, track['ranking_id'], track['spotify_track_id'])
+            await wait_for_radio_event_or_manual_skip(user, track_done_event(user), target)
+            played_tracks.add(track['track_id'])
         logger.info('artist_radio_transition next_artist_set=%d',set_no+1)

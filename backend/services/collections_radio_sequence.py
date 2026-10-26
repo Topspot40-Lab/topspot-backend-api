@@ -7,6 +7,7 @@ import random
 from backend.state.playback_state import begin_track, get_status, mark_playing, update_phase
 from backend.state.playback_flags import flags
 from backend.state.narration import track_done_event
+from backend.state.manual_radio_skip import ManualRadioSkipTarget, wait_for_radio_event_or_manual_skip
 from backend.state.playback_runtime import current_runtime, current_user_id
 from backend.services.collections_radio_loader import get_valid_collections, load_collection_rows
 from backend.services.block_builder import build_track_block
@@ -354,7 +355,7 @@ async def run_collections_radio_sequence(
                                 })
 
                             if intro_audio_queue:
-                                await publish_narration_queue_phase(
+                                if await publish_narration_queue_phase(
                                     "intro",
                                     track=track,
                                     artist=artist,
@@ -370,7 +371,8 @@ async def run_collections_radio_sequence(
                                         "bed_key": bed_key,
                                         "bed_audio_url": bed_audio_url,
                                     },
-                                )
+                                ):
+                                    continue
 
                         # ───────── DETAIL / ARTIST KEYS ─────────
                         detail_by_lang = {}
@@ -419,7 +421,7 @@ async def run_collections_radio_sequence(
                                         for item in detail_audio_queue
                                     ],
                                 )
-                                await publish_narration_queue_phase(
+                                if await publish_narration_queue_phase(
                                     "detail",
                                     track=track,
                                     artist=artist,
@@ -435,7 +437,8 @@ async def run_collections_radio_sequence(
                                         "bed_key": bed_key,
                                         "bed_audio_url": bed_audio_url,
                                     },
-                                )
+                                ):
+                                    continue
 
                         # ───────── ARTIST ─────────
                         if play_artist:
@@ -458,7 +461,7 @@ async def run_collections_radio_sequence(
                                 })
 
                             if artist_audio_queue:
-                                await publish_narration_queue_phase(
+                                if await publish_narration_queue_phase(
                                     "artist",
                                     track=track,
                                     artist=artist,
@@ -474,7 +477,8 @@ async def run_collections_radio_sequence(
                                         "bed_key": bed_key,
                                         "bed_audio_url": bed_audio_url,
                                     },
-                                )
+                                ):
+                                    continue
 
                         # ───────── TRACK ─────────
                         if getattr(track, "spotify_track_id", None):
@@ -515,7 +519,15 @@ async def run_collections_radio_sequence(
                                 (public_status.context or {}).get("spotify_track_id"),
                             )
 
-                            await track_done_event(user_id).wait()
+                            await wait_for_radio_event_or_manual_skip(
+                                user_id,
+                                track_done_event(user_id),
+                                ManualRadioSkipTarget(
+                                    current_runtime().status.playback_session_id,
+                                    ctr.id,
+                                    track.spotify_track_id,
+                                ),
+                            )
 
     except asyncio.CancelledError:
         logger.info("⛔ Collections radio cancelled")
