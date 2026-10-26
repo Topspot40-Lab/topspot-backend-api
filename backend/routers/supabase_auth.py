@@ -67,7 +67,7 @@ def logout():
         domain=cookie_config["COOKIE_DOMAIN"],
         secure=cookie_config["SECURE_COOKIE"],
         httponly=True,
-        samesite="none",
+        samesite=cookie_config["SAMESITE"],
     )
 
     return response
@@ -228,7 +228,7 @@ def create_supabase_signup(payload: SupabaseSignupRequest):
         value=topspot_jwt,
         httponly=True,
         secure=cookie_config["SECURE_COOKIE"],
-        samesite="none",
+        samesite=cookie_config["SAMESITE"],
         max_age=JWT_EXP_DELTA_SECONDS,
         path="/",
         domain=cookie_config["COOKIE_DOMAIN"],
@@ -580,7 +580,7 @@ def create_supabase_session(payload: SupabaseSessionRequest):
         value=topspot_jwt,
         httponly=True,
         secure=cookie_config["SECURE_COOKIE"],
-        samesite="none",
+        samesite=cookie_config["SAMESITE"],
         max_age=JWT_EXP_DELTA_SECONDS,
         path="/",
         domain=cookie_config["COOKIE_DOMAIN"],

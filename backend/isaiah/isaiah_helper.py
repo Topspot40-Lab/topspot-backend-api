@@ -1,13 +1,33 @@
 # backend/isaiah/isaiah_helper.py
 import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+
+# Auth routers import this helper before some of the older router modules call
+# load_dotenv(), so load the repository's existing local configuration here.
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 def get_env_config():
     """
-    Returns backend configuration for cookies.
+    Returns backend configuration for cookies. Production remains the default;
+    local development is explicitly selected with TOPSPOT_ENV=local.
     """
+    environment = os.getenv("TOPSPOT_ENV", "production").strip().lower()
+
+    if environment in {"local", "development", "dev"}:
+        return {
+            # Omit Domain so the browser creates a host-only localhost cookie.
+            "COOKIE_DOMAIN": None,
+            "SECURE_COOKIE": False,
+            "SAMESITE": "lax",
+        }
+
     return {
-        "COOKIE_DOMAIN": ".topspot40.com",  # set "topspot40.com" for production if needed, None if local
-        "SECURE_COOKIE": True  # set True if using HTTPS in production, False if local
+        "COOKIE_DOMAIN": ".topspot40.com",
+        "SECURE_COOKIE": True,
+        "SAMESITE": "none",
     }
 
 def get_spotify_redirect_uri(local: bool = True):
