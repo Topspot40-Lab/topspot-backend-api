@@ -8,6 +8,9 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from backend.studio.render.hook_title_frame import (
+    LAYOUT_VERSION, localized_title, render_hook_title_frame,
+)
 from backend.studio.factory.production_contract import SUPPORTED_LANGUAGE_CODES
 from backend.studio.factory.production_execution import ProductionExecution
 from backend.studio.stations.build_storyboard import save_json_atomic
@@ -211,12 +214,27 @@ def run_localized_deliveries(
         try:
             opening, master, hook_visual, brand, bed, tracks, inputs = _inputs(execution, language, bed)
             pending = artifact in execution.pending_artifacts(station=delivery_station)
-            if not pending and _recorded(sidecar(execution, language)) == inputs:
+            recorded = _recorded(sidecar(execution, language)) or {}
+            # Existing completed legacy deliveries retain their original artwork.
+            # New/unfinished deliveries adopt the title frame; styled deliveries
+            # retain it when resumed or rebuilt because their source inputs change.
+            styled = pending or "hook_layout_version" in recorded
+            if styled:
+                title = localized_title(production, language)
+                inputs.update(hook_layout_version=LAYOUT_VERSION,
+                              hook_title=title, hook_language=language)
+            if not pending and recorded == inputs:
                 media_validator(execution.output_path(station=delivery_station, artifact_id=artifact), tracks)
                 session.finish_station(delivery_station, success=True)
                 continue
             if not pending:
                 execution.requeue_artifact(station=delivery_station, artifact_id=artifact, reason="Localized delivery input digest changed or is missing")
+            if styled:
+                hook_visual = render_hook_title_frame(
+                    hook_visual,
+                    execution.factory_root / "delivery" / language / "hook_title_frame.png",
+                    title=title, language=language,
+                )
             output = execution.start_artifact(station=delivery_station, artifact_id=artifact)
             claimed = True
             builder(opening, master, hook_visual, brand, bed, tracks, output)
