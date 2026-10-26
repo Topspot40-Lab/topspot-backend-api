@@ -27,3 +27,4 @@ venv/
 **/spotify_token.cache
 backend/studio/work/
 backend/scripts/catalogs/output/
+backend/scripts/catalogs/*.pdf
