@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import stripe
 from backend.isaiah.jwt_session import create_jwt_token, JWT_EXP_DELTA_SECONDS, decode_jwt_token
 from backend.isaiah.isaiah_spotify import get_valid_access_token
+from backend.isaiah.access_codes import create_access_code_router
 from backend.isaiah.offer_access import OFFER_CODE, compute_complimentary_access, compute_offer_access
 from datetime import datetime, timedelta, timezone
 #from main import supabase  # import your Supabase client
@@ -62,6 +63,8 @@ SPOTIFY_REDIRECT_URI = os.getenv("SPOTIPY_REDIRECT_URI")
 spotify_user_auth_router = APIRouter()
 play_router = APIRouter()
 stripe_router = APIRouter()
+
+stripe_router.include_router(create_access_code_router(lambda: supabase))
 
 
 def _checkout_session_is_owned_by_user(session, user_id: str) -> bool:
